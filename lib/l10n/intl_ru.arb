@@ -1,0 +1,8 @@
+{
+  "mainTexttt": "Главный  экран для юзера",
+  "tabBarText_main": "Главная",
+  "tabBarText_grassCoin": "Grass Coin",
+  "tabBarText_company": "Компания",
+  "tabBarText_education": "Обучение",
+  "tabBarText_service":"Сервисы"
+}
