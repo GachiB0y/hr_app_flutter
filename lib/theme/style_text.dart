@@ -8,7 +8,7 @@ abstract class StyleTextCustom {
   static const TextStyle styleTextNotification =
       TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600);
   static const TextStyle textNameUser =
-      TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600);
   static const TextStyle textJobUserGrey =
-      TextStyle(fontSize: 11, color: Colors.grey, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w600);
 }

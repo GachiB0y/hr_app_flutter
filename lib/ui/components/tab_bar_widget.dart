@@ -81,7 +81,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
           buildItem(
               index: 4,
               img: Image.asset(
-                'assets/images/user_circle.png',
+                'assets/images/service_icon.png',
                 width: 30,
                 height: 30,
               ),
@@ -103,7 +103,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
       child: ColorFiltered(
         colorFilter: ColorFilter.mode(
             isSelected ? ColorsForWidget.colorGreen : Colors.black,
-            BlendMode.modulate),
+            BlendMode.srcATop),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

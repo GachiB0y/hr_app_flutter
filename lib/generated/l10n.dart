@@ -109,6 +109,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Index`
+  String get userMainScrenText_index {
+    return Intl.message(
+      'Index',
+      name: 'userMainScrenText_index',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Баланс`
+  String get userMainScreenText_balance {
+    return Intl.message(
+      'Баланс',
+      name: 'userMainScreenText_balance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

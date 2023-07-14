@@ -29,6 +29,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "tabBarText_grassCoin":
             MessageLookupByLibrary.simpleMessage("Grass Coin"),
         "tabBarText_main": MessageLookupByLibrary.simpleMessage("Main"),
-        "tabBarText_service": MessageLookupByLibrary.simpleMessage("Services")
+        "tabBarText_service": MessageLookupByLibrary.simpleMessage("Services"),
+        "userMainScreenText_balance":
+            MessageLookupByLibrary.simpleMessage("Баланс"),
+        "userMainScrenText_index": MessageLookupByLibrary.simpleMessage("Index")
       };
 }

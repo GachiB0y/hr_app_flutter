@@ -30,6 +30,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "tabBarText_grassCoin":
             MessageLookupByLibrary.simpleMessage("Grass Coin"),
         "tabBarText_main": MessageLookupByLibrary.simpleMessage("Главная"),
-        "tabBarText_service": MessageLookupByLibrary.simpleMessage("Сервисы")
+        "tabBarText_service": MessageLookupByLibrary.simpleMessage("Сервисы"),
+        "userMainScreenText_balance":
+            MessageLookupByLibrary.simpleMessage("Баланс"),
+        "userMainScrenText_index":
+            MessageLookupByLibrary.simpleMessage("Индекс")
       };
 }

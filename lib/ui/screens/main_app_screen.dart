@@ -16,17 +16,25 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   var pages = <Widget>[
     const UserMainScreen(),
-    const Text(
-      'Grass Coin',
+    Center(
+      child: const Text(
+        'Grass Coin',
+      ),
     ),
-    const Text(
-      'Компакния',
+    Center(
+      child: const Text(
+        'Компакния',
+      ),
     ),
-    const Text(
-      'Обучение',
+    Center(
+      child: const Text(
+        'Обучение',
+      ),
     ),
-    const Text(
-      'Сервисы',
+    Center(
+      child: const Text(
+        'Сервисы',
+      ),
     ),
   ];
 
