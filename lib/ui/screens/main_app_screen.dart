@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/ui/components/tab_bar_widget.dart';
+import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 
 class MainAppScreen extends StatefulWidget {
@@ -14,25 +15,21 @@ class MainAppScreen extends StatefulWidget {
 class _MainAppScreenState extends State<MainAppScreen> {
   var selectedPageIndex = 0;
 
-  var pages = <Widget>[
-    const UserMainScreen(),
+  var pages = const <Widget>[
+    UserMainScreen(),
+    GrassCoinScreen(),
     Center(
-      child: const Text(
-        'Grass Coin',
-      ),
-    ),
-    Center(
-      child: const Text(
+      child: Text(
         'Компакния',
       ),
     ),
     Center(
-      child: const Text(
+      child: Text(
         'Обучение',
       ),
     ),
     Center(
-      child: const Text(
+      child: Text(
         'Сервисы',
       ),
     ),
@@ -41,7 +38,6 @@ class _MainAppScreenState extends State<MainAppScreen> {
   void onChangeTab(int index) {
     setState(() {
       selectedPageIndex = index;
-      print(index);
     });
   }
 

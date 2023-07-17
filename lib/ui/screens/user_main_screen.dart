@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
 
@@ -12,7 +13,7 @@ class UserMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: _AppBarFirstScreen(),
+      appBar: const AppBarUserWdiget(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
@@ -20,14 +21,14 @@ class UserMainScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                   height: MediaQuery.of(context).size.height / 4.6,
-                  child: ScrollBarWidget()),
+                  child: const ScrollBarWidget()),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 26,
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'События компании',
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
@@ -35,122 +36,11 @@ class UserMainScreen extends StatelessWidget {
               ),
               Expanded(
                   child: Container(
-                      padding: EdgeInsets.only(left: 8),
-                      child: TableScrollWidget())),
+                      padding: const EdgeInsets.only(left: 8),
+                      child: const TableScrollWidget())),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _AppBarFirstScreen extends StatelessWidget
-    implements PreferredSizeWidget {
-  const _AppBarFirstScreen();
-
-  @override
-  Size get preferredSize => const Size.fromHeight(80);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      toolbarHeight: 100,
-      leadingWidth: 85,
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-            right: 20.0,
-          ),
-          child: Container(
-            height: 34,
-            width: 34,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(70, 255, 255, 255),
-              borderRadius: BorderRadius.circular(17),
-            ),
-            child: MaterialButton(
-              onPressed: () {},
-              textColor: Colors.black,
-              padding: const EdgeInsets.all(2),
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.notifications_none,
-                size: 35,
-              ),
-            ),
-          ),
-        ),
-      ],
-      leading: const Avatar(),
-      title: const Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Александр Волков', style: StyleTextCustom.textNameUser),
-              SizedBox(
-                height: 5,
-              ),
-              Text('Менеджер по работе с клиентами',
-                  style: StyleTextCustom.textJobUserGrey),
-            ],
-          ),
-        ],
-      ),
-      backgroundColor: Colors.transparent,
-    );
-  }
-}
-
-class Avatar extends StatelessWidget {
-  const Avatar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Stack(
-        children: [
-          Container(
-            child: Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 128, 124, 124),
-                    border: Border.all(
-                      width: 1,
-                      color: Color.fromARGB(255, 128, 124, 124),
-                    ),
-                  ),
-                  child: Image.asset(
-                    'assets/images/man.png',
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    height: 50,
-                    width: 50,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                  padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-                  decoration: BoxDecoration(
-                    color: ColorsForWidget.colorRed,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    '123',
-                    style: StyleTextCustom.styleTextNotification,
-                  )),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -232,62 +122,73 @@ class ElementForScrollBarWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30), color: Colors.white),
-          width: sizeScreen.width / 2.2,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        'assets/images/icon_crown.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '1208',
-                            style: TextStyle(fontSize: 28),
-                          ),
-                          Text(
-                            S.of(context).userMainScrenText_index,
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                        ],
-                      ),
-                    ]),
-                const Divider(),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ColorFiltered(
-                        colorFilter:
-                            ColorFilter.mode(Colors.orange, BlendMode.srcATop),
-                        child: Image.asset(
-                          'assets/images/grass_icon_main.png',
+          width: sizeScreen.width / 2.4,
+          child: Stack(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          'assets/images/icon_crown.png',
                           width: 50,
                           height: 50,
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '256',
-                            style: TextStyle(fontSize: 28),
+                        Column(
+                          children: [
+                            const Text(
+                              '1208',
+                              style: TextStyle(fontSize: 28),
+                            ),
+                            Text(
+                              S.of(context).userMainScrenText_index,
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  const Divider(),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                              Colors.orange, BlendMode.srcATop),
+                          child: Image.asset(
+                            'assets/images/grass_icon_main.png',
+                            width: 50,
+                            height: 50,
                           ),
-                          Text(
-                            S.of(context).userMainScreenText_balance,
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                        ],
-                      ),
-                    ]),
-              ],
+                        ),
+                        Column(
+                          children: [
+                            const Text(
+                              '256',
+                              style: TextStyle(fontSize: 28),
+                            ),
+                            Text(
+                              S.of(context).userMainScreenText_balance,
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                      ]),
+                ],
+              ),
             ),
-          ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () {
+                  print('Clicked');
+                },
+              ),
+            )
+          ]),
         ),
       );
     } else {
@@ -299,7 +200,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: ColorsForWidget.colorGreen),
-              width: sizeScreen.width / 2.5,
+              width: sizeScreen.width / 2.4,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Align(
@@ -316,6 +217,17 @@ class ElementForScrollBarWidget extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Image.asset(pathImages[index])),
             ),
+            SizedBox(
+                width: sizeScreen.width / 2.4,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(30),
+                    onTap: () {
+                      print('click');
+                    },
+                  ),
+                )),
           ],
         ),
       );
@@ -324,6 +236,8 @@ class ElementForScrollBarWidget extends StatelessWidget {
 }
 
 class TableScrollWidget extends StatefulWidget {
+  const TableScrollWidget({super.key});
+
   @override
   State<StatefulWidget> createState() => _TableScrollWidgetState();
 }
@@ -332,28 +246,28 @@ class _TableScrollWidgetState extends State<TableScrollWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  List<Widget> _tabs = [
-    Text(
+  final List<Widget> _tabs = [
+    const Text(
       'Актуальное',
       style: TextStyle(
         fontSize: 18,
       ),
     ),
-    Text('Новости',
+    const Text('Новости',
         style: TextStyle(
           fontSize: 18,
         )),
-    Text('Сотрудники',
+    const Text('Сотрудники',
         style: TextStyle(
           fontSize: 18,
         )),
-    Text('Мероприятия',
+    const Text('Мероприятия',
         style: TextStyle(
           fontSize: 18,
         )),
   ];
 
-  List<List<Color>> _tabColors = [
+  final List<List<Color>> _tabColors = const [
     [
       Colors.red,
       Colors.redAccent,
