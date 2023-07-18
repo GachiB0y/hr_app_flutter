@@ -50,7 +50,7 @@ class UserMainScreen extends StatelessWidget {
               Expanded(
                   child: Container(
                       padding: const EdgeInsets.only(left: 8),
-                      child: TableScrollWidget())),
+                      child: const TableScrollWidget())),
             ],
           ),
         ),
@@ -196,9 +196,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(30),
-                onTap: () {
-                  print('Clicked');
-                },
+                onTap: () {},
               ),
             )
           ]),
@@ -236,9 +234,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(30),
-                    onTap: () {
-                      print('click');
-                    },
+                    onTap: () {},
                   ),
                 )),
           ],
@@ -380,6 +376,8 @@ class ElementForScrollBarWidget extends StatelessWidget {
 // }
 
 class TableScrollWidget extends StatefulWidget {
+  const TableScrollWidget({super.key});
+
   @override
   State<TableScrollWidget> createState() => _TableScrollWidgetState();
 }
@@ -390,7 +388,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   late final List<EventEntity> events;
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         final cubit = context.read<EventEntityCubit>();
         events = cubit.state.itemsGet;
@@ -407,7 +405,6 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     final cubit = context.watch<EventEntityCubit>();
     selectTabTags = cubit.state.tabs[selectedTab];
 
-    final List<EventEntity> eventsList = cubit.state.itemsGet;
     return Column(
       children: [
         SizedBox(
@@ -418,7 +415,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
             itemBuilder: (context, index) {
               String tab = cubit.state.tabs[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -426,11 +423,31 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       cubit.changeVisibleEvents(index: index);
                     });
                   },
-                  child: Text(
-                    tab,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: index == selectedTab ? Colors.blue : Colors.black,
+                  child: Container(
+                    decoration: index == selectedTab
+                        ? const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Colors.black, // Цвет подчеркивания
+                                  width: 1.5 // Толщина подчеркивания
+                                  ),
+                            ),
+                          )
+                        : null,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 6.0),
+                        child: Text(
+                          tab,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: index == selectedTab
+                                ? Colors.black
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -474,7 +491,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                         children: [
                           Text(
                             item.title,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(height: 8),
                           Text(item.description),

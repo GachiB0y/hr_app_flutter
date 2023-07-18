@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -77,7 +74,7 @@ class EventEntityCubit extends Cubit<EventEntityState> {
         newEventActual.add(element);
       }
     }
-    print(state.copyWith(eventsActual: newEventActual));
+
     final newState = state.copyWith(eventsActual: newEventActual);
     emit(newState);
   }
@@ -90,25 +87,12 @@ class EventEntityCubit extends Cubit<EventEntityState> {
         imagePath:
             'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
         dateFrom: DateTime.now(),
-        dateTo: DateTime.now().subtract(Duration(days: 1)),
+        dateTo: DateTime.now().subtract(const Duration(days: 1)),
         tags: ['Мероприятия', 'Соотрудники']);
     newEventEntityList = state._listItems.toList();
     newEventEntityList.add(newEvent);
 
     final newState = state.copyWith(listItems: newEventEntityList);
     emit(newState);
-    // events = newEventEntityList;
   }
-  // void incrementDishes(int idDishes) {
-  //   final List<CitchenElement> dishes = state.itemsGet;
-  //   for (var element in dishes) {
-  //     if (element.id == idDishes) {
-  //       if (element.count >= 0) {
-  //         element.count++;
-  //         final newState = state.copyWith(listItems: dishes);
-  //         emit(newState);
-  //       }
-  //     }
-  //   }
-  // }
 }

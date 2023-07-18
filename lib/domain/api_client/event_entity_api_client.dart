@@ -11,7 +11,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Новости']),
       EventEntity(
           title: 'Заголовок 2',
@@ -19,7 +19,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости']),
       EventEntity(
           title: 'Заголовок 3',
@@ -27,7 +27,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Сотрудники']),
       EventEntity(
           title: 'Заголовок 4',
@@ -35,7 +35,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Сотрудники']),
       EventEntity(
           title: 'Заголовок 5',
@@ -43,7 +43,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости', 'Сотрудники']),
       EventEntity(
           title: 'Заголовок 6',
@@ -51,7 +51,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости', 'Сотрудники']),
       EventEntity(
           title: 'Заголовок 7',
@@ -59,7 +59,7 @@ class EventEntityApiClient implements EventEntityApi {
           imagePath:
               'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
           dateFrom: DateTime.now(),
-          dateTo: DateTime.now().subtract(Duration(days: 1)),
+          dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Мероприятия', 'Соотрудники']),
     ];
     return events;

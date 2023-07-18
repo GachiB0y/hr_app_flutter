@@ -239,6 +239,8 @@ class HistoryOperationCoinWidget extends StatelessWidget {
         isTransfer: false),
   ];
 
+  HistoryOperationCoinWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GroupedListViewHistoryOperation(
@@ -250,7 +252,7 @@ class HistoryOperationCoinWidget extends StatelessWidget {
 class GroupedListViewHistoryOperation extends StatelessWidget {
   final List<HistoryOperationEntity> historyList;
 
-  GroupedListViewHistoryOperation({required this.historyList});
+  const GroupedListViewHistoryOperation({super.key, required this.historyList});
 
   bool compareDates(DateTime date1, DateTime date2) {
     // Установка времени на полночь для обоих дат
@@ -263,7 +265,7 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
   bool compareYesterday(DateTime date) {
     // Получение вчерашней даты
     DateTime today = DateTime.now();
-    DateTime yesterday = today.subtract(Duration(days: 1));
+    DateTime yesterday = today.subtract(const Duration(days: 1));
 
     // Сравнение даты сегодня с вчерашней датой
     return compareDates(date, yesterday);
@@ -298,7 +300,7 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
           ListTile(
             title: Text(
               dateString,
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
           ListView(
