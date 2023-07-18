@@ -190,12 +190,12 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
       children: [
         widget.item.isTransfer
             ? Text(
-                '+${widget.item.count.toString()}',
-                style: TextStyle(color: Colors.green, fontSize: 16),
+                '-${widget.item.count.toString()}',
+                style: const TextStyle(fontSize: 16),
               )
             : Text(
-                '-${widget.item.count.toString()}',
-                style: TextStyle(fontSize: 16),
+                '+${widget.item.count.toString()}',
+                style: const TextStyle(color: Colors.green, fontSize: 16),
               ),
         const SizedBox(
           width: 5,
@@ -223,7 +223,7 @@ class HistoryOperationCoinWidget extends StatelessWidget {
         count: 2,
         isTransfer: false),
     HistoryOperationEntity(
-        date: DateTime.utc(2023, 07, 16),
+        date: DateTime.utc(2023, 07, 17),
         name: 'Sanya Volkov',
         count: 100,
         isTransfer: true),
@@ -252,12 +252,38 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
 
   GroupedListViewHistoryOperation({required this.historyList});
 
+  bool compareDates(DateTime date1, DateTime date2) {
+    // Установка времени на полночь для обоих дат
+    DateTime date1OnlyDate = DateTime(date1.year, date1.month, date1.day);
+    DateTime date2OnlyDate = DateTime(date2.year, date2.month, date2.day);
+
+    return date1OnlyDate.isAtSameMomentAs(date2OnlyDate);
+  }
+
+  bool compareYesterday(DateTime date) {
+    // Получение вчерашней даты
+    DateTime today = DateTime.now();
+    DateTime yesterday = today.subtract(Duration(days: 1));
+
+    // Сравнение даты сегодня с вчерашней датой
+    return compareDates(date, yesterday);
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime today = DateTime.now();
     // Группировка элементов по дате
     Map<String, List<HistoryOperationEntity>> groups = {};
     historyList.forEach((item) {
-      String dateString = DateFormat('yyyy-MM-dd').format(item.date);
+      String dateString = DateFormat('d MMM EEE, y.').format(item.date);
+      bool isSameDay = compareDates(today, item.date);
+      bool isYesterday = compareYesterday(item.date);
+      if (isSameDay) {
+        dateString = 'Сегодня';
+      } else if (isYesterday) {
+        dateString = 'Вчера';
+      }
+
       if (groups[dateString] == null) {
         groups[dateString] = [];
       }
@@ -270,18 +296,21 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
       groupWidgets.add(Column(
         children: [
           ListTile(
-            title: Text(dateString),
+            title: Text(
+              dateString,
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
           ),
           ListView(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: groupItems
                 .map(
                   (item) => ListTile(
                       title: Text(item.name),
                       subtitle: Text(
                         item.isTransfer ? 'Перевод' : 'Зачисление',
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                       trailing: SizedBox(
                         width: 80,
@@ -293,7 +322,7 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
                 )
                 .toList(),
           ),
-          Divider(),
+          const Divider(),
         ],
       ));
     });

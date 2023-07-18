@@ -11,6 +11,8 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0.0,
+      // shadowColor: Colors.transparent,
       toolbarHeight: 100,
       leadingWidth: 85,
       actions: <Widget>[
