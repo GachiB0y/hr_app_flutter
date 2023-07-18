@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/ui/components/tab_bar_widget.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
@@ -15,20 +16,21 @@ class MainAppScreen extends StatefulWidget {
 class _MainAppScreenState extends State<MainAppScreen> {
   var selectedPageIndex = 0;
 
-  var pages = const <Widget>[
-    UserMainScreen(),
-    GrassCoinScreen(),
-    Center(
+  // final apiClient = EventEntityApiClient();
+  var pages = <Widget>[
+    UserMainScreen.create(),
+    const GrassCoinScreen(),
+    const Center(
       child: Text(
         'Компакния',
       ),
     ),
-    Center(
+    const Center(
       child: Text(
         'Обучение',
       ),
     ),
-    Center(
+    const Center(
       child: Text(
         'Сервисы',
       ),

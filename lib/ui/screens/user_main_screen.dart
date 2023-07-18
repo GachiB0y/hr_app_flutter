@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
+import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
@@ -7,7 +11,16 @@ import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
 import '../../theme/colors_from_theme.dart';
 
 class UserMainScreen extends StatelessWidget {
-  const UserMainScreen({super.key});
+  UserMainScreen({super.key});
+  // final apiClient = new EventEntityApiClient();
+
+  static Widget create() {
+    return BlocProvider<EventEntityCubit>(
+      create: (context) =>
+          EventEntityCubit(apiClientEventEntity: EventEntityApiClient()),
+      child: UserMainScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +50,7 @@ class UserMainScreen extends StatelessWidget {
               Expanded(
                   child: Container(
                       padding: const EdgeInsets.only(left: 8),
-                      child: const TableScrollWidget())),
+                      child: TableScrollWidget())),
             ],
           ),
         ),
@@ -235,130 +248,242 @@ class ElementForScrollBarWidget extends StatelessWidget {
   }
 }
 
-class TableScrollWidget extends StatefulWidget {
-  const TableScrollWidget({super.key});
+// class TableScrollWidget extends StatefulWidget {
+//   const TableScrollWidget({super.key});
 
+//   @override
+//   State<StatefulWidget> createState() => _TableScrollWidgetState();
+// }
+
+// class _TableScrollWidgetState extends State<TableScrollWidget>
+//     with SingleTickerProviderStateMixin {
+//   late TabController _tabController;
+
+//   final List<Widget> _tabs = [
+//     const Text(
+//       'Актуальное',
+//       style: TextStyle(
+//         fontSize: 18,
+//       ),
+//     ),
+//     const Text('Новости',
+//         style: TextStyle(
+//           fontSize: 18,
+//         )),
+//     const Text('Сотрудники',
+//         style: TextStyle(
+//           fontSize: 18,
+//         )),
+//     const Text('Мероприятия',
+//         style: TextStyle(
+//           fontSize: 18,
+//         )),
+//   ];
+
+//   final List<List<EventEntity>> _events = [];
+
+//   final List<List<Color>> _tabColors = const [
+//     [
+//       Colors.red,
+//       Colors.redAccent,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange,
+//       Colors.deepOrange
+//     ],
+//     [
+//       Colors.green,
+//       Colors.greenAccent,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal,
+//       Colors.teal
+//     ],
+//     [
+//       Colors.blue,
+//       Colors.blueAccent,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo,
+//       Colors.indigo
+//     ],
+//     [
+//       Colors.yellow,
+//       Colors.yellowAccent,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber,
+//       Colors.amber
+//     ],
+//   ];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _tabController = TabController(length: _tabs.length, vsync: this);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         TabBar(
+//           controller: _tabController,
+//           tabs: _tabs,
+//           isScrollable: true,
+//           indicatorColor: Colors.grey,
+//           labelColor: Colors.black,
+//           unselectedLabelColor: Colors.grey[500],
+//         ),
+//         Expanded(
+//           child: TabBarView(
+//             controller: _tabController,
+//             children: _tabs.map((tab) {
+//               int index = _tabs.indexOf(tab);
+//               return ListView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 itemCount: 10,
+//                 itemBuilder: (context, i) {
+//                   return Container(
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(20),
+//                       color: _tabColors[index][i],
+//                     ),
+//                     width: MediaQuery.of(context).size.width / 1.5,
+//                     margin: const EdgeInsets.only(
+//                         left: 8.0, right: 8.0, top: 20.0, bottom: 8.0),
+//                   );
+//                 },
+//               );
+//             }).toList(),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+class TableScrollWidget extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TableScrollWidgetState();
+  State<TableScrollWidget> createState() => _TableScrollWidgetState();
 }
 
-class _TableScrollWidgetState extends State<TableScrollWidget>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  final List<Widget> _tabs = [
-    const Text(
-      'Актуальное',
-      style: TextStyle(
-        fontSize: 18,
-      ),
-    ),
-    const Text('Новости',
-        style: TextStyle(
-          fontSize: 18,
-        )),
-    const Text('Сотрудники',
-        style: TextStyle(
-          fontSize: 18,
-        )),
-    const Text('Мероприятия',
-        style: TextStyle(
-          fontSize: 18,
-        )),
-  ];
-
-  final List<List<Color>> _tabColors = const [
-    [
-      Colors.red,
-      Colors.redAccent,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange,
-      Colors.deepOrange
-    ],
-    [
-      Colors.green,
-      Colors.greenAccent,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal,
-      Colors.teal
-    ],
-    [
-      Colors.blue,
-      Colors.blueAccent,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo,
-      Colors.indigo
-    ],
-    [
-      Colors.yellow,
-      Colors.yellowAccent,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber,
-      Colors.amber
-    ],
-  ];
-
+class _TableScrollWidgetState extends State<TableScrollWidget> {
+  int selectedTab = 0;
+  String selectTabTags = '';
+  late final List<EventEntity> events;
   @override
   void initState() {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (_) {
+        final cubit = context.read<EventEntityCubit>();
+        events = cubit.state.itemsGet;
+        selectTabTags = cubit.state.tabs[selectedTab];
+        cubit.changeVisibleEvents(index: selectedTab);
+      },
+    );
+
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<EventEntityCubit>();
+    selectTabTags = cubit.state.tabs[selectedTab];
+
+    final List<EventEntity> eventsList = cubit.state.itemsGet;
     return Column(
       children: [
-        TabBar(
-          controller: _tabController,
-          tabs: _tabs,
-          isScrollable: true,
-          indicatorColor: Colors.grey,
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey[500],
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: _tabs.map((tab) {
-              int index = _tabs.indexOf(tab);
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, i) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: _tabColors[index][i],
+        SizedBox(
+          height: 50,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: cubit.state.tabs.length,
+            itemBuilder: (context, index) {
+              String tab = cubit.state.tabs[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedTab = index;
+                      cubit.changeVisibleEvents(index: index);
+                    });
+                  },
+                  child: Text(
+                    tab,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: index == selectedTab ? Colors.blue : Colors.black,
                     ),
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    margin: const EdgeInsets.only(
-                        left: 8.0, right: 8.0, top: 20.0, bottom: 8.0),
-                  );
-                },
+                  ),
+                ),
               );
-            }).toList(),
+            },
           ),
         ),
+        IconButton(
+            onPressed: () {
+              cubit.addItem();
+            },
+            icon: const Icon(Icons.add)),
+        cubit.state.eventsActual.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator.adaptive(),
+              )
+            : Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(16),
+                  itemCount: cubit.state.eventsActual
+                      .length, // начинаем с выбранной вкладки
+                  itemBuilder: (context, index) {
+                    EventEntity item =
+                        cubit.state.eventsActual.reversed.toList()[index];
+                    // получаем элемент для текущей вкладки
+                    return Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                            image: NetworkImage(
+                                'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg'),
+                            fit: BoxFit.cover),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(item.description),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
       ],
     );
   }
