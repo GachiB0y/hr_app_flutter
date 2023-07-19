@@ -3,7 +3,7 @@ import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 
 class EventEntityApiClient implements EventEntityApi {
   @override
-  List<EventEntity> getEvents() {
+  Future<List<EventEntity>> getEvents() async {
     List<EventEntity> events = [
       EventEntity(
           title: 'Заголовок 1',
@@ -62,6 +62,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Мероприятия', 'Соотрудники']),
     ];
+    await Future.delayed(const Duration(seconds: 1), () => "Hello Dart");
     return events;
   }
 }

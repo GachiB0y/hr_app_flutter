@@ -388,12 +388,12 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   late final List<EventEntity> events;
   @override
   void initState() {
+    final cubit = context.read<EventEntityCubit>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        final cubit = context.read<EventEntityCubit>();
         events = cubit.state.itemsGet;
         selectTabTags = cubit.state.tabs[selectedTab];
-        cubit.changeVisibleEvents(index: selectedTab);
+        // cubit.changeVisibleEvents(index: selectedTab);
       },
     );
 

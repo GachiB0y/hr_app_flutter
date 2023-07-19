@@ -47,7 +47,7 @@ class EventEntityState {
 }
 
 abstract class EventEntityApi {
-  List<EventEntity> getEvents();
+  Future<List<EventEntity>> getEvents();
 }
 
 class EventEntityCubit extends Cubit<EventEntityState> {
@@ -64,11 +64,13 @@ class EventEntityCubit extends Cubit<EventEntityState> {
     final res = await apiClientEventEntity.getEvents();
     final newState = state.copyWith(listItems: res);
     emit(newState);
+    changeVisibleEvents(index: 0);
   }
 
-  void changeVisibleEvents({required int index}) {
+  Future<void> changeVisibleEvents({required int index}) async {
     state.eventsActual.clear();
     final newEventActual = state.eventsActual.toList();
+
     for (var element in state.itemsGet) {
       if (element.tags.contains(state.tabs[index])) {
         newEventActual.add(element);
