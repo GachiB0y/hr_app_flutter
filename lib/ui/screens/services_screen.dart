@@ -1,19 +1,24 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
-import 'package:intl/intl.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({super.key});
+  ServicesScreen({
+    Key? key,
+  }) : super(key: key);
 
-  void openBottomSheet(BuildContext context) {
+  void openBottomSheet(BuildContext context, MainAppScreenViewCubit cubit) {
     showModalBottomSheet(
       elevation: 0.0,
       backgroundColor: Colors.transparent,
@@ -22,9 +27,9 @@ class ServicesScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
           initialChildSize:
-              0.5, // Измените это значение, чтобы задать начальный размер листа
+              0.8, // Измените это значение, чтобы задать начальный размер листа
           minChildSize:
-              0.5, // Измените это значение, чтобы задать минимальный размер листа
+              0.8, // Измените это значение, чтобы задать минимальный размер листа
           maxChildSize:
               1.0, // Измените это значение, чтобы задать максимальный размер листа
           expand: true,
@@ -49,7 +54,7 @@ class ServicesScreen extends StatelessWidget {
                         width: 52,
                         child: CustomPaint(
                           // size: Size(50, 50),
-                          painter: TestPainterLeft(),
+                          painter: PainterLeft(),
                         ),
                       ),
                       Container(
@@ -83,7 +88,7 @@ class ServicesScreen extends StatelessWidget {
                         width: 52,
                         child: CustomPaint(
                           // size: Size(50, 50),
-                          painter: TestPainterRight(),
+                          painter: PainterRight(),
                         ),
                       ),
                       Expanded(
@@ -98,10 +103,10 @@ class ServicesScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20.0)),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(20.0)),
                       ),
                       child: BottomSheetCreateEventsWidget(),
                     ),
@@ -112,11 +117,14 @@ class ServicesScreen extends StatelessWidget {
           },
         );
       },
-    );
+    ).whenComplete(() {
+      cubit.changeVisibleBottomBar(false);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<MainAppScreenViewCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -131,14 +139,9 @@ class ServicesScreen extends StatelessWidget {
               ),
               trailing: IconButton(
                   onPressed: () {
-                    // showModalBottomSheet<void>(
-                    //   isScrollControlled: true,
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return BottomSheetCreateEventsWidget();
-                    //   },
-                    // );
-                    openBottomSheet(context);
+                    cubit.changeVisibleBottomBar(true);
+
+                    openBottomSheet(context, cubit);
                   },
                   icon: const Icon(
                     Icons.add_circle,
@@ -153,7 +156,7 @@ class ServicesScreen extends StatelessWidget {
   }
 }
 
-class TestPainterRight extends CustomPainter {
+class PainterRight extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double radius = 100;
@@ -161,11 +164,14 @@ class TestPainterRight extends CustomPainter {
     double y = 26;
     final path = Path()
       ..moveTo(0, size.height) // Начало пути
-      ..arcToPoint(Offset(size.width - y, y / 3),
-          radius: Radius.elliptical(x, y), clockwise: false)
+      ..arcToPoint(Offset(size.width - y + 5, y / 3),
+          radius: Radius.circular(
+            x,
+          ),
+          clockwise: false)
       ..arcToPoint(
-        Offset(size.width - 10, 0),
-        radius: Radius.elliptical(x, y),
+        Offset(size.width, 0),
+        radius: Radius.elliptical(x, x),
       )
       ..lineTo(size.width, 0)
       ..lineTo(size.width,
@@ -184,7 +190,7 @@ class TestPainterRight extends CustomPainter {
   }
 }
 
-class TestPainterLeft extends CustomPainter {
+class PainterLeft extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double radius = 100;
@@ -193,11 +199,10 @@ class TestPainterLeft extends CustomPainter {
     final path = Path()
       ..moveTo(size.width, size.height) // Начало пути
       ..arcToPoint(
-        Offset(size.width - y, y / 3),
+        Offset(size.width - y - 5, y / 3),
         radius: Radius.elliptical(x, y),
       )
-      ..arcToPoint(Offset(0 + 10, 0),
-          radius: Radius.elliptical(x, y), clockwise: false)
+      ..arcToPoint(Offset(0, 0), radius: Radius.circular(x), clockwise: false)
       ..lineTo(0, 0)
       ..lineTo(
           0, size.height) // Добавить линию, образующую правую стенку контейнера
@@ -263,7 +268,7 @@ class _BottomSheetCreateEventsWidgetState
               const SizedBox(
                 height: 10,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: MyPickerImage(),
               ),
@@ -326,8 +331,6 @@ class _BottomSheetCreateEventsWidgetState
                           dateFrom: DateTime.now(),
                           dateTo: DateTime.now(),
                           tags: selectedItems);
-                      print(startDate);
-                      print(endDate);
                     },
                   ),
                 ),

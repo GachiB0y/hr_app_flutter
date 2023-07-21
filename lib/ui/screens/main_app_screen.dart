@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 
 import 'package:hr_app_flutter/ui/components/tab_bar_widget.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
@@ -16,7 +18,7 @@ class MainAppScreen extends StatefulWidget {
 
 class _MainAppScreenState extends State<MainAppScreen> {
   var selectedPageIndex = 0;
-
+  // bool _modalOpened = false;
   var pages = <Widget>[
     UserMainScreen.create(),
     const GrassCoinScreen(),
@@ -30,7 +32,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
         'Обучение',
       ),
     ),
-    const ServicesScreen(),
+    ServicesScreen(),
   ];
 
   void onChangeTab(int index) {
@@ -41,19 +43,30 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: null,
-      body: Navigator(
-        onGenerateRoute: (settings) {
-          List<Widget> screen = pages;
-          // if (settings.name == 'page2') screen = page2;
-          // if (settings.name == 'page3') screen = page3;
-          return MaterialPageRoute(builder: (_) => screen[selectedPageIndex]);
-        },
-      ),
-      // pages[selectedPageIndex],
-      bottomNavigationBar: TabBarWidget(
-          index: selectedPageIndex, onChangeTab: (index) => onChangeTab(index)),
+    final model = context.watch<MainAppScreenViewCubit>();
+    return BlocListener<MainAppScreenViewCubit, MainAppScreenViewState>(
+      listener: (context, state) => MainAppScreenViewCubit(),
+      child: BlocBuilder<MainAppScreenViewCubit, MainAppScreenViewState>(
+          builder: (context, state) {
+        return Scaffold(
+          appBar: null,
+          body: Navigator(
+            onGenerateRoute: (settings) {
+              List<Widget> screen = pages;
+              // if (settings.name == 'page2') screen = page2;
+              // if (settings.name == 'page3') screen = page3;
+              return MaterialPageRoute(
+                  builder: (_) => screen[selectedPageIndex]);
+            },
+          ),
+          // pages[selectedPageIndex],
+          bottomNavigationBar: state.modalOpened
+              ? null
+              : TabBarWidget(
+                  index: selectedPageIndex,
+                  onChangeTab: (index) => onChangeTab(index)),
+        );
+      }),
     );
   }
 }
