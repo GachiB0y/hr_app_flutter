@@ -1,27 +1,101 @@
+import 'dart:io';
+
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:intl/intl.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
-  void _showModalSheet(BuildContext context) {
+
+  void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      showDragHandle: true,
-      // backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
+      isScrollControlled: true,
       builder: (BuildContext context) {
-        return Stack(
-          children: [
-            Container(
-              // color: Colors.transparent,
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: Column(
+        return DraggableScrollableSheet(
+          initialChildSize:
+              0.5, // Измените это значение, чтобы задать начальный размер листа
+          minChildSize:
+              0.5, // Измените это значение, чтобы задать минимальный размер листа
+          maxChildSize:
+              1.0, // Измените это значение, чтобы задать максимальный размер листа
+          expand: true,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Column(
                 children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                          ),
+                          height: 26,
+                        ),
+                      ),
+                      Container(
+                        height: 26,
+                        width: 52,
+                        child: CustomPaint(
+                          // size: Size(50, 50),
+                          painter: TestPainterLeft(),
+                        ),
+                      ),
+                      Container(
+                        width: 25.0,
+                        height: 5.0,
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                      Container(
+                        // Контейнер "летающей" ручки
+                        width: 50.0,
+                        height: 5.0,
+
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                      Container(
+                        width: 25.0,
+                        height: 5.0,
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                      Container(
+                        height: 26,
+                        width: 52,
+                        child: CustomPaint(
+                          // size: Size(50, 50),
+                          painter: TestPainterRight(),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 26,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(
@@ -34,65 +108,6 @@ class ServicesScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                // Контейнер "летающей" ручки
-                width: 50.0,
-                height: 10.0,
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void openBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return DraggableScrollableSheet(
-          initialChildSize:
-              0.8, // Измените это значение, чтобы задать начальный размер листа
-          minChildSize:
-              0.8, // Измените это значение, чтобы задать минимальный размер листа
-          maxChildSize:
-              0.8, // Измените это значение, чтобы задать максимальный размер листа
-          expand: true,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Column(
-              children: [
-                Container(
-                  // Контейнер "летающей" ручки
-                  width: 50.0,
-                  height: 5.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                      ),
-                      child: BottomSheetCreateEventsWidget()),
-                ),
-              ],
             );
           },
         );
@@ -123,7 +138,7 @@ class ServicesScreen extends StatelessWidget {
                     //     return BottomSheetCreateEventsWidget();
                     //   },
                     // );
-                    _showModalSheet(context);
+                    openBottomSheet(context);
                   },
                   icon: const Icon(
                     Icons.add_circle,
@@ -135,6 +150,69 @@ class ServicesScreen extends StatelessWidget {
         ],
       )),
     );
+  }
+}
+
+class TestPainterRight extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    double radius = 100;
+    double x = 52;
+    double y = 26;
+    final path = Path()
+      ..moveTo(0, size.height) // Начало пути
+      ..arcToPoint(Offset(size.width - y, y / 3),
+          radius: Radius.elliptical(x, y), clockwise: false)
+      ..arcToPoint(
+        Offset(size.width - 10, 0),
+        radius: Radius.elliptical(x, y),
+      )
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width,
+          size.height) // Добавить линию, образующую правую стенку контейнера
+      ..close(); // Замкнуть контур, создав обрезанный прямоугольник
+    final paint = Paint()
+      ..color = const Color.fromARGB(255, 224, 224, 224)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class TestPainterLeft extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    double radius = 100;
+    double x = 52;
+    double y = 26;
+    final path = Path()
+      ..moveTo(size.width, size.height) // Начало пути
+      ..arcToPoint(
+        Offset(size.width - y, y / 3),
+        radius: Radius.elliptical(x, y),
+      )
+      ..arcToPoint(Offset(0 + 10, 0),
+          radius: Radius.elliptical(x, y), clockwise: false)
+      ..lineTo(0, 0)
+      ..lineTo(
+          0, size.height) // Добавить линию, образующую правую стенку контейнера
+      ..close(); // Замкнуть контур, создав обрезанный прямоугольник
+    final paint = Paint()
+      ..color = const Color.fromARGB(255, 224, 224, 224)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 5;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 
@@ -157,6 +235,10 @@ class _BottomSheetCreateEventsWidgetState
   ];
   TextEditingController dataDescriptionController = TextEditingController();
   TextEditingController dataTitleController = TextEditingController();
+  TextEditingController dateRangeController = TextEditingController();
+  List<String> selectedItems = [];
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -181,6 +263,13 @@ class _BottomSheetCreateEventsWidgetState
               const SizedBox(
                 height: 10,
               ),
+              Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: MyPickerImage(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               const Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(
@@ -191,10 +280,16 @@ class _BottomSheetCreateEventsWidgetState
                       color: Colors.grey),
                 ),
               ),
-              const ScrollWidget(),
+              ScrollWidget(
+                selectedItems: selectedItems,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: DateRangePickerWidget(),
+                child: DateRangePickerWidget(
+                  dateRangeController: dateRangeController,
+                  endDate: endDate,
+                  startDate: startDate,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -206,10 +301,35 @@ class _BottomSheetCreateEventsWidgetState
                 child: TextFieldDescriptionWidget(
                     dataDescriptionController: dataDescriptionController),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Center(
-                child: ElevatedButton(
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () => Navigator.pop(context),
+                child: Container(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorsForWidget.colorGreen),
+                    ),
+                    child: const Text(
+                      'Создать',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      final abc = EventEntity(
+                          title: dataTitleController.text,
+                          description: dataDescriptionController.text,
+                          imagePath:
+                              'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
+                          dateFrom: DateTime.now(),
+                          dateTo: DateTime.now(),
+                          tags: selectedItems);
+                      print(startDate);
+                      print(endDate);
+                    },
+                  ),
                 ),
               ),
             ],
@@ -256,8 +376,6 @@ class TextFieldDescriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      // maxLength: 256,
-      // expands: true,
       maxLines: null,
       controller: dataDescriptionController,
       decoration: const InputDecoration(
@@ -273,7 +391,8 @@ class TextFieldDescriptionWidget extends StatelessWidget {
 }
 
 class ScrollWidget extends StatefulWidget {
-  const ScrollWidget({super.key});
+  List<String> selectedItems;
+  ScrollWidget({super.key, required this.selectedItems});
 
   @override
   _ScrollWidgetState createState() => _ScrollWidgetState();
@@ -281,14 +400,13 @@ class ScrollWidget extends StatefulWidget {
 
 class _ScrollWidgetState extends State<ScrollWidget> {
   List<String> items = ['Актуальное', 'Новости', 'Сотрудники', 'Мероприятия'];
-  List<String> selectedItems = [];
 
   void selectItem(String item) {
     setState(() {
-      if (selectedItems.contains(item)) {
-        selectedItems.remove(item);
+      if (widget.selectedItems.contains(item)) {
+        widget.selectedItems.remove(item);
       } else {
-        selectedItems.add(item);
+        widget.selectedItems.add(item);
       }
     });
   }
@@ -299,12 +417,12 @@ class _ScrollWidgetState extends State<ScrollWidget> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: items.map((item) {
-          bool isSelected = selectedItems.contains(item);
+          bool isSelected = widget.selectedItems.contains(item);
 
           return GestureDetector(
             onTap: () {
               selectItem(item);
-              print(selectedItems);
+              print(widget.selectedItems);
             },
             child: Container(
               padding: EdgeInsets.all(10),
@@ -328,29 +446,34 @@ class _ScrollWidgetState extends State<ScrollWidget> {
 }
 
 class DateRangePickerWidget extends StatefulWidget {
+  final TextEditingController dateRangeController;
+  DateTime startDate;
+  DateTime endDate;
+
+  DateRangePickerWidget(
+      {super.key,
+      required this.dateRangeController,
+      required this.startDate,
+      required this.endDate});
   @override
   _DateRangePickerWidgetState createState() => _DateRangePickerWidgetState();
 }
 
 class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
-  TextEditingController dateRangeController = TextEditingController();
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
-
   Future<void> selectDateRange(BuildContext context) async {
     final pickedDates = await showDateRangePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 1),
       lastDate: DateTime(DateTime.now().year + 1),
-      initialDateRange: startDate != null && endDate != null
-          ? DateTimeRange(start: startDate, end: endDate)
+      initialDateRange: widget.startDate != null && widget.endDate != null
+          ? DateTimeRange(start: widget.startDate, end: widget.endDate)
           : null,
     );
 
     if (pickedDates != null) {
       setState(() {
-        startDate = pickedDates.start;
-        endDate = pickedDates.end;
+        widget.startDate = pickedDates.start;
+        widget.endDate = pickedDates.end;
         updateDateRangeText();
       });
     }
@@ -358,16 +481,18 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
 
   void updateDateRangeText() {
     final formatter = DateFormat('d MMM');
-    String start =
-        startDate != null ? formatter.format(startDate) : 'Start Date';
-    String end = endDate != null ? formatter.format(endDate) : 'End Date';
+    String start = widget.startDate != null
+        ? formatter.format(widget.startDate)
+        : 'Start Date';
+    String end =
+        widget.endDate != null ? formatter.format(widget.endDate) : 'End Date';
     String dateRangeText = '$start - $end';
-    dateRangeController.text = dateRangeText;
+    widget.dateRangeController.text = dateRangeText;
   }
 
   @override
   void dispose() {
-    dateRangeController.dispose();
+    widget.dateRangeController.dispose();
     super.dispose();
   }
 
@@ -377,7 +502,7 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
       onTap: () => selectDateRange(context),
       child: AbsorbPointer(
         child: TextFormField(
-          controller: dateRangeController,
+          controller: widget.dateRangeController,
           decoration: const InputDecoration(
             labelStyle: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w600, color: Colors.grey),
@@ -388,6 +513,88 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MyPickerImage extends StatefulWidget {
+  const MyPickerImage({Key? key}) : super(key: key);
+
+  @override
+  _MyPickerImageState createState() => _MyPickerImageState();
+}
+
+class _MyPickerImageState extends State<MyPickerImage> {
+  final MyImage _myImage = MyImage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _myImage.imageFile != null
+            ? Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  image: DecorationImage(
+                    image: _myImage.imageFile != null
+                        ? FileImage(_myImage.imageFile as File)
+                        : const NetworkImage(
+                                'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg')
+                            as ImageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+        SizedBox(
+          width: double.infinity,
+          height: 200,
+          child: InkWell(
+            onTap: () async {
+              await _myImage.pickImage(ImageSource.gallery);
+              setState(() {});
+            },
+          ),
+        ),
+      ],
     );
   }
 }
