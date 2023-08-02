@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:io';
 
@@ -5,10 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
@@ -18,7 +20,10 @@ class ServicesScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  void openBottomSheet(BuildContext context, MainAppScreenViewCubit cubit) {
+  void openBottomSheet(
+      BuildContext context,
+      MainAppScreenViewCubit cubitMainAppScreen,
+      EventEntityCubit cubitEventEntity) {
     showModalBottomSheet(
       elevation: 0.0,
       backgroundColor: Colors.transparent,
@@ -108,7 +113,9 @@ class ServicesScreen extends StatelessWidget {
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(20.0)),
                       ),
-                      child: BottomSheetCreateEventsWidget(),
+                      child: BottomSheetCreateEventsWidget(
+                        cubit: cubitEventEntity,
+                      ),
                     ),
                   ),
                 ],
@@ -118,13 +125,14 @@ class ServicesScreen extends StatelessWidget {
         );
       },
     ).whenComplete(() {
-      cubit.changeVisibleBottomBar(false);
+      cubitMainAppScreen.changeVisibleBottomBar(false);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<MainAppScreenViewCubit>();
+    final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
+    final cubitEventEntity = context.watch<EventEntityCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -139,9 +147,10 @@ class ServicesScreen extends StatelessWidget {
               ),
               trailing: IconButton(
                   onPressed: () {
-                    cubit.changeVisibleBottomBar(true);
+                    cubitMainAppScreen.changeVisibleBottomBar(true);
 
-                    openBottomSheet(context, cubit);
+                    openBottomSheet(
+                        context, cubitMainAppScreen, cubitEventEntity);
                   },
                   icon: const Icon(
                     Icons.add_circle,
@@ -222,7 +231,11 @@ class PainterLeft extends CustomPainter {
 }
 
 class BottomSheetCreateEventsWidget extends StatefulWidget {
-  BottomSheetCreateEventsWidget({super.key});
+  EventEntityCubit cubit;
+  BottomSheetCreateEventsWidget({
+    Key? key,
+    required this.cubit,
+  }) : super(key: key);
 
   @override
   State<BottomSheetCreateEventsWidget> createState() =>
@@ -323,14 +336,17 @@ class _BottomSheetCreateEventsWidgetState
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     onPressed: () {
-                      final abc = EventEntity(
+                      final event = EventEntity(
                           title: dataTitleController.text,
                           description: dataDescriptionController.text,
                           imagePath:
-                              'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
+                              'https://media.istockphoto.com/id/1309352410/ru/%D1%84%D0%BE%D1%82%D0%BE/%D1%87%D0%B8%D0%B7%D0%B1%D1%83%D1%80%D0%B3%D0%B5%D1%80-%D1%81-%D0%BF%D0%BE%D0%BC%D0%B8%D0%B4%D0%BE%D1%80%D0%B0%D0%BC%D0%B8-%D0%B8-%D1%81%D0%B0%D0%BB%D0%B0%D1%82%D0%BE%D0%BC-%D0%BD%D0%B0-%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D1%8F%D0%BD%D0%BD%D0%BE%D0%B9-%D0%B4%D0%BE%D1%81%D0%BA%D0%B5.jpg?s=612x612&w=0&k=20&c=dW1Aguo-4PEcRs79PUbmMXpx5YrBjqSYiEhwnddbj_g=',
                           dateFrom: DateTime.now(),
                           dateTo: DateTime.now(),
                           tags: selectedItems);
+
+                      widget.cubit.addItem(event);
+                      Navigator.pop(context);
                     },
                   ),
                 ),

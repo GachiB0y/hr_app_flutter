@@ -81,16 +81,9 @@ class EventEntityCubit extends Cubit<EventEntityState> {
     emit(newState);
   }
 
-  void addItem() {
+  void addItem(EventEntity newEvent) {
     List<EventEntity> newEventEntityList = [];
-    final newEvent = EventEntity(
-        title: 'Заголовок 8',
-        description: 'Мероприятия - Сотрудники  8',
-        imagePath:
-            'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg',
-        dateFrom: DateTime.now(),
-        dateTo: DateTime.now().subtract(const Duration(days: 1)),
-        tags: ['Мероприятия', 'Соотрудники']);
+
     newEventEntityList = state._listItems.toList();
     newEventEntityList.add(newEvent);
 

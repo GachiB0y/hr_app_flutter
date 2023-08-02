@@ -20,7 +20,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
   var selectedPageIndex = 0;
   // bool _modalOpened = false;
   var pages = <Widget>[
-    UserMainScreen.create(),
+    UserMainScreen(),
     const GrassCoinScreen(),
     const Center(
       child: Text(

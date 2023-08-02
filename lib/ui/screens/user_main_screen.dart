@@ -10,7 +10,7 @@ import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
 
-class UserMainScreen extends StatelessWidget {
+class UserMainScreen extends StatefulWidget {
   UserMainScreen({super.key});
   // final apiClient = new EventEntityApiClient();
 
@@ -20,6 +20,17 @@ class UserMainScreen extends StatelessWidget {
           EventEntityCubit(apiClientEventEntity: EventEntityApiClient()),
       child: UserMainScreen(),
     );
+  }
+
+  @override
+  State<UserMainScreen> createState() => _UserMainScreenState();
+}
+
+class _UserMainScreenState extends State<UserMainScreen> {
+  @override
+  void initState() {
+    context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
+    super.initState();
   }
 
   @override
@@ -244,137 +255,6 @@ class ElementForScrollBarWidget extends StatelessWidget {
   }
 }
 
-// class TableScrollWidget extends StatefulWidget {
-//   const TableScrollWidget({super.key});
-
-//   @override
-//   State<StatefulWidget> createState() => _TableScrollWidgetState();
-// }
-
-// class _TableScrollWidgetState extends State<TableScrollWidget>
-//     with SingleTickerProviderStateMixin {
-//   late TabController _tabController;
-
-//   final List<Widget> _tabs = [
-//     const Text(
-//       'Актуальное',
-//       style: TextStyle(
-//         fontSize: 18,
-//       ),
-//     ),
-//     const Text('Новости',
-//         style: TextStyle(
-//           fontSize: 18,
-//         )),
-//     const Text('Сотрудники',
-//         style: TextStyle(
-//           fontSize: 18,
-//         )),
-//     const Text('Мероприятия',
-//         style: TextStyle(
-//           fontSize: 18,
-//         )),
-//   ];
-
-//   final List<List<EventEntity>> _events = [];
-
-//   final List<List<Color>> _tabColors = const [
-//     [
-//       Colors.red,
-//       Colors.redAccent,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange,
-//       Colors.deepOrange
-//     ],
-//     [
-//       Colors.green,
-//       Colors.greenAccent,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal,
-//       Colors.teal
-//     ],
-//     [
-//       Colors.blue,
-//       Colors.blueAccent,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo,
-//       Colors.indigo
-//     ],
-//     [
-//       Colors.yellow,
-//       Colors.yellowAccent,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber,
-//       Colors.amber
-//     ],
-//   ];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _tabController = TabController(length: _tabs.length, vsync: this);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         TabBar(
-//           controller: _tabController,
-//           tabs: _tabs,
-//           isScrollable: true,
-//           indicatorColor: Colors.grey,
-//           labelColor: Colors.black,
-//           unselectedLabelColor: Colors.grey[500],
-//         ),
-//         Expanded(
-//           child: TabBarView(
-//             controller: _tabController,
-//             children: _tabs.map((tab) {
-//               int index = _tabs.indexOf(tab);
-//               return ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: 10,
-//                 itemBuilder: (context, i) {
-//                   return Container(
-//                     decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(20),
-//                       color: _tabColors[index][i],
-//                     ),
-//                     width: MediaQuery.of(context).size.width / 1.5,
-//                     margin: const EdgeInsets.only(
-//                         left: 8.0, right: 8.0, top: 20.0, bottom: 8.0),
-//                   );
-//                 },
-//               );
-//             }).toList(),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class TableScrollWidget extends StatefulWidget {
   const TableScrollWidget({super.key});
 
@@ -455,11 +335,6 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
             },
           ),
         ),
-        IconButton(
-            onPressed: () {
-              cubit.addItem();
-            },
-            icon: const Icon(Icons.add)),
         cubit.state.eventsActual.isEmpty
             ? const Center(
                 child: CircularProgressIndicator.adaptive(),
@@ -479,22 +354,30 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       margin: const EdgeInsets.only(bottom: 16, right: 16.0),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        image: const DecorationImage(
-                            image: NetworkImage(
-                                'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg'),
+                        image: DecorationImage(
+                            image: NetworkImage(item.imagePath),
                             fit: BoxFit.cover),
                         color: Colors.grey,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(18),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            item.title,
-                            style: const TextStyle(fontSize: 20),
+                          const Spacer(),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                item.title,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(item.description),
                         ],
                       ),
                     );
