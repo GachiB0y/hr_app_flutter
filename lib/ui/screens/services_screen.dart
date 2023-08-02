@@ -1,15 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
@@ -257,6 +258,13 @@ class _BottomSheetCreateEventsWidgetState
   List<String> selectedItems = [];
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
+  String? base64Image;
+
+  void changeParams(Uint8List bytes) {
+    setState(() {
+      base64Image = base64Encode(bytes);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -281,9 +289,11 @@ class _BottomSheetCreateEventsWidgetState
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: MyPickerImage(),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: MyPickerImage(
+                  callback: changeParams,
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -336,7 +346,9 @@ class _BottomSheetCreateEventsWidgetState
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     onPressed: () {
+                      print('base64Image$base64Image');
                       final event = EventEntity(
+                          base64Image: base64Image,
                           title: dataTitleController.text,
                           description: dataDescriptionController.text,
                           imagePath:
@@ -444,8 +456,8 @@ class _ScrollWidgetState extends State<ScrollWidget> {
               print(widget.selectedItems);
             },
             child: Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: isSelected ? Colors.black : Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -537,7 +549,11 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
 }
 
 class MyPickerImage extends StatefulWidget {
-  const MyPickerImage({Key? key}) : super(key: key);
+  void Function(Uint8List) callback;
+  MyPickerImage({
+    Key? key,
+    required this.callback,
+  }) : super(key: key);
 
   @override
   _MyPickerImageState createState() => _MyPickerImageState();
@@ -557,11 +573,7 @@ class _MyPickerImageState extends State<MyPickerImage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   image: DecorationImage(
-                    image: _myImage.imageFile != null
-                        ? FileImage(_myImage.imageFile as File)
-                        : const NetworkImage(
-                                'https://dari.me/wp-content/uploads/2020/04/baidarki-darimechti-1.jpg')
-                            as ImageProvider,
+                    image: FileImage(_myImage.imageFile as File),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -609,7 +621,12 @@ class _MyPickerImageState extends State<MyPickerImage> {
           child: InkWell(
             onTap: () async {
               await _myImage.pickImage(ImageSource.gallery);
-              setState(() {});
+              final imageFile = _myImage.imageFile;
+              if (imageFile != null) {
+                final file = File(imageFile.path);
+                final bytes = await file.readAsBytes();
+                widget.callback(bytes);
+              }
             },
           ),
         ),

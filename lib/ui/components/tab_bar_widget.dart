@@ -19,7 +19,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
   Widget build(BuildContext context) {
     return BottomAppBar(
       height: 74,
-      color: Colors.white,
+      color: Colors.grey[200],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

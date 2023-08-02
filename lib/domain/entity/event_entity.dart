@@ -2,10 +2,12 @@ class EventEntity {
   final String title;
   final String description;
   final String imagePath;
+  final String? base64Image;
   final DateTime dateFrom;
   final DateTime dateTo;
   final List<String> tags;
   EventEntity({
+    required this.base64Image,
     required this.title,
     required this.description,
     required this.imagePath,

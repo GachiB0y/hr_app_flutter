@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
@@ -355,7 +358,10 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(item.imagePath),
+                            image: item.base64Image == null
+                                ? NetworkImage(item.imagePath)
+                                    as ImageProvider<Object>
+                                : MemoryImage(base64Decode(item.base64Image!)),
                             fit: BoxFit.cover),
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(18),

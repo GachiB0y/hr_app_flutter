@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
         title: 'Flutter Demo',
         theme: ThemeData(
+          bottomNavigationBarTheme:
+              BottomNavigationBarThemeData(backgroundColor: Colors.red[200]),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
@@ -37,11 +39,6 @@ class MyApp extends StatelessWidget {
             ),
           ],
           child: const MainAppScreen(),
-        )
-        // BlocProvider<MainAppScreenViewCubit>(
-        //   create: (context) => MainAppScreenViewCubit(),
-        //   child: const MainAppScreen(),
-        // ),
-        );
+        ));
   }
 }

@@ -6,6 +6,7 @@ class EventEntityApiClient implements EventEntityApi {
   Future<List<EventEntity>> getEvents() async {
     List<EventEntity> events = [
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 1',
           description: 'Новости 1',
           imagePath:
@@ -14,6 +15,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Новости']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 2',
           description: 'Актуальное - Новости 2',
           imagePath:
@@ -22,6 +24,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 3',
           description: 'Актуальное - Сотрудники 3',
           imagePath:
@@ -30,6 +33,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Сотрудники']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 4',
           description: 'Актуальное - Сотрудники 4',
           imagePath:
@@ -38,6 +42,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Сотрудники']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 5',
           description: 'Актуальное - Сотрудники - Новости 5',
           imagePath:
@@ -46,6 +51,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости', 'Сотрудники']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 6',
           description: 'Актуальное - Сотрудники - Новости 6',
           imagePath:
@@ -54,6 +60,7 @@ class EventEntityApiClient implements EventEntityApi {
           dateTo: DateTime.now().subtract(const Duration(days: 1)),
           tags: ['Актуальное', 'Новости', 'Сотрудники']),
       EventEntity(
+          base64Image: null,
           title: 'Заголовок 7',
           description: 'Мероприятия - Сотрудники  7',
           imagePath:
