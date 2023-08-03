@@ -259,6 +259,7 @@ class _BottomSheetCreateEventsWidgetState
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   String? base64Image;
+  String errorMessage = '';
 
   void changeParams(Uint8List bytes) {
     setState(() {
@@ -332,6 +333,14 @@ class _BottomSheetCreateEventsWidgetState
               const SizedBox(
                 height: 10,
               ),
+              errorMessage != ''
+                  ? Center(
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               Center(
                 child: Container(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -346,7 +355,16 @@ class _BottomSheetCreateEventsWidgetState
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     onPressed: () {
-                      print('base64Image$base64Image');
+                      if (dataDescriptionController.text.isEmpty ||
+                          dataTitleController.text.isEmpty ||
+                          dateRangeController.text.isEmpty ||
+                          selectedItems.isEmpty) {
+                        setState(() {
+                          errorMessage = 'Заполните все поля!!!';
+                        });
+                        return;
+                      }
+
                       final event = EventEntity(
                           base64Image: base64Image,
                           title: dataTitleController.text,

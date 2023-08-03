@@ -33,7 +33,7 @@ class GrassCoinScreen extends StatelessWidget {
                   children: [
                     ColorFiltered(
                       colorFilter: const ColorFilter.mode(
-                          Colors.orange, BlendMode.srcATop),
+                          ColorsForWidget.colorGreen, BlendMode.srcATop),
                       child: Image.asset(
                         'assets/images/grass_icon_main.png',
                         width: 40,
@@ -201,7 +201,8 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
           width: 5,
         ),
         ColorFiltered(
-          colorFilter: const ColorFilter.mode(Colors.orange, BlendMode.srcATop),
+          colorFilter: const ColorFilter.mode(
+              ColorsForWidget.colorGreen, BlendMode.srcATop),
           child: Image.asset(
             'assets/images/grass_icon_main.png',
             width: 15,
