@@ -41,17 +41,21 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ],
       leading: const Avatar(),
-      title: const Row(
+      title: Row(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Александр Волков', style: StyleTextCustom.textNameUser),
-              SizedBox(
+              const Text('Александр Волков',
+                  style: StyleTextCustom.textNameUser),
+              const SizedBox(
                 height: 5,
               ),
-              Text('Менеджер по работе с клиентами',
-                  style: StyleTextCustom.textJobUserGrey),
+              RichText(
+                text: const TextSpan(
+                    text: 'Менеджер по работе\n с клиентами',
+                    style: StyleTextCustom.textJobUserGrey),
+              ),
             ],
           ),
         ],

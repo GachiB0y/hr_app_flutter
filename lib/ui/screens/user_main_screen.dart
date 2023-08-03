@@ -51,8 +51,8 @@ class _UserMainScreenState extends State<UserMainScreen> {
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: RefreshIndicator(
-            color: Colors.white,
-            backgroundColor: ColorsForWidget.colorGreen,
+            color: ColorsForWidget.colorGreen,
+            backgroundColor: Colors.white,
             onRefresh: _refreshEventsList,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
