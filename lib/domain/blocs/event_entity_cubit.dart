@@ -60,7 +60,7 @@ class EventEntityCubit extends Cubit<EventEntityState> {
     loadEventsList();
   }
 
-  void loadEventsList() async {
+  Future<void> loadEventsList() async {
     final res = await apiClientEventEntity.getEvents();
     final newState = state.copyWith(listItems: res);
     emit(newState);

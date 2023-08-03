@@ -36,6 +36,12 @@ class _UserMainScreenState extends State<UserMainScreen> {
     super.initState();
   }
 
+  Future<void> _refreshEventsList() async {
+    final cubit = context.read<EventEntityCubit>();
+    cubit.loadEventsList();
+    return Future<void>.delayed(const Duration(seconds: 3));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,28 +50,39 @@ class _UserMainScreenState extends State<UserMainScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                  height: MediaQuery.of(context).size.height / 4.6,
-                  child: const ScrollBarWidget()),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 26,
+          child: RefreshIndicator(
+            color: Colors.white,
+            backgroundColor: ColorsForWidget.colorGreen,
+            onRefresh: _refreshEventsList,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height / 4.6,
+                      child: const ScrollBarWidget()),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 40,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'События компании',
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height / 2.3,
+                      child: Container(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: const TableScrollWidget())),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'События компании',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-                ),
-              ),
-              Expanded(
-                  child: Container(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: const TableScrollWidget())),
-            ],
+            ),
           ),
         ),
       ),
@@ -269,6 +286,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   int selectedTab = 0;
   String selectTabTags = '';
   late final List<EventEntity> events;
+
   @override
   void initState() {
     final cubit = context.read<EventEntityCubit>();
@@ -289,6 +307,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     selectTabTags = cubit.state.tabs[selectedTab];
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 50,
@@ -343,51 +362,55 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                 child: CircularProgressIndicator.adaptive(),
               )
             : Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: cubit.state.eventsActual
-                      .length, // начинаем с выбранной вкладки
-                  itemBuilder: (context, index) {
-                    EventEntity item =
-                        cubit.state.eventsActual.reversed.toList()[index];
-                    // получаем элемент для текущей вкладки
-                    return Container(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: item.base64Image == null
-                                ? NetworkImage(item.imagePath)
-                                    as ImageProvider<Object>
-                                : MemoryImage(base64Decode(item.base64Image!)),
-                            fit: BoxFit.cover),
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item.title,
-                                style: const TextStyle(fontSize: 16),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.7,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: cubit.state.eventsActual
+                        .length, // начинаем с выбранной вкладки
+                    itemBuilder: (context, index) {
+                      EventEntity item =
+                          cubit.state.eventsActual.reversed.toList()[index];
+                      // получаем элемент для текущей вкладки
+                      return Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        margin: const EdgeInsets.only(bottom: 16, right: 16.0),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: item.base64Image == null
+                                  ? NetworkImage(item.imagePath)
+                                      as ImageProvider<Object>
+                                  : MemoryImage(
+                                      base64Decode(item.base64Image!)),
+                              fit: BoxFit.cover),
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Spacer(),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  item.title,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
       ],
