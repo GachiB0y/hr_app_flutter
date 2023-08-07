@@ -120,12 +120,12 @@ class GrassCoinScreen extends StatelessWidget {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30))),
                         padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(28)),
+                            MaterialStateProperty.all(const EdgeInsets.all(16)),
                       ),
                       onPressed: () {},
                       icon: const Icon(
                         Icons.sync,
-                        size: 28,
+                        size: 26,
                         color: Colors.black,
                       ),
                       label: const Text('Обменять',
@@ -140,11 +140,11 @@ class GrassCoinScreen extends StatelessWidget {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30))),
                         padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(28)),
+                            MaterialStateProperty.all(const EdgeInsets.all(16)),
                       ),
                       onPressed: () {},
                       icon: const Icon(Icons.card_giftcard,
-                          size: 28, color: Colors.black),
+                          size: 26, color: Colors.black),
                       label: const Text('Подарить',
                           style: TextStyle(
                               fontSize: 18,
@@ -153,7 +153,7 @@ class GrassCoinScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 40,
+                height: 15,
               ),
               const Text(
                 'История операций',
