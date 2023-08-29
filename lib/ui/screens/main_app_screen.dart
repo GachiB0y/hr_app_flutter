@@ -22,7 +22,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
   // bool _modalOpened = false;
   var pages = <Widget>[
     UserMainScreen(),
-    const GrassCoinScreen(),
+    GrassCoinScreen(),
     const Center(
       child: Text(
         'Компания',
@@ -44,7 +44,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<MainAppScreenViewCubit>();
+    // final model = context.watch<MainAppScreenViewCubit>();
     return BlocListener<MainAppScreenViewCubit, MainAppScreenViewState>(
       listener: (context, state) => MainAppScreenViewCubit(),
       child: BlocBuilder<MainAppScreenViewCubit, MainAppScreenViewState>(

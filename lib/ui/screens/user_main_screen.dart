@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +6,6 @@ import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
-import 'package:hr_app_flutter/theme/style_text.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
@@ -46,7 +43,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: const AppBarUserWdiget(),
+      // appBar: const AppBarUserWdiget(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
@@ -61,6 +58,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const AppBarUserWdiget(),
                   SizedBox(
                       height: MediaQuery.of(context).size.height / 4.6,
                       child: const ScrollBarWidget()),
