@@ -11,16 +11,16 @@ import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
 import '../../theme/colors_from_theme.dart';
 
 class UserMainScreen extends StatefulWidget {
-  UserMainScreen({super.key});
+  const UserMainScreen({super.key});
   // final apiClient = new EventEntityApiClient();
 
-  static Widget create() {
-    return BlocProvider<EventEntityCubit>(
-      create: (context) =>
-          EventEntityCubit(apiClientEventEntity: EventEntityApiClient()),
-      child: UserMainScreen(),
-    );
-  }
+  // static Widget create() {
+  //   return BlocProvider<EventEntityCubit>(
+  //     create: (context) =>
+  //         EventEntityCubit(apiClientEventEntity: EventEntityApiClient()),
+  //     child: UserMainScreen(),
+  //   );
+  // }
 
   @override
   State<UserMainScreen> createState() => _UserMainScreenState();

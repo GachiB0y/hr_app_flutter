@@ -3,59 +3,63 @@ import 'package:hr_app_flutter/domain/entity/history_operation_entity.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
 import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
-import 'package:swipe_refresh/swipe_refresh.dart';
+
 import 'package:intl/intl.dart';
 
 class GrassCoinScreen extends StatelessWidget {
-  GrassCoinScreen({super.key});
+  const GrassCoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final padding = MediaQuery.of(context).size.width / 16;
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      // appBar: const AppBarUserWdiget(),
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              // snap: true,
-              floating: true,
-              // backgroundColor: Colors.transparent,
-              surfaceTintColor: Colors.transparent,
-              expandedHeight: MediaQuery.of(context).size.height / 2.3,
-              // leadingWidth: 70,
-              // leading: const Avatar(),
-              toolbarHeight: 100,
+        child: RefreshIndicator(
+          onRefresh: () {
+            return Future<void>.delayed(const Duration(seconds: 3));
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                snap: true,
+                floating: true,
+                backgroundColor: Colors.grey[200],
+                surfaceTintColor: Colors.transparent,
+                // expandedHeight: 100,
+                leadingWidth: 70,
+                leading: const Avatar(),
+                toolbarHeight: 100,
 
-              title: Row(
-                children: [
-                  const Avatar(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Александр Волков',
-                          style: StyleTextCustom.textNameUser),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: const TextSpan(
-                            text: 'Менеджер по работе\n с клиентами',
-                            style: StyleTextCustom.textJobUserGrey),
-                      ),
-                    ],
-                  ),
-                ],
+                title: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Александр Волков',
+                            style: StyleTextCustom.textNameUser),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                              text: 'Менеджер по работе\n с клиентами',
+                              style: StyleTextCustom.textJobUserGrey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(302),
+                  child: Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: const BodyContentWidgetCoinScreen()),
+                ),
               ),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(300),
-                child: BodyContentWidgetCoinScreen(padding: padding),
-              ),
-            ),
-            HistoryOperationCoinWidget(),
-          ],
+              HistoryOperationCoinWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -65,18 +69,18 @@ class GrassCoinScreen extends StatelessWidget {
 class BodyContentWidgetCoinScreen extends StatelessWidget {
   const BodyContentWidgetCoinScreen({
     super.key,
-    required this.padding,
   });
-
-  final double padding;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          'Баланс Грасс-коинов на счёте',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        Container(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: const Text(
+            'Баланс Грасс-коинов на счёте',
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(
           height: 20,
@@ -102,9 +106,9 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(right: padding),
-            child: const Row(
+          const Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Row(
               children: [
                 Icon(
                   Icons.add_circle_outline,
@@ -205,161 +209,6 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
           'История операций',
           style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
         ),
-      ],
-    );
-  }
-}
-
-class ContentCoinScrollWidget extends StatelessWidget {
-  const ContentCoinScrollWidget({
-    super.key,
-    required this.padding,
-  });
-
-  final double padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const AppBarUserWdiget(),
-        const Text(
-          'Баланс Грасс-коинов на счёте',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(
-            children: [
-              ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                    ColorsForWidget.colorGreen, BlendMode.srcATop),
-                child: Image.asset(
-                  'assets/images/grass_icon_main.png',
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text(
-                '256',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: padding),
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.add_circle_outline,
-                  size: 45,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '56',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Text(
-                      'за неделю',
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ]),
-        const SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(
-              width: double.infinity,
-            ),
-            child: ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-                ),
-                onPressed: () {},
-                icon: Container(
-                  decoration: BoxDecoration(
-                      color: ColorsForWidget.colorGreen,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: const Icon(Icons.question_mark_rounded,
-                      size: 18, color: Colors.white),
-                ),
-                label: const Text('Что такое коин и что с ним делать?',
-                    style: TextStyle(fontSize: 16, color: Colors.black))),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
-                ),
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.sync,
-                  size: 26,
-                  color: Colors.black,
-                ),
-                label: const Text('Обменять',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black))),
-            ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
-                ),
-                onPressed: () {},
-                icon: const Icon(Icons.card_giftcard,
-                    size: 26, color: Colors.black),
-                label: const Text('Подарить',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black))),
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        const Text(
-          'История операций',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Expanded(child: HistoryOperationCoinWidget())
       ],
     );
   }
@@ -502,12 +351,14 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
     groups.forEach((dateString, groupItems) {
       groupWidgets.add(Column(
         children: [
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(bottom: 5.0),
             height: 25,
             child: ListTile(
               title: Text(
                 dateString,
-                style: const TextStyle(fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
             ),
           ),

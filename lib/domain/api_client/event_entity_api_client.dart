@@ -1,7 +1,9 @@
-import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 
-class EventEntityApiClient implements EventEntityApi {
+class EventEntityApiClient implements EventsEntityProvider {
   @override
   Future<List<EventEntity>> getEvents() async {
     List<EventEntity> events = [
@@ -71,5 +73,25 @@ class EventEntityApiClient implements EventEntityApi {
     ];
     await Future.delayed(const Duration(seconds: 1), () => "Hello Dart");
     return events;
+  }
+}
+
+abstract class EventsEntityProvider {
+  Future<List<EventEntity>> getEvents();
+}
+
+class EventsEntitytProviderImpl implements EventsEntityProvider {
+  EventsEntitytProviderImpl();
+
+  @override
+  Future<List<EventEntity>> getEvents() async {
+    var url = 'http://domain/get_events';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final List<EventEntity> result = jsonDecode(response.body);
+      return result;
+    } else {
+      throw Exception('Error fetching EventEntity');
+    }
   }
 }
