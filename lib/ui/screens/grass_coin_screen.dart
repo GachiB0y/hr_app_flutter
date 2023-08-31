@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/history_operation_entity.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
@@ -16,7 +18,10 @@ class GrassCoinScreen extends StatelessWidget {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () {
-            return Future<void>.delayed(const Duration(seconds: 3));
+            context
+                .read<WalletBloc>()
+                .add(const WalletEvent.fetch(userToken: 'userToken'));
+            return Future<void>.delayed(const Duration(milliseconds: 100));
           },
           child: CustomScrollView(
             slivers: [
@@ -66,13 +71,30 @@ class GrassCoinScreen extends StatelessWidget {
   }
 }
 
-class BodyContentWidgetCoinScreen extends StatelessWidget {
+class BodyContentWidgetCoinScreen extends StatefulWidget {
   const BodyContentWidgetCoinScreen({
     super.key,
   });
 
   @override
+  State<BodyContentWidgetCoinScreen> createState() =>
+      _BodyContentWidgetCoinScreenState();
+}
+
+class _BodyContentWidgetCoinScreenState
+    extends State<BodyContentWidgetCoinScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<WalletBloc>()
+        .add(const WalletEvent.fetch(userToken: 'userToken'));
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final blocWallet = context.watch<WalletBloc>();
+
     return Column(
       children: [
         Container(
@@ -100,10 +122,21 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              const Text(
-                '256',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
-              ),
+              blocWallet.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                loaded: (walletLoaded) {
+                  return Text(
+                    walletLoaded.balance.toString(),
+                    style: const TextStyle(
+                        fontSize: 40, fontWeight: FontWeight.w500),
+                  );
+                },
+                error: () => const Text('Nothing found...'),
+              )
             ],
           ),
           const Padding(

@@ -6,4 +6,4 @@ class MyClient {
     final response = await http.get(Uri.parse(url + '$pathName'));
     return response;
   }
-}
+}// На данный момент нигде не используется

@@ -56,6 +56,5 @@ class MainAppScreenViewCubit extends Cubit<MainAppScreenViewState> {
   Future<void> changeVisibleBottomBar(bool value) async {
     final newState = state.copyWith(modalOpened: value);
     emit(newState);
-    print('State: ${state.modalOpened}');
   }
 }
