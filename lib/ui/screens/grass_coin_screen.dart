@@ -4,7 +4,8 @@ import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/history_operation_entity.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
-import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
 
@@ -36,25 +37,7 @@ class GrassCoinScreen extends StatelessWidget {
                 leading: const Avatar(),
                 toolbarHeight: 100,
 
-                title: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Александр Волков',
-                            style: StyleTextCustom.textNameUser),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        RichText(
-                          text: const TextSpan(
-                              text: 'Менеджер по работе\n с клиентами',
-                              style: StyleTextCustom.textJobUserGrey),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                title: const TitleAppBarWidget(),
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(302),
                   child: Container(
@@ -136,7 +119,7 @@ class _BodyContentWidgetCoinScreenState
                   );
                 },
                 error: () => const Text('Nothing found...'),
-              )
+              ),
             ],
           ),
           const Padding(

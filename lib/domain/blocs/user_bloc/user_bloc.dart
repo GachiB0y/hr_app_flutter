@@ -20,6 +20,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           User userLoaded = await userRepo
               .getBalance(userToken: event.userToken)
               .timeout(const Duration(seconds: 5));
+          await Future<void>.delayed(const Duration(seconds: 2));
           emit(UserState.loaded(userLoaded: userLoaded));
         } on TimeoutException {
           emit(const UserState.error());

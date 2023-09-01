@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
+import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarUserWdiget({super.key});
@@ -41,25 +42,7 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ],
       leading: const Avatar(),
-      title: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Александр Волков',
-                  style: StyleTextCustom.textNameUser),
-              const SizedBox(
-                height: 5,
-              ),
-              RichText(
-                text: const TextSpan(
-                    text: 'Менеджер по работе\n с клиентами',
-                    style: StyleTextCustom.textJobUserGrey),
-              ),
-            ],
-          ),
-        ],
-      ),
+      title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,
     );
   }

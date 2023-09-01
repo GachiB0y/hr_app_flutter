@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
-import 'package:hr_app_flutter/ui/components/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
 
@@ -158,6 +159,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocWallet = context.watch<WalletBloc>();
     if (index == 0) {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
@@ -193,31 +195,39 @@ class ElementForScrollBarWidget extends StatelessWidget {
                         ),
                       ]),
                   const Divider(),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                              ColorsForWidget.colorGreen, BlendMode.srcATop),
-                          child: Image.asset(
-                            'assets/images/grass_icon_main.png',
-                            width: 50,
-                            height: 50,
+                  blocWallet.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (walletLoaded) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ColorFiltered(
+                            colorFilter: const ColorFilter.mode(
+                                ColorsForWidget.colorGreen, BlendMode.srcATop),
+                            child: Image.asset(
+                              'assets/images/grass_icon_main.png',
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            const Text(
-                              '256',
-                              style: TextStyle(fontSize: 28),
-                            ),
-                            Text(
-                              S.of(context).userMainScreenText_balance,
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                          ],
-                        ),
-                      ]),
+                          Column(
+                            children: [
+                              Text(
+                                walletLoaded.balance.toString(),
+                                style: const TextStyle(fontSize: 28),
+                              ),
+                              Text(
+                                S.of(context).userMainScreenText_balance,
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                            ],
+                          ),
+                        ]),
+                    error: () => const Text('Nothing found...'),
+                  ),
                 ],
               ),
             ),
