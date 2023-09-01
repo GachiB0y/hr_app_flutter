@@ -304,91 +304,91 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
-    return Container(
-      child: blocWallet.state.when(
-        loading: () {
-          return const Center(
+    return blocWallet.state.when(
+      loading: () {
+        return const SliverToBoxAdapter(
+          child: Center(
             child: CircularProgressIndicator(),
-          );
-        },
-        loaded: (walletLoaded) {
-          DateTime today = DateTime.now();
-          // Группировка элементов по дате
-          Map<String, List<Transaction>> groups = {};
-          walletLoaded.transactions.forEach((item) {
-            final DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
-            String dateString = DateFormat('d MMM EEE, y.').format(date);
-            bool isSameDay = compareDates(today, date);
-            bool isYesterday = compareYesterday(date);
-            if (isSameDay) {
-              dateString = 'Сегодня';
-            } else if (isYesterday) {
-              dateString = 'Вчера';
-            }
+          ),
+        );
+      },
+      loaded: (walletLoaded) {
+        DateTime today = DateTime.now();
+        // Группировка элементов по дате
+        Map<String, List<Transaction>> groups = {};
+        walletLoaded.transactions.forEach((item) {
+          final DateTime date =
+              DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
+          String dateString = DateFormat('d MMM EEE, y.').format(date);
+          bool isSameDay = compareDates(today, date);
+          bool isYesterday = compareYesterday(date);
+          if (isSameDay) {
+            dateString = 'Сегодня';
+          } else if (isYesterday) {
+            dateString = 'Вчера';
+          }
 
-            if (groups[dateString] == null) {
-              groups[dateString] = [];
-            }
-            groups[dateString]?.add(item);
-          });
+          if (groups[dateString] == null) {
+            groups[dateString] = [];
+          }
+          groups[dateString]?.add(item);
+        });
 
-          // Создание списка групп
-          List<Widget> groupWidgets = [];
-          groups.forEach((dateString, groupItems) {
-            groupWidgets.add(Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 5.0),
-                  height: 25,
-                  child: ListTile(
-                    title: Text(
-                      dateString,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
-                    ),
+        // Создание списка групп
+        List<Widget> groupWidgets = [];
+        groups.forEach((dateString, groupItems) {
+          groupWidgets.add(Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 5.0),
+                height: 25,
+                child: ListTile(
+                  title: Text(
+                    dateString,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                 ),
-                ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: groupItems
-                      .map(
-                        (item) => ListTile(
-                          title: Text(item.sender.toString()),
-                          subtitle: Text(
-                            item.type == 0 ? 'Перевод' : 'Зачисление',
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                          trailing: SizedBox(
-                            width: 80,
-                            height: 50,
-                            child: TralingHistoryWidget(
-                              item: item,
-                            ),
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: groupItems
+                    .map(
+                      (item) => ListTile(
+                        title: Text(item.sender.toString()),
+                        subtitle: Text(
+                          item.type == 0 ? 'Перевод' : 'Зачисление',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        trailing: SizedBox(
+                          width: 80,
+                          height: 50,
+                          child: TralingHistoryWidget(
+                            item: item,
                           ),
                         ),
-                      )
-                      .toList(),
-                ),
-                const Divider(),
-              ],
-            ));
-          });
+                      ),
+                    )
+                    .toList(),
+              ),
+              const Divider(),
+            ],
+          ));
+        });
 
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Column(
-                  children: groupWidgets,
-                );
-              },
-              childCount: 1,
-            ),
-          );
-        },
-        error: () => const Text('Nothing found...'),
-      ),
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Column(
+                children: groupWidgets,
+              );
+            },
+            childCount: 1,
+          ),
+        );
+      },
+      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
     );
   }
 }
