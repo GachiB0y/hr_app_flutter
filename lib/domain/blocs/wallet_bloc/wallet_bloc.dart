@@ -19,15 +19,15 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
         try {
           Wallet _walletLoaded = await walletRepo
-              .getBalance(userToken: event.userToken)
+              .getWallet(userToken: event.userToken)
               .timeout(const Duration(seconds: 5));
-          await Future<void>.delayed(const Duration(seconds: 3));
+
           final state = WalletState.loaded(walletLoaded: _walletLoaded);
 
-          final newState = (state as _$WalletStateLoaded)
-              .copyWith(walletLoaded: Wallet(balance: 5555));
+          // final newState = (state as _$WalletStateLoaded)
+          //     .copyWith(walletLoaded: Wallet(balance: 5555, transactions: []));
 
-          emit(newState);
+          emit(state);
         } on TimeoutException {
           emit(const WalletState.error());
         } catch (e) {

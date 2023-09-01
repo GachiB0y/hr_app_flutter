@@ -30,8 +30,12 @@ class UserMainScreen extends StatefulWidget {
 class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
-    context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
     super.initState();
+    context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
+
+    context
+        .read<WalletBloc>()
+        .add(const WalletEvent.fetch(userToken: 'userToken'));
   }
 
   Future<void> _refreshEventsList() async {

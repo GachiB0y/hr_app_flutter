@@ -21,6 +21,7 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Wallet {
   int get balance => throw _privateConstructorUsedError;
+  List<Transaction> get transactions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -32,7 +33,7 @@ abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
       _$WalletCopyWithImpl<$Res, Wallet>;
   @useResult
-  $Res call({int balance});
+  $Res call({int balance, List<Transaction> transactions});
 }
 
 /// @nodoc
@@ -49,12 +50,17 @@ class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
   @override
   $Res call({
     Object? balance = null,
+    Object? transactions = null,
   }) {
     return _then(_value.copyWith(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
+      transactions: null == transactions
+          ? _value.transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<Transaction>,
     ) as $Val);
   }
 }
@@ -65,7 +71,7 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       __$$_WalletCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int balance});
+  $Res call({int balance, List<Transaction> transactions});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_WalletCopyWithImpl<$Res>
   @override
   $Res call({
     Object? balance = null,
+    Object? transactions = null,
   }) {
     return _then(_$_Wallet(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
+      transactions: null == transactions
+          ? _value._transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<Transaction>,
     ));
   }
 }
@@ -92,17 +103,26 @@ class __$$_WalletCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Wallet implements _Wallet {
-  const _$_Wallet({required this.balance});
+  const _$_Wallet(
+      {required this.balance, required final List<Transaction> transactions})
+      : _transactions = transactions;
 
   factory _$_Wallet.fromJson(Map<String, dynamic> json) =>
       _$$_WalletFromJson(json);
 
   @override
   final int balance;
+  final List<Transaction> _transactions;
+  @override
+  List<Transaction> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
 
   @override
   String toString() {
-    return 'Wallet(balance: $balance)';
+    return 'Wallet(balance: $balance, transactions: $transactions)';
   }
 
   @override
@@ -110,12 +130,15 @@ class _$_Wallet implements _Wallet {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Wallet &&
-            (identical(other.balance, balance) || other.balance == balance));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, balance);
+  int get hashCode => Object.hash(
+      runtimeType, balance, const DeepCollectionEquality().hash(_transactions));
 
   @JsonKey(ignore: true)
   @override
@@ -132,14 +155,325 @@ class _$_Wallet implements _Wallet {
 }
 
 abstract class _Wallet implements Wallet {
-  const factory _Wallet({required final int balance}) = _$_Wallet;
+  const factory _Wallet(
+      {required final int balance,
+      required final List<Transaction> transactions}) = _$_Wallet;
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
 
   @override
   int get balance;
   @override
+  List<Transaction> get transactions;
+  @override
   @JsonKey(ignore: true)
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Transaction _$TransactionFromJson(Map<String, dynamic> json) {
+  return _Transaction.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Transaction {
+  int get recipient => throw _privateConstructorUsedError;
+  int get amount => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  int get createAt => throw _privateConstructorUsedError;
+  int get type => throw _privateConstructorUsedError;
+  int get sender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'coins_reward')
+  int get coinsReward => throw _privateConstructorUsedError;
+  int get team => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TransactionCopyWith<Transaction> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TransactionCopyWith<$Res> {
+  factory $TransactionCopyWith(
+          Transaction value, $Res Function(Transaction) then) =
+      _$TransactionCopyWithImpl<$Res, Transaction>;
+  @useResult
+  $Res call(
+      {int recipient,
+      int amount,
+      int id,
+      int createAt,
+      int type,
+      int sender,
+      @JsonKey(name: 'coins_reward') int coinsReward,
+      int team,
+      String message});
+}
+
+/// @nodoc
+class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
+    implements $TransactionCopyWith<$Res> {
+  _$TransactionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? recipient = null,
+    Object? amount = null,
+    Object? id = null,
+    Object? createAt = null,
+    Object? type = null,
+    Object? sender = null,
+    Object? coinsReward = null,
+    Object? team = null,
+    Object? message = null,
+  }) {
+    return _then(_value.copyWith(
+      recipient: null == recipient
+          ? _value.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as int,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int,
+      sender: null == sender
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
+              as int,
+      coinsReward: null == coinsReward
+          ? _value.coinsReward
+          : coinsReward // ignore: cast_nullable_to_non_nullable
+              as int,
+      team: null == team
+          ? _value.team
+          : team // ignore: cast_nullable_to_non_nullable
+              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_TransactionCopyWith<$Res>
+    implements $TransactionCopyWith<$Res> {
+  factory _$$_TransactionCopyWith(
+          _$_Transaction value, $Res Function(_$_Transaction) then) =
+      __$$_TransactionCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int recipient,
+      int amount,
+      int id,
+      int createAt,
+      int type,
+      int sender,
+      @JsonKey(name: 'coins_reward') int coinsReward,
+      int team,
+      String message});
+}
+
+/// @nodoc
+class __$$_TransactionCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$_Transaction>
+    implements _$$_TransactionCopyWith<$Res> {
+  __$$_TransactionCopyWithImpl(
+      _$_Transaction _value, $Res Function(_$_Transaction) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? recipient = null,
+    Object? amount = null,
+    Object? id = null,
+    Object? createAt = null,
+    Object? type = null,
+    Object? sender = null,
+    Object? coinsReward = null,
+    Object? team = null,
+    Object? message = null,
+  }) {
+    return _then(_$_Transaction(
+      recipient: null == recipient
+          ? _value.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as int,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int,
+      sender: null == sender
+          ? _value.sender
+          : sender // ignore: cast_nullable_to_non_nullable
+              as int,
+      coinsReward: null == coinsReward
+          ? _value.coinsReward
+          : coinsReward // ignore: cast_nullable_to_non_nullable
+              as int,
+      team: null == team
+          ? _value.team
+          : team // ignore: cast_nullable_to_non_nullable
+              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Transaction implements _Transaction {
+  const _$_Transaction(
+      {required this.recipient,
+      required this.amount,
+      required this.id,
+      required this.createAt,
+      required this.type,
+      required this.sender,
+      @JsonKey(name: 'coins_reward') required this.coinsReward,
+      required this.team,
+      required this.message});
+
+  factory _$_Transaction.fromJson(Map<String, dynamic> json) =>
+      _$$_TransactionFromJson(json);
+
+  @override
+  final int recipient;
+  @override
+  final int amount;
+  @override
+  final int id;
+  @override
+  final int createAt;
+  @override
+  final int type;
+  @override
+  final int sender;
+  @override
+  @JsonKey(name: 'coins_reward')
+  final int coinsReward;
+  @override
+  final int team;
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'Transaction(recipient: $recipient, amount: $amount, id: $id, createAt: $createAt, type: $type, sender: $sender, coinsReward: $coinsReward, team: $team, message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Transaction &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createAt, createAt) ||
+                other.createAt == createAt) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.sender, sender) || other.sender == sender) &&
+            (identical(other.coinsReward, coinsReward) ||
+                other.coinsReward == coinsReward) &&
+            (identical(other.team, team) || other.team == team) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, recipient, amount, id, createAt,
+      type, sender, coinsReward, team, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
+      __$$_TransactionCopyWithImpl<_$_Transaction>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TransactionToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Transaction implements Transaction {
+  const factory _Transaction(
+      {required final int recipient,
+      required final int amount,
+      required final int id,
+      required final int createAt,
+      required final int type,
+      required final int sender,
+      @JsonKey(name: 'coins_reward') required final int coinsReward,
+      required final int team,
+      required final String message}) = _$_Transaction;
+
+  factory _Transaction.fromJson(Map<String, dynamic> json) =
+      _$_Transaction.fromJson;
+
+  @override
+  int get recipient;
+  @override
+  int get amount;
+  @override
+  int get id;
+  @override
+  int get createAt;
+  @override
+  int get type;
+  @override
+  int get sender;
+  @override
+  @JsonKey(name: 'coins_reward')
+  int get coinsReward;
+  @override
+  int get team;
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
       throw _privateConstructorUsedError;
 }

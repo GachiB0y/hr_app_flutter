@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/history_operation_entity.dart';
+
+import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:hr_app_flutter/theme/style_text.dart';
+
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
 
-class GrassCoinScreen extends StatelessWidget {
+class GrassCoinScreen extends StatefulWidget {
   const GrassCoinScreen({super.key});
+
+  @override
+  State<GrassCoinScreen> createState() => _GrassCoinScreenState();
+}
+
+class _GrassCoinScreenState extends State<GrassCoinScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<WalletBloc>()
+        .add(const WalletEvent.fetch(userToken: 'userToken'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,25 +68,10 @@ class GrassCoinScreen extends StatelessWidget {
   }
 }
 
-class BodyContentWidgetCoinScreen extends StatefulWidget {
+class BodyContentWidgetCoinScreen extends StatelessWidget {
   const BodyContentWidgetCoinScreen({
     super.key,
   });
-
-  @override
-  State<BodyContentWidgetCoinScreen> createState() =>
-      _BodyContentWidgetCoinScreenState();
-}
-
-class _BodyContentWidgetCoinScreenState
-    extends State<BodyContentWidgetCoinScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context
-        .read<WalletBloc>()
-        .add(const WalletEvent.fetch(userToken: 'userToken'));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +235,7 @@ class TralingHistoryWidget extends StatefulWidget {
     required this.item,
   });
 
-  final HistoryOperationEntity item;
+  final Transaction item;
   @override
   State<TralingHistoryWidget> createState() => _TralingHistoryWidgetState();
 }
@@ -247,13 +246,13 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        widget.item.isTransfer
+        widget.item.type == 0
             ? Text(
-                '-${widget.item.count.toString()}',
+                '-${widget.item.amount.toString()}',
                 style: const TextStyle(fontSize: 16),
               )
             : Text(
-                '+${widget.item.count.toString()}',
+                '+${widget.item.amount.toString()}',
                 style: const TextStyle(color: Colors.green, fontSize: 16),
               ),
         const SizedBox(
@@ -274,55 +273,16 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
 }
 
 class HistoryOperationCoinWidget extends StatelessWidget {
-  final List<HistoryOperationEntity> historyList = [
-    HistoryOperationEntity(
-        date: DateTime.now(), name: 'Sanya Volkov', count: 1, isTransfer: true),
-    HistoryOperationEntity(
-        date: DateTime.now(),
-        name: 'Sanya Volkov',
-        count: 2,
-        isTransfer: false),
-    HistoryOperationEntity(
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        name: 'Sanya Volkov',
-        count: 228,
-        isTransfer: false),
-    HistoryOperationEntity(
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        name: 'Sanya Volkov',
-        count: 228,
-        isTransfer: false),
-    HistoryOperationEntity(
-        date: DateTime.utc(2023, 07, 17),
-        name: 'Sanya Volkov',
-        count: 100,
-        isTransfer: true),
-    HistoryOperationEntity(
-        date: DateTime.utc(2023, 07, 16),
-        name: 'Sanya Volkov',
-        count: 222,
-        isTransfer: true),
-    HistoryOperationEntity(
-        date: DateTime.utc(2023, 07, 15),
-        name: 'Vasya Pupkin',
-        count: 50,
-        isTransfer: false),
-  ];
-
-  HistoryOperationCoinWidget({super.key});
+  const HistoryOperationCoinWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GroupedListViewHistoryOperation(
-      historyList: historyList,
-    );
+    return const GroupedListViewHistoryOperation();
   }
 }
 
 class GroupedListViewHistoryOperation extends StatelessWidget {
-  final List<HistoryOperationEntity> historyList;
-
-  const GroupedListViewHistoryOperation({super.key, required this.historyList});
+  const GroupedListViewHistoryOperation({super.key});
 
   bool compareDates(DateTime date1, DateTime date2) {
     // Установка времени на полночь для обоих дат
@@ -343,76 +303,91 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime today = DateTime.now();
-    // Группировка элементов по дате
-    Map<String, List<HistoryOperationEntity>> groups = {};
-    historyList.forEach((item) {
-      String dateString = DateFormat('d MMM EEE, y.').format(item.date);
-      bool isSameDay = compareDates(today, item.date);
-      bool isYesterday = compareYesterday(item.date);
-      if (isSameDay) {
-        dateString = 'Сегодня';
-      } else if (isYesterday) {
-        dateString = 'Вчера';
-      }
-
-      if (groups[dateString] == null) {
-        groups[dateString] = [];
-      }
-      groups[dateString]?.add(item);
-    });
-
-    // Создание списка групп
-    List<Widget> groupWidgets = [];
-    groups.forEach((dateString, groupItems) {
-      groupWidgets.add(Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 5.0),
-            height: 25,
-            child: ListTile(
-              title: Text(
-                dateString,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-              ),
-            ),
-          ),
-          ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: groupItems
-                .map(
-                  (item) => ListTile(
-                    title: Text(item.name),
-                    subtitle: Text(
-                      item.isTransfer ? 'Перевод' : 'Зачисление',
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    trailing: SizedBox(
-                      width: 80,
-                      height: 50,
-                      child: TralingHistoryWidget(
-                        item: item,
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-          const Divider(),
-        ],
-      ));
-    });
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return Column(
-            children: groupWidgets,
+    final blocWallet = context.watch<WalletBloc>();
+    return Container(
+      child: blocWallet.state.when(
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         },
-        childCount: 1,
+        loaded: (walletLoaded) {
+          DateTime today = DateTime.now();
+          // Группировка элементов по дате
+          Map<String, List<Transaction>> groups = {};
+          walletLoaded.transactions.forEach((item) {
+            final DateTime date =
+                DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
+            String dateString = DateFormat('d MMM EEE, y.').format(date);
+            bool isSameDay = compareDates(today, date);
+            bool isYesterday = compareYesterday(date);
+            if (isSameDay) {
+              dateString = 'Сегодня';
+            } else if (isYesterday) {
+              dateString = 'Вчера';
+            }
+
+            if (groups[dateString] == null) {
+              groups[dateString] = [];
+            }
+            groups[dateString]?.add(item);
+          });
+
+          // Создание списка групп
+          List<Widget> groupWidgets = [];
+          groups.forEach((dateString, groupItems) {
+            groupWidgets.add(Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 5.0),
+                  height: 25,
+                  child: ListTile(
+                    title: Text(
+                      dateString,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                  ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: groupItems
+                      .map(
+                        (item) => ListTile(
+                          title: Text(item.sender.toString()),
+                          subtitle: Text(
+                            item.type == 0 ? 'Перевод' : 'Зачисление',
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          trailing: SizedBox(
+                            width: 80,
+                            height: 50,
+                            child: TralingHistoryWidget(
+                              item: item,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const Divider(),
+              ],
+            ));
+          });
+
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Column(
+                  children: groupWidgets,
+                );
+              },
+              childCount: 1,
+            ),
+          );
+        },
+        error: () => const Text('Nothing found...'),
       ),
     );
   }

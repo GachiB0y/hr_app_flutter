@@ -8,8 +8,38 @@ part of 'wallet.dart';
 
 _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       balance: json['balance'] as int,
+      transactions: (json['transactions'] as List<dynamic>)
+          .map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
       'balance': instance.balance,
+      'transactions': instance.transactions,
+    };
+
+_$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
+    _$_Transaction(
+      recipient: json['recipient'] as int,
+      amount: json['amount'] as int,
+      id: json['id'] as int,
+      createAt: json['createAt'] as int,
+      type: json['type'] as int,
+      sender: json['sender'] as int,
+      coinsReward: json['coins_reward'] as int,
+      team: json['team'] as int,
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
+    <String, dynamic>{
+      'recipient': instance.recipient,
+      'amount': instance.amount,
+      'id': instance.id,
+      'createAt': instance.createAt,
+      'type': instance.type,
+      'sender': instance.sender,
+      'coins_reward': instance.coinsReward,
+      'team': instance.team,
+      'message': instance.message,
     };
