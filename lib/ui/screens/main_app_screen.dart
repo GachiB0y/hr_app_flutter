@@ -21,8 +21,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
   var selectedPageIndex = 0;
   // bool _modalOpened = false;
   var pages = <Widget>[
-    UserMainScreen(),
-    GrassCoinScreen(),
+    const UserMainScreen(),
+    const GrassCoinScreen(),
     const Center(
       child: Text(
         'Компания',

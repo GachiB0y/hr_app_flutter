@@ -12,6 +12,7 @@ import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
                   UserBloc(userRepo: userRepository),
             ),
           ],
-          child: const MainAppScreen(),
+          child: AuthenticationForm(),
         ));
   }
 }
