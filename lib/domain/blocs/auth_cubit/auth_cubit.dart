@@ -57,7 +57,7 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
   AuthViewCubit({required this.authRepository})
       : super(AuthViewCubitFormFillInProgressState()) {}
 
-  bool _isValid({required String phoneNumber}) => phoneNumber.length == 17;
+  bool _isValid({required String phoneNumber}) => phoneNumber.length == 11;
 
   Future<void> auth({required String phoneNumber, required String code}) async {
     emit(AuthViewCubitAuthProgressState());
@@ -78,7 +78,6 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
   Future<String?> _login(
       {required String phoneNumber, required String code}) async {
     try {
-      // sessionId =_apiClient.tokenUser;
       await authRepository.login(numberPhone: phoneNumber, code: code);
     } catch (e) {
       return 'Неудалось авторизироваться!';

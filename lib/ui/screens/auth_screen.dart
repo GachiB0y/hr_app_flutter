@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 
 class AuthenticationForm extends StatefulWidget {
+  const AuthenticationForm({super.key});
+
   @override
   AuthenticationFormState createState() => AuthenticationFormState();
 }
@@ -12,6 +14,8 @@ class AuthenticationFormState extends State<AuthenticationForm> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _smsCodeController = TextEditingController();
   bool _showSMSCodeField = false;
+  String formattedPhoneNumber = '';
+  String? code = null;
 
   @override
   void dispose() {
@@ -63,15 +67,15 @@ class AuthenticationFormState extends State<AuthenticationForm> {
                     /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                     final String originalPhoneNumber =
                         _phoneNumberController.text;
-                    final String formattedPhoneNumber =
+                    formattedPhoneNumber =
                         originalPhoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                    final String? code =
+                    code =
                         await cubit.getCode(phoneNumber: formattedPhoneNumber);
 
                     /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                     if (code != null) {
                       setState(() {
-                        _smsCodeController.text = code;
+                        _smsCodeController.text = code as String;
                         _showSMSCodeField = true;
                       });
                     }
@@ -100,8 +104,10 @@ class AuthenticationFormState extends State<AuthenticationForm> {
                     ),
                     const SizedBox(height: 20.0),
                     ElevatedButton(
-                      onPressed: () {
-                        // Perform authentication
+                      onPressed: () async {
+                        await cubit.auth(
+                            phoneNumber: formattedPhoneNumber,
+                            code: _smsCodeController.text);
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
