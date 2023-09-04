@@ -16,20 +16,19 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$WalletEvent {
-  String get userToken => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userToken) fetch,
+    required TResult Function() fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userToken)? fetch,
+    TResult? Function()? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userToken)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,10 +48,6 @@ mixin _$WalletEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $WalletEventCopyWith<WalletEvent> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -60,8 +55,6 @@ abstract class $WalletEventCopyWith<$Res> {
   factory $WalletEventCopyWith(
           WalletEvent value, $Res Function(WalletEvent) then) =
       _$WalletEventCopyWithImpl<$Res, WalletEvent>;
-  @useResult
-  $Res call({String userToken});
 }
 
 /// @nodoc
@@ -73,30 +66,13 @@ class _$WalletEventCopyWithImpl<$Res, $Val extends WalletEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userToken = null,
-  }) {
-    return _then(_value.copyWith(
-      userToken: null == userToken
-          ? _value.userToken
-          : userToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$WalletEventFetchCopyWith<$Res>
-    implements $WalletEventCopyWith<$Res> {
+abstract class _$$WalletEventFetchCopyWith<$Res> {
   factory _$$WalletEventFetchCopyWith(
           _$WalletEventFetch value, $Res Function(_$WalletEventFetch) then) =
       __$$WalletEventFetchCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userToken});
 }
 
 /// @nodoc
@@ -106,76 +82,51 @@ class __$$WalletEventFetchCopyWithImpl<$Res>
   __$$WalletEventFetchCopyWithImpl(
       _$WalletEventFetch _value, $Res Function(_$WalletEventFetch) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userToken = null,
-  }) {
-    return _then(_$WalletEventFetch(
-      userToken: null == userToken
-          ? _value.userToken
-          : userToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$WalletEventFetch implements WalletEventFetch {
-  const _$WalletEventFetch({required this.userToken});
-
-  @override
-  final String userToken;
+  const _$WalletEventFetch();
 
   @override
   String toString() {
-    return 'WalletEvent.fetch(userToken: $userToken)';
+    return 'WalletEvent.fetch()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$WalletEventFetch &&
-            (identical(other.userToken, userToken) ||
-                other.userToken == userToken));
+        (other.runtimeType == runtimeType && other is _$WalletEventFetch);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userToken);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$WalletEventFetchCopyWith<_$WalletEventFetch> get copyWith =>
-      __$$WalletEventFetchCopyWithImpl<_$WalletEventFetch>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userToken) fetch,
+    required TResult Function() fetch,
   }) {
-    return fetch(userToken);
+    return fetch();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userToken)? fetch,
+    TResult? Function()? fetch,
   }) {
-    return fetch?.call(userToken);
+    return fetch?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userToken)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch(userToken);
+      return fetch();
     }
     return orElse();
   }
@@ -210,15 +161,7 @@ class _$WalletEventFetch implements WalletEventFetch {
 }
 
 abstract class WalletEventFetch implements WalletEvent {
-  const factory WalletEventFetch({required final String userToken}) =
-      _$WalletEventFetch;
-
-  @override
-  String get userToken;
-  @override
-  @JsonKey(ignore: true)
-  _$$WalletEventFetchCopyWith<_$WalletEventFetch> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory WalletEventFetch() = _$WalletEventFetch;
 }
 
 WalletState _$WalletStateFromJson(Map<String, dynamic> json) {

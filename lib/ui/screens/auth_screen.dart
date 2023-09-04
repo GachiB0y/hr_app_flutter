@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 
 class AuthenticationForm extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class AuthenticationFormState extends State<AuthenticationForm> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<AuthViewCubit>();
     return Scaffold(
       backgroundColor: Colors.green,
       body: Center(
@@ -55,10 +58,24 @@ class AuthenticationFormState extends State<AuthenticationForm> {
               ),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _showSMSCodeField = true;
-                  });
+                onPressed: () async {
+                  if (_phoneNumberController.text.length == 17) {
+                    /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
+                    final String originalPhoneNumber =
+                        _phoneNumberController.text;
+                    final String formattedPhoneNumber =
+                        originalPhoneNumber.replaceAll(RegExp(r'[^\d]'), '');
+                    final String? code =
+                        await cubit.getCode(phoneNumber: formattedPhoneNumber);
+
+                    /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
+                    if (code != null) {
+                      setState(() {
+                        _smsCodeController.text = code;
+                        _showSMSCodeField = true;
+                      });
+                    }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,

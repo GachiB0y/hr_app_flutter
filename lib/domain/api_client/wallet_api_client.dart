@@ -31,7 +31,7 @@ class WalletProviderImpl implements WalletProvider {
       final int result = jsonData['result']['coins'];
       return result;
     } else {
-      throw Exception('Error fetching EventEntity');
+      throw Exception('Error fetching Balance');
     }
   }
 
@@ -57,7 +57,7 @@ class WalletProviderImpl implements WalletProvider {
 
       return result;
     } else {
-      throw Exception('Error fetching EventEntity');
+      throw Exception('Error fetching Transactions');
     }
   }
 }

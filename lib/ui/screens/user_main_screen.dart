@@ -32,9 +32,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
     super.initState();
     context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
 
-    context
-        .read<WalletBloc>()
-        .add(const WalletEvent.fetch(userToken: 'userToken'));
+    context.read<WalletBloc>().add(const WalletEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {

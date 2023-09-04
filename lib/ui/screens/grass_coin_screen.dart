@@ -21,9 +21,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<WalletBloc>()
-        .add(const WalletEvent.fetch(userToken: 'userToken'));
+    context.read<WalletBloc>().add(const WalletEvent.fetch());
   }
 
   @override
@@ -33,9 +31,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () {
-            context
-                .read<WalletBloc>()
-                .add(const WalletEvent.fetch(userToken: 'userToken'));
+            context.read<WalletBloc>().add(const WalletEvent.fetch());
             return Future<void>.delayed(const Duration(milliseconds: 100));
           },
           child: CustomScrollView(

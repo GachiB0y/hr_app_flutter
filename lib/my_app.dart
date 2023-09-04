@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
+import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
+import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
+import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
@@ -25,6 +30,14 @@ class MyApp extends StatelessWidget {
       WalletRepositoryImpl(walletProvider: WalletProviderImpl());
   final UserRepository userRepository =
       UserRepositoryImpl(userProvider: UserProviderImpl());
+  static const AuthProvider authProvider = AuthProviderImpl();
+  static const SecureStorageDefault secureStorageDefault =
+      SecureStorageDefault();
+  static const SessionDataProvdier sessionDataProvdier =
+      SessionDataProvdierDefault(secureStorage: secureStorageDefault);
+
+  final AuthRepository authRepository = AuthRepositoryImpl(
+      authProvider: authProvider, sessionDataProvdier: sessionDataProvdier);
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +66,16 @@ class MyApp extends StatelessWidget {
                   eventEntityRepository: eventEntityRepository),
             ),
             BlocProvider<WalletBloc>(
-              create: (BuildContext context) =>
-                  WalletBloc(walletRepo: walletRepository),
+              create: (BuildContext context) => WalletBloc(
+                  walletRepo: walletRepository, authRepository: authRepository),
             ),
             BlocProvider<UserBloc>(
               create: (BuildContext context) =>
                   UserBloc(userRepo: userRepository),
+            ),
+            BlocProvider<AuthViewCubit>(
+              create: (BuildContext context) =>
+                  AuthViewCubit(authRepository: authRepository),
             ),
           ],
           child: AuthenticationForm(),
