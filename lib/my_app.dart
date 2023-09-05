@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
@@ -16,32 +17,63 @@ import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:hr_app_flutter/router/router.dart';
+
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
-import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
-import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final EventEntityRepository eventEntityRepository =
-      EventEntityRepositoryImpl(eventEntityProvider: EventEntityApiClient());
-  final WalletRepository walletRepository =
-      WalletRepositoryImpl(walletProvider: WalletProviderImpl());
-  final UserRepository userRepository =
-      UserRepositoryImpl(userProvider: UserProviderImpl());
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
   static const AuthProvider authProvider = AuthProviderImpl();
   static const SecureStorageDefault secureStorageDefault =
       SecureStorageDefault();
   static const SessionDataProvdier sessionDataProvdier =
       SessionDataProvdierDefault(secureStorage: secureStorageDefault);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _router = AppRouter();
+  final EventEntityRepository eventEntityRepository =
+      EventEntityRepositoryImpl(eventEntityProvider: EventEntityApiClient());
+
+  final WalletRepository walletRepository =
+      WalletRepositoryImpl(walletProvider: WalletProviderImpl());
+
+  final UserRepository userRepository =
+      UserRepositoryImpl(userProvider: UserProviderImpl());
+
   final AuthRepository authRepository = AuthRepositoryImpl(
-      authProvider: authProvider, sessionDataProvdier: sessionDataProvdier);
+      authProvider: MyApp.authProvider,
+      sessionDataProvdier: MyApp.sessionDataProvdier);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MainAppScreenViewCubit>(
+          create: (BuildContext context) => MainAppScreenViewCubit(),
+        ),
+        BlocProvider<EventEntityCubit>(
+          create: (BuildContext context) =>
+              EventEntityCubit(eventEntityRepository: eventEntityRepository),
+        ),
+        BlocProvider<WalletBloc>(
+          create: (BuildContext context) => WalletBloc(
+              walletRepo: walletRepository, authRepository: authRepository),
+        ),
+        BlocProvider<UserBloc>(
+          create: (BuildContext context) => UserBloc(userRepo: userRepository),
+        ),
+        BlocProvider<AuthViewCubit>(
+          create: (BuildContext context) =>
+              AuthViewCubit(authRepository: authRepository),
+        ),
+      ],
+      child: MaterialApp.router(
         localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -49,36 +81,15 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        title: 'Flutter Demo',
+        title: 'HR App',
         theme: ThemeData(
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.red[200]),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider<MainAppScreenViewCubit>(
-              create: (BuildContext context) => MainAppScreenViewCubit(),
-            ),
-            BlocProvider<EventEntityCubit>(
-              create: (BuildContext context) => EventEntityCubit(
-                  eventEntityRepository: eventEntityRepository),
-            ),
-            BlocProvider<WalletBloc>(
-              create: (BuildContext context) => WalletBloc(
-                  walletRepo: walletRepository, authRepository: authRepository),
-            ),
-            BlocProvider<UserBloc>(
-              create: (BuildContext context) =>
-                  UserBloc(userRepo: userRepository),
-            ),
-            BlocProvider<AuthViewCubit>(
-              create: (BuildContext context) =>
-                  AuthViewCubit(authRepository: authRepository),
-            ),
-          ],
-          child: AuthenticationForm(),
-        ));
+        routerConfig: _router.config(),
+      ),
+    );
   }
 }

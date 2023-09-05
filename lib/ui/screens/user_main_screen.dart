@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
 
+@RoutePage()
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({super.key});
   // final apiClient = new EventEntityApiClient();

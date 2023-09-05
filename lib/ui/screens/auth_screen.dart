@@ -1,16 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
+import 'package:hr_app_flutter/router/router.dart';
 
-class AuthenticationForm extends StatefulWidget {
-  const AuthenticationForm({super.key});
+@RoutePage()
+class AuthenticationFormScreen extends StatefulWidget {
+  const AuthenticationFormScreen({super.key});
 
   @override
-  AuthenticationFormState createState() => AuthenticationFormState();
+  AuthenticationFormScreenState createState() =>
+      AuthenticationFormScreenState();
 }
 
-class AuthenticationFormState extends State<AuthenticationForm> {
+class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _smsCodeController = TextEditingController();
   bool _showSMSCodeField = false;
@@ -108,6 +112,7 @@ class AuthenticationFormState extends State<AuthenticationForm> {
                         await cubit.auth(
                             phoneNumber: formattedPhoneNumber,
                             code: _smsCodeController.text);
+                        AutoRouter.of(context).push(MainAppRoute());
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

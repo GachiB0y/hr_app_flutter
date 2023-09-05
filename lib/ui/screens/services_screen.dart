@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,8 +17,9 @@ import 'package:hr_app_flutter/domain/entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
+@RoutePage()
 class ServicesScreen extends StatelessWidget {
-  ServicesScreen({
+  const ServicesScreen({
     Key? key,
   }) : super(key: key);
 
