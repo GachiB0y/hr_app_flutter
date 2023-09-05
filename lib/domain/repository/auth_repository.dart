@@ -76,6 +76,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
     await _sessionDataProvdier.setSessionId(record.refresToken);
     await _sessionDataProvdier.setAccessToken(record.accessToken);
+
+    final one = await _sessionDataProvdier.getAccessToken();
+    final two = await _sessionDataProvdier.getSessionId();
   }
 
   @override

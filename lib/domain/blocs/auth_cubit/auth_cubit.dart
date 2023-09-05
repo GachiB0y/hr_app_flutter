@@ -62,7 +62,7 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
   Future<void> auth({required String phoneNumber, required String code}) async {
     emit(AuthViewCubitAuthProgressState());
     if (!_isValid(phoneNumber: phoneNumber)) {
-      final newState = AuthViewCubitErrorState('Заполните логин или пароль');
+      final newState = AuthViewCubitErrorState('Заполните номер телефона!');
       emit(newState);
       return;
     }
