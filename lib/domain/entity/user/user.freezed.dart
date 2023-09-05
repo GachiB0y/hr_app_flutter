@@ -20,9 +20,15 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
-  String get position => throw _privateConstructorUsedError;
+  int get auto_card => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name_i')
+  String get nameI => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name_o')
+  String get nameO => throw _privateConstructorUsedError;
+  @JsonKey(name: 'date_birth')
+  String get dateBirth => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +40,13 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String firstName, String lastName, String position});
+  $Res call(
+      {int auto_card,
+      String name,
+      @JsonKey(name: 'name_i') String nameI,
+      @JsonKey(name: 'name_o') String nameO,
+      @JsonKey(name: 'date_birth') String dateBirth,
+      String email});
 }
 
 /// @nodoc
@@ -50,22 +62,37 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? position = null,
+    Object? auto_card = null,
+    Object? name = null,
+    Object? nameI = null,
+    Object? nameO = null,
+    Object? dateBirth = null,
+    Object? email = null,
   }) {
     return _then(_value.copyWith(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      auto_card: null == auto_card
+          ? _value.auto_card
+          : auto_card // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      nameI: null == nameI
+          ? _value.nameI
+          : nameI // ignore: cast_nullable_to_non_nullable
               as String,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      nameO: null == nameO
+          ? _value.nameO
+          : nameO // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateBirth: null == dateBirth
+          ? _value.dateBirth
+          : dateBirth // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -77,7 +104,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String firstName, String lastName, String position});
+  $Res call(
+      {int auto_card,
+      String name,
+      @JsonKey(name: 'name_i') String nameI,
+      @JsonKey(name: 'name_o') String nameO,
+      @JsonKey(name: 'date_birth') String dateBirth,
+      String email});
 }
 
 /// @nodoc
@@ -89,22 +122,37 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? position = null,
+    Object? auto_card = null,
+    Object? name = null,
+    Object? nameI = null,
+    Object? nameO = null,
+    Object? dateBirth = null,
+    Object? email = null,
   }) {
     return _then(_$_User(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      auto_card: null == auto_card
+          ? _value.auto_card
+          : auto_card // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      nameI: null == nameI
+          ? _value.nameI
+          : nameI // ignore: cast_nullable_to_non_nullable
               as String,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      nameO: null == nameO
+          ? _value.nameO
+          : nameO // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateBirth: null == dateBirth
+          ? _value.dateBirth
+          : dateBirth // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -114,22 +162,34 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.firstName,
-      required this.lastName,
-      required this.position});
+      {required this.auto_card,
+      required this.name,
+      @JsonKey(name: 'name_i') required this.nameI,
+      @JsonKey(name: 'name_o') required this.nameO,
+      @JsonKey(name: 'date_birth') required this.dateBirth,
+      required this.email});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final String firstName;
+  final int auto_card;
   @override
-  final String lastName;
+  final String name;
   @override
-  final String position;
+  @JsonKey(name: 'name_i')
+  final String nameI;
+  @override
+  @JsonKey(name: 'name_o')
+  final String nameO;
+  @override
+  @JsonKey(name: 'date_birth')
+  final String dateBirth;
+  @override
+  final String email;
 
   @override
   String toString() {
-    return 'User(firstName: $firstName, lastName: $lastName, position: $position)';
+    return 'User(auto_card: $auto_card, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, email: $email)';
   }
 
   @override
@@ -137,17 +197,20 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_User &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.position, position) ||
-                other.position == position));
+            (identical(other.auto_card, auto_card) ||
+                other.auto_card == auto_card) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.nameI, nameI) || other.nameI == nameI) &&
+            (identical(other.nameO, nameO) || other.nameO == nameO) &&
+            (identical(other.dateBirth, dateBirth) ||
+                other.dateBirth == dateBirth) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, firstName, lastName, position);
+  int get hashCode =>
+      Object.hash(runtimeType, auto_card, name, nameI, nameO, dateBirth, email);
 
   @JsonKey(ignore: true)
   @override
@@ -165,18 +228,30 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String firstName,
-      required final String lastName,
-      required final String position}) = _$_User;
+      {required final int auto_card,
+      required final String name,
+      @JsonKey(name: 'name_i') required final String nameI,
+      @JsonKey(name: 'name_o') required final String nameO,
+      @JsonKey(name: 'date_birth') required final String dateBirth,
+      required final String email}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  String get firstName;
+  int get auto_card;
   @override
-  String get lastName;
+  String get name;
   @override
-  String get position;
+  @JsonKey(name: 'name_i')
+  String get nameI;
+  @override
+  @JsonKey(name: 'name_o')
+  String get nameO;
+  @override
+  @JsonKey(name: 'date_birth')
+  String get dateBirth;
+  @override
+  String get email;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

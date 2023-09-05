@@ -2,7 +2,7 @@ import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 abstract class UserRepository {
-  Future<User> getBalance({required String userToken});
+  Future<User> getUserInfo({required String userToken});
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -13,7 +13,7 @@ class UserRepositoryImpl implements UserRepository {
   final UserProvider _userProvider;
 
   @override
-  Future<User> getBalance({required String userToken}) {
-    return _userProvider.getBalance(userToken: userToken);
+  Future<User> getUserInfo({required String userToken}) {
+    return _userProvider.getUserInfo(userToken: userToken);
   }
 }

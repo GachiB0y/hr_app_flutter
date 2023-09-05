@@ -16,20 +16,19 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserEvent {
-  String get userToken => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userToken) fetch,
+    required TResult Function() fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userToken)? fetch,
+    TResult? Function()? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userToken)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,18 +48,12 @@ mixin _$UserEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $UserEventCopyWith<UserEvent> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserEventCopyWith<$Res> {
   factory $UserEventCopyWith(UserEvent value, $Res Function(UserEvent) then) =
       _$UserEventCopyWithImpl<$Res, UserEvent>;
-  @useResult
-  $Res call({String userToken});
 }
 
 /// @nodoc
@@ -72,30 +65,13 @@ class _$UserEventCopyWithImpl<$Res, $Val extends UserEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userToken = null,
-  }) {
-    return _then(_value.copyWith(
-      userToken: null == userToken
-          ? _value.userToken
-          : userToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$UserEventFetchCopyWith<$Res>
-    implements $UserEventCopyWith<$Res> {
+abstract class _$$UserEventFetchCopyWith<$Res> {
   factory _$$UserEventFetchCopyWith(
           _$UserEventFetch value, $Res Function(_$UserEventFetch) then) =
       __$$UserEventFetchCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userToken});
 }
 
 /// @nodoc
@@ -105,76 +81,51 @@ class __$$UserEventFetchCopyWithImpl<$Res>
   __$$UserEventFetchCopyWithImpl(
       _$UserEventFetch _value, $Res Function(_$UserEventFetch) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userToken = null,
-  }) {
-    return _then(_$UserEventFetch(
-      userToken: null == userToken
-          ? _value.userToken
-          : userToken // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$UserEventFetch implements UserEventFetch {
-  const _$UserEventFetch({required this.userToken});
-
-  @override
-  final String userToken;
+  const _$UserEventFetch();
 
   @override
   String toString() {
-    return 'UserEvent.fetch(userToken: $userToken)';
+    return 'UserEvent.fetch()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserEventFetch &&
-            (identical(other.userToken, userToken) ||
-                other.userToken == userToken));
+        (other.runtimeType == runtimeType && other is _$UserEventFetch);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userToken);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserEventFetchCopyWith<_$UserEventFetch> get copyWith =>
-      __$$UserEventFetchCopyWithImpl<_$UserEventFetch>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userToken) fetch,
+    required TResult Function() fetch,
   }) {
-    return fetch(userToken);
+    return fetch();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userToken)? fetch,
+    TResult? Function()? fetch,
   }) {
-    return fetch?.call(userToken);
+    return fetch?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userToken)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch(userToken);
+      return fetch();
     }
     return orElse();
   }
@@ -209,15 +160,7 @@ class _$UserEventFetch implements UserEventFetch {
 }
 
 abstract class UserEventFetch implements UserEvent {
-  const factory UserEventFetch({required final String userToken}) =
-      _$UserEventFetch;
-
-  @override
-  String get userToken;
-  @override
-  @JsonKey(ignore: true)
-  _$$UserEventFetchCopyWith<_$UserEventFetch> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory UserEventFetch() = _$UserEventFetch;
 }
 
 UserState _$UserStateFromJson(Map<String, dynamic> json) {

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
@@ -18,8 +17,6 @@ import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hr_app_flutter/router/router.dart';
-
-import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -66,7 +63,8 @@ class _MyAppState extends State<MyApp> {
               walletRepo: walletRepository, authRepository: authRepository),
         ),
         BlocProvider<UserBloc>(
-          create: (BuildContext context) => UserBloc(userRepo: userRepository),
+          create: (BuildContext context) => UserBloc(
+              userRepo: userRepository, authRepository: authRepository),
         ),
         BlocProvider<AuthViewCubit>(
           create: (BuildContext context) =>

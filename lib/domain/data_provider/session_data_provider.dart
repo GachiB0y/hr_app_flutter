@@ -51,6 +51,6 @@ class SessionDataProvdierDefault implements SessionDataProvdier {
   @override
   bool isLiveToken({required String jwtToken}) {
     bool isExpired = JwtDecoder.isExpired(jwtToken);
-    return isExpired;
+    return !isExpired;
   }
 }

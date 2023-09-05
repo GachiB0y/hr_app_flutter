@@ -108,7 +108,7 @@ class AuthProviderImpl implements AuthProvider {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
       final String accessToken = jsonData['access_token'];
-      final String refresToken = jsonData['refresToken'];
+      final String refresToken = jsonData['refresh_token'];
       return (accessToken: accessToken, refresToken: refresToken);
     } else {
       throw Exception('Error fetching makeNewJwtToken');

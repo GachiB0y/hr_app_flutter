@@ -16,7 +16,7 @@ class WalletProviderImpl implements WalletProvider {
   Future<int> getBalance({required String userToken}) async {
     var headers = {
       'accept': 'application/json',
-      'Authorization': 'Bearer $refreshToken'
+      'Authorization': 'Bearer $userToken'
     };
     var request =
         http.Request('GET', Uri.parse('http://10.3.29.20:9115/coins/balance'));
@@ -39,7 +39,7 @@ class WalletProviderImpl implements WalletProvider {
   Future<List<Transaction>> getTransactions({required String userToken}) async {
     var headers = {
       'accept': 'application/json',
-      'Authorization': 'Bearer $refreshToken'
+      'Authorization': 'Bearer $userToken'
     };
     var request = http.Request(
         'GET', Uri.parse('http://10.3.29.20:9115/coins/transactions'));

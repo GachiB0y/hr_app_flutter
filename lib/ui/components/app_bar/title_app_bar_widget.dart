@@ -17,7 +17,7 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<UserBloc>().add(const UserEvent.fetch(userToken: 'userToken'));
+    context.read<UserBloc>().add(const UserEvent.fetch());
   }
 
   @override
@@ -35,14 +35,15 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${'${userLoaded.firstName} ${userLoaded.lastName}'} ',
+                Text('${'${userLoaded.name} ${userLoaded.nameI}'} ',
                     style: StyleTextCustom.textNameUser),
                 const SizedBox(
                   height: 5,
                 ),
                 RichText(
                   text: TextSpan(
-                      text: userLoaded.position,
+                      text:
+                          'Менеджер по работе\nc клиентами', //userLoaded.position,
                       style: StyleTextCustom.textJobUserGrey),
                 ),
               ],

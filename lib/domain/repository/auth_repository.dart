@@ -76,9 +76,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
     await _sessionDataProvdier.setSessionId(record.refresToken);
     await _sessionDataProvdier.setAccessToken(record.accessToken);
-
-    final one = await _sessionDataProvdier.getAccessToken();
-    final two = await _sessionDataProvdier.getSessionId();
   }
 
   @override
@@ -106,11 +103,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   bool isLiveToken({required String jwtToken}) {
     bool isLive = _sessionDataProvdier.isLiveToken(jwtToken: jwtToken);
-    if (isLive) {
-      return true;
-    } else {
-      return false;
-    }
+    return isLive;
   }
 
   @override
