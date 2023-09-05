@@ -6,6 +6,7 @@ import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
@@ -69,6 +70,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AuthViewCubit>(
           create: (BuildContext context) =>
               AuthViewCubit(authRepository: authRepository),
+        ),
+        BlocProvider<LoaderViewCubit>(
+          create: (BuildContext context) =>
+              LoaderViewCubit(authRepository: authRepository),
         ),
       ],
       child: MaterialApp.router(

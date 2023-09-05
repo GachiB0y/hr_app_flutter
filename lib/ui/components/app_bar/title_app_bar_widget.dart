@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
+
 import 'package:hr_app_flutter/theme/style_text.dart';
 
 class TitleAppBarWidget extends StatefulWidget {

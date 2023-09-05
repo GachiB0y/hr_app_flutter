@@ -81,6 +81,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     await _sessionDataProvdier.deleteSessionId();
+    await _sessionDataProvdier.deleteAccessToken();
   }
 
   @override

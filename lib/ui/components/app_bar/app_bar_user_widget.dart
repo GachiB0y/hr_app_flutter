@@ -1,4 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
+import 'package:hr_app_flutter/router/router.dart';
+
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/theme/style_text.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
@@ -11,6 +16,8 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loaderViewCubit = context.watch<LoaderViewCubit>();
+
     return AppBar(
       scrolledUnderElevation: 0.0,
       // shadowColor: Colors.transparent,
@@ -29,12 +36,16 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
               borderRadius: BorderRadius.circular(17),
             ),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () async {
+                await loaderViewCubit.logout();
+
+                AutoRouter.of(context).push(const AuthenticationFormRoute());
+              },
               textColor: Colors.black,
               padding: const EdgeInsets.all(2),
               shape: const CircleBorder(),
               child: const Icon(
-                Icons.notifications_none,
+                Icons.logout,
                 size: 35,
               ),
             ),
