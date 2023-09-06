@@ -1,17 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-
-import 'package:hr_app_flutter/ui/components/tab_bar_widget.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
 import 'package:hr_app_flutter/ui/screens/education_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/services_screen.dart';
-
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 
 @RoutePage()
@@ -35,19 +33,12 @@ class _MainAppScreenState extends State<MainAppScreen> {
     const ServicesScreen(),
   ];
 
-  // void onChangeTab(int index) {
-  //   setState(() {
-  //     selectedPageIndex = index;
-  //   });
-  // }
-
   void _openPage(int index, TabsRouter tabsRouter) {
     tabsRouter.setActiveIndex(index);
   }
 
   @override
   Widget build(BuildContext context) {
-    // final model = context.watch<MainAppScreenViewCubit>();
     return BlocListener<MainAppScreenViewCubit, MainAppScreenViewState>(
       listener: (context, state) => MainAppScreenViewCubit(),
       child: BlocBuilder<MainAppScreenViewCubit, MainAppScreenViewState>(
@@ -74,58 +65,28 @@ class _MainAppScreenState extends State<MainAppScreen> {
                       onTap: (index) => _openPage(index, tabsRouter),
                       items: [
                         BottomNavigationBarItem(
-                            icon: Image.asset(
-                              'assets/images/menu_icon_grey.png',
-                              width: 30,
-                              height: 30,
-                            ),
+                            icon: const Icon(MyCustomIcon.iconHome, size: 28),
                             label: S.of(context).tabBarText_main),
                         BottomNavigationBarItem(
-                            icon: Image.asset(
-                              'assets/images/rub_icon.png',
-                              width: 30,
-                              height: 30,
-                            ),
+                            icon: const Icon(MyCustomIcon.iconRub, size: 30),
                             label: S.of(context).tabBarText_grassCoin),
                         BottomNavigationBarItem(
-                            icon: Image.asset(
-                              'assets/images/grass_icon_main.png',
-                              width: 30,
-                              height: 30,
-                            ),
+                            icon: const Icon(MyCustomIcon.iconLogoGrass,
+                                size: 36),
                             label: S.of(context).tabBarText_company),
                         BottomNavigationBarItem(
-                            icon: Image.asset(
-                              'assets/images/book_icon.png',
-                              width: 30,
-                              height: 30,
-                            ),
+                            icon: const Icon(MyCustomIcon.iconBook, size: 30),
                             label: S.of(context).tabBarText_education),
                         BottomNavigationBarItem(
-                            icon: Image.asset(
-                              'assets/images/service_icon.png',
-                              width: 30,
-                              height: 30,
+                            icon: const Icon(
+                              MyCustomIcon.iconService,
                             ),
                             label: S.of(context).tabBarText_service),
                       ],
                     ),
-              // TabBarWidget(
-              //     index: selectedPageIndex,
-              //     onChangeTab: (index) => onChangeTab(index)),
             );
           },
         );
-        // Navigator(
-        //   onGenerateRoute: (settings) {
-        //     List<Widget> screen = pages;
-        //     // if (settings.name == 'page2') screen = page2;
-        //     // if (settings.name == 'page3') screen = page3;
-        //     return MaterialPageRoute(
-        //         builder: (_) => screen[selectedPageIndex]);
-        //   },
-        // ),
-        // pages[selectedPageIndex],
       }),
     );
   }
