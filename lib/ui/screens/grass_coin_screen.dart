@@ -244,7 +244,7 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        widget.item.type == 0
+        widget.item.typeTtransaction == 1
             ? Text(
                 '-${widget.item.amount.toString()}',
                 style: const TextStyle(fontSize: 16),
@@ -354,9 +354,11 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
                 children: groupItems
                     .map(
                       (item) => ListTile(
-                        title: Text(item.sender.toString()),
+                        title: item.typeTtransaction == 0
+                            ? Text(item.sender)
+                            : Text(item.recipient),
                         subtitle: Text(
-                          item.type == 0 ? 'Перевод' : 'Зачисление',
+                          item.typeTtransaction == 0 ? 'Зачисление' : 'Перевод',
                           style: const TextStyle(color: Colors.grey),
                         ),
                         trailing: SizedBox(

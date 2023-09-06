@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:http/http.dart' as http;
 
@@ -51,7 +49,8 @@ class WalletProviderImpl implements WalletProvider {
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<Transaction> result = (jsonData['result'] as List<dynamic>)
+      final List<Transaction> result = (jsonData
+              as List<dynamic>) // Добавить ключ ['result'] если вотевет будет
           .map((item) => Transaction.fromJson(item))
           .toList();
 

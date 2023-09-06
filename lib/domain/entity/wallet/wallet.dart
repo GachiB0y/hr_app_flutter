@@ -15,12 +15,14 @@ class Wallet with _$Wallet {
 @freezed
 class Transaction with _$Transaction {
   const factory Transaction({
-    required int recipient,
+    required String recipient,
+    @JsonKey(name: 'recipient_id') required int recipientId,
     required int amount,
     required int id,
     required int createAt,
-    required int type,
-    required int sender,
+    @JsonKey(name: 'type_transaction') required int typeTtransaction,
+    required String sender,
+    @JsonKey(name: 'sender_id') required int senderId,
     @JsonKey(name: 'coins_reward') required int coinsReward,
     required int team,
     required String message,

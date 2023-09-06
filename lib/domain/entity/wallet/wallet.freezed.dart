@@ -177,12 +177,17 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Transaction {
-  int get recipient => throw _privateConstructorUsedError;
+  String get recipient => throw _privateConstructorUsedError;
+  @JsonKey(name: 'recipient_id')
+  int get recipientId => throw _privateConstructorUsedError;
   int get amount => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
   int get createAt => throw _privateConstructorUsedError;
-  int get type => throw _privateConstructorUsedError;
-  int get sender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type_transaction')
+  int get typeTtransaction => throw _privateConstructorUsedError;
+  String get sender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sender_id')
+  int get senderId => throw _privateConstructorUsedError;
   @JsonKey(name: 'coins_reward')
   int get coinsReward => throw _privateConstructorUsedError;
   int get team => throw _privateConstructorUsedError;
@@ -201,12 +206,14 @@ abstract class $TransactionCopyWith<$Res> {
       _$TransactionCopyWithImpl<$Res, Transaction>;
   @useResult
   $Res call(
-      {int recipient,
+      {String recipient,
+      @JsonKey(name: 'recipient_id') int recipientId,
       int amount,
       int id,
       int createAt,
-      int type,
-      int sender,
+      @JsonKey(name: 'type_transaction') int typeTtransaction,
+      String sender,
+      @JsonKey(name: 'sender_id') int senderId,
       @JsonKey(name: 'coins_reward') int coinsReward,
       int team,
       String message});
@@ -226,11 +233,13 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
   @override
   $Res call({
     Object? recipient = null,
+    Object? recipientId = null,
     Object? amount = null,
     Object? id = null,
     Object? createAt = null,
-    Object? type = null,
+    Object? typeTtransaction = null,
     Object? sender = null,
+    Object? senderId = null,
     Object? coinsReward = null,
     Object? team = null,
     Object? message = null,
@@ -239,6 +248,10 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _value.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
               as int,
       amount: null == amount
           ? _value.amount
@@ -252,13 +265,17 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
           ? _value.createAt
           : createAt // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      typeTtransaction: null == typeTtransaction
+          ? _value.typeTtransaction
+          : typeTtransaction // ignore: cast_nullable_to_non_nullable
               as int,
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
               as int,
       coinsReward: null == coinsReward
           ? _value.coinsReward
@@ -285,12 +302,14 @@ abstract class _$$_TransactionCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int recipient,
+      {String recipient,
+      @JsonKey(name: 'recipient_id') int recipientId,
       int amount,
       int id,
       int createAt,
-      int type,
-      int sender,
+      @JsonKey(name: 'type_transaction') int typeTtransaction,
+      String sender,
+      @JsonKey(name: 'sender_id') int senderId,
       @JsonKey(name: 'coins_reward') int coinsReward,
       int team,
       String message});
@@ -308,11 +327,13 @@ class __$$_TransactionCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recipient = null,
+    Object? recipientId = null,
     Object? amount = null,
     Object? id = null,
     Object? createAt = null,
-    Object? type = null,
+    Object? typeTtransaction = null,
     Object? sender = null,
+    Object? senderId = null,
     Object? coinsReward = null,
     Object? team = null,
     Object? message = null,
@@ -321,6 +342,10 @@ class __$$_TransactionCopyWithImpl<$Res>
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _value.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
               as int,
       amount: null == amount
           ? _value.amount
@@ -334,13 +359,17 @@ class __$$_TransactionCopyWithImpl<$Res>
           ? _value.createAt
           : createAt // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      typeTtransaction: null == typeTtransaction
+          ? _value.typeTtransaction
+          : typeTtransaction // ignore: cast_nullable_to_non_nullable
               as int,
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
               as int,
       coinsReward: null == coinsReward
           ? _value.coinsReward
@@ -363,11 +392,13 @@ class __$$_TransactionCopyWithImpl<$Res>
 class _$_Transaction implements _Transaction {
   const _$_Transaction(
       {required this.recipient,
+      @JsonKey(name: 'recipient_id') required this.recipientId,
       required this.amount,
       required this.id,
       required this.createAt,
-      required this.type,
+      @JsonKey(name: 'type_transaction') required this.typeTtransaction,
       required this.sender,
+      @JsonKey(name: 'sender_id') required this.senderId,
       @JsonKey(name: 'coins_reward') required this.coinsReward,
       required this.team,
       required this.message});
@@ -376,7 +407,10 @@ class _$_Transaction implements _Transaction {
       _$$_TransactionFromJson(json);
 
   @override
-  final int recipient;
+  final String recipient;
+  @override
+  @JsonKey(name: 'recipient_id')
+  final int recipientId;
   @override
   final int amount;
   @override
@@ -384,9 +418,13 @@ class _$_Transaction implements _Transaction {
   @override
   final int createAt;
   @override
-  final int type;
+  @JsonKey(name: 'type_transaction')
+  final int typeTtransaction;
   @override
-  final int sender;
+  final String sender;
+  @override
+  @JsonKey(name: 'sender_id')
+  final int senderId;
   @override
   @JsonKey(name: 'coins_reward')
   final int coinsReward;
@@ -397,7 +435,7 @@ class _$_Transaction implements _Transaction {
 
   @override
   String toString() {
-    return 'Transaction(recipient: $recipient, amount: $amount, id: $id, createAt: $createAt, type: $type, sender: $sender, coinsReward: $coinsReward, team: $team, message: $message)';
+    return 'Transaction(recipient: $recipient, recipientId: $recipientId, amount: $amount, id: $id, createAt: $createAt, typeTtransaction: $typeTtransaction, sender: $sender, senderId: $senderId, coinsReward: $coinsReward, team: $team, message: $message)';
   }
 
   @override
@@ -407,12 +445,17 @@ class _$_Transaction implements _Transaction {
             other is _$_Transaction &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createAt, createAt) ||
                 other.createAt == createAt) &&
-            (identical(other.type, type) || other.type == type) &&
+            (identical(other.typeTtransaction, typeTtransaction) ||
+                other.typeTtransaction == typeTtransaction) &&
             (identical(other.sender, sender) || other.sender == sender) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
             (identical(other.coinsReward, coinsReward) ||
                 other.coinsReward == coinsReward) &&
             (identical(other.team, team) || other.team == team) &&
@@ -421,8 +464,19 @@ class _$_Transaction implements _Transaction {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, recipient, amount, id, createAt,
-      type, sender, coinsReward, team, message);
+  int get hashCode => Object.hash(
+      runtimeType,
+      recipient,
+      recipientId,
+      amount,
+      id,
+      createAt,
+      typeTtransaction,
+      sender,
+      senderId,
+      coinsReward,
+      team,
+      message);
 
   @JsonKey(ignore: true)
   @override
@@ -440,12 +494,14 @@ class _$_Transaction implements _Transaction {
 
 abstract class _Transaction implements Transaction {
   const factory _Transaction(
-      {required final int recipient,
+      {required final String recipient,
+      @JsonKey(name: 'recipient_id') required final int recipientId,
       required final int amount,
       required final int id,
       required final int createAt,
-      required final int type,
-      required final int sender,
+      @JsonKey(name: 'type_transaction') required final int typeTtransaction,
+      required final String sender,
+      @JsonKey(name: 'sender_id') required final int senderId,
       @JsonKey(name: 'coins_reward') required final int coinsReward,
       required final int team,
       required final String message}) = _$_Transaction;
@@ -454,7 +510,10 @@ abstract class _Transaction implements Transaction {
       _$_Transaction.fromJson;
 
   @override
-  int get recipient;
+  String get recipient;
+  @override
+  @JsonKey(name: 'recipient_id')
+  int get recipientId;
   @override
   int get amount;
   @override
@@ -462,9 +521,13 @@ abstract class _Transaction implements Transaction {
   @override
   int get createAt;
   @override
-  int get type;
+  @JsonKey(name: 'type_transaction')
+  int get typeTtransaction;
   @override
-  int get sender;
+  String get sender;
+  @override
+  @JsonKey(name: 'sender_id')
+  int get senderId;
   @override
   @JsonKey(name: 'coins_reward')
   int get coinsReward;

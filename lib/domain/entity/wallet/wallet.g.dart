@@ -20,12 +20,14 @@ Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
 
 _$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
     _$_Transaction(
-      recipient: json['recipient'] as int,
+      recipient: json['recipient'] as String,
+      recipientId: json['recipient_id'] as int,
       amount: json['amount'] as int,
       id: json['id'] as int,
       createAt: json['createAt'] as int,
-      type: json['type'] as int,
-      sender: json['sender'] as int,
+      typeTtransaction: json['type_transaction'] as int,
+      sender: json['sender'] as String,
+      senderId: json['sender_id'] as int,
       coinsReward: json['coins_reward'] as int,
       team: json['team'] as int,
       message: json['message'] as String,
@@ -34,11 +36,13 @@ _$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
     <String, dynamic>{
       'recipient': instance.recipient,
+      'recipient_id': instance.recipientId,
       'amount': instance.amount,
       'id': instance.id,
       'createAt': instance.createAt,
-      'type': instance.type,
+      'type_transaction': instance.typeTtransaction,
       'sender': instance.sender,
+      'sender_id': instance.senderId,
       'coins_reward': instance.coinsReward,
       'team': instance.team,
       'message': instance.message,

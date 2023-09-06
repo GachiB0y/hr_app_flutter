@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -117,8 +116,8 @@ class ServicesScreen extends StatelessWidget {
                             top: Radius.circular(20.0)),
                       ),
                       child: BottomSheetCreateEventsWidget(
-                        cubit: cubitEventEntity,
-                      ),
+                          // cubitEventEntity: cubitEventEntity,
+                          ),
                     ),
                   ),
                 ],
@@ -171,7 +170,7 @@ class ServicesScreen extends StatelessWidget {
 class PainterRight extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    double radius = 100;
+    // double radius = 100;
     double x = 52;
     double y = 26;
     final path = Path()
@@ -205,7 +204,7 @@ class PainterRight extends CustomPainter {
 class PainterLeft extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    double radius = 100;
+    // double radius = 100;
     double x = 52;
     double y = 26;
     final path = Path()
@@ -234,10 +233,8 @@ class PainterLeft extends CustomPainter {
 }
 
 class BottomSheetCreateEventsWidget extends StatefulWidget {
-  EventEntityCubit cubit;
   BottomSheetCreateEventsWidget({
     Key? key,
-    required this.cubit,
   }) : super(key: key);
 
   @override
@@ -377,7 +374,8 @@ class _BottomSheetCreateEventsWidgetState
                           dateTo: DateTime.now(),
                           tags: selectedItems);
 
-                      widget.cubit.addItem(event);
+                      final cubitEventEntity = context.read<EventEntityCubit>();
+                      cubitEventEntity.addItem(event);
                       Navigator.pop(context);
                     },
                   ),
