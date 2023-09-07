@@ -40,9 +40,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
           final state = WalletState.loaded(walletLoaded: _walletLoaded);
 
-          // final newState = (state as _$WalletStateLoaded)
-          //     .copyWith(walletLoaded: Wallet(balance: 5555, transactions: []));
-
           emit(state);
         } on TimeoutException {
           emit(const WalletState.error());
@@ -62,23 +59,23 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
             accessToken = newAccecssToken;
           }
 
-          // final int newBalance = await walletRepo
-          //     .sendCoinsToOtherUser(
-          //         accessToken: accessToken as String,
-          //         amount: event.amount,
-          //         userId: event.userId,
-          //         message: event.message)
-          //     .timeout(const Duration(seconds: 5));
+          final int newBalance = await walletRepo
+              .sendCoinsToOtherUser(
+                  accessToken: accessToken as String,
+                  amount: event.amount,
+                  userId: event.userId,
+                  message: event.message)
+              .timeout(const Duration(seconds: 5));
 
-          // final oldState = (state as WalletStateLoaded).copyWith();
-          // final List<Transaction> transactions =
-          //     oldState.walletLoaded.transactions;
+          final oldState = (state as WalletStateLoaded).copyWith();
+          final List<Transaction> transactions =
+              oldState.walletLoaded.transactions;
 
-          // final newState = (state as WalletStateLoaded).copyWith(
-          //     walletLoaded:
-          //         Wallet(balance: newBalance, transactions: transactions));
+          final newState = (state as WalletStateLoaded).copyWith(
+              walletLoaded:
+                  Wallet(balance: newBalance, transactions: transactions));
 
-          emit(state);
+          emit(newState);
         } on TimeoutException {
           emit(const WalletState.error());
         } catch (e) {

@@ -58,7 +58,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                       child: const BodyContentWidgetCoinScreen()),
                 ),
               ),
-              HistoryOperationCoinWidget(),
+              const HistoryOperationCoinWidget(),
             ],
           ),
         ),

@@ -44,7 +44,8 @@ class _SearchFriendAndSendCoinsScreenState
                     amount: int.parse(amountCoins),
                     userId: autoCard,
                     message: 'LOL'));
-                context.read<WalletBloc>().add(const WalletEvent.fetch());
+                blocWallet.add(const WalletEvent.fetch());
+
                 Navigator.of(context).pop(); // Закрыть Алерт
                 Navigator.of(context).pop(); // Закрть последнюю вкладку
               },
