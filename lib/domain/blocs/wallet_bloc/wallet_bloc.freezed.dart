@@ -19,32 +19,44 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function(int amount, int userId, String message)
+        sendCoinsToOtherUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventSendCoinsToOtherUser value)
+        sendCoinsToOtherUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -107,6 +119,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function(int amount, int userId, String message)
+        sendCoinsToOtherUser,
   }) {
     return fetch();
   }
@@ -115,6 +129,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
   }) {
     return fetch?.call();
   }
@@ -123,6 +139,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -135,6 +153,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventSendCoinsToOtherUser value)
+        sendCoinsToOtherUser,
   }) {
     return fetch(this);
   }
@@ -143,6 +163,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
   }) {
     return fetch?.call(this);
   }
@@ -151,6 +173,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -162,6 +186,171 @@ class _$WalletEventFetch implements WalletEventFetch {
 
 abstract class WalletEventFetch implements WalletEvent {
   const factory WalletEventFetch() = _$WalletEventFetch;
+}
+
+/// @nodoc
+abstract class _$$WalletEventSendCoinsToOtherUserCopyWith<$Res> {
+  factory _$$WalletEventSendCoinsToOtherUserCopyWith(
+          _$WalletEventSendCoinsToOtherUser value,
+          $Res Function(_$WalletEventSendCoinsToOtherUser) then) =
+      __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int amount, int userId, String message});
+}
+
+/// @nodoc
+class __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventSendCoinsToOtherUser>
+    implements _$$WalletEventSendCoinsToOtherUserCopyWith<$Res> {
+  __$$WalletEventSendCoinsToOtherUserCopyWithImpl(
+      _$WalletEventSendCoinsToOtherUser _value,
+      $Res Function(_$WalletEventSendCoinsToOtherUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+    Object? userId = null,
+    Object? message = null,
+  }) {
+    return _then(_$WalletEventSendCoinsToOtherUser(
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$WalletEventSendCoinsToOtherUser
+    implements WalletEventSendCoinsToOtherUser {
+  const _$WalletEventSendCoinsToOtherUser(
+      {required this.amount, required this.userId, required this.message});
+
+  @override
+  final int amount;
+  @override
+  final int userId;
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'WalletEvent.sendCoinsToOtherUser(amount: $amount, userId: $userId, message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletEventSendCoinsToOtherUser &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, amount, userId, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WalletEventSendCoinsToOtherUserCopyWith<_$WalletEventSendCoinsToOtherUser>
+      get copyWith => __$$WalletEventSendCoinsToOtherUserCopyWithImpl<
+          _$WalletEventSendCoinsToOtherUser>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function(int amount, int userId, String message)
+        sendCoinsToOtherUser,
+  }) {
+    return sendCoinsToOtherUser(amount, userId, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+  }) {
+    return sendCoinsToOtherUser?.call(amount, userId, message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+    required TResult orElse(),
+  }) {
+    if (sendCoinsToOtherUser != null) {
+      return sendCoinsToOtherUser(amount, userId, message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventSendCoinsToOtherUser value)
+        sendCoinsToOtherUser,
+  }) {
+    return sendCoinsToOtherUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+  }) {
+    return sendCoinsToOtherUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+    required TResult orElse(),
+  }) {
+    if (sendCoinsToOtherUser != null) {
+      return sendCoinsToOtherUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class WalletEventSendCoinsToOtherUser implements WalletEvent {
+  const factory WalletEventSendCoinsToOtherUser(
+      {required final int amount,
+      required final int userId,
+      required final String message}) = _$WalletEventSendCoinsToOtherUser;
+
+  int get amount;
+  int get userId;
+  String get message;
+  @JsonKey(ignore: true)
+  _$$WalletEventSendCoinsToOtherUserCopyWith<_$WalletEventSendCoinsToOtherUser>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 WalletState _$WalletStateFromJson(Map<String, dynamic> json) {

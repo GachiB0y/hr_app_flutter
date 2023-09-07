@@ -4,6 +4,11 @@ import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 
 abstract class WalletRepository {
   Future<Wallet> getWallet({required String accessToken});
+  Future<int> sendCoinsToOtherUser(
+      {required String accessToken,
+      required int amount,
+      required int userId,
+      required String message});
 }
 
 class WalletRepositoryImpl implements WalletRepository {
@@ -21,5 +26,20 @@ class WalletRepositoryImpl implements WalletRepository {
         await _walletProvider.getTransactions(userToken: accessToken);
     final Wallet wallet = Wallet(balance: balance, transactions: transactions);
     return wallet;
+  }
+
+  @override
+  Future<int> sendCoinsToOtherUser(
+      {required String accessToken,
+      required int amount,
+      required int userId,
+      required String message}) async {
+    final int newBalance = await _walletProvider.sendCoinsToOtherUser(
+      userToken: accessToken,
+      amount: amount,
+      userId: userId,
+      message: message,
+    );
+    return newBalance;
   }
 }

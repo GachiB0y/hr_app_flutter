@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/ui/screens/education_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/loader_screen.dart';
 import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
+import 'package:hr_app_flutter/ui/screens/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/ui/screens/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 part 'router.gr.dart';
@@ -22,5 +23,8 @@ class AppRouter extends _$AppRouter {
           AutoRoute(page: EducationRoute.page, path: 'education'),
           AutoRoute(page: CompanyRoute.page, path: 'company'),
         ]),
+        AutoRoute(
+            page: SearchFriendAndSendCoinsRoute.page,
+            path: '/search_friend_and_send_coins'),
       ];
 }

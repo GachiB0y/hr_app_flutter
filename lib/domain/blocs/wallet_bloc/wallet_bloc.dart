@@ -49,6 +49,41 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         } catch (e) {
           emit(const WalletState.error());
         }
+      } else if (event is WalletEventSendCoinsToOtherUser) {
+        try {
+          String? accessToken = await authRepository.getAccessTokenInStorage();
+          final bool isLive =
+              authRepository.isLiveToken(jwtToken: accessToken as String);
+          if (!isLive) {
+            final String? refreshToken =
+                await authRepository.getRefeshTokenInStorage();
+            final newAccecssToken = await authRepository.makeJwtTokens(
+                refreshToken: refreshToken as String);
+            accessToken = newAccecssToken;
+          }
+
+          // final int newBalance = await walletRepo
+          //     .sendCoinsToOtherUser(
+          //         accessToken: accessToken as String,
+          //         amount: event.amount,
+          //         userId: event.userId,
+          //         message: event.message)
+          //     .timeout(const Duration(seconds: 5));
+
+          // final oldState = (state as WalletStateLoaded).copyWith();
+          // final List<Transaction> transactions =
+          //     oldState.walletLoaded.transactions;
+
+          // final newState = (state as WalletStateLoaded).copyWith(
+          //     walletLoaded:
+          //         Wallet(balance: newBalance, transactions: transactions));
+
+          emit(state);
+        } on TimeoutException {
+          emit(const WalletState.error());
+        } catch (e) {
+          emit(const WalletState.error());
+        }
       }
     });
   }

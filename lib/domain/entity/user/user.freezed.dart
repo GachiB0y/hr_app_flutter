@@ -20,7 +20,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
-  int get auto_card => throw _privateConstructorUsedError;
+  @JsonKey(name: 'auto_card')
+  int get autoCard => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_i')
   String get nameI => throw _privateConstructorUsedError;
@@ -28,6 +29,8 @@ mixin _$User {
   String get nameO => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_birth')
   String get dateBirth => throw _privateConstructorUsedError;
+  @JsonKey(name: 'staff_position')
+  String get staffPosition => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,11 +44,12 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {int auto_card,
+      {@JsonKey(name: 'auto_card') int autoCard,
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
       @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'staff_position') String staffPosition,
       String email});
 }
 
@@ -62,17 +66,18 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? auto_card = null,
+    Object? autoCard = null,
     Object? name = null,
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? staffPosition = null,
     Object? email = null,
   }) {
     return _then(_value.copyWith(
-      auto_card: null == auto_card
-          ? _value.auto_card
-          : auto_card // ignore: cast_nullable_to_non_nullable
+      autoCard: null == autoCard
+          ? _value.autoCard
+          : autoCard // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -89,6 +94,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       dateBirth: null == dateBirth
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
+              as String,
+      staffPosition: null == staffPosition
+          ? _value.staffPosition
+          : staffPosition // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _value.email
@@ -105,11 +114,12 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int auto_card,
+      {@JsonKey(name: 'auto_card') int autoCard,
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
       @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'staff_position') String staffPosition,
       String email});
 }
 
@@ -122,17 +132,18 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? auto_card = null,
+    Object? autoCard = null,
     Object? name = null,
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? staffPosition = null,
     Object? email = null,
   }) {
     return _then(_$_User(
-      auto_card: null == auto_card
-          ? _value.auto_card
-          : auto_card // ignore: cast_nullable_to_non_nullable
+      autoCard: null == autoCard
+          ? _value.autoCard
+          : autoCard // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -150,6 +161,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
               as String,
+      staffPosition: null == staffPosition
+          ? _value.staffPosition
+          : staffPosition // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -162,17 +177,19 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.auto_card,
+      {@JsonKey(name: 'auto_card') required this.autoCard,
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
       @JsonKey(name: 'name_o') required this.nameO,
       @JsonKey(name: 'date_birth') required this.dateBirth,
+      @JsonKey(name: 'staff_position') required this.staffPosition,
       required this.email});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final int auto_card;
+  @JsonKey(name: 'auto_card')
+  final int autoCard;
   @override
   final String name;
   @override
@@ -185,11 +202,14 @@ class _$_User implements _User {
   @JsonKey(name: 'date_birth')
   final String dateBirth;
   @override
+  @JsonKey(name: 'staff_position')
+  final String staffPosition;
+  @override
   final String email;
 
   @override
   String toString() {
-    return 'User(auto_card: $auto_card, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, email: $email)';
+    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email)';
   }
 
   @override
@@ -197,20 +217,22 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_User &&
-            (identical(other.auto_card, auto_card) ||
-                other.auto_card == auto_card) &&
+            (identical(other.autoCard, autoCard) ||
+                other.autoCard == autoCard) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nameI, nameI) || other.nameI == nameI) &&
             (identical(other.nameO, nameO) || other.nameO == nameO) &&
             (identical(other.dateBirth, dateBirth) ||
                 other.dateBirth == dateBirth) &&
+            (identical(other.staffPosition, staffPosition) ||
+                other.staffPosition == staffPosition) &&
             (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, auto_card, name, nameI, nameO, dateBirth, email);
+  int get hashCode => Object.hash(runtimeType, autoCard, name, nameI, nameO,
+      dateBirth, staffPosition, email);
 
   @JsonKey(ignore: true)
   @override
@@ -228,17 +250,19 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final int auto_card,
+      {@JsonKey(name: 'auto_card') required final int autoCard,
       required final String name,
       @JsonKey(name: 'name_i') required final String nameI,
       @JsonKey(name: 'name_o') required final String nameO,
       @JsonKey(name: 'date_birth') required final String dateBirth,
+      @JsonKey(name: 'staff_position') required final String staffPosition,
       required final String email}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  int get auto_card;
+  @JsonKey(name: 'auto_card')
+  int get autoCard;
   @override
   String get name;
   @override
@@ -250,6 +274,9 @@ abstract class _User implements User {
   @override
   @JsonKey(name: 'date_birth')
   String get dateBirth;
+  @override
+  @JsonKey(name: 'staff_position')
+  String get staffPosition;
   @override
   String get email;
   @override

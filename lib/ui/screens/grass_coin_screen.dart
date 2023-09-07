@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
@@ -205,7 +206,10 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30))),
                   padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  AutoRouter.of(context)
+                      .push(const SearchFriendAndSendCoinsRoute());
+                },
                 icon: const Icon(Icons.card_giftcard,
                     size: 26, color: Colors.black),
                 label: const Text('Подарить',

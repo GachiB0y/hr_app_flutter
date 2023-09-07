@@ -42,8 +42,7 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
                 ),
                 RichText(
                   text: TextSpan(
-                      text:
-                          'Менеджер по работе\nc клиентами', //userLoaded.position,
+                      text: userLoaded.staffPosition,
                       style: StyleTextCustom.textJobUserGrey),
                 ),
               ],

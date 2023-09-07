@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
-import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 
 abstract class AuthViewCubitState {}
 
