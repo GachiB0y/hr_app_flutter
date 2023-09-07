@@ -1,8 +1,8 @@
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 
 abstract class EventEntityRepository {
-  Future<List<EventEntity>> getEvents();
+  Future<List<EventEntity>> getEvents({required String accessToken});
 }
 
 class EventEntityRepositoryImpl implements EventEntityRepository {
@@ -13,7 +13,7 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
   final EventsEntityProvider _eventEntityProvider;
 
   @override
-  Future<List<EventEntity>> getEvents() {
-    return _eventEntityProvider.getEvents();
+  Future<List<EventEntity>> getEvents({required String accessToken}) {
+    return _eventEntityProvider.getEvents(accessToken: accessToken);
   }
 }

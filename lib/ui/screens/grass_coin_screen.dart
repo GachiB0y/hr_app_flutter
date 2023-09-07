@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
@@ -157,22 +158,53 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
               width: double.infinity,
             ),
             child: ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-                ),
-                onPressed: () {},
-                icon: Container(
-                  decoration: BoxDecoration(
-                      color: ColorsForWidget.colorGreen,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: const Icon(Icons.question_mark_rounded,
-                      size: 18, color: Colors.white),
-                ),
-                label: const Text('Что такое коин и что с ним делать?',
-                    style: TextStyle(fontSize: 16, color: Colors.black))),
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30))),
+                padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+              ),
+              onPressed: () {},
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: ColorsForWidget.colorGreen,
+                    borderRadius: BorderRadius.circular(30)),
+                child: const Icon(Icons.question_mark_rounded,
+                    size: 18, color: Colors.white),
+              ),
+              label: const Text(
+                'Что такое коин и что с ним делать?',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints.tightFor(
+              width: double.infinity,
+            ),
+            child: ElevatedButton.icon(
+              style: ButtonStyle(
+                backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30))),
+                padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+              ),
+              onPressed: () {},
+              icon: const Icon(
+                MyCustomIcon.iconRub,
+                size: 18,
+                color: ColorsForWidget.colorGreen,
+              ),
+              label: const Text(
+                'Как заработать коины?',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
           ),
         ),
         const SizedBox(

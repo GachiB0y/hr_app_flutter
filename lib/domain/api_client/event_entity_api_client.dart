@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:hr_app_flutter/constants.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 
 class EventEntityApiClient implements EventsEntityProvider {
   @override
-  Future<List<EventEntity>> getEvents() async {
+  Future<List<EventEntity>> getEvents({required String accessToken}) async {
     List<EventEntity> events = [
       EventEntity(
           base64Image: null,
@@ -77,21 +78,35 @@ class EventEntityApiClient implements EventsEntityProvider {
 }
 
 abstract class EventsEntityProvider {
-  Future<List<EventEntity>> getEvents();
+  Future<List<EventEntity>> getEvents({required String accessToken});
 }
 
 class EventsEntitytProviderImpl implements EventsEntityProvider {
   EventsEntitytProviderImpl();
 
   @override
-  Future<List<EventEntity>> getEvents() async {
-    var url = 'http://domain/get_events';
-    final response = await http.get(Uri.parse(url));
+  Future<List<EventEntity>> getEvents({required String accessToken}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request('GET', Uri.parse('$host:$port/news/'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
     if (response.statusCode == 200) {
-      final List<EventEntity> result = jsonDecode(response.body);
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final List<EventEntity> result = (jsonData['result']
+              as List<dynamic>) // Добавить ключ ['result'] если вотевет будет
+          .map((item) => EventEntity.fromJson(item))
+          .toList();
+
       return result;
     } else {
-      throw Exception('Error fetching EventEntity');
+      throw Exception('Error fetching Transactions');
     }
   }
 }

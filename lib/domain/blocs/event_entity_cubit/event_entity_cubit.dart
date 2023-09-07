@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 
 class EventEntityState {
@@ -46,10 +46,6 @@ class EventEntityState {
   int get hashCode => _listItems.hashCode ^ eventsActual.hashCode;
 }
 
-// abstract class EventEntityApi {
-//   Future<List<EventEntity>> getEvents();
-// }
-
 class EventEntityCubit extends Cubit<EventEntityState> {
   final EventEntityRepository eventEntityRepository;
   EventEntityCubit({required this.eventEntityRepository})
@@ -61,7 +57,7 @@ class EventEntityCubit extends Cubit<EventEntityState> {
   }
 
   Future<void> loadEventsList() async {
-    final res = await eventEntityRepository.getEvents();
+    final res = await eventEntityRepository.getEvents(accessToken: 'ZAGLYSHKA');
     final newState = state.copyWith(listItems: res);
     emit(newState);
     changeVisibleEvents(index: 0);
