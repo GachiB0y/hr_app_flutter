@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,8 +22,7 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request =
-        http.Request('GET', Uri.parse('http://10.3.29.20:9115/coins/balance'));
+    var request = http.Request('GET', Uri.parse('$host:$port/coins/balance'));
 
     request.headers.addAll(headers);
 
@@ -44,8 +44,8 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request(
-        'GET', Uri.parse('http://10.3.29.20:9115/coins/transactions'));
+    var request =
+        http.Request('GET', Uri.parse('$host:$port/coins/transactions'));
 
     request.headers.addAll(headers);
 
@@ -76,8 +76,8 @@ class WalletProviderImpl implements WalletProvider {
       'Authorization': 'Bearer $userToken',
       'Content-Type': 'application/json'
     };
-    var request = http.Request(
-        'POST', Uri.parse('http://10.3.29.20:9115/coins/transfer-to-friend'));
+    var request =
+        http.Request('POST', Uri.parse('$host:$port/coins/transfer-to-friend'));
     request.body = json
         .encode({"recipient": userId, "amount": amount, "message": message});
     request.headers.addAll(headers);

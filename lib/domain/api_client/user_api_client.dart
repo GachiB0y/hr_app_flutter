@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,8 +20,7 @@ class UserProviderImpl implements UserProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request =
-        http.Request('GET', Uri.parse('http://10.3.29.20:9115/auth/profile'));
+    var request = http.Request('GET', Uri.parse('$host:$port/auth/profile'));
 
     request.headers.addAll(headers);
 
@@ -43,8 +43,8 @@ class UserProviderImpl implements UserProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request('GET',
-        Uri.parse('http://10.3.29.20:9115/auth/find_by_phone/$phoneNumber'));
+    var request = http.Request(
+        'GET', Uri.parse('$host:$port/auth/find_by_phone/$phoneNumber'));
 
     request.headers.addAll(headers);
 

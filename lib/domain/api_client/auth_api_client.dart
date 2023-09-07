@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hr_app_flutter/constants.dart';
 import 'package:http/http.dart' as http;
 
 abstract class AuthProvider {
@@ -19,8 +20,7 @@ class AuthProviderImpl implements AuthProvider {
       'accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request =
-        http.Request('POST', Uri.parse('http://10.3.29.20:9115/auth/'));
+    var request = http.Request('POST', Uri.parse('$host:$port/auth/'));
     request.body = json.encode({
       "phone": numberPhone,
     });
@@ -42,8 +42,7 @@ class AuthProviderImpl implements AuthProvider {
       'accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request =
-        http.Request('POST', Uri.parse('http://10.3.29.20:9115/auth/'));
+    var request = http.Request('POST', Uri.parse('$host:$port/auth/'));
     request.body = json.encode({
       "phone": numberPhone,
     });
@@ -67,10 +66,8 @@ class AuthProviderImpl implements AuthProvider {
       {required String numberPhone, required String code}) async {
     var headers = {'accept': 'application/json'};
 
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://10.3.29.20:9115/auth/verify_sms?phone=$numberPhone&code=$code'));
+    var request = http.Request('POST',
+        Uri.parse('$host:$port/auth/verify_sms?phone=$numberPhone&code=$code'));
 
     request.body = json.encode({
       "phone": numberPhone,
@@ -97,9 +94,7 @@ class AuthProviderImpl implements AuthProvider {
       {required String refreshToken}) async {
     var headers = {'accept': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://10.3.29.20:9115/auth/switch_token?token=$refreshToken'));
+        'POST', Uri.parse('$host:$port/auth/switch_token?token=$refreshToken'));
 
     request.headers.addAll(headers);
 

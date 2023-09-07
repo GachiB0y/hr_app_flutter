@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-const refreshToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwSUQiOjQ3NjEsInNjb3BlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjkzNTg0NzEzfQ.w00oPaw9Vhnbe5vQn8OOvJwgVr3_47G7nlmi7iC3ogU';
+const String host = 'http://10.3.29.20';
+const String port = '9115';
 
 class MyCustomIcon {
   static const IconData iconLogoGrass =
