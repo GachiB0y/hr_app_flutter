@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
@@ -79,6 +80,12 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<OtherUsersBloc>(
           create: (BuildContext context) => OtherUsersBloc(
               authRepository: authRepository, userRepo: userRepository),
+        ),
+        BlocProvider<CoinsScreenViewModelBloc>(
+          create: (BuildContext context) => CoinsScreenViewModelBloc(
+            authRepository: authRepository,
+            walletRepo: walletRepository,
+          ),
         ),
       ],
       child: MaterialApp.router(

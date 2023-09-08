@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 
@@ -304,7 +304,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         events = cubit.state.itemsGet;
-        selectTabTags = cubit.state.tabs[selectedTab];
+        // selectTabTags = cubit.state.tabs[selectedTab];
         // cubit.changeVisibleEvents(index: selectedTab);
       },
     );
@@ -315,7 +315,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<EventEntityCubit>();
-    selectTabTags = cubit.state.tabs[selectedTab];
+    // selectTabTags = cubit.state.tabs[selectedTab];
 
     return Column(
       mainAxisSize: MainAxisSize.min,

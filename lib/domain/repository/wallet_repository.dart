@@ -1,9 +1,13 @@
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
+import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart';
+import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_reward.dart';
 
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 
 abstract class WalletRepository {
   Future<Wallet> getWallet({required String accessToken});
+  Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
+  Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});
   Future<int> sendCoinsToOtherUser(
       {required String accessToken,
       required int amount,
@@ -41,5 +45,23 @@ class WalletRepositoryImpl implements WalletRepository {
       message: message,
     );
     return newBalance;
+  }
+
+  @override
+  Future<List<CoinsInfo>> getCoinsInfo({required String userToken}) async {
+    final List<CoinsInfo> listCoinsinfo = await _walletProvider.getCoinsInfo(
+      userToken: userToken,
+    );
+    return listCoinsinfo;
+  }
+
+  @override
+  Future<List<CoinsReward>> getInfoCoinsReward(
+      {required String userToken}) async {
+    final List<CoinsReward> listCoinsReward =
+        await _walletProvider.getInfoCoinsReward(
+      userToken: userToken,
+    );
+    return listCoinsReward;
   }
 }

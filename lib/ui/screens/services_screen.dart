@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 

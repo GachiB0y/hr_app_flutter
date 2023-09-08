@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/constants.dart';
+import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
+import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart';
 
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -26,6 +28,9 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
   void initState() {
     super.initState();
     context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context
+        .read<CoinsScreenViewModelBloc>()
+        .add(const CoinsScreenViewModelEvent.fetchInfo());
   }
 
   @override
@@ -53,7 +58,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
 
                 title: const TitleAppBarWidget(),
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(302),
+                  preferredSize: const Size.fromHeight(360),
                   child: Container(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: const BodyContentWidgetCoinScreen()),
@@ -72,6 +77,26 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
   const BodyContentWidgetCoinScreen({
     super.key,
   });
+
+  void _showBottomSheet(BuildContext context, {required bool isCoinsInfo}) {
+    showModalBottomSheet(
+      showDragHandle: true,
+      backgroundColor: ColorsForWidget.colorGrey,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor: 0.7, // Указывает высоту окна в относительных единицах
+          child: Container(
+            margin: const EdgeInsets.only(left: 16, right: 16),
+            child: CardListCoinsInfoBottomSheet(
+              isCoinsInfo: isCoinsInfo,
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +189,7 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30))),
                 padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
               ),
-              onPressed: () {},
+              onPressed: () => _showBottomSheet(context, isCoinsInfo: true),
               icon: Container(
                 decoration: BoxDecoration(
                     color: ColorsForWidget.colorGreen,
@@ -194,7 +219,7 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30))),
                 padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
               ),
-              onPressed: () {},
+              onPressed: () => _showBottomSheet(context, isCoinsInfo: false),
               icon: const Icon(
                 MyCustomIcon.iconRub,
                 size: 18,
@@ -422,6 +447,79 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
             },
             childCount: 1,
           ),
+        );
+      },
+      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
+    );
+  }
+}
+
+class CardListCoinsInfoBottomSheet extends StatelessWidget {
+  final bool isCoinsInfo;
+
+  const CardListCoinsInfoBottomSheet({super.key, required this.isCoinsInfo});
+
+  @override
+  Widget build(BuildContext context) {
+    final blocCoinsScreenViewModel = context.watch<CoinsScreenViewModelBloc>();
+
+    return blocCoinsScreenViewModel.state.when(
+      loaded: (listCoinsInfoLoaded, listCoinsRewardLoaded) {
+        return isCoinsInfo
+            ? ListView.builder(
+                itemCount: listCoinsInfoLoaded.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        listCoinsInfoLoaded[index].title,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Text(
+                            'Награда: ${listCoinsInfoLoaded[index].price.toString()}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const Icon(
+                            MyCustomIcon.iconLogoGrass,
+                            color: ColorsForWidget.colorGreen,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              )
+            : ListView.builder(
+                itemCount: listCoinsRewardLoaded.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        listCoinsRewardLoaded[index].title,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Text(
+                            'Цена: ${listCoinsRewardLoaded[index].price.toString()}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const Icon(
+                            MyCustomIcon.iconLogoGrass,
+                            color: ColorsForWidget.colorGreen,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+      },
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       },
       error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
