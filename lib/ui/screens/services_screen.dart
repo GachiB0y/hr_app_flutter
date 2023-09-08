@@ -55,7 +55,7 @@ class ServicesScreen extends StatelessWidget {
                           height: 26,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 26,
                         width: 52,
                         child: CustomPaint(
@@ -89,7 +89,7 @@ class ServicesScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 26,
                         width: 52,
                         child: CustomPaint(
@@ -114,9 +114,7 @@ class ServicesScreen extends StatelessWidget {
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(20.0)),
                       ),
-                      child: BottomSheetCreateEventsWidget(
-                          // cubitEventEntity: cubitEventEntity,
-                          ),
+                      child: const BottomSheetCreateEventsWidget(),
                     ),
                   ),
                 ],
@@ -212,7 +210,8 @@ class PainterLeft extends CustomPainter {
         Offset(size.width - y - 5, y / 3),
         radius: Radius.elliptical(x, y),
       )
-      ..arcToPoint(Offset(0, 0), radius: Radius.circular(x), clockwise: false)
+      ..arcToPoint(const Offset(0, 0),
+          radius: Radius.circular(x), clockwise: false)
       ..lineTo(0, 0)
       ..lineTo(
           0, size.height) // Добавить линию, образующую правую стенку контейнера
@@ -232,7 +231,7 @@ class PainterLeft extends CustomPainter {
 }
 
 class BottomSheetCreateEventsWidget extends StatefulWidget {
-  BottomSheetCreateEventsWidget({
+  const BottomSheetCreateEventsWidget({
     Key? key,
   }) : super(key: key);
 
@@ -470,7 +469,6 @@ class _ScrollWidgetState extends State<ScrollWidget> {
           return GestureDetector(
             onTap: () {
               selectItem(item);
-              print(widget.selectedItems);
             },
             child: Container(
               padding: const EdgeInsets.all(10),

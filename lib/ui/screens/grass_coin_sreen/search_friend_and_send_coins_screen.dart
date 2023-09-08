@@ -21,8 +21,10 @@ class _SearchFriendAndSendCoinsScreenState
   String amountCoins = '';
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<OtherUsersBloc>().add(OtherUsersEvent.clearList());
   }
 
   void showPopupWindow(int autoCard) {

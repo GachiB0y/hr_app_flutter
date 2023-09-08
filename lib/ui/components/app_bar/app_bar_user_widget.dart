@@ -88,22 +88,22 @@ class Avatar extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                  padding: const EdgeInsets.only(left: 3.0, right: 3.0),
-                  decoration: BoxDecoration(
-                    color: ColorsForWidget.colorRed,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    '123',
-                    style: StyleTextCustom.styleTextNotification,
-                  )),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 20.0),
+          //   child: Align(
+          //     alignment: Alignment.topRight,
+          //     child: Container(
+          //         padding: const EdgeInsets.only(left: 3.0, right: 3.0),
+          //         decoration: BoxDecoration(
+          //           color: ColorsForWidget.colorRed,
+          //           borderRadius: BorderRadius.circular(12),
+          //         ),
+          //         child: const Text(
+          //           '123',
+          //           style: StyleTextCustom.styleTextNotification,
+          //         )),
+          //   ),
+          // ),
         ],
       ),
     );

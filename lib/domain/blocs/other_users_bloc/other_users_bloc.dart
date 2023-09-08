@@ -22,8 +22,14 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     on<OtherUsersEvent>((event, emit) async {
       if (event is OtherUsersEventFetch) {
         await onOtherUsersEventFetch(emit, event);
+      } else if (event is OtherUsersEventClearList) {
+        onOtherUsersEventClearList(emit);
       }
     });
+  }
+
+  void onOtherUsersEventClearList(Emitter<OtherUserState> emit) {
+    emit(const OtherUserState.loaded(listUsersLoaded: []));
   }
 
   Future<void> onOtherUsersEventFetch(

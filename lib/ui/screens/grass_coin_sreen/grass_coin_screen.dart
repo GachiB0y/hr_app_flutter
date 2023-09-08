@@ -24,6 +24,10 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
   @override
   void initState() {
     super.initState();
+    getInfoForInit();
+  }
+
+  void getInfoForInit() {
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context
         .read<CoinsScreenViewModelBloc>()
@@ -36,8 +40,9 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: RefreshIndicator(
+          color: ColorsForWidget.colorGreen,
           onRefresh: () {
-            context.read<WalletBloc>().add(const WalletEvent.fetch());
+            getInfoForInit();
             return Future<void>.delayed(const Duration(milliseconds: 100));
           },
           child: CustomScrollView(

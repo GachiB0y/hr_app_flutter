@@ -4,4 +4,5 @@ part of 'other_users_bloc.dart';
 class OtherUsersEvent with _$OtherUsersEvent {
   const factory OtherUsersEvent.gethUsersByPhoneNumber(
       {required String phoneNumber}) = OtherUsersEventFetch;
+  const factory OtherUsersEvent.clearList() = OtherUsersEventClearList;
 }

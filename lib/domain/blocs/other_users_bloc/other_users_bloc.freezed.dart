@@ -16,20 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$OtherUsersEvent {
-  String get phoneNumber => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) gethUsersByPhoneNumber,
+    required TResult Function() clearList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult? Function()? clearList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult Function()? clearList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -37,22 +39,21 @@ mixin _$OtherUsersEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OtherUsersEventFetch value)
         gethUsersByPhoneNumber,
+    required TResult Function(OtherUsersEventClearList value) clearList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult? Function(OtherUsersEventClearList value)? clearList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult Function(OtherUsersEventClearList value)? clearList,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $OtherUsersEventCopyWith<OtherUsersEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -61,8 +62,6 @@ abstract class $OtherUsersEventCopyWith<$Res> {
   factory $OtherUsersEventCopyWith(
           OtherUsersEvent value, $Res Function(OtherUsersEvent) then) =
       _$OtherUsersEventCopyWithImpl<$Res, OtherUsersEvent>;
-  @useResult
-  $Res call({String phoneNumber});
 }
 
 /// @nodoc
@@ -74,28 +73,13 @@ class _$OtherUsersEventCopyWithImpl<$Res, $Val extends OtherUsersEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? phoneNumber = null,
-  }) {
-    return _then(_value.copyWith(
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OtherUsersEventFetchCopyWith<$Res>
-    implements $OtherUsersEventCopyWith<$Res> {
+abstract class _$$OtherUsersEventFetchCopyWith<$Res> {
   factory _$$OtherUsersEventFetchCopyWith(_$OtherUsersEventFetch value,
           $Res Function(_$OtherUsersEventFetch) then) =
       __$$OtherUsersEventFetchCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String phoneNumber});
 }
@@ -158,6 +142,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) gethUsersByPhoneNumber,
+    required TResult Function() clearList,
   }) {
     return gethUsersByPhoneNumber(phoneNumber);
   }
@@ -166,6 +151,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult? Function()? clearList,
   }) {
     return gethUsersByPhoneNumber?.call(phoneNumber);
   }
@@ -174,6 +160,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult Function()? clearList,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -187,6 +174,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   TResult map<TResult extends Object?>({
     required TResult Function(OtherUsersEventFetch value)
         gethUsersByPhoneNumber,
+    required TResult Function(OtherUsersEventClearList value) clearList,
   }) {
     return gethUsersByPhoneNumber(this);
   }
@@ -195,6 +183,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult? Function(OtherUsersEventClearList value)? clearList,
   }) {
     return gethUsersByPhoneNumber?.call(this);
   }
@@ -203,6 +192,7 @@ class _$OtherUsersEventFetch implements OtherUsersEventFetch {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult Function(OtherUsersEventClearList value)? clearList,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -216,12 +206,114 @@ abstract class OtherUsersEventFetch implements OtherUsersEvent {
   const factory OtherUsersEventFetch({required final String phoneNumber}) =
       _$OtherUsersEventFetch;
 
-  @override
   String get phoneNumber;
-  @override
   @JsonKey(ignore: true)
   _$$OtherUsersEventFetchCopyWith<_$OtherUsersEventFetch> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OtherUsersEventClearListCopyWith<$Res> {
+  factory _$$OtherUsersEventClearListCopyWith(_$OtherUsersEventClearList value,
+          $Res Function(_$OtherUsersEventClearList) then) =
+      __$$OtherUsersEventClearListCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OtherUsersEventClearListCopyWithImpl<$Res>
+    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventClearList>
+    implements _$$OtherUsersEventClearListCopyWith<$Res> {
+  __$$OtherUsersEventClearListCopyWithImpl(_$OtherUsersEventClearList _value,
+      $Res Function(_$OtherUsersEventClearList) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OtherUsersEventClearList implements OtherUsersEventClearList {
+  const _$OtherUsersEventClearList();
+
+  @override
+  String toString() {
+    return 'OtherUsersEvent.clearList()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OtherUsersEventClearList);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phoneNumber) gethUsersByPhoneNumber,
+    required TResult Function() clearList,
+  }) {
+    return clearList();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult? Function()? clearList,
+  }) {
+    return clearList?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult Function()? clearList,
+    required TResult orElse(),
+  }) {
+    if (clearList != null) {
+      return clearList();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OtherUsersEventFetch value)
+        gethUsersByPhoneNumber,
+    required TResult Function(OtherUsersEventClearList value) clearList,
+  }) {
+    return clearList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult? Function(OtherUsersEventClearList value)? clearList,
+  }) {
+    return clearList?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OtherUsersEventFetch value)? gethUsersByPhoneNumber,
+    TResult Function(OtherUsersEventClearList value)? clearList,
+    required TResult orElse(),
+  }) {
+    if (clearList != null) {
+      return clearList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OtherUsersEventClearList implements OtherUsersEvent {
+  const factory OtherUsersEventClearList() = _$OtherUsersEventClearList;
 }
 
 OtherUserState _$OtherUserStateFromJson(Map<String, dynamic> json) {
