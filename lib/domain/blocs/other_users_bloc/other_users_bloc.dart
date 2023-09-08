@@ -21,31 +21,26 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
   }) : super(const OtherUserState.loading()) {
     on<OtherUsersEvent>((event, emit) async {
       if (event is OtherUsersEventFetch) {
-        emit(const OtherUserState.loading());
-        try {
-          String? accessToken = await authRepository.getAccessTokenInStorage();
-          final bool isLive =
-              authRepository.isLiveToken(jwtToken: accessToken as String);
-          if (!isLive) {
-            final String? refreshToken =
-                await authRepository.getRefeshTokenInStorage();
-            final newAccecssToken = await authRepository.makeJwtTokens(
-                refreshToken: refreshToken as String);
-            accessToken = newAccecssToken;
-          }
-          List<User> listUsersLoaded = await userRepo
-              .getUserByPhoneNumber(
-                  userToken: accessToken as String,
-                  phoneNumber: event.phoneNumber)
-              .timeout(const Duration(seconds: 5));
-
-          emit(OtherUserState.loaded(listUsersLoaded: listUsersLoaded));
-        } on TimeoutException {
-          emit(const OtherUserState.error());
-        } catch (e) {
-          emit(const OtherUserState.error());
-        }
+        await onOtherUsersEventFetch(emit, event);
       }
     });
+  }
+
+  Future<void> onOtherUsersEventFetch(
+      Emitter<OtherUserState> emit, OtherUsersEventFetch event) async {
+    emit(const OtherUserState.loading());
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+      List<User> listUsersLoaded = await userRepo
+          .getUserByPhoneNumber(
+              userToken: accessToken as String, phoneNumber: event.phoneNumber)
+          .timeout(const Duration(seconds: 5));
+
+      emit(OtherUserState.loaded(listUsersLoaded: listUsersLoaded));
+    } on TimeoutException {
+      emit(const OtherUserState.error());
+    } catch (e) {
+      emit(const OtherUserState.error());
+    }
   }
 }

@@ -19,6 +19,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function() clearListOtherUsers,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
   }) =>
@@ -26,6 +27,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function()? clearListOtherUsers,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
   }) =>
@@ -33,6 +35,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function()? clearListOtherUsers,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
     required TResult orElse(),
@@ -41,6 +44,8 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventClearListOtherUsers value)
+        clearListOtherUsers,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
   }) =>
@@ -48,6 +53,8 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventClearListOtherUsers value)?
+        clearListOtherUsers,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
   }) =>
@@ -55,6 +62,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventClearListOtherUsers value)? clearListOtherUsers,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
     required TResult orElse(),
@@ -119,6 +127,7 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function() clearListOtherUsers,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
   }) {
@@ -129,6 +138,7 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function()? clearListOtherUsers,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
   }) {
@@ -139,6 +149,7 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function()? clearListOtherUsers,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
     required TResult orElse(),
@@ -153,6 +164,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventClearListOtherUsers value)
+        clearListOtherUsers,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
   }) {
@@ -163,6 +176,8 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventClearListOtherUsers value)?
+        clearListOtherUsers,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
   }) {
@@ -173,6 +188,7 @@ class _$WalletEventFetch implements WalletEventFetch {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventClearListOtherUsers value)? clearListOtherUsers,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
     required TResult orElse(),
@@ -186,6 +202,127 @@ class _$WalletEventFetch implements WalletEventFetch {
 
 abstract class WalletEventFetch implements WalletEvent {
   const factory WalletEventFetch() = _$WalletEventFetch;
+}
+
+/// @nodoc
+abstract class _$$WalletEventClearListOtherUsersCopyWith<$Res> {
+  factory _$$WalletEventClearListOtherUsersCopyWith(
+          _$WalletEventClearListOtherUsers value,
+          $Res Function(_$WalletEventClearListOtherUsers) then) =
+      __$$WalletEventClearListOtherUsersCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$WalletEventClearListOtherUsersCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventClearListOtherUsers>
+    implements _$$WalletEventClearListOtherUsersCopyWith<$Res> {
+  __$$WalletEventClearListOtherUsersCopyWithImpl(
+      _$WalletEventClearListOtherUsers _value,
+      $Res Function(_$WalletEventClearListOtherUsers) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$WalletEventClearListOtherUsers
+    implements WalletEventClearListOtherUsers {
+  const _$WalletEventClearListOtherUsers();
+
+  @override
+  String toString() {
+    return 'WalletEvent.clearListOtherUsers()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletEventClearListOtherUsers);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function() clearListOtherUsers,
+    required TResult Function(int amount, int userId, String message)
+        sendCoinsToOtherUser,
+  }) {
+    return clearListOtherUsers();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function()? clearListOtherUsers,
+    TResult? Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+  }) {
+    return clearListOtherUsers?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function()? clearListOtherUsers,
+    TResult Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+    required TResult orElse(),
+  }) {
+    if (clearListOtherUsers != null) {
+      return clearListOtherUsers();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventClearListOtherUsers value)
+        clearListOtherUsers,
+    required TResult Function(WalletEventSendCoinsToOtherUser value)
+        sendCoinsToOtherUser,
+  }) {
+    return clearListOtherUsers(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventClearListOtherUsers value)?
+        clearListOtherUsers,
+    TResult? Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+  }) {
+    return clearListOtherUsers?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventClearListOtherUsers value)? clearListOtherUsers,
+    TResult Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+    required TResult orElse(),
+  }) {
+    if (clearListOtherUsers != null) {
+      return clearListOtherUsers(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class WalletEventClearListOtherUsers implements WalletEvent {
+  const factory WalletEventClearListOtherUsers() =
+      _$WalletEventClearListOtherUsers;
 }
 
 /// @nodoc
@@ -274,6 +411,7 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function() clearListOtherUsers,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
   }) {
@@ -284,6 +422,7 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function()? clearListOtherUsers,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
   }) {
@@ -294,6 +433,7 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function()? clearListOtherUsers,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
     required TResult orElse(),
@@ -308,6 +448,8 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventClearListOtherUsers value)
+        clearListOtherUsers,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
   }) {
@@ -318,6 +460,8 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventClearListOtherUsers value)?
+        clearListOtherUsers,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
   }) {
@@ -328,6 +472,7 @@ class _$WalletEventSendCoinsToOtherUser
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventClearListOtherUsers value)? clearListOtherUsers,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
     required TResult orElse(),

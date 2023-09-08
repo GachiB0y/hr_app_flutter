@@ -4,12 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart';
-
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 

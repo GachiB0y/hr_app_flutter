@@ -18,70 +18,61 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     required this.walletRepo,
     required this.authRepository,
   }) : super(const WalletState.loading()) {
-    on<WalletEvent>((event, emit) async {
-      if (event is WalletEventFetch) {
-        emit(const WalletState.loading());
-
-        try {
-          String? accessToken = await authRepository.getAccessTokenInStorage();
-          final bool isLive =
-              authRepository.isLiveToken(jwtToken: accessToken as String);
-          if (!isLive) {
-            final String? refreshToken =
-                await authRepository.getRefeshTokenInStorage();
-            final newAccecssToken = await authRepository.makeJwtTokens(
-                refreshToken: refreshToken as String);
-            accessToken = newAccecssToken;
-          }
-
-          final Wallet _walletLoaded = await walletRepo
-              .getWallet(accessToken: accessToken as String)
-              .timeout(const Duration(seconds: 5));
-
-          final state = WalletState.loaded(walletLoaded: _walletLoaded);
-
-          emit(state);
-        } on TimeoutException {
-          emit(const WalletState.error());
-        } catch (e) {
-          emit(const WalletState.error());
+    on<WalletEvent>(
+      (event, emit) async {
+        if (event is WalletEventFetch) {
+          await onWalletEventFetch(emit);
+        } else if (event is WalletEventSendCoinsToOtherUser) {
+          await onWalletEventSendCoinsToOtherUser(event, emit);
         }
-      } else if (event is WalletEventSendCoinsToOtherUser) {
-        try {
-          String? accessToken = await authRepository.getAccessTokenInStorage();
-          final bool isLive =
-              authRepository.isLiveToken(jwtToken: accessToken as String);
-          if (!isLive) {
-            final String? refreshToken =
-                await authRepository.getRefeshTokenInStorage();
-            final newAccecssToken = await authRepository.makeJwtTokens(
-                refreshToken: refreshToken as String);
-            accessToken = newAccecssToken;
-          }
+      },
+    );
+  }
 
-          final int newBalance = await walletRepo
-              .sendCoinsToOtherUser(
-                  accessToken: accessToken as String,
-                  amount: event.amount,
-                  userId: event.userId,
-                  message: event.message)
-              .timeout(const Duration(seconds: 5));
+  Future<void> onWalletEventSendCoinsToOtherUser(
+      WalletEventSendCoinsToOtherUser event, Emitter<WalletState> emit) async {
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
 
-          final oldState = (state as WalletStateLoaded).copyWith();
-          final List<Transaction> transactions =
-              oldState.walletLoaded.transactions;
+      final int newBalance = await walletRepo
+          .sendCoinsToOtherUser(
+              accessToken: accessToken as String,
+              amount: event.amount,
+              userId: event.userId,
+              message: event.message)
+          .timeout(const Duration(seconds: 5));
 
-          final newState = (state as WalletStateLoaded).copyWith(
-              walletLoaded:
-                  Wallet(balance: newBalance, transactions: transactions));
+      final oldState = (state as WalletStateLoaded).copyWith();
+      final List<Transaction> transactions = oldState.walletLoaded.transactions;
 
-          emit(newState);
-        } on TimeoutException {
-          emit(const WalletState.error());
-        } catch (e) {
-          emit(const WalletState.error());
-        }
-      }
-    });
+      final newState = (state as WalletStateLoaded).copyWith(
+          walletLoaded:
+              Wallet(balance: newBalance, transactions: transactions));
+
+      emit(newState);
+    } on TimeoutException {
+      emit(const WalletState.error());
+    } catch (e) {
+      emit(const WalletState.error());
+    }
+  }
+
+  Future<void> onWalletEventFetch(Emitter<WalletState> emit) async {
+    emit(const WalletState.loading());
+
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+      final Wallet _walletLoaded = await walletRepo
+          .getWallet(accessToken: accessToken as String)
+          .timeout(const Duration(seconds: 5));
+
+      final state = WalletState.loaded(walletLoaded: _walletLoaded);
+
+      emit(state);
+    } on TimeoutException {
+      emit(const WalletState.error());
+    } catch (e) {
+      emit(const WalletState.error());
+    }
   }
 }

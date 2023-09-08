@@ -20,6 +20,11 @@ class _SearchFriendAndSendCoinsScreenState
   String phoneNumber = '';
   String amountCoins = '';
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void showPopupWindow(int autoCard) {
     showDialog(
       context: context,
@@ -109,7 +114,9 @@ class _SearchFriendAndSendCoinsScreenState
                     itemCount: listUsersLoaded.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        title: Text(listUsersLoaded[index].name),
+                        title: Text(
+                            '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
+                        subtitle: Text(listUsersLoaded[index].staffPosition),
                         onTap: () {
                           showPopupWindow(listUsersLoaded[index].autoCard);
                         },

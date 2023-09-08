@@ -5,6 +5,7 @@ abstract class AuthRepository {
   Future<bool> isAuth();
 
   Future<bool> isExistToken({required bool isRefrshToken});
+  Future<String?> cheskIsLiveAccessToken();
 
   Future<String> getCode({required String numberPhone});
   Future<String?> makeJwtTokens({required String refreshToken});
@@ -125,5 +126,18 @@ class AuthRepositoryImpl implements AuthRepository {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<String?> cheskIsLiveAccessToken() async {
+    String? accessToken = await getAccessTokenInStorage();
+    final bool isLive = isLiveToken(jwtToken: accessToken as String);
+    if (!isLive) {
+      final String? refreshToken = await getRefeshTokenInStorage();
+      final newAccecssToken =
+          await makeJwtTokens(refreshToken: refreshToken as String);
+      accessToken = newAccecssToken;
+    }
+    return accessToken;
   }
 }

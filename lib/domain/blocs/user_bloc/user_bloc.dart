@@ -21,29 +21,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }) : super(const UserState.loading()) {
     on<UserEvent>((event, emit) async {
       if (event is UserEventFetch) {
-        emit(const UserState.loading());
-        try {
-          String? accessToken = await authRepository.getAccessTokenInStorage();
-          final bool isLive =
-              authRepository.isLiveToken(jwtToken: accessToken as String);
-          if (!isLive) {
-            final String? refreshToken =
-                await authRepository.getRefeshTokenInStorage();
-            final newAccecssToken = await authRepository.makeJwtTokens(
-                refreshToken: refreshToken as String);
-            accessToken = newAccecssToken;
-          }
-          User userLoaded = await userRepo
-              .getUserInfo(userToken: accessToken as String)
-              .timeout(const Duration(seconds: 5));
-
-          emit(UserState.loaded(userLoaded: userLoaded));
-        } on TimeoutException {
-          emit(const UserState.error());
-        } catch (e) {
-          emit(const UserState.error());
-        }
+        await onUserEventFetch(emit);
       }
     });
+  }
+
+  Future<void> onUserEventFetch(Emitter<UserState> emit) async {
+    emit(const UserState.loading());
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      User userLoaded = await userRepo
+          .getUserInfo(userToken: accessToken as String)
+          .timeout(const Duration(seconds: 5));
+
+      emit(UserState.loaded(userLoaded: userLoaded));
+    } on TimeoutException {
+      emit(const UserState.error());
+    } catch (e) {
+      emit(const UserState.error());
+    }
   }
 }
