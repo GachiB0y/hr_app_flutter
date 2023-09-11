@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 
 class EventEntityApiClient implements EventsEntityProvider {
+  const EventEntityApiClient();
   @override
   Future<List<EventEntity>> getEvents({required String accessToken}) async {
     List<EventEntity> events = [
@@ -81,8 +82,8 @@ abstract class EventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
 }
 
-class EventsEntitytProviderImpl implements EventsEntityProvider {
-  EventsEntitytProviderImpl();
+class EventsEntityProviderImpl implements EventsEntityProvider {
+  const EventsEntityProviderImpl();
 
   @override
   Future<List<EventEntity>> getEvents({required String accessToken}) async {

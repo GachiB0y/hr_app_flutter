@@ -18,7 +18,7 @@ abstract class WalletProvider {
 }
 
 class WalletProviderImpl implements WalletProvider {
-  WalletProviderImpl();
+  const WalletProviderImpl();
 
   @override
   Future<int> getBalance({required String userToken}) async {

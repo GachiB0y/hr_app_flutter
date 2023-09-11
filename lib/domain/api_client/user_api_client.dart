@@ -12,7 +12,7 @@ abstract class UserProvider {
 }
 
 class UserProviderImpl implements UserProvider {
-  UserProviderImpl();
+  const UserProviderImpl();
 
   @override
   Future<User> getUserInfo({required String userToken}) async {

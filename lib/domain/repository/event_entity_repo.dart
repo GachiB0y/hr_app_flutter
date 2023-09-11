@@ -6,7 +6,7 @@ abstract class EventEntityRepository {
 }
 
 class EventEntityRepositoryImpl implements EventEntityRepository {
-  EventEntityRepositoryImpl({
+  const EventEntityRepositoryImpl({
     required EventsEntityProvider eventEntityProvider,
   }) : _eventEntityProvider = eventEntityProvider;
 
