@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
@@ -49,7 +50,7 @@ class _DIContainer {
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
   AuthProvider _makeAuthProvider() => const AuthProviderImpl();
   EventsEntityProvider _makeEventsEntityProvider() =>
-      const EventEntityApiClient(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
+      const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
   WalletProvider _makeWalletProvider() => const WalletProviderImpl();
   UserProvider _makeUserProvider() => const UserProviderImpl();
   EventEntityRepository _makeEventEntityRepository() =>
@@ -72,41 +73,43 @@ class ScreenFactoryDefault implements ScreenFactory {
 
   @override
   MultiBlocProvider createMultiBlocProvider() {
+    final authRepository = _diContainer._makeAuthRepository();
     return MultiBlocProvider(
       providers: [
         BlocProvider<MainAppScreenViewCubit>(
           create: (BuildContext context) => MainAppScreenViewCubit(),
         ),
-        BlocProvider<EventEntityCubit>(
-          create: (BuildContext context) => EventEntityCubit(
-              eventEntityRepository: _diContainer._makeEventEntityRepository()),
+        BlocProvider<EventEntityBloc>(
+          create: (BuildContext context) => EventEntityBloc(
+              eventEntityRepository: _diContainer._makeEventEntityRepository(),
+              authRepository: authRepository),
         ),
         BlocProvider<WalletBloc>(
           create: (BuildContext context) => WalletBloc(
               walletRepo: _diContainer._makeWalletRepository(),
-              authRepository: _diContainer._makeAuthRepository()),
+              authRepository: authRepository),
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
               userRepo: _diContainer._makeUserRepository(),
-              authRepository: _diContainer._makeAuthRepository()),
+              authRepository: authRepository),
         ),
         BlocProvider<AuthViewCubit>(
           create: (BuildContext context) =>
-              AuthViewCubit(authRepository: _diContainer._makeAuthRepository()),
+              AuthViewCubit(authRepository: authRepository),
         ),
         BlocProvider<LoaderViewCubit>(
-          create: (BuildContext context) => LoaderViewCubit(
-              authRepository: _diContainer._makeAuthRepository()),
+          create: (BuildContext context) =>
+              LoaderViewCubit(authRepository: authRepository),
         ),
         BlocProvider<OtherUsersBloc>(
           create: (BuildContext context) => OtherUsersBloc(
-              authRepository: _diContainer._makeAuthRepository(),
+              authRepository: authRepository,
               userRepo: _diContainer._makeUserRepository()),
         ),
         BlocProvider<CoinsScreenViewModelBloc>(
           create: (BuildContext context) => CoinsScreenViewModelBloc(
-            authRepository: _diContainer._makeAuthRepository(),
+            authRepository: authRepository,
             walletRepo: _diContainer._makeWalletRepository(),
           ),
         ),

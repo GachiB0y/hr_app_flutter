@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 
@@ -32,15 +34,18 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
+    // context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
 
     context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
-    final cubit = context.read<EventEntityCubit>();
-    cubit.loadEventsList();
-    return Future<void>.delayed(const Duration(seconds: 3));
+    // final cubit = context.read<EventEntityCubit>();
+    // cubit.loadEventsList();
+    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
+
+    return Future<void>.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -297,13 +302,15 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   int selectedTab = 0;
   String selectTabTags = '';
   late final List<EventEntity> events;
+  List<EventEntity> filteredEventEntity = [];
 
   @override
   void initState() {
-    final cubit = context.read<EventEntityCubit>();
+    // final cubit = context.read<EventEntityCubit>();
+    final blocEventEntity = context.read<EventEntityBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        events = cubit.state.itemsGet;
+        // events = cubit.state.itemsGet;
         // selectTabTags = cubit.state.tabs[selectedTab];
         // cubit.changeVisibleEvents(index: selectedTab);
       },
@@ -312,119 +319,143 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     super.initState();
   }
 
+  List<EventEntity> filterListCategory(List<EventEntity> filteredEventEntity,
+      List<EventEntity> listEventEntityLoaded, String tab) {
+    filteredEventEntity = listEventEntityLoaded
+        .where(
+            (item) => item.categories.any((category) => category.name == tab))
+        .toList();
+    print(filteredEventEntity);
+
+    return filteredEventEntity;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<EventEntityCubit>();
+    final blocEventEntity = context.watch<EventEntityBloc>();
+    // final cubit = context.watch<EventEntityCubit>();
     // selectTabTags = cubit.state.tabs[selectedTab];
+    final List<String> tabs = [
+      'Актуальное',
+      'Новости',
+      'Сотрудники',
+      'Мероприятие'
+    ];
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: 50,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: cubit.state.tabs.length,
-            itemBuilder: (context, index) {
-              String tab = cubit.state.tabs[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedTab = index;
-                      cubit.changeVisibleEvents(index: index);
-                    });
-                  },
-                  child: Container(
-                    decoration: index == selectedTab
-                        ? const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  color: Colors.black, // Цвет подчеркивания
-                                  width: 1.5 // Толщина подчеркивания
-                                  ),
+    return blocEventEntity.state.when(
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator.adaptive(),
+        );
+      },
+      loaded: (listEventEntityLoaded) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: tabs.length,
+                itemBuilder: (context, index) {
+                  String tab = tabs[index];
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          filteredEventEntity = filterListCategory(
+                              filteredEventEntity, listEventEntityLoaded, tab);
+                          selectedTab = index;
+                          // cubit.changeVisibleEvents(index: index);
+                        });
+                      },
+                      child: Container(
+                        decoration: index == selectedTab
+                            ? const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                      color: Colors.black, // Цвет подчеркивания
+                                      width: 1.5 // Толщина подчеркивания
+                                      ),
+                                ),
+                              )
+                            : null,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 6.0),
+                            child: Text(
+                              tab,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: index == selectedTab
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
                             ),
-                          )
-                        : null,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 6.0),
-                        child: Text(
-                          tab,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: index == selectedTab
-                                ? Colors.black
-                                : Colors.grey,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        cubit.state.eventsActual.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
-            : Expanded(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.7,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: cubit.state.eventsActual
-                        .length, // начинаем с выбранной вкладки
-                    itemBuilder: (context, index) {
-                      EventEntity item =
-                          cubit.state.eventsActual.reversed.toList()[index];
-                      // получаем элемент для текущей вкладки
-                      return Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: item.base64Image == null
-                                  ? NetworkImage(item.imagePath)
-                                      as ImageProvider<Object>
-                                  : MemoryImage(
-                                      base64Decode(item.base64Image!)),
-                              fit: BoxFit.cover),
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  item.title,
-                                  style: const TextStyle(fontSize: 16),
-                                ),
+                  );
+                },
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height / 2.7,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(16),
+                  itemCount: filteredEventEntity
+                      .length, // начинаем с выбранной вкладки
+                  itemBuilder: (context, index) {
+                    EventEntity item =
+                        filteredEventEntity.reversed.toList()[index];
+                    // получаем элемент для текущей вкладки
+                    return Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(item.image)
+                                as ImageProvider<Object>,
+                            fit: BoxFit.cover),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                item.title,
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
-      ],
+            ),
+          ],
+        );
+      },
+      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
     );
   }
 }

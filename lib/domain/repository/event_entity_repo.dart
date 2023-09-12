@@ -1,5 +1,6 @@
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 
 abstract class EventEntityRepository {
   Future<List<EventEntity>> getEvents({required String accessToken});

@@ -22,7 +22,7 @@ _$EventEntityStateLoaded _$$EventEntityStateLoadedFromJson(
         Map<String, dynamic> json) =>
     _$EventEntityStateLoaded(
       listEventEntityLoaded: (json['listEventEntityLoaded'] as List<dynamic>)
-          .map((e) => EventEntity.fromJson(e as String))
+          .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
       $type: json['runtimeType'] as String?,
     );

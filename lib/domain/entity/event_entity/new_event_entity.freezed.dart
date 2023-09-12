@@ -22,9 +22,8 @@ EventEntity _$EventEntityFromJson(Map<String, dynamic> json) {
 mixin _$EventEntity {
   int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_url')
-  String get imageUrl => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -33,9 +32,9 @@ mixin _$EventEntity {
   bool get isPublish => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_archived')
   bool get isArchived => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_id')
-  List<Category> get category_id => throw _privateConstructorUsedError;
-  Writer get write => throw _privateConstructorUsedError;
+  @JsonKey(name: 'categories')
+  List<Category> get categories => throw _privateConstructorUsedError;
+  int get writer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,16 +51,14 @@ abstract class $EventEntityCopyWith<$Res> {
   $Res call(
       {int id,
       String title,
-      String content,
-      @JsonKey(name: 'image_url') String imageUrl,
+      String description,
+      String image,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'category_id') List<Category> category_id,
-      Writer write});
-
-  $WriterCopyWith<$Res> get write;
+      @JsonKey(name: 'categories') List<Category> categories,
+      int writer});
 }
 
 /// @nodoc
@@ -79,14 +76,14 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? content = null,
-    Object? imageUrl = null,
+    Object? description = null,
+    Object? image = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
     Object? isArchived = null,
-    Object? category_id = null,
-    Object? write = null,
+    Object? categories = null,
+    Object? writer = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -97,13 +94,13 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -121,23 +118,15 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
               as bool,
-      category_id: null == category_id
-          ? _value.category_id
-          : category_id // ignore: cast_nullable_to_non_nullable
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>,
-      write: null == write
-          ? _value.write
-          : write // ignore: cast_nullable_to_non_nullable
-              as Writer,
+      writer: null == writer
+          ? _value.writer
+          : writer // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $WriterCopyWith<$Res> get write {
-    return $WriterCopyWith<$Res>(_value.write, (value) {
-      return _then(_value.copyWith(write: value) as $Val);
-    });
   }
 }
 
@@ -152,17 +141,14 @@ abstract class _$$_EventEntityCopyWith<$Res>
   $Res call(
       {int id,
       String title,
-      String content,
-      @JsonKey(name: 'image_url') String imageUrl,
+      String description,
+      String image,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'category_id') List<Category> category_id,
-      Writer write});
-
-  @override
-  $WriterCopyWith<$Res> get write;
+      @JsonKey(name: 'categories') List<Category> categories,
+      int writer});
 }
 
 /// @nodoc
@@ -178,14 +164,14 @@ class __$$_EventEntityCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? content = null,
-    Object? imageUrl = null,
+    Object? description = null,
+    Object? image = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
     Object? isArchived = null,
-    Object? category_id = null,
-    Object? write = null,
+    Object? categories = null,
+    Object? writer = null,
   }) {
     return _then(_$_EventEntity(
       id: null == id
@@ -196,13 +182,13 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -220,14 +206,14 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
               as bool,
-      category_id: null == category_id
-          ? _value._category_id
-          : category_id // ignore: cast_nullable_to_non_nullable
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>,
-      write: null == write
-          ? _value.write
-          : write // ignore: cast_nullable_to_non_nullable
-              as Writer,
+      writer: null == writer
+          ? _value.writer
+          : writer // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -239,15 +225,15 @@ class _$_EventEntity implements _EventEntity {
   const _$_EventEntity(
       {required this.id,
       required this.title,
-      required this.content,
-      @JsonKey(name: 'image_url') required this.imageUrl,
+      required this.description,
+      required this.image,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'is_publish') required this.isPublish,
       @JsonKey(name: 'is_archived') required this.isArchived,
-      @JsonKey(name: 'category_id') required final List<Category> category_id,
-      required this.write})
-      : _category_id = category_id;
+      @JsonKey(name: 'categories') required final List<Category> categories,
+      required this.writer})
+      : _categories = categories;
 
   factory _$_EventEntity.fromJson(Map<String, dynamic> json) =>
       _$$_EventEntityFromJson(json);
@@ -257,10 +243,9 @@ class _$_EventEntity implements _EventEntity {
   @override
   final String title;
   @override
-  final String content;
+  final String description;
   @override
-  @JsonKey(name: 'image_url')
-  final String imageUrl;
+  final String image;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -273,21 +258,21 @@ class _$_EventEntity implements _EventEntity {
   @override
   @JsonKey(name: 'is_archived')
   final bool isArchived;
-  final List<Category> _category_id;
+  final List<Category> _categories;
   @override
-  @JsonKey(name: 'category_id')
-  List<Category> get category_id {
-    if (_category_id is EqualUnmodifiableListView) return _category_id;
+  @JsonKey(name: 'categories')
+  List<Category> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_category_id);
+    return EqualUnmodifiableListView(_categories);
   }
 
   @override
-  final Writer write;
+  final int writer;
 
   @override
   String toString() {
-    return 'EventEntity(id: $id, title: $title, content: $content, imageUrl: $imageUrl, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, category_id: $category_id, write: $write)';
+    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, writer: $writer)';
   }
 
   @override
@@ -297,9 +282,9 @@ class _$_EventEntity implements _EventEntity {
             other is _$_EventEntity &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.content, content) || other.content == content) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -309,8 +294,8 @@ class _$_EventEntity implements _EventEntity {
             (identical(other.isArchived, isArchived) ||
                 other.isArchived == isArchived) &&
             const DeepCollectionEquality()
-                .equals(other._category_id, _category_id) &&
-            (identical(other.write, write) || other.write == write));
+                .equals(other._categories, _categories) &&
+            (identical(other.writer, writer) || other.writer == writer));
   }
 
   @JsonKey(ignore: true)
@@ -319,14 +304,14 @@ class _$_EventEntity implements _EventEntity {
       runtimeType,
       id,
       title,
-      content,
-      imageUrl,
+      description,
+      image,
       createdAt,
       updatedAt,
       isPublish,
       isArchived,
-      const DeepCollectionEquality().hash(_category_id),
-      write);
+      const DeepCollectionEquality().hash(_categories),
+      writer);
 
   @JsonKey(ignore: true)
   @override
@@ -346,14 +331,14 @@ abstract class _EventEntity implements EventEntity {
   const factory _EventEntity(
       {required final int id,
       required final String title,
-      required final String content,
-      @JsonKey(name: 'image_url') required final String imageUrl,
+      required final String description,
+      required final String image,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'updated_at') required final DateTime updatedAt,
       @JsonKey(name: 'is_publish') required final bool isPublish,
       @JsonKey(name: 'is_archived') required final bool isArchived,
-      @JsonKey(name: 'category_id') required final List<Category> category_id,
-      required final Writer write}) = _$_EventEntity;
+      @JsonKey(name: 'categories') required final List<Category> categories,
+      required final int writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
       _$_EventEntity.fromJson;
@@ -363,10 +348,9 @@ abstract class _EventEntity implements EventEntity {
   @override
   String get title;
   @override
-  String get content;
+  String get description;
   @override
-  @JsonKey(name: 'image_url')
-  String get imageUrl;
+  String get image;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
@@ -380,10 +364,10 @@ abstract class _EventEntity implements EventEntity {
   @JsonKey(name: 'is_archived')
   bool get isArchived;
   @override
-  @JsonKey(name: 'category_id')
-  List<Category> get category_id;
+  @JsonKey(name: 'categories')
+  List<Category> get categories;
   @override
-  Writer get write;
+  int get writer;
   @override
   @JsonKey(ignore: true)
   _$$_EventEntityCopyWith<_$_EventEntity> get copyWith =>
@@ -397,7 +381,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Category {
   int get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -410,7 +394,7 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({int id, String title});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -427,16 +411,16 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -449,7 +433,7 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
       __$$_CategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String title});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
@@ -464,16 +448,16 @@ class __$$_CategoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
+    Object? name = null,
   }) {
     return _then(_$_Category(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -482,7 +466,7 @@ class __$$_CategoryCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Category implements _Category {
-  const _$_Category({required this.id, required this.title});
+  const _$_Category({required this.id, required this.name});
 
   factory _$_Category.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryFromJson(json);
@@ -490,11 +474,11 @@ class _$_Category implements _Category {
   @override
   final int id;
   @override
-  final String title;
+  final String name;
 
   @override
   String toString() {
-    return 'Category(id: $id, title: $title)';
+    return 'Category(id: $id, name: $name)';
   }
 
   @override
@@ -503,12 +487,12 @@ class _$_Category implements _Category {
         (other.runtimeType == runtimeType &&
             other is _$_Category &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title);
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
@@ -525,15 +509,15 @@ class _$_Category implements _Category {
 }
 
 abstract class _Category implements Category {
-  const factory _Category(
-      {required final int id, required final String title}) = _$_Category;
+  const factory _Category({required final int id, required final String name}) =
+      _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
   int get id;
   @override
-  String get title;
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryCopyWith<_$_Category> get copyWith =>
