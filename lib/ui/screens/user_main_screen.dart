@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
@@ -16,15 +13,6 @@ import '../../theme/colors_from_theme.dart';
 @RoutePage()
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({super.key});
-  // final apiClient = new EventEntityApiClient();
-
-  // static Widget create() {
-  //   return BlocProvider<EventEntityCubit>(
-  //     create: (context) =>
-  //         EventEntityCubit(apiClientEventEntity: EventEntityApiClient()),
-  //     child: UserMainScreen(),
-  //   );
-  // }
 
   @override
   State<UserMainScreen> createState() => _UserMainScreenState();
@@ -34,17 +22,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    // context.read<EventEntityCubit>().changeVisibleEvents(index: 0);
 
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
-    // final cubit = context.read<EventEntityCubit>();
-    // cubit.loadEventsList();
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
-
+    context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context.read<CategoryBloc>().add(const CategoryEvent.fetch());
     return Future<void>.delayed(const Duration(seconds: 1));
   }
 
@@ -52,7 +38,6 @@ class _UserMainScreenState extends State<UserMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      // appBar: const AppBarUserWdiget(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
@@ -301,46 +286,17 @@ class TableScrollWidget extends StatefulWidget {
 class _TableScrollWidgetState extends State<TableScrollWidget> {
   int selectedTab = 0;
   String selectTabTags = '';
-  late final List<EventEntity> events;
-  List<EventEntity> filteredEventEntity = [];
 
   @override
   void initState() {
-    // final cubit = context.read<EventEntityCubit>();
-    final blocEventEntity = context.read<EventEntityBloc>();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        // events = cubit.state.itemsGet;
-        // selectTabTags = cubit.state.tabs[selectedTab];
-        // cubit.changeVisibleEvents(index: selectedTab);
-      },
-    );
-
     super.initState();
-  }
-
-  List<EventEntity> filterListCategory(List<EventEntity> filteredEventEntity,
-      List<EventEntity> listEventEntityLoaded, String tab) {
-    filteredEventEntity = listEventEntityLoaded
-        .where(
-            (item) => item.categories.any((category) => category.name == tab))
-        .toList();
-    print(filteredEventEntity);
-
-    return filteredEventEntity;
+    context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }
 
   @override
   Widget build(BuildContext context) {
     final blocEventEntity = context.watch<EventEntityBloc>();
-    // final cubit = context.watch<EventEntityCubit>();
-    // selectTabTags = cubit.state.tabs[selectedTab];
-    final List<String> tabs = [
-      'Актуальное',
-      'Новости',
-      'Сотрудники',
-      'Мероприятие'
-    ];
+    final blocCategory = context.watch<CategoryBloc>();
 
     return blocEventEntity.state.when(
       loading: () {
@@ -348,61 +304,75 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
           child: CircularProgressIndicator.adaptive(),
         );
       },
-      loaded: (listEventEntityLoaded) {
+      loaded: (listEventEntityLoaded, filteredEventEntity) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: tabs.length,
-                itemBuilder: (context, index) {
-                  String tab = tabs[index];
+            blocCategory.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                },
+                loaded: (listCategoryLoaded) {
+                  return SizedBox(
+                    height: 50,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: listCategoryLoaded.length,
+                      itemBuilder: (context, index) {
+                        String tab = listCategoryLoaded[index].name;
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          filteredEventEntity = filterListCategory(
-                              filteredEventEntity, listEventEntityLoaded, tab);
-                          selectedTab = index;
-                          // cubit.changeVisibleEvents(index: index);
-                        });
-                      },
-                      child: Container(
-                        decoration: index == selectedTab
-                            ? const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: Colors.black, // Цвет подчеркивания
-                                      width: 1.5 // Толщина подчеркивания
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                context.read<EventEntityBloc>().add(
+                                    EventEntityEvent.filterNews(
+                                        idTab: listCategoryLoaded[index].id,
+                                        listEventEntityLoaded:
+                                            listEventEntityLoaded));
+
+                                selectedTab = index;
+                              });
+                            },
+                            child: Container(
+                              decoration: index == selectedTab
+                                  ? const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors
+                                                .black, // Цвет подчеркивания
+                                            width: 1.5 // Толщина подчеркивания
+                                            ),
                                       ),
+                                    )
+                                  : null,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 6.0),
+                                  child: Text(
+                                    tab,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: index == selectedTab
+                                          ? Colors.black
+                                          : Colors.grey,
+                                    ),
+                                  ),
                                 ),
-                              )
-                            : null,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 6.0),
-                            child: Text(
-                              tab,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: index == selectedTab
-                                    ? Colors.black
-                                    : Colors.grey,
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   );
                 },
-              ),
-            ),
+                error: () =>
+                    const SliverToBoxAdapter(child: Text('Nothing found...'))),
             Expanded(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height / 2.7,

@@ -244,13 +244,6 @@ class BottomSheetCreateEventsWidget extends StatefulWidget {
 
 class _BottomSheetCreateEventsWidgetState
     extends State<BottomSheetCreateEventsWidget> {
-  int selectedTab = 0;
-  final List<String> tabs = [
-    'Актуальное',
-    'Новости',
-    'Сотрудники',
-    'Мероприятия'
-  ];
   TextEditingController dataDescriptionController = TextEditingController();
   TextEditingController dataTitleController = TextEditingController();
   TextEditingController dateRangeController = TextEditingController();

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 abstract class EventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
+  Future<List<Category>> getCategory({required String accessToken});
 }
 
 class EventsEntityProviderImpl implements EventsEntityProvider {
@@ -30,7 +31,32 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
           .toList();
       return result;
     } else {
-      throw Exception('Error fetching Transactions');
+      throw Exception('Error fetching EventsEntity');
+    }
+  }
+
+  @override
+  Future<List<Category>> getCategory({required String accessToken}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+
+    var request = http.Request('GET', Uri.parse('$host:$port/news/categories'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final List<Category> result = (jsonData['result'] as List<dynamic>)
+          .map((item) => Category.fromJson(item))
+          .toList();
+      return result;
+    } else {
+      throw Exception('Error fetching Category');
     }
   }
 }

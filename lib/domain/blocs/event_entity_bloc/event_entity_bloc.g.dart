@@ -24,6 +24,10 @@ _$EventEntityStateLoaded _$$EventEntityStateLoadedFromJson(
       listEventEntityLoaded: (json['listEventEntityLoaded'] as List<dynamic>)
           .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
+      filteredListEventEntity:
+          (json['filteredListEventEntity'] as List<dynamic>)
+              .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
+              .toList(),
       $type: json['runtimeType'] as String?,
     );
 
@@ -31,6 +35,7 @@ Map<String, dynamic> _$$EventEntityStateLoadedToJson(
         _$EventEntityStateLoaded instance) =>
     <String, dynamic>{
       'listEventEntityLoaded': instance.listEventEntityLoaded,
+      'filteredListEventEntity': instance.filteredListEventEntity,
       'runtimeType': instance.$type,
     };
 

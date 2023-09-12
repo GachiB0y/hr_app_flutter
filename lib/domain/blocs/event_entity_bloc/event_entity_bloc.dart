@@ -24,8 +24,23 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
     on<EventEntityEvent>((event, emit) async {
       if (event is EventEntityEventFetch) {
         await oneEventEntityFetch(emit);
+      } else if (event is EventEntityEventFilterNews) {
+        List<EventEntity> filteredEventEntity = filterListCategory(
+            idTab: event.idTab,
+            listEventEntityLoaded: event.listEventEntityLoaded);
+        emit(EventEntityState.loaded(
+            listEventEntityLoaded: event.listEventEntityLoaded,
+            filteredListEventEntity: filteredEventEntity));
       }
     });
+  }
+  List<EventEntity> filterListCategory(
+      {required List<EventEntity> listEventEntityLoaded, required int idTab}) {
+    final List<EventEntity> filteredEventEntity = listEventEntityLoaded
+        .where(
+            (item) => item.categories.any((category) => category.id == idTab))
+        .toList();
+    return filteredEventEntity;
   }
 
   Future<void> oneEventEntityFetch(Emitter<EventEntityState> emit) async {
@@ -37,9 +52,14 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
             accessToken: accessToken as String,
           )
           .timeout(const Duration(seconds: 5));
+      List<EventEntity> filteredEventEntity = filterListCategory(
+        listEventEntityLoaded: listEventEntityLoaded,
+        idTab: 1,
+      );
 
       emit(EventEntityState.loaded(
-          listEventEntityLoaded: listEventEntityLoaded));
+          listEventEntityLoaded: listEventEntityLoaded,
+          filteredListEventEntity: filteredEventEntity));
     } on TimeoutException {
       emit(const EventEntityState.error());
     } catch (e) {

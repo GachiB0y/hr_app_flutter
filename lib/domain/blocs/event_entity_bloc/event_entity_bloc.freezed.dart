@@ -19,32 +19,42 @@ mixin _$EventEntityEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function(
+            int idTab, List<EventEntity> listEventEntityLoaded)
+        filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventFilterNews value) filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventFilterNews value)? filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventFilterNews value)? filterNews,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -107,6 +117,9 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
+    required TResult Function(
+            int idTab, List<EventEntity> listEventEntityLoaded)
+        filterNews,
   }) {
     return fetch();
   }
@@ -115,6 +128,8 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
   }) {
     return fetch?.call();
   }
@@ -123,6 +138,8 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -135,6 +152,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventFilterNews value) filterNews,
   }) {
     return fetch(this);
   }
@@ -143,6 +161,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventFilterNews value)? filterNews,
   }) {
     return fetch?.call(this);
   }
@@ -151,6 +170,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventFilterNews value)? filterNews,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -162,6 +182,169 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
 
 abstract class EventEntityEventFetch implements EventEntityEvent {
   const factory EventEntityEventFetch() = _$EventEntityEventFetch;
+}
+
+/// @nodoc
+abstract class _$$EventEntityEventFilterNewsCopyWith<$Res> {
+  factory _$$EventEntityEventFilterNewsCopyWith(
+          _$EventEntityEventFilterNews value,
+          $Res Function(_$EventEntityEventFilterNews) then) =
+      __$$EventEntityEventFilterNewsCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int idTab, List<EventEntity> listEventEntityLoaded});
+}
+
+/// @nodoc
+class __$$EventEntityEventFilterNewsCopyWithImpl<$Res>
+    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventFilterNews>
+    implements _$$EventEntityEventFilterNewsCopyWith<$Res> {
+  __$$EventEntityEventFilterNewsCopyWithImpl(
+      _$EventEntityEventFilterNews _value,
+      $Res Function(_$EventEntityEventFilterNews) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? idTab = null,
+    Object? listEventEntityLoaded = null,
+  }) {
+    return _then(_$EventEntityEventFilterNews(
+      idTab: null == idTab
+          ? _value.idTab
+          : idTab // ignore: cast_nullable_to_non_nullable
+              as int,
+      listEventEntityLoaded: null == listEventEntityLoaded
+          ? _value._listEventEntityLoaded
+          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
+  const _$EventEntityEventFilterNews(
+      {required this.idTab,
+      required final List<EventEntity> listEventEntityLoaded})
+      : _listEventEntityLoaded = listEventEntityLoaded;
+
+  @override
+  final int idTab;
+  final List<EventEntity> _listEventEntityLoaded;
+  @override
+  List<EventEntity> get listEventEntityLoaded {
+    if (_listEventEntityLoaded is EqualUnmodifiableListView)
+      return _listEventEntityLoaded;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listEventEntityLoaded);
+  }
+
+  @override
+  String toString() {
+    return 'EventEntityEvent.filterNews(idTab: $idTab, listEventEntityLoaded: $listEventEntityLoaded)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EventEntityEventFilterNews &&
+            (identical(other.idTab, idTab) || other.idTab == idTab) &&
+            const DeepCollectionEquality()
+                .equals(other._listEventEntityLoaded, _listEventEntityLoaded));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, idTab,
+      const DeepCollectionEquality().hash(_listEventEntityLoaded));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EventEntityEventFilterNewsCopyWith<_$EventEntityEventFilterNews>
+      get copyWith => __$$EventEntityEventFilterNewsCopyWithImpl<
+          _$EventEntityEventFilterNews>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function(
+            int idTab, List<EventEntity> listEventEntityLoaded)
+        filterNews,
+  }) {
+    return filterNews(idTab, listEventEntityLoaded);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
+  }) {
+    return filterNews?.call(idTab, listEventEntityLoaded);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
+    required TResult orElse(),
+  }) {
+    if (filterNews != null) {
+      return filterNews(idTab, listEventEntityLoaded);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventFilterNews value) filterNews,
+  }) {
+    return filterNews(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventFilterNews value)? filterNews,
+  }) {
+    return filterNews?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventFilterNews value)? filterNews,
+    required TResult orElse(),
+  }) {
+    if (filterNews != null) {
+      return filterNews(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EventEntityEventFilterNews implements EventEntityEvent {
+  const factory EventEntityEventFilterNews(
+          {required final int idTab,
+          required final List<EventEntity> listEventEntityLoaded}) =
+      _$EventEntityEventFilterNews;
+
+  int get idTab;
+  List<EventEntity> get listEventEntityLoaded;
+  @JsonKey(ignore: true)
+  _$$EventEntityEventFilterNewsCopyWith<_$EventEntityEventFilterNews>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 EventEntityState _$EventEntityStateFromJson(Map<String, dynamic> json) {
@@ -184,21 +367,27 @@ mixin _$EventEntityState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<EventEntity> listEventEntityLoaded) loaded,
+    required TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)
+        loaded,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult? Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -294,7 +483,9 @@ class _$EventEntityStateLoading implements EventEntityStateLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<EventEntity> listEventEntityLoaded) loaded,
+    required TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)
+        loaded,
     required TResult Function() error,
   }) {
     return loading();
@@ -304,7 +495,9 @@ class _$EventEntityStateLoading implements EventEntityStateLoading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult? Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -314,7 +507,9 @@ class _$EventEntityStateLoading implements EventEntityStateLoading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -379,7 +574,9 @@ abstract class _$$EventEntityStateLoadedCopyWith<$Res> {
           $Res Function(_$EventEntityStateLoaded) then) =
       __$$EventEntityStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<EventEntity> listEventEntityLoaded});
+  $Res call(
+      {List<EventEntity> listEventEntityLoaded,
+      List<EventEntity> filteredListEventEntity});
 }
 
 /// @nodoc
@@ -394,11 +591,16 @@ class __$$EventEntityStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? listEventEntityLoaded = null,
+    Object? filteredListEventEntity = null,
   }) {
     return _then(_$EventEntityStateLoaded(
       listEventEntityLoaded: null == listEventEntityLoaded
           ? _value._listEventEntityLoaded
           : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+      filteredListEventEntity: null == filteredListEventEntity
+          ? _value._filteredListEventEntity
+          : filteredListEventEntity // ignore: cast_nullable_to_non_nullable
               as List<EventEntity>,
     ));
   }
@@ -409,8 +611,10 @@ class __$$EventEntityStateLoadedCopyWithImpl<$Res>
 class _$EventEntityStateLoaded implements EventEntityStateLoaded {
   const _$EventEntityStateLoaded(
       {required final List<EventEntity> listEventEntityLoaded,
+      required final List<EventEntity> filteredListEventEntity,
       final String? $type})
       : _listEventEntityLoaded = listEventEntityLoaded,
+        _filteredListEventEntity = filteredListEventEntity,
         $type = $type ?? 'loaded';
 
   factory _$EventEntityStateLoaded.fromJson(Map<String, dynamic> json) =>
@@ -425,12 +629,21 @@ class _$EventEntityStateLoaded implements EventEntityStateLoaded {
     return EqualUnmodifiableListView(_listEventEntityLoaded);
   }
 
+  final List<EventEntity> _filteredListEventEntity;
+  @override
+  List<EventEntity> get filteredListEventEntity {
+    if (_filteredListEventEntity is EqualUnmodifiableListView)
+      return _filteredListEventEntity;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredListEventEntity);
+  }
+
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'EventEntityState.loaded(listEventEntityLoaded: $listEventEntityLoaded)';
+    return 'EventEntityState.loaded(listEventEntityLoaded: $listEventEntityLoaded, filteredListEventEntity: $filteredListEventEntity)';
   }
 
   @override
@@ -439,13 +652,17 @@ class _$EventEntityStateLoaded implements EventEntityStateLoaded {
         (other.runtimeType == runtimeType &&
             other is _$EventEntityStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other._listEventEntityLoaded, _listEventEntityLoaded));
+                .equals(other._listEventEntityLoaded, _listEventEntityLoaded) &&
+            const DeepCollectionEquality().equals(
+                other._filteredListEventEntity, _filteredListEventEntity));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_listEventEntityLoaded));
+      runtimeType,
+      const DeepCollectionEquality().hash(_listEventEntityLoaded),
+      const DeepCollectionEquality().hash(_filteredListEventEntity));
 
   @JsonKey(ignore: true)
   @override
@@ -458,32 +675,38 @@ class _$EventEntityStateLoaded implements EventEntityStateLoaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<EventEntity> listEventEntityLoaded) loaded,
+    required TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)
+        loaded,
     required TResult Function() error,
   }) {
-    return loaded(listEventEntityLoaded);
+    return loaded(listEventEntityLoaded, filteredListEventEntity);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult? Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult? Function()? error,
   }) {
-    return loaded?.call(listEventEntityLoaded);
+    return loaded?.call(listEventEntityLoaded, filteredListEventEntity);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(listEventEntityLoaded);
+      return loaded(listEventEntityLoaded, filteredListEventEntity);
     }
     return orElse();
   }
@@ -532,13 +755,15 @@ class _$EventEntityStateLoaded implements EventEntityStateLoaded {
 
 abstract class EventEntityStateLoaded implements EventEntityState {
   const factory EventEntityStateLoaded(
-          {required final List<EventEntity> listEventEntityLoaded}) =
+          {required final List<EventEntity> listEventEntityLoaded,
+          required final List<EventEntity> filteredListEventEntity}) =
       _$EventEntityStateLoaded;
 
   factory EventEntityStateLoaded.fromJson(Map<String, dynamic> json) =
       _$EventEntityStateLoaded.fromJson;
 
   List<EventEntity> get listEventEntityLoaded;
+  List<EventEntity> get filteredListEventEntity;
   @JsonKey(ignore: true)
   _$$EventEntityStateLoadedCopyWith<_$EventEntityStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -591,7 +816,9 @@ class _$EventEntityStateError implements EventEntityStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<EventEntity> listEventEntityLoaded) loaded,
+    required TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)
+        loaded,
     required TResult Function() error,
   }) {
     return error();
@@ -601,7 +828,9 @@ class _$EventEntityStateError implements EventEntityStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult? Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -611,7 +840,9 @@ class _$EventEntityStateError implements EventEntityStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<EventEntity> listEventEntityLoaded)? loaded,
+    TResult Function(List<EventEntity> listEventEntityLoaded,
+            List<EventEntity> filteredListEventEntity)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {

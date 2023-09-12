@@ -4,9 +4,9 @@ import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
@@ -73,7 +73,10 @@ class ScreenFactoryDefault implements ScreenFactory {
 
   @override
   MultiBlocProvider createMultiBlocProvider() {
-    final authRepository = _diContainer._makeAuthRepository();
+    final AuthRepository authRepository = _diContainer._makeAuthRepository();
+    final EventEntityRepository eventEntityRepository =
+        _diContainer._makeEventEntityRepository();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<MainAppScreenViewCubit>(
@@ -81,7 +84,7 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<EventEntityBloc>(
           create: (BuildContext context) => EventEntityBloc(
-              eventEntityRepository: _diContainer._makeEventEntityRepository(),
+              eventEntityRepository: eventEntityRepository,
               authRepository: authRepository),
         ),
         BlocProvider<WalletBloc>(
@@ -113,6 +116,12 @@ class ScreenFactoryDefault implements ScreenFactory {
             walletRepo: _diContainer._makeWalletRepository(),
           ),
         ),
+        BlocProvider<CategoryBloc>(
+          create: (BuildContext context) => CategoryBloc(
+            authRepository: authRepository,
+            eventEntityRepository: eventEntityRepository,
+          ),
+        )
       ],
       child: MaterialApp.router(
         localizationsDelegates: const [
