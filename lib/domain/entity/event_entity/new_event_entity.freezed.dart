@@ -24,6 +24,10 @@ mixin _$EventEntity {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_date')
+  DateTime get startDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_date')
+  DateTime get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -34,7 +38,7 @@ mixin _$EventEntity {
   bool get isArchived => throw _privateConstructorUsedError;
   @JsonKey(name: 'categories')
   List<Category> get categories => throw _privateConstructorUsedError;
-  int get writer => throw _privateConstructorUsedError;
+  Writer get writer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,12 +57,16 @@ abstract class $EventEntityCopyWith<$Res> {
       String title,
       String description,
       String image,
+      @JsonKey(name: 'start_date') DateTime startDate,
+      @JsonKey(name: 'end_date') DateTime endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
       @JsonKey(name: 'categories') List<Category> categories,
-      int writer});
+      Writer writer});
+
+  $WriterCopyWith<$Res> get writer;
 }
 
 /// @nodoc
@@ -78,6 +86,8 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
     Object? title = null,
     Object? description = null,
     Object? image = null,
+    Object? startDate = null,
+    Object? endDate = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -102,6 +112,14 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endDate: null == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -125,8 +143,16 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
       writer: null == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Writer,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $WriterCopyWith<$Res> get writer {
+    return $WriterCopyWith<$Res>(_value.writer, (value) {
+      return _then(_value.copyWith(writer: value) as $Val);
+    });
   }
 }
 
@@ -143,12 +169,17 @@ abstract class _$$_EventEntityCopyWith<$Res>
       String title,
       String description,
       String image,
+      @JsonKey(name: 'start_date') DateTime startDate,
+      @JsonKey(name: 'end_date') DateTime endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
       @JsonKey(name: 'categories') List<Category> categories,
-      int writer});
+      Writer writer});
+
+  @override
+  $WriterCopyWith<$Res> get writer;
 }
 
 /// @nodoc
@@ -166,6 +197,8 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? image = null,
+    Object? startDate = null,
+    Object? endDate = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -190,6 +223,14 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endDate: null == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -213,7 +254,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
       writer: null == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Writer,
     ));
   }
 }
@@ -227,6 +268,8 @@ class _$_EventEntity implements _EventEntity {
       required this.title,
       required this.description,
       required this.image,
+      @JsonKey(name: 'start_date') required this.startDate,
+      @JsonKey(name: 'end_date') required this.endDate,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'is_publish') required this.isPublish,
@@ -246,6 +289,12 @@ class _$_EventEntity implements _EventEntity {
   final String description;
   @override
   final String image;
+  @override
+  @JsonKey(name: 'start_date')
+  final DateTime startDate;
+  @override
+  @JsonKey(name: 'end_date')
+  final DateTime endDate;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -268,11 +317,11 @@ class _$_EventEntity implements _EventEntity {
   }
 
   @override
-  final int writer;
+  final Writer writer;
 
   @override
   String toString() {
-    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, writer: $writer)';
+    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, writer: $writer)';
   }
 
   @override
@@ -285,6 +334,9 @@ class _$_EventEntity implements _EventEntity {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.image, image) || other.image == image) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -306,6 +358,8 @@ class _$_EventEntity implements _EventEntity {
       title,
       description,
       image,
+      startDate,
+      endDate,
       createdAt,
       updatedAt,
       isPublish,
@@ -333,12 +387,14 @@ abstract class _EventEntity implements EventEntity {
       required final String title,
       required final String description,
       required final String image,
+      @JsonKey(name: 'start_date') required final DateTime startDate,
+      @JsonKey(name: 'end_date') required final DateTime endDate,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'updated_at') required final DateTime updatedAt,
       @JsonKey(name: 'is_publish') required final bool isPublish,
       @JsonKey(name: 'is_archived') required final bool isArchived,
       @JsonKey(name: 'categories') required final List<Category> categories,
-      required final int writer}) = _$_EventEntity;
+      required final Writer writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
       _$_EventEntity.fromJson;
@@ -351,6 +407,12 @@ abstract class _EventEntity implements EventEntity {
   String get description;
   @override
   String get image;
+  @override
+  @JsonKey(name: 'start_date')
+  DateTime get startDate;
+  @override
+  @JsonKey(name: 'end_date')
+  DateTime get endDate;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
@@ -367,7 +429,7 @@ abstract class _EventEntity implements EventEntity {
   @JsonKey(name: 'categories')
   List<Category> get categories;
   @override
-  int get writer;
+  Writer get writer;
   @override
   @JsonKey(ignore: true)
   _$$_EventEntityCopyWith<_$_EventEntity> get copyWith =>
@@ -530,12 +592,13 @@ Writer _$WriterFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Writer {
+  @JsonKey(name: 'user_id')
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'first_name')
+  @JsonKey(name: 'name')
   String get firstName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'name_i')
   String get middleName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'name_o')
   String get lastName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -549,10 +612,10 @@ abstract class $WriterCopyWith<$Res> {
       _$WriterCopyWithImpl<$Res, Writer>;
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'middle_name') String middleName,
-      @JsonKey(name: 'last_name') String lastName});
+      {@JsonKey(name: 'user_id') int id,
+      @JsonKey(name: 'name') String firstName,
+      @JsonKey(name: 'name_i') String middleName,
+      @JsonKey(name: 'name_o') String lastName});
 }
 
 /// @nodoc
@@ -601,10 +664,10 @@ abstract class _$$_WriterCopyWith<$Res> implements $WriterCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'middle_name') String middleName,
-      @JsonKey(name: 'last_name') String lastName});
+      {@JsonKey(name: 'user_id') int id,
+      @JsonKey(name: 'name') String firstName,
+      @JsonKey(name: 'name_i') String middleName,
+      @JsonKey(name: 'name_o') String lastName});
 }
 
 /// @nodoc
@@ -647,24 +710,25 @@ class __$$_WriterCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Writer implements _Writer {
   const _$_Writer(
-      {required this.id,
-      @JsonKey(name: 'first_name') required this.firstName,
-      @JsonKey(name: 'middle_name') required this.middleName,
-      @JsonKey(name: 'last_name') required this.lastName});
+      {@JsonKey(name: 'user_id') required this.id,
+      @JsonKey(name: 'name') required this.firstName,
+      @JsonKey(name: 'name_i') required this.middleName,
+      @JsonKey(name: 'name_o') required this.lastName});
 
   factory _$_Writer.fromJson(Map<String, dynamic> json) =>
       _$$_WriterFromJson(json);
 
   @override
+  @JsonKey(name: 'user_id')
   final int id;
   @override
-  @JsonKey(name: 'first_name')
+  @JsonKey(name: 'name')
   final String firstName;
   @override
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'name_i')
   final String middleName;
   @override
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'name_o')
   final String lastName;
 
   @override
@@ -707,23 +771,24 @@ class _$_Writer implements _Writer {
 
 abstract class _Writer implements Writer {
   const factory _Writer(
-      {required final int id,
-      @JsonKey(name: 'first_name') required final String firstName,
-      @JsonKey(name: 'middle_name') required final String middleName,
-      @JsonKey(name: 'last_name') required final String lastName}) = _$_Writer;
+      {@JsonKey(name: 'user_id') required final int id,
+      @JsonKey(name: 'name') required final String firstName,
+      @JsonKey(name: 'name_i') required final String middleName,
+      @JsonKey(name: 'name_o') required final String lastName}) = _$_Writer;
 
   factory _Writer.fromJson(Map<String, dynamic> json) = _$_Writer.fromJson;
 
   @override
+  @JsonKey(name: 'user_id')
   int get id;
   @override
-  @JsonKey(name: 'first_name')
+  @JsonKey(name: 'name')
   String get firstName;
   @override
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'name_i')
   String get middleName;
   @override
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'name_o')
   String get lastName;
   @override
   @JsonKey(ignore: true)

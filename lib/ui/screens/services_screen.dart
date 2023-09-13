@@ -1,16 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:hr_app_flutter/domain/blocs/event_entity_cubit/event_entity_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
@@ -23,7 +21,6 @@ class ServicesScreen extends StatelessWidget {
   void openBottomSheet(
     BuildContext context,
     MainAppScreenViewCubit cubitMainAppScreen,
-    // EventEntityCubit cubitEventEntity
   ) {
     showModalBottomSheet(
       elevation: 0.0,
@@ -131,7 +128,6 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
-    // final cubitEventEntity = context.watch<EventEntityCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -149,8 +145,8 @@ class ServicesScreen extends StatelessWidget {
                     cubitMainAppScreen.changeVisibleBottomBar(true);
 
                     openBottomSheet(
-                      context, cubitMainAppScreen,
-                      // cubitEventEntity
+                      context,
+                      cubitMainAppScreen,
                     );
                   },
                   icon: const Icon(
@@ -244,27 +240,30 @@ class BottomSheetCreateEventsWidget extends StatefulWidget {
 
 class _BottomSheetCreateEventsWidgetState
     extends State<BottomSheetCreateEventsWidget> {
-  TextEditingController dataDescriptionController = TextEditingController();
-  TextEditingController dataTitleController = TextEditingController();
-  TextEditingController dateRangeController = TextEditingController();
+  final TextEditingController dataDescriptionController =
+      TextEditingController();
+  final TextEditingController dataTitleController = TextEditingController();
+  final TextEditingController dateRangeController = TextEditingController();
   List<String> selectedItems = [];
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   String? base64Image;
+  foundation.Uint8List? bytesSend;
   String errorMessage = '';
+  File? file;
 
-  void changeParams(Uint8List bytes) {
+  Future<void> changeParams(File openFile) async {
     setState(() {
-      base64Image = base64Encode(bytes);
+      file = openFile;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final blocEventEntity = context.read<EventEntityBloc>();
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        // height: MediaQuery.of(context).size.height * 0.5,
         color: Colors.grey[300],
         child: Padding(
           padding: const EdgeInsets.only(top: 40.0),
@@ -302,7 +301,7 @@ class _BottomSheetCreateEventsWidgetState
                 ),
               ),
               ScrollWidget(
-                selectedItems: selectedItems,
+                selectedCategories: selectedItems,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -356,19 +355,14 @@ class _BottomSheetCreateEventsWidgetState
                         });
                         return;
                       }
-                      // ЗАКОММЕНИТРОВАННО НА ВРЕМЯ _ СОЗДАНИЕ СУЩНОСТИ НОВОСТЬ И ОТПАРРАВКА НА БЭК
-                      // final event = EventEntity(
-                      //     base64Image: base64Image,
-                      //     title: dataTitleController.text,
-                      //     description: dataDescriptionController.text,
-                      //     imagePath:
-                      //         'https://media.istockphoto.com/id/1309352410/ru/%D1%84%D0%BE%D1%82%D0%BE/%D1%87%D0%B8%D0%B7%D0%B1%D1%83%D1%80%D0%B3%D0%B5%D1%80-%D1%81-%D0%BF%D0%BE%D0%BC%D0%B8%D0%B4%D0%BE%D1%80%D0%B0%D0%BC%D0%B8-%D0%B8-%D1%81%D0%B0%D0%BB%D0%B0%D1%82%D0%BE%D0%BC-%D0%BD%D0%B0-%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D1%8F%D0%BD%D0%BD%D0%BE%D0%B9-%D0%B4%D0%BE%D1%81%D0%BA%D0%B5.jpg?s=612x612&w=0&k=20&c=dW1Aguo-4PEcRs79PUbmMXpx5YrBjqSYiEhwnddbj_g=',
-                      //     dateFrom: DateTime.now(),
-                      //     dateTo: DateTime.now(),
-                      //     tags: selectedItems);
 
-                      // final cubitEventEntity = context.read<EventEntityCubit>();
-                      // cubitEventEntity.addItem(event);
+                      blocEventEntity.add(EventEntityEvent.createNewEventEntity(
+                          title: dataTitleController.text,
+                          description: dataDescriptionController.text,
+                          imageFile: file!,
+                          categories: selectedItems,
+                          startDate: startDate.toString(),
+                          endDate: endDate.toString()));
                       Navigator.pop(context);
                     },
                   ),
@@ -433,56 +427,65 @@ class TextFieldDescriptionWidget extends StatelessWidget {
 }
 
 class ScrollWidget extends StatefulWidget {
-  final List<String> selectedItems;
-  const ScrollWidget({super.key, required this.selectedItems});
+  final List<String> selectedCategories;
+  const ScrollWidget({super.key, required this.selectedCategories});
 
   @override
   _ScrollWidgetState createState() => _ScrollWidgetState();
 }
 
 class _ScrollWidgetState extends State<ScrollWidget> {
-  List<String> items = ['Актуальное', 'Новости', 'Сотрудники', 'Мероприятия'];
-
   void selectItem(String item) {
     setState(() {
-      if (widget.selectedItems.contains(item)) {
-        widget.selectedItems.remove(item);
+      if (widget.selectedCategories.contains(item)) {
+        widget.selectedCategories.remove(item);
       } else {
-        widget.selectedItems.add(item);
+        widget.selectedCategories.add(item);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: items.map((item) {
-          bool isSelected = widget.selectedItems.contains(item);
+    final blocCategory = context.watch<CategoryBloc>();
+    return blocCategory.state.when(
+        loading: () {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        },
+        loaded: (listCategory) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: listCategory.map((item) {
+                bool isSelected =
+                    widget.selectedCategories.contains(item.id.toString());
 
-          return GestureDetector(
-            onTap: () {
-              selectItem(item);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: isSelected ? Colors.black : Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                item,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.black,
-                ),
-              ),
+                return GestureDetector(
+                  onTap: () {
+                    selectItem(item.id.toString());
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.black : Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      item.name,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           );
-        }).toList(),
-      ),
-    );
+        },
+        error: () => const Text('Nothing found...'));
   }
 }
 
@@ -559,7 +562,7 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
 }
 
 class MyPickerImage extends StatefulWidget {
-  void Function(Uint8List) callback;
+  void Function(File) callback;
   MyPickerImage({
     Key? key,
     required this.callback,
@@ -633,9 +636,9 @@ class _MyPickerImageState extends State<MyPickerImage> {
               await _myImage.pickImage(ImageSource.gallery);
               final imageFile = _myImage.imageFile;
               if (imageFile != null) {
-                final file = File(imageFile.path);
-                final bytes = await file.readAsBytes();
-                widget.callback(bytes);
+                final File file = File(imageFile.path);
+                final foundation.Uint8List bytes = await file.readAsBytes();
+                widget.callback(file);
               }
             },
           ),

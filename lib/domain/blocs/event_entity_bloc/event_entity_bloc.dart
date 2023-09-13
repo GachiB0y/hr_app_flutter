@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity/event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
-
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 
@@ -31,6 +31,23 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
         emit(EventEntityState.loaded(
             listEventEntityLoaded: event.listEventEntityLoaded,
             filteredListEventEntity: filteredEventEntity));
+      } else if (event is EventEntityEventCreateNewEventEntity) {
+        try {
+          String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+          eventEntityRepository.createNewEventEntity(
+              accessToken: accessToken as String,
+              title: event.title,
+              description: event.description,
+              imageFile: event.imageFile,
+              categories: event.categories,
+              startDate: event.startDate,
+              endDate: event.endDate);
+        } on TimeoutException {
+          emit(const EventEntityState.error());
+        } catch (e) {
+          emit(const EventEntityState.error());
+        }
       }
     });
   }

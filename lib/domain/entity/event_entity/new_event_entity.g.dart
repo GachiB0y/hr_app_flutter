@@ -12,6 +12,8 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       description: json['description'] as String,
       image: json['image'] as String,
+      startDate: DateTime.parse(json['start_date'] as String),
+      endDate: DateTime.parse(json['end_date'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       isPublish: json['is_publish'] as bool,
@@ -19,7 +21,7 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
       categories: (json['categories'] as List<dynamic>)
           .map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
-      writer: json['writer'] as int,
+      writer: Writer.fromJson(json['writer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
@@ -28,12 +30,14 @@ Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
       'title': instance.title,
       'description': instance.description,
       'image': instance.image,
+      'start_date': instance.startDate.toIso8601String(),
+      'end_date': instance.endDate.toIso8601String(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'is_publish': instance.isPublish,
       'is_archived': instance.isArchived,
       'categories': instance.categories.map((e) => e.toJson()).toList(),
-      'writer': instance.writer,
+      'writer': instance.writer.toJson(),
     };
 
 _$_Category _$$_CategoryFromJson(Map<String, dynamic> json) => _$_Category(
@@ -48,15 +52,15 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
     };
 
 _$_Writer _$$_WriterFromJson(Map<String, dynamic> json) => _$_Writer(
-      id: json['id'] as int,
-      firstName: json['first_name'] as String,
-      middleName: json['middle_name'] as String,
-      lastName: json['last_name'] as String,
+      id: json['user_id'] as int,
+      firstName: json['name'] as String,
+      middleName: json['name_i'] as String,
+      lastName: json['name_o'] as String,
     );
 
 Map<String, dynamic> _$$_WriterToJson(_$_Writer instance) => <String, dynamic>{
-      'id': instance.id,
-      'first_name': instance.firstName,
-      'middle_name': instance.middleName,
-      'last_name': instance.lastName,
+      'user_id': instance.id,
+      'name': instance.firstName,
+      'name_i': instance.middleName,
+      'name_o': instance.lastName,
     };

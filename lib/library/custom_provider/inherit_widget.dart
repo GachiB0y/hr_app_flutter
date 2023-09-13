@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: Example(),
-  ));
-}
-
 class Example extends StatelessWidget {
   const Example({super.key});
 
@@ -33,7 +27,7 @@ class _SimpleCalcWidgetState extends State<SimpleCalcWidget> {
     return Center(
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SimpleCalcWidgetProvider(
+          child: ChangeNotifierProvaider<SimpleCalcWidgetModel>(
             model: _model,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -66,7 +60,8 @@ class FirstNumberWidget extends StatelessWidget {
     return TextField(
       decoration: const InputDecoration(border: OutlineInputBorder()),
       onChanged: (value) =>
-          SimpleCalcWidgetProvider.read(context)?.firstNumber = value,
+          ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)
+              ?.firstNumber = value,
     );
   }
 }
@@ -79,7 +74,8 @@ class SecondNumberWidget extends StatelessWidget {
     return TextField(
       decoration: const InputDecoration(border: OutlineInputBorder()),
       onChanged: (value) =>
-          SimpleCalcWidgetProvider.read(context)?.secondNumber = value,
+          ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)
+              ?.secondNumber = value,
     );
   }
 }
@@ -90,53 +86,52 @@ class SummButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => SimpleCalcWidgetProvider.read(context)?.sum(),
+        onPressed: () =>
+            ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)?.sum(),
         child: const Text('Count summ'));
   }
 }
-
-// class ResultWidget extends StatefulWidget {
-//   const ResultWidget({Key? key}) : super(key: key);
-//   @override
-//   State<ResultWidget> createState() => _ResultWidgetState();
-// }
-
-// class _ResultWidgetState extends State<ResultWidget> {
-//   String _value = '-1';
-
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     final model = SimpleCalcWidgetProvider.of(context)?.model;
-//     model?.addListener(() {
-//       _value = '${model.summResult}';
-//       setState(() {});
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text('Result:$_value');
-//   }
-// }
 
 class ResultWidget extends StatelessWidget {
   const ResultWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final value = SimpleCalcWidgetProvider.watch(context)?.summResult ?? '-1';
+    final value = ChangeNotifierProvaider.watch<SimpleCalcWidgetModel>(context)
+            ?.summResult ??
+        '-1';
     return Text('Result: $value');
   }
 }
 
-class SimpleCalcWidgetModel extends ChangeNotifier {
+class SimpleCalcWidgetModel extends Listenable {
+  // Создание списка слушателей
+  final List<VoidCallback> _listeners = [];
   int? _firstNumber;
   int? _secondNumber;
   int? summResult;
 
   set firstNumber(String value) => _firstNumber = int.tryParse(value);
   set secondNumber(String value) => _secondNumber = int.tryParse(value);
+
+  // Метод для добавления слушателей
+  @override
+  void addListener(VoidCallback listener) {
+    _listeners.add(listener);
+  }
+
+  // Метод для удаления слушателей
+  @override
+  void removeListener(VoidCallback listener) {
+    _listeners.remove(listener);
+  }
+
+  // Метод для уведомления слушателей об изменениях
+  void notifyListeners() {
+    for (final listener in _listeners) {
+      listener();
+    }
+  }
 
   void sum() {
     int? summResult;
@@ -171,8 +166,29 @@ class SimpleCalcWidgetProvider
         ?.widget;
     return widget is SimpleCalcWidgetProvider ? widget.notifier : null;
   }
-  // @override
-  // bool updateShouldNotify(covariant SimpleCalcWidgetProvider oldWidget) {
-  //   return model != oldWidget.model;
-  // }
+}
+
+class ChangeNotifierProvaider<T extends Listenable>
+    extends InheritedNotifier<T> {
+  final T? model;
+  const ChangeNotifierProvaider(
+      {Key? key, required this.model, required Widget child})
+      : super(key: key, child: child, notifier: model);
+
+  static T? watch<T extends Listenable>(BuildContext context) {
+    final notifier = context
+        .dependOnInheritedWidgetOfExactType<ChangeNotifierProvaider>()
+        ?.notifier;
+    if (notifier != null && notifier is T) {
+      return notifier;
+    }
+    return null;
+  }
+
+  static T? read<T extends Listenable>(BuildContext context) {
+    final widget = context
+        .getElementForInheritedWidgetOfExactType<ChangeNotifierProvaider>()
+        ?.widget;
+    return widget is ChangeNotifierProvaider ? widget.notifier as T : null;
+  }
 }

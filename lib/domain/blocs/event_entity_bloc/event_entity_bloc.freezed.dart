@@ -20,6 +20,14 @@ mixin _$EventEntityEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(
+            String title,
+            String description,
+            String startDate,
+            String endDate,
+            File imageFile,
+            List<String> categories)
+        createNewEventEntity,
+    required TResult Function(
             int idTab, List<EventEntity> listEventEntityLoaded)
         filterNews,
   }) =>
@@ -27,6 +35,9 @@ mixin _$EventEntityEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
   }) =>
@@ -34,6 +45,9 @@ mixin _$EventEntityEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
     required TResult orElse(),
@@ -42,18 +56,24 @@ mixin _$EventEntityEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventCreateNewEventEntity value)
+        createNewEventEntity,
     required TResult Function(EventEntityEventFilterNews value) filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult? Function(EventEntityEventFilterNews value)? filterNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult Function(EventEntityEventFilterNews value)? filterNews,
     required TResult orElse(),
   }) =>
@@ -118,6 +138,14 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(
+            String title,
+            String description,
+            String startDate,
+            String endDate,
+            File imageFile,
+            List<String> categories)
+        createNewEventEntity,
+    required TResult Function(
             int idTab, List<EventEntity> listEventEntityLoaded)
         filterNews,
   }) {
@@ -128,6 +156,9 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
   }) {
@@ -138,6 +169,9 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
     required TResult orElse(),
@@ -152,6 +186,8 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventCreateNewEventEntity value)
+        createNewEventEntity,
     required TResult Function(EventEntityEventFilterNews value) filterNews,
   }) {
     return fetch(this);
@@ -161,6 +197,8 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult? Function(EventEntityEventFilterNews value)? filterNews,
   }) {
     return fetch?.call(this);
@@ -170,6 +208,8 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult Function(EventEntityEventFilterNews value)? filterNews,
     required TResult orElse(),
   }) {
@@ -182,6 +222,249 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
 
 abstract class EventEntityEventFetch implements EventEntityEvent {
   const factory EventEntityEventFetch() = _$EventEntityEventFetch;
+}
+
+/// @nodoc
+abstract class _$$EventEntityEventCreateNewEventEntityCopyWith<$Res> {
+  factory _$$EventEntityEventCreateNewEventEntityCopyWith(
+          _$EventEntityEventCreateNewEventEntity value,
+          $Res Function(_$EventEntityEventCreateNewEventEntity) then) =
+      __$$EventEntityEventCreateNewEventEntityCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String title,
+      String description,
+      String startDate,
+      String endDate,
+      File imageFile,
+      List<String> categories});
+}
+
+/// @nodoc
+class __$$EventEntityEventCreateNewEventEntityCopyWithImpl<$Res>
+    extends _$EventEntityEventCopyWithImpl<$Res,
+        _$EventEntityEventCreateNewEventEntity>
+    implements _$$EventEntityEventCreateNewEventEntityCopyWith<$Res> {
+  __$$EventEntityEventCreateNewEventEntityCopyWithImpl(
+      _$EventEntityEventCreateNewEventEntity _value,
+      $Res Function(_$EventEntityEventCreateNewEventEntity) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? description = null,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? imageFile = null,
+    Object? categories = null,
+  }) {
+    return _then(_$EventEntityEventCreateNewEventEntity(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      endDate: null == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageFile: null == imageFile
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as File,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EventEntityEventCreateNewEventEntity
+    implements EventEntityEventCreateNewEventEntity {
+  const _$EventEntityEventCreateNewEventEntity(
+      {required this.title,
+      required this.description,
+      required this.startDate,
+      required this.endDate,
+      required this.imageFile,
+      required final List<String> categories})
+      : _categories = categories;
+
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  final String startDate;
+  @override
+  final String endDate;
+  @override
+  final File imageFile;
+  final List<String> _categories;
+  @override
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  @override
+  String toString() {
+    return 'EventEntityEvent.createNewEventEntity(title: $title, description: $description, startDate: $startDate, endDate: $endDate, imageFile: $imageFile, categories: $categories)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EventEntityEventCreateNewEventEntity &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.imageFile, imageFile) ||
+                other.imageFile == imageFile) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, title, description, startDate,
+      endDate, imageFile, const DeepCollectionEquality().hash(_categories));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EventEntityEventCreateNewEventEntityCopyWith<
+          _$EventEntityEventCreateNewEventEntity>
+      get copyWith => __$$EventEntityEventCreateNewEventEntityCopyWithImpl<
+          _$EventEntityEventCreateNewEventEntity>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function(
+            String title,
+            String description,
+            String startDate,
+            String endDate,
+            File imageFile,
+            List<String> categories)
+        createNewEventEntity,
+    required TResult Function(
+            int idTab, List<EventEntity> listEventEntityLoaded)
+        filterNews,
+  }) {
+    return createNewEventEntity(
+        title, description, startDate, endDate, imageFile, categories);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
+    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
+  }) {
+    return createNewEventEntity?.call(
+        title, description, startDate, endDate, imageFile, categories);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
+    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
+        filterNews,
+    required TResult orElse(),
+  }) {
+    if (createNewEventEntity != null) {
+      return createNewEventEntity(
+          title, description, startDate, endDate, imageFile, categories);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventCreateNewEventEntity value)
+        createNewEventEntity,
+    required TResult Function(EventEntityEventFilterNews value) filterNews,
+  }) {
+    return createNewEventEntity(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
+    TResult? Function(EventEntityEventFilterNews value)? filterNews,
+  }) {
+    return createNewEventEntity?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
+    TResult Function(EventEntityEventFilterNews value)? filterNews,
+    required TResult orElse(),
+  }) {
+    if (createNewEventEntity != null) {
+      return createNewEventEntity(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EventEntityEventCreateNewEventEntity
+    implements EventEntityEvent {
+  const factory EventEntityEventCreateNewEventEntity(
+          {required final String title,
+          required final String description,
+          required final String startDate,
+          required final String endDate,
+          required final File imageFile,
+          required final List<String> categories}) =
+      _$EventEntityEventCreateNewEventEntity;
+
+  String get title;
+  String get description;
+  String get startDate;
+  String get endDate;
+  File get imageFile;
+  List<String> get categories;
+  @JsonKey(ignore: true)
+  _$$EventEntityEventCreateNewEventEntityCopyWith<
+          _$EventEntityEventCreateNewEventEntity>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -272,6 +555,14 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(
+            String title,
+            String description,
+            String startDate,
+            String endDate,
+            File imageFile,
+            List<String> categories)
+        createNewEventEntity,
+    required TResult Function(
             int idTab, List<EventEntity> listEventEntityLoaded)
         filterNews,
   }) {
@@ -282,6 +573,9 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
+    TResult? Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
   }) {
@@ -292,6 +586,9 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
+    TResult Function(String title, String description, String startDate,
+            String endDate, File imageFile, List<String> categories)?
+        createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
     required TResult orElse(),
@@ -306,6 +603,8 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(EventEntityEventFetch value) fetch,
+    required TResult Function(EventEntityEventCreateNewEventEntity value)
+        createNewEventEntity,
     required TResult Function(EventEntityEventFilterNews value) filterNews,
   }) {
     return filterNews(this);
@@ -315,6 +614,8 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EventEntityEventFetch value)? fetch,
+    TResult? Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult? Function(EventEntityEventFilterNews value)? filterNews,
   }) {
     return filterNews?.call(this);
@@ -324,6 +625,8 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EventEntityEventFetch value)? fetch,
+    TResult Function(EventEntityEventCreateNewEventEntity value)?
+        createNewEventEntity,
     TResult Function(EventEntityEventFilterNews value)? filterNews,
     required TResult orElse(),
   }) {

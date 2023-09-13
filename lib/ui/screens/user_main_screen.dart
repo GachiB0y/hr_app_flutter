@@ -371,8 +371,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                     ),
                   );
                 },
-                error: () =>
-                    const SliverToBoxAdapter(child: Text('Nothing found...'))),
+                error: () => const Text('Nothing found...')),
             Expanded(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height / 2.7,
@@ -425,7 +424,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
           ],
         );
       },
-      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
+      error: () => const Text('Nothing found...'),
     );
   }
 }
