@@ -165,8 +165,8 @@ class ServicesScreen extends StatelessWidget {
               ),
               trailing: IconButton(
                   onPressed: () {
-                    // AutoRouter.of(context).push(const ApproveNewsRoute());
-                    AutoRouter.of(context).push(const AboutNewsRoute());
+                    AutoRouter.of(context).push(const ApproveNewsRoute());
+                    // AutoRouter.of(context).push(const AboutNewsRoute());
                   },
                   icon: const Icon(
                     Icons.add_circle,

@@ -22,8 +22,29 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
     on<ApprovementEvent>((event, emit) async {
       if (event is ApprovementEventFetch) {
         await onApprovementEventFetch(emit);
+      } else if (event is ApprovementEventApprovedNews) {
+        await onApprovedNews(event, emit);
       }
     });
+  }
+
+  Future<void> onApprovedNews(ApprovementEventApprovedNews event,
+      Emitter<ApprovementNewsState> emit) async {
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      await eventEntityRepository
+          .approvementNews(
+            accessToken: accessToken as String,
+            id: event.id,
+          )
+          .timeout(const Duration(seconds: 5));
+      await onApprovementEventFetch(emit);
+    } on TimeoutException {
+      emit(const ApprovementNewsState.error());
+    } catch (e) {
+      emit(const ApprovementNewsState.error());
+    }
   }
 
   Future<void> onApprovementEventFetch(

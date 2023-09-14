@@ -16,13 +16,21 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<User> getUserInfo({required String userToken}) {
-    return _userProvider.getUserInfo(userToken: userToken);
+    try {
+      return _userProvider.getUserInfo(userToken: userToken);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber}) {
-    return _userProvider.getUserByPhoneNumber(
-        userToken: userToken, phoneNumber: phoneNumber);
+    try {
+      return _userProvider.getUserByPhoneNumber(
+          userToken: userToken, phoneNumber: phoneNumber);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

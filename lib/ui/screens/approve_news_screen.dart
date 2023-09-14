@@ -46,7 +46,10 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(loadedApprovementNews[index].image),
+                      image: Image.network(loadedApprovementNews[index].image)
+                          .image,
+
+                      // NetworkImage(loadedApprovementNews[index].image),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -57,7 +60,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                       Text(
                         loadedApprovementNews[index].title,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -66,22 +69,26 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                       Text(
                         loadedApprovementNews[index].description,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
+                          color: Colors.black,
+                          fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
+                          color: Colors.black,
+                          fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle confirm button press
+                          context.read<ApprovementNewsBloc>().add(
+                              ApprovementEvent.approvedNews(
+                                  id: loadedApprovementNews[index]
+                                      .id
+                                      .toString()));
                         },
                         child: const Text('Confirm'),
                       ),

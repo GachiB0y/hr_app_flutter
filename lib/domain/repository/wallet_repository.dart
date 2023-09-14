@@ -24,12 +24,17 @@ class WalletRepositoryImpl implements WalletRepository {
 
   @override
   Future<Wallet> getWallet({required String accessToken}) async {
-    final int balance =
-        await _walletProvider.getBalance(userToken: accessToken);
-    final List<Transaction> transactions =
-        await _walletProvider.getTransactions(userToken: accessToken);
-    final Wallet wallet = Wallet(balance: balance, transactions: transactions);
-    return wallet;
+    try {
+      final int balance =
+          await _walletProvider.getBalance(userToken: accessToken);
+      final List<Transaction> transactions =
+          await _walletProvider.getTransactions(userToken: accessToken);
+      final Wallet wallet =
+          Wallet(balance: balance, transactions: transactions);
+      return wallet;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -38,30 +43,42 @@ class WalletRepositoryImpl implements WalletRepository {
       required int amount,
       required int userId,
       required String message}) async {
-    final int newBalance = await _walletProvider.sendCoinsToOtherUser(
-      userToken: accessToken,
-      amount: amount,
-      userId: userId,
-      message: message,
-    );
-    return newBalance;
+    try {
+      final int newBalance = await _walletProvider.sendCoinsToOtherUser(
+        userToken: accessToken,
+        amount: amount,
+        userId: userId,
+        message: message,
+      );
+      return newBalance;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken}) async {
-    final List<CoinsInfo> listCoinsinfo = await _walletProvider.getCoinsInfo(
-      userToken: userToken,
-    );
-    return listCoinsinfo;
+    try {
+      final List<CoinsInfo> listCoinsinfo = await _walletProvider.getCoinsInfo(
+        userToken: userToken,
+      );
+      return listCoinsinfo;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<List<CoinsReward>> getInfoCoinsReward(
       {required String userToken}) async {
-    final List<CoinsReward> listCoinsReward =
-        await _walletProvider.getInfoCoinsReward(
-      userToken: userToken,
-    );
-    return listCoinsReward;
+    try {
+      final List<CoinsReward> listCoinsReward =
+          await _walletProvider.getInfoCoinsReward(
+        userToken: userToken,
+      );
+      return listCoinsReward;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

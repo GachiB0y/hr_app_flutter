@@ -36,7 +36,7 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
         try {
           String? accessToken = await authRepository.cheskIsLiveAccessToken();
 
-          eventEntityRepository.createNewEventEntity(
+          await eventEntityRepository.createNewEventEntity(
               accessToken: accessToken as String,
               title: event.title,
               description: event.description,

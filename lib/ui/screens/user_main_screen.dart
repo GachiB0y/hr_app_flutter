@@ -390,8 +390,10 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(item.image)
-                                as ImageProvider<Object>,
+                            image: Image.network(item.image).image,
+
+                            // NetworkImage(item.image)
+                            //     as ImageProvider<Object>,
                             fit: BoxFit.cover),
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(18),

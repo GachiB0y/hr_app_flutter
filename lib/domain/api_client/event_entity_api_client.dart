@@ -19,6 +19,10 @@ abstract class EventsEntityProvider {
     required io.File imageFile,
     required List<String> categories,
   });
+  Future<bool> approvementNews({
+    required String accessToken,
+    required String id,
+  });
 }
 
 class EventsEntityProviderImpl implements EventsEntityProvider {
@@ -136,6 +140,27 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       return result;
     } else {
       throw Exception('Error fetching  Approvment Events');
+    }
+  }
+
+  @override
+  Future<bool> approvementNews(
+      {required String accessToken, required String id}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+
+    var request = http.Request('POST',
+        Uri.parse('http://10.3.29.20:9100/news/approve_feed?feed_id=$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception('Error approvement News!!!');
     }
   }
 }

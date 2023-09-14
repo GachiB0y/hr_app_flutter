@@ -16,6 +16,10 @@ abstract class EventEntityRepository {
     required File imageFile,
     required List<String> categories,
   });
+  Future<bool> approvementNews({
+    required String accessToken,
+    required String id,
+  });
 }
 
 class EventEntityRepositoryImpl implements EventEntityRepository {
@@ -44,14 +48,18 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       required String endDate,
       required File imageFile,
       required List<String> categories}) async {
-    return await _eventEntityProvider.createNewEventEntity(
-        accessToken: accessToken,
-        title: title,
-        description: description,
-        imageFile: imageFile,
-        categories: categories,
-        startDate: startDate,
-        endDate: endDate);
+    try {
+      return await _eventEntityProvider.createNewEventEntity(
+          accessToken: accessToken,
+          title: title,
+          description: description,
+          imageFile: imageFile,
+          categories: categories,
+          startDate: startDate,
+          endDate: endDate);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -59,5 +67,16 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       {required String accessToken}) async {
     return await _eventEntityProvider.getApprovmentEvents(
         accessToken: accessToken);
+  }
+
+  @override
+  Future<bool> approvementNews(
+      {required String accessToken, required String id}) async {
+    try {
+      return await _eventEntityProvider.approvementNews(
+          accessToken: accessToken, id: id);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

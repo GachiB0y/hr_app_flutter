@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' as foundation;
+// import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,7 +81,7 @@ class _MyPickerImageState extends State<MyPickerImage> {
               final imageFile = _myImage.imageFile;
               if (imageFile != null) {
                 final File file = File(imageFile.path);
-                final foundation.Uint8List bytes = await file.readAsBytes();
+                // final foundation.Uint8List bytes = await file.readAsBytes();
                 widget.callback(file);
               }
             },
