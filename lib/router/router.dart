@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
+import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
 import 'package:hr_app_flutter/ui/screens/education_screen.dart';
@@ -6,7 +8,7 @@ import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/grass_coin_screen.dar
 import 'package:hr_app_flutter/ui/screens/loader_screen.dart';
 import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
-import 'package:hr_app_flutter/ui/screens/services_screen.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 part 'router.gr.dart';
 
@@ -27,5 +29,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
             page: SearchFriendAndSendCoinsRoute.page,
             path: '/search_friend_and_send_coins'),
+        AutoRoute(page: ApproveNewsRoute.page, path: '/approve_news'),
+        AutoRoute(page: AboutNewsRoute.page, path: '/about_news'),
       ];
 }

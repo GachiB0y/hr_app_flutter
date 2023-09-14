@@ -29,8 +29,9 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
             idTab: event.idTab,
             listEventEntityLoaded: event.listEventEntityLoaded);
         emit(EventEntityState.loaded(
-            listEventEntityLoaded: event.listEventEntityLoaded,
-            filteredListEventEntity: filteredEventEntity));
+          listEventEntityLoaded: event.listEventEntityLoaded,
+          filteredListEventEntity: filteredEventEntity,
+        ));
       } else if (event is EventEntityEventCreateNewEventEntity) {
         try {
           String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -75,8 +76,9 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
       );
 
       emit(EventEntityState.loaded(
-          listEventEntityLoaded: listEventEntityLoaded,
-          filteredListEventEntity: filteredEventEntity));
+        listEventEntityLoaded: listEventEntityLoaded,
+        filteredListEventEntity: filteredEventEntity,
+      ));
     } on TimeoutException {
       emit(const EventEntityState.error());
     } catch (e) {

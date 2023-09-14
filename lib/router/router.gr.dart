@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AboutNewsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AboutNewsScreen(),
+      );
+    },
+    ApproveNewsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ApproveNewsScreen(),
+      );
+    },
     AuthenticationFormRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -70,6 +82,34 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [AboutNewsScreen]
+class AboutNewsRoute extends PageRouteInfo<void> {
+  const AboutNewsRoute({List<PageRouteInfo>? children})
+      : super(
+          AboutNewsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AboutNewsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ApproveNewsScreen]
+class ApproveNewsRoute extends PageRouteInfo<void> {
+  const ApproveNewsRoute({List<PageRouteInfo>? children})
+      : super(
+          ApproveNewsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ApproveNewsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

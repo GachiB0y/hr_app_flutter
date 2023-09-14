@@ -105,8 +105,8 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request(
-        'GET', Uri.parse('http://10.3.29.20:9115/coins/coins_reward'));
+    var request =
+        http.Request('GET', Uri.parse('$host:$port/coins/coins_reward'));
 
     request.headers.addAll(headers);
 
@@ -132,8 +132,7 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken',
     };
-    var request =
-        http.Request('GET', Uri.parse('http://10.3.29.20:9115/coins/info'));
+    var request = http.Request('GET', Uri.parse('$host:$port/coins/info'));
 
     request.headers.addAll(headers);
 

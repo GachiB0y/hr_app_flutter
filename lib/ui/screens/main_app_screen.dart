@@ -9,7 +9,7 @@ import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
 import 'package:hr_app_flutter/ui/screens/education_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/grass_coin_screen.dart';
-import 'package:hr_app_flutter/ui/screens/services_screen.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 
 @RoutePage()

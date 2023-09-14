@@ -3,6 +3,7 @@ import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
+import 'package:hr_app_flutter/domain/blocs/approvement_news_bloc/approvement_news_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
@@ -118,6 +119,12 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<CategoryBloc>(
           create: (BuildContext context) => CategoryBloc(
+            authRepository: authRepository,
+            eventEntityRepository: eventEntityRepository,
+          ),
+        ),
+        BlocProvider<ApprovementNewsBloc>(
+          create: (BuildContext context) => ApprovementNewsBloc(
             authRepository: authRepository,
             eventEntityRepository: eventEntityRepository,
           ),

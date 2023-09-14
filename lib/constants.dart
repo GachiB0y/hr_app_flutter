@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 const String host = 'http://10.3.29.20';
-const String port = '9115';
+const String port = '9100';
 
 class MyCustomIcon {
   static const IconData iconLogoGrass =

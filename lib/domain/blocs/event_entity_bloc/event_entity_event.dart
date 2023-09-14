@@ -11,8 +11,8 @@ class EventEntityEvent with _$EventEntityEvent {
     required File imageFile,
     required List<String> categories,
   }) = EventEntityEventCreateNewEventEntity;
-  const factory EventEntityEvent.filterNews(
-          {required int idTab,
-          required List<EventEntity> listEventEntityLoaded}) =
-      EventEntityEventFilterNews;
+  const factory EventEntityEvent.filterNews({
+    required int idTab,
+    required List<EventEntity> listEventEntityLoaded,
+  }) = EventEntityEventFilterNews;
 }

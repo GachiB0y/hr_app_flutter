@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/my_picker_image.dart';
 import 'package:intl/intl.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
-import 'package:hr_app_flutter/domain/entity/image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 @RoutePage()
@@ -148,6 +148,25 @@ class ServicesScreen extends StatelessWidget {
                       context,
                       cubitMainAppScreen,
                     );
+                  },
+                  icon: const Icon(
+                    Icons.add_circle,
+                    size: 35,
+                    color: ColorsForWidget.colorGreen,
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListTile(
+              leading: const Text(
+                'Модерация новстей',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+              ),
+              trailing: IconButton(
+                  onPressed: () {
+                    // AutoRouter.of(context).push(const ApproveNewsRoute());
+                    AutoRouter.of(context).push(const AboutNewsRoute());
                   },
                   icon: const Icon(
                     Icons.add_circle,
@@ -557,93 +576,6 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class MyPickerImage extends StatefulWidget {
-  void Function(File) callback;
-  MyPickerImage({
-    Key? key,
-    required this.callback,
-  }) : super(key: key);
-
-  @override
-  _MyPickerImageState createState() => _MyPickerImageState();
-}
-
-class _MyPickerImageState extends State<MyPickerImage> {
-  final MyImage _myImage = MyImage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _myImage.imageFile != null
-            ? Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
-                    image: FileImage(_myImage.imageFile as File),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-        SizedBox(
-          width: double.infinity,
-          height: 200,
-          child: InkWell(
-            onTap: () async {
-              await _myImage.pickImage(ImageSource.gallery);
-              final imageFile = _myImage.imageFile;
-              if (imageFile != null) {
-                final File file = File(imageFile.path);
-                final foundation.Uint8List bytes = await file.readAsBytes();
-                widget.callback(file);
-              }
-            },
-          ),
-        ),
-      ],
     );
   }
 }
