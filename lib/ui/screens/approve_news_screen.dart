@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/approvement_news_bloc/approvement_news_bloc.dart';
+import 'package:hr_app_flutter/router/router.dart';
 
 @RoutePage()
 class ApproveNewsScreen extends StatefulWidget {
@@ -41,58 +42,68 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
             return ListView.builder(
               itemCount: loadedApprovementNews.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: Image.network(loadedApprovementNews[index].image)
-                          .image,
+                return GestureDetector(
+                  onDoubleTap: () {
+                    // AutoRouter.of(context).push(
+                    //   const AboutNewsRoute(),
+                    // );
+                    context.pushRoute(
+                        AboutNewsRoute(id: loadedApprovementNews[index].id));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: Image.network(loadedApprovementNews[index].image)
+                            .image,
 
-                      // NetworkImage(loadedApprovementNews[index].image),
-                      fit: BoxFit.cover,
+                        // NetworkImage(loadedApprovementNews[index].image),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        loadedApprovementNews[index].title,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          loadedApprovementNews[index].title,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        loadedApprovementNews[index].description,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                        const SizedBox(height: 8),
+                        Text(
+                          loadedApprovementNews[index].description,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                        const SizedBox(height: 8),
+                        Text(
+                          'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<ApprovementNewsBloc>().add(
-                              ApprovementEvent.approvedNews(
-                                  id: loadedApprovementNews[index]
-                                      .id
-                                      .toString()));
-                        },
-                        child: const Text('Confirm'),
-                      ),
-                    ],
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<ApprovementNewsBloc>().add(
+                                ApprovementEvent.approvedNews(
+                                    id: loadedApprovementNews[index]
+                                        .id
+                                        .toString()));
+                          },
+                          child: const Text('Подтвердить'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

@@ -41,8 +41,8 @@ class Category with _$Category {
 class Writer with _$Writer {
   const factory Writer({
     @JsonKey(name: 'user_id') required int id,
-    @JsonKey(name: 'name') required String firstName,
-    @JsonKey(name: 'name_i') required String middleName,
+    @JsonKey(name: 'name_i') required String firstName,
+    @JsonKey(name: 'name') required String middleName,
     @JsonKey(name: 'name_o') required String lastName,
   }) = _Writer;
 

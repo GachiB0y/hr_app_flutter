@@ -594,9 +594,9 @@ Writer _$WriterFromJson(Map<String, dynamic> json) {
 mixin _$Writer {
   @JsonKey(name: 'user_id')
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'name')
-  String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_i')
+  String get firstName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name')
   String get middleName => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_o')
   String get lastName => throw _privateConstructorUsedError;
@@ -613,8 +613,8 @@ abstract class $WriterCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'user_id') int id,
-      @JsonKey(name: 'name') String firstName,
-      @JsonKey(name: 'name_i') String middleName,
+      @JsonKey(name: 'name_i') String firstName,
+      @JsonKey(name: 'name') String middleName,
       @JsonKey(name: 'name_o') String lastName});
 }
 
@@ -665,8 +665,8 @@ abstract class _$$_WriterCopyWith<$Res> implements $WriterCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'user_id') int id,
-      @JsonKey(name: 'name') String firstName,
-      @JsonKey(name: 'name_i') String middleName,
+      @JsonKey(name: 'name_i') String firstName,
+      @JsonKey(name: 'name') String middleName,
       @JsonKey(name: 'name_o') String lastName});
 }
 
@@ -711,8 +711,8 @@ class __$$_WriterCopyWithImpl<$Res>
 class _$_Writer implements _Writer {
   const _$_Writer(
       {@JsonKey(name: 'user_id') required this.id,
-      @JsonKey(name: 'name') required this.firstName,
-      @JsonKey(name: 'name_i') required this.middleName,
+      @JsonKey(name: 'name_i') required this.firstName,
+      @JsonKey(name: 'name') required this.middleName,
       @JsonKey(name: 'name_o') required this.lastName});
 
   factory _$_Writer.fromJson(Map<String, dynamic> json) =>
@@ -722,10 +722,10 @@ class _$_Writer implements _Writer {
   @JsonKey(name: 'user_id')
   final int id;
   @override
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name_i')
   final String firstName;
   @override
-  @JsonKey(name: 'name_i')
+  @JsonKey(name: 'name')
   final String middleName;
   @override
   @JsonKey(name: 'name_o')
@@ -772,8 +772,8 @@ class _$_Writer implements _Writer {
 abstract class _Writer implements Writer {
   const factory _Writer(
       {@JsonKey(name: 'user_id') required final int id,
-      @JsonKey(name: 'name') required final String firstName,
-      @JsonKey(name: 'name_i') required final String middleName,
+      @JsonKey(name: 'name_i') required final String firstName,
+      @JsonKey(name: 'name') required final String middleName,
       @JsonKey(name: 'name_o') required final String lastName}) = _$_Writer;
 
   factory _Writer.fromJson(Map<String, dynamic> json) = _$_Writer.fromJson;
@@ -782,10 +782,10 @@ abstract class _Writer implements Writer {
   @JsonKey(name: 'user_id')
   int get id;
   @override
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name_i')
   String get firstName;
   @override
-  @JsonKey(name: 'name_i')
+  @JsonKey(name: 'name')
   String get middleName;
   @override
   @JsonKey(name: 'name_o')

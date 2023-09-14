@@ -20,6 +20,10 @@ abstract class EventEntityRepository {
     required String accessToken,
     required String id,
   });
+  Future<EventEntity> getNewsById({
+    required String accessToken,
+    required String id,
+  });
 }
 
 class EventEntityRepositoryImpl implements EventEntityRepository {
@@ -74,6 +78,17 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       {required String accessToken, required String id}) async {
     try {
       return await _eventEntityProvider.approvementNews(
+          accessToken: accessToken, id: id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<EventEntity> getNewsById(
+      {required String accessToken, required String id}) async {
+    try {
+      return await _eventEntityProvider.getNewsById(
           accessToken: accessToken, id: id);
     } catch (e) {
       rethrow;

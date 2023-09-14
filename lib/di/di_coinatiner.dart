@@ -10,6 +10,7 @@ import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_s
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/one_news_bloc/one_news_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
@@ -128,7 +129,13 @@ class ScreenFactoryDefault implements ScreenFactory {
             authRepository: authRepository,
             eventEntityRepository: eventEntityRepository,
           ),
-        )
+        ),
+        BlocProvider<OneNewsBloc>(
+          create: (BuildContext context) => OneNewsBloc(
+            authRepository: authRepository,
+            eventEntityRepository: eventEntityRepository,
+          ),
+        ),
       ],
       child: MaterialApp.router(
         localizationsDelegates: const [

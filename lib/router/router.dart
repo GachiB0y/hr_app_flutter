@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
@@ -30,6 +32,6 @@ class AppRouter extends _$AppRouter {
             page: SearchFriendAndSendCoinsRoute.page,
             path: '/search_friend_and_send_coins'),
         AutoRoute(page: ApproveNewsRoute.page, path: '/approve_news'),
-        AutoRoute(page: AboutNewsRoute.page, path: '/about_news'),
+        AutoRoute(page: AboutNewsRoute.page, path: '/about_news/'),
       ];
 }

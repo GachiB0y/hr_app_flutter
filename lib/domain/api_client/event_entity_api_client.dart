@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 
 abstract class EventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
+  Future<EventEntity> getNewsById({
+    required String accessToken,
+    required String id,
+  });
   Future<List<EventEntity>> getApprovmentEvents({required String accessToken});
   Future<List<Category>> getCategory({required String accessToken});
   Future<bool> createNewEventEntity({
@@ -151,8 +155,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       'Authorization': 'Bearer $accessToken',
     };
 
-    var request = http.Request('POST',
-        Uri.parse('http://10.3.29.20:9100/news/approve_feed?feed_id=$id'));
+    var request = http.Request(
+        'POST', Uri.parse('$host:$port/news/approve_feed?feed_id=$id'));
 
     request.headers.addAll(headers);
 
@@ -161,6 +165,30 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       return true;
     } else {
       throw Exception('Error approvement News!!!');
+    }
+  }
+
+  @override
+  Future<EventEntity> getNewsById(
+      {required String accessToken, required String id}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request('GET', Uri.parse('$host:$port/news/find/$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final EventEntity result = EventEntity.fromJson(jsonData['result']);
+
+      return result;
+    } else {
+      throw Exception('Error fetching News By Id');
     }
   }
 }

@@ -16,9 +16,13 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AboutNewsRoute.name: (routeData) {
+      final args = routeData.argsAs<AboutNewsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const AboutNewsScreen(),
+        child: AboutNewsScreen(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     ApproveNewsRoute.name: (routeData) {
@@ -86,16 +90,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [AboutNewsScreen]
-class AboutNewsRoute extends PageRouteInfo<void> {
-  const AboutNewsRoute({List<PageRouteInfo>? children})
-      : super(
+class AboutNewsRoute extends PageRouteInfo<AboutNewsRouteArgs> {
+  AboutNewsRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
           AboutNewsRoute.name,
+          args: AboutNewsRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'AboutNewsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<AboutNewsRouteArgs> page =
+      PageInfo<AboutNewsRouteArgs>(name);
+}
+
+class AboutNewsRouteArgs {
+  const AboutNewsRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'AboutNewsRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

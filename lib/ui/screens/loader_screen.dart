@@ -29,6 +29,6 @@ class LoaderScreen extends StatelessWidget {
         ? const MainAppRoute()
         : const AuthenticationFormRoute();
 
-    AutoRouter.of(context).push(nextScreen);
+    AutoRouter.of(context).replace(nextScreen);
   }
 }

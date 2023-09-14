@@ -53,14 +53,14 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
 
 _$_Writer _$$_WriterFromJson(Map<String, dynamic> json) => _$_Writer(
       id: json['user_id'] as int,
-      firstName: json['name'] as String,
-      middleName: json['name_i'] as String,
+      firstName: json['name_i'] as String,
+      middleName: json['name'] as String,
       lastName: json['name_o'] as String,
     );
 
 Map<String, dynamic> _$$_WriterToJson(_$_Writer instance) => <String, dynamic>{
       'user_id': instance.id,
-      'name': instance.firstName,
-      'name_i': instance.middleName,
+      'name_i': instance.firstName,
+      'name': instance.middleName,
       'name_o': instance.lastName,
     };
