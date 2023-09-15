@@ -26,28 +26,29 @@ class _SimpleCalcWidgetState extends State<SimpleCalcWidget> {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: ChangeNotifierProvaider<SimpleCalcWidgetModel>(
-            model: _model,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                const FirstNumberWidget(),
-                SizedBox(
-                  height: 10,
-                ),
-                const SecondNumberWidget(),
-                SizedBox(
-                  height: 10,
-                ),
-                const SummButtonWidget(),
-                SizedBox(
-                  height: 10,
-                ),
-                const ResultWidget(),
-              ],
-            ),
-          )),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: ChangeNotifierProvaider<SimpleCalcWidgetModel>(
+          model: _model,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              const FirstNumberWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              const SecondNumberWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              const SummButtonWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              const ResultWidget(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -59,9 +60,10 @@ class FirstNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(border: OutlineInputBorder()),
-      onChanged: (value) =>
-          ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)
-              ?.firstNumber = value,
+      onChanged: (value) => ChangeNotifierProvaider.read<
+              ChangeNotifierProvaider<SimpleCalcWidgetModel>,
+              SimpleCalcWidgetModel>(context)
+          ?.firstNumber = value,
     );
   }
 }
@@ -73,9 +75,10 @@ class SecondNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(border: OutlineInputBorder()),
-      onChanged: (value) =>
-          ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)
-              ?.secondNumber = value,
+      onChanged: (value) => ChangeNotifierProvaider.read<
+              ChangeNotifierProvaider<SimpleCalcWidgetModel>,
+              SimpleCalcWidgetModel>(context)
+          ?.secondNumber = value,
     );
   }
 }
@@ -86,8 +89,10 @@ class SummButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () =>
-            ChangeNotifierProvaider.read<SimpleCalcWidgetModel>(context)?.sum(),
+        onPressed: () => ChangeNotifierProvaider.read<
+                ChangeNotifierProvaider<SimpleCalcWidgetModel>,
+                SimpleCalcWidgetModel>(context)
+            ?.sum(),
         child: const Text('Count summ'));
   }
 }
@@ -97,7 +102,9 @@ class ResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final value = ChangeNotifierProvaider.watch<SimpleCalcWidgetModel>(context)
+    final value = ChangeNotifierProvaider.watch<
+                ChangeNotifierProvaider<SimpleCalcWidgetModel>,
+                SimpleCalcWidgetModel>(context)
             ?.summResult ??
         '-1';
     return Text('Result: $value');
@@ -175,20 +182,18 @@ class ChangeNotifierProvaider<T extends Listenable>
       {Key? key, required this.model, required Widget child})
       : super(key: key, child: child, notifier: model);
 
-  static T? watch<T extends Listenable>(BuildContext context) {
-    final notifier = context
-        .dependOnInheritedWidgetOfExactType<ChangeNotifierProvaider>()
-        ?.notifier;
-    if (notifier != null && notifier is T) {
+  static T? watch<M extends ChangeNotifierProvaider<T>, T extends Listenable>(
+      BuildContext context) {
+    final notifier = context.dependOnInheritedWidgetOfExactType<M>()?.notifier;
+    if (notifier != null) {
       return notifier;
     }
     return null;
   }
 
-  static T? read<T extends Listenable>(BuildContext context) {
-    final widget = context
-        .getElementForInheritedWidgetOfExactType<ChangeNotifierProvaider>()
-        ?.widget;
+  static T? read<M extends ChangeNotifierProvaider<T>, T extends Listenable>(
+      BuildContext context) {
+    final widget = context.getElementForInheritedWidgetOfExactType<M>()?.widget;
     return widget is ChangeNotifierProvaider ? widget.notifier as T : null;
   }
 }

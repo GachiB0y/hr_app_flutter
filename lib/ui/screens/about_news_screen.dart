@@ -2,16 +2,37 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/one_news_bloc/one_news_bloc.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/utils/date_formatter.dart';
 
 @RoutePage()
-class AboutNewsScreen extends StatefulWidget {
-  const AboutNewsScreen({super.key, required this.id});
+class AboutNewsScreen extends StatefulWidget implements AutoRouteWrapper {
+  const AboutNewsScreen(
+      {super.key,
+      required this.id,
+      required this.authRepository,
+      required this.eventEntityRepository});
 
   final int id;
 
+  final AuthRepository authRepository;
+
+  final EventEntityRepository eventEntityRepository;
+
   @override
   State<AboutNewsScreen> createState() => _AboutNewsScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<OneNewsBloc>(
+      create: (BuildContext context) => OneNewsBloc(
+        authRepository: authRepository,
+        eventEntityRepository: eventEntityRepository,
+      ),
+      child: this,
+    );
+  }
 }
 
 class _AboutNewsScreenState extends State<AboutNewsScreen> {

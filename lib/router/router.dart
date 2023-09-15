@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
@@ -17,6 +19,7 @@ part 'router.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter {
   AppRouter();
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: LoaderRoute.page, path: '/'),

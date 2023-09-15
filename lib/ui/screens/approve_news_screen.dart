@@ -2,14 +2,32 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/approvement_news_bloc/approvement_news_bloc.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
 @RoutePage()
-class ApproveNewsScreen extends StatefulWidget {
-  const ApproveNewsScreen({super.key});
+class ApproveNewsScreen extends StatefulWidget implements AutoRouteWrapper {
+  const ApproveNewsScreen(
+      {super.key,
+      required this.authRepository,
+      required this.eventEntityRepository});
+  final AuthRepository authRepository;
+  final EventEntityRepository eventEntityRepository;
 
   @override
   State<ApproveNewsScreen> createState() => _ApproveNewsScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<ApprovementNewsBloc>(
+      create: (BuildContext context) => ApprovementNewsBloc(
+        authRepository: authRepository,
+        eventEntityRepository: eventEntityRepository,
+      ),
+      child: this,
+    );
+  }
 }
 
 class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
@@ -44,11 +62,11 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onDoubleTap: () {
-                    // AutoRouter.of(context).push(
-                    //   const AboutNewsRoute(),
-                    // );
-                    context.pushRoute(
-                        AboutNewsRoute(id: loadedApprovementNews[index].id));
+                    context.pushRoute(AboutNewsRoute(
+                        id: loadedApprovementNews[index].id,
+                        authRepository: blocApprovementNews.authRepository,
+                        eventEntityRepository:
+                            blocApprovementNews.eventEntityRepository));
                   },
                   child: Container(
                     margin: const EdgeInsets.all(10),
@@ -57,8 +75,6 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                       image: DecorationImage(
                         image: Image.network(loadedApprovementNews[index].image)
                             .image,
-
-                        // NetworkImage(loadedApprovementNews[index].image),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(10),
@@ -106,6 +122,9 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                               child: const Text('Подтвердить'),
                             ),
                             ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.redAccent)),
                               onPressed: () {
                                 context.read<ApprovementNewsBloc>().add(
                                     ApprovementEvent.moveInArchiveNews(

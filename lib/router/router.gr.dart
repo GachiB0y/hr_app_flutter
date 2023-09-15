@@ -19,16 +19,25 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<AboutNewsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: AboutNewsScreen(
+        child: WrappedRoute(
+            child: AboutNewsScreen(
           key: args.key,
           id: args.id,
-        ),
+          authRepository: args.authRepository,
+          eventEntityRepository: args.eventEntityRepository,
+        )),
       );
     },
     ApproveNewsRoute.name: (routeData) {
+      final args = routeData.argsAs<ApproveNewsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ApproveNewsScreen(),
+        child: WrappedRoute(
+            child: ApproveNewsScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          eventEntityRepository: args.eventEntityRepository,
+        )),
       );
     },
     AuthenticationFormRoute.name: (routeData) {
@@ -94,12 +103,16 @@ class AboutNewsRoute extends PageRouteInfo<AboutNewsRouteArgs> {
   AboutNewsRoute({
     Key? key,
     required int id,
+    required AuthRepository authRepository,
+    required EventEntityRepository eventEntityRepository,
     List<PageRouteInfo>? children,
   }) : super(
           AboutNewsRoute.name,
           args: AboutNewsRouteArgs(
             key: key,
             id: id,
+            authRepository: authRepository,
+            eventEntityRepository: eventEntityRepository,
           ),
           initialChildren: children,
         );
@@ -114,30 +127,65 @@ class AboutNewsRouteArgs {
   const AboutNewsRouteArgs({
     this.key,
     required this.id,
+    required this.authRepository,
+    required this.eventEntityRepository,
   });
 
   final Key? key;
 
   final int id;
 
+  final AuthRepository authRepository;
+
+  final EventEntityRepository eventEntityRepository;
+
   @override
   String toString() {
-    return 'AboutNewsRouteArgs{key: $key, id: $id}';
+    return 'AboutNewsRouteArgs{key: $key, id: $id, authRepository: $authRepository, eventEntityRepository: $eventEntityRepository}';
   }
 }
 
 /// generated route for
 /// [ApproveNewsScreen]
-class ApproveNewsRoute extends PageRouteInfo<void> {
-  const ApproveNewsRoute({List<PageRouteInfo>? children})
-      : super(
+class ApproveNewsRoute extends PageRouteInfo<ApproveNewsRouteArgs> {
+  ApproveNewsRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required EventEntityRepository eventEntityRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
           ApproveNewsRoute.name,
+          args: ApproveNewsRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            eventEntityRepository: eventEntityRepository,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ApproveNewsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ApproveNewsRouteArgs> page =
+      PageInfo<ApproveNewsRouteArgs>(name);
+}
+
+class ApproveNewsRouteArgs {
+  const ApproveNewsRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.eventEntityRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final EventEntityRepository eventEntityRepository;
+
+  @override
+  String toString() {
+    return 'ApproveNewsRouteArgs{key: $key, authRepository: $authRepository, eventEntityRepository: $eventEntityRepository}';
+  }
 }
 
 /// generated route for

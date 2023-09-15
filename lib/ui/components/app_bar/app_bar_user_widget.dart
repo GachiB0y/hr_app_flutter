@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/router/router.dart';
-
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:hr_app_flutter/theme/style_text.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {

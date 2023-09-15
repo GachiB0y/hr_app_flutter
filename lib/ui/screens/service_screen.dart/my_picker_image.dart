@@ -1,15 +1,14 @@
 import 'dart:io';
 
-// import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
+import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyPickerImage extends StatefulWidget {
-  void Function(File) callback;
-  MyPickerImage({
+  const MyPickerImage({
     Key? key,
-    required this.callback,
   }) : super(key: key);
 
   @override
@@ -81,8 +80,12 @@ class _MyPickerImageState extends State<MyPickerImage> {
               final imageFile = _myImage.imageFile;
               if (imageFile != null) {
                 final File file = File(imageFile.path);
-                // final foundation.Uint8List bytes = await file.readAsBytes();
-                widget.callback(file);
+                ChangeNotifierProvaider.read<
+                        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+                        BottomSheetCreateEventsModel>(context)
+                    ?.file = file;
+
+                setState(() {});
               }
             },
           ),

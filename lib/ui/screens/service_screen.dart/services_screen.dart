@@ -1,23 +1,30 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart' as foundation;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/Painteres_widget.dart';
+import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/my_picker_image.dart';
-import 'package:intl/intl.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 @RoutePage()
-class ServicesScreen extends StatelessWidget {
+class ServicesScreen extends StatefulWidget {
   const ServicesScreen({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ServicesScreen> createState() => _ServicesScreenState();
+}
+
+class _ServicesScreenState extends State<ServicesScreen> {
+  final _model = BottomSheetCreateEventsModel();
   void openBottomSheet(
     BuildContext context,
     MainAppScreenViewCubit cubitMainAppScreen,
@@ -106,13 +113,16 @@ class ServicesScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(20.0)),
-                      ),
-                      child: const BottomSheetCreateEventsWidget(),
-                    ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(20.0)),
+                        ),
+                        child: ChangeNotifierProvaider<
+                            BottomSheetCreateEventsModel>(
+                          model: _model,
+                          child: const BottomSheetCreateEventsWidget(),
+                        )),
                   ),
                 ],
               ),
@@ -128,6 +138,8 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
+    final blocEventEntity = context.read<EventEntityBloc>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -165,7 +177,10 @@ class ServicesScreen extends StatelessWidget {
               ),
               trailing: IconButton(
                   onPressed: () {
-                    AutoRouter.of(context).push(const ApproveNewsRoute());
+                    AutoRouter.of(context).push(ApproveNewsRoute(
+                        authRepository: blocEventEntity.authRepository,
+                        eventEntityRepository:
+                            blocEventEntity.eventEntityRepository));
                   },
                   icon: const Icon(
                     Icons.add_circle,
@@ -177,72 +192,6 @@ class ServicesScreen extends StatelessWidget {
         ],
       )),
     );
-  }
-}
-
-class PainterRight extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // double radius = 100;
-    double x = 52;
-    double y = 26;
-    final path = Path()
-      ..moveTo(0, size.height) // Начало пути
-      ..arcToPoint(Offset(size.width - y + 5, y / 3),
-          radius: Radius.circular(
-            x,
-          ),
-          clockwise: false)
-      ..arcToPoint(
-        Offset(size.width, 0),
-        radius: Radius.elliptical(x, x),
-      )
-      ..lineTo(size.width, 0)
-      ..lineTo(size.width,
-          size.height) // Добавить линию, образующую правую стенку контейнера
-      ..close(); // Замкнуть контур, создав обрезанный прямоугольник
-    final paint = Paint()
-      ..color = const Color.fromARGB(255, 224, 224, 224)
-      ..style = PaintingStyle.fill;
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
-
-class PainterLeft extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // double radius = 100;
-    double x = 52;
-    double y = 26;
-    final path = Path()
-      ..moveTo(size.width, size.height) // Начало пути
-      ..arcToPoint(
-        Offset(size.width - y - 5, y / 3),
-        radius: Radius.elliptical(x, y),
-      )
-      ..arcToPoint(const Offset(0, 0),
-          radius: Radius.circular(x), clockwise: false)
-      ..lineTo(0, 0)
-      ..lineTo(
-          0, size.height) // Добавить линию, образующую правую стенку контейнера
-      ..close(); // Замкнуть контур, создав обрезанный прямоугольник
-    final paint = Paint()
-      ..color = const Color.fromARGB(255, 224, 224, 224)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5;
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }
 
@@ -262,22 +211,25 @@ class _BottomSheetCreateEventsWidgetState
       TextEditingController();
   final TextEditingController dataTitleController = TextEditingController();
   final TextEditingController dateRangeController = TextEditingController();
-  List<String> selectedItems = [];
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
-  String? base64Image;
-  foundation.Uint8List? bytesSend;
-  String errorMessage = '';
-  File? file;
-
-  Future<void> changeParams(File openFile) async {
-    setState(() {
-      file = openFile;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<String> selectedCategories = ChangeNotifierProvaider.watch<
+            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+            BottomSheetCreateEventsModel>(context)
+        ?.selectedItems as List<String>;
+    String errorMessage = ChangeNotifierProvaider.watch<
+            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+            BottomSheetCreateEventsModel>(context)
+        ?.errorMessage as String;
+    DateTime startDate = ChangeNotifierProvaider.watch<
+            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+            BottomSheetCreateEventsModel>(context)
+        ?.startDate as DateTime;
+    DateTime endDate = ChangeNotifierProvaider.watch<
+            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+            BottomSheetCreateEventsModel>(context)
+        ?.endDate as DateTime;
+
     final blocEventEntity = context.read<EventEntityBloc>();
     return SingleChildScrollView(
       child: Container(
@@ -299,11 +251,9 @@ class _BottomSheetCreateEventsWidgetState
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: MyPickerImage(
-                  callback: changeParams,
-                ),
+              const Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: MyPickerImage(),
               ),
               const SizedBox(
                 height: 10,
@@ -319,14 +269,12 @@ class _BottomSheetCreateEventsWidgetState
                 ),
               ),
               ScrollWidget(
-                selectedCategories: selectedItems,
+                selectedCategories: selectedCategories,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: DateRangePickerWidget(
                   dateRangeController: dateRangeController,
-                  endDate: endDate,
-                  startDate: startDate,
                 ),
               ),
               Padding(
@@ -345,7 +293,11 @@ class _BottomSheetCreateEventsWidgetState
               errorMessage != ''
                   ? Center(
                       child: Text(
-                        errorMessage,
+                        ChangeNotifierProvaider.watch<
+                                ChangeNotifierProvaider<
+                                    BottomSheetCreateEventsModel>,
+                                BottomSheetCreateEventsModel>(context)
+                            ?.errorMessage as String,
                         style: const TextStyle(fontSize: 18, color: Colors.red),
                       ),
                     )
@@ -367,18 +319,24 @@ class _BottomSheetCreateEventsWidgetState
                       if (dataDescriptionController.text.isEmpty ||
                           dataTitleController.text.isEmpty ||
                           dateRangeController.text.isEmpty ||
-                          selectedItems.isEmpty) {
-                        setState(() {
-                          errorMessage = 'Заполните все поля!!!';
-                        });
+                          selectedCategories.isEmpty) {
+                        ChangeNotifierProvaider.read<
+                                ChangeNotifierProvaider<
+                                    BottomSheetCreateEventsModel>,
+                                BottomSheetCreateEventsModel>(context)
+                            ?.showError();
                         return;
                       }
 
                       blocEventEntity.add(EventEntityEvent.createNewEventEntity(
                           title: dataTitleController.text,
                           description: dataDescriptionController.text,
-                          imageFile: file!,
-                          categories: selectedItems,
+                          imageFile: ChangeNotifierProvaider.read<
+                                  ChangeNotifierProvaider<
+                                      BottomSheetCreateEventsModel>,
+                                  BottomSheetCreateEventsModel>(context)
+                              ?.file! as File,
+                          categories: selectedCategories,
                           startDate: startDate.toString(),
                           endDate: endDate.toString()));
                       Navigator.pop(context);
@@ -509,49 +467,16 @@ class _ScrollWidgetState extends State<ScrollWidget> {
 
 class DateRangePickerWidget extends StatefulWidget {
   final TextEditingController dateRangeController;
-  DateTime startDate;
-  DateTime endDate;
 
-  DateRangePickerWidget(
-      {super.key,
-      required this.dateRangeController,
-      required this.startDate,
-      required this.endDate});
+  const DateRangePickerWidget({
+    super.key,
+    required this.dateRangeController,
+  });
   @override
   _DateRangePickerWidgetState createState() => _DateRangePickerWidgetState();
 }
 
 class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
-  Future<void> selectDateRange(BuildContext context) async {
-    final pickedDates = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime(DateTime.now().year + 1),
-      initialDateRange: widget.startDate != null && widget.endDate != null
-          ? DateTimeRange(start: widget.startDate, end: widget.endDate)
-          : null,
-    );
-
-    if (pickedDates != null) {
-      setState(() {
-        widget.startDate = pickedDates.start;
-        widget.endDate = pickedDates.end;
-        updateDateRangeText();
-      });
-    }
-  }
-
-  void updateDateRangeText() {
-    final formatter = DateFormat('d MMM');
-    String start = widget.startDate != null
-        ? formatter.format(widget.startDate)
-        : 'Start Date';
-    String end =
-        widget.endDate != null ? formatter.format(widget.endDate) : 'End Date';
-    String dateRangeText = '$start - $end';
-    widget.dateRangeController.text = dateRangeText;
-  }
-
   @override
   void dispose() {
     widget.dateRangeController.dispose();
@@ -561,7 +486,10 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => selectDateRange(context),
+      onTap: () => ChangeNotifierProvaider.read<
+              ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+              BottomSheetCreateEventsModel>(context)
+          ?.selectDateRange(context, widget.dateRangeController),
       child: AbsorbPointer(
         child: TextFormField(
           controller: widget.dateRangeController,
