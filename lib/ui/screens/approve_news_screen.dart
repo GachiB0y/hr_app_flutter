@@ -92,15 +92,30 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.read<ApprovementNewsBloc>().add(
-                                ApprovementEvent.approvedNews(
-                                    id: loadedApprovementNews[index]
-                                        .id
-                                        .toString()));
-                          },
-                          child: const Text('Подтвердить'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                context.read<ApprovementNewsBloc>().add(
+                                    ApprovementEvent.approvedNews(
+                                        id: loadedApprovementNews[index]
+                                            .id
+                                            .toString()));
+                              },
+                              child: const Text('Подтвердить'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                context.read<ApprovementNewsBloc>().add(
+                                    ApprovementEvent.moveInArchiveNews(
+                                        id: loadedApprovementNews[index]
+                                            .id
+                                            .toString()));
+                              },
+                              child: const Text('Отколнить'),
+                            ),
+                          ],
                         ),
                       ],
                     ),

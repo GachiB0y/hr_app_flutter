@@ -24,6 +24,8 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
         await onApprovementEventFetch(emit);
       } else if (event is ApprovementEventApprovedNews) {
         await onApprovedNews(event, emit);
+      } else if (event is ApprovementEventMoveInArchiveNews) {
+        await onMoveInArchiveNews(event, emit);
       }
     });
   }
@@ -35,6 +37,25 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
 
       await eventEntityRepository
           .approvementNews(
+            accessToken: accessToken as String,
+            id: event.id,
+          )
+          .timeout(const Duration(seconds: 5));
+      await onApprovementEventFetch(emit);
+    } on TimeoutException {
+      emit(const ApprovementNewsState.error());
+    } catch (e) {
+      emit(const ApprovementNewsState.error());
+    }
+  }
+
+  Future<void> onMoveInArchiveNews(ApprovementEventMoveInArchiveNews event,
+      Emitter<ApprovementNewsState> emit) async {
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      await eventEntityRepository
+          .moveInArchiveNews(
             accessToken: accessToken as String,
             id: event.id,
           )

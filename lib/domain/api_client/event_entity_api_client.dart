@@ -27,6 +27,10 @@ abstract class EventsEntityProvider {
     required String accessToken,
     required String id,
   });
+  Future<bool> moveInArchiveNews({
+    required String accessToken,
+    required String id,
+  });
 }
 
 class EventsEntityProviderImpl implements EventsEntityProvider {
@@ -189,6 +193,27 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       return result;
     } else {
       throw Exception('Error fetching News By Id');
+    }
+  }
+
+  @override
+  Future<bool> moveInArchiveNews(
+      {required String accessToken, required String id}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+
+    var request = http.Request(
+        'POST', Uri.parse('$host:$port/news/move_in_archive?feed_id=$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception('Error move In Archive News!!!');
     }
   }
 }

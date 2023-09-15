@@ -20,18 +20,21 @@ mixin _$ApprovementEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(String id) approvedNews,
+    required TResult Function(String id) moveInArchiveNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String id)? approvedNews,
+    TResult? Function(String id)? moveInArchiveNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String id)? approvedNews,
+    TResult Function(String id)? moveInArchiveNews,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,24 @@ mixin _$ApprovementEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ApprovementEventFetch value) fetch,
     required TResult Function(ApprovementEventApprovedNews value) approvedNews,
+    required TResult Function(ApprovementEventMoveInArchiveNews value)
+        moveInArchiveNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ApprovementEventFetch value)? fetch,
     TResult? Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult? Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ApprovementEventFetch value)? fetch,
     TResult Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +123,7 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(String id) approvedNews,
+    required TResult Function(String id) moveInArchiveNews,
   }) {
     return fetch();
   }
@@ -123,6 +133,7 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String id)? approvedNews,
+    TResult? Function(String id)? moveInArchiveNews,
   }) {
     return fetch?.call();
   }
@@ -132,6 +143,7 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String id)? approvedNews,
+    TResult Function(String id)? moveInArchiveNews,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -145,6 +157,8 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult map<TResult extends Object?>({
     required TResult Function(ApprovementEventFetch value) fetch,
     required TResult Function(ApprovementEventApprovedNews value) approvedNews,
+    required TResult Function(ApprovementEventMoveInArchiveNews value)
+        moveInArchiveNews,
   }) {
     return fetch(this);
   }
@@ -154,6 +168,8 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ApprovementEventFetch value)? fetch,
     TResult? Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult? Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
   }) {
     return fetch?.call(this);
   }
@@ -163,6 +179,8 @@ class _$ApprovementEventFetch implements ApprovementEventFetch {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ApprovementEventFetch value)? fetch,
     TResult Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -245,6 +263,7 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult when<TResult extends Object?>({
     required TResult Function() fetch,
     required TResult Function(String id) approvedNews,
+    required TResult Function(String id) moveInArchiveNews,
   }) {
     return approvedNews(id);
   }
@@ -254,6 +273,7 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String id)? approvedNews,
+    TResult? Function(String id)? moveInArchiveNews,
   }) {
     return approvedNews?.call(id);
   }
@@ -263,6 +283,7 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String id)? approvedNews,
+    TResult Function(String id)? moveInArchiveNews,
     required TResult orElse(),
   }) {
     if (approvedNews != null) {
@@ -276,6 +297,8 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult map<TResult extends Object?>({
     required TResult Function(ApprovementEventFetch value) fetch,
     required TResult Function(ApprovementEventApprovedNews value) approvedNews,
+    required TResult Function(ApprovementEventMoveInArchiveNews value)
+        moveInArchiveNews,
   }) {
     return approvedNews(this);
   }
@@ -285,6 +308,8 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ApprovementEventFetch value)? fetch,
     TResult? Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult? Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
   }) {
     return approvedNews?.call(this);
   }
@@ -294,6 +319,8 @@ class _$ApprovementEventApprovedNews implements ApprovementEventApprovedNews {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ApprovementEventFetch value)? fetch,
     TResult Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
     required TResult orElse(),
   }) {
     if (approvedNews != null) {
@@ -310,6 +337,156 @@ abstract class ApprovementEventApprovedNews implements ApprovementEvent {
   String get id;
   @JsonKey(ignore: true)
   _$$ApprovementEventApprovedNewsCopyWith<_$ApprovementEventApprovedNews>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ApprovementEventMoveInArchiveNewsCopyWith<$Res> {
+  factory _$$ApprovementEventMoveInArchiveNewsCopyWith(
+          _$ApprovementEventMoveInArchiveNews value,
+          $Res Function(_$ApprovementEventMoveInArchiveNews) then) =
+      __$$ApprovementEventMoveInArchiveNewsCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$ApprovementEventMoveInArchiveNewsCopyWithImpl<$Res>
+    extends _$ApprovementEventCopyWithImpl<$Res,
+        _$ApprovementEventMoveInArchiveNews>
+    implements _$$ApprovementEventMoveInArchiveNewsCopyWith<$Res> {
+  __$$ApprovementEventMoveInArchiveNewsCopyWithImpl(
+      _$ApprovementEventMoveInArchiveNews _value,
+      $Res Function(_$ApprovementEventMoveInArchiveNews) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$ApprovementEventMoveInArchiveNews(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ApprovementEventMoveInArchiveNews
+    implements ApprovementEventMoveInArchiveNews {
+  const _$ApprovementEventMoveInArchiveNews({required this.id});
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'ApprovementEvent.moveInArchiveNews(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApprovementEventMoveInArchiveNews &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovementEventMoveInArchiveNewsCopyWith<
+          _$ApprovementEventMoveInArchiveNews>
+      get copyWith => __$$ApprovementEventMoveInArchiveNewsCopyWithImpl<
+          _$ApprovementEventMoveInArchiveNews>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function(String id) approvedNews,
+    required TResult Function(String id) moveInArchiveNews,
+  }) {
+    return moveInArchiveNews(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function(String id)? approvedNews,
+    TResult? Function(String id)? moveInArchiveNews,
+  }) {
+    return moveInArchiveNews?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function(String id)? approvedNews,
+    TResult Function(String id)? moveInArchiveNews,
+    required TResult orElse(),
+  }) {
+    if (moveInArchiveNews != null) {
+      return moveInArchiveNews(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ApprovementEventFetch value) fetch,
+    required TResult Function(ApprovementEventApprovedNews value) approvedNews,
+    required TResult Function(ApprovementEventMoveInArchiveNews value)
+        moveInArchiveNews,
+  }) {
+    return moveInArchiveNews(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ApprovementEventFetch value)? fetch,
+    TResult? Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult? Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
+  }) {
+    return moveInArchiveNews?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ApprovementEventFetch value)? fetch,
+    TResult Function(ApprovementEventApprovedNews value)? approvedNews,
+    TResult Function(ApprovementEventMoveInArchiveNews value)?
+        moveInArchiveNews,
+    required TResult orElse(),
+  }) {
+    if (moveInArchiveNews != null) {
+      return moveInArchiveNews(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ApprovementEventMoveInArchiveNews implements ApprovementEvent {
+  const factory ApprovementEventMoveInArchiveNews({required final String id}) =
+      _$ApprovementEventMoveInArchiveNews;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$ApprovementEventMoveInArchiveNewsCopyWith<
+          _$ApprovementEventMoveInArchiveNews>
       get copyWith => throw _privateConstructorUsedError;
 }
 

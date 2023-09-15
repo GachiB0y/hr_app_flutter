@@ -24,6 +24,10 @@ abstract class EventEntityRepository {
     required String accessToken,
     required String id,
   });
+  Future<bool> moveInArchiveNews({
+    required String accessToken,
+    required String id,
+  });
 }
 
 class EventEntityRepositoryImpl implements EventEntityRepository {
@@ -89,6 +93,17 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       {required String accessToken, required String id}) async {
     try {
       return await _eventEntityProvider.getNewsById(
+          accessToken: accessToken, id: id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> moveInArchiveNews(
+      {required String accessToken, required String id}) async {
+    try {
+      return await _eventEntityProvider.moveInArchiveNews(
           accessToken: accessToken, id: id);
     } catch (e) {
       rethrow;
