@@ -3,16 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/utils/international_phone_formatter.dart';
 
 @RoutePage()
-class SearchFriendAndSendCoinsScreen extends StatefulWidget {
-  const SearchFriendAndSendCoinsScreen({Key? key}) : super(key: key);
-
+class SearchFriendAndSendCoinsScreen extends StatefulWidget
+    implements AutoRouteWrapper {
+  const SearchFriendAndSendCoinsScreen(
+      {Key? key, required this.authRepository, required this.userRepo})
+      : super(key: key);
+  final AuthRepository authRepository;
+  final UserRepository userRepo;
   @override
   _SearchFriendAndSendCoinsScreenState createState() =>
       _SearchFriendAndSendCoinsScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<OtherUsersBloc>(
+      create: (BuildContext context) =>
+          OtherUsersBloc(authRepository: authRepository, userRepo: userRepo),
+      child: this,
+    );
+  }
 }
 
 class _SearchFriendAndSendCoinsScreenState
@@ -22,9 +37,8 @@ class _SearchFriendAndSendCoinsScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    context.read<OtherUsersBloc>().add(OtherUsersEvent.clearList());
+    context.read<OtherUsersBloc>().add(const OtherUsersEvent.clearList());
   }
 
   void showPopupWindow(int autoCard) {

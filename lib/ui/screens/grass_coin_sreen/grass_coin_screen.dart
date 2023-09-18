@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -103,6 +104,7 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
+    final blocUser = context.watch<UserBloc>();
 
     return Column(
       children: [
@@ -266,8 +268,9 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                   padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
                 ),
                 onPressed: () {
-                  AutoRouter.of(context)
-                      .push(const SearchFriendAndSendCoinsRoute());
+                  AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
+                      authRepository: blocUser.authRepository,
+                      userRepo: blocUser.userRepo));
                 },
                 icon: const Icon(Icons.card_giftcard,
                     size: 26, color: Colors.black),

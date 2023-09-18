@@ -105,11 +105,6 @@ class ScreenFactoryDefault implements ScreenFactory {
           create: (BuildContext context) =>
               LoaderViewCubit(authRepository: authRepository),
         ),
-        BlocProvider<OtherUsersBloc>(
-          create: (BuildContext context) => OtherUsersBloc(
-              authRepository: authRepository,
-              userRepo: _diContainer._makeUserRepository()),
-        ),
         BlocProvider<CoinsScreenViewModelBloc>(
           create: (BuildContext context) => CoinsScreenViewModelBloc(
             authRepository: authRepository,
@@ -122,18 +117,6 @@ class ScreenFactoryDefault implements ScreenFactory {
             eventEntityRepository: eventEntityRepository,
           ),
         ),
-        // BlocProvider<ApprovementNewsBloc>(
-        //   create: (BuildContext context) => ApprovementNewsBloc(
-        //     authRepository: authRepository,
-        //     eventEntityRepository: eventEntityRepository,
-        //   ),
-        // ),
-        // BlocProvider<OneNewsBloc>(
-        //   create: (BuildContext context) => OneNewsBloc(
-        //     authRepository: authRepository,
-        //     eventEntityRepository: eventEntityRepository,
-        //   ),
-        // ),
       ],
       child: MaterialApp.router(
         localizationsDelegates: const [

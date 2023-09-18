@@ -77,9 +77,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SearchFriendAndSendCoinsRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchFriendAndSendCoinsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchFriendAndSendCoinsScreen(),
+        child: WrappedRoute(
+            child: SearchFriendAndSendCoinsScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
       );
     },
     ServicesRoute.name: (routeData) {
@@ -274,16 +280,46 @@ class MainAppRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SearchFriendAndSendCoinsScreen]
-class SearchFriendAndSendCoinsRoute extends PageRouteInfo<void> {
-  const SearchFriendAndSendCoinsRoute({List<PageRouteInfo>? children})
-      : super(
+class SearchFriendAndSendCoinsRoute
+    extends PageRouteInfo<SearchFriendAndSendCoinsRouteArgs> {
+  SearchFriendAndSendCoinsRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    List<PageRouteInfo>? children,
+  }) : super(
           SearchFriendAndSendCoinsRoute.name,
+          args: SearchFriendAndSendCoinsRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchFriendAndSendCoinsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SearchFriendAndSendCoinsRouteArgs> page =
+      PageInfo<SearchFriendAndSendCoinsRouteArgs>(name);
+}
+
+class SearchFriendAndSendCoinsRouteArgs {
+  const SearchFriendAndSendCoinsRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  @override
+  String toString() {
+    return 'SearchFriendAndSendCoinsRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+  }
 }
 
 /// generated route for
