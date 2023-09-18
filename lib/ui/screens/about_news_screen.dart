@@ -103,11 +103,34 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return ListTile(
-                        title: Text(
-                            '${news.writer.firstName} ${news.writer.middleName}'),
-                        subtitle: Wrap(children: [
-                          Text(news.description),
-                        ]),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Автор:',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                                '${news.writer.firstName} ${news.writer.middleName}'),
+                          ],
+                        ),
+                        subtitle: Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Описание:',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Wrap(children: [
+                                Text(news.description),
+                              ]),
+                            ],
+                          ),
+                        ),
                       );
                     },
                     childCount:

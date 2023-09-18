@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/bloc_observable.dart';
 import 'package:hr_app_flutter/di/di_coinatiner.dart';
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AppFactory {
   Widget makeApp();
@@ -9,12 +10,7 @@ abstract class AppFactory {
 final appFactory = makeAppFactory();
 
 void main() {
+  Bloc.observer = const AppBlocObserver();
   final app = appFactory.makeApp();
   runApp(app);
 }
-
-// void main() {
-//   runApp(const MaterialApp(
-//     home: Example(),
-//   ));
-// }
