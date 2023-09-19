@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/ui/components/service_element/service_element_widget.dart';
 
 import '../../theme/colors_from_theme.dart';
 
@@ -22,12 +25,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
+    context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
@@ -82,52 +87,87 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 }
 
-class ScrollBarWidget extends StatelessWidget {
+class ScrollBarWidget extends StatefulWidget {
   const ScrollBarWidget({super.key});
 
-  final List<String> text = const [
-    '',
-    'Справки\nи заявления',
-    'Бережливое\nпроизводство',
-    'График\nотпусков',
-    'Командировки',
-    'Расписание\nавтобусов',
-    'Режим работы',
-    'Структура\nорганизаций',
-    'Интерактивная\nкарта помещений',
-  ];
+  @override
+  State<ScrollBarWidget> createState() => _ScrollBarWidgetState();
+}
 
+class _ScrollBarWidgetState extends State<ScrollBarWidget> {
   final List<String> pathImages = const [
     '',
     'assets/images/note.png',
+    'assets/images/bus.png',
     'assets/images/thumbs_up.png',
+    'assets/images/tree_structure.png',
     'assets/images/airplane.png',
     'assets/images/globe.png',
-    'assets/images/bus.png',
     'assets/images/alarm.png',
-    'assets/images/tree_structure.png',
     'assets/images/map.png',
   ];
-
+  List<Widget> groupWidgets = [];
   @override
   Widget build(BuildContext context) {
-    final sizeScreen = MediaQuery.of(context).size;
-    return ListView.builder(
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      itemCount: text.length,
-      itemBuilder: (BuildContext context, int index) {
-        final double leftPadding = index == 0 ? 16.0 : 4.0;
-        final double rightPadding = index == text.length - 1 ? 16.0 : 4.0;
-        return ElementForScrollBarWidget(
-          leftPadding: leftPadding,
-          rightPadding: rightPadding,
-          sizeScreen: sizeScreen,
-          text: text,
-          index: index,
-          pathImages: pathImages,
+    final blocService = context.watch<ServiceBloc>();
+
+    return blocService.state.when(
+      loading: () {
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       },
+      loaded: (loadedServices) {
+        groupWidgets.clear();
+        groupWidgets.add(const SizedBox.shrink());
+        for (var service in loadedServices) {
+          if (service.id == 22) {
+            if (service.permissions.createService) {
+              groupWidgets.add(
+                ServiceElementWidget(
+                  idHandler: 1,
+                  title: 'Создать новость',
+                  isRow: true,
+                  service: service,
+                ),
+              );
+            }
+            if (service.permissions.approveService) {
+              groupWidgets.add(
+                ServiceElementWidget(
+                  idHandler: 2,
+                  title: 'Модерация новостей',
+                  isRow: true,
+                  service: service,
+                ),
+              );
+            }
+          } else {
+            groupWidgets.add(
+              ServiceElementWidget(
+                title: service.name,
+                isRow: true,
+                service: service,
+              ),
+            );
+          }
+        }
+        return ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: groupWidgets.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ElementForScrollBarWidget(
+              listService: loadedServices,
+              index: index,
+              pathImages: pathImages,
+              groupWidgets: groupWidgets,
+            );
+          },
+        );
+      },
+      error: () => const SafeArea(
+          child: Center(child: Text('Ошибка загрузки сервисов.'))),
     );
   }
 }
@@ -135,24 +175,24 @@ class ScrollBarWidget extends StatelessWidget {
 class ElementForScrollBarWidget extends StatelessWidget {
   const ElementForScrollBarWidget({
     super.key,
-    required this.leftPadding,
-    required this.rightPadding,
-    required this.sizeScreen,
-    required this.text,
+    required this.listService,
     required this.index,
     required this.pathImages,
+    required this.groupWidgets,
   });
 
-  final double leftPadding;
   final int index;
-  final double rightPadding;
-  final Size sizeScreen;
-  final List<String> text;
+
+  final List<Service> listService;
+  final List<Widget> groupWidgets;
   final List<String> pathImages;
 
   @override
   Widget build(BuildContext context) {
+    final sizeScreen = MediaQuery.of(context).size;
     final blocWallet = context.watch<WalletBloc>();
+    final double leftPadding = index == 0 ? 16.0 : 4.0;
+    final double rightPadding = index == listService.length - 1 ? 16.0 : 4.0;
     if (index == 0) {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
@@ -237,40 +277,12 @@ class ElementForScrollBarWidget extends StatelessWidget {
     } else {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorsForWidget.colorGreen),
-              width: sizeScreen.width / 2.4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      text[index],
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    )),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Image.asset(pathImages[index])),
-            ),
-            SizedBox(
-                width: sizeScreen.width / 2.4,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {},
-                  ),
-                )),
-          ],
-        ),
+        child: groupWidgets[index],
+        //   ServiceElementWidget(
+        //     title: listService[index].name,
+        //     isRow: true,
+        //     service: listService[index],
+        //   ),
       );
     }
   }
@@ -371,7 +383,8 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                     ),
                   );
                 },
-                error: () => const Text('Nothing found...')),
+                error: () =>
+                    const Center(child: Text('Ошибка загрузки сервисов!'))),
             Expanded(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height / 2.7,

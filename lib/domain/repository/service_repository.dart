@@ -7,15 +7,15 @@ abstract class ServiceRepository {
 
 class ServiceRepositoryImpl implements ServiceRepository {
   ServiceRepositoryImpl({
-    required ServiceProvider ServiceProvider,
-  }) : _ServiceProvider = ServiceProvider;
+    required ServiceProvider serviceProvider,
+  }) : _serviceProvider = serviceProvider;
 
-  final ServiceProvider _ServiceProvider;
+  final ServiceProvider _serviceProvider;
 
   @override
   Future<List<Service>> getServices({required String userToken}) {
     try {
-      return _ServiceProvider.getServices(userToken: userToken);
+      return _serviceProvider.getServices(userToken: userToken);
     } catch (e) {
       rethrow;
     }

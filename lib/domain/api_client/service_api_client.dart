@@ -17,7 +17,10 @@ class ServiceProviderImpl implements ServiceProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/auth/profile'));
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'http://10.3.50.98:8888/admin/avalible_services_list')); // ЗАМЕНИТЬ НА ДРУГОЙ ЭТО ТЕСТОВЫЙ АПИ
 
     request.headers.addAll(headers);
 
@@ -26,7 +29,7 @@ class ServiceProviderImpl implements ServiceProvider {
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<Service> result = (jsonData
+      final List<Service> result = (jsonData['result']
               as List<dynamic>) // Добавить ключ ['result'] если вотевет будет
           .map((item) => Service.fromJson(item))
           .toList();

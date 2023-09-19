@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
+import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
@@ -9,11 +10,13 @@ import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_s
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
@@ -48,6 +51,7 @@ class _DIContainer {
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
   AuthProvider _makeAuthProvider() => const AuthProviderImpl();
+  ServiceProvider _makeServiceProvider() => const ServiceProviderImpl();
   EventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
   WalletProvider _makeWalletProvider() => const WalletProviderImpl();
@@ -60,6 +64,8 @@ class _DIContainer {
 
   UserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
+  ServiceRepository _makeServiceRepository() =>
+      ServiceRepositoryImpl(serviceProvider: _makeServiceProvider());
   AuthRepository _makeAuthRepository() => AuthRepositoryImpl(
       authProvider: _makeAuthProvider(),
       sessionDataProvdier: _makeSessionDataProvdier());
@@ -114,6 +120,12 @@ class ScreenFactoryDefault implements ScreenFactory {
           create: (BuildContext context) => CategoryBloc(
             authRepository: authRepository,
             eventEntityRepository: eventEntityRepository,
+          ),
+        ),
+        BlocProvider<ServiceBloc>(
+          create: (BuildContext context) => ServiceBloc(
+            authRepository: authRepository,
+            serviceRepository: _diContainer._makeServiceRepository(),
           ),
         ),
       ],

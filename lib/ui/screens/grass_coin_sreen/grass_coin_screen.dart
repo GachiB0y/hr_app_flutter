@@ -401,46 +401,50 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
         // Создание списка групп
         List<Widget> groupWidgets = [];
         groups.forEach((dateString, groupItems) {
-          groupWidgets.add(Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 5.0),
-                height: 25,
-                child: ListTile(
-                  title: Text(
-                    dateString,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 18),
+          groupWidgets.add(
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 5.0),
+                  height: 25,
+                  child: ListTile(
+                    title: Text(
+                      dateString,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
                   ),
                 ),
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: groupItems
-                    .map(
-                      (item) => ListTile(
-                        title: item.typeTtransaction == 0
-                            ? Text(item.sender)
-                            : Text(item.recipient),
-                        subtitle: Text(
-                          item.typeTtransaction == 0 ? 'Зачисление' : 'Перевод',
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        trailing: SizedBox(
-                          width: 80,
-                          height: 50,
-                          child: TralingHistoryWidget(
-                            item: item,
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: groupItems
+                      .map(
+                        (item) => ListTile(
+                          title: item.typeTtransaction == 0
+                              ? Text(item.sender)
+                              : Text(item.recipient),
+                          subtitle: Text(
+                            item.typeTtransaction == 0
+                                ? 'Зачисление'
+                                : 'Перевод',
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          trailing: SizedBox(
+                            width: 80,
+                            height: 50,
+                            child: TralingHistoryWidget(
+                              item: item,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              const Divider(),
-            ],
-          ));
+                      )
+                      .toList(),
+                ),
+                const Divider(),
+              ],
+            ),
+          );
         });
 
         return SliverList(
