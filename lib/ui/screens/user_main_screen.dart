@@ -9,8 +9,6 @@ import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart'
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
-import 'package:hr_app_flutter/ui/components/service_element/service_element_widget.dart';
-
 import '../../theme/colors_from_theme.dart';
 
 @RoutePage()
@@ -117,53 +115,14 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
           child: CircularProgressIndicator(),
         );
       },
-      loaded: (loadedServices) {
+      loaded: (loadedServices, loeadedServiceWidgets) {
         groupWidgets.clear();
         groupWidgets.add(const SizedBox.shrink());
-        for (var service in loadedServices) {
-          if (service.id == 22) {
-            if (service.permissions.createService) {
-              groupWidgets.add(
-                ServiceElementWidget(
-                  imagePath: 'assets/images/thumbs_up.png',
-                  idHandler: 1,
-                  title: 'Создать новость',
-                  isRow: true,
-                  service: service,
-                ),
-              );
-            }
-            if (service.permissions.approveService) {
-              groupWidgets.add(
-                ServiceElementWidget(
-                  imagePath: 'assets/images/tree_structure.png',
-                  idHandler: 2,
-                  title: 'Модерация новостей',
-                  isRow: true,
-                  service: service,
-                ),
-              );
-            }
-          } else if (service.id == 24) {
-            groupWidgets.add(
-              ServiceElementWidget(
-                imagePath: 'assets/images/note.png',
-                title: service.name,
-                isRow: true,
-                service: service,
-              ),
-            );
-          } else if (service.id == 25) {
-            groupWidgets.add(
-              ServiceElementWidget(
-                imagePath: 'assets/images/bus.png',
-                title: service.name,
-                isRow: true,
-                service: service,
-              ),
-            );
-          }
+
+        for (var widget in loeadedServiceWidgets) {
+          groupWidgets.add(widget);
         }
+
         return ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,

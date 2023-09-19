@@ -23,6 +23,7 @@ _$ServiceStateLoaded _$$ServiceStateLoadedFromJson(Map<String, dynamic> json) =>
       servicesLoaded: (json['servicesLoaded'] as List<dynamic>)
           .map((e) => Service.fromJson(e as Map<String, dynamic>))
           .toList(),
+      loeadedServiceWidgets: json['loeadedServiceWidgets'] as List<dynamic>,
       $type: json['runtimeType'] as String?,
     );
 
@@ -30,6 +31,7 @@ Map<String, dynamic> _$$ServiceStateLoadedToJson(
         _$ServiceStateLoaded instance) =>
     <String, dynamic>{
       'servicesLoaded': instance.servicesLoaded,
+      'loeadedServiceWidgets': instance.loeadedServiceWidgets,
       'runtimeType': instance.$type,
     };
 

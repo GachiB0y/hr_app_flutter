@@ -184,21 +184,27 @@ mixin _$ServiceState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Service> servicesLoaded) loaded,
+    required TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)
+        loaded,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<Service> servicesLoaded)? loaded,
+    TResult? Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Service> servicesLoaded)? loaded,
+    TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -293,7 +299,9 @@ class _$ServiceStateLoading implements ServiceStateLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Service> servicesLoaded) loaded,
+    required TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)
+        loaded,
     required TResult Function() error,
   }) {
     return loading();
@@ -303,7 +311,9 @@ class _$ServiceStateLoading implements ServiceStateLoading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<Service> servicesLoaded)? loaded,
+    TResult? Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -313,7 +323,9 @@ class _$ServiceStateLoading implements ServiceStateLoading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Service> servicesLoaded)? loaded,
+    TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -378,7 +390,8 @@ abstract class _$$ServiceStateLoadedCopyWith<$Res> {
           $Res Function(_$ServiceStateLoaded) then) =
       __$$ServiceStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Service> servicesLoaded});
+  $Res call(
+      {List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets});
 }
 
 /// @nodoc
@@ -393,12 +406,17 @@ class __$$ServiceStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? servicesLoaded = null,
+    Object? loeadedServiceWidgets = null,
   }) {
     return _then(_$ServiceStateLoaded(
       servicesLoaded: null == servicesLoaded
           ? _value._servicesLoaded
           : servicesLoaded // ignore: cast_nullable_to_non_nullable
               as List<Service>,
+      loeadedServiceWidgets: null == loeadedServiceWidgets
+          ? _value._loeadedServiceWidgets
+          : loeadedServiceWidgets // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -407,8 +425,11 @@ class __$$ServiceStateLoadedCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ServiceStateLoaded implements ServiceStateLoaded {
   const _$ServiceStateLoaded(
-      {required final List<Service> servicesLoaded, final String? $type})
+      {required final List<Service> servicesLoaded,
+      required final List<dynamic> loeadedServiceWidgets,
+      final String? $type})
       : _servicesLoaded = servicesLoaded,
+        _loeadedServiceWidgets = loeadedServiceWidgets,
         $type = $type ?? 'loaded';
 
   factory _$ServiceStateLoaded.fromJson(Map<String, dynamic> json) =>
@@ -422,12 +443,21 @@ class _$ServiceStateLoaded implements ServiceStateLoaded {
     return EqualUnmodifiableListView(_servicesLoaded);
   }
 
+  final List<dynamic> _loeadedServiceWidgets;
+  @override
+  List<dynamic> get loeadedServiceWidgets {
+    if (_loeadedServiceWidgets is EqualUnmodifiableListView)
+      return _loeadedServiceWidgets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_loeadedServiceWidgets);
+  }
+
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'ServiceState.loaded(servicesLoaded: $servicesLoaded)';
+    return 'ServiceState.loaded(servicesLoaded: $servicesLoaded, loeadedServiceWidgets: $loeadedServiceWidgets)';
   }
 
   @override
@@ -436,13 +466,17 @@ class _$ServiceStateLoaded implements ServiceStateLoaded {
         (other.runtimeType == runtimeType &&
             other is _$ServiceStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other._servicesLoaded, _servicesLoaded));
+                .equals(other._servicesLoaded, _servicesLoaded) &&
+            const DeepCollectionEquality()
+                .equals(other._loeadedServiceWidgets, _loeadedServiceWidgets));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_servicesLoaded));
+      runtimeType,
+      const DeepCollectionEquality().hash(_servicesLoaded),
+      const DeepCollectionEquality().hash(_loeadedServiceWidgets));
 
   @JsonKey(ignore: true)
   @override
@@ -455,32 +489,38 @@ class _$ServiceStateLoaded implements ServiceStateLoaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Service> servicesLoaded) loaded,
+    required TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)
+        loaded,
     required TResult Function() error,
   }) {
-    return loaded(servicesLoaded);
+    return loaded(servicesLoaded, loeadedServiceWidgets);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<Service> servicesLoaded)? loaded,
+    TResult? Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult? Function()? error,
   }) {
-    return loaded?.call(servicesLoaded);
+    return loaded?.call(servicesLoaded, loeadedServiceWidgets);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Service> servicesLoaded)? loaded,
+    TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(servicesLoaded);
+      return loaded(servicesLoaded, loeadedServiceWidgets);
     }
     return orElse();
   }
@@ -529,12 +569,15 @@ class _$ServiceStateLoaded implements ServiceStateLoaded {
 
 abstract class ServiceStateLoaded implements ServiceState {
   const factory ServiceStateLoaded(
-      {required final List<Service> servicesLoaded}) = _$ServiceStateLoaded;
+          {required final List<Service> servicesLoaded,
+          required final List<dynamic> loeadedServiceWidgets}) =
+      _$ServiceStateLoaded;
 
   factory ServiceStateLoaded.fromJson(Map<String, dynamic> json) =
       _$ServiceStateLoaded.fromJson;
 
   List<Service> get servicesLoaded;
+  List<dynamic> get loeadedServiceWidgets;
   @JsonKey(ignore: true)
   _$$ServiceStateLoadedCopyWith<_$ServiceStateLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -586,7 +629,9 @@ class _$ServiceStateError implements ServiceStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Service> servicesLoaded) loaded,
+    required TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)
+        loaded,
     required TResult Function() error,
   }) {
     return error();
@@ -596,7 +641,9 @@ class _$ServiceStateError implements ServiceStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<Service> servicesLoaded)? loaded,
+    TResult? Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -606,7 +653,9 @@ class _$ServiceStateError implements ServiceStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Service> servicesLoaded)? loaded,
+    TResult Function(
+            List<Service> servicesLoaded, List<dynamic> loeadedServiceWidgets)?
+        loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {

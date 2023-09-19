@@ -1,13 +1,12 @@
 import 'dart:io';
-import 'package:auto_route/auto_route.dart';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
-import 'package:hr_app_flutter/ui/components/service_element/service_element_widget.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/my_picker_image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
@@ -45,51 +44,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
               child: CircularProgressIndicator.adaptive(),
             );
           },
-          loaded: (loadedService) {
+          loaded: (loadedService, loeadedServiceWidgets) {
             groupWidgets.clear();
-            for (var service in loadedService) {
-              if (service.id == 22) {
-                if (service.permissions.createService) {
-                  groupWidgets.add(
-                    ServiceElementWidget(
-                      imagePath: 'assets/images/thumbs_up.png',
-                      idHandler: 1,
-                      title: 'Создать новость',
-                      isRow: true,
-                      service: service,
-                    ),
-                  );
-                }
-                if (service.permissions.approveService) {
-                  groupWidgets.add(
-                    ServiceElementWidget(
-                      imagePath: 'assets/images/tree_structure.png',
-                      idHandler: 2,
-                      title: 'Модерация новостей',
-                      isRow: true,
-                      service: service,
-                    ),
-                  );
-                }
-              } else if (service.id == 24) {
-                groupWidgets.add(
-                  ServiceElementWidget(
-                    imagePath: 'assets/images/note.png',
-                    title: service.name,
-                    isRow: true,
-                    service: service,
-                  ),
-                );
-              } else if (service.id == 25) {
-                groupWidgets.add(
-                  ServiceElementWidget(
-                    imagePath: 'assets/images/bus.png',
-                    title: service.name,
-                    isRow: true,
-                    service: service,
-                  ),
-                );
-              }
+
+            for (var widget in loeadedServiceWidgets) {
+              groupWidgets.add(widget);
             }
             return CustomScrollView(
               primary: false,

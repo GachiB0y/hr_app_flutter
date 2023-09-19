@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
+import 'package:hr_app_flutter/ui/components/service_element/service_element_widget.dart';
 
 part 'service_bloc.freezed.dart';
 part 'service_bloc.g.dart';
@@ -38,8 +41,55 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
           )
           .timeout(const Duration(seconds: 5));
 
+      List<Widget> groupWidgets = [];
+      for (var service in servicesLoaded) {
+        if (service.id == 22) {
+          if (service.permissions.createService) {
+            groupWidgets.add(
+              ServiceElementWidget(
+                imagePath: 'assets/images/thumbs_up.png',
+                idHandler: 1,
+                title: 'Создать новость',
+                isRow: true,
+                service: service,
+              ),
+            );
+          }
+          if (service.permissions.approveService) {
+            groupWidgets.add(
+              ServiceElementWidget(
+                imagePath: 'assets/images/tree_structure.png',
+                idHandler: 2,
+                title: 'Модерация новостей',
+                isRow: true,
+                service: service,
+              ),
+            );
+          }
+        } else if (service.id == 24) {
+          groupWidgets.add(
+            ServiceElementWidget(
+              imagePath: 'assets/images/note.png',
+              title: service.name,
+              isRow: true,
+              service: service,
+            ),
+          );
+        } else if (service.id == 25) {
+          groupWidgets.add(
+            ServiceElementWidget(
+              imagePath: 'assets/images/bus.png',
+              title: service.name,
+              isRow: true,
+              service: service,
+            ),
+          );
+        }
+      }
+
       emit(ServiceState.loaded(
         servicesLoaded: servicesLoaded,
+        loeadedServiceWidgets: groupWidgets,
       ));
     } on TimeoutException {
       emit(const ServiceState.error());
