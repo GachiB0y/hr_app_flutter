@@ -18,8 +18,10 @@ class ServiceElementWidget extends StatefulWidget {
     required this.isRow,
     required this.service,
     this.idHandler,
+    this.imagePath,
   });
 
+  final String? imagePath;
   final String? title;
   final int? idHandler;
   final Service service;
@@ -31,6 +33,8 @@ class ServiceElementWidget extends StatefulWidget {
 
 class _ServiceElementWidgetState extends State<ServiceElementWidget> {
   final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
+
+  get imagePath => widget.imagePath;
   void openBottomSheet({
     required BuildContext context,
     required MainAppScreenViewCubit cubitMainAppScreen,
@@ -169,7 +173,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Align(
               alignment: Alignment.topLeft,
-              child: Image.asset('assets/images/note.png')),
+              child: Image.asset(imagePath ?? 'assets/images/note.png')),
         ),
         SizedBox(
           width: widget.isRow ? sizeScreen.width / 2.4 : null,

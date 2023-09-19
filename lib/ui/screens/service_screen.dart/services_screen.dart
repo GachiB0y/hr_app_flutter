@@ -29,7 +29,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     context.read<ServiceBloc>().add(const ServiceEvent.fetch());
   }
 
-  final _model = BottomSheetCreateEventsModel();
   // Создание списка групп
   List<Widget> groupWidgets = [];
 
@@ -53,9 +52,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 if (service.permissions.createService) {
                   groupWidgets.add(
                     ServiceElementWidget(
+                      imagePath: 'assets/images/thumbs_up.png',
                       idHandler: 1,
                       title: 'Создать новость',
-                      isRow: false,
+                      isRow: true,
                       service: service,
                     ),
                   );
@@ -63,18 +63,29 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 if (service.permissions.approveService) {
                   groupWidgets.add(
                     ServiceElementWidget(
+                      imagePath: 'assets/images/tree_structure.png',
                       idHandler: 2,
                       title: 'Модерация новостей',
-                      isRow: false,
+                      isRow: true,
                       service: service,
                     ),
                   );
                 }
-              } else {
+              } else if (service.id == 24) {
                 groupWidgets.add(
                   ServiceElementWidget(
+                    imagePath: 'assets/images/note.png',
                     title: service.name,
-                    isRow: false,
+                    isRow: true,
+                    service: service,
+                  ),
+                );
+              } else if (service.id == 25) {
+                groupWidgets.add(
+                  ServiceElementWidget(
+                    imagePath: 'assets/images/bus.png',
+                    title: service.name,
+                    isRow: true,
                     service: service,
                   ),
                 );

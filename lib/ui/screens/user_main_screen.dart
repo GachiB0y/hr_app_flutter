@@ -125,6 +125,7 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
             if (service.permissions.createService) {
               groupWidgets.add(
                 ServiceElementWidget(
+                  imagePath: 'assets/images/thumbs_up.png',
                   idHandler: 1,
                   title: 'Создать новость',
                   isRow: true,
@@ -135,6 +136,7 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
             if (service.permissions.approveService) {
               groupWidgets.add(
                 ServiceElementWidget(
+                  imagePath: 'assets/images/tree_structure.png',
                   idHandler: 2,
                   title: 'Модерация новостей',
                   isRow: true,
@@ -142,9 +144,19 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
                 ),
               );
             }
-          } else {
+          } else if (service.id == 24) {
             groupWidgets.add(
               ServiceElementWidget(
+                imagePath: 'assets/images/note.png',
+                title: service.name,
+                isRow: true,
+                service: service,
+              ),
+            );
+          } else if (service.id == 25) {
+            groupWidgets.add(
+              ServiceElementWidget(
+                imagePath: 'assets/images/bus.png',
                 title: service.name,
                 isRow: true,
                 service: service,
@@ -160,7 +172,6 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
             return ElementForScrollBarWidget(
               listService: loadedServices,
               index: index,
-              pathImages: pathImages,
               groupWidgets: groupWidgets,
             );
           },
@@ -177,7 +188,6 @@ class ElementForScrollBarWidget extends StatelessWidget {
     super.key,
     required this.listService,
     required this.index,
-    required this.pathImages,
     required this.groupWidgets,
   });
 
@@ -185,7 +195,6 @@ class ElementForScrollBarWidget extends StatelessWidget {
 
   final List<Service> listService;
   final List<Widget> groupWidgets;
-  final List<String> pathImages;
 
   @override
   Widget build(BuildContext context) {
@@ -278,11 +287,6 @@ class ElementForScrollBarWidget extends StatelessWidget {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
         child: groupWidgets[index],
-        //   ServiceElementWidget(
-        //     title: listService[index].name,
-        //     isRow: true,
-        //     service: listService[index],
-        //   ),
       );
     }
   }
