@@ -68,7 +68,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  if (_phoneNumberController.text.length == 17) {
+                  if (_phoneNumberController.text.length == 18) {
                     /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                     final String originalPhoneNumber =
                         _phoneNumberController.text;
