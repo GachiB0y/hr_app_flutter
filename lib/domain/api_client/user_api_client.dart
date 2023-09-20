@@ -20,7 +20,7 @@ class UserProviderImpl implements UserProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/auth/profile'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/auth/profile'));
 
     request.headers.addAll(headers);
 
@@ -44,7 +44,7 @@ class UserProviderImpl implements UserProvider {
       'Authorization': 'Bearer $userToken'
     };
     var request = http.Request(
-        'GET', Uri.parse('$host:$port/auth/find_by_phone/$phoneNumber'));
+        'GET', Uri.parse('$urlAdress/auth/find_by_phone/$phoneNumber'));
 
     request.headers.addAll(headers);
 

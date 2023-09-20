@@ -26,7 +26,7 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/coins/balance'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/coins/balance'));
 
     request.headers.addAll(headers);
 
@@ -49,7 +49,7 @@ class WalletProviderImpl implements WalletProvider {
       'Authorization': 'Bearer $userToken'
     };
     var request =
-        http.Request('GET', Uri.parse('$host:$port/coins/transactions'));
+        http.Request('GET', Uri.parse('$urlAdress/coins/transactions'));
 
     request.headers.addAll(headers);
 
@@ -81,7 +81,7 @@ class WalletProviderImpl implements WalletProvider {
       'Content-Type': 'application/json'
     };
     var request =
-        http.Request('POST', Uri.parse('$host:$port/coins/transfer-to-friend'));
+        http.Request('POST', Uri.parse('$urlAdress/coins/transfer-to-friend'));
     request.body = json
         .encode({"recipient": userId, "amount": amount, "message": message});
     request.headers.addAll(headers);
@@ -106,7 +106,7 @@ class WalletProviderImpl implements WalletProvider {
       'Authorization': 'Bearer $userToken'
     };
     var request =
-        http.Request('GET', Uri.parse('$host:$port/coins/coins_reward'));
+        http.Request('GET', Uri.parse('$urlAdress/coins/coins_reward'));
 
     request.headers.addAll(headers);
 
@@ -132,7 +132,7 @@ class WalletProviderImpl implements WalletProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken',
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/coins/info'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/coins/info'));
 
     request.headers.addAll(headers);
 

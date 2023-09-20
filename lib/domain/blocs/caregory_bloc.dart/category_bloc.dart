@@ -34,7 +34,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           .getCategory(
             accessToken: accessToken as String,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       emit(CategoryState.loaded(listCategoryLoaded: listCategoryLoaded));
     } on TimeoutException {

@@ -36,7 +36,7 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
             accessToken: accessToken as String,
             id: event.id,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       emit(OneNewsState.loaded(
         oneNewsLoaded: oneNewsLoaded,

@@ -33,7 +33,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       User userLoaded = await userRepo
           .getUserInfo(userToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       emit(UserState.loaded(userLoaded: userLoaded));
     } on TimeoutException {

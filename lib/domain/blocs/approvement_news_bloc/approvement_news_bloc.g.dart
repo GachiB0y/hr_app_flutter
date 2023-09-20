@@ -39,11 +39,13 @@ Map<String, dynamic> _$$ApprovementNewsStateLoadedToJson(
 _$ApprovementNewsStateError _$$ApprovementNewsStateErrorFromJson(
         Map<String, dynamic> json) =>
     _$ApprovementNewsStateError(
+      errorText: json['errorText'] as String?,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$ApprovementNewsStateErrorToJson(
         _$ApprovementNewsStateError instance) =>
     <String, dynamic>{
+      'errorText': instance.errorText,
       'runtimeType': instance.$type,
     };

@@ -127,10 +127,14 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                       onPressed: () async {
-                        await cubitAuth.auth(
-                            phoneNumber: formattedPhoneNumber,
-                            code: _smsCodeController.text);
-                        AutoRouter.of(context).push(MainAppRoute());
+                        try {
+                          await cubitAuth.auth(
+                              phoneNumber: formattedPhoneNumber,
+                              code: _smsCodeController.text);
+                          AutoRouter.of(context).push(MainAppRoute());
+                        } catch (e) {
+                          error = e.toString();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

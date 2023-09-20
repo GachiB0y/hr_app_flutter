@@ -40,7 +40,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
       List<User> listUsersLoaded = await userRepo
           .getUserByPhoneNumber(
               userToken: accessToken as String, phoneNumber: event.phoneNumber)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       emit(OtherUserState.loaded(listUsersLoaded: listUsersLoaded));
     } on TimeoutException {

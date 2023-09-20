@@ -39,7 +39,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
           .getServices(
             userToken: accessToken as String,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       List<Widget> groupWidgets = [];
       for (var service in servicesLoaded) {

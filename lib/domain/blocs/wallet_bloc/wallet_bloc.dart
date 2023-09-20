@@ -40,7 +40,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
               amount: event.amount,
               userId: event.userId,
               message: event.message)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       final oldState = (state as WalletStateLoaded).copyWith();
       final List<Transaction> transactions = oldState.walletLoaded.transactions;
@@ -64,7 +64,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
       final Wallet _walletLoaded = await walletRepo
           .getWallet(accessToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       final state = WalletState.loaded(walletLoaded: _walletLoaded);
 

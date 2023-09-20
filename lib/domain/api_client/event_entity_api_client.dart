@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io' as io;
 
+import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
@@ -42,7 +43,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $accessToken'
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/news/'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/news/'));
 
     request.headers.addAll(headers);
 
@@ -67,7 +68,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       'Authorization': 'Bearer $accessToken'
     };
 
-    var request = http.Request('GET', Uri.parse('$host:$port/news/categories'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/news/categories'));
 
     request.headers.addAll(headers);
 
@@ -101,7 +102,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
     };
 
     var request =
-        http.MultipartRequest('POST', Uri.parse('$host:$port/news/add_feed'));
+        http.MultipartRequest('POST', Uri.parse('$urlAdress/news/add_feed'));
 
     request.fields.addAll({
       'some_other_data':
@@ -133,7 +134,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
     };
 
     var request =
-        http.Request('GET', Uri.parse('$host:$port/news/approvement_list'));
+        http.Request('GET', Uri.parse('$urlAdress/news/approvement_list'));
 
     request.headers.addAll(headers);
 
@@ -146,6 +147,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
           .map((item) => EventEntity.fromJson(item))
           .toList();
       return result;
+    } else if (response.statusCode == 404) {
+      throw ApiClientException(ApiClientExceptionType.notFound);
     } else {
       throw Exception('Error fetching  Approvment Events');
     }
@@ -160,7 +163,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
     };
 
     var request = http.Request(
-        'POST', Uri.parse('$host:$port/news/approve_feed?feed_id=$id'));
+        'POST', Uri.parse('$urlAdress/news/approve_feed?feed_id=$id'));
 
     request.headers.addAll(headers);
 
@@ -179,7 +182,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       'accept': 'application/json',
       'Authorization': 'Bearer $accessToken'
     };
-    var request = http.Request('GET', Uri.parse('$host:$port/news/find/$id'));
+    var request = http.Request('GET', Uri.parse('$urlAdress/news/find/$id'));
 
     request.headers.addAll(headers);
 
@@ -205,7 +208,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
     };
 
     var request = http.Request(
-        'POST', Uri.parse('$host:$port/news/move_in_archive?feed_id=$id'));
+        'POST', Uri.parse('$urlAdress/news/move_in_archive?feed_id=$id'));
 
     request.headers.addAll(headers);
 

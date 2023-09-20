@@ -515,7 +515,7 @@ mixin _$ApprovementNewsState {
     required TResult Function() loading,
     required TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)
         loaded,
-    required TResult Function() error,
+    required TResult Function(String? errorText) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -523,14 +523,14 @@ mixin _$ApprovementNewsState {
     TResult? Function()? loading,
     TResult? Function(List<EventEntity> listApprovmentEventEntityLoaded)?
         loaded,
-    TResult? Function()? error,
+    TResult? Function(String? errorText)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)? loaded,
-    TResult Function()? error,
+    TResult Function(String? errorText)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -631,7 +631,7 @@ class _$ApprovementNewsStateLoading implements ApprovementNewsStateLoading {
     required TResult Function() loading,
     required TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)
         loaded,
-    required TResult Function() error,
+    required TResult Function(String? errorText) error,
   }) {
     return loading();
   }
@@ -642,7 +642,7 @@ class _$ApprovementNewsStateLoading implements ApprovementNewsStateLoading {
     TResult? Function()? loading,
     TResult? Function(List<EventEntity> listApprovmentEventEntityLoaded)?
         loaded,
-    TResult? Function()? error,
+    TResult? Function(String? errorText)? error,
   }) {
     return loading?.call();
   }
@@ -652,7 +652,7 @@ class _$ApprovementNewsStateLoading implements ApprovementNewsStateLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)? loaded,
-    TResult Function()? error,
+    TResult Function(String? errorText)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -801,7 +801,7 @@ class _$ApprovementNewsStateLoaded implements ApprovementNewsStateLoaded {
     required TResult Function() loading,
     required TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)
         loaded,
-    required TResult Function() error,
+    required TResult Function(String? errorText) error,
   }) {
     return loaded(listApprovmentEventEntityLoaded);
   }
@@ -812,7 +812,7 @@ class _$ApprovementNewsStateLoaded implements ApprovementNewsStateLoaded {
     TResult? Function()? loading,
     TResult? Function(List<EventEntity> listApprovmentEventEntityLoaded)?
         loaded,
-    TResult? Function()? error,
+    TResult? Function(String? errorText)? error,
   }) {
     return loaded?.call(listApprovmentEventEntityLoaded);
   }
@@ -822,7 +822,7 @@ class _$ApprovementNewsStateLoaded implements ApprovementNewsStateLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)? loaded,
-    TResult Function()? error,
+    TResult Function(String? errorText)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -893,6 +893,8 @@ abstract class _$$ApprovementNewsStateErrorCopyWith<$Res> {
           _$ApprovementNewsStateError value,
           $Res Function(_$ApprovementNewsStateError) then) =
       __$$ApprovementNewsStateErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorText});
 }
 
 /// @nodoc
@@ -903,35 +905,60 @@ class __$$ApprovementNewsStateErrorCopyWithImpl<$Res>
   __$$ApprovementNewsStateErrorCopyWithImpl(_$ApprovementNewsStateError _value,
       $Res Function(_$ApprovementNewsStateError) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = freezed,
+  }) {
+    return _then(_$ApprovementNewsStateError(
+      errorText: freezed == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ApprovementNewsStateError implements ApprovementNewsStateError {
-  const _$ApprovementNewsStateError({final String? $type})
+  const _$ApprovementNewsStateError({this.errorText, final String? $type})
       : $type = $type ?? 'error';
 
   factory _$ApprovementNewsStateError.fromJson(Map<String, dynamic> json) =>
       _$$ApprovementNewsStateErrorFromJson(json);
+
+  @override
+  final String? errorText;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'ApprovementNewsState.error()';
+    return 'ApprovementNewsState.error(errorText: $errorText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ApprovementNewsStateError);
+            other is _$ApprovementNewsStateError &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovementNewsStateErrorCopyWith<_$ApprovementNewsStateError>
+      get copyWith => __$$ApprovementNewsStateErrorCopyWithImpl<
+          _$ApprovementNewsStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -939,9 +966,9 @@ class _$ApprovementNewsStateError implements ApprovementNewsStateError {
     required TResult Function() loading,
     required TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)
         loaded,
-    required TResult Function() error,
+    required TResult Function(String? errorText) error,
   }) {
-    return error();
+    return error(errorText);
   }
 
   @override
@@ -950,9 +977,9 @@ class _$ApprovementNewsStateError implements ApprovementNewsStateError {
     TResult? Function()? loading,
     TResult? Function(List<EventEntity> listApprovmentEventEntityLoaded)?
         loaded,
-    TResult? Function()? error,
+    TResult? Function(String? errorText)? error,
   }) {
-    return error?.call();
+    return error?.call(errorText);
   }
 
   @override
@@ -960,11 +987,11 @@ class _$ApprovementNewsStateError implements ApprovementNewsStateError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<EventEntity> listApprovmentEventEntityLoaded)? loaded,
-    TResult Function()? error,
+    TResult Function(String? errorText)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(errorText);
     }
     return orElse();
   }
@@ -1012,8 +1039,14 @@ class _$ApprovementNewsStateError implements ApprovementNewsStateError {
 }
 
 abstract class ApprovementNewsStateError implements ApprovementNewsState {
-  const factory ApprovementNewsStateError() = _$ApprovementNewsStateError;
+  const factory ApprovementNewsStateError({final String? errorText}) =
+      _$ApprovementNewsStateError;
 
   factory ApprovementNewsStateError.fromJson(Map<String, dynamic> json) =
       _$ApprovementNewsStateError.fromJson;
+
+  String? get errorText;
+  @JsonKey(ignore: true)
+  _$$ApprovementNewsStateErrorCopyWith<_$ApprovementNewsStateError>
+      get copyWith => throw _privateConstructorUsedError;
 }

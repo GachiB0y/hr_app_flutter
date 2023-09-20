@@ -143,7 +143,9 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
               },
             );
           },
-          error: () => const Text('Nothing found...'),
+          error: (e) => e == null
+              ? const Text('Nothing found...')
+              : Center(child: Text(e)),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
@@ -40,7 +41,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
             accessToken: accessToken as String,
             id: event.id,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
       await onApprovementEventFetch(emit);
     } on TimeoutException {
       emit(const ApprovementNewsState.error());
@@ -59,7 +60,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
             accessToken: accessToken as String,
             id: event.id,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
       await onApprovementEventFetch(emit);
     } on TimeoutException {
       emit(const ApprovementNewsState.error());
@@ -78,13 +79,16 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
               .getApprovmentEvents(
                 accessToken: accessToken as String,
               )
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 10));
 
       emit(ApprovementNewsState.loaded(
         listApprovmentEventEntityLoaded: listApprovmentEventEntityLoaded,
       ));
     } on TimeoutException {
-      emit(const ApprovementNewsState.error());
+      emit(const ApprovementNewsState.error(
+          errorText: 'Время ожидания истекло!'));
+    } on ApiClientException {
+      emit(const ApprovementNewsState.error(errorText: 'Ничего не найденно!'));
     } catch (e) {
       emit(const ApprovementNewsState.error());
     }

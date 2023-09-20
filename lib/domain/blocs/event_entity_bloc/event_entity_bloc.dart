@@ -68,7 +68,7 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
           .getEvents(
             accessToken: accessToken as String,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
       List<EventEntity> filteredEventEntity = filterListCategory(
         listEventEntityLoaded: listEventEntityLoaded,
         idTab: 1,

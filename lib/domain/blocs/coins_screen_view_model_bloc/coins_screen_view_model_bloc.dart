@@ -38,7 +38,7 @@ class CoinsScreenViewModelBloc
 
       final List<CoinsReward> listCoinsReward = await walletRepo
           .getInfoCoinsReward(userToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       if (state is CoinsScreenViewModelStateLoaded) {
         final oldState = (state as CoinsScreenViewModelStateLoaded).copyWith();
@@ -69,7 +69,7 @@ class CoinsScreenViewModelBloc
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
       final List<CoinsInfo> listCoinsInfo = await walletRepo
           .getCoinsInfo(userToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
 
       if (state is CoinsScreenViewModelStateLoaded) {
         final oldState = (state as CoinsScreenViewModelStateLoaded).copyWith();
@@ -101,10 +101,10 @@ class CoinsScreenViewModelBloc
 
       final List<CoinsInfo> listCoinsInfo = await walletRepo
           .getCoinsInfo(userToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
       final List<CoinsReward> listCoinsReward = await walletRepo
           .getInfoCoinsReward(userToken: accessToken as String)
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 10));
       final newState = CoinsScreenViewModelState.loaded(
           listCoinsInfoLoaded: listCoinsInfo,
           listCoinsRewardLoaded: listCoinsReward);

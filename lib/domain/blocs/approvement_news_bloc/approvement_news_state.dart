@@ -6,7 +6,8 @@ class ApprovementNewsState with _$ApprovementNewsState {
   const factory ApprovementNewsState.loaded(
           {required List<EventEntity> listApprovmentEventEntityLoaded}) =
       ApprovementNewsStateLoaded;
-  const factory ApprovementNewsState.error() = ApprovementNewsStateError;
+  const factory ApprovementNewsState.error({String? errorText}) =
+      ApprovementNewsStateError;
 
   factory ApprovementNewsState.fromJson(Map<String, dynamic> json) =>
       _$ApprovementNewsStateFromJson(json);

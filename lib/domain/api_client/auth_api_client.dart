@@ -20,7 +20,7 @@ class AuthProviderImpl implements AuthProvider {
       'accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('$host:$port/auth/'));
+    var request = http.Request('POST', Uri.parse('$urlAdress/auth/'));
     request.body = json.encode({
       "phone": numberPhone,
     });
@@ -42,7 +42,7 @@ class AuthProviderImpl implements AuthProvider {
       'accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('$host:$port/auth/'));
+    var request = http.Request('POST', Uri.parse('$urlAdress/auth/'));
     request.body = json.encode({
       "phone": numberPhone,
     });
@@ -67,7 +67,7 @@ class AuthProviderImpl implements AuthProvider {
     var headers = {'accept': 'application/json'};
 
     var request = http.Request('POST',
-        Uri.parse('$host:$port/auth/verify_sms?phone=$numberPhone&code=$code'));
+        Uri.parse('$urlAdress/auth/verify_sms?phone=$numberPhone&code=$code'));
 
     request.body = json.encode({
       "phone": numberPhone,
@@ -94,7 +94,7 @@ class AuthProviderImpl implements AuthProvider {
       {required String refreshToken}) async {
     var headers = {'accept': 'application/json'};
     var request = http.Request(
-        'POST', Uri.parse('$host:$port/auth/switch_token?token=$refreshToken'));
+        'POST', Uri.parse('$urlAdress/auth/switch_token?token=$refreshToken'));
 
     request.headers.addAll(headers);
 

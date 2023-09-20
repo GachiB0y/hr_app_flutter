@@ -73,8 +73,12 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
   @override
   Future<List<EventEntity>> getApprovmentEvents(
       {required String accessToken}) async {
-    return await _eventEntityProvider.getApprovmentEvents(
-        accessToken: accessToken);
+    try {
+      return await _eventEntityProvider.getApprovmentEvents(
+          accessToken: accessToken);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
