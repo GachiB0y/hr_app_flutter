@@ -8,6 +8,7 @@ import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 import '../../theme/colors_from_theme.dart';
 
@@ -360,39 +361,45 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                     EventEntity item =
                         filteredEventEntity.reversed.toList()[index];
                     // получаем элемент для текущей вкладки
-                    return Container(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.network(item.image).image,
-
-                            // NetworkImage(item.image)
-                            //     as ImageProvider<Object>,
-                            fit: BoxFit.cover),
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item.title,
-                                style: const TextStyle(fontSize: 16),
+                    return GestureDetector(
+                      onDoubleTap: () {
+                        context.pushRoute(AboutNewsRoute(
+                            id: item.id,
+                            authRepository: blocEventEntity.authRepository,
+                            eventEntityRepository:
+                                blocEventEntity.eventEntityRepository));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        margin: const EdgeInsets.only(bottom: 16, right: 16.0),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: Image.network(item.image).image,
+                              fit: BoxFit.cover),
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Spacer(),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  item.title,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
