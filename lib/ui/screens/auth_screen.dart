@@ -21,6 +21,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
   bool _showSMSCodeField = false;
   String formattedPhoneNumber = '';
   String? code = null;
+  String? error = null;
 
   @override
   void dispose() {
@@ -55,6 +56,12 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20.0),
+              error == null
+                  ? const SizedBox.shrink()
+                  : Text(
+                      error!,
+                      style: const TextStyle(color: Colors.red),
+                    ),
               TextField(
                 controller: _phoneNumberController,
                 keyboardType: TextInputType.phone,
@@ -74,8 +81,14 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                         _phoneNumberController.text;
                     formattedPhoneNumber =
                         originalPhoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                    code = await cubitAuth.getCode(
-                        phoneNumber: formattedPhoneNumber);
+                    try {
+                      code = await cubitAuth.getCode(
+                          phoneNumber: formattedPhoneNumber);
+                    } catch (e) {
+                      setState(() {
+                        error = e.toString();
+                      });
+                    }
 
                     /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                     if (code != null) {
@@ -84,6 +97,10 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                         _showSMSCodeField = true;
                       });
                     }
+                  } else {
+                    setState(() {
+                      error = 'Not valid numberr phone';
+                    });
                   }
                 },
                 style: ElevatedButton.styleFrom(
