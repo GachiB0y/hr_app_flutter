@@ -131,7 +131,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                           await cubitAuth.auth(
                               phoneNumber: formattedPhoneNumber,
                               code: _smsCodeController.text);
-                          AutoRouter.of(context).push(MainAppRoute());
+                          AutoRouter.of(context).replace(MainAppRoute());
                         } catch (e) {
                           error = e.toString();
                         }
