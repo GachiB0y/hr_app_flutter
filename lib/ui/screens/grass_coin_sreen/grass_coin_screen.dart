@@ -49,6 +49,24 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
+                // flexibleSpace: FlexibleSpaceBar(
+                //   background: Column(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       ListTile(
+                //         leading: CircleAvatar(
+                //           backgroundImage: Image.asset(
+                //             'assets/images/man.png',
+                //             color: const Color.fromARGB(255, 0, 0, 0),
+                //             height: 50,
+                //             width: 50,
+                //           ).image,
+                //         ),
+                //         title: TitleAppBarWidget(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 pinned: true,
                 snap: true,
                 floating: true,
@@ -58,21 +76,43 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                 leadingWidth: 70,
                 leading: const Avatar(),
                 toolbarHeight: 100,
-
                 title: const TitleAppBarWidget(),
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(360),
+                  preferredSize: Size.fromHeight(360),
                   child: Container(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: const BodyContentWidgetCoinScreen()),
                 ),
               ),
+              // SliverPersistentHeader(
+              //   pinned: true,
+              //   delegate: _CustomHeaderDelegate(),
+              // ),
               const HistoryOperationCoinWidget(),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class _CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return BodyContentWidgetCoinScreen();
+  }
+
+  @override
+  double get maxExtent => 360; // Максимальная высота шапки
+
+  @override
+  double get minExtent => 360; // Минимальная высота шапки
+
+  @override
+  bool shouldRebuild(_CustomHeaderDelegate oldDelegate) {
+    return false;
   }
 }
 
@@ -106,189 +146,202 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
     final blocWallet = context.watch<WalletBloc>();
     final blocUser = context.watch<UserBloc>();
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: const Text(
-            'Баланс Грасс-коинов на счёте',
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+    return Container(
+      // padding: const EdgeInsets.only(left: 20, right: 20),
+      height: 360,
+      // color: Colors.grey[200],
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            // padding: const EdgeInsets.only(top: 5.0),
+            child: const Text(
+              'Баланс Грасс-коинов на счёте',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(
-            children: [
-              ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                    ColorsForWidget.colorGreen, BlendMode.srcATop),
-                child: Image.asset(
-                  'assets/images/grass_icon_main.png',
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              blocWallet.state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                loaded: (walletLoaded) {
-                  return Text(
-                    walletLoaded.balance.toString(),
-                    style: const TextStyle(
-                        fontSize: 40, fontWeight: FontWeight.w500),
-                  );
-                },
-                error: () => const Text('Nothing found...'),
-              ),
-            ],
+          const SizedBox(
+            height: 20,
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Row(
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
               children: [
-                Icon(
-                  Icons.add_circle_outline,
-                  size: 45,
+                ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                      ColorsForWidget.colorGreen, BlendMode.srcATop),
+                  child: Image.asset(
+                    'assets/images/grass_icon_main.png',
+                    width: 40,
+                    height: 40,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '56',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Text(
-                      'за неделю',
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
+                blocWallet.state.when(
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  loaded: (walletLoaded) {
+                    return Text(
+                      walletLoaded.balance.toString(),
+                      style: const TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.w500),
+                    );
+                  },
+                  error: () => const Text('Nothing found...'),
                 ),
               ],
             ),
+            const Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add_circle_outline,
+                    size: 45,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '56',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        'за неделю',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ]),
+          const SizedBox(
+            height: 20,
           ),
-        ]),
-        const SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(
-              width: double.infinity,
-            ),
-            child: ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30))),
-                padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints.tightFor(
+                width: double.infinity,
               ),
-              onPressed: () => _showBottomSheet(context, isCoinsInfo: true),
-              icon: Container(
-                decoration: BoxDecoration(
-                    color: ColorsForWidget.colorGreen,
-                    borderRadius: BorderRadius.circular(30)),
-                child: const Icon(Icons.question_mark_rounded,
-                    size: 18, color: Colors.white),
-              ),
-              label: const Text(
-                'Что такое коин и что с ним делать?',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(
-              width: double.infinity,
-            ),
-            child: ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30))),
-                padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-              ),
-              onPressed: () => _showBottomSheet(context, isCoinsInfo: false),
-              icon: const Icon(
-                MyCustomIcon.iconRub,
-                size: 18,
-                color: ColorsForWidget.colorGreen,
-              ),
-              label: const Text(
-                'Как заработать коины?',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton.icon(
+              child: ElevatedButton.icon(
                 style: ButtonStyle(
                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                 ),
-                onPressed: () {},
+                onPressed: () => _showBottomSheet(context, isCoinsInfo: true),
+                icon: Container(
+                  decoration: BoxDecoration(
+                      color: ColorsForWidget.colorGreen,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: const Icon(Icons.question_mark_rounded,
+                      size: 18, color: Colors.white),
+                ),
+                label: const Text(
+                  'Что такое коин и что с ним делать?',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints.tightFor(
+                width: double.infinity,
+              ),
+              child: ElevatedButton.icon(
+                style: ButtonStyle(
+                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30))),
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+                ),
+                onPressed: () => _showBottomSheet(context, isCoinsInfo: false),
                 icon: const Icon(
-                  Icons.sync,
-                  size: 26,
-                  color: Colors.black,
+                  MyCustomIcon.iconRub,
+                  size: 18,
+                  color: ColorsForWidget.colorGreen,
                 ),
-                label: const Text('Обменять',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black))),
-            ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
+                label: const Text(
+                  'Как заработать коины?',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
-                onPressed: () {
-                  AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
-                      authRepository: blocUser.authRepository,
-                      userRepo: blocUser.userRepo));
-                },
-                icon: const Icon(Icons.card_giftcard,
-                    size: 26, color: Colors.black),
-                label: const Text('Подарить',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black))),
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        const Text(
-          'История операций',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-        ),
-      ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(Colors.white),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30))),
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(16)),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.sync,
+                    size: 26,
+                    color: Colors.black,
+                  ),
+                  label: const Text('Обменять',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black))),
+              ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(Colors.white),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30))),
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(16)),
+                  ),
+                  onPressed: () {
+                    AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
+                        authRepository: blocUser.authRepository,
+                        userRepo: blocUser.userRepo));
+                  },
+                  icon: const Icon(Icons.card_giftcard,
+                      size: 26, color: Colors.black),
+                  label: const Text('Подарить',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black))),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'История операций',
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 }

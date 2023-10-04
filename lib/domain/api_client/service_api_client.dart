@@ -20,7 +20,7 @@ class ServiceProviderImpl implements ServiceProvider {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://apihuntflow.grass.su/admin/avalible_services_list')); // ЗАМЕНИТЬ НА ДРУГОЙ ЭТО ТЕСТОВЫЙ АПИ 10.3.50.98:8888
+            '$urlAdress/admin/avalible_services_list')); // ЗАМЕНИТЬ НА ДРУГОЙ ЭТО ТЕСТОВЫЙ АПИ 10.3.50.98:8888
 
     request.headers.addAll(headers);
 

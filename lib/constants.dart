@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 const String host =
-    'https://apihuntflow.grass.su'; //'http://10.3.29.20'  'https://apihuntflow.grass.su'
-const String port = ''; //':9100'
+    'http://10.3.50.98'; //'http://10.3.29.20'  'https://apihuntflow.grass.su'
+const String port = ':8888'; //':9100'
 const String urlAdress = '$host$port';
 
 class MyCustomIcon {
