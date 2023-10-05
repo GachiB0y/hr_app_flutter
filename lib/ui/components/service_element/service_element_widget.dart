@@ -169,8 +169,9 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.bottomCenter,
               child: Text(
+                textAlign: TextAlign.center,
                 widget.title ?? widget.service.name,
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
