@@ -58,19 +58,21 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
 
   bool _isValid({required String phoneNumber}) => phoneNumber.length == 11;
 
-  Future<void> auth({required String phoneNumber, required String code}) async {
+  Future<bool> auth({required String phoneNumber, required String code}) async {
     emit(AuthViewCubitAuthProgressState());
     if (!_isValid(phoneNumber: phoneNumber)) {
       final newState = AuthViewCubitErrorState('Заполните номер телефона!');
       emit(newState);
-      return;
+      return false;
     }
 
     final errorMessage = await _login(phoneNumber: phoneNumber, code: code);
     if (errorMessage == null) {
       emit(AuthViewCubitSuccesAuthState());
+      return true;
     } else {
       emit(AuthViewCubitErrorState(errorMessage));
+      return false;
     }
   }
 
@@ -84,12 +86,14 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
     return null;
   }
 
-  Future<String?> getCode({required String phoneNumber}) async {
-    final String code = await authRepository.getCode(numberPhone: phoneNumber);
-    if (code.isEmpty) {
+  Future<bool> getCode({required String phoneNumber}) async {
+    try {
+      final bool isCode =
+          await authRepository.getCode(numberPhone: phoneNumber);
+      return isCode;
+    } catch (e) {
       emit(AuthViewCubitErrorState('Неудалось получить код!'));
-      return null;
+      return false;
     }
-    return code;
   }
 }

@@ -20,7 +20,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
   final TextEditingController _smsCodeController = TextEditingController();
   bool _showSMSCodeField = false;
   String formattedPhoneNumber = '';
-  String? code = null;
+  // String? code = null;
   String? error = null;
 
   @override
@@ -82,19 +82,19 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     formattedPhoneNumber =
                         originalPhoneNumber.replaceAll(RegExp(r'[^\d]'), '');
                     try {
-                      code = await cubitAuth.getCode(
+                      final bool isCode = await cubitAuth.getCode(
                           phoneNumber: formattedPhoneNumber);
+
+                      /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
+                      if (isCode == true) {
+                        setState(() {
+                          // _smsCodeController.text = code as String;
+                          _showSMSCodeField = true;
+                        });
+                      }
                     } catch (e) {
                       setState(() {
                         error = e.toString();
-                      });
-                    }
-
-                    /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
-                    if (code != null) {
-                      setState(() {
-                        _smsCodeController.text = code as String;
-                        _showSMSCodeField = true;
                       });
                     }
                   } else {
@@ -128,10 +128,12 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         try {
-                          await cubitAuth.auth(
+                          final bool isAuth = await cubitAuth.auth(
                               phoneNumber: formattedPhoneNumber,
                               code: _smsCodeController.text);
-                          AutoRouter.of(context).replace(MainAppRoute());
+                          if (isAuth == true) {
+                            AutoRouter.of(context).replace(MainAppRoute());
+                          }
                         } catch (e) {
                           error = e.toString();
                         }

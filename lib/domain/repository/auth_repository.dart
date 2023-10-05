@@ -7,7 +7,7 @@ abstract class AuthRepository {
   Future<bool> isExistToken({required bool isRefrshToken});
   Future<String?> cheskIsLiveAccessToken();
 
-  Future<String> getCode({required String numberPhone});
+  Future<bool> getCode({required String numberPhone});
   Future<String?> makeJwtTokens({required String refreshToken});
   Future<String?> getRefeshTokenInStorage();
   Future<String?> getAccessTokenInStorage();
@@ -28,10 +28,14 @@ class AuthRepositoryImpl implements AuthRepository {
   final SessionDataProvdier _sessionDataProvdier;
 
   @override
-  Future<String> getCode({required String numberPhone}) async {
-    final String code =
-        await _authProvider.getCodeByPhoneNumberTest(numberPhone: numberPhone);
-    return code;
+  Future<bool> getCode({required String numberPhone}) async {
+    try {
+      final bool isCode =
+          await _authProvider.getCodeByPhoneNumber(numberPhone: numberPhone);
+      return isCode;
+    } catch (e) {
+      rethrow;
+    }
   }
 
 // Проверка на авторизацию пользователя
