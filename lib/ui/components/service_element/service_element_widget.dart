@@ -155,11 +155,19 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
       children: [
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.4),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: Offset(0, 6),
+                ),
+              ],
+              borderRadius: BorderRadius.circular(50),
               color: ColorsForWidget.colorGreen),
           width: widget.isRow ? sizeScreen.width / 2.4 : null,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
@@ -169,10 +177,13 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        Container(
+          width: widget.isRow ? sizeScreen.width / 2.4 : null,
+          padding: const EdgeInsets.only(
+            top: 30.0,
+          ),
           child: Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.topCenter,
               child: Image.asset(imagePath ?? 'assets/images/note.png')),
         ),
         SizedBox(
@@ -180,7 +191,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(50),
               onTap: () {
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&

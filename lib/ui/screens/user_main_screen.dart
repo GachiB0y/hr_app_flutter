@@ -44,7 +44,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
       backgroundColor: Colors.grey[200],
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20.0),
+          padding: const EdgeInsets.only(top: 1.0),
           child: RefreshIndicator(
             color: ColorsForWidget.colorGreen,
             backgroundColor: Colors.white,
@@ -60,11 +60,11 @@ class _UserMainScreenState extends State<UserMainScreen> {
                   SizedBox(
                       height: MediaQuery.of(context).size.height / 4.6,
                       child: const ScrollBarWidget()),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 40,
-                  ),
+                  // SizedBox(
+                  //   height: MediaQuery.of(context).size.height / 50,
+                  // ),
                   const Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.only(left: 16.0),
                     child: Text(
                       'События компании',
                       style:
@@ -129,10 +129,13 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
           scrollDirection: Axis.horizontal,
           itemCount: groupWidgets.length,
           itemBuilder: (BuildContext context, int index) {
-            return ElementForScrollBarWidget(
-              listService: loadedServices,
-              index: index,
-              groupWidgets: groupWidgets,
+            return Container(
+              padding: EdgeInsets.only(bottom: 15),
+              child: ElementForScrollBarWidget(
+                listService: loadedServices,
+                index: index,
+                groupWidgets: groupWidgets,
+              ),
             );
           },
         );
@@ -160,14 +163,23 @@ class ElementForScrollBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
     final blocWallet = context.watch<WalletBloc>();
-    final double leftPadding = index == 0 ? 16.0 : 4.0;
-    final double rightPadding = index == listService.length - 1 ? 16.0 : 4.0;
+    final double leftPadding = index == 0 ? 16.0 : 8.0;
+    final double rightPadding = index == listService.length ? 16.0 : 8.0;
     if (index == 0) {
       return Padding(
-        padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
+        padding: EdgeInsets.only(
+          left: leftPadding,
+          right: rightPadding,
+        ),
         child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30), color: Colors.white),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: Offset(0, 6),
+            ),
+          ], borderRadius: BorderRadius.circular(50), color: Colors.white),
           width: sizeScreen.width / 2.4,
           child: Stack(children: [
             Padding(

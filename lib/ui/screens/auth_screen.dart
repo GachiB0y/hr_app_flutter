@@ -76,7 +76,6 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
               ElevatedButton(
                 onPressed: () async {
                   if (_phoneNumberController.text.length == 18) {
-                    /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                     final String originalPhoneNumber =
                         _phoneNumberController.text;
                     formattedPhoneNumber =
@@ -85,10 +84,8 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                       final bool isCode = await cubitAuth.getCode(
                           phoneNumber: formattedPhoneNumber);
 
-                      /// ЗАГЛУШКА В ДАЛЬНЕЙШЕМ КОД ПРИЙДЕТ НА СМС
                       if (isCode == true) {
                         setState(() {
-                          // _smsCodeController.text = code as String;
                           _showSMSCodeField = true;
                         });
                       }
@@ -99,7 +96,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     }
                   } else {
                     setState(() {
-                      error = 'Not valid numberr phone';
+                      error = 'Not valid number phone';
                     });
                   }
                 },
@@ -133,6 +130,10 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                               code: _smsCodeController.text);
                           if (isAuth == true) {
                             AutoRouter.of(context).replace(MainAppRoute());
+                          } else {
+                            setState(() {
+                              error = 'Not valid CODE';
+                            });
                           }
                         } catch (e) {
                           error = e.toString();
