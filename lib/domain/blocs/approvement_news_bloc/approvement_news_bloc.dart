@@ -88,7 +88,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
       emit(const ApprovementNewsState.error(
           errorText: 'Время ожидания истекло!'));
     } on ApiClientException {
-      emit(const ApprovementNewsState.error(errorText: 'Ничего не найденно!'));
+      emit(const ApprovementNewsState.error(errorText: 'Ничего не найдено!'));
     } catch (e) {
       emit(const ApprovementNewsState.error());
     }

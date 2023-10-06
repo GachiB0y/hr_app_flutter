@@ -40,6 +40,9 @@ class _UserMainScreenState extends State<UserMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Center(
@@ -58,7 +61,8 @@ class _UserMainScreenState extends State<UserMainScreen> {
                 children: [
                   const AppBarUserWdiget(),
                   SizedBox(
-                      height: MediaQuery.of(context).size.height / 4.6,
+                      height: (MediaQuery.of(context).size.height / 4.25) *
+                          textScaleFactor,
                       child: const ScrollBarWidget()),
                   // SizedBox(
                   //   height: MediaQuery.of(context).size.height / 50,
@@ -165,6 +169,9 @@ class ElementForScrollBarWidget extends StatelessWidget {
     final blocWallet = context.watch<WalletBloc>();
     final double leftPadding = index == 0 ? 16.0 : 8.0;
     final double rightPadding = index == listService.length ? 16.0 : 8.0;
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+
     if (index == 0) {
       return Padding(
         padding: EdgeInsets.only(
@@ -180,7 +187,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
               offset: Offset(0, 6),
             ),
           ], borderRadius: BorderRadius.circular(50), color: Colors.white),
-          width: sizeScreen.width / 2.4,
+          width: (sizeScreen.width / 2.2) * textScaleFactor,
           child: Stack(children: [
             Padding(
               padding: const EdgeInsets.all(8.0),

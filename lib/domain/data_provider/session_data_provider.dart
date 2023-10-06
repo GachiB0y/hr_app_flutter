@@ -2,8 +2,8 @@ import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_sto
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract class _Keys {
-  static const sessionId = 'session-id';
-  static const accessToken = 'access-token';
+  static const sessionId = 'session_id';
+  static const accessToken = 'access_token';
 }
 
 abstract class SessionDataProvdier {
@@ -22,7 +22,8 @@ class SessionDataProvdierDefault implements SessionDataProvdier {
   const SessionDataProvdierDefault({required this.secureStorage});
 
   @override
-  Future<String?> getSessionId() => secureStorage.read(key: _Keys.sessionId);
+  Future<String?> getSessionId() async =>
+      await secureStorage.read(key: _Keys.sessionId);
 
   @override
   Future<void> setSessionId(String value) {

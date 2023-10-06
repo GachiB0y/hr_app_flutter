@@ -151,6 +151,10 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
     final blocEventEntity = context.read<EventEntityBloc>();
     final sizeScreen = MediaQuery.of(context).size;
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+    final sizeWidhtIsRow = (sizeScreen.width / 2.2) * textScaleFactor;
+
     return Stack(
       children: [
         Container(
@@ -165,7 +169,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
               ],
               borderRadius: BorderRadius.circular(50),
               color: ColorsForWidget.colorGreen),
-          width: widget.isRow ? sizeScreen.width / 2.4 : null,
+          width: widget.isRow ? sizeWidhtIsRow : null,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Align(
@@ -179,7 +183,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           ),
         ),
         Container(
-          width: widget.isRow ? sizeScreen.width / 2.4 : null,
+          width: widget.isRow ? sizeWidhtIsRow : null,
           padding: const EdgeInsets.only(
             top: 30.0,
           ),
@@ -188,7 +192,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
               child: Image.asset(imagePath ?? 'assets/images/note.png')),
         ),
         SizedBox(
-          width: widget.isRow ? sizeScreen.width / 2.4 : null,
+          width: widget.isRow ? sizeWidhtIsRow : null,
           child: Material(
             color: Colors.transparent,
             child: InkWell(
