@@ -8,8 +8,8 @@ part of 'wallet.dart';
 
 _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       balance: json['balance'] as int,
-      transactions: (json['transactions'] as List<dynamic>)
-          .map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+      transactions: (json['transactions'] as List<dynamic>?)
+          ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

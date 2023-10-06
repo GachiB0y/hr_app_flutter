@@ -7,7 +7,7 @@ part 'wallet.g.dart';
 class Wallet with _$Wallet {
   const factory Wallet(
       {required int balance,
-      required List<Transaction> transactions}) = _Wallet;
+      required List<Transaction>? transactions}) = _Wallet;
 
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 }

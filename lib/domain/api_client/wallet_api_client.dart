@@ -9,7 +9,7 @@ abstract class WalletProvider {
   Future<int> getBalance({required String userToken});
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
   Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});
-  Future<List<Transaction>> getTransactions({required String userToken});
+  Future<List<Transaction>?> getTransactions({required String userToken});
   Future<int> sendCoinsToOtherUser(
       {required String userToken,
       required int amount,
@@ -43,7 +43,8 @@ class WalletProviderImpl implements WalletProvider {
   }
 
   @override
-  Future<List<Transaction>> getTransactions({required String userToken}) async {
+  Future<List<Transaction>?> getTransactions(
+      {required String userToken}) async {
     var headers = {
       'accept': 'application/json',
       'Authorization': 'Bearer $userToken'
@@ -64,6 +65,8 @@ class WalletProviderImpl implements WalletProvider {
           .toList();
 
       return result;
+    } else if (response.statusCode == 404) {
+      return null;
     } else {
       throw Exception('Error fetching Transactions');
     }

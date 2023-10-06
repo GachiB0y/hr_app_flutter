@@ -27,7 +27,7 @@ class WalletRepositoryImpl implements WalletRepository {
     try {
       final int balance =
           await _walletProvider.getBalance(userToken: accessToken);
-      final List<Transaction> transactions =
+      final List<Transaction>? transactions =
           await _walletProvider.getTransactions(userToken: accessToken);
       final Wallet wallet =
           Wallet(balance: balance, transactions: transactions);

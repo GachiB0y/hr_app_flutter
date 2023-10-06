@@ -50,19 +50,26 @@ class _ServicesScreenState extends State<ServicesScreen> {
             for (var widget in loeadedServiceWidgets) {
               groupWidgets.add(widget);
             }
-            return CustomScrollView(
-              primary: false,
-              slivers: <Widget>[
-                SliverPadding(
-                  padding: const EdgeInsets.all(20),
-                  sliver: SliverGrid.count(
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 2,
-                    children: groupWidgets,
+            return RefreshIndicator(
+              color: ColorsForWidget.colorGreen,
+              onRefresh: () {
+                blocServiceBloc.add(const ServiceEvent.fetch());
+                return Future<void>.delayed(const Duration(seconds: 1));
+              },
+              child: CustomScrollView(
+                // primary: false,
+                slivers: <Widget>[
+                  SliverPadding(
+                    padding: const EdgeInsets.all(20),
+                    sliver: SliverGrid.count(
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: 2,
+                      children: groupWidgets,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
           error: () => const Text('Nothing found...'),

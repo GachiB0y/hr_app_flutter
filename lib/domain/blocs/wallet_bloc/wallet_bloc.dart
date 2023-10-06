@@ -43,7 +43,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           .timeout(const Duration(seconds: 10));
 
       final oldState = (state as WalletStateLoaded).copyWith();
-      final List<Transaction> transactions = oldState.walletLoaded.transactions;
+      final List<Transaction>? transactions =
+          oldState.walletLoaded.transactions;
 
       final newState = (state as WalletStateLoaded).copyWith(
           walletLoaded:

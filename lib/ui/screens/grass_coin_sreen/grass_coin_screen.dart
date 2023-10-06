@@ -146,19 +146,16 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
     final blocWallet = context.watch<WalletBloc>();
     final blocUser = context.watch<UserBloc>();
 
-    return Container(
+    return SizedBox(
       // padding: const EdgeInsets.only(left: 20, right: 20),
       height: 360,
       // color: Colors.grey[200],
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            // padding: const EdgeInsets.only(top: 5.0),
-            child: const Text(
-              'Баланс Грасс-коинов на счёте',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
+          const Text(
+            'Баланс Грасс-коинов на счёте',
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 20,
@@ -430,86 +427,91 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
         );
       },
       loaded: (walletLoaded) {
-        DateTime today = DateTime.now();
-        // Группировка элементов по дате
-        Map<String, List<Transaction>> groups = {};
-        walletLoaded.transactions.forEach((item) {
-          final DateTime date =
-              DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
-          String dateString = DateFormat('d MMM EEE, y.').format(date);
-          bool isSameDay = compareDates(today, date);
-          bool isYesterday = compareYesterday(date);
-          if (isSameDay) {
-            dateString = 'Сегодня';
-          } else if (isYesterday) {
-            dateString = 'Вчера';
-          }
+        if (walletLoaded.transactions != null) {
+          DateTime today = DateTime.now();
+          // Группировка элементов по дате
+          Map<String, List<Transaction>> groups = {};
+          walletLoaded.transactions?.forEach((item) {
+            final DateTime date =
+                DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
+            String dateString = DateFormat('d MMM EEE, y.').format(date);
+            bool isSameDay = compareDates(today, date);
+            bool isYesterday = compareYesterday(date);
+            if (isSameDay) {
+              dateString = 'Сегодня';
+            } else if (isYesterday) {
+              dateString = 'Вчера';
+            }
 
-          if (groups[dateString] == null) {
-            groups[dateString] = [];
-          }
-          groups[dateString]?.add(item);
-        });
+            if (groups[dateString] == null) {
+              groups[dateString] = [];
+            }
+            groups[dateString]?.add(item);
+          });
 
-        // Создание списка групп
-        List<Widget> groupWidgets = [];
-        groups.forEach((dateString, groupItems) {
-          groupWidgets.add(
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 5.0),
-                  height: 25,
-                  child: ListTile(
-                    title: Text(
-                      dateString,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
+          // Создание списка групп
+          List<Widget> groupWidgets = [];
+          groups.forEach((dateString, groupItems) {
+            groupWidgets.add(
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5.0),
+                    height: 25,
+                    child: ListTile(
+                      title: Text(
+                        dateString,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
                     ),
                   ),
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: groupItems
-                      .map(
-                        (item) => ListTile(
-                          title: item.typeTtransaction == 0
-                              ? Text(item.sender)
-                              : Text(item.recipient),
-                          subtitle: Text(
-                            item.typeTtransaction == 0
-                                ? 'Зачисление'
-                                : 'Перевод',
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                          trailing: SizedBox(
-                            width: 80,
-                            height: 50,
-                            child: TralingHistoryWidget(
-                              item: item,
+                  ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: groupItems
+                        .map(
+                          (item) => ListTile(
+                            title: item.typeTtransaction == 0
+                                ? Text(item.sender)
+                                : Text(item.recipient),
+                            subtitle: Text(
+                              item.typeTtransaction == 0
+                                  ? 'Зачисление'
+                                  : 'Перевод',
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                            trailing: SizedBox(
+                              width: 80,
+                              height: 50,
+                              child: TralingHistoryWidget(
+                                item: item,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
-                const Divider(),
-              ],
+                        )
+                        .toList(),
+                  ),
+                  const Divider(),
+                ],
+              ),
+            );
+          });
+
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Column(
+                  children: groupWidgets,
+                );
+              },
+              childCount: 1,
             ),
           );
-        });
-
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Column(
-                children: groupWidgets,
-              );
-            },
-            childCount: 1,
-          ),
-        );
+        } else {
+          return const SliverToBoxAdapter(
+              child: Center(child: Text('Ничего не найдено')));
+        }
       },
       error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
     );

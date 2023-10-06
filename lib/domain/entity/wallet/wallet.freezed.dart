@@ -21,7 +21,7 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Wallet {
   int get balance => throw _privateConstructorUsedError;
-  List<Transaction> get transactions => throw _privateConstructorUsedError;
+  List<Transaction>? get transactions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
       _$WalletCopyWithImpl<$Res, Wallet>;
   @useResult
-  $Res call({int balance, List<Transaction> transactions});
+  $Res call({int balance, List<Transaction>? transactions});
 }
 
 /// @nodoc
@@ -50,17 +50,17 @@ class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
   @override
   $Res call({
     Object? balance = null,
-    Object? transactions = null,
+    Object? transactions = freezed,
   }) {
     return _then(_value.copyWith(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      transactions: null == transactions
+      transactions: freezed == transactions
           ? _value.transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>,
+              as List<Transaction>?,
     ) as $Val);
   }
 }
@@ -71,7 +71,7 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       __$$_WalletCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int balance, List<Transaction> transactions});
+  $Res call({int balance, List<Transaction>? transactions});
 }
 
 /// @nodoc
@@ -85,17 +85,17 @@ class __$$_WalletCopyWithImpl<$Res>
   @override
   $Res call({
     Object? balance = null,
-    Object? transactions = null,
+    Object? transactions = freezed,
   }) {
     return _then(_$_Wallet(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int,
-      transactions: null == transactions
+      transactions: freezed == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>,
+              as List<Transaction>?,
     ));
   }
 }
@@ -104,7 +104,7 @@ class __$$_WalletCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Wallet implements _Wallet {
   const _$_Wallet(
-      {required this.balance, required final List<Transaction> transactions})
+      {required this.balance, required final List<Transaction>? transactions})
       : _transactions = transactions;
 
   factory _$_Wallet.fromJson(Map<String, dynamic> json) =>
@@ -112,12 +112,14 @@ class _$_Wallet implements _Wallet {
 
   @override
   final int balance;
-  final List<Transaction> _transactions;
+  final List<Transaction>? _transactions;
   @override
-  List<Transaction> get transactions {
+  List<Transaction>? get transactions {
+    final value = _transactions;
+    if (value == null) return null;
     if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -157,14 +159,14 @@ class _$_Wallet implements _Wallet {
 abstract class _Wallet implements Wallet {
   const factory _Wallet(
       {required final int balance,
-      required final List<Transaction> transactions}) = _$_Wallet;
+      required final List<Transaction>? transactions}) = _$_Wallet;
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
 
   @override
   int get balance;
   @override
-  List<Transaction> get transactions;
+  List<Transaction>? get transactions;
   @override
   @JsonKey(ignore: true)
   _$$_WalletCopyWith<_$_Wallet> get copyWith =>
