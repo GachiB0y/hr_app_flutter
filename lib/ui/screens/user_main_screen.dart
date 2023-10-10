@@ -153,7 +153,8 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 6.5,
-      margin: const EdgeInsets.all(16.0),
+      margin:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
