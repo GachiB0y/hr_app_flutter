@@ -24,6 +24,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           await onWalletEventFetch(emit);
         } else if (event is WalletEventSendCoinsToOtherUser) {
           await onWalletEventSendCoinsToOtherUser(event, emit);
+        } else if (event is WalletEventSendCoinsToBracer) {
+          await onWalletEventSendCoinsToBracer(event, emit);
         }
       },
     );
@@ -70,6 +72,34 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       final state = WalletState.loaded(walletLoaded: _walletLoaded);
 
       emit(state);
+    } on TimeoutException {
+      emit(const WalletState.error());
+    } catch (e) {
+      emit(const WalletState.error());
+    }
+  }
+
+  Future<void> onWalletEventSendCoinsToBracer(
+      WalletEventSendCoinsToBracer event, Emitter<WalletState> emit) async {
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      final int newBalance = await walletRepo
+          .sendCoinsToBracer(
+            accessToken: accessToken as String,
+            amount: event.amount,
+          )
+          .timeout(const Duration(seconds: 10));
+
+      final oldState = (state as WalletStateLoaded).copyWith();
+      final List<Transaction>? transactions =
+          oldState.walletLoaded.transactions;
+
+      final newState = (state as WalletStateLoaded).copyWith(
+          walletLoaded:
+              Wallet(balance: newBalance, transactions: transactions));
+
+      emit(newState);
     } on TimeoutException {
       emit(const WalletState.error());
     } catch (e) {

@@ -15,6 +15,10 @@ abstract class WalletProvider {
       required int amount,
       required int userId,
       required String message});
+  Future<int> sendCoinsToBracer({
+    required String userToken,
+    required int amount,
+  });
 }
 
 class WalletProviderImpl implements WalletProvider {
@@ -98,6 +102,35 @@ class WalletProviderImpl implements WalletProvider {
       return result;
     } else {
       throw Exception('Error send Coins!!!');
+    }
+  }
+
+  @override
+  Future<int> sendCoinsToBracer({
+    required String userToken,
+    required int amount,
+  }) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $userToken',
+      'Content-Type': 'application/json'
+    };
+    var request =
+        http.Request('POST', Uri.parse('$urlAdress/coins/transfer_to_bracer'));
+    request.body = json.encode({
+      "amount": amount,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 201) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final int result = jsonData['result']['coins'];
+      return result;
+    } else {
+      throw Exception('Error send to Bracer Coins!!!');
     }
   }
 

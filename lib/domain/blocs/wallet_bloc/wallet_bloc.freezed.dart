@@ -21,6 +21,7 @@ mixin _$WalletEvent {
     required TResult Function() fetch,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
+    required TResult Function(int amount) sendCoinsToBracer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$WalletEvent {
     TResult? Function()? fetch,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult? Function(int amount)? sendCoinsToBracer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$WalletEvent {
     TResult Function()? fetch,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult Function(int amount)? sendCoinsToBracer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,8 @@ mixin _$WalletEvent {
     required TResult Function(WalletEventFetch value) fetch,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
+    required TResult Function(WalletEventSendCoinsToBracer value)
+        sendCoinsToBracer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +55,7 @@ mixin _$WalletEvent {
     TResult? Function(WalletEventFetch value)? fetch,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult? Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +63,7 @@ mixin _$WalletEvent {
     TResult Function(WalletEventFetch value)? fetch,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +128,7 @@ class _$WalletEventFetch implements WalletEventFetch {
     required TResult Function() fetch,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
+    required TResult Function(int amount) sendCoinsToBracer,
   }) {
     return fetch();
   }
@@ -131,6 +139,7 @@ class _$WalletEventFetch implements WalletEventFetch {
     TResult? Function()? fetch,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult? Function(int amount)? sendCoinsToBracer,
   }) {
     return fetch?.call();
   }
@@ -141,6 +150,7 @@ class _$WalletEventFetch implements WalletEventFetch {
     TResult Function()? fetch,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult Function(int amount)? sendCoinsToBracer,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -155,6 +165,8 @@ class _$WalletEventFetch implements WalletEventFetch {
     required TResult Function(WalletEventFetch value) fetch,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
+    required TResult Function(WalletEventSendCoinsToBracer value)
+        sendCoinsToBracer,
   }) {
     return fetch(this);
   }
@@ -165,6 +177,7 @@ class _$WalletEventFetch implements WalletEventFetch {
     TResult? Function(WalletEventFetch value)? fetch,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult? Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
   }) {
     return fetch?.call(this);
   }
@@ -175,6 +188,7 @@ class _$WalletEventFetch implements WalletEventFetch {
     TResult Function(WalletEventFetch value)? fetch,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -276,6 +290,7 @@ class _$WalletEventSendCoinsToOtherUser
     required TResult Function() fetch,
     required TResult Function(int amount, int userId, String message)
         sendCoinsToOtherUser,
+    required TResult Function(int amount) sendCoinsToBracer,
   }) {
     return sendCoinsToOtherUser(amount, userId, message);
   }
@@ -286,6 +301,7 @@ class _$WalletEventSendCoinsToOtherUser
     TResult? Function()? fetch,
     TResult? Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult? Function(int amount)? sendCoinsToBracer,
   }) {
     return sendCoinsToOtherUser?.call(amount, userId, message);
   }
@@ -296,6 +312,7 @@ class _$WalletEventSendCoinsToOtherUser
     TResult Function()? fetch,
     TResult Function(int amount, int userId, String message)?
         sendCoinsToOtherUser,
+    TResult Function(int amount)? sendCoinsToBracer,
     required TResult orElse(),
   }) {
     if (sendCoinsToOtherUser != null) {
@@ -310,6 +327,8 @@ class _$WalletEventSendCoinsToOtherUser
     required TResult Function(WalletEventFetch value) fetch,
     required TResult Function(WalletEventSendCoinsToOtherUser value)
         sendCoinsToOtherUser,
+    required TResult Function(WalletEventSendCoinsToBracer value)
+        sendCoinsToBracer,
   }) {
     return sendCoinsToOtherUser(this);
   }
@@ -320,6 +339,7 @@ class _$WalletEventSendCoinsToOtherUser
     TResult? Function(WalletEventFetch value)? fetch,
     TResult? Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult? Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
   }) {
     return sendCoinsToOtherUser?.call(this);
   }
@@ -330,6 +350,7 @@ class _$WalletEventSendCoinsToOtherUser
     TResult Function(WalletEventFetch value)? fetch,
     TResult Function(WalletEventSendCoinsToOtherUser value)?
         sendCoinsToOtherUser,
+    TResult Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
     required TResult orElse(),
   }) {
     if (sendCoinsToOtherUser != null) {
@@ -350,6 +371,156 @@ abstract class WalletEventSendCoinsToOtherUser implements WalletEvent {
   String get message;
   @JsonKey(ignore: true)
   _$$WalletEventSendCoinsToOtherUserCopyWith<_$WalletEventSendCoinsToOtherUser>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$WalletEventSendCoinsToBracerCopyWith<$Res> {
+  factory _$$WalletEventSendCoinsToBracerCopyWith(
+          _$WalletEventSendCoinsToBracer value,
+          $Res Function(_$WalletEventSendCoinsToBracer) then) =
+      __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int amount});
+}
+
+/// @nodoc
+class __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventSendCoinsToBracer>
+    implements _$$WalletEventSendCoinsToBracerCopyWith<$Res> {
+  __$$WalletEventSendCoinsToBracerCopyWithImpl(
+      _$WalletEventSendCoinsToBracer _value,
+      $Res Function(_$WalletEventSendCoinsToBracer) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? amount = null,
+  }) {
+    return _then(_$WalletEventSendCoinsToBracer(
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$WalletEventSendCoinsToBracer implements WalletEventSendCoinsToBracer {
+  const _$WalletEventSendCoinsToBracer({required this.amount});
+
+  @override
+  final int amount;
+
+  @override
+  String toString() {
+    return 'WalletEvent.sendCoinsToBracer(amount: $amount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletEventSendCoinsToBracer &&
+            (identical(other.amount, amount) || other.amount == amount));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, amount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WalletEventSendCoinsToBracerCopyWith<_$WalletEventSendCoinsToBracer>
+      get copyWith => __$$WalletEventSendCoinsToBracerCopyWithImpl<
+          _$WalletEventSendCoinsToBracer>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetch,
+    required TResult Function(int amount, int userId, String message)
+        sendCoinsToOtherUser,
+    required TResult Function(int amount) sendCoinsToBracer,
+  }) {
+    return sendCoinsToBracer(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetch,
+    TResult? Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+    TResult? Function(int amount)? sendCoinsToBracer,
+  }) {
+    return sendCoinsToBracer?.call(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetch,
+    TResult Function(int amount, int userId, String message)?
+        sendCoinsToOtherUser,
+    TResult Function(int amount)? sendCoinsToBracer,
+    required TResult orElse(),
+  }) {
+    if (sendCoinsToBracer != null) {
+      return sendCoinsToBracer(amount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WalletEventFetch value) fetch,
+    required TResult Function(WalletEventSendCoinsToOtherUser value)
+        sendCoinsToOtherUser,
+    required TResult Function(WalletEventSendCoinsToBracer value)
+        sendCoinsToBracer,
+  }) {
+    return sendCoinsToBracer(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(WalletEventFetch value)? fetch,
+    TResult? Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+    TResult? Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
+  }) {
+    return sendCoinsToBracer?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WalletEventFetch value)? fetch,
+    TResult Function(WalletEventSendCoinsToOtherUser value)?
+        sendCoinsToOtherUser,
+    TResult Function(WalletEventSendCoinsToBracer value)? sendCoinsToBracer,
+    required TResult orElse(),
+  }) {
+    if (sendCoinsToBracer != null) {
+      return sendCoinsToBracer(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class WalletEventSendCoinsToBracer implements WalletEvent {
+  const factory WalletEventSendCoinsToBracer({required final int amount}) =
+      _$WalletEventSendCoinsToBracer;
+
+  int get amount;
+  @JsonKey(ignore: true)
+  _$$WalletEventSendCoinsToBracerCopyWith<_$WalletEventSendCoinsToBracer>
       get copyWith => throw _privateConstructorUsedError;
 }
 

@@ -40,9 +40,12 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
                 const SizedBox(
                   height: 5,
                 ),
-                RichText(
-                  text: TextSpan(
-                      text: userLoaded.staffPosition,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                      softWrap: true,
+                      maxLines: 2,
+                      userLoaded.staffPosition,
                       style: StyleTextCustom.textJobUserGrey),
                 ),
               ],

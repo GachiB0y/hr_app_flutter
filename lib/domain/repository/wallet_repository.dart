@@ -4,7 +4,7 @@ import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_rew
 
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 
-abstract class WalletRepository {
+abstract interface class WalletRepository {
   Future<Wallet> getWallet({required String accessToken});
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
   Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});
@@ -13,6 +13,10 @@ abstract class WalletRepository {
       required int amount,
       required int userId,
       required String message});
+  Future<int> sendCoinsToBracer({
+    required String accessToken,
+    required int amount,
+  });
 }
 
 class WalletRepositoryImpl implements WalletRepository {
@@ -49,6 +53,22 @@ class WalletRepositoryImpl implements WalletRepository {
         amount: amount,
         userId: userId,
         message: message,
+      );
+      return newBalance;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> sendCoinsToBracer({
+    required String accessToken,
+    required int amount,
+  }) async {
+    try {
+      final int newBalance = await _walletProvider.sendCoinsToBracer(
+        userToken: accessToken,
+        amount: amount,
       );
       return newBalance;
     } catch (e) {

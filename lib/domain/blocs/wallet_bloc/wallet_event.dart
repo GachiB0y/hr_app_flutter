@@ -8,4 +8,7 @@ class WalletEvent with _$WalletEvent {
       {required int amount,
       required int userId,
       required String message}) = WalletEventSendCoinsToOtherUser;
+  const factory WalletEvent.sendCoinsToBracer({
+    required int amount,
+  }) = WalletEventSendCoinsToBracer;
 }

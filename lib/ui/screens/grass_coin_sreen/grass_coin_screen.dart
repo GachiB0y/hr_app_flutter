@@ -299,7 +299,7 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                     size: 26,
                     color: Colors.black,
                   ),
-                  label: const Text('Обменять',
+                  label: const Text('На браслет',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,

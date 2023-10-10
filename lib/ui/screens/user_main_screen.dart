@@ -80,12 +80,118 @@ class _UserMainScreenState extends State<UserMainScreen> {
                       child: Container(
                           padding: const EdgeInsets.only(left: 8),
                           child: const TableScrollWidget())),
+                  const InfoBirthdayAndNewPeopleWidget(),
+                  const SerachPeopleButtonWidget(),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class SerachPeopleButtonWidget extends StatelessWidget {
+  const SerachPeopleButtonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 6.5,
+      margin:
+          const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: ColorsForWidget.colorGreen),
+      child: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Найти соотрудника',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'структура компании',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Image.asset(
+              'assets/images/new_people.png',
+              width: 75,
+              height: 75,
+            ),
+          ]),
+        ),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () {},
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
+  const InfoBirthdayAndNewPeopleWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 6.5,
+      margin: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: ColorsForWidget.colorGreen),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              15.toString(),
+              style: const TextStyle(fontSize: 30, color: Colors.white),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Дни рождения',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ],
+        ),
+        const VerticalDivider(
+          color: Colors.white,
+          thickness: 2,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              3.toString(),
+              style: const TextStyle(fontSize: 30, color: Colors.white),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Новенькие',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }
@@ -98,17 +204,6 @@ class ScrollBarWidget extends StatefulWidget {
 }
 
 class _ScrollBarWidgetState extends State<ScrollBarWidget> {
-  final List<String> pathImages = const [
-    '',
-    'assets/images/note.png',
-    'assets/images/bus.png',
-    'assets/images/thumbs_up.png',
-    'assets/images/tree_structure.png',
-    'assets/images/airplane.png',
-    'assets/images/globe.png',
-    'assets/images/alarm.png',
-    'assets/images/map.png',
-  ];
   List<Widget> groupWidgets = [];
   @override
   Widget build(BuildContext context) {
@@ -134,7 +229,7 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
           itemCount: groupWidgets.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(bottom: 15),
               child: ElementForScrollBarWidget(
                 listService: loadedServices,
                 index: index,
@@ -184,7 +279,7 @@ class ElementForScrollBarWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
               spreadRadius: 2,
               blurRadius: 4,
-              offset: Offset(0, 6),
+              offset: const Offset(0, 6),
             ),
           ], borderRadius: BorderRadius.circular(50), color: Colors.white),
           width: (sizeScreen.width / 2.2) * textScaleFactor,
@@ -368,61 +463,59 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                 },
                 error: () =>
                     const Center(child: Text('Ошибка загрузки сервисов!'))),
-            Expanded(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height / 2.7,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: filteredEventEntity
-                      .length, // начинаем с выбранной вкладки
-                  itemBuilder: (context, index) {
-                    EventEntity item =
-                        filteredEventEntity.reversed.toList()[index];
-                    // получаем элемент для текущей вкладки
-                    return GestureDetector(
-                      onDoubleTap: () {
-                        context.pushRoute(AboutNewsRoute(
-                            id: item.id,
-                            authRepository: blocEventEntity.authRepository,
-                            eventEntityRepository:
-                                blocEventEntity.eventEntityRepository));
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: Image.network(item.image).image,
-                              fit: BoxFit.cover),
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  item.title,
-                                  style: const TextStyle(fontSize: 16),
-                                ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 2.7,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(16),
+                itemCount:
+                    filteredEventEntity.length, // начинаем с выбранной вкладки
+                itemBuilder: (context, index) {
+                  EventEntity item =
+                      filteredEventEntity.reversed.toList()[index];
+                  // получаем элемент для текущей вкладки
+                  return GestureDetector(
+                    onDoubleTap: () {
+                      context.pushRoute(AboutNewsRoute(
+                          id: item.id,
+                          authRepository: blocEventEntity.authRepository,
+                          eventEntityRepository:
+                              blocEventEntity.eventEntityRepository));
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: Image.network(item.image).image,
+                            fit: BoxFit.cover),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                item.title,
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
