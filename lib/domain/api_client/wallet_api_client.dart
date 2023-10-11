@@ -116,10 +116,8 @@ class WalletProviderImpl implements WalletProvider {
       'Content-Type': 'application/json'
     };
     var request =
-        http.Request('POST', Uri.parse('$urlAdress/coins/transfer_to_bracer'));
-    request.body = json.encode({
-      "amount": amount,
-    });
+        http.Request('POST', Uri.parse('$urlAdress/coins/transfer-to-bracer'));
+    request.body = json.encode({"amount": amount});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
