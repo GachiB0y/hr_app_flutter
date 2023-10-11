@@ -116,11 +116,19 @@ class _CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class BodyContentWidgetCoinScreen extends StatelessWidget {
+class BodyContentWidgetCoinScreen extends StatefulWidget {
   const BodyContentWidgetCoinScreen({
     super.key,
   });
 
+  @override
+  State<BodyContentWidgetCoinScreen> createState() =>
+      _BodyContentWidgetCoinScreenState();
+}
+
+class _BodyContentWidgetCoinScreenState
+    extends State<BodyContentWidgetCoinScreen> {
+  String amountCoins = '';
   void _showBottomSheet(BuildContext context, {required bool isCoinsInfo}) {
     showModalBottomSheet(
       showDragHandle: true,
@@ -141,15 +149,48 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
     );
   }
 
+  void showPopupWindow() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Введите сумму'),
+          content: TextField(
+            decoration: const InputDecoration(
+              labelText: 'Количество',
+            ),
+            onChanged: (value) {
+              setState(() {
+                amountCoins = value;
+              });
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                final blocWallet = context.read<WalletBloc>();
+                blocWallet.add(
+                  WalletEvent.sendCoinsToBracer(
+                    amount: int.parse(amountCoins),
+                  ),
+                );
+                Navigator.of(context).pop(); // Закрыть Алерт
+              },
+              child: const Text('Подтвердить'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
     final blocUser = context.watch<UserBloc>();
 
     return SizedBox(
-      // padding: const EdgeInsets.only(left: 20, right: 20),
       height: 360,
-      // color: Colors.grey[200],
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -293,7 +334,9 @@ class BodyContentWidgetCoinScreen extends StatelessWidget {
                     padding:
                         MaterialStateProperty.all(const EdgeInsets.all(16)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showPopupWindow(); // Вызов окна для перевода коина на браслет
+                  },
                   icon: const Icon(
                     Icons.sync,
                     size: 26,
