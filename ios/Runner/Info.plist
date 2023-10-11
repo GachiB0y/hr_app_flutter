@@ -7,6 +7,11 @@
     <key>NSAllowsArbitraryLoads</key>
     <true/>
 </dict>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Access to photo library is required to choose images</string>
+<key>NSCameraUsageDescription</key>
+<string>Access to camera is required to take photos</string>
+
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
