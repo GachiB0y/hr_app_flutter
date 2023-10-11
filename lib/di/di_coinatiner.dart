@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
@@ -46,6 +47,8 @@ class _DIContainer {
   static const SecureStorageDefault secureStorageDefault =
       SecureStorageDefault();
 
+  static const IHTTPService htttpService = HTTPServiceImpl();
+
   ScreenFactoryDefault _makeScreenFactory() => ScreenFactoryDefault(this);
 
   SessionDataProvdier _makeSessionDataProvdier() =>
@@ -54,8 +57,8 @@ class _DIContainer {
   ServiceProvider _makeServiceProvider() => const ServiceProviderImpl();
   EventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
-  WalletProvider _makeWalletProvider() => const WalletProviderImpl();
-  UserProvider _makeUserProvider() => const UserProviderImpl();
+  WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
+  UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
   EventEntityRepository _makeEventEntityRepository() =>
       EventEntityRepositoryImpl(
           eventEntityProvider: _makeEventsEntityProvider());

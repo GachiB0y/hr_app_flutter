@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:hr_app_flutter/constants.dart';
+import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart';
 import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_reward.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
@@ -22,7 +23,8 @@ abstract class WalletProvider {
 }
 
 class WalletProviderImpl implements WalletProvider {
-  const WalletProviderImpl();
+  IHTTPService _httpService;
+  WalletProviderImpl(this._httpService);
 
   @override
   Future<int> getBalance({required String userToken}) async {
