@@ -16,7 +16,19 @@ class User with _$User {
     @JsonKey(name: 'phone_1') required String phoneOne,
     @JsonKey(name: 'phone_2') required String phoneTwo,
     @JsonKey(name: 'avatar') required String avatar,
+    required List<TagUser> tags,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+@freezed
+class TagUser with _$TagUser {
+  const factory TagUser({
+    required int id,
+    required String name,
+  }) = _TagUser;
+
+  factory TagUser.fromJson(Map<String, dynamic> json) =>
+      _$TagUserFromJson(json);
 }

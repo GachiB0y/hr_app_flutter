@@ -76,6 +76,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainAppScreen(),
       );
     },
+    ProfileWidgetRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileWidgetRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProfileWidgetScreen(
+          key: args.key,
+          user: args.user,
+        ),
+      );
+    },
     SearchFriendAndSendCoinsRoute.name: (routeData) {
       final args = routeData.argsAs<SearchFriendAndSendCoinsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -276,6 +286,44 @@ class MainAppRoute extends PageRouteInfo<void> {
   static const String name = 'MainAppRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileWidgetScreen]
+class ProfileWidgetRoute extends PageRouteInfo<ProfileWidgetRouteArgs> {
+  ProfileWidgetRoute({
+    Key? key,
+    required User user,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProfileWidgetRoute.name,
+          args: ProfileWidgetRouteArgs(
+            key: key,
+            user: user,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileWidgetRoute';
+
+  static const PageInfo<ProfileWidgetRouteArgs> page =
+      PageInfo<ProfileWidgetRouteArgs>(name);
+}
+
+class ProfileWidgetRouteArgs {
+  const ProfileWidgetRouteArgs({
+    this.key,
+    required this.user,
+  });
+
+  final Key? key;
+
+  final User user;
+
+  @override
+  String toString() {
+    return 'ProfileWidgetRouteArgs{key: $key, user: $user}';
+  }
 }
 
 /// generated route for

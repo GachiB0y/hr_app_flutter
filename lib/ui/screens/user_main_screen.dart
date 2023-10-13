@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
@@ -25,16 +28,27 @@ class _UserMainScreenState extends State<UserMainScreen> {
   void initState() {
     super.initState();
     context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<RookiesBloc>().add(const RookiesEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context
+        .read<UserBirthDayInfoBloc>()
+        .add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
     context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<RookiesBloc>().add(const RookiesEvent.fetch());
+
+    context
+        .read<UserBirthDayInfoBloc>()
+        .add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
+    context.read<UserBloc>().add(const UserEvent
+        .fetch()); //  Только обновить т.к сам блок инициализируется в АппБаре
     return Future<void>.delayed(const Duration(seconds: 1));
   }
 
@@ -99,8 +113,10 @@ class SerachPeopleButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
     return Container(
-      height: MediaQuery.of(context).size.height / 6.5,
+      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
       margin:
           const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -115,7 +131,10 @@ class SerachPeopleButtonWidget extends StatelessWidget {
               children: [
                 Text(
                   'Найти соотрудника',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -151,10 +170,15 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserBirthDayInfoBloc blocBirthDayInfo =
+        context.watch<UserBirthDayInfoBloc>();
+    final RookiesBloc blocRookies = context.watch<RookiesBloc>();
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+
     return Container(
-      height: MediaQuery.of(context).size.height / 6.5,
-      margin:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
+      margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
@@ -163,9 +187,19 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              15.toString(),
-              style: const TextStyle(fontSize: 30, color: Colors.white),
+            blocBirthDayInfo.state.when(
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              loaded: (birthDayInfo) {
+                return Text(
+                  birthDayInfo.count.toString(),
+                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                );
+              },
+              error: () => const Text('Ошибка загрузки.'),
             ),
             const SizedBox(height: 10),
             const Text(
@@ -181,9 +215,19 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              3.toString(),
-              style: const TextStyle(fontSize: 30, color: Colors.white),
+            blocRookies.state.when(
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              loaded: (rookiseInfo) {
+                return Text(
+                  rookiseInfo.count.toString(),
+                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                );
+              },
+              error: () => const Text('Ошибка загрузки.'),
             ),
             const SizedBox(height: 10),
             const Text(
