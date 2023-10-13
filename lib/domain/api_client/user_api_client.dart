@@ -10,6 +10,10 @@ import 'package:http/http.dart' as http;
 
 abstract class UserProvider {
   Future<User> getUserInfo({required String userToken});
+  Future<User> getUserInfoById(
+      {required String userToken, required String userID});
+  Future<List<User>> findUser(
+      {required String userToken, required String findText});
   Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
   Future<Rookies> getRookiesInfo({required String userToken});
   Future<List<User>> getUserByPhoneNumber(
@@ -97,6 +101,39 @@ class UserProviderImpl implements UserProvider {
       return result;
     } else {
       throw Exception('Error fetching Info Rookies');
+    }
+  }
+
+  @override
+  Future<User> getUserInfoById(
+      {required String userToken, required String userID}) async {
+    String uri = '$urlAdress/auth/find_by_id/$userID';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final User result = User.fromJson(jsonData['result']);
+      return result;
+    } else {
+      throw Exception('Error fetching User Info By Id User');
+    }
+  }
+
+  @override
+  Future<List<User>> findUser(
+      {required String userToken, required String findText}) async {
+    String uri = '$urlAdress/auth/find_user?name=$findText';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+
+      final List<User> result = (jsonData as List<dynamic>)
+          .map((item) => User.fromJson(item))
+          .toList();
+      return result;
+    } else {
+      throw Exception('Error find User');
     }
   }
 }
