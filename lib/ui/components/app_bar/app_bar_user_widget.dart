@@ -2,18 +2,31 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
-class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
+class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
   const AppBarUserWdiget({super.key});
 
   @override
+  State<AppBarUserWdiget> createState() => _AppBarUserWdigetState();
+  @override
   Size get preferredSize => const Size.fromHeight(80);
+}
+
+class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<UserBloc>().add(const UserEvent.fetch());
+  }
 
   @override
   Widget build(BuildContext context) {
     final loaderViewCubit = context.watch<LoaderViewCubit>();
+    final blocUser = context.watch<UserBloc>();
 
     return AppBar(
       scrolledUnderElevation: 0.0,
@@ -36,7 +49,7 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () async {
                 await loaderViewCubit.logout();
 
-                AutoRouter.of(context).push(const AuthenticationFormRoute());
+                AutoRouter.of(context).replace(const AuthenticationFormRoute());
               },
               textColor: Colors.black,
               padding: const EdgeInsets.all(2),
@@ -49,7 +62,12 @@ class AppBarUserWdiget extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      leading: const Avatar(),
+      leading: GestureDetector(
+          onTap: () {
+            context.pushRoute(ProfileWidgetRoute(
+                user: (blocUser.state as UserStateLoaded).userLoaded));
+          },
+          child: const Avatar()),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,
     );

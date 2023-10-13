@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart';
+import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 import 'package:http/http.dart' as http;
@@ -10,12 +11,13 @@ import 'package:http/http.dart' as http;
 abstract class UserProvider {
   Future<User> getUserInfo({required String userToken});
   Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
+  Future<Rookies> getRookiesInfo({required String userToken});
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber});
 }
 
 class UserProviderImpl implements UserProvider {
-  IHTTPService _httpService;
+  final IHTTPService _httpService;
 
   UserProviderImpl(this._httpService);
 
@@ -80,7 +82,21 @@ class UserProviderImpl implements UserProvider {
           BirthDayInfoEntity.fromJson(jsonData['result']);
       return result;
     } else {
-      throw Exception('Error fetching User Info');
+      throw Exception('Error fetching User Info Birthday List');
+    }
+  }
+
+  @override
+  Future<Rookies> getRookiesInfo({required String userToken}) async {
+    const String uri = '$urlAdress/auth/rookies';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final Rookies result = Rookies.fromJson(jsonData['result']);
+      return result;
+    } else {
+      throw Exception('Error fetching Info Rookies');
     }
   }
 }

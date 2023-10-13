@@ -23,7 +23,7 @@ abstract class WalletProvider {
 }
 
 class WalletProviderImpl implements WalletProvider {
-  IHTTPService _httpService;
+  final IHTTPService _httpService;
   WalletProviderImpl(this._httpService);
 
   @override

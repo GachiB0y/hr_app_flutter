@@ -11,7 +11,9 @@ import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_s
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
@@ -82,6 +84,7 @@ class ScreenFactoryDefault implements ScreenFactory {
   @override
   MultiBlocProvider createMultiBlocProvider() {
     final AuthRepository authRepository = _diContainer._makeAuthRepository();
+    final UserRepository userRepository = _diContainer._makeUserRepository();
     final EventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
@@ -102,8 +105,15 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
-              userRepo: _diContainer._makeUserRepository(),
-              authRepository: authRepository),
+              userRepo: userRepository, authRepository: authRepository),
+        ),
+        BlocProvider<UserBirthDayInfoBloc>(
+          create: (BuildContext context) => UserBirthDayInfoBloc(
+              userRepo: userRepository, authRepository: authRepository),
+        ),
+        BlocProvider<RookiesBloc>(
+          create: (BuildContext context) => RookiesBloc(
+              userRepo: userRepository, authRepository: authRepository),
         ),
         BlocProvider<AuthViewCubit>(
           create: (BuildContext context) =>

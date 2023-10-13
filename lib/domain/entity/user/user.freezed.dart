@@ -38,6 +38,7 @@ mixin _$User {
   String get phoneTwo => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar')
   String get avatar => throw _privateConstructorUsedError;
+  List<TagUser> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +60,8 @@ abstract class $UserCopyWith<$Res> {
       String email,
       @JsonKey(name: 'phone_1') String phoneOne,
       @JsonKey(name: 'phone_2') String phoneTwo,
-      @JsonKey(name: 'avatar') String avatar});
+      @JsonKey(name: 'avatar') String avatar,
+      List<TagUser> tags});
 }
 
 /// @nodoc
@@ -85,6 +87,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? phoneOne = null,
     Object? phoneTwo = null,
     Object? avatar = null,
+    Object? tags = null,
   }) {
     return _then(_value.copyWith(
       autoCard: null == autoCard
@@ -127,6 +130,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagUser>,
     ) as $Val);
   }
 }
@@ -147,7 +154,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       @JsonKey(name: 'phone_1') String phoneOne,
       @JsonKey(name: 'phone_2') String phoneTwo,
-      @JsonKey(name: 'avatar') String avatar});
+      @JsonKey(name: 'avatar') String avatar,
+      List<TagUser> tags});
 }
 
 /// @nodoc
@@ -169,6 +177,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? phoneOne = null,
     Object? phoneTwo = null,
     Object? avatar = null,
+    Object? tags = null,
   }) {
     return _then(_$_User(
       autoCard: null == autoCard
@@ -211,6 +220,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagUser>,
     ));
   }
 }
@@ -228,7 +241,9 @@ class _$_User implements _User {
       required this.email,
       @JsonKey(name: 'phone_1') required this.phoneOne,
       @JsonKey(name: 'phone_2') required this.phoneTwo,
-      @JsonKey(name: 'avatar') required this.avatar});
+      @JsonKey(name: 'avatar') required this.avatar,
+      required final List<TagUser> tags})
+      : _tags = tags;
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -260,10 +275,17 @@ class _$_User implements _User {
   @override
   @JsonKey(name: 'avatar')
   final String avatar;
+  final List<TagUser> _tags;
+  @override
+  List<TagUser> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
 
   @override
   String toString() {
-    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar)';
+    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar, tags: $tags)';
   }
 
   @override
@@ -285,13 +307,25 @@ class _$_User implements _User {
                 other.phoneOne == phoneOne) &&
             (identical(other.phoneTwo, phoneTwo) ||
                 other.phoneTwo == phoneTwo) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, autoCard, name, nameI, nameO,
-      dateBirth, staffPosition, email, phoneOne, phoneTwo, avatar);
+  int get hashCode => Object.hash(
+      runtimeType,
+      autoCard,
+      name,
+      nameI,
+      nameO,
+      dateBirth,
+      staffPosition,
+      email,
+      phoneOne,
+      phoneTwo,
+      avatar,
+      const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
@@ -318,7 +352,8 @@ abstract class _User implements User {
       required final String email,
       @JsonKey(name: 'phone_1') required final String phoneOne,
       @JsonKey(name: 'phone_2') required final String phoneTwo,
-      @JsonKey(name: 'avatar') required final String avatar}) = _$_User;
+      @JsonKey(name: 'avatar') required final String avatar,
+      required final List<TagUser> tags}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -351,6 +386,156 @@ abstract class _User implements User {
   @JsonKey(name: 'avatar')
   String get avatar;
   @override
+  List<TagUser> get tags;
+  @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+}
+
+TagUser _$TagUserFromJson(Map<String, dynamic> json) {
+  return _TagUser.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TagUser {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TagUserCopyWith<TagUser> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TagUserCopyWith<$Res> {
+  factory $TagUserCopyWith(TagUser value, $Res Function(TagUser) then) =
+      _$TagUserCopyWithImpl<$Res, TagUser>;
+  @useResult
+  $Res call({int id, String name});
+}
+
+/// @nodoc
+class _$TagUserCopyWithImpl<$Res, $Val extends TagUser>
+    implements $TagUserCopyWith<$Res> {
+  _$TagUserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_TagUserCopyWith<$Res> implements $TagUserCopyWith<$Res> {
+  factory _$$_TagUserCopyWith(
+          _$_TagUser value, $Res Function(_$_TagUser) then) =
+      __$$_TagUserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String name});
+}
+
+/// @nodoc
+class __$$_TagUserCopyWithImpl<$Res>
+    extends _$TagUserCopyWithImpl<$Res, _$_TagUser>
+    implements _$$_TagUserCopyWith<$Res> {
+  __$$_TagUserCopyWithImpl(_$_TagUser _value, $Res Function(_$_TagUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+  }) {
+    return _then(_$_TagUser(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_TagUser implements _TagUser {
+  const _$_TagUser({required this.id, required this.name});
+
+  factory _$_TagUser.fromJson(Map<String, dynamic> json) =>
+      _$$_TagUserFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+
+  @override
+  String toString() {
+    return 'TagUser(id: $id, name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TagUser &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TagUserCopyWith<_$_TagUser> get copyWith =>
+      __$$_TagUserCopyWithImpl<_$_TagUser>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TagUserToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TagUser implements TagUser {
+  const factory _TagUser({required final int id, required final String name}) =
+      _$_TagUser;
+
+  factory _TagUser.fromJson(Map<String, dynamic> json) = _$_TagUser.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TagUserCopyWith<_$_TagUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
