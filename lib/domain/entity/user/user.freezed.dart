@@ -28,17 +28,19 @@ mixin _$User {
   @JsonKey(name: 'name_o')
   String get nameO => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_birth')
-  String get dateBirth => throw _privateConstructorUsedError;
+  String? get dateBirth => throw _privateConstructorUsedError;
   @JsonKey(name: 'staff_position')
   String get staffPosition => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone_1')
-  String get phoneOne => throw _privateConstructorUsedError;
+  String? get phoneOne => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone_2')
-  String get phoneTwo => throw _privateConstructorUsedError;
+  String? get phoneTwo => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar')
   String get avatar => throw _privateConstructorUsedError;
   List<TagUser> get tags => throw _privateConstructorUsedError;
+  @JsonKey(name: 'edit_tags')
+  bool get editTags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,13 +57,14 @@ abstract class $UserCopyWith<$Res> {
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
-      @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'date_birth') String? dateBirth,
       @JsonKey(name: 'staff_position') String staffPosition,
-      String email,
-      @JsonKey(name: 'phone_1') String phoneOne,
-      @JsonKey(name: 'phone_2') String phoneTwo,
+      String? email,
+      @JsonKey(name: 'phone_1') String? phoneOne,
+      @JsonKey(name: 'phone_2') String? phoneTwo,
       @JsonKey(name: 'avatar') String avatar,
-      List<TagUser> tags});
+      List<TagUser> tags,
+      @JsonKey(name: 'edit_tags') bool editTags});
 }
 
 /// @nodoc
@@ -81,13 +84,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? name = null,
     Object? nameI = null,
     Object? nameO = null,
-    Object? dateBirth = null,
+    Object? dateBirth = freezed,
     Object? staffPosition = null,
-    Object? email = null,
-    Object? phoneOne = null,
-    Object? phoneTwo = null,
+    Object? email = freezed,
+    Object? phoneOne = freezed,
+    Object? phoneTwo = freezed,
     Object? avatar = null,
     Object? tags = null,
+    Object? editTags = null,
   }) {
     return _then(_value.copyWith(
       autoCard: null == autoCard
@@ -106,26 +110,26 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.nameO
           : nameO // ignore: cast_nullable_to_non_nullable
               as String,
-      dateBirth: null == dateBirth
+      dateBirth: freezed == dateBirth
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       staffPosition: null == staffPosition
           ? _value.staffPosition
           : staffPosition // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneOne: null == phoneOne
+              as String?,
+      phoneOne: freezed == phoneOne
           ? _value.phoneOne
           : phoneOne // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneTwo: null == phoneTwo
+              as String?,
+      phoneTwo: freezed == phoneTwo
           ? _value.phoneTwo
           : phoneTwo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
@@ -134,6 +138,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<TagUser>,
+      editTags: null == editTags
+          ? _value.editTags
+          : editTags // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -149,13 +157,14 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
-      @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'date_birth') String? dateBirth,
       @JsonKey(name: 'staff_position') String staffPosition,
-      String email,
-      @JsonKey(name: 'phone_1') String phoneOne,
-      @JsonKey(name: 'phone_2') String phoneTwo,
+      String? email,
+      @JsonKey(name: 'phone_1') String? phoneOne,
+      @JsonKey(name: 'phone_2') String? phoneTwo,
       @JsonKey(name: 'avatar') String avatar,
-      List<TagUser> tags});
+      List<TagUser> tags,
+      @JsonKey(name: 'edit_tags') bool editTags});
 }
 
 /// @nodoc
@@ -171,13 +180,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? name = null,
     Object? nameI = null,
     Object? nameO = null,
-    Object? dateBirth = null,
+    Object? dateBirth = freezed,
     Object? staffPosition = null,
-    Object? email = null,
-    Object? phoneOne = null,
-    Object? phoneTwo = null,
+    Object? email = freezed,
+    Object? phoneOne = freezed,
+    Object? phoneTwo = freezed,
     Object? avatar = null,
     Object? tags = null,
+    Object? editTags = null,
   }) {
     return _then(_$_User(
       autoCard: null == autoCard
@@ -196,26 +206,26 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.nameO
           : nameO // ignore: cast_nullable_to_non_nullable
               as String,
-      dateBirth: null == dateBirth
+      dateBirth: freezed == dateBirth
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       staffPosition: null == staffPosition
           ? _value.staffPosition
           : staffPosition // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneOne: null == phoneOne
+              as String?,
+      phoneOne: freezed == phoneOne
           ? _value.phoneOne
           : phoneOne // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneTwo: null == phoneTwo
+              as String?,
+      phoneTwo: freezed == phoneTwo
           ? _value.phoneTwo
           : phoneTwo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
@@ -224,6 +234,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<TagUser>,
+      editTags: null == editTags
+          ? _value.editTags
+          : editTags // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -236,13 +250,14 @@ class _$_User implements _User {
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
       @JsonKey(name: 'name_o') required this.nameO,
-      @JsonKey(name: 'date_birth') required this.dateBirth,
+      @JsonKey(name: 'date_birth') this.dateBirth = null,
       @JsonKey(name: 'staff_position') required this.staffPosition,
-      required this.email,
-      @JsonKey(name: 'phone_1') required this.phoneOne,
-      @JsonKey(name: 'phone_2') required this.phoneTwo,
+      this.email = null,
+      @JsonKey(name: 'phone_1') this.phoneOne = null,
+      @JsonKey(name: 'phone_2') this.phoneTwo = null,
       @JsonKey(name: 'avatar') required this.avatar,
-      required final List<TagUser> tags})
+      required final List<TagUser> tags,
+      @JsonKey(name: 'edit_tags') this.editTags = false})
       : _tags = tags;
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -260,18 +275,19 @@ class _$_User implements _User {
   final String nameO;
   @override
   @JsonKey(name: 'date_birth')
-  final String dateBirth;
+  final String? dateBirth;
   @override
   @JsonKey(name: 'staff_position')
   final String staffPosition;
   @override
-  final String email;
+  @JsonKey()
+  final String? email;
   @override
   @JsonKey(name: 'phone_1')
-  final String phoneOne;
+  final String? phoneOne;
   @override
   @JsonKey(name: 'phone_2')
-  final String phoneTwo;
+  final String? phoneTwo;
   @override
   @JsonKey(name: 'avatar')
   final String avatar;
@@ -284,8 +300,12 @@ class _$_User implements _User {
   }
 
   @override
+  @JsonKey(name: 'edit_tags')
+  final bool editTags;
+
+  @override
   String toString() {
-    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar, tags: $tags)';
+    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar, tags: $tags, editTags: $editTags)';
   }
 
   @override
@@ -308,7 +328,9 @@ class _$_User implements _User {
             (identical(other.phoneTwo, phoneTwo) ||
                 other.phoneTwo == phoneTwo) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
-            const DeepCollectionEquality().equals(other._tags, _tags));
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.editTags, editTags) ||
+                other.editTags == editTags));
   }
 
   @JsonKey(ignore: true)
@@ -325,7 +347,8 @@ class _$_User implements _User {
       phoneOne,
       phoneTwo,
       avatar,
-      const DeepCollectionEquality().hash(_tags));
+      const DeepCollectionEquality().hash(_tags),
+      editTags);
 
   @JsonKey(ignore: true)
   @override
@@ -347,13 +370,14 @@ abstract class _User implements User {
       required final String name,
       @JsonKey(name: 'name_i') required final String nameI,
       @JsonKey(name: 'name_o') required final String nameO,
-      @JsonKey(name: 'date_birth') required final String dateBirth,
+      @JsonKey(name: 'date_birth') final String? dateBirth,
       @JsonKey(name: 'staff_position') required final String staffPosition,
-      required final String email,
-      @JsonKey(name: 'phone_1') required final String phoneOne,
-      @JsonKey(name: 'phone_2') required final String phoneTwo,
+      final String? email,
+      @JsonKey(name: 'phone_1') final String? phoneOne,
+      @JsonKey(name: 'phone_2') final String? phoneTwo,
       @JsonKey(name: 'avatar') required final String avatar,
-      required final List<TagUser> tags}) = _$_User;
+      required final List<TagUser> tags,
+      @JsonKey(name: 'edit_tags') final bool editTags}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -370,23 +394,26 @@ abstract class _User implements User {
   String get nameO;
   @override
   @JsonKey(name: 'date_birth')
-  String get dateBirth;
+  String? get dateBirth;
   @override
   @JsonKey(name: 'staff_position')
   String get staffPosition;
   @override
-  String get email;
+  String? get email;
   @override
   @JsonKey(name: 'phone_1')
-  String get phoneOne;
+  String? get phoneOne;
   @override
   @JsonKey(name: 'phone_2')
-  String get phoneTwo;
+  String? get phoneTwo;
   @override
   @JsonKey(name: 'avatar')
   String get avatar;
   @override
   List<TagUser> get tags;
+  @override
+  @JsonKey(name: 'edit_tags')
+  bool get editTags;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

@@ -120,7 +120,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                             ),
                           ],
                         ),
-                        const TagsWidget()
+                        if (user.editTags) const TagsWidget()
                       ],
                     );
                   } else {

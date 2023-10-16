@@ -5,6 +5,8 @@ import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 abstract class UserRepository {
   Future<Rookies> getRookiesInfo({required String userToken});
+  Future<bool> addTagsForUser(
+      {required String userToken, required List<TagUser> tags});
   Future<User> getUserInfoById(
       {required String userToken, required String userID});
   Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
@@ -76,6 +78,16 @@ class UserRepositoryImpl implements UserRepository {
       {required String userToken, required String findText}) {
     try {
       return _userProvider.findUser(userToken: userToken, findText: findText);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> addTagsForUser(
+      {required String userToken, required List<TagUser> tags}) {
+    try {
+      return _userProvider.addTagsForUser(userToken: userToken, tags: tags);
     } catch (e) {
       rethrow;
     }

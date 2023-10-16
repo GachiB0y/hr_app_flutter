@@ -10,13 +10,14 @@ class User with _$User {
     required String name,
     @JsonKey(name: 'name_i') required String nameI,
     @JsonKey(name: 'name_o') required String nameO,
-    @JsonKey(name: 'date_birth') required String dateBirth,
+    @Default(null) @JsonKey(name: 'date_birth') String? dateBirth,
     @JsonKey(name: 'staff_position') required String staffPosition,
-    required String email,
-    @JsonKey(name: 'phone_1') required String phoneOne,
-    @JsonKey(name: 'phone_2') required String phoneTwo,
+    @Default(null) String? email,
+    @Default(null) @JsonKey(name: 'phone_1') String? phoneOne,
+    @Default(null) @JsonKey(name: 'phone_2') String? phoneTwo,
     @JsonKey(name: 'avatar') required String avatar,
     required List<TagUser> tags,
+    @Default(false) @JsonKey(name: 'edit_tags') bool editTags,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

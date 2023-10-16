@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 
 abstract class UserProvider {
   Future<User> getUserInfo({required String userToken});
+  Future<bool> addTagsForUser(
+      {required String userToken, required List<TagUser> tags});
   Future<User> getUserInfoById(
       {required String userToken, required String userID});
   Future<List<User>> findUser(
@@ -133,6 +135,30 @@ class UserProviderImpl implements UserProvider {
           .toList();
       return result;
     } else {
+      throw Exception('Error find User');
+    }
+  }
+
+  @override
+  Future<bool> addTagsForUser(
+      {required String userToken, required List<TagUser> tags}) async {
+    String uri = '$urlAdress/auth/add_tags_to_user';
+    final String body = json.encode({
+      "user_id": userToken,
+      "tags": "$tags",
+    });
+    final response =
+        await _httpService.post(uri: uri, userToken: userToken, body: body);
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+
+      final List<User> result = (jsonData as List<dynamic>)
+          .map((item) => User.fromJson(item))
+          .toList();
+      return true;
+    } else {
+      ;
       throw Exception('Error find User');
     }
   }
