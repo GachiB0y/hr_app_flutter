@@ -61,78 +61,83 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
           ],
         ),
         body: SafeArea(
-          child: Container(
-              padding: const EdgeInsets.all(16),
-              child: blocOtherUsers.state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                },
-                loaded: (listUserLoaded, user) {
-                  if (user != null) {
-                    return Column(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: Image.network(user.avatar).image,
-                          radius: MediaQuery.of(context).size.width / 4,
-                        ),
-                        const SizedBox(height: 16),
-                        Flexible(
-                          child: Text(
-                            '${user.name} ${user.nameI}',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            softWrap: true,
-                            maxLines: 3,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          child: blocOtherUsers.state.when(
+            loading: (listUsersLoaded, currentUserProfile) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            },
+            loaded: (listUserLoaded, user) {
+              if (user != null) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: Column(
                           children: [
-                            const Icon(Icons.phone),
+                            CircleAvatar(
+                              backgroundImage: Image.network(user.avatar).image,
+                              radius: MediaQuery.of(context).size.width / 4,
+                            ),
+                            const SizedBox(height: 16),
                             Text(
-                              ' + ${user.phoneOne}',
-                              style: const TextStyle(fontSize: 16),
+                              '${user.name} ${user.nameI}',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              softWrap: true,
+                              maxLines: 3,
                             ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.phone),
+                                Text(
+                                  ' + ${user.phoneOne}',
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Flexible(
+                                  child: Text(
+                                    'Должность: ',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    user.staffPosition,
+                                    style: const TextStyle(fontSize: 16),
+                                    softWrap: true,
+                                    maxLines: 3,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const TagsWidget()
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Flexible(
-                              child: Text(
-                                'Должность: ',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                            Flexible(
-                              child: Text(
-                                user.staffPosition,
-                                style: const TextStyle(fontSize: 16),
-                                softWrap: true,
-                                maxLines: 3,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (user.editTags) const TagsWidget()
-                      ],
-                    );
-                  } else {
-                    return const Center(
-                      child: Text('СКЕЛЕТОН СКЕЛЕТОН СКЕЛЕТОН'),
-                    );
-                  }
-                },
-                error: (e) => e == null
-                    ? const Text('Пользователь не найден.')
-                    : Center(child: Text(e)),
-              )),
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: Text('СКЕЛЕТОН СКЕЛЕТОН СКЕЛЕТОН'),
+                );
+              }
+            },
+            error: (e) => e == null
+                ? const Text('Пользователь не найден.')
+                : Center(child: Text(e)),
+          ),
         ),
       ),
     );
@@ -146,6 +151,8 @@ class SaveButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocOtherUsers = context.watch<OtherUsersBloc>();
+
     if (ChangeNotifierProvaider.watch<
                 ChangeNotifierProvaider<UserProfileWidgetModel>,
                 UserProfileWidgetModel>(context) !=
@@ -156,7 +163,17 @@ class SaveButtonWidget extends StatelessWidget {
             .isSave) {
       return TextButton(
         child: const Text('Сохранить'),
-        onPressed: () {},
+        onPressed: () {
+          final currentProfileUser =
+              (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser;
+          blocOtherUsers.add(OtherUsersEvent.saveTagsToSend(
+              tags: currentProfileUser!.tags,
+              userId: currentProfileUser.autoCard));
+          ChangeNotifierProvaider.read<
+                  ChangeNotifierProvaider<UserProfileWidgetModel>,
+                  UserProfileWidgetModel>(context)
+              ?.changeIsSave(false);
+        },
       );
     } else {
       return const SizedBox.shrink();
@@ -172,43 +189,60 @@ class TagsWidget extends StatefulWidget {
 }
 
 class _TagsWidgetState extends State<TagsWidget> {
-  List<String> tags = [];
+  List<TagUser> tags = [];
   final tagController = TextEditingController();
 
   void addTag(String tag) {
     setState(() {
-      tags.add(tag);
+      // late final int newIdTag;
+      // if (tags.isEmpty) {
+      //   newIdTag = 1;
+      // } else {
+      //   newIdTag = tags.last.id + 1;
+      // }
+
+      final newTagUSer = TagUser(id: null, name: tag);
+      tags.add(newTagUSer);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final blocOtherUsers = context.watch<OtherUsersBloc>();
+    final tags =
+        (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser?.tags;
+
     return Column(
       children: [
         Wrap(
           spacing: 8,
-          children: tags.map((tag) => Chip(label: Text(tag))).toList(),
+          children: tags!.map((tag) => Chip(label: Text(tag.name))).toList(),
         ),
         const SizedBox(height: 16),
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'Введите название тега',
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                if (tagController.text.isNotEmpty) {
-                  ChangeNotifierProvaider.read<
-                          ChangeNotifierProvaider<UserProfileWidgetModel>,
-                          UserProfileWidgetModel>(context)
-                      ?.changeIsSave();
-                  addTag(tagController.text);
-                  tagController.clear();
-                }
-              },
+        if ((blocOtherUsers.state as OtherUserStateLoaded)
+            .currentProfileUser!
+            .editTags)
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Введите название тега',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  if (tagController.text.isNotEmpty) {
+                    ChangeNotifierProvaider.read<
+                            ChangeNotifierProvaider<UserProfileWidgetModel>,
+                            UserProfileWidgetModel>(context)
+                        ?.changeIsSave(true);
+                    // addTag(tagController.text);
+                    blocOtherUsers.add(OtherUsersEvent.addTag(
+                        tag: TagUser(id: null, name: tagController.text)));
+                    tagController.clear();
+                  }
+                },
+              ),
             ),
+            controller: tagController,
           ),
-          controller: tagController,
-        ),
       ],
     );
   }

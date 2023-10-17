@@ -142,7 +142,7 @@ class _SearchFriendAndSendCoinsScreenState
                   ),
                 );
               },
-              loading: () {
+              loading: (listUsersLoaded, currentUserProfile) {
                 return const SizedBox.shrink();
               },
               error: (e) => const SafeArea(

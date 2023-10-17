@@ -5,8 +5,10 @@ import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 abstract class UserRepository {
   Future<Rookies> getRookiesInfo({required String userToken});
-  Future<bool> addTagsForUser(
-      {required String userToken, required List<TagUser> tags});
+  Future<bool> saveTagsToSend(
+      {required String userToken,
+      required List<TagUser> tags,
+      required int userId});
   Future<User> getUserInfoById(
       {required String userToken, required String userID});
   Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
@@ -84,10 +86,17 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<bool> addTagsForUser(
-      {required String userToken, required List<TagUser> tags}) {
+  Future<bool> saveTagsToSend(
+      {required String userToken,
+      required List<TagUser> tags,
+      required int userId}) {
     try {
-      return _userProvider.addTagsForUser(userToken: userToken, tags: tags);
+      List<String> newListTags = [];
+      for (var element in tags) {
+        newListTags.add(element.name);
+      }
+      return _userProvider.saveTagsToSend(
+          userToken: userToken, tags: newListTags, userId: userId);
     } catch (e) {
       rethrow;
     }

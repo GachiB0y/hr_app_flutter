@@ -39,7 +39,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
     };
 
 _$_TagUser _$$_TagUserFromJson(Map<String, dynamic> json) => _$_TagUser(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? null,
       name: json['name'] as String,
     );
 

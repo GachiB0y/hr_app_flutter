@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
+import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart';
 import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
@@ -10,8 +11,10 @@ import 'package:http/http.dart' as http;
 
 abstract class UserProvider {
   Future<User> getUserInfo({required String userToken});
-  Future<bool> addTagsForUser(
-      {required String userToken, required List<TagUser> tags});
+  Future<bool> saveTagsToSend(
+      {required String userToken,
+      required List<String> tags,
+      required int userId});
   Future<User> getUserInfoById(
       {required String userToken, required String userID});
   Future<List<User>> findUser(
@@ -140,26 +143,29 @@ class UserProviderImpl implements UserProvider {
   }
 
   @override
-  Future<bool> addTagsForUser(
-      {required String userToken, required List<TagUser> tags}) async {
+  Future<bool> saveTagsToSend(
+      {required String userToken,
+      required List<String> tags,
+      required int userId}) async {
     String uri = '$urlAdress/auth/add_tags_to_user';
     final String body = json.encode({
-      "user_id": userToken,
-      "tags": "$tags",
+      "user_id": userId,
+      "tags": tags,
     });
     final response =
         await _httpService.post(uri: uri, userToken: userToken, body: body);
     if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
+      // final jsonResponse = await response.stream.bytesToString();
+      // final jsonData = jsonDecode(jsonResponse);
 
-      final List<User> result = (jsonData as List<dynamic>)
-          .map((item) => User.fromJson(item))
-          .toList();
+      // final List<User> result = (jsonData as List<dynamic>)
+      //     .map((item) => User.fromJson(item))
+      //     .toList();
       return true;
+    } else if (response.statusCode == 400) {
+      throw ApiClientException(ApiClientExceptionType.addTags);
     } else {
-      ;
-      throw Exception('Error find User');
+      throw Exception('Error Add Tags');
     }
   }
 }

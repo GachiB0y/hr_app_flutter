@@ -9,7 +9,9 @@ class OtherUsersEvent with _$OtherUsersEvent {
   const factory OtherUsersEvent.findUsers({required String findText}) =
       OtherUsersEventFindUsers;
   const factory OtherUsersEvent.clearList() = OtherUsersEventClearList;
-  const factory OtherUsersEvent.addTag(
+  const factory OtherUsersEvent.saveTagsToSend(
       {required List<TagUser> tags,
-      required int idUser}) = OtherUsersEventAddTag;
+      required int userId}) = OtherUsersEventSaveTagsToSend;
+  const factory OtherUsersEvent.addTag({required TagUser tag}) =
+      OtherUsersEventAddTag;
 }

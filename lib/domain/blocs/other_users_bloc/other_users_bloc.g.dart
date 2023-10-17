@@ -9,12 +9,20 @@ part of 'other_users_bloc.dart';
 _$OtherUserStateLoading _$$OtherUserStateLoadingFromJson(
         Map<String, dynamic> json) =>
     _$OtherUserStateLoading(
+      listUsersLoaded: (json['listUsersLoaded'] as List<dynamic>?)
+          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      currentProfileUser: json['currentProfileUser'] == null
+          ? null
+          : User.fromJson(json['currentProfileUser'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$OtherUserStateLoadingToJson(
         _$OtherUserStateLoading instance) =>
     <String, dynamic>{
+      'listUsersLoaded': instance.listUsersLoaded,
+      'currentProfileUser': instance.currentProfileUser,
       'runtimeType': instance.$type,
     };
 

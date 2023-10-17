@@ -63,15 +63,13 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
           ),
           onChanged: (value) {
             searchDebounce?.cancel();
-            searchDebounce = Timer(const Duration(milliseconds: 700), () {
-              blocOtherUsers.add(OtherUsersEvent.findUsers(findText: value));
-            });
-            // setState(() {
-            //   findText = value;
-            // });
+            if (value.isNotEmpty) {
+              searchDebounce = Timer(const Duration(milliseconds: 700), () {
+                blocOtherUsers.add(OtherUsersEvent.findUsers(findText: value));
+              });
+            }
           },
         ),
-        actions: [],
       ),
       body: SafeArea(
         child: Column(
@@ -97,8 +95,10 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   .image,
                           radius: MediaQuery.of(context).size.width / 8,
                         ),
-                        title: Text(
-                            '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
+                        title: Flexible(
+                          child: Text(
+                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}'),
+                        ),
                         subtitle: Text(listUsersLoaded[index].staffPosition),
                         onTap: () {
                           context.pushRoute(ProfileWidgetRoute(
@@ -112,7 +112,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                   ),
                 );
               },
-              loading: () {
+              loading: (listUsersLoaded, currentUserProfile) {
                 return const SizedBox.shrink();
               },
               error: (e) => const SafeArea(

@@ -425,7 +425,7 @@ TagUser _$TagUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TagUser {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -438,7 +438,7 @@ abstract class $TagUserCopyWith<$Res> {
   factory $TagUserCopyWith(TagUser value, $Res Function(TagUser) then) =
       _$TagUserCopyWithImpl<$Res, TagUser>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({int? id, String name});
 }
 
 /// @nodoc
@@ -454,14 +454,14 @@ class _$TagUserCopyWithImpl<$Res, $Val extends TagUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -477,7 +477,7 @@ abstract class _$$_TagUserCopyWith<$Res> implements $TagUserCopyWith<$Res> {
       __$$_TagUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({int? id, String name});
 }
 
 /// @nodoc
@@ -490,14 +490,14 @@ class __$$_TagUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
   }) {
     return _then(_$_TagUser(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -509,13 +509,14 @@ class __$$_TagUserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TagUser implements _TagUser {
-  const _$_TagUser({required this.id, required this.name});
+  const _$_TagUser({this.id = null, required this.name});
 
   factory _$_TagUser.fromJson(Map<String, dynamic> json) =>
       _$$_TagUserFromJson(json);
 
   @override
-  final int id;
+  @JsonKey()
+  final int? id;
   @override
   final String name;
 
@@ -552,13 +553,13 @@ class _$_TagUser implements _TagUser {
 }
 
 abstract class _TagUser implements TagUser {
-  const factory _TagUser({required final int id, required final String name}) =
+  const factory _TagUser({final int? id, required final String name}) =
       _$_TagUser;
 
   factory _TagUser.fromJson(Map<String, dynamic> json) = _$_TagUser.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String get name;
   @override

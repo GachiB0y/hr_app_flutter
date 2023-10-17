@@ -26,7 +26,7 @@ class User with _$User {
 @freezed
 class TagUser with _$TagUser {
   const factory TagUser({
-    required int id,
+    @Default(null) int? id,
     required String name,
   }) = _TagUser;
 
