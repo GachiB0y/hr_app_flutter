@@ -116,7 +116,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     return Container(
-      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin:
           const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -129,12 +129,15 @@ class SerachPeopleButtonWidget extends StatelessWidget {
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Найти соотрудника',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Найти соотрудника',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -181,9 +184,9 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
     if (textScaleFactor < 1) textScaleFactor = 1;
 
     return Container(
-      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin: const EdgeInsets.all(16.0),
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: ColorsForWidget.colorGreen),
@@ -200,7 +203,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
               loaded: (birthDayInfo) {
                 return Text(
                   birthDayInfo.count.toString(),
-                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 );
               },
               error: () => const Text('Ошибка загрузки.'),
@@ -208,7 +211,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
             const SizedBox(height: 10),
             const Text(
               'Дни рождения',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
@@ -228,7 +231,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
               loaded: (rookiseInfo) {
                 return Text(
                   rookiseInfo.count.toString(),
-                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 );
               },
               error: () => const Text('Ошибка загрузки.'),
@@ -236,7 +239,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
             const SizedBox(height: 10),
             const Text(
               'Новенькие',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
