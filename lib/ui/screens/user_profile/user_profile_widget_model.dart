@@ -27,7 +27,9 @@ class UserProfileWidgetModel extends Listenable {
   }
 
   void changeIsSave(bool newValue) {
-    isSave = newValue;
-    notifyListeners();
+    if (isSave != newValue) {
+      isSave = newValue;
+      notifyListeners();
+    }
   }
 }

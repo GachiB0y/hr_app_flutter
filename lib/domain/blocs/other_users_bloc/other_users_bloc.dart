@@ -34,6 +34,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
         await onOtherUsersEvenSaveTagsToSend(emit, event);
       } else if (event is OtherUsersEventAddTag) {
         onOtherUsersEventAddTag(emit, event);
+      } else if (event is OtherUsersEventDeleteTag) {
+        onOtherUsersEventDeleteTag(emit, event);
       }
     });
   }
@@ -155,6 +157,25 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
       emit(newState);
     } else {
       emit(const OtherUserState.error(errorText: 'Ошибка добавления тэга'));
+    }
+  }
+
+  void onOtherUsersEventDeleteTag(
+      Emitter<OtherUserState> emit, OtherUsersEventDeleteTag event) {
+    final copyProfile =
+        (state as OtherUserStateLoaded).currentProfileUser?.copyWith();
+    if (copyProfile != null) {
+      final newListTags = [...copyProfile.tags];
+      newListTags.remove(event.tag);
+      final newProfile = (state as OtherUserStateLoaded)
+          .currentProfileUser
+          ?.copyWith(tags: newListTags);
+
+      final newState = (state as OtherUserStateLoaded)
+          .copyWith(currentProfileUser: newProfile);
+      emit(newState);
+    } else {
+      emit(const OtherUserState.error(errorText: 'Ошибка удаления тэга'));
     }
   }
 }

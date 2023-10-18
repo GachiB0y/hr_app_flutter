@@ -14,4 +14,6 @@ class OtherUsersEvent with _$OtherUsersEvent {
       required int userId}) = OtherUsersEventSaveTagsToSend;
   const factory OtherUsersEvent.addTag({required TagUser tag}) =
       OtherUsersEventAddTag;
+  const factory OtherUsersEvent.deleteTag({required TagUser tag}) =
+      OtherUsersEventDeleteTag;
 }

@@ -2,11 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget_model.dart';
 
 @RoutePage()
@@ -52,6 +54,8 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     final blocOtherUsers = context.watch<OtherUsersBloc>();
+    final blocUser = context.watch<UserBloc>();
+    final stateBlocUser = blocUser.state as UserStateLoaded;
     return ChangeNotifierProvaider<UserProfileWidgetModel>(
       model: _model,
       child: Scaffold(
@@ -69,6 +73,8 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
             },
             loaded: (listUserLoaded, user) {
               if (user != null) {
+                double radius = MediaQuery.of(context).size.width / 4;
+
                 return CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
@@ -76,9 +82,33 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: Column(
                           children: [
-                            CircleAvatar(
-                              backgroundImage: Image.network(user.avatar).image,
-                              radius: MediaQuery.of(context).size.width / 4,
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: radius,
+                                  backgroundImage:
+                                      Image.network(user.avatar).image,
+                                ),
+                                stateBlocUser.userLoaded.autoCard ==
+                                        user.autoCard
+                                    ? Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: ColorsForWidget.colorGrey,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: IconButton(
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () {
+                                              // Действия при нажатии на иконку редактирования
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ],
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -194,13 +224,6 @@ class _TagsWidgetState extends State<TagsWidget> {
 
   void addTag(String tag) {
     setState(() {
-      // late final int newIdTag;
-      // if (tags.isEmpty) {
-      //   newIdTag = 1;
-      // } else {
-      //   newIdTag = tags.last.id + 1;
-      // }
-
       final newTagUSer = TagUser(id: null, name: tag);
       tags.add(newTagUSer);
     });
@@ -216,7 +239,24 @@ class _TagsWidgetState extends State<TagsWidget> {
       children: [
         Wrap(
           spacing: 8,
-          children: tags!.map((tag) => Chip(label: Text(tag.name))).toList(),
+          children: tags!
+              .map((tag) => Chip(
+                    label: Text(tag.name),
+                    onDeleted: () {
+                      ChangeNotifierProvaider.read<
+                              ChangeNotifierProvaider<UserProfileWidgetModel>,
+                              UserProfileWidgetModel>(context)
+                          ?.changeIsSave(true);
+                      blocOtherUsers.add(OtherUsersEvent.deleteTag(tag: tag));
+                    },
+                    deleteIcon: const Icon(Icons.close),
+                    deleteButtonTooltipMessage: 'Удалить',
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: Colors.grey[200],
+                  ))
+              .toList(),
         ),
         const SizedBox(height: 16),
         if ((blocOtherUsers.state as OtherUserStateLoaded)
@@ -233,7 +273,7 @@ class _TagsWidgetState extends State<TagsWidget> {
                             ChangeNotifierProvaider<UserProfileWidgetModel>,
                             UserProfileWidgetModel>(context)
                         ?.changeIsSave(true);
-                    // addTag(tagController.text);
+
                     blocOtherUsers.add(OtherUsersEvent.addTag(
                         tag: TagUser(id: null, name: tagController.text)));
                     tagController.clear();

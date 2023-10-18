@@ -24,6 +24,7 @@ mixin _$OtherUsersEvent {
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,6 +35,7 @@ mixin _$OtherUsersEvent {
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +46,7 @@ mixin _$OtherUsersEvent {
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -58,6 +61,7 @@ mixin _$OtherUsersEvent {
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,6 +74,7 @@ mixin _$OtherUsersEvent {
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +86,7 @@ mixin _$OtherUsersEvent {
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -181,6 +187,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return gethUsersByPhoneNumber(phoneNumber);
   }
@@ -194,6 +201,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return gethUsersByPhoneNumber?.call(phoneNumber);
   }
@@ -207,6 +215,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -227,6 +236,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return gethUsersByPhoneNumber(this);
   }
@@ -242,6 +252,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return gethUsersByPhoneNumber?.call(this);
   }
@@ -256,6 +267,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -354,6 +366,7 @@ class _$OtherUsersEventGethUsersByUserId
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return gethUsersByUserId(userId);
   }
@@ -367,6 +380,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return gethUsersByUserId?.call(userId);
   }
@@ -380,6 +394,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (gethUsersByUserId != null) {
@@ -400,6 +415,7 @@ class _$OtherUsersEventGethUsersByUserId
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return gethUsersByUserId(this);
   }
@@ -415,6 +431,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return gethUsersByUserId?.call(this);
   }
@@ -429,6 +446,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (gethUsersByUserId != null) {
@@ -522,6 +540,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return findUsers(findText);
   }
@@ -535,6 +554,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return findUsers?.call(findText);
   }
@@ -548,6 +568,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (findUsers != null) {
@@ -568,6 +589,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return findUsers(this);
   }
@@ -583,6 +605,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return findUsers?.call(this);
   }
@@ -597,6 +620,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (findUsers != null) {
@@ -661,6 +685,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return clearList();
   }
@@ -674,6 +699,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return clearList?.call();
   }
@@ -687,6 +713,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (clearList != null) {
@@ -707,6 +734,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return clearList(this);
   }
@@ -722,6 +750,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return clearList?.call(this);
   }
@@ -736,6 +765,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (clearList != null) {
@@ -839,6 +869,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return saveTagsToSend(tags, userId);
   }
@@ -852,6 +883,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return saveTagsToSend?.call(tags, userId);
   }
@@ -865,6 +897,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (saveTagsToSend != null) {
@@ -885,6 +918,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return saveTagsToSend(this);
   }
@@ -900,6 +934,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return saveTagsToSend?.call(this);
   }
@@ -914,6 +949,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (saveTagsToSend != null) {
@@ -1016,6 +1052,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     required TResult Function() clearList,
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
   }) {
     return addTag(tag);
   }
@@ -1029,6 +1066,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult? Function()? clearList,
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
   }) {
     return addTag?.call(tag);
   }
@@ -1042,6 +1080,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult Function()? clearList,
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
     required TResult orElse(),
   }) {
     if (addTag != null) {
@@ -1062,6 +1101,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     required TResult Function(OtherUsersEventSaveTagsToSend value)
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
   }) {
     return addTag(this);
   }
@@ -1077,6 +1117,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult? Function(OtherUsersEventClearList value)? clearList,
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
   }) {
     return addTag?.call(this);
   }
@@ -1091,6 +1132,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult Function(OtherUsersEventClearList value)? clearList,
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
     required TResult orElse(),
   }) {
     if (addTag != null) {
@@ -1108,6 +1150,188 @@ abstract class OtherUsersEventAddTag implements OtherUsersEvent {
   @JsonKey(ignore: true)
   _$$OtherUsersEventAddTagCopyWith<_$OtherUsersEventAddTag> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OtherUsersEventDeleteTagCopyWith<$Res> {
+  factory _$$OtherUsersEventDeleteTagCopyWith(_$OtherUsersEventDeleteTag value,
+          $Res Function(_$OtherUsersEventDeleteTag) then) =
+      __$$OtherUsersEventDeleteTagCopyWithImpl<$Res>;
+  @useResult
+  $Res call({TagUser tag});
+
+  $TagUserCopyWith<$Res> get tag;
+}
+
+/// @nodoc
+class __$$OtherUsersEventDeleteTagCopyWithImpl<$Res>
+    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventDeleteTag>
+    implements _$$OtherUsersEventDeleteTagCopyWith<$Res> {
+  __$$OtherUsersEventDeleteTagCopyWithImpl(_$OtherUsersEventDeleteTag _value,
+      $Res Function(_$OtherUsersEventDeleteTag) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tag = null,
+  }) {
+    return _then(_$OtherUsersEventDeleteTag(
+      tag: null == tag
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as TagUser,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TagUserCopyWith<$Res> get tag {
+    return $TagUserCopyWith<$Res>(_value.tag, (value) {
+      return _then(_value.copyWith(tag: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
+  const _$OtherUsersEventDeleteTag({required this.tag});
+
+  @override
+  final TagUser tag;
+
+  @override
+  String toString() {
+    return 'OtherUsersEvent.deleteTag(tag: $tag)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OtherUsersEventDeleteTag &&
+            (identical(other.tag, tag) || other.tag == tag));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, tag);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OtherUsersEventDeleteTagCopyWith<_$OtherUsersEventDeleteTag>
+      get copyWith =>
+          __$$OtherUsersEventDeleteTagCopyWithImpl<_$OtherUsersEventDeleteTag>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phoneNumber) gethUsersByPhoneNumber,
+    required TResult Function(String userId) gethUsersByUserId,
+    required TResult Function(String findText) findUsers,
+    required TResult Function() clearList,
+    required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
+    required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
+  }) {
+    return deleteTag(tag);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult? Function(String userId)? gethUsersByUserId,
+    TResult? Function(String findText)? findUsers,
+    TResult? Function()? clearList,
+    TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
+    TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
+  }) {
+    return deleteTag?.call(tag);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult Function(String userId)? gethUsersByUserId,
+    TResult Function(String findText)? findUsers,
+    TResult Function()? clearList,
+    TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
+    TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
+    required TResult orElse(),
+  }) {
+    if (deleteTag != null) {
+      return deleteTag(tag);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OtherUsersEventGethUsersByPhoneNumber value)
+        gethUsersByPhoneNumber,
+    required TResult Function(OtherUsersEventGethUsersByUserId value)
+        gethUsersByUserId,
+    required TResult Function(OtherUsersEventFindUsers value) findUsers,
+    required TResult Function(OtherUsersEventClearList value) clearList,
+    required TResult Function(OtherUsersEventSaveTagsToSend value)
+        saveTagsToSend,
+    required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+  }) {
+    return deleteTag(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OtherUsersEventGethUsersByPhoneNumber value)?
+        gethUsersByPhoneNumber,
+    TResult? Function(OtherUsersEventGethUsersByUserId value)?
+        gethUsersByUserId,
+    TResult? Function(OtherUsersEventFindUsers value)? findUsers,
+    TResult? Function(OtherUsersEventClearList value)? clearList,
+    TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
+    TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+  }) {
+    return deleteTag?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OtherUsersEventGethUsersByPhoneNumber value)?
+        gethUsersByPhoneNumber,
+    TResult Function(OtherUsersEventGethUsersByUserId value)? gethUsersByUserId,
+    TResult Function(OtherUsersEventFindUsers value)? findUsers,
+    TResult Function(OtherUsersEventClearList value)? clearList,
+    TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
+    TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    required TResult orElse(),
+  }) {
+    if (deleteTag != null) {
+      return deleteTag(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OtherUsersEventDeleteTag implements OtherUsersEvent {
+  const factory OtherUsersEventDeleteTag({required final TagUser tag}) =
+      _$OtherUsersEventDeleteTag;
+
+  TagUser get tag;
+  @JsonKey(ignore: true)
+  _$$OtherUsersEventDeleteTagCopyWith<_$OtherUsersEventDeleteTag>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 OtherUserState _$OtherUserStateFromJson(Map<String, dynamic> json) {
