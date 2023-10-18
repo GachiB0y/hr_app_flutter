@@ -1,24 +1,24 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
+
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:hr_app_flutter/utils/international_phone_formatter.dart';
 
 @RoutePage()
-class SearchFriendAndSendCoinsScreen extends StatefulWidget
-    implements AutoRouteWrapper {
-  const SearchFriendAndSendCoinsScreen(
+class SearchUserScreen extends StatefulWidget implements AutoRouteWrapper {
+  const SearchUserScreen(
       {Key? key, required this.authRepository, required this.userRepo})
       : super(key: key);
   final AuthRepository authRepository;
   final UserRepository userRepo;
   @override
-  _SearchFriendAndSendCoinsScreenState createState() =>
-      _SearchFriendAndSendCoinsScreenState();
+  _SearchUserScreenState createState() => _SearchUserScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -30,52 +30,15 @@ class SearchFriendAndSendCoinsScreen extends StatefulWidget
   }
 }
 
-class _SearchFriendAndSendCoinsScreenState
-    extends State<SearchFriendAndSendCoinsScreen> {
-  String phoneNumber = '';
+class _SearchUserScreenState extends State<SearchUserScreen> {
+  String findText = '';
   String amountCoins = '';
+  Timer? searchDebounce;
 
   @override
   void initState() {
     super.initState();
     context.read<OtherUsersBloc>().add(const OtherUsersEvent.clearList());
-  }
-
-  void showPopupWindow(int autoCard) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Введите сумму'),
-          content: TextField(
-            decoration: const InputDecoration(
-              labelText: 'Количество',
-            ),
-            onChanged: (value) {
-              setState(() {
-                amountCoins = value;
-              });
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                final blocWallet = context.read<WalletBloc>();
-                blocWallet.add(WalletEvent.sendCoinsToOtherUser(
-                    amount: int.parse(amountCoins),
-                    userId: autoCard,
-                    message: 'LOL'));
-                blocWallet.add(const WalletEvent.fetch());
-
-                Navigator.of(context).pop(); // Закрыть Алерт
-                Navigator.of(context).pop(); // Закрть последнюю вкладку
-              },
-              child: const Text('Подтвердить'),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -87,31 +50,26 @@ class _SearchFriendAndSendCoinsScreenState
         toolbarHeight: 100,
         backgroundColor: ColorsForWidget.colorGreen,
         title: TextField(
-          keyboardType: TextInputType.phone,
-          inputFormatters: [InternationalPhoneFormatter()],
           decoration: InputDecoration(
             prefixIcon: IconButton(
-              onPressed: () {
-                final formattedPhoneNumber =
-                    phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                blocOtherUsers.add(OtherUsersEvent.gethUsersByPhoneNumber(
-                    phoneNumber: formattedPhoneNumber));
-              },
+              onPressed: () {},
               icon: const Icon(Icons.search),
             ),
-            hintText: '+7 (___) ___-__-__',
+            hintText: 'Введите ФИО',
             filled: true,
             fillColor: Colors.white,
             border: const UnderlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(40))),
           ),
           onChanged: (value) {
-            setState(() {
-              phoneNumber = value;
-            });
+            searchDebounce?.cancel();
+            if (value.isNotEmpty) {
+              searchDebounce = Timer(const Duration(milliseconds: 700), () {
+                blocOtherUsers.add(OtherUsersEvent.findUsers(findText: value));
+              });
+            }
           },
         ),
-        actions: [],
       ),
       body: SafeArea(
         child: Column(
@@ -131,11 +89,23 @@ class _SearchFriendAndSendCoinsScreenState
                     itemCount: listUsersLoaded.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        title: Text(
-                            '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              Image.network(listUsersLoaded[index].avatar)
+                                  .image,
+                          radius: MediaQuery.of(context).size.width / 8,
+                        ),
+                        title: Flexible(
+                          child: Text(
+                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}'),
+                        ),
                         subtitle: Text(listUsersLoaded[index].staffPosition),
                         onTap: () {
-                          showPopupWindow(listUsersLoaded[index].autoCard);
+                          context.pushRoute(ProfileWidgetRoute(
+                            userId: listUsersLoaded[index].autoCard,
+                            authRepository: blocOtherUsers.authRepository,
+                            userRepo: blocOtherUsers.userRepo,
+                          ));
                         },
                       );
                     },

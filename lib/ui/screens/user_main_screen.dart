@@ -59,44 +59,43 @@ class _UserMainScreenState extends State<UserMainScreen> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 1.0),
-          child: RefreshIndicator(
-            color: ColorsForWidget.colorGreen,
-            backgroundColor: Colors.white,
-            onRefresh: _refreshEventsList,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AppBarUserWdiget(),
-                  SizedBox(
-                      height: (MediaQuery.of(context).size.height / 4.25) *
-                          textScaleFactor,
-                      child: const ScrollBarWidget()),
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height / 50,
-                  // ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'События компании',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 1.0),
+            child: RefreshIndicator(
+              color: ColorsForWidget.colorGreen,
+              backgroundColor: Colors.white,
+              onRefresh: _refreshEventsList,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AppBarUserWdiget(),
+                    SizedBox(
+                        height: (MediaQuery.of(context).size.height / 4.25) *
+                            textScaleFactor,
+                        child: const ScrollBarWidget()),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        'События компании',
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height / 2.3,
-                      child: Container(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: const TableScrollWidget())),
-                  const InfoBirthdayAndNewPeopleWidget(),
-                  const SerachPeopleButtonWidget(),
-                ],
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height / 2.3,
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: const TableScrollWidget())),
+                    const InfoBirthdayAndNewPeopleWidget(),
+                    const SerachPeopleButtonWidget(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -113,6 +112,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocUser = context.read<UserBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     return Container(
@@ -155,7 +155,11 @@ class SerachPeopleButtonWidget extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(50),
-            onTap: () {},
+            onTap: () {
+              AutoRouter.of(context).push(SearchUserRoute(
+                  authRepository: blocUser.authRepository,
+                  userRepo: blocUser.userRepo));
+            },
           ),
         ),
       ]),
@@ -520,7 +524,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       filteredEventEntity.reversed.toList()[index];
                   // получаем элемент для текущей вкладки
                   return GestureDetector(
-                    onDoubleTap: () {
+                    onTap: () {
                       context.pushRoute(AboutNewsRoute(
                           id: item.id,
                           authRepository: blocEventEntity.authRepository,

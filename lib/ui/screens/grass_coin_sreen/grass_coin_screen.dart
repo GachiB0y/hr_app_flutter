@@ -73,7 +73,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                 backgroundColor: Colors.grey[200],
                 surfaceTintColor: Colors.transparent,
                 // expandedHeight: 100,
-                leadingWidth: 70,
+                leadingWidth: 85,
                 leading: const Avatar(),
                 toolbarHeight: 100,
                 title: const TitleAppBarWidget(),

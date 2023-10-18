@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/domain/entity/user/user.dart';
+
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
@@ -13,6 +13,7 @@ import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/grass_coin_screen.dar
 import 'package:hr_app_flutter/ui/screens/loader_screen.dart';
 import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
+import 'package:hr_app_flutter/ui/screens/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart';
@@ -39,5 +40,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ApproveNewsRoute.page, path: '/approve_news'),
         AutoRoute(page: AboutNewsRoute.page, path: '/about_news/'),
         AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user/'),
+        AutoRoute(page: SearchUserRoute.page, path: '/search_user/'),
       ];
 }

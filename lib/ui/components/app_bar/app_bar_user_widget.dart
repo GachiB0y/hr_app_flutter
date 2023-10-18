@@ -18,7 +18,6 @@ class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
 class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<UserBloc>().add(const UserEvent.fetch());
   }
@@ -26,7 +25,6 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
   @override
   Widget build(BuildContext context) {
     final loaderViewCubit = context.watch<LoaderViewCubit>();
-    final blocUser = context.watch<UserBloc>();
 
     return AppBar(
       scrolledUnderElevation: 0.0,
@@ -62,12 +60,7 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
           ),
         ),
       ],
-      leading: GestureDetector(
-          onTap: () {
-            context.pushRoute(ProfileWidgetRoute(
-                user: (blocUser.state as UserStateLoaded).userLoaded));
-          },
-          child: const Avatar()),
+      leading: const Avatar(),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,
     );
@@ -79,47 +72,43 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Stack(
-        children: [
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 128, 124, 124),
-                  border: Border.all(
-                    width: 1,
+    final blocUser = context.watch<UserBloc>();
+
+    return GestureDetector(
+      onTap: () {
+        context.pushRoute(ProfileWidgetRoute(
+          userId: (blocUser.state as UserStateLoaded).userLoaded.autoCard,
+          authRepository: blocUser.authRepository,
+          userRepo: blocUser.userRepo,
+        ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Stack(
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40.0),
+                child: Container(
+                  decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 128, 124, 124),
+                    border: Border.all(
+                      width: 1,
+                      color: const Color.fromARGB(255, 128, 124, 124),
+                    ),
                   ),
-                ),
-                child: Image.asset(
-                  'assets/images/man.png',
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                  height: 50,
-                  width: 50,
+                  child: blocUser.state.when(loading: () {
+                    return const SizedBox.shrink();
+                  }, loaded: (user) {
+                    return Image.network(user.avatar);
+                  }, error: () {
+                    return const Text('Ошибка загрузки');
+                  }),
                 ),
               ),
             ),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 20.0),
-          //   child: Align(
-          //     alignment: Alignment.topRight,
-          //     child: Container(
-          //         padding: const EdgeInsets.only(left: 3.0, right: 3.0),
-          //         decoration: BoxDecoration(
-          //           color: ColorsForWidget.colorRed,
-          //           borderRadius: BorderRadius.circular(12),
-          //         ),
-          //         child: const Text(
-          //           '123',
-          //           style: StyleTextCustom.styleTextNotification,
-          //         )),
-          //   ),
-          // ),
-        ],
+          ],
+        ),
       ),
     );
   }

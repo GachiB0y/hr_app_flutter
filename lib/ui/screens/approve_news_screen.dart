@@ -61,7 +61,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
               itemCount: loadedApprovementNews.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onDoubleTap: () {
+                  onTap: () {
                     context.pushRoute(AboutNewsRoute(
                         id: loadedApprovementNews[index].id,
                         authRepository: blocApprovementNews.authRepository,

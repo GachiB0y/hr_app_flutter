@@ -80,10 +80,13 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<ProfileWidgetRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ProfileWidgetScreen(
+        child: WrappedRoute(
+            child: ProfileWidgetScreen(
           key: args.key,
-          user: args.user,
-        ),
+          userId: args.userId,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
       );
     },
     SearchFriendAndSendCoinsRoute.name: (routeData) {
@@ -92,6 +95,18 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: WrappedRoute(
             child: SearchFriendAndSendCoinsScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
+      );
+    },
+    SearchUserRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchUserRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: SearchUserScreen(
           key: args.key,
           authRepository: args.authRepository,
           userRepo: args.userRepo,
@@ -293,13 +308,17 @@ class MainAppRoute extends PageRouteInfo<void> {
 class ProfileWidgetRoute extends PageRouteInfo<ProfileWidgetRouteArgs> {
   ProfileWidgetRoute({
     Key? key,
-    required User user,
+    required int userId,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
     List<PageRouteInfo>? children,
   }) : super(
           ProfileWidgetRoute.name,
           args: ProfileWidgetRouteArgs(
             key: key,
-            user: user,
+            userId: userId,
+            authRepository: authRepository,
+            userRepo: userRepo,
           ),
           initialChildren: children,
         );
@@ -313,16 +332,22 @@ class ProfileWidgetRoute extends PageRouteInfo<ProfileWidgetRouteArgs> {
 class ProfileWidgetRouteArgs {
   const ProfileWidgetRouteArgs({
     this.key,
-    required this.user,
+    required this.userId,
+    required this.authRepository,
+    required this.userRepo,
   });
 
   final Key? key;
 
-  final User user;
+  final int userId;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
 
   @override
   String toString() {
-    return 'ProfileWidgetRouteArgs{key: $key, user: $user}';
+    return 'ProfileWidgetRouteArgs{key: $key, userId: $userId, authRepository: $authRepository, userRepo: $userRepo}';
   }
 }
 
@@ -367,6 +392,49 @@ class SearchFriendAndSendCoinsRouteArgs {
   @override
   String toString() {
     return 'SearchFriendAndSendCoinsRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+  }
+}
+
+/// generated route for
+/// [SearchUserScreen]
+class SearchUserRoute extends PageRouteInfo<SearchUserRouteArgs> {
+  SearchUserRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SearchUserRoute.name,
+          args: SearchUserRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchUserRoute';
+
+  static const PageInfo<SearchUserRouteArgs> page =
+      PageInfo<SearchUserRouteArgs>(name);
+}
+
+class SearchUserRouteArgs {
+  const SearchUserRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  @override
+  String toString() {
+    return 'SearchUserRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
   }
 }
 
