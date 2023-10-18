@@ -30,7 +30,7 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
       scrolledUnderElevation: 0.0,
       // shadowColor: Colors.transparent,
       toolbarHeight: 90,
-      leadingWidth: 85,
+      leadingWidth: 90,
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(
@@ -73,6 +73,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocUser = context.watch<UserBloc>();
+    double radius = MediaQuery.of(context).size.width / 8;
 
     return GestureDetector(
       onTap: () {
@@ -84,31 +85,16 @@ class Avatar extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0),
-        child: Stack(
-          children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 128, 124, 124),
-                    border: Border.all(
-                      width: 1,
-                      color: const Color.fromARGB(255, 128, 124, 124),
-                    ),
-                  ),
-                  child: blocUser.state.when(loading: () {
-                    return const SizedBox.shrink();
-                  }, loaded: (user) {
-                    return Image.network(user.avatar);
-                  }, error: () {
-                    return const Text('Ошибка загрузки');
-                  }),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: blocUser.state.when(loading: () {
+          return const SizedBox.shrink();
+        }, loaded: (user) {
+          return CircleAvatar(
+            radius: radius,
+            backgroundImage: Image.network(user.avatar).image,
+          );
+        }, error: () {
+          return const Text('Ошибка загрузки');
+        }),
       ),
     );
   }
