@@ -303,7 +303,10 @@ class _TagsWidgetState extends State<TagsWidget> {
                           ?.changeIsSave(newValue: true, isTags: true);
                       blocOtherUsers.add(OtherUsersEvent.deleteTag(tag: tag));
                     },
-                    deleteIcon: const Icon(Icons.close),
+                    deleteIcon: const Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
                     deleteButtonTooltipMessage: 'Удалить',
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
