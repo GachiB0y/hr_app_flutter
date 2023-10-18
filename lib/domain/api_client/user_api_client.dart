@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' as io;
 
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
@@ -23,6 +24,10 @@ abstract class UserProvider {
   Future<Rookies> getRookiesInfo({required String userToken});
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber});
+  Future<bool> sendAvatarWithProfile({
+    required String userToken,
+    required io.File imageFile,
+  });
 }
 
 class UserProviderImpl implements UserProvider {
@@ -155,12 +160,25 @@ class UserProviderImpl implements UserProvider {
     final response =
         await _httpService.post(uri: uri, userToken: userToken, body: body);
     if (response.statusCode == 200) {
-      // final jsonResponse = await response.stream.bytesToString();
-      // final jsonData = jsonDecode(jsonResponse);
+      return true;
+    } else if (response.statusCode == 400) {
+      throw ApiClientException(ApiClientExceptionType.addTags);
+    } else {
+      throw Exception('Error Add Tags');
+    }
+  }
 
-      // final List<User> result = (jsonData as List<dynamic>)
-      //     .map((item) => User.fromJson(item))
-      //     .toList();
+  @override
+  Future<bool> sendAvatarWithProfile(
+      {required String userToken, required io.File imageFile}) async {
+    String uri = '$urlAdress/auth/set_avatar';
+
+    final response = await _httpService.postWithFile(
+      uri: uri,
+      userToken: userToken,
+      imageFile: imageFile,
+    );
+    if (response.statusCode == 201) {
       return true;
     } else if (response.statusCode == 400) {
       throw ApiClientException(ApiClientExceptionType.addTags);

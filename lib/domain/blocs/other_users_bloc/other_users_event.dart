@@ -16,4 +16,7 @@ class OtherUsersEvent with _$OtherUsersEvent {
       OtherUsersEventAddTag;
   const factory OtherUsersEvent.deleteTag({required TagUser tag}) =
       OtherUsersEventDeleteTag;
+  const factory OtherUsersEvent.sendAvatarWithProfile(
+      {required io.File imageFile,
+      required int userId}) = OtherUsersEventSendAvatarWithProfile;
 }

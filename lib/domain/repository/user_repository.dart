@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart';
 import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
@@ -17,6 +19,8 @@ abstract class UserRepository {
   Future<User> getUserInfo({required String userToken});
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber});
+  Future<bool> sendAvatarWithProfile(
+      {required String userToken, required io.File imageFile});
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -97,6 +101,19 @@ class UserRepositoryImpl implements UserRepository {
       }
       return _userProvider.saveTagsToSend(
           userToken: userToken, tags: newListTags, userId: userId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> sendAvatarWithProfile(
+      {required String userToken, required io.File imageFile}) {
+    try {
+      return _userProvider.sendAvatarWithProfile(
+        userToken: userToken,
+        imageFile: imageFile,
+      );
     } catch (e) {
       rethrow;
     }
