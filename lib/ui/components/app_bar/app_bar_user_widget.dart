@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
@@ -30,7 +31,7 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
       scrolledUnderElevation: 0.0,
       // shadowColor: Colors.transparent,
       toolbarHeight: 90,
-      leadingWidth: 85,
+      leadingWidth: 90,
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(
@@ -73,6 +74,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocUser = context.watch<UserBloc>();
+    double radius = MediaQuery.of(context).size.width / 8;
 
     return GestureDetector(
       onTap: () {
@@ -84,31 +86,20 @@ class Avatar extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0),
-        child: Stack(
-          children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 128, 124, 124),
-                    border: Border.all(
-                      width: 1,
-                      color: const Color.fromARGB(255, 128, 124, 124),
-                    ),
-                  ),
-                  child: blocUser.state.when(loading: () {
-                    return const SizedBox.shrink();
-                  }, loaded: (user) {
-                    return Image.network(user.avatar);
-                  }, error: () {
-                    return const Text('Ошибка загрузки');
-                  }),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: blocUser.state.when(loading: () {
+          return const SizedBox.shrink();
+        }, loaded: (user) {
+          return CachedNetworkImage(
+              imageUrl: user.avatar,
+              imageBuilder: (context, imageProvider) {
+                return CircleAvatar(
+                  radius: radius,
+                  backgroundImage: imageProvider,
+                );
+              });
+        }, error: () {
+          return const Text('Ошибка загрузки');
+        }),
       ),
     );
   }

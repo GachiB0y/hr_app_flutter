@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
@@ -54,8 +57,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     final blocOtherUsers = context.watch<OtherUsersBloc>();
-    final blocUser = context.watch<UserBloc>();
-    final stateBlocUser = blocUser.state as UserStateLoaded;
+
     return ChangeNotifierProvaider<UserProfileWidgetModel>(
       model: _model,
       child: Scaffold(
@@ -73,8 +75,6 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
             },
             loaded: (listUserLoaded, user) {
               if (user != null) {
-                double radius = MediaQuery.of(context).size.width / 4;
-
                 return CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
@@ -82,34 +82,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: Column(
                           children: [
-                            Stack(
-                              children: [
-                                CircleAvatar(
-                                  radius: radius,
-                                  backgroundImage:
-                                      Image.network(user.avatar).image,
-                                ),
-                                stateBlocUser.userLoaded.autoCard ==
-                                        user.autoCard
-                                    ? Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: ColorsForWidget.colorGrey,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: IconButton(
-                                            icon: const Icon(Icons.edit),
-                                            onPressed: () {
-                                              // Действия при нажатии на иконку редактирования
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink(),
-                              ],
-                            ),
+                            const AvatarProfileWidget(),
                             const SizedBox(height: 16),
                             Text(
                               '${user.name} ${user.nameI}',
@@ -174,6 +147,72 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   }
 }
 
+class AvatarProfileWidget extends StatelessWidget {
+  const AvatarProfileWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double radius = MediaQuery.of(context).size.width / 4;
+    final blocUser = context.watch<UserBloc>();
+    final stateBlocUser = blocUser.state as UserStateLoaded;
+    final blocOtherUsers = context.watch<OtherUsersBloc>();
+    final user =
+        (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser;
+    final viewModel = ChangeNotifierProvaider.watch<
+        ChangeNotifierProvaider<UserProfileWidgetModel>,
+        UserProfileWidgetModel>(context);
+    return Stack(
+      children: [
+        CachedNetworkImage(
+            imageUrl: user!.avatar,
+            imageBuilder: (context, imageProvider) {
+              return CircleAvatar(
+                radius: radius,
+                backgroundImage: viewModel?.myImage.imageFile != null
+                    ? FileImage(viewModel?.myImage.imageFile as File)
+                    : imageProvider,
+              );
+            }),
+        stateBlocUser.userLoaded.autoCard == user?.autoCard
+            ? Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: ColorsForWidget.colorGrey,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () async {
+                      await viewModel?.selectImage();
+                      final imageFile = viewModel?.myImage.imageFile;
+                      if (imageFile != null) {
+                        final File file = File(imageFile.path);
+                        if (context.mounted) {
+                          ChangeNotifierProvaider.watch<
+                                  ChangeNotifierProvaider<
+                                      UserProfileWidgetModel>,
+                                  UserProfileWidgetModel>(context)
+                              ?.file = file;
+                          ChangeNotifierProvaider.read<
+                                  ChangeNotifierProvaider<
+                                      UserProfileWidgetModel>,
+                                  UserProfileWidgetModel>(context)
+                              ?.changeIsSave(newValue: true, isTags: false);
+                        }
+                      }
+                      // Действия при нажатии на иконку редактирования
+                    },
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+}
+
 class SaveButtonWidget extends StatelessWidget {
   const SaveButtonWidget({
     super.key,
@@ -196,13 +235,32 @@ class SaveButtonWidget extends StatelessWidget {
         onPressed: () {
           final currentProfileUser =
               (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser;
-          blocOtherUsers.add(OtherUsersEvent.saveTagsToSend(
-              tags: currentProfileUser!.tags,
-              userId: currentProfileUser.autoCard));
+          final isChangeTags = ChangeNotifierProvaider.read<
+                  ChangeNotifierProvaider<UserProfileWidgetModel>,
+                  UserProfileWidgetModel>(context)
+              ?.isChangeTags;
+          if (isChangeTags != null && isChangeTags == true) {
+            blocOtherUsers.add(OtherUsersEvent.saveTagsToSend(
+                tags: currentProfileUser!.tags,
+                userId: currentProfileUser.autoCard));
+          }
+          if (ChangeNotifierProvaider.read<
+                      ChangeNotifierProvaider<UserProfileWidgetModel>,
+                      UserProfileWidgetModel>(context)
+                  ?.file !=
+              null) {
+            blocOtherUsers.add(OtherUsersEvent.sendAvatarWithProfile(
+                userId: currentProfileUser!.autoCard,
+                imageFile: ChangeNotifierProvaider.read<
+                        ChangeNotifierProvaider<UserProfileWidgetModel>,
+                        UserProfileWidgetModel>(context)
+                    ?.file as File)); // Создать БЛОК добавления файла на бэкенд
+          }
+
           ChangeNotifierProvaider.read<
                   ChangeNotifierProvaider<UserProfileWidgetModel>,
                   UserProfileWidgetModel>(context)
-              ?.changeIsSave(false);
+              ?.changeIsSave(newValue: false, isTags: false);
         },
       );
     } else {
@@ -246,10 +304,13 @@ class _TagsWidgetState extends State<TagsWidget> {
                       ChangeNotifierProvaider.read<
                               ChangeNotifierProvaider<UserProfileWidgetModel>,
                               UserProfileWidgetModel>(context)
-                          ?.changeIsSave(true);
+                          ?.changeIsSave(newValue: true, isTags: true);
                       blocOtherUsers.add(OtherUsersEvent.deleteTag(tag: tag));
                     },
-                    deleteIcon: const Icon(Icons.close),
+                    deleteIcon: const Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
                     deleteButtonTooltipMessage: 'Удалить',
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -272,7 +333,7 @@ class _TagsWidgetState extends State<TagsWidget> {
                     ChangeNotifierProvaider.read<
                             ChangeNotifierProvaider<UserProfileWidgetModel>,
                             UserProfileWidgetModel>(context)
-                        ?.changeIsSave(true);
+                        ?.changeIsSave(newValue: true, isTags: true);
 
                     blocOtherUsers.add(OtherUsersEvent.addTag(
                         tag: TagUser(id: null, name: tagController.text)));

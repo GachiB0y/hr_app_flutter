@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' as io;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -36,6 +37,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
         onOtherUsersEventAddTag(emit, event);
       } else if (event is OtherUsersEventDeleteTag) {
         onOtherUsersEventDeleteTag(emit, event);
+      } else if (event is OtherUsersEventSendAvatarWithProfile) {
+        await onOtherUsersEventSendAvatarWithProfile(emit, event);
       }
     });
   }
@@ -135,7 +138,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     } on ApiClientExceptionType {
       emit(const OtherUserState.error(
           errorText:
-              'Ошибка сохранения новых тэгов. Обновите страницу и попробуйте еще раз.'));
+              'Ошибка сохранения. Обновите страницу и попробуйте еще раз.'));
     } catch (e) {
       emit(const OtherUserState.error());
     }
@@ -176,6 +179,41 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
       emit(newState);
     } else {
       emit(const OtherUserState.error(errorText: 'Ошибка удаления тэга'));
+    }
+  }
+
+  onOtherUsersEventSendAvatarWithProfile(Emitter<OtherUserState> emit,
+      OtherUsersEventSendAvatarWithProfile event) async {
+    String? accessToken = await authRepository.cheskIsLiveAccessToken();
+    try {
+      final oldState = (state as OtherUserStateLoaded);
+      emit(OtherUserState.loading(
+          listUsersLoaded: oldState.listUsersLoaded,
+          currentProfileUser: oldState.currentProfileUser));
+      bool isSendAvatar = await userRepo
+          .sendAvatarWithProfile(
+              userToken: accessToken as String, imageFile: event.imageFile)
+          .timeout(const Duration(seconds: 10));
+      if (isSendAvatar) {
+        User currentUserProfile = await userRepo
+            .getUserInfoById(
+                userToken: accessToken, userID: event.userId.toString())
+            .timeout(const Duration(seconds: 10));
+        final copyListUsersLoaded =
+            (state as OtherUserStateLoading).copyWith().listUsersLoaded;
+        final newState = OtherUserStateLoaded(
+            currentProfileUser: currentUserProfile,
+            listUsersLoaded: copyListUsersLoaded!);
+        emit(newState);
+      }
+    } on TimeoutException {
+      emit(const OtherUserState.error(errorText: 'Время ожидания истекло!'));
+    } on ApiClientExceptionType {
+      emit(const OtherUserState.error(
+          errorText:
+              'Ошибка сохранения. Обновите страницу и попробуйте еще раз.'));
+    } catch (e) {
+      emit(const OtherUserState.error());
     }
   }
 }

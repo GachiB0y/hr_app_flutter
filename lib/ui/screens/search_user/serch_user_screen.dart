@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
@@ -89,12 +90,16 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     itemCount: listUsersLoaded.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              Image.network(listUsersLoaded[index].avatar)
-                                  .image,
-                          radius: MediaQuery.of(context).size.width / 8,
-                        ),
+                        leading: Builder(builder: (context) {
+                          return CachedNetworkImage(
+                              imageUrl: listUsersLoaded[index].avatar,
+                              imageBuilder: (context, imageProvider) {
+                                return CircleAvatar(
+                                  backgroundImage: imageProvider,
+                                  radius: MediaQuery.of(context).size.width / 8,
+                                );
+                              });
+                        }),
                         title: Flexible(
                           child: Text(
                               '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}'),

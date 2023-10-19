@@ -25,6 +25,8 @@ mixin _$OtherUsersEvent {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +38,7 @@ mixin _$OtherUsersEvent {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +50,7 @@ mixin _$OtherUsersEvent {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,6 +66,8 @@ mixin _$OtherUsersEvent {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +81,8 @@ mixin _$OtherUsersEvent {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +95,8 @@ mixin _$OtherUsersEvent {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -188,6 +198,8 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return gethUsersByPhoneNumber(phoneNumber);
   }
@@ -202,6 +214,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return gethUsersByPhoneNumber?.call(phoneNumber);
   }
@@ -216,6 +229,7 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -237,6 +251,8 @@ class _$OtherUsersEventGethUsersByPhoneNumber
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return gethUsersByPhoneNumber(this);
   }
@@ -253,6 +269,8 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return gethUsersByPhoneNumber?.call(this);
   }
@@ -268,6 +286,8 @@ class _$OtherUsersEventGethUsersByPhoneNumber
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (gethUsersByPhoneNumber != null) {
@@ -367,6 +387,8 @@ class _$OtherUsersEventGethUsersByUserId
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return gethUsersByUserId(userId);
   }
@@ -381,6 +403,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return gethUsersByUserId?.call(userId);
   }
@@ -395,6 +418,7 @@ class _$OtherUsersEventGethUsersByUserId
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (gethUsersByUserId != null) {
@@ -416,6 +440,8 @@ class _$OtherUsersEventGethUsersByUserId
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return gethUsersByUserId(this);
   }
@@ -432,6 +458,8 @@ class _$OtherUsersEventGethUsersByUserId
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return gethUsersByUserId?.call(this);
   }
@@ -447,6 +475,8 @@ class _$OtherUsersEventGethUsersByUserId
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (gethUsersByUserId != null) {
@@ -541,6 +571,8 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return findUsers(findText);
   }
@@ -555,6 +587,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return findUsers?.call(findText);
   }
@@ -569,6 +602,7 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (findUsers != null) {
@@ -590,6 +624,8 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return findUsers(this);
   }
@@ -606,6 +642,8 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return findUsers?.call(this);
   }
@@ -621,6 +659,8 @@ class _$OtherUsersEventFindUsers implements OtherUsersEventFindUsers {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (findUsers != null) {
@@ -686,6 +726,8 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return clearList();
   }
@@ -700,6 +742,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return clearList?.call();
   }
@@ -714,6 +757,7 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (clearList != null) {
@@ -735,6 +779,8 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return clearList(this);
   }
@@ -751,6 +797,8 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return clearList?.call(this);
   }
@@ -766,6 +814,8 @@ class _$OtherUsersEventClearList implements OtherUsersEventClearList {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (clearList != null) {
@@ -870,6 +920,8 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return saveTagsToSend(tags, userId);
   }
@@ -884,6 +936,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return saveTagsToSend?.call(tags, userId);
   }
@@ -898,6 +951,7 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (saveTagsToSend != null) {
@@ -919,6 +973,8 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return saveTagsToSend(this);
   }
@@ -935,6 +991,8 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return saveTagsToSend?.call(this);
   }
@@ -950,6 +1008,8 @@ class _$OtherUsersEventSaveTagsToSend implements OtherUsersEventSaveTagsToSend {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (saveTagsToSend != null) {
@@ -1053,6 +1113,8 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return addTag(tag);
   }
@@ -1067,6 +1129,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return addTag?.call(tag);
   }
@@ -1081,6 +1144,7 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (addTag != null) {
@@ -1102,6 +1166,8 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return addTag(this);
   }
@@ -1118,6 +1184,8 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return addTag?.call(this);
   }
@@ -1133,6 +1201,8 @@ class _$OtherUsersEventAddTag implements OtherUsersEventAddTag {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (addTag != null) {
@@ -1235,6 +1305,8 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
     required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
     required TResult Function(TagUser tag) addTag,
     required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
   }) {
     return deleteTag(tag);
   }
@@ -1249,6 +1321,7 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
     TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult? Function(TagUser tag)? addTag,
     TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
   }) {
     return deleteTag?.call(tag);
   }
@@ -1263,6 +1336,7 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
     TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
     TResult Function(TagUser tag)? addTag,
     TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (deleteTag != null) {
@@ -1284,6 +1358,8 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
         saveTagsToSend,
     required TResult Function(OtherUsersEventAddTag value) addTag,
     required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
   }) {
     return deleteTag(this);
   }
@@ -1300,6 +1376,8 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
     TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult? Function(OtherUsersEventAddTag value)? addTag,
     TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
   }) {
     return deleteTag?.call(this);
   }
@@ -1315,6 +1393,8 @@ class _$OtherUsersEventDeleteTag implements OtherUsersEventDeleteTag {
     TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
     TResult Function(OtherUsersEventAddTag value)? addTag,
     TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
     required TResult orElse(),
   }) {
     if (deleteTag != null) {
@@ -1331,6 +1411,205 @@ abstract class OtherUsersEventDeleteTag implements OtherUsersEvent {
   TagUser get tag;
   @JsonKey(ignore: true)
   _$$OtherUsersEventDeleteTagCopyWith<_$OtherUsersEventDeleteTag>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OtherUsersEventSendAvatarWithProfileCopyWith<$Res> {
+  factory _$$OtherUsersEventSendAvatarWithProfileCopyWith(
+          _$OtherUsersEventSendAvatarWithProfile value,
+          $Res Function(_$OtherUsersEventSendAvatarWithProfile) then) =
+      __$$OtherUsersEventSendAvatarWithProfileCopyWithImpl<$Res>;
+  @useResult
+  $Res call({io.File imageFile, int userId});
+}
+
+/// @nodoc
+class __$$OtherUsersEventSendAvatarWithProfileCopyWithImpl<$Res>
+    extends _$OtherUsersEventCopyWithImpl<$Res,
+        _$OtherUsersEventSendAvatarWithProfile>
+    implements _$$OtherUsersEventSendAvatarWithProfileCopyWith<$Res> {
+  __$$OtherUsersEventSendAvatarWithProfileCopyWithImpl(
+      _$OtherUsersEventSendAvatarWithProfile _value,
+      $Res Function(_$OtherUsersEventSendAvatarWithProfile) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? imageFile = null,
+    Object? userId = null,
+  }) {
+    return _then(_$OtherUsersEventSendAvatarWithProfile(
+      imageFile: null == imageFile
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as io.File,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OtherUsersEventSendAvatarWithProfile
+    implements OtherUsersEventSendAvatarWithProfile {
+  const _$OtherUsersEventSendAvatarWithProfile(
+      {required this.imageFile, required this.userId});
+
+  @override
+  final io.File imageFile;
+  @override
+  final int userId;
+
+  @override
+  String toString() {
+    return 'OtherUsersEvent.sendAvatarWithProfile(imageFile: $imageFile, userId: $userId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OtherUsersEventSendAvatarWithProfile &&
+            (identical(other.imageFile, imageFile) ||
+                other.imageFile == imageFile) &&
+            (identical(other.userId, userId) || other.userId == userId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, imageFile, userId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OtherUsersEventSendAvatarWithProfileCopyWith<
+          _$OtherUsersEventSendAvatarWithProfile>
+      get copyWith => __$$OtherUsersEventSendAvatarWithProfileCopyWithImpl<
+          _$OtherUsersEventSendAvatarWithProfile>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phoneNumber) gethUsersByPhoneNumber,
+    required TResult Function(String userId) gethUsersByUserId,
+    required TResult Function(String findText) findUsers,
+    required TResult Function() clearList,
+    required TResult Function(List<TagUser> tags, int userId) saveTagsToSend,
+    required TResult Function(TagUser tag) addTag,
+    required TResult Function(TagUser tag) deleteTag,
+    required TResult Function(io.File imageFile, int userId)
+        sendAvatarWithProfile,
+  }) {
+    return sendAvatarWithProfile(imageFile, userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult? Function(String userId)? gethUsersByUserId,
+    TResult? Function(String findText)? findUsers,
+    TResult? Function()? clearList,
+    TResult? Function(List<TagUser> tags, int userId)? saveTagsToSend,
+    TResult? Function(TagUser tag)? addTag,
+    TResult? Function(TagUser tag)? deleteTag,
+    TResult? Function(io.File imageFile, int userId)? sendAvatarWithProfile,
+  }) {
+    return sendAvatarWithProfile?.call(imageFile, userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phoneNumber)? gethUsersByPhoneNumber,
+    TResult Function(String userId)? gethUsersByUserId,
+    TResult Function(String findText)? findUsers,
+    TResult Function()? clearList,
+    TResult Function(List<TagUser> tags, int userId)? saveTagsToSend,
+    TResult Function(TagUser tag)? addTag,
+    TResult Function(TagUser tag)? deleteTag,
+    TResult Function(io.File imageFile, int userId)? sendAvatarWithProfile,
+    required TResult orElse(),
+  }) {
+    if (sendAvatarWithProfile != null) {
+      return sendAvatarWithProfile(imageFile, userId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OtherUsersEventGethUsersByPhoneNumber value)
+        gethUsersByPhoneNumber,
+    required TResult Function(OtherUsersEventGethUsersByUserId value)
+        gethUsersByUserId,
+    required TResult Function(OtherUsersEventFindUsers value) findUsers,
+    required TResult Function(OtherUsersEventClearList value) clearList,
+    required TResult Function(OtherUsersEventSaveTagsToSend value)
+        saveTagsToSend,
+    required TResult Function(OtherUsersEventAddTag value) addTag,
+    required TResult Function(OtherUsersEventDeleteTag value) deleteTag,
+    required TResult Function(OtherUsersEventSendAvatarWithProfile value)
+        sendAvatarWithProfile,
+  }) {
+    return sendAvatarWithProfile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OtherUsersEventGethUsersByPhoneNumber value)?
+        gethUsersByPhoneNumber,
+    TResult? Function(OtherUsersEventGethUsersByUserId value)?
+        gethUsersByUserId,
+    TResult? Function(OtherUsersEventFindUsers value)? findUsers,
+    TResult? Function(OtherUsersEventClearList value)? clearList,
+    TResult? Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
+    TResult? Function(OtherUsersEventAddTag value)? addTag,
+    TResult? Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult? Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
+  }) {
+    return sendAvatarWithProfile?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OtherUsersEventGethUsersByPhoneNumber value)?
+        gethUsersByPhoneNumber,
+    TResult Function(OtherUsersEventGethUsersByUserId value)? gethUsersByUserId,
+    TResult Function(OtherUsersEventFindUsers value)? findUsers,
+    TResult Function(OtherUsersEventClearList value)? clearList,
+    TResult Function(OtherUsersEventSaveTagsToSend value)? saveTagsToSend,
+    TResult Function(OtherUsersEventAddTag value)? addTag,
+    TResult Function(OtherUsersEventDeleteTag value)? deleteTag,
+    TResult Function(OtherUsersEventSendAvatarWithProfile value)?
+        sendAvatarWithProfile,
+    required TResult orElse(),
+  }) {
+    if (sendAvatarWithProfile != null) {
+      return sendAvatarWithProfile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OtherUsersEventSendAvatarWithProfile implements OtherUsersEvent {
+  const factory OtherUsersEventSendAvatarWithProfile(
+      {required final io.File imageFile,
+      required final int userId}) = _$OtherUsersEventSendAvatarWithProfile;
+
+  io.File get imageFile;
+  int get userId;
+  @JsonKey(ignore: true)
+  _$$OtherUsersEventSendAvatarWithProfileCopyWith<
+          _$OtherUsersEventSendAvatarWithProfile>
       get copyWith => throw _privateConstructorUsedError;
 }
 

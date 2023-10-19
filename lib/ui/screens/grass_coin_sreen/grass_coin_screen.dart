@@ -49,33 +49,14 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                // flexibleSpace: FlexibleSpaceBar(
-                //   background: Column(
-                //     mainAxisAlignment: MainAxisAlignment.end,
-                //     children: [
-                //       ListTile(
-                //         leading: CircleAvatar(
-                //           backgroundImage: Image.asset(
-                //             'assets/images/man.png',
-                //             color: const Color.fromARGB(255, 0, 0, 0),
-                //             height: 50,
-                //             width: 50,
-                //           ).image,
-                //         ),
-                //         title: TitleAppBarWidget(),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 pinned: true,
                 snap: true,
                 floating: true,
                 backgroundColor: Colors.grey[200],
                 surfaceTintColor: Colors.transparent,
-                // expandedHeight: 100,
-                leadingWidth: 85,
+                leadingWidth: 90,
                 leading: const Avatar(),
-                toolbarHeight: 100,
+                toolbarHeight: 90,
                 title: const TitleAppBarWidget(),
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(360),
@@ -84,10 +65,6 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                       child: const BodyContentWidgetCoinScreen()),
                 ),
               ),
-              // SliverPersistentHeader(
-              //   pinned: true,
-              //   delegate: _CustomHeaderDelegate(),
-              // ),
               const HistoryOperationCoinWidget(),
             ],
           ),

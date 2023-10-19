@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
@@ -116,7 +117,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     return Container(
-      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin:
           const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -129,14 +130,16 @@ class SerachPeopleButtonWidget extends StatelessWidget {
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Найти соотрудника',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Найти соотрудника',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
-                SizedBox(height: 10),
                 Text(
                   'структура компании',
                   style: TextStyle(fontSize: 16, color: Colors.white),
@@ -181,9 +184,9 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
     if (textScaleFactor < 1) textScaleFactor = 1;
 
     return Container(
-      height: (MediaQuery.of(context).size.height / 6.5) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin: const EdgeInsets.all(16.0),
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: ColorsForWidget.colorGreen),
@@ -200,7 +203,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
               loaded: (birthDayInfo) {
                 return Text(
                   birthDayInfo.count.toString(),
-                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 );
               },
               error: () => const Text('Ошибка загрузки.'),
@@ -208,7 +211,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
             const SizedBox(height: 10),
             const Text(
               'Дни рождения',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
@@ -228,7 +231,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
               loaded: (rookiseInfo) {
                 return Text(
                   rookiseInfo.count.toString(),
-                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 );
               },
               error: () => const Text('Ошибка загрузки.'),
@@ -236,7 +239,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
             const SizedBox(height: 10),
             const Text(
               'Новенькие',
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
@@ -515,6 +518,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 2.7,
               child: ListView.builder(
+                itemExtent: MediaQuery.of(context).size.width / 1.5,
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(16),
                 itemCount:
@@ -531,38 +535,42 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                           eventEntityRepository:
                               blocEventEntity.eventEntityRepository));
                     },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.network(item.image).image,
-                            fit: BoxFit.cover),
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          Container(
-                            width: double.infinity,
+                    child: CachedNetworkImage(
+                        fadeInDuration: const Duration(milliseconds: 100),
+                        imageUrl: item.image,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            margin:
+                                const EdgeInsets.only(bottom: 16, right: 16.0),
+                            padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                              color: Colors.grey,
                               borderRadius: BorderRadius.circular(18),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item.title,
-                                style: const TextStyle(fontSize: 16),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Spacer(),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      item.title,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          );
+                        }),
                   );
                 },
               ),
