@@ -12,7 +12,6 @@ import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -181,12 +180,12 @@ class AvatarProfileWidget extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () async {
-                      await viewModel?.myImage.pickImage(ImageSource.gallery);
+                      await viewModel?.selectImage();
                       final imageFile = viewModel?.myImage.imageFile;
                       if (imageFile != null) {
                         final File file = File(imageFile.path);
                         if (context.mounted) {
-                          ChangeNotifierProvaider.read<
+                          ChangeNotifierProvaider.watch<
                                   ChangeNotifierProvaider<
                                       UserProfileWidgetModel>,
                                   UserProfileWidgetModel>(context)

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/domain/entity/image.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfileWidgetModel extends Listenable {
   // Создание списка слушателей
@@ -38,5 +39,10 @@ class UserProfileWidgetModel extends Listenable {
       isChangeTags = isTags;
       notifyListeners();
     }
+  }
+
+  Future<void> selectImage() async {
+    await myImage.pickImage(ImageSource.gallery);
+    notifyListeners();
   }
 }

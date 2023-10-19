@@ -139,7 +139,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 Text(
                   'структура компании',
                   style: TextStyle(fontSize: 16, color: Colors.white),

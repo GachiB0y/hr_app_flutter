@@ -109,7 +109,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
           '{"title":"$title","description":"$description","start_date":"$startDate","end_date":"$endDate","categories":$categories}'
     });
     var multipartFile = await http.MultipartFile.fromPath(
-      'my_file',
+      'file',
       imageFile.path,
       filename: imageFile.path.split('/').last,
       contentType: MediaType('image', 'jpg'),
