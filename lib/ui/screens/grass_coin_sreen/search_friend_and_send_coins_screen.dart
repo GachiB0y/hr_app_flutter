@@ -111,7 +111,6 @@ class _SearchFriendAndSendCoinsScreenState
             });
           },
         ),
-        actions: [],
       ),
       body: SafeArea(
         child: Column(

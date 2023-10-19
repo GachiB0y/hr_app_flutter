@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
@@ -88,10 +89,14 @@ class Avatar extends StatelessWidget {
         child: blocUser.state.when(loading: () {
           return const SizedBox.shrink();
         }, loaded: (user) {
-          return CircleAvatar(
-            radius: radius,
-            backgroundImage: Image.network(user.avatar).image,
-          );
+          return CachedNetworkImage(
+              imageUrl: user.avatar,
+              imageBuilder: (context, imageProvider) {
+                return CircleAvatar(
+                  radius: radius,
+                  backgroundImage: imageProvider,
+                );
+              });
         }, error: () {
           return const Text('Ошибка загрузки');
         }),

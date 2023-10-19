@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
@@ -162,12 +163,16 @@ class AvatarProfileWidget extends StatelessWidget {
         UserProfileWidgetModel>(context);
     return Stack(
       children: [
-        CircleAvatar(
-          radius: radius,
-          backgroundImage: viewModel?.myImage.imageFile != null
-              ? FileImage(viewModel?.myImage.imageFile as File)
-              : Image.network(user!.avatar).image,
-        ),
+        CachedNetworkImage(
+            imageUrl: user!.avatar,
+            imageBuilder: (context, imageProvider) {
+              return CircleAvatar(
+                radius: radius,
+                backgroundImage: viewModel?.myImage.imageFile != null
+                    ? FileImage(viewModel?.myImage.imageFile as File)
+                    : imageProvider,
+              );
+            }),
         stateBlocUser.userLoaded.autoCard == user?.autoCard
             ? Positioned(
                 top: 0,

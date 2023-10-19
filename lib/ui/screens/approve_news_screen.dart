@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/approvement_news_bloc/approvement_news_bloc.dart';
@@ -68,77 +69,83 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                         eventEntityRepository:
                             blocApprovementNews.eventEntityRepository));
                   },
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: Image.network(loadedApprovementNews[index].image)
-                            .image,
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          loadedApprovementNews[index].title,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          loadedApprovementNews[index].description,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                context.read<ApprovementNewsBloc>().add(
-                                    ApprovementEvent.approvedNews(
-                                        id: loadedApprovementNews[index]
-                                            .id
-                                            .toString()));
-                              },
-                              child: const Text('Подтвердить'),
+                  child: CachedNetworkImage(
+                      fadeInDuration: const Duration(milliseconds: 100),
+                      imageUrl: loadedApprovementNews[index].image,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.redAccent)),
-                              onPressed: () {
-                                context.read<ApprovementNewsBloc>().add(
-                                    ApprovementEvent.moveInArchiveNews(
-                                        id: loadedApprovementNews[index]
-                                            .id
-                                            .toString()));
-                              },
-                              child: const Text('Отколнить'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                loadedApprovementNews[index].title,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                loadedApprovementNews[index].description,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      context.read<ApprovementNewsBloc>().add(
+                                          ApprovementEvent.approvedNews(
+                                              id: loadedApprovementNews[index]
+                                                  .id
+                                                  .toString()));
+                                    },
+                                    child: const Text('Подтвердить'),
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.redAccent)),
+                                    onPressed: () {
+                                      context.read<ApprovementNewsBloc>().add(
+                                          ApprovementEvent.moveInArchiveNews(
+                                              id: loadedApprovementNews[index]
+                                                  .id
+                                                  .toString()));
+                                    },
+                                    child: const Text('Отколнить'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                 );
               },
             );

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dart';
@@ -139,7 +140,6 @@ class SerachPeopleButtonWidget extends StatelessWidget {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                // SizedBox(height: 10),
                 Text(
                   'структура компании',
                   style: TextStyle(fontSize: 16, color: Colors.white),
@@ -518,6 +518,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 2.7,
               child: ListView.builder(
+                itemExtent: MediaQuery.of(context).size.width / 1.5,
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(16),
                 itemCount:
@@ -534,38 +535,42 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                           eventEntityRepository:
                               blocEventEntity.eventEntityRepository));
                     },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      margin: const EdgeInsets.only(bottom: 16, right: 16.0),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.network(item.image).image,
-                            fit: BoxFit.cover),
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          Container(
-                            width: double.infinity,
+                    child: CachedNetworkImage(
+                        fadeInDuration: const Duration(milliseconds: 100),
+                        imageUrl: item.image,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            margin:
+                                const EdgeInsets.only(bottom: 16, right: 16.0),
+                            padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                              color: Colors.grey,
                               borderRadius: BorderRadius.circular(18),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item.title,
-                                style: const TextStyle(fontSize: 16),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Spacer(),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      item.title,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          );
+                        }),
                   );
                 },
               ),
