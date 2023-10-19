@@ -173,7 +173,7 @@ class AvatarProfileWidget extends StatelessWidget {
                     : imageProvider,
               );
             }),
-        stateBlocUser.userLoaded.autoCard == user?.autoCard
+        stateBlocUser.userLoaded.autoCard == user.autoCard
             ? Positioned(
                 top: 0,
                 right: 0,

@@ -89,6 +89,18 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    ScheduleBusRoute.name: (routeData) {
+      final args = routeData.argsAs<ScheduleBusRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ScheduleBusScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          serviceRepository: args.serviceRepository,
+        )),
+      );
+    },
     SearchFriendAndSendCoinsRoute.name: (routeData) {
       final args = routeData.argsAs<SearchFriendAndSendCoinsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -348,6 +360,49 @@ class ProfileWidgetRouteArgs {
   @override
   String toString() {
     return 'ProfileWidgetRouteArgs{key: $key, userId: $userId, authRepository: $authRepository, userRepo: $userRepo}';
+  }
+}
+
+/// generated route for
+/// [ScheduleBusScreen]
+class ScheduleBusRoute extends PageRouteInfo<ScheduleBusRouteArgs> {
+  ScheduleBusRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required ServiceRepository serviceRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ScheduleBusRoute.name,
+          args: ScheduleBusRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            serviceRepository: serviceRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ScheduleBusRoute';
+
+  static const PageInfo<ScheduleBusRouteArgs> page =
+      PageInfo<ScheduleBusRouteArgs>(name);
+}
+
+class ScheduleBusRouteArgs {
+  const ScheduleBusRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.serviceRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final ServiceRepository serviceRepository;
+
+  @override
+  String toString() {
+    return 'ScheduleBusRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
   }
 }
 

@@ -56,7 +56,7 @@ class _DIContainer {
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
   AuthProvider _makeAuthProvider() => const AuthProviderImpl();
-  ServiceProvider _makeServiceProvider() => const ServiceProviderImpl();
+  ServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
   EventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
   WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);

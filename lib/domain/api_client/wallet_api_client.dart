@@ -6,7 +6,7 @@ import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_rew
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:http/http.dart' as http;
 
-abstract class WalletProvider {
+abstract interface class WalletProvider {
   Future<int> getBalance({required String userToken});
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
   Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});

@@ -7,7 +7,7 @@ import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:http/http.dart' as http;
 
-abstract class EventsEntityProvider {
+abstract interface class EventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
   Future<EventEntity> getNewsById({
     required String accessToken,

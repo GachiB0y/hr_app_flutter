@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:http/http.dart' as http;
 
-abstract class AuthProvider {
+abstract interface class AuthProvider {
   Future<bool> getCodeByPhoneNumber({required String numberPhone});
   Future<String> getCodeByPhoneNumberTest({required String numberPhone});
   Future<({String accessToken, String refresToken})> makeToken(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -10,7 +11,6 @@ import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/painteres_widget.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ServiceElementWidget extends StatefulWidget {
   const ServiceElementWidget({
@@ -147,23 +147,6 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
     });
   }
 
-  void launchYandexMaps() async {
-    String url = 'yandexmaps://maps.yandex.ru/?ll=37.62,55.75&z=12';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  Future<void> _launchUrl() async {
-    final Uri _url = Uri.parse(
-        'https://yandex.ru/maps/10951/volzhskiy/?ll=44.835771%2C48.770463&mode=usermaps&source=constructorLink&um=constructor%3A58dc464d0f078429a7d09352fedc1a45a78e6aeda69a8e6083582370b34b0660&utm_source=share&z=14');
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
@@ -182,7 +165,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                   color: Colors.black.withOpacity(0.4),
                   spreadRadius: 2,
                   blurRadius: 4,
-                  offset: Offset(0, 6),
+                  offset: const Offset(0, 6),
                 ),
               ],
               borderRadius: BorderRadius.circular(50),
@@ -231,7 +214,11 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                       eventEntityRepository:
                           blocEventEntity.eventEntityRepository));
                 } else if (widget.service.id == 25) {
-                  await _launchUrl();
+                  final blocService = context.read<ServiceBloc>();
+                  context.pushRoute(ScheduleBusRoute(
+                    authRepository: blocService.authRepository,
+                    serviceRepository: blocService.serviceRepository,
+                  ));
                 }
               },
             ),

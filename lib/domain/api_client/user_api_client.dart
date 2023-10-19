@@ -10,7 +10,7 @@ import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 import 'package:http/http.dart' as http;
 
-abstract class UserProvider {
+abstract interface class UserProvider {
   Future<User> getUserInfo({required String userToken});
   Future<bool> saveTagsToSend(
       {required String userToken,
