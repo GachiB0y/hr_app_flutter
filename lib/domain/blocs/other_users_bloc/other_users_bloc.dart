@@ -95,8 +95,11 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
           .findUser(userToken: accessToken as String, findText: event.findText)
           .timeout(const Duration(seconds: 10));
 
-      final newState = (state as OtherUserStateLoaded)
-          .copyWith(listUsersLoaded: listUsersLoaded);
+      // final newState = (state as OtherUserStateLoaded)
+      //     .copyWith(listUsersLoaded: listUsersLoaded);
+
+      final newState = OtherUserStateLoaded(
+          listUsersLoaded: listUsersLoaded, currentProfileUser: null);
 
       emit(newState);
     } on TimeoutException {
