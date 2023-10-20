@@ -37,6 +37,8 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -59,7 +61,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                 toolbarHeight: 90,
                 title: const TitleAppBarWidget(),
                 bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(360),
+                  preferredSize: Size.fromHeight(360 * textScaleFactor),
                   child: Container(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: const BodyContentWidgetCoinScreen()),
@@ -113,6 +115,8 @@ class _BodyContentWidgetCoinScreenState
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
+        double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+        if (textScaleFactor < 1) textScaleFactor = 1;
         return FractionallySizedBox(
           heightFactor: 0.7, // Указывает высоту окна в относительных единицах
           child: Container(
@@ -165,9 +169,10 @@ class _BodyContentWidgetCoinScreenState
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
     final blocUser = context.watch<UserBloc>();
-
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
     return SizedBox(
-      height: 360,
+      height: (360 * textScaleFactor),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -176,7 +181,7 @@ class _BodyContentWidgetCoinScreenState
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(
@@ -321,7 +326,7 @@ class _BodyContentWidgetCoinScreenState
                   ),
                   label: const Text('На браслет',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w300,
                           color: Colors.black))),
               ElevatedButton.icon(
@@ -342,7 +347,7 @@ class _BodyContentWidgetCoinScreenState
                       size: 26, color: Colors.black),
                   label: const Text('Подарить',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w300,
                           color: Colors.black))),
             ],
@@ -438,6 +443,8 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
     return blocWallet.state.when(
       loading: () {
         return const SliverToBoxAdapter(
@@ -477,7 +484,7 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(bottom: 5.0),
-                    height: 25,
+                    height: 25 * textScaleFactor,
                     child: ListTile(
                       title: Text(
                         dateString,

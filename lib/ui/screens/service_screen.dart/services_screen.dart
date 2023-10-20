@@ -25,7 +25,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: false));
   }
 
   // Создание списка групп
@@ -53,7 +53,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
             return RefreshIndicator(
               color: ColorsForWidget.colorGreen,
               onRefresh: () {
-                blocServiceBloc.add(const ServiceEvent.fetch());
+                blocServiceBloc.add(const ServiceEvent.fetch(isRow: false));
                 return Future<void>.delayed(const Duration(seconds: 1));
               },
               child: CustomScrollView(

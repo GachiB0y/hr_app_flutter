@@ -119,7 +119,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                                     user.staffPosition,
                                     style: const TextStyle(fontSize: 16),
                                     softWrap: true,
-                                    maxLines: 3,
+                                    maxLines: 6,
                                   ),
                                 ),
                               ],

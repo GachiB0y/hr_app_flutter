@@ -190,7 +190,10 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           ),
           child: Align(
               alignment: Alignment.topCenter,
-              child: Image.asset(imagePath ?? 'assets/images/note.png')),
+              child: Image.asset(
+                imagePath ?? 'assets/images/note.png',
+                scale: widget.isRow ? textScaleFactor : (1 / textScaleFactor),
+              )),
         ),
         SizedBox(
           width: widget.isRow ? sizeWidhtIsRow : null,
@@ -219,6 +222,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     authRepository: blocService.authRepository,
                     serviceRepository: blocService.serviceRepository,
                   ));
+                  // context.pushRoute(BookingMeetingsFirstRoute());
                 }
               },
             ),

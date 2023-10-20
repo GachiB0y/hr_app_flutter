@@ -28,7 +28,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context
@@ -39,7 +39,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 
   Future<void> _refreshEventsList() async {
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
 
     context
@@ -274,9 +274,12 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
         for (var widget in loeadedServiceWidgets) {
           groupWidgets.add(widget);
         }
-
+        double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+        if (textScaleFactor < 1) textScaleFactor = 1;
         return ListView.builder(
-          shrinkWrap: true,
+          // shrinkWrap: true,
+          itemExtent:
+              (MediaQuery.of(context).size.height / 4.25) * textScaleFactor,
           scrollDirection: Axis.horizontal,
           itemCount: groupWidgets.length,
           itemBuilder: (BuildContext context, int index) {

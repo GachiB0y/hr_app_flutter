@@ -87,38 +87,45 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
               loaded: (listUsersLoaded, currentUserProfile) {
                 return Expanded(
                   child: ListView.builder(
-                    itemExtent: 70 * textScaleFactor,
+                    itemExtent: 84,
                     itemCount: listUsersLoaded.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: SizedBox(
-                          width: MediaQuery.of(context).size.width / 8,
-                          child: CachedNetworkImage(
-                              imageUrl: listUsersLoaded[index].avatar,
-                              imageBuilder: (context, imageProvider) {
-                                return CircleAvatar(
-                                  backgroundImage: imageProvider,
-                                  radius: MediaQuery.of(context).size.width / 8,
-                                );
-                              }),
-                        ),
-                        title: Text(
-                          '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}',
-                          softWrap: true,
-                          maxLines: 3,
-                        ),
-                        subtitle: Text(
-                          listUsersLoaded[index].staffPosition,
-                          softWrap: true,
-                          maxLines: 3,
-                        ),
-                        onTap: () {
-                          context.pushRoute(ProfileWidgetRoute(
-                            userId: listUsersLoaded[index].autoCard,
-                            authRepository: blocOtherUsers.authRepository,
-                            userRepo: blocOtherUsers.userRepo,
-                          ));
-                        },
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            leading: SizedBox(
+                              width: MediaQuery.of(context).size.width / 8,
+                              child: CachedNetworkImage(
+                                  imageUrl: listUsersLoaded[index].avatar,
+                                  imageBuilder: (context, imageProvider) {
+                                    return CircleAvatar(
+                                      backgroundImage: imageProvider,
+                                      radius:
+                                          MediaQuery.of(context).size.width / 8,
+                                    );
+                                  }),
+                            ),
+                            title: Text(
+                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            subtitle: Text(
+                              listUsersLoaded[index].staffPosition,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () {
+                              context.pushRoute(ProfileWidgetRoute(
+                                userId: listUsersLoaded[index].autoCard,
+                                authRepository: blocOtherUsers.authRepository,
+                                userRepo: blocOtherUsers.userRepo,
+                              ));
+                            },
+                          ),
+                          const Divider(
+                            height: 2,
+                          ),
+                        ],
                       );
                     },
                   ),

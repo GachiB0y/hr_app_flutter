@@ -46,6 +46,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthenticationFormScreen(),
       );
     },
+    BookingMeetingSecondRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BookingMeetingSecondScreen(),
+      );
+    },
+    BookingMeetingsFirstRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BookingMeetingsFirstScreen(),
+      );
+    },
     CompanyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -241,6 +253,34 @@ class AuthenticationFormRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthenticationFormRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BookingMeetingSecondScreen]
+class BookingMeetingSecondRoute extends PageRouteInfo<void> {
+  const BookingMeetingSecondRoute({List<PageRouteInfo>? children})
+      : super(
+          BookingMeetingSecondRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingMeetingSecondRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BookingMeetingsFirstScreen]
+class BookingMeetingsFirstRoute extends PageRouteInfo<void> {
+  const BookingMeetingsFirstRoute({List<PageRouteInfo>? children})
+      : super(
+          BookingMeetingsFirstRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingMeetingsFirstRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
