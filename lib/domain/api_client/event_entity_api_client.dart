@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io' as io;
 
+import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
-import 'package:http_parser/http_parser.dart';
+
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
-import 'package:http/http.dart' as http;
 
 abstract interface class EventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
@@ -35,19 +35,13 @@ abstract interface class EventsEntityProvider {
 }
 
 class EventsEntityProviderImpl implements EventsEntityProvider {
-  const EventsEntityProviderImpl();
+  final IHTTPService _httpService;
+  const EventsEntityProviderImpl(this._httpService);
 
   @override
   Future<List<EventEntity>> getEvents({required String accessToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    };
-    var request = http.Request('GET', Uri.parse('$urlAdress/news/'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/news/';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -63,16 +57,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
 
   @override
   Future<List<Category>> getCategory({required String accessToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    };
-
-    var request = http.Request('GET', Uri.parse('$urlAdress/news/categories'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/news/categories';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -95,29 +81,18 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       required String endDate,
       required io.File imageFile,
       required List<String> categories}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
-      'Content-Type': 'application/json'
-    };
+    String uri = '$urlAdress/news/add_feed';
 
-    var request =
-        http.MultipartRequest('POST', Uri.parse('$urlAdress/news/add_feed'));
-
-    request.fields.addAll({
+    final fields = {
       'some_other_data':
           '{"title":"$title","description":"$description","start_date":"$startDate","end_date":"$endDate","categories":$categories}'
-    });
-    var multipartFile = await http.MultipartFile.fromPath(
-      'file',
-      imageFile.path,
-      filename: imageFile.path.split('/').last,
-      contentType: MediaType('image', 'jpg'),
+    };
+    final response = await _httpService.postWithFile(
+      uri: uri,
+      userToken: accessToken,
+      imageFile: imageFile,
+      fields: fields,
     );
-    request.files.add(multipartFile);
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -128,17 +103,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
   @override
   Future<List<EventEntity>> getApprovmentEvents(
       {required String accessToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    };
-
-    var request =
-        http.Request('GET', Uri.parse('$urlAdress/news/approvement_list'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/news/approvement_list';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -157,17 +123,10 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
   @override
   Future<bool> approvementNews(
       {required String accessToken, required String id}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
-    };
+    String uri = '$urlAdress/news/approve_feed?feed_id=$id';
 
-    var request = http.Request(
-        'POST', Uri.parse('$urlAdress/news/approve_feed?feed_id=$id'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    final response =
+        await _httpService.post(uri: uri, userToken: accessToken, body: null);
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -178,15 +137,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
   @override
   Future<EventEntity> getNewsById(
       {required String accessToken, required String id}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    };
-    var request = http.Request('GET', Uri.parse('$urlAdress/news/find/$id'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/news/find/$id';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -202,17 +154,10 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
   @override
   Future<bool> moveInArchiveNews(
       {required String accessToken, required String id}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
-    };
+    String uri = '$urlAdress/news/move_in_archive?feed_id=$id';
 
-    var request = http.Request(
-        'POST', Uri.parse('$urlAdress/news/move_in_archive?feed_id=$id'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    final response =
+        await _httpService.post(uri: uri, userToken: accessToken, body: null);
     if (response.statusCode == 201) {
       return true;
     } else {

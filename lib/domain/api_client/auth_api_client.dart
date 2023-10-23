@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:hr_app_flutter/constants.dart';
+import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:http/http.dart' as http;
 
 abstract interface class AuthProvider {
   Future<bool> getCodeByPhoneNumber({required String numberPhone});
-  Future<String> getCodeByPhoneNumberTest({required String numberPhone});
+
   Future<({String accessToken, String refresToken})> makeToken(
       {required String numberPhone, required String code});
   Future<({String accessToken, String refresToken})> makeNewJwtTokens(
@@ -13,21 +14,18 @@ abstract interface class AuthProvider {
 }
 
 class AuthProviderImpl implements AuthProvider {
-  const AuthProviderImpl();
+  final IHTTPService _httpService;
+  const AuthProviderImpl(this._httpService);
   @override
   Future<bool> getCodeByPhoneNumber({required String numberPhone}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('$urlAdress/auth/'));
-    request.body = json.encode({
+    String uri = '$urlAdress/auth/';
+
+    final body = json.encode({
       "phone": numberPhone,
     });
 
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    final response =
+        await _httpService.post(uri: uri, userToken: null, body: body);
 
     if (response.statusCode == 200) {
       return true;
@@ -37,45 +35,16 @@ class AuthProviderImpl implements AuthProvider {
   }
 
   @override
-  Future<String> getCodeByPhoneNumberTest({required String numberPhone}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('$urlAdress/auth/'));
-    request.body = json.encode({
-      "phone": numberPhone,
-    });
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final String result = jsonData['code'];
-      return result;
-    } else {
-      throw Exception('Ошибка получения кода');
-    }
-  }
-
-  @override
   Future<({String accessToken, String refresToken})> makeToken(
       {required String numberPhone, required String code}) async {
-    var headers = {'accept': 'application/json'};
+    String uri = '$urlAdress/auth/verify_sms?phone=$numberPhone&code=$code';
 
-    var request = http.Request('POST',
-        Uri.parse('$urlAdress/auth/verify_sms?phone=$numberPhone&code=$code'));
-
-    request.body = json.encode({
+    final body = json.encode({
       "phone": numberPhone,
     });
 
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    final response =
+        await _httpService.post(uri: uri, userToken: null, body: body);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -106,7 +75,7 @@ class AuthProviderImpl implements AuthProvider {
       final String refresToken = jsonData['refresh_token'];
       return (accessToken: accessToken, refresToken: refresToken);
     } else {
-      throw Exception('Error fetching makeNewJwtToken');
+      throw Exception('Error fetching make New Jwt Token');
     }
   }
 }

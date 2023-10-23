@@ -153,7 +153,8 @@ class AvatarProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = MediaQuery.of(context).size.width / 4;
-    final blocUser = context.watch<UserBloc>();
+    final blocUser = context.watch<
+        UserBloc>(); // ВОЗМОЖНО ЗАМЕНИТЬ МИША БУДЕТ КИДАТЬ ФЛАГ ИЗ БЛОКА OtherUsersBloc, и тогда не будет краша при отсутвии блока UserBloc
     final stateBlocUser = blocUser.state as UserStateLoaded;
     final blocOtherUsers = context.watch<OtherUsersBloc>();
     final user =

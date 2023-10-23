@@ -4,7 +4,6 @@ import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart';
 import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_reward.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
-import 'package:http/http.dart' as http;
 
 abstract interface class WalletProvider {
   Future<int> getBalance({required String userToken});
@@ -28,15 +27,8 @@ class WalletProviderImpl implements WalletProvider {
 
   @override
   Future<int> getBalance({required String userToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken'
-    };
-    var request = http.Request('GET', Uri.parse('$urlAdress/coins/balance'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/coins/balance';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -51,22 +43,13 @@ class WalletProviderImpl implements WalletProvider {
   @override
   Future<List<Transaction>?> getTransactions(
       {required String userToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken'
-    };
-    var request =
-        http.Request('GET', Uri.parse('$urlAdress/coins/transactions'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/coins/transactions';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<Transaction> result = (jsonData['result']
-              as List<dynamic>) // Добавить ключ ['result'] если вотевет будет
+      final List<Transaction> result = (jsonData['result'] as List<dynamic>)
           .map((item) => Transaction.fromJson(item))
           .toList();
 
@@ -84,19 +67,11 @@ class WalletProviderImpl implements WalletProvider {
       required int amount,
       required int userId,
       required String message}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken',
-      'Content-Type': 'application/json'
-    };
-    var request =
-        http.Request('POST', Uri.parse('$urlAdress/coins/transfer-to-friend'));
-    request.body = json
+    String uri = '$urlAdress/coins/transfer-to-friend';
+    final String body = json
         .encode({"recipient": userId, "amount": amount, "message": message});
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
+    final response =
+        await _httpService.post(uri: uri, userToken: userToken, body: body);
     if (response.statusCode == 201) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -112,17 +87,10 @@ class WalletProviderImpl implements WalletProvider {
     required String userToken,
     required int amount,
   }) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken',
-      'Content-Type': 'application/json'
-    };
-    var request =
-        http.Request('POST', Uri.parse('$urlAdress/coins/transfer-to-bracer'));
-    request.body = json.encode({"amount": amount});
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/coins/transfer-to-bracer';
+    final String body = json.encode({"amount": amount});
+    final response =
+        await _httpService.post(uri: uri, userToken: userToken, body: body);
 
     if (response.statusCode == 201) {
       final jsonResponse = await response.stream.bytesToString();
@@ -137,42 +105,26 @@ class WalletProviderImpl implements WalletProvider {
   @override
   Future<List<CoinsReward>> getInfoCoinsReward(
       {required String userToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken'
-    };
-    var request =
-        http.Request('GET', Uri.parse('$urlAdress/coins/coins_reward'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/coins/coins_reward';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<CoinsReward> result = (jsonData['result']
-              as List<dynamic>) // Добавить ключ ['result'] если вотевет будет
+      final List<CoinsReward> result = (jsonData['result'] as List<dynamic>)
           .map((item) => CoinsReward.fromJson(item))
           .toList();
 
       return result;
     } else {
-      throw Exception('Error fetching getInfoCoinsReward');
+      throw Exception('Error fetching get Info Coins Reward');
     }
   }
 
   @override
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken',
-    };
-    var request = http.Request('GET', Uri.parse('$urlAdress/coins/info'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/coins/info';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -182,7 +134,7 @@ class WalletProviderImpl implements WalletProvider {
 
       return result;
     } else {
-      throw Exception('Error fetching getCoinsInfo');
+      throw Exception('Error fetching get Coins Info');
     }
   }
 }

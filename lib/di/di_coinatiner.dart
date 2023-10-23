@@ -57,10 +57,10 @@ class _DIContainer {
 
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
-  AuthProvider _makeAuthProvider() => const AuthProviderImpl();
+  AuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
   ServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
   EventsEntityProvider _makeEventsEntityProvider() =>
-      const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
+      const EventsEntityProviderImpl(htttpService);
   WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
   UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
   EventEntityRepository _makeEventEntityRepository() =>
