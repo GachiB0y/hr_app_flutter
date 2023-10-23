@@ -190,60 +190,68 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: ColorsForWidget.colorGreen),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            blocBirthDayInfo.state.when(
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loaded: (birthDayInfo) {
-                return Text(
-                  birthDayInfo.count.toString(),
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
-                );
-              },
-              error: () => const Text('Ошибка загрузки.'),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  blocBirthDayInfo.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (birthDayInfo) {
+                      return Text(
+                        birthDayInfo.count.toString(),
+                        style:
+                            const TextStyle(fontSize: 26, color: Colors.white),
+                      );
+                    },
+                    error: () => const Text('Ошибка загрузки.'),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Дни рождения',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Дни рождения',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+            const VerticalDivider(
+              color: Colors.white,
+              thickness: 2,
             ),
-          ],
-        ),
-        const VerticalDivider(
-          color: Colors.white,
-          thickness: 2,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            blocRookies.state.when(
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loaded: (rookiseInfo) {
-                return Text(
-                  rookiseInfo.count.toString(),
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
-                );
-              },
-              error: () => const Text('Ошибка загрузки.'),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  blocRookies.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (rookiseInfo) {
+                      return Text(
+                        rookiseInfo.count.toString(),
+                        style:
+                            const TextStyle(fontSize: 26, color: Colors.white),
+                      );
+                    },
+                    error: () => const Text('Ошибка загрузки.'),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Новенькие',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Новенькие',
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-          ],
-        ),
-      ]),
+          ]),
     );
   }
 }

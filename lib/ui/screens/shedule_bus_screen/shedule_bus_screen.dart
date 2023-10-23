@@ -7,6 +7,7 @@ import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_en
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:hr_app_flutter/ui/components/spinner_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
@@ -171,43 +172,74 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemExtent: 100 * textScaleFactor,
-        controller: _scrollController,
-        itemCount: widget.city.destinations.length,
-        itemBuilder: (context, index) {
-          final destination = widget.city.destinations[index];
-          return Container(
-            margin: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: ColorsForWidget.colorGreen,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
+      body: CustomScrollView(
+        slivers: widget.city.destinations
+            .map(
+              (destination) => Spinner(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16.0),
+                  decoration: BoxDecoration(
+                    color: ColorsForWidget.colorGreen,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
+                    title: Text(destination.namePath),
+                    onTap: () async {
+                      await _launchUrl(destination.link);
+                    },
+                  ),
                 ),
-              ],
-            ),
-            child: ListTile(
-              title: Text(destination.namePath),
-              onTap: () async {
-                await _launchUrl(destination.link);
-              },
-            ),
-          );
-        },
-      ),
-      floatingActionButton: _isListViewVisible
-          ? FloatingActionButton(
-              backgroundColor: ColorsForWidget.colorGrey,
-              onPressed: () {
-                // Действие, которое должно выполняться при нажатии на FloatingActionButton
-              },
-              child: const Icon(Icons.arrow_downward),
+              ),
             )
-          : null,
+            .toList(),
+      ),
+
+      //  ListView.builder(
+      //   itemExtent: 100 * textScaleFactor,
+      //   controller: _scrollController,
+      //   itemCount: widget.city.destinations.length,
+      //   itemBuilder: (context, index) {
+      //     final destination = widget.city.destinations[index];
+      //     return Container(
+      //       margin: const EdgeInsets.all(16.0),
+      //       decoration: BoxDecoration(
+      //         color: ColorsForWidget.colorGreen,
+      //         borderRadius: BorderRadius.circular(10),
+      //         boxShadow: [
+      //           BoxShadow(
+      //             color: Colors.black.withOpacity(0.2),
+      //             blurRadius: 5,
+      //             offset: const Offset(0, 3),
+      //           ),
+      //         ],
+      //       ),
+      //       child: ListTile(
+      //         title: Text(destination.namePath),
+      //         onTap: () async {
+      //           await _launchUrl(destination.link);
+      //         },
+      //       ),
+      //     );
+      //   },
+      // ),
+
+      // floatingActionButton: _isListViewVisible
+      //     ? FloatingActionButton(
+      //         backgroundColor: ColorsForWidget.colorGrey,
+      //         onPressed: () {
+      //           // Действие, которое должно выполняться при нажатии на FloatingActionButton
+      //         },
+      //         child: const Icon(Icons.arrow_downward),
+      //       )
+      //     : null,
     );
   }
 }
