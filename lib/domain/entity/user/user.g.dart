@@ -21,6 +21,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
           .map((e) => TagUser.fromJson(e as Map<String, dynamic>))
           .toList(),
       editTags: json['edit_tags'] as bool? ?? false,
+      self: json['self'] as bool,
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -36,6 +37,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'avatar': instance.avatar,
       'tags': instance.tags,
       'edit_tags': instance.editTags,
+      'self': instance.self,
     };
 
 _$_TagUser _$$_TagUserFromJson(Map<String, dynamic> json) => _$_TagUser(

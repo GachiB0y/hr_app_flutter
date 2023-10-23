@@ -4,13 +4,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
-
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget_model.dart';
 
@@ -57,6 +57,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     final blocOtherUsers = context.watch<OtherUsersBloc>();
+    final loaderViewCubit = context.watch<LoaderViewCubit>();
 
     return ChangeNotifierProvaider<UserProfileWidgetModel>(
       model: _model,
@@ -124,7 +125,29 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                                 ),
                               ],
                             ),
-                            const TagsWidget()
+                            const TagsWidget(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                await loaderViewCubit.logout();
+
+                                AutoRouter.of(context)
+                                    .replace(const AuthenticationFormRoute());
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                backgroundColor: Colors.red,
+                              ),
+                              child: const Text(
+                                'Выйти',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -137,9 +160,11 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                 );
               }
             },
-            error: (e) => e == null
-                ? const Text('Пользователь не найден.')
-                : Center(child: Text(e)),
+            error: (e) {
+              return e == null
+                  ? const Text('Пользователь не найден.')
+                  : Center(child: Text(e));
+            },
           ),
         ),
       ),
@@ -153,9 +178,7 @@ class AvatarProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = MediaQuery.of(context).size.width / 4;
-    final blocUser = context.watch<
-        UserBloc>(); // ВОЗМОЖНО ЗАМЕНИТЬ МИША БУДЕТ КИДАТЬ ФЛАГ ИЗ БЛОКА OtherUsersBloc, и тогда не будет краша при отсутвии блока UserBloc
-    final stateBlocUser = blocUser.state as UserStateLoaded;
+
     final blocOtherUsers = context.watch<OtherUsersBloc>();
     final user =
         (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser;
@@ -174,7 +197,7 @@ class AvatarProfileWidget extends StatelessWidget {
                     : imageProvider,
               );
             }),
-        stateBlocUser.userLoaded.autoCard == user.autoCard
+        user.self
             ? Positioned(
                 top: 0,
                 right: 0,
