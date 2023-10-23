@@ -57,7 +57,6 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     final blocOtherUsers = context.watch<OtherUsersBloc>();
-    final loaderViewCubit = context.watch<LoaderViewCubit>();
 
     return ChangeNotifierProvaider<UserProfileWidgetModel>(
       model: _model,
@@ -65,6 +64,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
         appBar: AppBar(
           actions: const [
             SaveButtonWidget(),
+            LogoutButtonWidget(),
           ],
         ),
         body: SafeArea(
@@ -126,28 +126,6 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                               ],
                             ),
                             const TagsWidget(),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                await loaderViewCubit.logout();
-
-                                AutoRouter.of(context)
-                                    .replace(const AuthenticationFormRoute());
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                backgroundColor: Colors.red,
-                              ),
-                              child: const Text(
-                                'Выйти',
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -169,6 +147,51 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
         ),
       ),
     );
+  }
+}
+
+class LogoutButtonWidget extends StatelessWidget {
+  const LogoutButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final loaderViewCubit = context.watch<LoaderViewCubit>();
+
+    if (ChangeNotifierProvaider.watch<
+                ChangeNotifierProvaider<UserProfileWidgetModel>,
+                UserProfileWidgetModel>(context)!
+            .isSave ==
+        true) {
+      return const SizedBox.shrink();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(
+          right: 20.0,
+        ),
+        child: Container(
+          height: 34,
+          width: 34,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(70, 255, 255, 255),
+            borderRadius: BorderRadius.circular(17),
+          ),
+          child: MaterialButton(
+            onPressed: () async {
+              await loaderViewCubit.logout();
+
+              AutoRouter.of(context).replace(const AuthenticationFormRoute());
+            },
+            textColor: Colors.black,
+            padding: const EdgeInsets.all(2),
+            shape: const CircleBorder(),
+            child: const Icon(
+              Icons.logout,
+              size: 35,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
 
