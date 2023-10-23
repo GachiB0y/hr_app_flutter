@@ -35,8 +35,7 @@ class ServiceProviderImpl implements ServiceProvider {
   Future<ScheduleBus> getScheduleBus({required String userToken}) async {
     String uri = '$urlAdress/bus/get_destination';
     final response = await _httpService.get(uri: uri, userToken: userToken);
-    if (response.statusCode == 201) {
-      // TODO: change to 200
+    if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
 
