@@ -76,6 +76,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const GrassCoinScreen(),
       );
     },
+    LeanProductionFormRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LeanProductionFormScreen(),
+      );
+    },
     LoaderRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -323,6 +329,20 @@ class GrassCoinRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'GrassCoinRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LeanProductionFormScreen]
+class LeanProductionFormRoute extends PageRouteInfo<void> {
+  const LeanProductionFormRoute({List<PageRouteInfo>? children})
+      : super(
+          LeanProductionFormRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LeanProductionFormRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

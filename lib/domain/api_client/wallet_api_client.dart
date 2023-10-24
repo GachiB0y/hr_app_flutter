@@ -6,7 +6,8 @@ import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_rew
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 
 abstract interface class WalletProvider {
-  Future<int> getBalance({required String userToken});
+  Future<({int balance, int avarageCoins})> getBalance(
+      {required String userToken});
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
   Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});
   Future<List<Transaction>?> getTransactions({required String userToken});
@@ -26,15 +27,17 @@ class WalletProviderImpl implements WalletProvider {
   WalletProviderImpl(this._httpService);
 
   @override
-  Future<int> getBalance({required String userToken}) async {
+  Future<({int balance, int avarageCoins})> getBalance(
+      {required String userToken}) async {
     String uri = '$urlAdress/coins/balance';
     final response = await _httpService.get(uri: uri, userToken: userToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final int result = jsonData['result']['coins'];
-      return result;
+      final int balance = jsonData['result']['coins'];
+      final int avarageCoins = jsonData['result']['avarage_coins'];
+      return (balance: balance, avarageCoins: avarageCoins);
     } else {
       throw Exception('Error fetching Balance');
     }

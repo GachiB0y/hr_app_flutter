@@ -45,12 +45,16 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           .timeout(const Duration(seconds: 10));
 
       final oldState = (state as WalletStateLoaded).copyWith();
-      final List<Transaction>? transactions =
+      final List<Transaction>? oldTransactions =
           oldState.walletLoaded.transactions;
 
+      final int oldAvarageCoins = oldState.walletLoaded.avarageCoins;
+
       final newState = (state as WalletStateLoaded).copyWith(
-          walletLoaded:
-              Wallet(balance: newBalance, transactions: transactions));
+          walletLoaded: Wallet(
+              balance: newBalance,
+              transactions: oldTransactions,
+              avarageCoins: oldAvarageCoins));
 
       emit(newState);
     } on TimeoutException {
@@ -92,12 +96,16 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           .timeout(const Duration(seconds: 10));
 
       final oldState = (state as WalletStateLoaded).copyWith();
-      final List<Transaction>? transactions =
+      final List<Transaction>? oldTransactions =
           oldState.walletLoaded.transactions;
 
+      final int oldAvarageCoins = oldState.walletLoaded.avarageCoins;
+
       final newState = (state as WalletStateLoaded).copyWith(
-          walletLoaded:
-              Wallet(balance: newBalance, transactions: transactions));
+          walletLoaded: Wallet(
+              balance: newBalance,
+              transactions: oldTransactions,
+              avarageCoins: oldAvarageCoins));
 
       emit(newState);
     } on TimeoutException {

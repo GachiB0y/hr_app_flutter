@@ -21,6 +21,8 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Wallet {
   int get balance => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avarage_coins')
+  int get avarageCoins => throw _privateConstructorUsedError;
   List<Transaction>? get transactions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +35,10 @@ abstract class $WalletCopyWith<$Res> {
   factory $WalletCopyWith(Wallet value, $Res Function(Wallet) then) =
       _$WalletCopyWithImpl<$Res, Wallet>;
   @useResult
-  $Res call({int balance, List<Transaction>? transactions});
+  $Res call(
+      {int balance,
+      @JsonKey(name: 'avarage_coins') int avarageCoins,
+      List<Transaction>? transactions});
 }
 
 /// @nodoc
@@ -50,12 +55,17 @@ class _$WalletCopyWithImpl<$Res, $Val extends Wallet>
   @override
   $Res call({
     Object? balance = null,
+    Object? avarageCoins = null,
     Object? transactions = freezed,
   }) {
     return _then(_value.copyWith(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
+              as int,
+      avarageCoins: null == avarageCoins
+          ? _value.avarageCoins
+          : avarageCoins // ignore: cast_nullable_to_non_nullable
               as int,
       transactions: freezed == transactions
           ? _value.transactions
@@ -71,7 +81,10 @@ abstract class _$$_WalletCopyWith<$Res> implements $WalletCopyWith<$Res> {
       __$$_WalletCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int balance, List<Transaction>? transactions});
+  $Res call(
+      {int balance,
+      @JsonKey(name: 'avarage_coins') int avarageCoins,
+      List<Transaction>? transactions});
 }
 
 /// @nodoc
@@ -85,12 +98,17 @@ class __$$_WalletCopyWithImpl<$Res>
   @override
   $Res call({
     Object? balance = null,
+    Object? avarageCoins = null,
     Object? transactions = freezed,
   }) {
     return _then(_$_Wallet(
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
+              as int,
+      avarageCoins: null == avarageCoins
+          ? _value.avarageCoins
+          : avarageCoins // ignore: cast_nullable_to_non_nullable
               as int,
       transactions: freezed == transactions
           ? _value._transactions
@@ -104,7 +122,9 @@ class __$$_WalletCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Wallet implements _Wallet {
   const _$_Wallet(
-      {required this.balance, required final List<Transaction>? transactions})
+      {required this.balance,
+      @JsonKey(name: 'avarage_coins') required this.avarageCoins,
+      required final List<Transaction>? transactions})
       : _transactions = transactions;
 
   factory _$_Wallet.fromJson(Map<String, dynamic> json) =>
@@ -112,6 +132,9 @@ class _$_Wallet implements _Wallet {
 
   @override
   final int balance;
+  @override
+  @JsonKey(name: 'avarage_coins')
+  final int avarageCoins;
   final List<Transaction>? _transactions;
   @override
   List<Transaction>? get transactions {
@@ -124,7 +147,7 @@ class _$_Wallet implements _Wallet {
 
   @override
   String toString() {
-    return 'Wallet(balance: $balance, transactions: $transactions)';
+    return 'Wallet(balance: $balance, avarageCoins: $avarageCoins, transactions: $transactions)';
   }
 
   @override
@@ -133,14 +156,16 @@ class _$_Wallet implements _Wallet {
         (other.runtimeType == runtimeType &&
             other is _$_Wallet &&
             (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.avarageCoins, avarageCoins) ||
+                other.avarageCoins == avarageCoins) &&
             const DeepCollectionEquality()
                 .equals(other._transactions, _transactions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, balance, const DeepCollectionEquality().hash(_transactions));
+  int get hashCode => Object.hash(runtimeType, balance, avarageCoins,
+      const DeepCollectionEquality().hash(_transactions));
 
   @JsonKey(ignore: true)
   @override
@@ -159,12 +184,16 @@ class _$_Wallet implements _Wallet {
 abstract class _Wallet implements Wallet {
   const factory _Wallet(
       {required final int balance,
+      @JsonKey(name: 'avarage_coins') required final int avarageCoins,
       required final List<Transaction>? transactions}) = _$_Wallet;
 
   factory _Wallet.fromJson(Map<String, dynamic> json) = _$_Wallet.fromJson;
 
   @override
   int get balance;
+  @override
+  @JsonKey(name: 'avarage_coins')
+  int get avarageCoins;
   @override
   List<Transaction>? get transactions;
   @override

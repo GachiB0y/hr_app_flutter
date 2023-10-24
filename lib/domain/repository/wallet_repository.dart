@@ -29,12 +29,17 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<Wallet> getWallet({required String accessToken}) async {
     try {
-      final int balance =
+      final ({int balance, int avarageCoins}) result =
           await _walletProvider.getBalance(userToken: accessToken);
+
+      final int balance = result.balance;
+      final int avarageCoins = result.avarageCoins;
       final List<Transaction>? transactions =
           await _walletProvider.getTransactions(userToken: accessToken);
-      final Wallet wallet =
-          Wallet(balance: balance, transactions: transactions);
+      final Wallet wallet = Wallet(
+          balance: balance,
+          transactions: transactions,
+          avarageCoins: avarageCoins);
       return wallet;
     } catch (e) {
       rethrow;

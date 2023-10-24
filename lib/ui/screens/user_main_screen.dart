@@ -94,6 +94,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             padding: const EdgeInsets.only(left: 8),
                             child: const TableScrollWidget())),
                     const InfoBirthdayAndNewPeopleWidget(),
+                    const LeanProductionButton(),
                     const SerachPeopleButtonWidget(),
                   ],
                 ),
@@ -106,8 +107,8 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 }
 
-class SerachPeopleButtonWidget extends StatelessWidget {
-  const SerachPeopleButtonWidget({
+class LeanProductionButton extends StatelessWidget {
+  const LeanProductionButton({
     super.key,
   });
 
@@ -116,12 +117,13 @@ class SerachPeopleButtonWidget extends StatelessWidget {
     final blocUser = context.read<UserBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
+    const double raiudsBorder = 30.0;
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin:
-          const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
       child: Stack(children: [
         Padding(
@@ -129,16 +131,75 @@ class SerachPeopleButtonWidget extends StatelessWidget {
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Найти соотрудника',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
-                  ),
+                Text(
+                  'Бережливое производство',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  'предложить идею',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Image.asset(
+              'assets/images/lean_production_img.png',
+              width: 75,
+              height: 75,
+            ),
+          ]),
+        ),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(raiudsBorder),
+            onTap: () {
+              AutoRouter.of(context).push(const LeanProductionFormRoute());
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class SerachPeopleButtonWidget extends StatelessWidget {
+  const SerachPeopleButtonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final blocUser = context.read<UserBloc>();
+    const double raiudsBorder = 30.0;
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+    return Container(
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
+      margin:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(raiudsBorder),
+          color: ColorsForWidget.colorGreen),
+      child: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Найти соотрудника',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
                 ),
                 Text(
                   'структура компании',
@@ -157,7 +218,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
               AutoRouter.of(context).push(SearchUserRoute(
                   authRepository: blocUser.authRepository,
@@ -182,13 +243,15 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
     final RookiesBloc blocRookies = context.watch<RookiesBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
+    const double raiudsBorder = 30.0;
 
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
-      margin: const EdgeInsets.all(16.0),
+      margin:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
       child: Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
