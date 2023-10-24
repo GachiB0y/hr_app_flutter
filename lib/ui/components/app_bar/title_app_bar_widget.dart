@@ -35,8 +35,13 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${'${userLoaded.name} ${userLoaded.nameI}'} ',
-                    softWrap: true, style: StyleTextCustom.textNameUser),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text('${'${userLoaded.name} ${userLoaded.nameI}'} ',
+                      softWrap: true,
+                      maxLines: 2,
+                      style: StyleTextCustom.textNameUser),
+                ),
                 const SizedBox(
                   height: 5,
                 ),

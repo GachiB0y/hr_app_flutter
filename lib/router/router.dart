@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
+import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/first_screen_booking_meetings.dart';
+import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/second_screen_booking_meeting.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
 import 'package:hr_app_flutter/ui/screens/education_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/grass_coin_screen.dart';
@@ -15,6 +18,7 @@ import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/ui/screens/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
+import 'package:hr_app_flutter/ui/screens/shedule_bus_screen/shedule_bus_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart';
 part 'router.gr.dart';
@@ -41,5 +45,12 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: AboutNewsRoute.page, path: '/about_news/'),
         AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user/'),
         AutoRoute(page: SearchUserRoute.page, path: '/search_user/'),
+        AutoRoute(page: ScheduleBusRoute.page, path: '/schedule_bus/'),
+        AutoRoute(
+            page: BookingMeetingsFirstRoute.page,
+            path: '/booking_meetings_first/'),
+        AutoRoute(
+            page: BookingMeetingSecondRoute.page,
+            path: '/booking_meetings_second/'),
       ];
 }

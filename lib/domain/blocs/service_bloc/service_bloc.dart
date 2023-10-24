@@ -31,7 +31,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   }
 
   Future<void> onServiceEventFetch(
-      Emitter<ServiceState> emit, ServiceEvent event) async {
+      Emitter<ServiceState> emit, ServiceEventFetch event) async {
     emit(const ServiceState.loading());
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -50,7 +50,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
                 imagePath: 'assets/images/thumbs_up.png',
                 idHandler: 1,
                 title: 'Создать новость',
-                isRow: true,
+                isRow: event.isRow,
                 service: service,
               ),
             );
@@ -61,7 +61,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
                 imagePath: 'assets/images/tree_structure.png',
                 idHandler: 2,
                 title: 'Модерация новостей',
-                isRow: true,
+                isRow: event.isRow,
                 service: service,
               ),
             );
@@ -71,7 +71,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
             ServiceElementWidget(
               imagePath: 'assets/images/note.png',
               title: service.name,
-              isRow: true,
+              isRow: event.isRow,
               service: service,
             ),
           );
@@ -80,7 +80,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
             ServiceElementWidget(
               imagePath: 'assets/images/bus.png',
               title: service.name,
-              isRow: true,
+              isRow: event.isRow,
               service: service,
             ),
           );

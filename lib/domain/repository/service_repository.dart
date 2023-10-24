@@ -1,8 +1,10 @@
 import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
+import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 
 abstract class ServiceRepository {
   Future<List<Service>> getServices({required String userToken});
+  Future<ScheduleBus> getScheduleBus({required String userToken});
 }
 
 class ServiceRepositoryImpl implements ServiceRepository {
@@ -16,6 +18,15 @@ class ServiceRepositoryImpl implements ServiceRepository {
   Future<List<Service>> getServices({required String userToken}) {
     try {
       return _serviceProvider.getServices(userToken: userToken);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ScheduleBus> getScheduleBus({required String userToken}) {
+    try {
+      return _serviceProvider.getScheduleBus(userToken: userToken);
     } catch (e) {
       rethrow;
     }

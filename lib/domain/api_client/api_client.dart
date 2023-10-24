@@ -8,7 +8,7 @@ abstract interface class IHTTPService {
   Future<StreamedResponse> post({
     required String uri,
     required String? body,
-    required String userToken,
+    required String? userToken,
   });
   Future<StreamedResponse> postWithFile({
     required String uri,
@@ -41,12 +41,14 @@ class HTTPServiceImpl implements IHTTPService {
   Future<StreamedResponse> post(
       {required String uri,
       required String? body,
-      required String userToken}) async {
+      required String? userToken}) async {
     var headers = {
       'accept': 'application/json',
-      'Authorization': 'Bearer $userToken',
       'Content-Type': 'application/json'
     };
+    if (userToken != null) {
+      headers.addAll({'Authorization': 'Bearer $userToken'});
+    }
 
     var request = Request('POST', Uri.parse(uri));
     if (body != null) request.body = body;

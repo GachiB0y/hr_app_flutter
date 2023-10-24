@@ -30,6 +30,8 @@ import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:hr_app_flutter/utils/custom_theme.dart';
+
 AppFactory makeAppFactory() => const _AppFactoryDefault();
 
 class _AppFactoryDefault implements AppFactory {
@@ -55,10 +57,10 @@ class _DIContainer {
 
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
-  AuthProvider _makeAuthProvider() => const AuthProviderImpl();
-  ServiceProvider _makeServiceProvider() => const ServiceProviderImpl();
+  AuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
+  ServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
   EventsEntityProvider _makeEventsEntityProvider() =>
-      const EventsEntityProviderImpl(); //EventEntityApiClient ЗАМЕНИТЬ НА EventsEntityProviderImpl ПРИ ПОЛУЧСЕНИИ НОВЫОГО СПИСКА НОВОСТЕЙ
+      const EventsEntityProviderImpl(htttpService);
   WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
   UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
   EventEntityRepository _makeEventEntityRepository() =>
@@ -151,12 +153,7 @@ class ScreenFactoryDefault implements ScreenFactory {
         ],
         supportedLocales: S.delegate.supportedLocales,
         title: 'HR App',
-        theme: ThemeData(
-          bottomNavigationBarTheme:
-              BottomNavigationBarThemeData(backgroundColor: Colors.red[200]),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          useMaterial3: true,
-        ),
+        theme: CustomTheme.lightTheme,
         routerConfig: _router.config(),
       ),
     );

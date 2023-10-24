@@ -45,7 +45,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
   @override
   Widget build(BuildContext context) {
     final blocOtherUsers = context.watch<OtherUsersBloc>();
-
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -63,8 +64,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(40))),
           ),
           onChanged: (value) {
-            searchDebounce?.cancel();
             if (value.isNotEmpty) {
+              searchDebounce?.cancel();
               searchDebounce = Timer(const Duration(milliseconds: 700), () {
                 blocOtherUsers.add(OtherUsersEvent.findUsers(findText: value));
               });
@@ -86,32 +87,45 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
               loaded: (listUsersLoaded, currentUserProfile) {
                 return Expanded(
                   child: ListView.builder(
-                    shrinkWrap: true,
+                    itemExtent: 84,
                     itemCount: listUsersLoaded.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: Builder(builder: (context) {
-                          return CachedNetworkImage(
-                              imageUrl: listUsersLoaded[index].avatar,
-                              imageBuilder: (context, imageProvider) {
-                                return CircleAvatar(
-                                  backgroundImage: imageProvider,
-                                  radius: MediaQuery.of(context).size.width / 8,
-                                );
-                              });
-                        }),
-                        title: Flexible(
-                          child: Text(
-                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}'),
-                        ),
-                        subtitle: Text(listUsersLoaded[index].staffPosition),
-                        onTap: () {
-                          context.pushRoute(ProfileWidgetRoute(
-                            userId: listUsersLoaded[index].autoCard,
-                            authRepository: blocOtherUsers.authRepository,
-                            userRepo: blocOtherUsers.userRepo,
-                          ));
-                        },
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            leading: SizedBox(
+                              width: MediaQuery.of(context).size.width / 8,
+                              child: CachedNetworkImage(
+                                  imageUrl: listUsersLoaded[index].avatar,
+                                  imageBuilder: (context, imageProvider) {
+                                    return CircleAvatar(
+                                      backgroundImage: imageProvider,
+                                      radius:
+                                          MediaQuery.of(context).size.width / 8,
+                                    );
+                                  }),
+                            ),
+                            title: Text(
+                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            subtitle: Text(
+                              listUsersLoaded[index].staffPosition,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () {
+                              context.pushRoute(ProfileWidgetRoute(
+                                userId: listUsersLoaded[index].autoCard,
+                                authRepository: blocOtherUsers.authRepository,
+                                userRepo: blocOtherUsers.userRepo,
+                              ));
+                            },
+                          ),
+                          const Divider(
+                            height: 2,
+                          ),
+                        ],
                       );
                     },
                   ),

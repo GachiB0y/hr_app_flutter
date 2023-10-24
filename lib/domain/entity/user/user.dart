@@ -18,6 +18,7 @@ class User with _$User {
     @JsonKey(name: 'avatar') required String avatar,
     required List<TagUser> tags,
     @Default(false) @JsonKey(name: 'edit_tags') bool editTags,
+    required bool self,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

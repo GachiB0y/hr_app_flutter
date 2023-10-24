@@ -46,6 +46,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthenticationFormScreen(),
       );
     },
+    BookingMeetingSecondRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BookingMeetingSecondScreen(),
+      );
+    },
+    BookingMeetingsFirstRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BookingMeetingsFirstScreen(),
+      );
+    },
     CompanyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -86,6 +98,18 @@ abstract class _$AppRouter extends RootStackRouter {
           userId: args.userId,
           authRepository: args.authRepository,
           userRepo: args.userRepo,
+        )),
+      );
+    },
+    ScheduleBusRoute.name: (routeData) {
+      final args = routeData.argsAs<ScheduleBusRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ScheduleBusScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          serviceRepository: args.serviceRepository,
         )),
       );
     },
@@ -234,6 +258,34 @@ class AuthenticationFormRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [BookingMeetingSecondScreen]
+class BookingMeetingSecondRoute extends PageRouteInfo<void> {
+  const BookingMeetingSecondRoute({List<PageRouteInfo>? children})
+      : super(
+          BookingMeetingSecondRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingMeetingSecondRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BookingMeetingsFirstScreen]
+class BookingMeetingsFirstRoute extends PageRouteInfo<void> {
+  const BookingMeetingsFirstRoute({List<PageRouteInfo>? children})
+      : super(
+          BookingMeetingsFirstRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookingMeetingsFirstRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CompanyScreen]
 class CompanyRoute extends PageRouteInfo<void> {
   const CompanyRoute({List<PageRouteInfo>? children})
@@ -348,6 +400,49 @@ class ProfileWidgetRouteArgs {
   @override
   String toString() {
     return 'ProfileWidgetRouteArgs{key: $key, userId: $userId, authRepository: $authRepository, userRepo: $userRepo}';
+  }
+}
+
+/// generated route for
+/// [ScheduleBusScreen]
+class ScheduleBusRoute extends PageRouteInfo<ScheduleBusRouteArgs> {
+  ScheduleBusRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required ServiceRepository serviceRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ScheduleBusRoute.name,
+          args: ScheduleBusRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            serviceRepository: serviceRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ScheduleBusRoute';
+
+  static const PageInfo<ScheduleBusRouteArgs> page =
+      PageInfo<ScheduleBusRouteArgs>(name);
+}
+
+class ScheduleBusRouteArgs {
+  const ScheduleBusRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.serviceRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final ServiceRepository serviceRepository;
+
+  @override
+  String toString() {
+    return 'ScheduleBusRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
   }
 }
 

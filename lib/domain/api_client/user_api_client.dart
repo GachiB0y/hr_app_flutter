@@ -8,9 +8,7 @@ import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart'
 import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
-import 'package:http/http.dart' as http;
-
-abstract class UserProvider {
+abstract interface class UserProvider {
   Future<User> getUserInfo({required String userToken});
   Future<bool> saveTagsToSend(
       {required String userToken,
@@ -37,15 +35,8 @@ class UserProviderImpl implements UserProvider {
 
   @override
   Future<User> getUserInfo({required String userToken}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken'
-    };
-    var request = http.Request('GET', Uri.parse('$urlAdress/auth/profile'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    String uri = '$urlAdress/auth/profile';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -60,17 +51,8 @@ class UserProviderImpl implements UserProvider {
   @override
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber}) async {
-    var headers = {
-      'accept': 'application/json',
-      'Authorization': 'Bearer $userToken'
-    };
-    var request = http.Request(
-        'GET', Uri.parse('$urlAdress/auth/find_by_phone/$phoneNumber'));
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
+    String uri = '$urlAdress/auth/find_by_phone/$phoneNumber';
+    final response = await _httpService.get(uri: uri, userToken: userToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);

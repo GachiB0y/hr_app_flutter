@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
+
 import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
@@ -25,42 +25,12 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
 
   @override
   Widget build(BuildContext context) {
-    final loaderViewCubit = context.watch<LoaderViewCubit>();
-
     return AppBar(
       scrolledUnderElevation: 0.0,
       // shadowColor: Colors.transparent,
       toolbarHeight: 90,
       leadingWidth: 90,
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-            right: 20.0,
-          ),
-          child: Container(
-            height: 34,
-            width: 34,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(70, 255, 255, 255),
-              borderRadius: BorderRadius.circular(17),
-            ),
-            child: MaterialButton(
-              onPressed: () async {
-                await loaderViewCubit.logout();
 
-                AutoRouter.of(context).replace(const AuthenticationFormRoute());
-              },
-              textColor: Colors.black,
-              padding: const EdgeInsets.all(2),
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.logout,
-                size: 35,
-              ),
-            ),
-          ),
-        ),
-      ],
       leading: const Avatar(),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,

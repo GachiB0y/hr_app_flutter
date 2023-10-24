@@ -28,7 +28,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context
@@ -39,7 +39,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 
   Future<void> _refreshEventsList() async {
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
 
     context
@@ -190,60 +190,68 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: ColorsForWidget.colorGreen),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            blocBirthDayInfo.state.when(
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loaded: (birthDayInfo) {
-                return Text(
-                  birthDayInfo.count.toString(),
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
-                );
-              },
-              error: () => const Text('Ошибка загрузки.'),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  blocBirthDayInfo.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (birthDayInfo) {
+                      return Text(
+                        birthDayInfo.count.toString(),
+                        style:
+                            const TextStyle(fontSize: 26, color: Colors.white),
+                      );
+                    },
+                    error: () => const Text('Ошибка загрузки.'),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Дни рождения',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Дни рождения',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+            const VerticalDivider(
+              color: Colors.white,
+              thickness: 2,
             ),
-          ],
-        ),
-        const VerticalDivider(
-          color: Colors.white,
-          thickness: 2,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            blocRookies.state.when(
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loaded: (rookiseInfo) {
-                return Text(
-                  rookiseInfo.count.toString(),
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
-                );
-              },
-              error: () => const Text('Ошибка загрузки.'),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  blocRookies.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (rookiseInfo) {
+                      return Text(
+                        rookiseInfo.count.toString(),
+                        style:
+                            const TextStyle(fontSize: 26, color: Colors.white),
+                      );
+                    },
+                    error: () => const Text('Ошибка загрузки.'),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Новенькие',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Новенькие',
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-          ],
-        ),
-      ]),
+          ]),
     );
   }
 }
@@ -274,9 +282,12 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
         for (var widget in loeadedServiceWidgets) {
           groupWidgets.add(widget);
         }
-
+        double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+        if (textScaleFactor < 1) textScaleFactor = 1;
         return ListView.builder(
-          shrinkWrap: true,
+          // shrinkWrap: true,
+          itemExtent:
+              (MediaQuery.of(context).size.height / 4.25) * textScaleFactor,
           scrollDirection: Axis.horizontal,
           itemCount: groupWidgets.length,
           itemBuilder: (BuildContext context, int index) {

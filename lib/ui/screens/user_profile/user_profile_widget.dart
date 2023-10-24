@@ -4,13 +4,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
-
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget_model.dart';
 
@@ -64,6 +64,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
         appBar: AppBar(
           actions: const [
             SaveButtonWidget(),
+            LogoutButtonWidget(),
           ],
         ),
         body: SafeArea(
@@ -119,12 +120,12 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                                     user.staffPosition,
                                     style: const TextStyle(fontSize: 16),
                                     softWrap: true,
-                                    maxLines: 3,
+                                    maxLines: 6,
                                   ),
                                 ),
                               ],
                             ),
-                            const TagsWidget()
+                            const TagsWidget(),
                           ],
                         ),
                       ),
@@ -137,13 +138,60 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
                 );
               }
             },
-            error: (e) => e == null
-                ? const Text('Пользователь не найден.')
-                : Center(child: Text(e)),
+            error: (e) {
+              return e == null
+                  ? const Text('Пользователь не найден.')
+                  : Center(child: Text(e));
+            },
           ),
         ),
       ),
     );
+  }
+}
+
+class LogoutButtonWidget extends StatelessWidget {
+  const LogoutButtonWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final loaderViewCubit = context.watch<LoaderViewCubit>();
+
+    if (ChangeNotifierProvaider.watch<
+                ChangeNotifierProvaider<UserProfileWidgetModel>,
+                UserProfileWidgetModel>(context)!
+            .isSave ==
+        true) {
+      return const SizedBox.shrink();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(
+          right: 20.0,
+        ),
+        child: Container(
+          height: 34,
+          width: 34,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(70, 255, 255, 255),
+            borderRadius: BorderRadius.circular(17),
+          ),
+          child: MaterialButton(
+            onPressed: () async {
+              await loaderViewCubit.logout();
+
+              AutoRouter.of(context).replace(const AuthenticationFormRoute());
+            },
+            textColor: Colors.black,
+            padding: const EdgeInsets.all(2),
+            shape: const CircleBorder(),
+            child: const Icon(
+              Icons.logout,
+              size: 35,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -153,8 +201,7 @@ class AvatarProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = MediaQuery.of(context).size.width / 4;
-    final blocUser = context.watch<UserBloc>();
-    final stateBlocUser = blocUser.state as UserStateLoaded;
+
     final blocOtherUsers = context.watch<OtherUsersBloc>();
     final user =
         (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser;
@@ -173,7 +220,7 @@ class AvatarProfileWidget extends StatelessWidget {
                     : imageProvider,
               );
             }),
-        stateBlocUser.userLoaded.autoCard == user?.autoCard
+        user.self
             ? Positioned(
                 top: 0,
                 right: 0,

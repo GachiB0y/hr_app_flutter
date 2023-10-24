@@ -41,6 +41,7 @@ mixin _$User {
   List<TagUser> get tags => throw _privateConstructorUsedError;
   @JsonKey(name: 'edit_tags')
   bool get editTags => throw _privateConstructorUsedError;
+  bool get self => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,7 +65,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'phone_2') String? phoneTwo,
       @JsonKey(name: 'avatar') String avatar,
       List<TagUser> tags,
-      @JsonKey(name: 'edit_tags') bool editTags});
+      @JsonKey(name: 'edit_tags') bool editTags,
+      bool self});
 }
 
 /// @nodoc
@@ -92,6 +94,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? avatar = null,
     Object? tags = null,
     Object? editTags = null,
+    Object? self = null,
   }) {
     return _then(_value.copyWith(
       autoCard: null == autoCard
@@ -142,6 +145,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.editTags
           : editTags // ignore: cast_nullable_to_non_nullable
               as bool,
+      self: null == self
+          ? _value.self
+          : self // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -164,7 +171,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'phone_2') String? phoneTwo,
       @JsonKey(name: 'avatar') String avatar,
       List<TagUser> tags,
-      @JsonKey(name: 'edit_tags') bool editTags});
+      @JsonKey(name: 'edit_tags') bool editTags,
+      bool self});
 }
 
 /// @nodoc
@@ -188,6 +196,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? avatar = null,
     Object? tags = null,
     Object? editTags = null,
+    Object? self = null,
   }) {
     return _then(_$_User(
       autoCard: null == autoCard
@@ -238,6 +247,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.editTags
           : editTags // ignore: cast_nullable_to_non_nullable
               as bool,
+      self: null == self
+          ? _value.self
+          : self // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -257,7 +270,8 @@ class _$_User implements _User {
       @JsonKey(name: 'phone_2') this.phoneTwo = null,
       @JsonKey(name: 'avatar') required this.avatar,
       required final List<TagUser> tags,
-      @JsonKey(name: 'edit_tags') this.editTags = false})
+      @JsonKey(name: 'edit_tags') this.editTags = false,
+      required this.self})
       : _tags = tags;
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -302,10 +316,12 @@ class _$_User implements _User {
   @override
   @JsonKey(name: 'edit_tags')
   final bool editTags;
+  @override
+  final bool self;
 
   @override
   String toString() {
-    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar, tags: $tags, editTags: $editTags)';
+    return 'User(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition, email: $email, phoneOne: $phoneOne, phoneTwo: $phoneTwo, avatar: $avatar, tags: $tags, editTags: $editTags, self: $self)';
   }
 
   @override
@@ -330,7 +346,8 @@ class _$_User implements _User {
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.editTags, editTags) ||
-                other.editTags == editTags));
+                other.editTags == editTags) &&
+            (identical(other.self, self) || other.self == self));
   }
 
   @JsonKey(ignore: true)
@@ -348,7 +365,8 @@ class _$_User implements _User {
       phoneTwo,
       avatar,
       const DeepCollectionEquality().hash(_tags),
-      editTags);
+      editTags,
+      self);
 
   @JsonKey(ignore: true)
   @override
@@ -377,7 +395,8 @@ abstract class _User implements User {
       @JsonKey(name: 'phone_2') final String? phoneTwo,
       @JsonKey(name: 'avatar') required final String avatar,
       required final List<TagUser> tags,
-      @JsonKey(name: 'edit_tags') final bool editTags}) = _$_User;
+      @JsonKey(name: 'edit_tags') final bool editTags,
+      required final bool self}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -414,6 +433,8 @@ abstract class _User implements User {
   @override
   @JsonKey(name: 'edit_tags')
   bool get editTags;
+  @override
+  bool get self;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

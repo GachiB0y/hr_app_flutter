@@ -88,6 +88,10 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                         setState(() {
                           _showSMSCodeField = true;
                         });
+                      } else {
+                        setState(() {
+                          error = 'Номер телефона не найден!';
+                        });
                       }
                     } catch (e) {
                       setState(() {
@@ -96,7 +100,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     }
                   } else {
                     setState(() {
-                      error = 'Not valid number phone';
+                      error = 'Неправильный номер телефона!';
                     });
                   }
                 },

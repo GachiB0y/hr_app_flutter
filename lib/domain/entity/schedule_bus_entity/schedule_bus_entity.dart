@@ -1,21 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'shedule_bus_entity.freezed.dart';
-part 'shedule_bus_entity.g.dart';
+part 'schedule_bus_entity.freezed.dart';
+part 'schedule_bus_entity.g.dart';
 
 @freezed
-class SheduleBus with _$SheduleBus {
-  const factory SheduleBus({
-    required List<City> city,
-  }) = _SheduleBus;
+class ScheduleBus with _$ScheduleBus {
+  const factory ScheduleBus({required List<City> result}) = _ScheduleBus;
 
-  factory SheduleBus.fromJson(Map<String, dynamic> json) =>
-      _$SheduleBusFromJson(json);
+  factory ScheduleBus.fromJson(Map<String, dynamic> json) =>
+      _$ScheduleBusFromJson(json);
 }
 
 @freezed
 class City with _$City {
   const factory City({
-    required String nameCity,
+    required String country,
     required List<Destination> destinations,
   }) = _City;
 
@@ -27,7 +25,7 @@ class Destination with _$Destination {
   const factory Destination({
     @JsonKey(name: 'name_path') required String namePath,
     required String link,
-    required int id,
+    int? id,
   }) = _Destination;
 
   factory Destination.fromJson(Map<String, dynamic> json) =>
