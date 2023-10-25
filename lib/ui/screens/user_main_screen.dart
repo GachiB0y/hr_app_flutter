@@ -159,7 +159,9 @@ class LeanProductionButton extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
-              AutoRouter.of(context).push(const LeanProductionFormRoute());
+              AutoRouter.of(context).push(LeanProductionFormRoute(
+                  authRepository: blocUser.authRepository,
+                  userRepo: blocUser.userRepo));
             },
           ),
         ),

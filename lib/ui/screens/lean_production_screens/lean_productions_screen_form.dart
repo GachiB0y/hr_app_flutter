@@ -1,15 +1,35 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
+import 'package:hr_app_flutter/domain/entity/user/user.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_picker.dart';
 import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_pikcer_model.dart';
 
 import '../../../library/custom_provider/inherit_widget.dart';
 
 @RoutePage()
-class LeanProductionFormScreen extends StatelessWidget {
-  const LeanProductionFormScreen({super.key});
+class LeanProductionFormScreen extends StatelessWidget
+    implements AutoRouteWrapper {
+  const LeanProductionFormScreen(
+      {super.key, required this.authRepository, required this.userRepo});
+  final AuthRepository authRepository;
+  final UserRepository userRepo;
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<OtherUsersBloc>(
+      create: (BuildContext context) =>
+          OtherUsersBloc(authRepository: authRepository, userRepo: userRepo),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +39,19 @@ class LeanProductionFormScreen extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         title: const Text('Подача заявления'),
       ),
-      body: const MyFormWidget(),
+      body: MyFormWidget(
+        authRepository: authRepository,
+        userRepo: userRepo,
+      ),
     );
   }
 }
 
 class MyFormWidget extends StatefulWidget {
-  const MyFormWidget({super.key});
+  const MyFormWidget(
+      {super.key, required this.authRepository, required this.userRepo});
+  final AuthRepository authRepository;
+  final UserRepository userRepo;
 
   @override
   _MyFormWidgetState createState() => _MyFormWidgetState();
@@ -44,6 +70,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
   final List<TextEditingController> _executorsControllers = [
     TextEditingController()
   ];
+  final List<TextEditingController> _executorsIdControllers = [
+    TextEditingController()
+  ];
   bool isChecked = false;
 
   @override
@@ -57,6 +86,7 @@ class _MyFormWidgetState extends State<MyFormWidget> {
     _benefitController.dispose();
     _authorController.dispose();
     _executorsControllers.forEach((controller) => controller.dispose());
+    _executorsIdControllers.forEach((controller) => controller.dispose());
     super.dispose();
   }
 
@@ -97,42 +127,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                     });
                   },
                 ),
-                CustomTextFormField(
-                    iconData: Icons.person,
-                    inputText: 'ФИО сотрудника',
-                    nameController: _employeeNameController),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: _executorsControllers.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: CustomTextFormField(
-                          iconData: Icons.person_4,
-                          inputText: 'Исполнитель ${index + 1}',
-                          nameController: _executorsControllers[index]),
-                    );
-                  },
-                ),
-                _executorsControllers.length < 3
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Center(
-                          child: ElevatedButton(
-                            child: const Text('Добавить исполнителя'),
-                            onPressed: () {
-                              if (_executorsControllers.length < 3) {
-                                setState(() {
-                                  _executorsControllers
-                                      .add(TextEditingController());
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
                 const SizedBox(
                   height: 10,
                 ),
@@ -166,6 +160,52 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                   height: 10,
                 ),
                 const FilePickerWidget(),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _executorsControllers.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ImplementersInputWidget(
+                        authRepository: widget.authRepository,
+                        userRepo: widget.userRepo,
+                        iconData: Icons.person_4,
+                        inputText: 'Исполнитель ${index + 1}',
+                        nameController: _executorsControllers[index],
+                        idController: _executorsIdControllers[index],
+                      ),
+
+                      // CustomTextFormField(
+                      //     iconData: Icons.person_4,
+                      //     inputText: 'Исполнитель ${index + 1}',
+                      //     nameController: _executorsControllers[index]),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                _executorsControllers.length < 3
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Center(
+                          child: ElevatedButton(
+                            child: const Text('Добавить исполнителя'),
+                            onPressed: () {
+                              if (_executorsControllers.length < 3) {
+                                setState(() {
+                                  _executorsControllers
+                                      .add(TextEditingController());
+                                  _executorsIdControllers
+                                      .add(TextEditingController());
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(
                   height: 10,
                 ),
@@ -177,9 +217,12 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                         if (_formKey.currentState!.validate()) {
                           // Perform form submission
                           // ...
-                          print('GOOOOD');
+
+                          print('GOOD!!');
                         } else {
                           print('SO BAD !');
+                          print('${_executorsIdControllers[0].text}');
+                          print('${_executorsIdControllers[1].text}');
                         }
                       }
                     },
@@ -295,6 +338,155 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
           const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+}
+
+class ImplementersInputWidget extends StatefulWidget {
+  const ImplementersInputWidget({
+    super.key,
+    required this.authRepository,
+    required this.userRepo,
+    required TextEditingController nameController,
+    required TextEditingController idController,
+    required IconData? iconData,
+    required String inputText,
+  })  : _idController = idController,
+        _nameController = nameController,
+        _iconData = iconData,
+        _inputText = inputText;
+  final AuthRepository authRepository;
+  final UserRepository userRepo;
+
+  final TextEditingController _nameController;
+  final TextEditingController _idController;
+  final IconData? _iconData;
+  final String _inputText;
+
+  @override
+  _ImplementersInputWidgetState createState() =>
+      _ImplementersInputWidgetState();
+}
+
+class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
+  List<User> filteredUserList = [];
+  Timer? searchDebounce;
+  final FocusNode focusNodeSearch = FocusNode();
+  bool isFocus = false;
+  final ScrollController _scrollController = ScrollController();
+
+  String get inputText => widget._inputText;
+  IconData? get iconData => widget._iconData;
+  TextEditingController get nameController => widget._nameController;
+  TextEditingController get idController => widget._idController;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<OtherUsersBloc>().add(const OtherUsersEvent.clearList());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final blocOtherUsers = context.watch<OtherUsersBloc>();
+
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(inputText),
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  icon: Icon(iconData),
+                  border: InputBorder.none,
+                ),
+                onTap: () {
+                  setState(() {
+                    isFocus = true;
+                  });
+                },
+                onSubmitted: (value) {
+                  setState(() {
+                    isFocus = false;
+                  });
+                },
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    searchDebounce?.cancel();
+                    searchDebounce =
+                        Timer(const Duration(milliseconds: 700), () {
+                      blocOtherUsers
+                          .add(OtherUsersEvent.findUsers(findText: value));
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        blocOtherUsers.state.when(
+          loading: (listUsersLoaded, currentUserProfile) {
+            return const SizedBox.shrink();
+          },
+          loaded: (listUsersLoaded, currentUserProfile) {
+            return listUsersLoaded.isEmpty
+                ? const SizedBox.shrink()
+                : isFocus
+                    ? Container(
+                        constraints:
+                            const BoxConstraints(minHeight: 70, maxHeight: 240),
+                        padding: const EdgeInsets.all(16.0),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.white),
+                        child: Scrollbar(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemExtent: 70,
+                            itemCount: listUsersLoaded.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                    '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
+                                subtitle:
+                                    Text(listUsersLoaded[index].staffPosition),
+                                onTap: () {
+                                  nameController.text =
+                                      '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
+                                  idController.text = listUsersLoaded[index]
+                                      .autoCard
+                                      .toString();
+                                  setState(() {
+                                    isFocus = false;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink();
+          },
+          error: (e) => const Center(child: Text('Пользователь не найден.')),
+        ),
+      ],
     );
   }
 }

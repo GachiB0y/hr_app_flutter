@@ -77,9 +77,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     LeanProductionFormRoute.name: (routeData) {
+      final args = routeData.argsAs<LeanProductionFormRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LeanProductionFormScreen(),
+        child: WrappedRoute(
+            child: LeanProductionFormScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
       );
     },
     LoaderRoute.name: (routeData) {
@@ -335,16 +341,46 @@ class GrassCoinRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LeanProductionFormScreen]
-class LeanProductionFormRoute extends PageRouteInfo<void> {
-  const LeanProductionFormRoute({List<PageRouteInfo>? children})
-      : super(
+class LeanProductionFormRoute
+    extends PageRouteInfo<LeanProductionFormRouteArgs> {
+  LeanProductionFormRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    List<PageRouteInfo>? children,
+  }) : super(
           LeanProductionFormRoute.name,
+          args: LeanProductionFormRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'LeanProductionFormRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<LeanProductionFormRouteArgs> page =
+      PageInfo<LeanProductionFormRouteArgs>(name);
+}
+
+class LeanProductionFormRouteArgs {
+  const LeanProductionFormRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  @override
+  String toString() {
+    return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+  }
 }
 
 /// generated route for
