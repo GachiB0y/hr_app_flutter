@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
@@ -11,16 +9,18 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_picker.dart';
 import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_pikcer_model.dart';
+import 'package:hr_app_flutter/ui/screens/lean_production_screens/lean_productions_screen_form_model.dart';
 
 import '../../../library/custom_provider/inherit_widget.dart';
 
 @RoutePage()
 class LeanProductionFormScreen extends StatelessWidget
     implements AutoRouteWrapper {
-  const LeanProductionFormScreen(
+  LeanProductionFormScreen(
       {super.key, required this.authRepository, required this.userRepo});
   final AuthRepository authRepository;
   final UserRepository userRepo;
+  final _model = LeanProductionFormScreenModel();
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -33,16 +33,37 @@ class LeanProductionFormScreen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
+    return ChangeNotifierProvaider<LeanProductionFormScreenModel>(
+      model: _model,
+      child: Scaffold(
         backgroundColor: Colors.grey[200],
-        title: const Text('Подача заявления'),
+        appBar: AppBar(
+          backgroundColor: Colors.grey[200],
+          title: const Text('Подача заявления'),
+        ),
+        body: MyFormWidget(
+          authRepository: authRepository,
+          userRepo: userRepo,
+        ),
+        floatingActionButton: const CustomFloatingActionButton(),
       ),
-      body: MyFormWidget(
-        authRepository: authRepository,
-        userRepo: userRepo,
-      ),
+    );
+  }
+}
+
+class CustomFloatingActionButton extends StatelessWidget {
+  const CustomFloatingActionButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: const Icon(Icons.attach_file),
+      onPressed: () => ChangeNotifierProvaider.read<
+              ChangeNotifierProvaider<LeanProductionFormScreenModel>,
+              LeanProductionFormScreenModel>(context)
+          ?.pickFile(),
     );
   }
 }
@@ -92,6 +113,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final model = ChangeNotifierProvaider.watch<
+        ChangeNotifierProvaider<LeanProductionFormScreenModel>,
+        LeanProductionFormScreenModel>(context);
     return SingleChildScrollView(
       child: ChangeNotifierProvaider<CustomDatePickerModel>(
         model: CustomDatePickerModel(),
@@ -159,7 +183,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                 const SizedBox(
                   height: 10,
                 ),
-                const FilePickerWidget(),
+                model?.fileNames.isEmpty == false
+                    ? const FilePickerWidget()
+                    : const SizedBox.shrink(),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -175,37 +201,61 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                         nameController: _executorsControllers[index],
                         idController: _executorsIdControllers[index],
                       ),
-
-                      // CustomTextFormField(
-                      //     iconData: Icons.person_4,
-                      //     inputText: 'Исполнитель ${index + 1}',
-                      //     nameController: _executorsControllers[index]),
                     );
                   },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                _executorsControllers.length < 3
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Center(
-                          child: ElevatedButton(
-                            child: const Text('Добавить исполнителя'),
-                            onPressed: () {
-                              if (_executorsControllers.length < 3) {
-                                setState(() {
-                                  _executorsControllers
-                                      .add(TextEditingController());
-                                  _executorsIdControllers
-                                      .add(TextEditingController());
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _executorsControllers.length < 3
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: IconButton(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Color(0xffb3f2b2))),
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  if (_executorsControllers.length < 3) {
+                                    setState(() {
+                                      _executorsControllers
+                                          .add(TextEditingController());
+                                      _executorsIdControllers
+                                          .add(TextEditingController());
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    _executorsControllers.length > 1
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: IconButton(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Color(0xfff3b2b2))),
+                                onPressed: () {
+                                  if (_executorsControllers.length > 1) {
+                                    setState(() {
+                                      _executorsControllers.removeLast();
+                                      _executorsIdControllers.removeLast();
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.remove),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -221,8 +271,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                           print('GOOD!!');
                         } else {
                           print('SO BAD !');
-                          print('${_executorsIdControllers[0].text}');
-                          print('${_executorsIdControllers[1].text}');
+                          print(model?.path);
+                          _executorsIdControllers
+                              .forEach((controller) => print(controller.text));
                         }
                       }
                     },
@@ -292,27 +343,11 @@ class FilePickerWidget extends StatefulWidget {
 }
 
 class _FilePickerWidgetState extends State<FilePickerWidget> {
-  String _fileName = '';
-
-  FilePickerResult? result;
-  String? path;
-
-  void _pickFile() async {
-    result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png'],
-    );
-
-    if (result != null) {
-      setState(() {
-        path = result!.files.single.path;
-        _fileName = result!.files.single.name;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final model = ChangeNotifierProvaider.watch<
+        ChangeNotifierProvaider<LeanProductionFormScreenModel>,
+        LeanProductionFormScreenModel>(context);
     return Container(
       padding: const EdgeInsets.all(16.0),
       width: double.infinity,
@@ -321,21 +356,57 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: _pickFile,
-            child: const Text(
-              'Выберите файл ...',
-              style: TextStyle(fontSize: 16, color: Colors.blue),
-            ),
+          const Text(
+            'Выбранные фаилы:',
+            style: TextStyle(fontSize: 16),
           ),
-          const SizedBox(height: 16),
-          _fileName != ''
-              ? Text(
-                  'Выбранный фаил: $_fileName',
-                  style: const TextStyle(fontSize: 16),
-                )
-              : const SizedBox.shrink(),
-          const SizedBox(height: 16),
+          SizedBox(
+            height: 160,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemExtent: 120,
+                itemCount: model?.fileNames.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Stack(children: [
+                          Container(
+                            margin: const EdgeInsets.all(8.0),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.file_present,
+                                size: 60,
+                              ),
+                              onPressed: () {
+                                // Действия при нажатии на иконку документа
+                              },
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional.topEnd,
+                            child: IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                model?.deleteFile(indexFile: index);
+                              },
+                            ),
+                          ),
+                        ]),
+                        Text(
+                          '${model?.fileNames[index]}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+            // Text(
+            //   'Выбранный фаил: ${model!.fileName}',
+            //   style: const TextStyle(fontSize: 16),
+            // ),
+          ),
         ],
       ),
     );
