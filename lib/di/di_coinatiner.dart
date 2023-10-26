@@ -19,6 +19,7 @@ import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
@@ -71,6 +72,9 @@ class _DIContainer {
 
   UserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
+
+  LeanProductionRepository _makeLeanProductionRepository() =>
+      LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
   ServiceRepository _makeServiceRepository() =>
       ServiceRepositoryImpl(serviceProvider: _makeServiceProvider());
   AuthRepository _makeAuthRepository() => AuthRepositoryImpl(
@@ -87,6 +91,8 @@ class ScreenFactoryDefault implements ScreenFactory {
   MultiBlocProvider createMultiBlocProvider() {
     final AuthRepository authRepository = _diContainer._makeAuthRepository();
     final UserRepository userRepository = _diContainer._makeUserRepository();
+    final LeanProductionRepository leanProductionRepository =
+        _diContainer._makeLeanProductionRepository();
     final EventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
@@ -107,7 +113,9 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
-              userRepo: userRepository, authRepository: authRepository),
+              userRepo: userRepository,
+              authRepository: authRepository,
+              leanProductionRepository: leanProductionRepository),
         ),
         BlocProvider<UserBirthDayInfoBloc>(
           create: (BuildContext context) => UserBirthDayInfoBloc(

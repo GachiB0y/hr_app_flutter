@@ -161,7 +161,8 @@ class LeanProductionButton extends StatelessWidget {
             onTap: () {
               AutoRouter.of(context).push(LeanProductionFormRoute(
                   authRepository: blocUser.authRepository,
-                  userRepo: blocUser.userRepo));
+                  userRepo: blocUser.userRepo,
+                  leanRepository: blocUser.leanProductionRepository));
             },
           ),
         ),

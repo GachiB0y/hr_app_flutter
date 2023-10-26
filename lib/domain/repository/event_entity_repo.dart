@@ -57,11 +57,13 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       required File imageFile,
       required List<String> categories}) async {
     try {
+      final List<String> pathsNew = [];
+      pathsNew.add(imageFile.path);
       return await _eventEntityProvider.createNewEventEntity(
           accessToken: accessToken,
           title: title,
           description: description,
-          imageFile: imageFile,
+          paths: pathsNew,
           categories: categories,
           startDate: startDate,
           endDate: endDate);

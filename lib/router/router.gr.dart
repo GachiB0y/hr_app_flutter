@@ -85,6 +85,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           authRepository: args.authRepository,
           userRepo: args.userRepo,
+          leanRepository: args.leanRepository,
         )),
       );
     },
@@ -347,6 +348,7 @@ class LeanProductionFormRoute
     Key? key,
     required AuthRepository authRepository,
     required UserRepository userRepo,
+    required LeanProductionRepository leanRepository,
     List<PageRouteInfo>? children,
   }) : super(
           LeanProductionFormRoute.name,
@@ -354,6 +356,7 @@ class LeanProductionFormRoute
             key: key,
             authRepository: authRepository,
             userRepo: userRepo,
+            leanRepository: leanRepository,
           ),
           initialChildren: children,
         );
@@ -369,6 +372,7 @@ class LeanProductionFormRouteArgs {
     this.key,
     required this.authRepository,
     required this.userRepo,
+    required this.leanRepository,
   });
 
   final Key? key;
@@ -377,9 +381,11 @@ class LeanProductionFormRouteArgs {
 
   final UserRepository userRepo;
 
+  final LeanProductionRepository leanRepository;
+
   @override
   String toString() {
-    return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+    return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
   }
 }
 

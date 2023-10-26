@@ -110,9 +110,11 @@ class UserRepositoryImpl implements UserRepository {
   Future<bool> sendAvatarWithProfile(
       {required String userToken, required io.File imageFile}) {
     try {
+      final List<String> pathsNew = [];
+      pathsNew.add(imageFile.path);
       return _userProvider.sendAvatarWithProfile(
         userToken: userToken,
-        imageFile: imageFile,
+        paths: pathsNew,
       );
     } catch (e) {
       rethrow;

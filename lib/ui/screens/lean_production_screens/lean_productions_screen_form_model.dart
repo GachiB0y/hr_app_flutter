@@ -42,8 +42,8 @@ class LeanProductionFormScreenModel extends Listenable {
       path = result!.files.single.path;
 
       result!.files.forEach((element) {
-        paths.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
-        fileNames.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        // paths.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        // fileNames.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
         paths.add(element.path);
         fileNames.add(element.name);
       });

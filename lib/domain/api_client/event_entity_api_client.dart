@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io' as io;
 
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
-
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 
@@ -21,7 +19,7 @@ abstract interface class EventsEntityProvider {
     required String description,
     required String startDate,
     required String endDate,
-    required io.File imageFile,
+    required List<String> paths,
     required List<String> categories,
   });
   Future<bool> approvementNews({
@@ -79,7 +77,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       required String description,
       required String startDate,
       required String endDate,
-      required io.File imageFile,
+      required List<String> paths,
       required List<String> categories}) async {
     String uri = '$urlAdress/news/add_feed';
 
@@ -90,8 +88,8 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
     final response = await _httpService.postWithFile(
       uri: uri,
       userToken: accessToken,
-      imageFile: imageFile,
-      fields: fields,
+      paths: paths,
+      fieldsNew: fields,
     );
     if (response.statusCode == 201) {
       return true;
