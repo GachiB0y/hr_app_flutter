@@ -69,13 +69,9 @@ class ServiceProviderImpl implements ServiceProvider {
     // };
     // final Map<String, String> newFields = {'issue': '$bodyRequest'};
 
-    // final Map<String, String> newFields = {
-    //   'issue':
-    //       '{     "realized": ${formEntity.realized},     "first_implementer": ${formEntity.firstImplementer},     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }'
-    // };
     final Map<String, String> newFields = {
       'issue':
-          '{     "realized": ${formEntity.realized},     "first_implementer": "AAAAAAAA",     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }'
+          '{     "realized": ${formEntity.realized},     "first_implementer": ${formEntity.firstImplementer},     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }'
     };
 
     final response = await _httpService.postWithFile(
