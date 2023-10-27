@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
-import 'package:hr_app_flutter/domain/entity/lean_production_form_entity/lean_production_form_entity.dart';
+import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
+import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
+
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
@@ -27,6 +29,8 @@ class LeanProductionFormBloc
     on<LeanProductionFormEvent>((event, emit) async {
       if (event is LeanProductionFormEventSubmitForm) {
         await onLeanProductionFormEventSubmit(event, emit);
+      } else if (event is LeanProductionFormEventGetMyLeanProductions) {
+        await onLeanProductionFormEventGetMyLeanProductions(event, emit);
       }
     });
   }
@@ -34,7 +38,6 @@ class LeanProductionFormBloc
   Future<void> onLeanProductionFormEventSubmit(
       LeanProductionFormEventSubmitForm event,
       Emitter<LeanProductionFormState> emit) async {
-    emit(const LeanProductionFormState.loading());
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
 
@@ -50,6 +53,29 @@ class LeanProductionFormBloc
     } on ApiClientException {
       emit(const LeanProductionFormState.error(
           errorText: 'Ошибка отправки формы!'));
+    } catch (e) {
+      emit(
+          const LeanProductionFormState.error(errorText: 'Неизвестная ошибка'));
+    }
+  }
+
+  Future<void> onLeanProductionFormEventGetMyLeanProductions(
+      LeanProductionFormEventGetMyLeanProductions event,
+      Emitter<LeanProductionFormState> emit) async {
+    emit(const LeanProductionFormState.loading());
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      final List<MyLeanProductionsEntity> myProposals = await leanRepository
+          .getMyLeanProductions(
+            userToken: accessToken as String,
+          )
+          .timeout(const Duration(seconds: 10));
+
+      emit(LeanProductionFormState.loaded(myProposals: myProposals));
+    } on TimeoutException {
+      emit(const LeanProductionFormState.error(
+          errorText: 'Ошибка ожидания  запроса!'));
     } catch (e) {
       emit(
           const LeanProductionFormState.error(errorText: 'Неизвестная ошибка'));

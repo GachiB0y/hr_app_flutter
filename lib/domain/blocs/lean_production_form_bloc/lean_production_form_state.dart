@@ -5,7 +5,7 @@ class LeanProductionFormState with _$LeanProductionFormState {
   const factory LeanProductionFormState.loading() =
       LeanProductionFormStateLoading;
   const factory LeanProductionFormState.loaded(
-      {LeanProductionFormEntity? formEntity,
+      {List<MyLeanProductionsEntity>? myProposals,
       bool? isSubmitting}) = LeanProductionFormStateLoaded;
   const factory LeanProductionFormState.error({String? errorText}) =
       LeanProductionFormStateError;

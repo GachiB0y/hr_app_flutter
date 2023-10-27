@@ -21,10 +21,10 @@ Map<String, dynamic> _$$LeanProductionFormStateLoadingToJson(
 _$LeanProductionFormStateLoaded _$$LeanProductionFormStateLoadedFromJson(
         Map<String, dynamic> json) =>
     _$LeanProductionFormStateLoaded(
-      formEntity: json['formEntity'] == null
-          ? null
-          : LeanProductionFormEntity.fromJson(
-              json['formEntity'] as Map<String, dynamic>),
+      myProposals: (json['myProposals'] as List<dynamic>?)
+          ?.map((e) =>
+              MyLeanProductionsEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
       isSubmitting: json['isSubmitting'] as bool?,
       $type: json['runtimeType'] as String?,
     );
@@ -32,7 +32,7 @@ _$LeanProductionFormStateLoaded _$$LeanProductionFormStateLoadedFromJson(
 Map<String, dynamic> _$$LeanProductionFormStateLoadedToJson(
         _$LeanProductionFormStateLoaded instance) =>
     <String, dynamic>{
-      'formEntity': instance.formEntity,
+      'myProposals': instance.myProposals,
       'isSubmitting': instance.isSubmitting,
       'runtimeType': instance.$type,
     };

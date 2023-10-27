@@ -16,43 +16,47 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LeanProductionFormEvent {
-  LeanProductionFormEntity get formEntity => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() getMyLeanProductions,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getMyLeanProductions,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getMyLeanProductions,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
+        getMyLeanProductions,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $LeanProductionFormEventCopyWith<LeanProductionFormEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -61,10 +65,6 @@ abstract class $LeanProductionFormEventCopyWith<$Res> {
   factory $LeanProductionFormEventCopyWith(LeanProductionFormEvent value,
           $Res Function(LeanProductionFormEvent) then) =
       _$LeanProductionFormEventCopyWithImpl<$Res, LeanProductionFormEvent>;
-  @useResult
-  $Res call({LeanProductionFormEntity formEntity});
-
-  $LeanProductionFormEntityCopyWith<$Res> get formEntity;
 }
 
 /// @nodoc
@@ -77,41 +77,130 @@ class _$LeanProductionFormEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? formEntity = null,
-  }) {
-    return _then(_value.copyWith(
-      formEntity: null == formEntity
-          ? _value.formEntity
-          : formEntity // ignore: cast_nullable_to_non_nullable
-              as LeanProductionFormEntity,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $LeanProductionFormEntityCopyWith<$Res> get formEntity {
-    return $LeanProductionFormEntityCopyWith<$Res>(_value.formEntity, (value) {
-      return _then(_value.copyWith(formEntity: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$LeanProductionFormEventSubmitFormCopyWith<$Res>
-    implements $LeanProductionFormEventCopyWith<$Res> {
+abstract class _$$LeanProductionFormEventGetMyLeanProductionsCopyWith<$Res> {
+  factory _$$LeanProductionFormEventGetMyLeanProductionsCopyWith(
+          _$LeanProductionFormEventGetMyLeanProductions value,
+          $Res Function(_$LeanProductionFormEventGetMyLeanProductions) then) =
+      __$$LeanProductionFormEventGetMyLeanProductionsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LeanProductionFormEventGetMyLeanProductionsCopyWithImpl<$Res>
+    extends _$LeanProductionFormEventCopyWithImpl<$Res,
+        _$LeanProductionFormEventGetMyLeanProductions>
+    implements _$$LeanProductionFormEventGetMyLeanProductionsCopyWith<$Res> {
+  __$$LeanProductionFormEventGetMyLeanProductionsCopyWithImpl(
+      _$LeanProductionFormEventGetMyLeanProductions _value,
+      $Res Function(_$LeanProductionFormEventGetMyLeanProductions) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LeanProductionFormEventGetMyLeanProductions
+    implements LeanProductionFormEventGetMyLeanProductions {
+  const _$LeanProductionFormEventGetMyLeanProductions();
+
+  @override
+  String toString() {
+    return 'LeanProductionFormEvent.getMyLeanProductions()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeanProductionFormEventGetMyLeanProductions);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getMyLeanProductions,
+    required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+  }) {
+    return getMyLeanProductions();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getMyLeanProductions,
+    TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+  }) {
+    return getMyLeanProductions?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getMyLeanProductions,
+    TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    required TResult orElse(),
+  }) {
+    if (getMyLeanProductions != null) {
+      return getMyLeanProductions();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
+        getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventSubmitForm value)
+        submitForm,
+  }) {
+    return getMyLeanProductions(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+  }) {
+    return getMyLeanProductions?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    required TResult orElse(),
+  }) {
+    if (getMyLeanProductions != null) {
+      return getMyLeanProductions(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LeanProductionFormEventGetMyLeanProductions
+    implements LeanProductionFormEvent {
+  const factory LeanProductionFormEventGetMyLeanProductions() =
+      _$LeanProductionFormEventGetMyLeanProductions;
+}
+
+/// @nodoc
+abstract class _$$LeanProductionFormEventSubmitFormCopyWith<$Res> {
   factory _$$LeanProductionFormEventSubmitFormCopyWith(
           _$LeanProductionFormEventSubmitForm value,
           $Res Function(_$LeanProductionFormEventSubmitForm) then) =
       __$$LeanProductionFormEventSubmitFormCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({LeanProductionFormEntity formEntity});
 
-  @override
   $LeanProductionFormEntityCopyWith<$Res> get formEntity;
 }
 
@@ -136,6 +225,14 @@ class __$$LeanProductionFormEventSubmitFormCopyWithImpl<$Res>
           : formEntity // ignore: cast_nullable_to_non_nullable
               as LeanProductionFormEntity,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LeanProductionFormEntityCopyWith<$Res> get formEntity {
+    return $LeanProductionFormEntityCopyWith<$Res>(_value.formEntity, (value) {
+      return _then(_value.copyWith(formEntity: value));
+    });
   }
 }
 
@@ -176,6 +273,7 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() getMyLeanProductions,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
   }) {
     return submitForm(formEntity);
@@ -184,6 +282,7 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getMyLeanProductions,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
   }) {
     return submitForm?.call(formEntity);
@@ -192,6 +291,7 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getMyLeanProductions,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     required TResult orElse(),
   }) {
@@ -204,6 +304,8 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
+        getMyLeanProductions,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
   }) {
@@ -213,6 +315,8 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
   }) {
     return submitForm?.call(this);
@@ -221,6 +325,8 @@ class _$LeanProductionFormEventSubmitForm
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     required TResult orElse(),
   }) {
@@ -237,9 +343,7 @@ abstract class LeanProductionFormEventSubmitForm
           {required final LeanProductionFormEntity formEntity}) =
       _$LeanProductionFormEventSubmitForm;
 
-  @override
   LeanProductionFormEntity get formEntity;
-  @override
   @JsonKey(ignore: true)
   _$$LeanProductionFormEventSubmitFormCopyWith<
           _$LeanProductionFormEventSubmitForm>
@@ -271,7 +375,7 @@ mixin _$LeanProductionFormState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            LeanProductionFormEntity? formEntity, bool? isSubmitting)
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
     required TResult Function(String? errorText) error,
   }) =>
@@ -279,7 +383,8 @@ mixin _$LeanProductionFormState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult? Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult? Function(String? errorText)? error,
   }) =>
@@ -287,7 +392,8 @@ mixin _$LeanProductionFormState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult Function(String? errorText)? error,
     required TResult orElse(),
@@ -391,7 +497,7 @@ class _$LeanProductionFormStateLoading
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            LeanProductionFormEntity? formEntity, bool? isSubmitting)
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
     required TResult Function(String? errorText) error,
   }) {
@@ -402,7 +508,8 @@ class _$LeanProductionFormStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult? Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult? Function(String? errorText)? error,
   }) {
@@ -413,7 +520,8 @@ class _$LeanProductionFormStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult Function(String? errorText)? error,
     required TResult orElse(),
@@ -482,9 +590,7 @@ abstract class _$$LeanProductionFormStateLoadedCopyWith<$Res> {
           $Res Function(_$LeanProductionFormStateLoaded) then) =
       __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({LeanProductionFormEntity? formEntity, bool? isSubmitting});
-
-  $LeanProductionFormEntityCopyWith<$Res>? get formEntity;
+  $Res call({List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting});
 }
 
 /// @nodoc
@@ -500,31 +606,19 @@ class __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? formEntity = freezed,
+    Object? myProposals = freezed,
     Object? isSubmitting = freezed,
   }) {
     return _then(_$LeanProductionFormStateLoaded(
-      formEntity: freezed == formEntity
-          ? _value.formEntity
-          : formEntity // ignore: cast_nullable_to_non_nullable
-              as LeanProductionFormEntity?,
+      myProposals: freezed == myProposals
+          ? _value._myProposals
+          : myProposals // ignore: cast_nullable_to_non_nullable
+              as List<MyLeanProductionsEntity>?,
       isSubmitting: freezed == isSubmitting
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $LeanProductionFormEntityCopyWith<$Res>? get formEntity {
-    if (_value.formEntity == null) {
-      return null;
-    }
-
-    return $LeanProductionFormEntityCopyWith<$Res>(_value.formEntity!, (value) {
-      return _then(_value.copyWith(formEntity: value));
-    });
   }
 }
 
@@ -532,14 +626,25 @@ class __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
   const _$LeanProductionFormStateLoaded(
-      {this.formEntity, this.isSubmitting, final String? $type})
-      : $type = $type ?? 'loaded';
+      {final List<MyLeanProductionsEntity>? myProposals,
+      this.isSubmitting,
+      final String? $type})
+      : _myProposals = myProposals,
+        $type = $type ?? 'loaded';
 
   factory _$LeanProductionFormStateLoaded.fromJson(Map<String, dynamic> json) =>
       _$$LeanProductionFormStateLoadedFromJson(json);
 
+  final List<MyLeanProductionsEntity>? _myProposals;
   @override
-  final LeanProductionFormEntity? formEntity;
+  List<MyLeanProductionsEntity>? get myProposals {
+    final value = _myProposals;
+    if (value == null) return null;
+    if (_myProposals is EqualUnmodifiableListView) return _myProposals;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final bool? isSubmitting;
 
@@ -548,7 +653,7 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
 
   @override
   String toString() {
-    return 'LeanProductionFormState.loaded(formEntity: $formEntity, isSubmitting: $isSubmitting)';
+    return 'LeanProductionFormState.loaded(myProposals: $myProposals, isSubmitting: $isSubmitting)';
   }
 
   @override
@@ -556,15 +661,16 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LeanProductionFormStateLoaded &&
-            (identical(other.formEntity, formEntity) ||
-                other.formEntity == formEntity) &&
+            const DeepCollectionEquality()
+                .equals(other._myProposals, _myProposals) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, formEntity, isSubmitting);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_myProposals), isSubmitting);
 
   @JsonKey(ignore: true)
   @override
@@ -578,35 +684,37 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            LeanProductionFormEntity? formEntity, bool? isSubmitting)
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
     required TResult Function(String? errorText) error,
   }) {
-    return loaded(formEntity, isSubmitting);
+    return loaded(myProposals, isSubmitting);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult? Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult? Function(String? errorText)? error,
   }) {
-    return loaded?.call(formEntity, isSubmitting);
+    return loaded?.call(myProposals, isSubmitting);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult Function(String? errorText)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(formEntity, isSubmitting);
+      return loaded(myProposals, isSubmitting);
     }
     return orElse();
   }
@@ -656,13 +764,13 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
 abstract class LeanProductionFormStateLoaded
     implements LeanProductionFormState {
   const factory LeanProductionFormStateLoaded(
-      {final LeanProductionFormEntity? formEntity,
+      {final List<MyLeanProductionsEntity>? myProposals,
       final bool? isSubmitting}) = _$LeanProductionFormStateLoaded;
 
   factory LeanProductionFormStateLoaded.fromJson(Map<String, dynamic> json) =
       _$LeanProductionFormStateLoaded.fromJson;
 
-  LeanProductionFormEntity? get formEntity;
+  List<MyLeanProductionsEntity>? get myProposals;
   bool? get isSubmitting;
   @JsonKey(ignore: true)
   _$$LeanProductionFormStateLoadedCopyWith<_$LeanProductionFormStateLoaded>
@@ -748,7 +856,7 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            LeanProductionFormEntity? formEntity, bool? isSubmitting)
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
     required TResult Function(String? errorText) error,
   }) {
@@ -759,7 +867,8 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult? Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult? Function(String? errorText)? error,
   }) {
@@ -770,7 +879,8 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(LeanProductionFormEntity? formEntity, bool? isSubmitting)?
+    TResult Function(
+            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
     TResult Function(String? errorText)? error,
     required TResult orElse(),

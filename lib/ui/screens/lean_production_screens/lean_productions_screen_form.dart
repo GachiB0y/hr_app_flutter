@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/lean_production_form_bloc/lean_production_form_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/other_users_bloc/other_users_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/lean_production_form_entity/lean_production_form_entity.dart';
+import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
-import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_picker.dart';
-import 'package:hr_app_flutter/ui/components/custom_date_picker/custom_date_pikcer_model.dart';
 import 'package:hr_app_flutter/ui/screens/lean_production_screens/lean_productions_screen_form_model.dart';
 
 import '../../../library/custom_provider/inherit_widget.dart';
@@ -158,210 +156,187 @@ class _MyFormWidgetState extends State<MyFormWidget> {
             ..showSnackBar(
               SnackBar(
                 content: Center(
-                    child: Text(
-                        'Ошибка:${(state as LeanProductionFormStateError).errorText}.\n Попробуйте снова')),
+                    child:
+                        Text('Ошибка:${state.errorText}.\n Попробуйте снова')),
                 duration: const Duration(seconds: 6),
               ),
             );
         }
       },
       child: SingleChildScrollView(
-        child: ChangeNotifierProvaider<CustomDatePickerModel>(
-          model: CustomDatePickerModel(),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Colors.white),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Дата'),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          CustomDatePicker(),
-                        ],
-                      )),
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: const Text('Подано реализованным'),
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = !isChecked;
-                      });
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormField(
-                      iconData: Icons.receipt,
-                      inputText: 'Суть проблемы',
-                      nameController: _problemController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormField(
-                      iconData: Icons.question_mark_outlined,
-                      inputText: 'Как решить',
-                      nameController: _solutionController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormField(
-                      iconData: Icons.paid,
-                      inputText: 'Ориентировочные затраты',
-                      nameController: _costController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormField(
-                      iconData: Icons.star,
-                      inputText:
-                          'Польза предложения (экономия времени, средств и т.д.)',
-                      nameController: _benefitController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  model?.fileNames.isEmpty == false
-                      ? const FilePickerWidget()
-                      : const SizedBox.shrink(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _executorsControllers.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: ImplementersInputWidget(
-                          authRepository: widget.authRepository,
-                          userRepo: widget.userRepo,
-                          iconData: Icons.person_4,
-                          inputText: 'Исполнитель ${index + 1}',
-                          nameController: _executorsControllers[index],
-                          idController: _executorsIdControllers[index],
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _executorsControllers.length < 3
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Center(
-                                child: IconButton(
-                                  style: const ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Color(0xffb3f2b2))),
-                                  icon: const Icon(Icons.add),
-                                  onPressed: () {
-                                    if (_executorsControllers.length < 3) {
-                                      setState(() {
-                                        _executorsControllers
-                                            .add(TextEditingController());
-                                        _executorsIdControllers
-                                            .add(TextEditingController());
-                                      });
-                                    }
-                                  },
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                      _executorsControllers.length > 1
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Center(
-                                child: IconButton(
-                                  style: const ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Color(0xfff3b2b2))),
-                                  onPressed: () {
-                                    if (_executorsControllers.length > 1) {
-                                      setState(() {
-                                        _executorsControllers.removeLast();
-                                        _executorsIdControllers.removeLast();
-                                      });
-                                    }
-                                  },
-                                  icon: const Icon(Icons.remove),
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      child: const Text('Отправить'),
-                      onPressed: () {
-                        if (_formKey.currentState != null) {
-                          if (_formKey.currentState!.validate()) {
-                            final modelView = ChangeNotifierProvaider.watch<
-                                ChangeNotifierProvaider<
-                                    LeanProductionFormScreenModel>,
-                                LeanProductionFormScreenModel>(context);
-
-                            int firstImplementer = 0;
-                            int secondImplementer = 0;
-                            int thirdImplementer = 0;
-
-                            _executorsIdControllers
-                                .asMap()
-                                .forEach((index, controller) {
-                              switch (index) {
-                                case 0:
-                                  if (controller.text != '') {
-                                    firstImplementer =
-                                        int.parse(controller.text);
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextFormField(
+                    iconData: Icons.receipt,
+                    inputText: 'Суть проблемы',
+                    nameController: _problemController),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomTextFormField(
+                    iconData: Icons.question_mark_outlined,
+                    inputText: 'Как решить',
+                    nameController: _solutionController),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomTextFormField(
+                    iconData: Icons.paid,
+                    inputText: 'Ориентировочные затраты',
+                    nameController: _costController),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomTextFormField(
+                    iconData: Icons.star,
+                    inputText:
+                        'Польза предложения (экономия времени, средств и т.д.)',
+                    nameController: _benefitController),
+                const SizedBox(
+                  height: 10,
+                ),
+                model?.fileNames.isEmpty == false
+                    ? const FilePickerWidget()
+                    : const SizedBox.shrink(),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _executorsControllers.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ImplementersInputWidget(
+                        authRepository: widget.authRepository,
+                        userRepo: widget.userRepo,
+                        iconData: Icons.person_4,
+                        inputText: 'Исполнитель ${index + 1}',
+                        nameController: _executorsControllers[index],
+                        idController: _executorsIdControllers[index],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _executorsControllers.length < 3
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: IconButton(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Color(0xffb3f2b2))),
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  if (_executorsControllers.length < 3) {
+                                    setState(() {
+                                      _executorsControllers
+                                          .add(TextEditingController());
+                                      _executorsIdControllers
+                                          .add(TextEditingController());
+                                    });
                                   }
-                                case 1:
-                                  secondImplementer =
-                                      int.parse(controller.text);
-                                case 2:
-                                  thirdImplementer = int.parse(controller.text);
-                              }
-                            });
-                            final formEntity = LeanProductionFormEntity(
-                              firstImplementer: firstImplementer,
-                              secondImplementer: secondImplementer,
-                              thirdImplementer: thirdImplementer,
-                              realized: isChecked,
-                              issue: _problemController.text,
-                              solution: _solutionController.text,
-                              expenses: _costController.text,
-                              benefit: _benefitController.text,
-                              paths:
-                                  modelView!.paths.whereType<String>().toList(),
-                            );
+                                },
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    _executorsControllers.length > 1
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: IconButton(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Color(0xfff3b2b2))),
+                                onPressed: () {
+                                  if (_executorsControllers.length > 1) {
+                                    setState(() {
+                                      _executorsControllers.removeLast();
+                                      _executorsIdControllers.removeLast();
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.remove),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Подано реализованным'),
+                  value: isChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = !isChecked;
+                    });
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    child: const Text('Отправить'),
+                    onPressed: () {
+                      if (_formKey.currentState != null) {
+                        if (_formKey.currentState!.validate()) {
+                          final modelView = ChangeNotifierProvaider.watch<
+                              ChangeNotifierProvaider<
+                                  LeanProductionFormScreenModel>,
+                              LeanProductionFormScreenModel>(context);
 
-                            blocLeanProductionForm.add(
-                                LeanProductionFormEvent.submitForm(
-                                    formEntity: formEntity));
-                          }
+                          int firstImplementer = 0;
+                          int secondImplementer = 0;
+                          int thirdImplementer = 0;
+
+                          _executorsIdControllers
+                              .asMap()
+                              .forEach((index, controller) {
+                            switch (index) {
+                              case 0:
+                                if (controller.text != '') {
+                                  firstImplementer = int.parse(controller.text);
+                                }
+                              case 1:
+                                secondImplementer = int.parse(controller.text);
+                              case 2:
+                                thirdImplementer = int.parse(controller.text);
+                            }
+                          });
+                          final formEntity = LeanProductionFormEntity(
+                            firstImplementer: firstImplementer,
+                            secondImplementer: secondImplementer,
+                            thirdImplementer: thirdImplementer,
+                            realized: isChecked,
+                            issue: _problemController.text,
+                            solution: _solutionController.text,
+                            expenses: _costController.text,
+                            benefit: _benefitController.text,
+                            paths:
+                                modelView!.paths.whereType<String>().toList(),
+                          );
+
+                          blocLeanProductionForm.add(
+                              LeanProductionFormEvent.submitForm(
+                                  formEntity: formEntity));
                         }
-                      },
-                    ),
+                      }
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -485,10 +460,6 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
                     ),
                   );
                 }),
-            // Text(
-            //   'Выбранный фаил: ${model!.fileName}',
-            //   style: const TextStyle(fontSize: 16),
-            // ),
           ),
         ],
       ),

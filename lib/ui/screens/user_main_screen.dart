@@ -118,6 +118,7 @@ class LeanProductionButton extends StatelessWidget {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     const double raiudsBorder = 30.0;
+
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin:
@@ -129,6 +130,11 @@ class LeanProductionButton extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            // Image.asset(
+            //   'assets/images/lean_production_img.png',
+            //   width: 50,
+            //   height: 50,
+            // ),
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,24 +153,62 @@ class LeanProductionButton extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Image.asset(
-              'assets/images/lean_production_img.png',
-              width: 75,
-              height: 75,
+            MenuAnchor(
+              style: const MenuStyle(
+                padding: MaterialStatePropertyAll(EdgeInsets.all(8)),
+                elevation: MaterialStatePropertyAll(5.0),
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(raiudsBorder),
+                    ),
+                  ),
+                ),
+                backgroundColor: MaterialStatePropertyAll(
+                  Color(0xffb3f2b2),
+                  // Colors.white
+                ),
+              ),
+              builder: (BuildContext context, MenuController controller,
+                  Widget? child) {
+                return IconButton(
+                  onPressed: () {
+                    if (controller.isOpen) {
+                      controller.close();
+                    } else {
+                      controller.open();
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.more_vert_outlined,
+                    size: 36,
+                    color: Colors.white,
+                  ),
+                  tooltip: 'Показать меню',
+                );
+              },
+              menuChildren: [
+                MenuItemButton(
+                  onPressed: () {
+                    AutoRouter.of(context).push(LeanProductionFormRoute(
+                        authRepository: blocUser.authRepository,
+                        userRepo: blocUser.userRepo,
+                        leanRepository: blocUser.leanProductionRepository));
+                  },
+                  child: const Text('Подать заявление'),
+                ),
+                MenuItemButton(
+                  onPressed: () {
+                    AutoRouter.of(context).push(MyLeanProductionsRoute(
+                        authRepository: blocUser.authRepository,
+                        userRepo: blocUser.userRepo,
+                        leanRepository: blocUser.leanProductionRepository));
+                  },
+                  child: const Text('Мои заявления'),
+                ),
+              ],
             ),
           ]),
-        ),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(raiudsBorder),
-            onTap: () {
-              AutoRouter.of(context).push(LeanProductionFormRoute(
-                  authRepository: blocUser.authRepository,
-                  userRepo: blocUser.userRepo,
-                  leanRepository: blocUser.leanProductionRepository));
-            },
-          ),
         ),
       ]),
     );
@@ -250,74 +294,69 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
 
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
-      margin:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
-      child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  blocBirthDayInfo.state.when(
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    loaded: (birthDayInfo) {
-                      return Text(
-                        birthDayInfo.count.toString(),
-                        style:
-                            const TextStyle(fontSize: 26, color: Colors.white),
-                      );
-                    },
-                    error: () => const Text('Ошибка загрузки.'),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Дни рождения',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
+      child: Row(children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              blocBirthDayInfo.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                loaded: (birthDayInfo) {
+                  return Text(
+                    birthDayInfo.count.toString(),
+                    style: const TextStyle(fontSize: 26, color: Colors.white),
+                  );
+                },
+                error: () => const Text('Ошибка загрузки.'),
               ),
-            ),
-            const VerticalDivider(
-              color: Colors.white,
-              thickness: 2,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  blocRookies.state.when(
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    loaded: (rookiseInfo) {
-                      return Text(
-                        rookiseInfo.count.toString(),
-                        style:
-                            const TextStyle(fontSize: 26, color: Colors.white),
-                      );
-                    },
-                    error: () => const Text('Ошибка загрузки.'),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Новенькие',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              const Text(
+                'Дни рождения',
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
-            ),
-          ]),
+            ],
+          ),
+        ),
+        const VerticalDivider(
+          color: Colors.white,
+          thickness: 2,
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              blocRookies.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                loaded: (rookiseInfo) {
+                  return Text(
+                    rookiseInfo.count.toString(),
+                    style: const TextStyle(fontSize: 26, color: Colors.white),
+                  );
+                },
+                error: () => const Text('Ошибка загрузки.'),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Новенькие',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

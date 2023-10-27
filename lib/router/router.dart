@@ -15,6 +15,7 @@ import 'package:hr_app_flutter/ui/screens/company_screen.dart';
 import 'package:hr_app_flutter/ui/screens/education_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/grass_coin_screen.dart';
 import 'package:hr_app_flutter/ui/screens/lean_production_screens/lean_productions_screen_form.dart';
+import 'package:hr_app_flutter/ui/screens/lean_production_screens/my_lean_productions_screen.dart';
 import 'package:hr_app_flutter/ui/screens/loader_screen.dart';
 import 'package:hr_app_flutter/ui/screens/main_app_screen.dart';
 import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
@@ -56,5 +57,7 @@ class AppRouter extends _$AppRouter {
             path: '/booking_meetings_second/'),
         AutoRoute(
             page: LeanProductionFormRoute.page, path: '/lean_production_form/'),
+        AutoRoute(
+            page: MyLeanProductionsRoute.page, path: '/my_lean_productions/'),
       ];
 }
