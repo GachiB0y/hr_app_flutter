@@ -31,6 +31,9 @@ class LeanProductionFormBloc
         await onLeanProductionFormEventSubmit(event, emit);
       } else if (event is LeanProductionFormEventGetMyLeanProductions) {
         await onLeanProductionFormEventGetMyLeanProductions(event, emit);
+      } else if (event
+          is LeanProductionFormEventDownloadFileWithLeanProduction) {
+        await downloadFileWithLeanProduction(event, emit);
       }
     });
   }
@@ -73,6 +76,27 @@ class LeanProductionFormBloc
           .timeout(const Duration(seconds: 10));
 
       emit(LeanProductionFormState.loaded(myProposals: myProposals));
+    } on TimeoutException {
+      emit(const LeanProductionFormState.error(
+          errorText: 'Ошибка ожидания  запроса!'));
+    } catch (e) {
+      emit(
+          const LeanProductionFormState.error(errorText: 'Неизвестная ошибка'));
+    }
+  }
+
+  Future<void> downloadFileWithLeanProduction(
+      LeanProductionFormEventDownloadFileWithLeanProduction event,
+      Emitter<LeanProductionFormState> emit) async {
+    try {
+      String? accessToken = await authRepository.cheskIsLiveAccessToken();
+
+      await leanRepository
+          .downloadFileWithLeanProduction(
+            userToken: accessToken as String,
+            url: event.url,
+          )
+          .timeout(const Duration(seconds: 10));
     } on TimeoutException {
       emit(const LeanProductionFormState.error(
           errorText: 'Ошибка ожидания  запроса!'));

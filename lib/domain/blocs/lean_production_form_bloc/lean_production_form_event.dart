@@ -7,4 +7,8 @@ class LeanProductionFormEvent with _$LeanProductionFormEvent {
   const factory LeanProductionFormEvent.submitForm(
           {required LeanProductionFormEntity formEntity}) =
       LeanProductionFormEventSubmitForm;
+
+  const factory LeanProductionFormEvent.downloadFileWithLeanProduction(
+          {required String url}) =
+      LeanProductionFormEventDownloadFileWithLeanProduction;
 }

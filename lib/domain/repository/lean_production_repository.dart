@@ -8,6 +8,9 @@ abstract class LeanProductionRepository {
       required String userToken});
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
       {required String userToken});
+
+  Future<void> downloadFileWithLeanProduction(
+      {required String url, required String userToken});
 }
 
 class LeanProductionRepositoryImpl implements LeanProductionRepository {
@@ -35,6 +38,19 @@ class LeanProductionRepositoryImpl implements LeanProductionRepository {
     try {
       return _serviceProvider.getMyLeanProductions(
         userToken: userToken,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> downloadFileWithLeanProduction(
+      {required String url, required String userToken}) {
+    try {
+      return _serviceProvider.downloadFileWithLeanProduction(
+        userToken: userToken,
+        url: url,
       );
     } catch (e) {
       rethrow;

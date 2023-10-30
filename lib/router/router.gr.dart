@@ -89,6 +89,17 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    LeanProductionInfoProposalsRoute.name: (routeData) {
+      final args = routeData.argsAs<LeanProductionInfoProposalsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: LeanProductionInfoProposalsScreen(
+          key: args.key,
+          modelLeanProduction: args.modelLeanProduction,
+          blocLeanProduction: args.blocLeanProduction,
+        ),
+      );
+    },
     LoaderRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -399,6 +410,50 @@ class LeanProductionFormRouteArgs {
   @override
   String toString() {
     return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+  }
+}
+
+/// generated route for
+/// [LeanProductionInfoProposalsScreen]
+class LeanProductionInfoProposalsRoute
+    extends PageRouteInfo<LeanProductionInfoProposalsRouteArgs> {
+  LeanProductionInfoProposalsRoute({
+    Key? key,
+    required MyLeanProductionsEntity modelLeanProduction,
+    required LeanProductionFormBloc blocLeanProduction,
+    List<PageRouteInfo>? children,
+  }) : super(
+          LeanProductionInfoProposalsRoute.name,
+          args: LeanProductionInfoProposalsRouteArgs(
+            key: key,
+            modelLeanProduction: modelLeanProduction,
+            blocLeanProduction: blocLeanProduction,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'LeanProductionInfoProposalsRoute';
+
+  static const PageInfo<LeanProductionInfoProposalsRouteArgs> page =
+      PageInfo<LeanProductionInfoProposalsRouteArgs>(name);
+}
+
+class LeanProductionInfoProposalsRouteArgs {
+  const LeanProductionInfoProposalsRouteArgs({
+    this.key,
+    required this.modelLeanProduction,
+    required this.blocLeanProduction,
+  });
+
+  final Key? key;
+
+  final MyLeanProductionsEntity modelLeanProduction;
+
+  final LeanProductionFormBloc blocLeanProduction;
+
+  @override
+  String toString() {
+    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction}';
   }
 }
 

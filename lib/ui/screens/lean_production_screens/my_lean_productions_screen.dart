@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/lean_production_form_bloc/lean_production_form_bloc.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:hr_app_flutter/utils/get_icon_by_text_func.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
@@ -47,30 +48,11 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
         .add(const LeanProductionFormEvent.getMyLeanProductions());
   }
 
-  Icon getIconByText(String text) {
-    if (text == 'На обработке') {
-      return const Icon(
-        Icons.watch_later,
-        color: Colors.orange,
-      );
-    } else if (text == 'Принята') {
-      return const Icon(
-        Icons.check,
-        color: ColorsForWidget.colorGreen,
-      );
-    } else if (text == 'Отклонена') {
-      return const Icon(
-        Icons.block,
-        color: Colors.red,
-      );
-    } else {
-      return const Icon(Icons.error);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final blocLeanProduction = context.watch<LeanProductionFormBloc>();
+    final LeanProductionFormBloc blocLeanProduction =
+        context.watch<LeanProductionFormBloc>();
+    const double radius = 30.0;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -98,21 +80,21 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
           },
           loaded: (myProposals, isSubmitted) {
             return ListView.builder(
-                itemCount: 10,
+                itemCount: myProposals!.length,
                 itemBuilder: ((BuildContext context, int index) {
                   return Card(
                     color: Colors.white,
                     // Color(0xffb3f2b2),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(radius),
                     ),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(radius),
                       ),
                       contentPadding: const EdgeInsets.all(16.0),
                       title: Text(
-                        'Заявление №${myProposals![index].number}',
+                        'Заявление №${myProposals[index].number}',
                         style: const TextStyle(fontSize: 18),
                       ),
                       subtitle: Text(DateFormat('dd.MM.yyyy')
@@ -130,7 +112,10 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
                         ],
                       ),
                       onTap: () {
-                        print('TAP');
+                        AutoRouter.of(context).push(
+                            LeanProductionInfoProposalsRoute(
+                                modelLeanProduction: myProposals[index],
+                                blocLeanProduction: blocLeanProduction));
                       },
                     ),
                   );

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/domain/blocs/lean_production_form_bloc/lean_production_form_bloc.dart';
 
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
@@ -24,6 +25,9 @@ import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.da
 import 'package:hr_app_flutter/ui/screens/shedule_bus_screen/shedule_bus_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart';
+
+import '../domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
+import '../ui/screens/lean_production_screens/lean_production_info_proposals.dart';
 part 'router.gr.dart';
 
 @AutoRouterConfig()
@@ -45,19 +49,24 @@ class AppRouter extends _$AppRouter {
             page: SearchFriendAndSendCoinsRoute.page,
             path: '/search_friend_and_send_coins'),
         AutoRoute(page: ApproveNewsRoute.page, path: '/approve_news'),
-        AutoRoute(page: AboutNewsRoute.page, path: '/about_news/'),
-        AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user/'),
-        AutoRoute(page: SearchUserRoute.page, path: '/search_user/'),
-        AutoRoute(page: ScheduleBusRoute.page, path: '/schedule_bus/'),
+        AutoRoute(page: AboutNewsRoute.page, path: '/about_news'),
+        AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user'),
+        AutoRoute(page: SearchUserRoute.page, path: '/search_user'),
+        AutoRoute(page: ScheduleBusRoute.page, path: '/schedule_bus'),
         AutoRoute(
             page: BookingMeetingsFirstRoute.page,
-            path: '/booking_meetings_first/'),
+            path: '/booking_meetings_first'),
         AutoRoute(
             page: BookingMeetingSecondRoute.page,
-            path: '/booking_meetings_second/'),
+            path: '/booking_meetings_second'),
         AutoRoute(
-            page: LeanProductionFormRoute.page, path: '/lean_production_form/'),
+            page: LeanProductionFormRoute.page, path: '/lean_production_form'),
         AutoRoute(
-            page: MyLeanProductionsRoute.page, path: '/my_lean_productions/'),
+          page: MyLeanProductionsRoute.page,
+          path: '/my_lean_productions',
+        ),
+        AutoRoute(
+            page: LeanProductionInfoProposalsRoute.page,
+            path: '/info_proposals'),
       ];
 }

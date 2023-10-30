@@ -20,18 +20,21 @@ mixin _$LeanProductionFormEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+    required TResult Function(String url) downloadFileWithLeanProduction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult? Function(String url)? downloadFileWithLeanProduction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,6 +44,9 @@ mixin _$LeanProductionFormEvent {
         getMyLeanProductions,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
+    required TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)
+        downloadFileWithLeanProduction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,6 +54,9 @@ mixin _$LeanProductionFormEvent {
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult? Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +64,9 @@ mixin _$LeanProductionFormEvent {
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -124,6 +136,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+    required TResult Function(String url) downloadFileWithLeanProduction,
   }) {
     return getMyLeanProductions();
   }
@@ -133,6 +146,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult? Function(String url)? downloadFileWithLeanProduction,
   }) {
     return getMyLeanProductions?.call();
   }
@@ -142,6 +156,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
   }) {
     if (getMyLeanProductions != null) {
@@ -157,6 +172,9 @@ class _$LeanProductionFormEventGetMyLeanProductions
         getMyLeanProductions,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
+    required TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)
+        downloadFileWithLeanProduction,
   }) {
     return getMyLeanProductions(this);
   }
@@ -167,6 +185,9 @@ class _$LeanProductionFormEventGetMyLeanProductions
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult? Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
   }) {
     return getMyLeanProductions?.call(this);
   }
@@ -177,6 +198,9 @@ class _$LeanProductionFormEventGetMyLeanProductions
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
     required TResult orElse(),
   }) {
     if (getMyLeanProductions != null) {
@@ -275,6 +299,7 @@ class _$LeanProductionFormEventSubmitForm
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+    required TResult Function(String url) downloadFileWithLeanProduction,
   }) {
     return submitForm(formEntity);
   }
@@ -284,6 +309,7 @@ class _$LeanProductionFormEventSubmitForm
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult? Function(String url)? downloadFileWithLeanProduction,
   }) {
     return submitForm?.call(formEntity);
   }
@@ -293,6 +319,7 @@ class _$LeanProductionFormEventSubmitForm
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
   }) {
     if (submitForm != null) {
@@ -308,6 +335,9 @@ class _$LeanProductionFormEventSubmitForm
         getMyLeanProductions,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
+    required TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)
+        downloadFileWithLeanProduction,
   }) {
     return submitForm(this);
   }
@@ -318,6 +348,9 @@ class _$LeanProductionFormEventSubmitForm
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult? Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
   }) {
     return submitForm?.call(this);
   }
@@ -328,6 +361,9 @@ class _$LeanProductionFormEventSubmitForm
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
     required TResult orElse(),
   }) {
     if (submitForm != null) {
@@ -347,6 +383,174 @@ abstract class LeanProductionFormEventSubmitForm
   @JsonKey(ignore: true)
   _$$LeanProductionFormEventSubmitFormCopyWith<
           _$LeanProductionFormEventSubmitForm>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWith<
+    $Res> {
+  factory _$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWith(
+          _$LeanProductionFormEventDownloadFileWithLeanProduction value,
+          $Res Function(_$LeanProductionFormEventDownloadFileWithLeanProduction)
+              then) =
+      __$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWithImpl<
+          $Res>;
+  @useResult
+  $Res call({String url});
+}
+
+/// @nodoc
+class __$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWithImpl<
+        $Res>
+    extends _$LeanProductionFormEventCopyWithImpl<$Res,
+        _$LeanProductionFormEventDownloadFileWithLeanProduction>
+    implements
+        _$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWith<$Res> {
+  __$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWithImpl(
+      _$LeanProductionFormEventDownloadFileWithLeanProduction _value,
+      $Res Function(_$LeanProductionFormEventDownloadFileWithLeanProduction)
+          _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_$LeanProductionFormEventDownloadFileWithLeanProduction(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LeanProductionFormEventDownloadFileWithLeanProduction
+    implements LeanProductionFormEventDownloadFileWithLeanProduction {
+  const _$LeanProductionFormEventDownloadFileWithLeanProduction(
+      {required this.url});
+
+  @override
+  final String url;
+
+  @override
+  String toString() {
+    return 'LeanProductionFormEvent.downloadFileWithLeanProduction(url: $url)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeanProductionFormEventDownloadFileWithLeanProduction &&
+            (identical(other.url, url) || other.url == url));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWith<
+          _$LeanProductionFormEventDownloadFileWithLeanProduction>
+      get copyWith =>
+          __$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWithImpl<
+                  _$LeanProductionFormEventDownloadFileWithLeanProduction>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getMyLeanProductions,
+    required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+    required TResult Function(String url) downloadFileWithLeanProduction,
+  }) {
+    return downloadFileWithLeanProduction(url);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getMyLeanProductions,
+    TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult? Function(String url)? downloadFileWithLeanProduction,
+  }) {
+    return downloadFileWithLeanProduction?.call(url);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getMyLeanProductions,
+    TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult Function(String url)? downloadFileWithLeanProduction,
+    required TResult orElse(),
+  }) {
+    if (downloadFileWithLeanProduction != null) {
+      return downloadFileWithLeanProduction(url);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
+        getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventSubmitForm value)
+        submitForm,
+    required TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)
+        downloadFileWithLeanProduction,
+  }) {
+    return downloadFileWithLeanProduction(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult? Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
+  }) {
+    return downloadFileWithLeanProduction?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
+    required TResult orElse(),
+  }) {
+    if (downloadFileWithLeanProduction != null) {
+      return downloadFileWithLeanProduction(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LeanProductionFormEventDownloadFileWithLeanProduction
+    implements LeanProductionFormEvent {
+  const factory LeanProductionFormEventDownloadFileWithLeanProduction(
+          {required final String url}) =
+      _$LeanProductionFormEventDownloadFileWithLeanProduction;
+
+  String get url;
+  @JsonKey(ignore: true)
+  _$$LeanProductionFormEventDownloadFileWithLeanProductionCopyWith<
+          _$LeanProductionFormEventDownloadFileWithLeanProduction>
       get copyWith => throw _privateConstructorUsedError;
 }
 

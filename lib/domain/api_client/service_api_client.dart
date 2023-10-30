@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
 
@@ -17,6 +19,9 @@ abstract interface class ServiceProvider {
   Future<bool> sendFormLeanProduction(
       {required LeanProductionFormEntity formEntity,
       required String userToken});
+
+  Future<void> downloadFileWithLeanProduction(
+      {required String url, required String userToken});
 }
 
 class ServiceProviderImpl implements ServiceProvider {
@@ -95,6 +100,37 @@ class ServiceProviderImpl implements ServiceProvider {
               .map((item) => MyLeanProductionsEntity.fromJson(item))
               .toList();
       return result;
+    } else {
+      throw Exception('Error fetching My Proposals');
+    }
+  }
+
+  @override
+  Future<void> downloadFileWithLeanProduction(
+      {required String url, required String userToken}) async {
+    String uri = '$urlAdress/lean_fabrication/download_file?url=$url';
+    final response =
+        await _httpService.post(uri: uri, userToken: userToken, body: null);
+
+    final fileName = url.split('/').last;
+
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.toBytes();
+
+      Directory directory = await getApplicationDocumentsDirectory();
+      String filePath = '${directory.path}/$fileName';
+
+      File file = File(filePath);
+
+      await file.writeAsBytes(jsonResponse);
+
+      String? result = await FilePicker.platform.saveFile(fileName: fileName);
+
+      // final jsonData = jsonDecode(jsonResponse);
+      // final List<MyLeanProductionsEntity> result =
+      //     (jsonData['result']['offers'] as List<dynamic>)
+      //         .map((item) => MyLeanProductionsEntity.fromJson(item))
+      //         .toList();
     } else {
       throw Exception('Error fetching My Proposals');
     }

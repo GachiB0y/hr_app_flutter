@@ -13,6 +13,7 @@ import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/screens/lean_production_screens/lean_productions_screen_form_model.dart';
 
 import '../../../library/custom_provider/inherit_widget.dart';
+import '../../components/custom_text_form_field/custom_text_form_field.dart';
 
 @RoutePage()
 class LeanProductionFormScreen extends StatelessWidget
@@ -132,7 +133,8 @@ class _MyFormWidgetState extends State<MyFormWidget> {
         ChangeNotifierProvaider<LeanProductionFormScreenModel>,
         LeanProductionFormScreenModel>(context);
 
-    final blocLeanProductionForm = context.read<LeanProductionFormBloc>();
+    final LeanProductionFormBloc blocLeanProductionForm =
+        context.read<LeanProductionFormBloc>();
     return BlocListener<LeanProductionFormBloc, LeanProductionFormState>(
       listener: (context, state) {
         if (state is LeanProductionFormStateLoaded) {
@@ -172,30 +174,29 @@ class _MyFormWidgetState extends State<MyFormWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextFormField(
-                    iconData: Icons.receipt,
+                    iconData: const Icon(Icons.receipt),
                     inputText: 'Суть проблемы',
                     nameController: _problemController),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomTextFormField(
-                    iconData: Icons.question_mark_outlined,
+                    iconData: const Icon(Icons.question_mark_outlined),
                     inputText: 'Как решить',
                     nameController: _solutionController),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomTextFormField(
-                    iconData: Icons.paid,
+                    iconData: const Icon(Icons.paid),
                     inputText: 'Ориентировочные затраты',
                     nameController: _costController),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomTextFormField(
-                    iconData: Icons.star,
-                    inputText:
-                        'Польза предложения (экономия времени, средств и т.д.)',
+                    iconData: const Icon(Icons.star),
+                    inputText: 'Польза предложения',
                     nameController: _benefitController),
                 const SizedBox(
                   height: 10,
@@ -340,53 +341,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
-    super.key,
-    required TextEditingController nameController,
-    required IconData? iconData,
-    required String inputText,
-  })  : _nameController = nameController,
-        _iconData = iconData,
-        _inputText = inputText;
-
-  final TextEditingController _nameController;
-  final IconData? _iconData;
-  final String _inputText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0), color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(_inputText),
-          TextFormField(
-            maxLines: 10,
-            minLines: 1,
-            controller: _nameController,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              icon: Icon(_iconData),
-              border: InputBorder.none,
-            ),
-            validator: (value) {
-              if (value != null && value.isEmpty) {
-                return 'Поле обязательно для заполнения';
-              }
-              return null;
-            },
-          ),
-        ],
       ),
     );
   }

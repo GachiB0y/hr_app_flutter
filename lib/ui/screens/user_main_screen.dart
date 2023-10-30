@@ -556,6 +556,8 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     final blocEventEntity = context.watch<EventEntityBloc>();
     final blocCategory = context.watch<CategoryBloc>();
 
+    const double radius = 30.0;
+
     return blocEventEntity.state.when(
       loading: () {
         return const Center(
@@ -663,7 +665,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                               image: DecorationImage(
                                   image: imageProvider, fit: BoxFit.cover),
                               color: Colors.grey,
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(radius),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -673,7 +675,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(18),
+                                    borderRadius: BorderRadius.circular(radius),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),

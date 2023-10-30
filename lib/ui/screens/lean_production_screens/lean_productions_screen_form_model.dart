@@ -35,7 +35,7 @@ class LeanProductionFormScreenModel extends Listenable {
   void pickFile() async {
     result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png'],
+      allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png', 'docx'],
     );
 
     if (result != null) {
