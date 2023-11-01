@@ -34,6 +34,8 @@ class LeanProductionFormBloc
       } else if (event
           is LeanProductionFormEventDownloadFileWithLeanProduction) {
         await downloadFileWithLeanProduction(event, emit);
+      } else if (event is LeanProductionFormEventCreateInitState) {
+        emit(const LeanProductionFormState.loading());
       }
     });
   }
@@ -96,10 +98,22 @@ class LeanProductionFormBloc
             userToken: accessToken as String,
             url: event.url,
           )
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 100));
     } on TimeoutException {
       emit(const LeanProductionFormState.error(
           errorText: 'Ошибка ожидания  запроса!'));
+    } on ApiClientException catch (e) {
+      switch (e.type) {
+        case ApiClientExceptionType.openFileDocuments:
+          return emit(LeanProductionFormState.error(
+              errorText: 'Ошибка открытия файла!', exception: e.type));
+        case ApiClientExceptionType.openFileImage:
+          return emit(LeanProductionFormState.error(
+              errorText: 'Ошибка открытия картинки!', exception: e.type));
+        default:
+          return emit(const LeanProductionFormState.error(
+              errorText: 'Неизвестная ошибка'));
+      }
     } catch (e) {
       emit(
           const LeanProductionFormState.error(errorText: 'Неизвестная ошибка'));

@@ -1,4 +1,12 @@
-enum ApiClientExceptionType { network, auth, other, notFound, addTags }
+enum ApiClientExceptionType {
+  network,
+  auth,
+  other,
+  notFound,
+  addTags,
+  openFileImage,
+  openFileDocuments,
+}
 
 class ApiClientException implements Exception {
   final ApiClientExceptionType type;

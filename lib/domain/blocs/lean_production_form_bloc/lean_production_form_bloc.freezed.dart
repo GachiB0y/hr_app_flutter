@@ -19,6 +19,7 @@ mixin _$LeanProductionFormEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
+    required TResult Function() createInitState,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
     required TResult Function(String url) downloadFileWithLeanProduction,
   }) =>
@@ -26,6 +27,7 @@ mixin _$LeanProductionFormEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
+    TResult? Function()? createInitState,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult? Function(String url)? downloadFileWithLeanProduction,
   }) =>
@@ -33,6 +35,7 @@ mixin _$LeanProductionFormEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
+    TResult Function()? createInitState,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
@@ -42,6 +45,8 @@ mixin _$LeanProductionFormEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
         getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventCreateInitState value)
+        createInitState,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
     required TResult Function(
@@ -53,6 +58,8 @@ mixin _$LeanProductionFormEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult? Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -63,6 +70,8 @@ mixin _$LeanProductionFormEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -135,6 +144,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
+    required TResult Function() createInitState,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
     required TResult Function(String url) downloadFileWithLeanProduction,
   }) {
@@ -145,6 +155,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
+    TResult? Function()? createInitState,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult? Function(String url)? downloadFileWithLeanProduction,
   }) {
@@ -155,6 +166,7 @@ class _$LeanProductionFormEventGetMyLeanProductions
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
+    TResult Function()? createInitState,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
@@ -170,6 +182,8 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult map<TResult extends Object?>({
     required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
         getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventCreateInitState value)
+        createInitState,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
     required TResult Function(
@@ -184,6 +198,8 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult? Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -197,6 +213,8 @@ class _$LeanProductionFormEventGetMyLeanProductions
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -214,6 +232,140 @@ abstract class LeanProductionFormEventGetMyLeanProductions
     implements LeanProductionFormEvent {
   const factory LeanProductionFormEventGetMyLeanProductions() =
       _$LeanProductionFormEventGetMyLeanProductions;
+}
+
+/// @nodoc
+abstract class _$$LeanProductionFormEventCreateInitStateCopyWith<$Res> {
+  factory _$$LeanProductionFormEventCreateInitStateCopyWith(
+          _$LeanProductionFormEventCreateInitState value,
+          $Res Function(_$LeanProductionFormEventCreateInitState) then) =
+      __$$LeanProductionFormEventCreateInitStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LeanProductionFormEventCreateInitStateCopyWithImpl<$Res>
+    extends _$LeanProductionFormEventCopyWithImpl<$Res,
+        _$LeanProductionFormEventCreateInitState>
+    implements _$$LeanProductionFormEventCreateInitStateCopyWith<$Res> {
+  __$$LeanProductionFormEventCreateInitStateCopyWithImpl(
+      _$LeanProductionFormEventCreateInitState _value,
+      $Res Function(_$LeanProductionFormEventCreateInitState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LeanProductionFormEventCreateInitState
+    implements LeanProductionFormEventCreateInitState {
+  const _$LeanProductionFormEventCreateInitState();
+
+  @override
+  String toString() {
+    return 'LeanProductionFormEvent.createInitState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeanProductionFormEventCreateInitState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getMyLeanProductions,
+    required TResult Function() createInitState,
+    required TResult Function(LeanProductionFormEntity formEntity) submitForm,
+    required TResult Function(String url) downloadFileWithLeanProduction,
+  }) {
+    return createInitState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getMyLeanProductions,
+    TResult? Function()? createInitState,
+    TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult? Function(String url)? downloadFileWithLeanProduction,
+  }) {
+    return createInitState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getMyLeanProductions,
+    TResult Function()? createInitState,
+    TResult Function(LeanProductionFormEntity formEntity)? submitForm,
+    TResult Function(String url)? downloadFileWithLeanProduction,
+    required TResult orElse(),
+  }) {
+    if (createInitState != null) {
+      return createInitState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
+        getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventCreateInitState value)
+        createInitState,
+    required TResult Function(LeanProductionFormEventSubmitForm value)
+        submitForm,
+    required TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)
+        downloadFileWithLeanProduction,
+  }) {
+    return createInitState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
+    TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult? Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
+  }) {
+    return createInitState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
+        getMyLeanProductions,
+    TResult Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
+    TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
+    TResult Function(
+            LeanProductionFormEventDownloadFileWithLeanProduction value)?
+        downloadFileWithLeanProduction,
+    required TResult orElse(),
+  }) {
+    if (createInitState != null) {
+      return createInitState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LeanProductionFormEventCreateInitState
+    implements LeanProductionFormEvent {
+  const factory LeanProductionFormEventCreateInitState() =
+      _$LeanProductionFormEventCreateInitState;
 }
 
 /// @nodoc
@@ -298,6 +450,7 @@ class _$LeanProductionFormEventSubmitForm
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
+    required TResult Function() createInitState,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
     required TResult Function(String url) downloadFileWithLeanProduction,
   }) {
@@ -308,6 +461,7 @@ class _$LeanProductionFormEventSubmitForm
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
+    TResult? Function()? createInitState,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult? Function(String url)? downloadFileWithLeanProduction,
   }) {
@@ -318,6 +472,7 @@ class _$LeanProductionFormEventSubmitForm
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
+    TResult Function()? createInitState,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
@@ -333,6 +488,8 @@ class _$LeanProductionFormEventSubmitForm
   TResult map<TResult extends Object?>({
     required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
         getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventCreateInitState value)
+        createInitState,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
     required TResult Function(
@@ -347,6 +504,8 @@ class _$LeanProductionFormEventSubmitForm
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult? Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -360,6 +519,8 @@ class _$LeanProductionFormEventSubmitForm
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -466,6 +627,7 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getMyLeanProductions,
+    required TResult Function() createInitState,
     required TResult Function(LeanProductionFormEntity formEntity) submitForm,
     required TResult Function(String url) downloadFileWithLeanProduction,
   }) {
@@ -476,6 +638,7 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getMyLeanProductions,
+    TResult? Function()? createInitState,
     TResult? Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult? Function(String url)? downloadFileWithLeanProduction,
   }) {
@@ -486,6 +649,7 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getMyLeanProductions,
+    TResult Function()? createInitState,
     TResult Function(LeanProductionFormEntity formEntity)? submitForm,
     TResult Function(String url)? downloadFileWithLeanProduction,
     required TResult orElse(),
@@ -501,6 +665,8 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   TResult map<TResult extends Object?>({
     required TResult Function(LeanProductionFormEventGetMyLeanProductions value)
         getMyLeanProductions,
+    required TResult Function(LeanProductionFormEventCreateInitState value)
+        createInitState,
     required TResult Function(LeanProductionFormEventSubmitForm value)
         submitForm,
     required TResult Function(
@@ -515,6 +681,8 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult? Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult? Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult? Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -528,6 +696,8 @@ class _$LeanProductionFormEventDownloadFileWithLeanProduction
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LeanProductionFormEventGetMyLeanProductions value)?
         getMyLeanProductions,
+    TResult Function(LeanProductionFormEventCreateInitState value)?
+        createInitState,
     TResult Function(LeanProductionFormEventSubmitForm value)? submitForm,
     TResult Function(
             LeanProductionFormEventDownloadFileWithLeanProduction value)?
@@ -581,7 +751,9 @@ mixin _$LeanProductionFormState {
     required TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
-    required TResult Function(String? errorText) error,
+    required TResult Function(
+            String? errorText, ApiClientExceptionType? exception)
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -590,7 +762,8 @@ mixin _$LeanProductionFormState {
     TResult? Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult? Function(String? errorText)? error,
+    TResult? Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -599,7 +772,8 @@ mixin _$LeanProductionFormState {
     TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult Function(String? errorText)? error,
+    TResult Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -703,7 +877,9 @@ class _$LeanProductionFormStateLoading
     required TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
-    required TResult Function(String? errorText) error,
+    required TResult Function(
+            String? errorText, ApiClientExceptionType? exception)
+        error,
   }) {
     return loading();
   }
@@ -715,7 +891,8 @@ class _$LeanProductionFormStateLoading
     TResult? Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult? Function(String? errorText)? error,
+    TResult? Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
   }) {
     return loading?.call();
   }
@@ -727,7 +904,8 @@ class _$LeanProductionFormStateLoading
     TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult Function(String? errorText)? error,
+    TResult Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -890,7 +1068,9 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
     required TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
-    required TResult Function(String? errorText) error,
+    required TResult Function(
+            String? errorText, ApiClientExceptionType? exception)
+        error,
   }) {
     return loaded(myProposals, isSubmitting);
   }
@@ -902,7 +1082,8 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
     TResult? Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult? Function(String? errorText)? error,
+    TResult? Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
   }) {
     return loaded?.call(myProposals, isSubmitting);
   }
@@ -914,7 +1095,8 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
     TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult Function(String? errorText)? error,
+    TResult Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -988,7 +1170,7 @@ abstract class _$$LeanProductionFormStateErrorCopyWith<$Res> {
           $Res Function(_$LeanProductionFormStateError) then) =
       __$$LeanProductionFormStateErrorCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? errorText});
+  $Res call({String? errorText, ApiClientExceptionType? exception});
 }
 
 /// @nodoc
@@ -1005,12 +1187,17 @@ class __$$LeanProductionFormStateErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? errorText = freezed,
+    Object? exception = freezed,
   }) {
     return _then(_$LeanProductionFormStateError(
       errorText: freezed == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String?,
+      exception: freezed == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as ApiClientExceptionType?,
     ));
   }
 }
@@ -1018,7 +1205,8 @@ class __$$LeanProductionFormStateErrorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LeanProductionFormStateError implements LeanProductionFormStateError {
-  const _$LeanProductionFormStateError({this.errorText, final String? $type})
+  const _$LeanProductionFormStateError(
+      {this.errorText, this.exception, final String? $type})
       : $type = $type ?? 'error';
 
   factory _$LeanProductionFormStateError.fromJson(Map<String, dynamic> json) =>
@@ -1026,13 +1214,15 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
 
   @override
   final String? errorText;
+  @override
+  final ApiClientExceptionType? exception;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'LeanProductionFormState.error(errorText: $errorText)';
+    return 'LeanProductionFormState.error(errorText: $errorText, exception: $exception)';
   }
 
   @override
@@ -1041,12 +1231,14 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
         (other.runtimeType == runtimeType &&
             other is _$LeanProductionFormStateError &&
             (identical(other.errorText, errorText) ||
-                other.errorText == errorText));
+                other.errorText == errorText) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, errorText);
+  int get hashCode => Object.hash(runtimeType, errorText, exception);
 
   @JsonKey(ignore: true)
   @override
@@ -1062,9 +1254,11 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
     required TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
         loaded,
-    required TResult Function(String? errorText) error,
+    required TResult Function(
+            String? errorText, ApiClientExceptionType? exception)
+        error,
   }) {
-    return error(errorText);
+    return error(errorText, exception);
   }
 
   @override
@@ -1074,9 +1268,10 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
     TResult? Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult? Function(String? errorText)? error,
+    TResult? Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
   }) {
-    return error?.call(errorText);
+    return error?.call(errorText, exception);
   }
 
   @override
@@ -1086,11 +1281,12 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
     TResult Function(
             List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
         loaded,
-    TResult Function(String? errorText)? error,
+    TResult Function(String? errorText, ApiClientExceptionType? exception)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(errorText);
+      return error(errorText, exception);
     }
     return orElse();
   }
@@ -1138,13 +1334,15 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
 }
 
 abstract class LeanProductionFormStateError implements LeanProductionFormState {
-  const factory LeanProductionFormStateError({final String? errorText}) =
+  const factory LeanProductionFormStateError(
+          {final String? errorText, final ApiClientExceptionType? exception}) =
       _$LeanProductionFormStateError;
 
   factory LeanProductionFormStateError.fromJson(Map<String, dynamic> json) =
       _$LeanProductionFormStateError.fromJson;
 
   String? get errorText;
+  ApiClientExceptionType? get exception;
   @JsonKey(ignore: true)
   _$$LeanProductionFormStateErrorCopyWith<_$LeanProductionFormStateError>
       get copyWith => throw _privateConstructorUsedError;

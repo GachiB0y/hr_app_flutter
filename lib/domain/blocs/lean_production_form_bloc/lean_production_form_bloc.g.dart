@@ -41,6 +41,8 @@ _$LeanProductionFormStateError _$$LeanProductionFormStateErrorFromJson(
         Map<String, dynamic> json) =>
     _$LeanProductionFormStateError(
       errorText: json['errorText'] as String?,
+      exception: $enumDecodeNullable(
+          _$ApiClientExceptionTypeEnumMap, json['exception']),
       $type: json['runtimeType'] as String?,
     );
 
@@ -48,5 +50,16 @@ Map<String, dynamic> _$$LeanProductionFormStateErrorToJson(
         _$LeanProductionFormStateError instance) =>
     <String, dynamic>{
       'errorText': instance.errorText,
+      'exception': _$ApiClientExceptionTypeEnumMap[instance.exception],
       'runtimeType': instance.$type,
     };
+
+const _$ApiClientExceptionTypeEnumMap = {
+  ApiClientExceptionType.network: 'network',
+  ApiClientExceptionType.auth: 'auth',
+  ApiClientExceptionType.other: 'other',
+  ApiClientExceptionType.notFound: 'notFound',
+  ApiClientExceptionType.addTags: 'addTags',
+  ApiClientExceptionType.openFileImage: 'openFileImage',
+  ApiClientExceptionType.openFileDocuments: 'openFileDocuments',
+};

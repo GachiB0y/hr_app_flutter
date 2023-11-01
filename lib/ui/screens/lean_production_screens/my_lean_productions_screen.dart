@@ -115,13 +115,18 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
                         AutoRouter.of(context).push(
                             LeanProductionInfoProposalsRoute(
                                 modelLeanProduction: myProposals[index],
-                                blocLeanProduction: blocLeanProduction));
+                                blocLeanProduction: blocLeanProduction,
+                                authRepository:
+                                    blocLeanProduction.authRepository,
+                                userRepo: blocLeanProduction.userRepo,
+                                leanRepository:
+                                    blocLeanProduction.leanRepository));
                       },
                     ),
                   );
                 }));
           },
-          error: (e) => const SafeArea(
+          error: (e, exception) => const SafeArea(
             child: Center(
               child: Text('Ошибка.Заявления не найденны.'),
             ),

@@ -7,8 +7,9 @@ class LeanProductionFormState with _$LeanProductionFormState {
   const factory LeanProductionFormState.loaded(
       {List<MyLeanProductionsEntity>? myProposals,
       bool? isSubmitting}) = LeanProductionFormStateLoaded;
-  const factory LeanProductionFormState.error({String? errorText}) =
-      LeanProductionFormStateError;
+  const factory LeanProductionFormState.error(
+      {String? errorText,
+      ApiClientExceptionType? exception}) = LeanProductionFormStateError;
 
   factory LeanProductionFormState.fromJson(Map<String, dynamic> json) =>
       _$LeanProductionFormStateFromJson(json);

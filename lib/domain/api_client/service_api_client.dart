@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
-import 'package:path_provider/path_provider.dart';
+
+import 'package:open_file/open_file.dart';
 import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 abstract interface class ServiceProvider {
   Future<List<Service>> getServices({required String userToken});
@@ -105,6 +108,66 @@ class ServiceProviderImpl implements ServiceProvider {
     }
   }
 
+  Future<void> openFile(
+      {required PermissionStatus statusStorage,
+      bool isStatusPhotos = false,
+      required File newFile}) async {
+    if (isStatusPhotos) {
+      PermissionStatus statusPhotos = await Permission.photos.status;
+
+      if (statusStorage.isGranted && statusPhotos.isGranted) {
+        // Разрешение уже предоставлено, открываем файл
+        OpenFile.open(newFile.path);
+      } else {
+        if (statusStorage.isDenied || statusStorage.isPermanentlyDenied) {
+          // Разрешение не предоставлено, запрашиваем его у пользователя
+          if (await Permission.manageExternalStorage.request().isGranted) {
+            // Разрешение предоставлено, открываем файл
+            OpenFile.open(newFile.path);
+            return;
+          } else {
+            // Пользователь отказал в предоставлении разрешения На Документы
+            // Обработайте это соответствующим образом
+            throw (ApiClientException(
+                ApiClientExceptionType.openFileDocuments));
+          }
+        } else if (statusPhotos.isDenied || statusPhotos.isPermanentlyDenied) {
+          // Разрешение не предоставлено, запрашиваем его у пользователя
+
+          final perm = await Permission.photos.request();
+          if (perm.isGranted) {
+            // Разрешение предоставлено, открываем файл
+            OpenFile.open(newFile.path);
+            return;
+          } else {
+            // Пользователь отказал в предоставлении разрешения На Фото
+            // Обработайте это соответствующим образом
+            throw (ApiClientException(ApiClientExceptionType.openFileImage));
+          }
+        }
+      }
+    } else {
+      if (statusStorage.isGranted) {
+        // Разрешение уже предоставлено, открываем файл
+        OpenFile.open(newFile.path);
+      } else {
+        if (statusStorage.isDenied || statusStorage.isPermanentlyDenied) {
+          // Разрешение не предоставлено, запрашиваем его у пользователя
+          if (await Permission.manageExternalStorage.request().isGranted) {
+            // Разрешение предоставлено, открываем файл
+            OpenFile.open(newFile.path);
+            return;
+          } else {
+            // Пользователь отказал в предоставлении разрешения На Документы
+            // Обработайте это соответствующим образом
+            throw (ApiClientException(
+                ApiClientExceptionType.openFileDocuments));
+          }
+        }
+      }
+    }
+  }
+
   @override
   Future<void> downloadFileWithLeanProduction(
       {required String url, required String userToken}) async {
@@ -115,22 +178,49 @@ class ServiceProviderImpl implements ServiceProvider {
     final fileName = url.split('/').last;
 
     if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.toBytes();
+      try {
+        String? directory = await FilePicker.platform.getDirectoryPath();
+        final jsonResponse = await response.stream.toBytes();
 
-      Directory directory = await getApplicationDocumentsDirectory();
-      String filePath = '${directory.path}/$fileName';
+        String filePath = '$directory/$fileName';
 
-      File file = File(filePath);
+        File file = File(filePath);
+        final isExists = await file.exists();
 
-      await file.writeAsBytes(jsonResponse);
+        File newFile = file;
+        if (!isExists) {
+          newFile = await file.writeAsBytes(jsonResponse);
+        }
 
-      String? result = await FilePicker.platform.saveFile(fileName: fileName);
+        PermissionStatus statusStorage =
+            await Permission.manageExternalStorage.status;
 
-      // final jsonData = jsonDecode(jsonResponse);
-      // final List<MyLeanProductionsEntity> result =
-      //     (jsonData['result']['offers'] as List<dynamic>)
-      //         .map((item) => MyLeanProductionsEntity.fromJson(item))
-      //         .toList();
+        if (Platform.isAndroid) {
+          var androidInfo = await DeviceInfoPlugin().androidInfo;
+          final version = androidInfo.version.release;
+          final verInt = int.parse(version);
+
+          if (verInt <= 12) {
+            await openFile(
+                newFile: newFile,
+                statusStorage: statusStorage,
+                isStatusPhotos: false);
+          } else {
+            await openFile(
+                newFile: newFile,
+                statusStorage: statusStorage,
+                isStatusPhotos: true);
+          }
+        } else {
+          var version = 'Not Android';
+          await openFile(
+              newFile: newFile,
+              statusStorage: statusStorage,
+              isStatusPhotos: false);
+        }
+      } catch (e) {
+        throw Exception(e);
+      }
     } else {
       throw Exception('Error fetching My Proposals');
     }

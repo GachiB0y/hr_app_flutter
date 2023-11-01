@@ -93,11 +93,15 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<LeanProductionInfoProposalsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: LeanProductionInfoProposalsScreen(
+        child: WrappedRoute(
+            child: LeanProductionInfoProposalsScreen(
           key: args.key,
           modelLeanProduction: args.modelLeanProduction,
           blocLeanProduction: args.blocLeanProduction,
-        ),
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+          leanRepository: args.leanRepository,
+        )),
       );
     },
     LoaderRoute.name: (routeData) {
@@ -421,6 +425,9 @@ class LeanProductionInfoProposalsRoute
     Key? key,
     required MyLeanProductionsEntity modelLeanProduction,
     required LeanProductionFormBloc blocLeanProduction,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    required LeanProductionRepository leanRepository,
     List<PageRouteInfo>? children,
   }) : super(
           LeanProductionInfoProposalsRoute.name,
@@ -428,6 +435,9 @@ class LeanProductionInfoProposalsRoute
             key: key,
             modelLeanProduction: modelLeanProduction,
             blocLeanProduction: blocLeanProduction,
+            authRepository: authRepository,
+            userRepo: userRepo,
+            leanRepository: leanRepository,
           ),
           initialChildren: children,
         );
@@ -443,6 +453,9 @@ class LeanProductionInfoProposalsRouteArgs {
     this.key,
     required this.modelLeanProduction,
     required this.blocLeanProduction,
+    required this.authRepository,
+    required this.userRepo,
+    required this.leanRepository,
   });
 
   final Key? key;
@@ -451,9 +464,15 @@ class LeanProductionInfoProposalsRouteArgs {
 
   final LeanProductionFormBloc blocLeanProduction;
 
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  final LeanProductionRepository leanRepository;
+
   @override
   String toString() {
-    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction}';
+    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
   }
 }
 
