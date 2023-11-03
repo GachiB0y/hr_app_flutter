@@ -6,7 +6,8 @@ class LeanProductionFormState with _$LeanProductionFormState {
       LeanProductionFormStateLoading;
   const factory LeanProductionFormState.loaded(
       {List<MyLeanProductionsEntity>? myProposals,
-      bool? isSubmitting}) = LeanProductionFormStateLoaded;
+      bool? isSubmitting,
+      @Default(false) bool? isLoadingFile}) = LeanProductionFormStateLoaded;
   const factory LeanProductionFormState.error(
       {String? errorText,
       ApiClientExceptionType? exception}) = LeanProductionFormStateError;

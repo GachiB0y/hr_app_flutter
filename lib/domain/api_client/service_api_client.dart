@@ -12,6 +12,7 @@ import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_pro
 import 'package:open_file/open_file.dart';
 import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 abstract interface class ServiceProvider {
@@ -153,7 +154,11 @@ class ServiceProviderImpl implements ServiceProvider {
       } else {
         if (statusStorage.isDenied || statusStorage.isPermanentlyDenied) {
           // Разрешение не предоставлено, запрашиваем его у пользователя
-          if (await Permission.manageExternalStorage.request().isGranted) {
+          PermissionStatus perm;
+
+          perm = await Permission.manageExternalStorage.request();
+
+          if (perm.isGranted) {
             // Разрешение предоставлено, открываем файл
             OpenFile.open(newFile.path);
             return;
@@ -179,18 +184,27 @@ class ServiceProviderImpl implements ServiceProvider {
 
     if (response.statusCode == 200) {
       try {
-        String? directory = await FilePicker.platform.getDirectoryPath();
+        // String? directory = await FilePicker.platform.getDirectoryPath();
+
+        Directory? directory;
+        if (Platform.isAndroid) {
+          directory = await getExternalStorageDirectory();
+        } else if (Platform.isIOS) {
+          directory = await getApplicationDocumentsDirectory();
+        }
+
         final jsonResponse = await response.stream.toBytes();
 
-        String filePath = '$directory/$fileName';
+        String filePath = '${directory!.path}/$fileName';
 
         File file = File(filePath);
         final isExists = await file.exists();
 
         File newFile = file;
-        if (!isExists) {
-          newFile = await file.writeAsBytes(jsonResponse);
+        if (isExists) {
+          await file.delete();
         }
+        newFile = await file.writeAsBytes(jsonResponse);
 
         PermissionStatus statusStorage =
             await Permission.manageExternalStorage.status;
@@ -212,12 +226,12 @@ class ServiceProviderImpl implements ServiceProvider {
                 isStatusPhotos: true);
           }
         } else {
-          var version = 'Not Android';
-          await openFile(
-              newFile: newFile,
-              statusStorage: statusStorage,
-              isStatusPhotos: false);
+          /// Если это IOS
+
+          OpenFile.open(newFile.path);
         }
+      } on ApiClientException {
+        rethrow;
       } catch (e) {
         throw Exception(e);
       }

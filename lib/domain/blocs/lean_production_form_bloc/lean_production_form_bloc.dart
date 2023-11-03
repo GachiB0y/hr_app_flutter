@@ -93,12 +93,19 @@ class LeanProductionFormBloc
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
 
+      emit(const LeanProductionFormState.loaded());
+      final isLoadingState = (state as LeanProductionFormStateLoaded)
+          .copyWith(isLoadingFile: true);
+      emit(isLoadingState);
       await leanRepository
           .downloadFileWithLeanProduction(
             userToken: accessToken as String,
             url: event.url,
           )
           .timeout(const Duration(seconds: 100));
+      final isLoadedState = (state as LeanProductionFormStateLoaded)
+          .copyWith(isLoadingFile: false);
+      emit(isLoadedState);
     } on TimeoutException {
       emit(const LeanProductionFormState.error(
           errorText: 'Ошибка ожидания  запроса!'));

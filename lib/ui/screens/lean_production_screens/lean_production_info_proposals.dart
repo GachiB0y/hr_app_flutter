@@ -70,10 +70,26 @@ class InfoProposalsForm extends StatefulWidget {
 
 class _InfoProposalsFormState extends State<InfoProposalsForm> {
   MyLeanProductionsEntity get modelLeanProduction => widget.modelLeanProduction;
+  final GlobalKey<State> _progressDialogKey = GlobalKey<State>();
 
-  @override
-  void dispose() {
-    super.dispose();
+  showProgressDialog(BuildContext context, GlobalKey<State> key) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          key: key,
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('Загрузка...'),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -90,6 +106,9 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
           //       duration: Duration(seconds: 6),
           //     ),
           //   );
+          if (_progressDialogKey.currentContext != null) {
+            Navigator.of(_progressDialogKey.currentContext!).pop();
+          }
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
@@ -101,6 +120,14 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
           context
               .read<LeanProductionFormBloc>()
               .add(const LeanProductionFormEvent.createInitState());
+        } else if (state is LeanProductionFormStateLoaded) {
+          if (state.isLoadingFile == true) {
+            showProgressDialog(context, _progressDialogKey);
+          } else if (state.isLoadingFile == false) {
+            if (_progressDialogKey.currentContext != null) {
+              Navigator.of(_progressDialogKey.currentContext!).pop();
+            }
+          }
         }
       },
       child: SingleChildScrollView(
@@ -284,9 +311,13 @@ class MyBottomSheet extends StatelessWidget {
         children: [
           switch (exceptionType) {
             ApiClientExceptionType.openFileDocuments => const Text(
-                'Разрешите доступ к управлению\n всеми файлами на телефоне'),
-            ApiClientExceptionType.openFileImage =>
-              const Text('Разрешите доступ к Фото и видео на телефоне'),
+                'Разрешите доступ к управлению\n всеми файлами на телефоне',
+                style: TextStyle(fontSize: 18),
+              ),
+            ApiClientExceptionType.openFileImage => const Text(
+                'Разрешите доступ к Фото и видео на телефоне',
+                style: TextStyle(fontSize: 18),
+              ),
             _ => const Text('Ошибка сохранения файла'),
           },
           const SizedBox(height: 16),
@@ -295,13 +326,19 @@ class MyBottomSheet extends StatelessWidget {
                 onPressed: () {
                   requestPermission(context);
                 },
-                child: const Text('Разрешить'),
+                child: const Text(
+                  'Разрешить',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
             ApiClientExceptionType.openFileImage => ElevatedButton(
                 onPressed: () {
                   requestPermission(context);
                 },
-                child: const Text('Разрешить'),
+                child: const Text(
+                  'Разрешить',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
             _ => const SizedBox.shrink(),
           },
@@ -315,15 +352,24 @@ class MyBottomSheet extends StatelessWidget {
                   onPressed: () {
                     requestPermission(context);
                   },
-                  child: const Text('Не сейчас'),
+                  child: const Text(
+                    'Не сейчас',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ApiClientExceptionType.openFileImage => ElevatedButton(
                   onPressed: () {
                     requestPermission(context);
                   },
-                  child: const Text('Не сейчас'),
+                  child: const Text(
+                    'Не сейчас',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-              _ => const Text('Ок'),
+              _ => const Text(
+                  'Ок',
+                  style: TextStyle(fontSize: 18),
+                ),
             },
           ),
         ],

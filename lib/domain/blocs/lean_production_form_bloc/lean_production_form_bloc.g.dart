@@ -26,6 +26,7 @@ _$LeanProductionFormStateLoaded _$$LeanProductionFormStateLoadedFromJson(
               MyLeanProductionsEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
       isSubmitting: json['isSubmitting'] as bool?,
+      isLoadingFile: json['isLoadingFile'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
@@ -34,6 +35,7 @@ Map<String, dynamic> _$$LeanProductionFormStateLoadedToJson(
     <String, dynamic>{
       'myProposals': instance.myProposals,
       'isSubmitting': instance.isSubmitting,
+      'isLoadingFile': instance.isLoadingFile,
       'runtimeType': instance.$type,
     };
 

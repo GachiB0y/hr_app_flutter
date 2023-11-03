@@ -78,7 +78,7 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
               child: CircularProgressIndicator.adaptive(),
             );
           },
-          loaded: (myProposals, isSubmitted) {
+          loaded: (myProposals, isSubmitted, isLoadingFile) {
             return ListView.builder(
                 itemCount: myProposals!.length,
                 itemBuilder: ((BuildContext context, int index) {

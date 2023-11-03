@@ -748,8 +748,8 @@ mixin _$LeanProductionFormState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
+    required TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)
         loaded,
     required TResult Function(
             String? errorText, ApiClientExceptionType? exception)
@@ -759,8 +759,8 @@ mixin _$LeanProductionFormState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult? Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult? Function(String? errorText, ApiClientExceptionType? exception)?
         error,
@@ -769,8 +769,8 @@ mixin _$LeanProductionFormState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult Function(String? errorText, ApiClientExceptionType? exception)?
         error,
@@ -874,8 +874,8 @@ class _$LeanProductionFormStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
+    required TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)
         loaded,
     required TResult Function(
             String? errorText, ApiClientExceptionType? exception)
@@ -888,8 +888,8 @@ class _$LeanProductionFormStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult? Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult? Function(String? errorText, ApiClientExceptionType? exception)?
         error,
@@ -901,8 +901,8 @@ class _$LeanProductionFormStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult Function(String? errorText, ApiClientExceptionType? exception)?
         error,
@@ -972,7 +972,10 @@ abstract class _$$LeanProductionFormStateLoadedCopyWith<$Res> {
           $Res Function(_$LeanProductionFormStateLoaded) then) =
       __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting});
+  $Res call(
+      {List<MyLeanProductionsEntity>? myProposals,
+      bool? isSubmitting,
+      bool? isLoadingFile});
 }
 
 /// @nodoc
@@ -990,6 +993,7 @@ class __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? myProposals = freezed,
     Object? isSubmitting = freezed,
+    Object? isLoadingFile = freezed,
   }) {
     return _then(_$LeanProductionFormStateLoaded(
       myProposals: freezed == myProposals
@@ -999,6 +1003,10 @@ class __$$LeanProductionFormStateLoadedCopyWithImpl<$Res>
       isSubmitting: freezed == isSubmitting
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isLoadingFile: freezed == isLoadingFile
+          ? _value.isLoadingFile
+          : isLoadingFile // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
   }
@@ -1010,6 +1018,7 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
   const _$LeanProductionFormStateLoaded(
       {final List<MyLeanProductionsEntity>? myProposals,
       this.isSubmitting,
+      this.isLoadingFile = false,
       final String? $type})
       : _myProposals = myProposals,
         $type = $type ?? 'loaded';
@@ -1029,13 +1038,16 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
 
   @override
   final bool? isSubmitting;
+  @override
+  @JsonKey()
+  final bool? isLoadingFile;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'LeanProductionFormState.loaded(myProposals: $myProposals, isSubmitting: $isSubmitting)';
+    return 'LeanProductionFormState.loaded(myProposals: $myProposals, isSubmitting: $isSubmitting, isLoadingFile: $isLoadingFile)';
   }
 
   @override
@@ -1046,13 +1058,18 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
             const DeepCollectionEquality()
                 .equals(other._myProposals, _myProposals) &&
             (identical(other.isSubmitting, isSubmitting) ||
-                other.isSubmitting == isSubmitting));
+                other.isSubmitting == isSubmitting) &&
+            (identical(other.isLoadingFile, isLoadingFile) ||
+                other.isLoadingFile == isLoadingFile));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_myProposals), isSubmitting);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_myProposals),
+      isSubmitting,
+      isLoadingFile);
 
   @JsonKey(ignore: true)
   @override
@@ -1065,42 +1082,42 @@ class _$LeanProductionFormStateLoaded implements LeanProductionFormStateLoaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
+    required TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)
         loaded,
     required TResult Function(
             String? errorText, ApiClientExceptionType? exception)
         error,
   }) {
-    return loaded(myProposals, isSubmitting);
+    return loaded(myProposals, isSubmitting, isLoadingFile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult? Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult? Function(String? errorText, ApiClientExceptionType? exception)?
         error,
   }) {
-    return loaded?.call(myProposals, isSubmitting);
+    return loaded?.call(myProposals, isSubmitting, isLoadingFile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult Function(String? errorText, ApiClientExceptionType? exception)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(myProposals, isSubmitting);
+      return loaded(myProposals, isSubmitting, isLoadingFile);
     }
     return orElse();
   }
@@ -1151,13 +1168,15 @@ abstract class LeanProductionFormStateLoaded
     implements LeanProductionFormState {
   const factory LeanProductionFormStateLoaded(
       {final List<MyLeanProductionsEntity>? myProposals,
-      final bool? isSubmitting}) = _$LeanProductionFormStateLoaded;
+      final bool? isSubmitting,
+      final bool? isLoadingFile}) = _$LeanProductionFormStateLoaded;
 
   factory LeanProductionFormStateLoaded.fromJson(Map<String, dynamic> json) =
       _$LeanProductionFormStateLoaded.fromJson;
 
   List<MyLeanProductionsEntity>? get myProposals;
   bool? get isSubmitting;
+  bool? get isLoadingFile;
   @JsonKey(ignore: true)
   _$$LeanProductionFormStateLoadedCopyWith<_$LeanProductionFormStateLoaded>
       get copyWith => throw _privateConstructorUsedError;
@@ -1251,8 +1270,8 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)
+    required TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)
         loaded,
     required TResult Function(
             String? errorText, ApiClientExceptionType? exception)
@@ -1265,8 +1284,8 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult? Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult? Function(String? errorText, ApiClientExceptionType? exception)?
         error,
@@ -1278,8 +1297,8 @@ class _$LeanProductionFormStateError implements LeanProductionFormStateError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<MyLeanProductionsEntity>? myProposals, bool? isSubmitting)?
+    TResult Function(List<MyLeanProductionsEntity>? myProposals,
+            bool? isSubmitting, bool? isLoadingFile)?
         loaded,
     TResult Function(String? errorText, ApiClientExceptionType? exception)?
         error,

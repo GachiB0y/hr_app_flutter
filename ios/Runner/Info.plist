@@ -6,20 +6,36 @@
 <dict>
     <key>NSAllowsArbitraryLoads</key>
     <true/>
+	<key>NSFileSharingEnabled</key>
+    <true/>
 </dict>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Access to photo library is required to choose images</string>
-<key>NSCameraUsageDescription</key>
-<string>Access to camera is required to take photos</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Для выбора фото из галереи</string>
-<key>NSPhotoLibraryAddUsageDescription</key>
-<string>Для сохранения фото в галерею</string>
-<key>NSCameraUsageDescription</key>
-<string>Для записи видео с помощью камеры</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Для записи звука во время видеозаписи</string>
-
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to photo library is required to choose images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to camera is required to take photos</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Для сохранения фото в галерею</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Для записи звука во время видеозаписи</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>App wants to access your documents folder</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>App wants to access your downloads folder</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>NSFileProviderTemporaryDirectory</key>
+	<string>tmp</string>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Explain why your app uses music</string>
+	<key>UIBackgroundModes</key>
+	<array>
+	<string>fetch</string>
+	<string>remote-notification</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

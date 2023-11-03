@@ -318,7 +318,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
                 },
                 error: () => const Text('Ошибка загрузки.'),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               const Text(
                 'Дни рождения',
                 style: TextStyle(fontSize: 16, color: Colors.white),
@@ -348,7 +348,7 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
                 },
                 error: () => const Text('Ошибка загрузки.'),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               const Text(
                 'Новенькие',
                 style: TextStyle(fontSize: 16, color: Colors.white),
