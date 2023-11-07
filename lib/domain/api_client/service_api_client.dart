@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
-
 import 'package:open_file/open_file.dart';
 import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
@@ -184,8 +182,6 @@ class ServiceProviderImpl implements ServiceProvider {
 
     if (response.statusCode == 200) {
       try {
-        // String? directory = await FilePicker.platform.getDirectoryPath();
-
         Directory? directory;
         if (Platform.isAndroid) {
           directory = await getExternalStorageDirectory();
