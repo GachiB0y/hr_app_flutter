@@ -54,7 +54,7 @@ class AuthViewCubitSuccesAuthState extends AuthViewCubitState {
 class AuthViewCubit extends Cubit<AuthViewCubitState> {
   final AuthRepository authRepository;
   AuthViewCubit({required this.authRepository})
-      : super(AuthViewCubitFormFillInProgressState()) {}
+      : super(AuthViewCubitFormFillInProgressState());
 
   bool _isValid({required String phoneNumber}) => phoneNumber.length == 11;
 

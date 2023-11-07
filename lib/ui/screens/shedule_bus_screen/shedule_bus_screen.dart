@@ -7,7 +7,6 @@ import 'package:hr_app_flutter/domain/entity/schedule_bus_entity/schedule_bus_en
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:hr_app_flutter/ui/components/spinner_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()

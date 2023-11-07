@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'my_lean_productions_entity.freezed.dart';
 part 'my_lean_productions_entity.g.dart';
@@ -12,6 +14,7 @@ class MyLeanProductionsEntity with _$MyLeanProductionsEntity {
     required String solution,
     required String expenses,
     required String benefit,
+    required List<ImplementsForLeanProdInfo> implementers,
     required List<FileElement> files,
   }) = _MyLeanProductionsEntity;
 
@@ -28,4 +31,15 @@ class FileElement with _$FileElement {
 
   factory FileElement.fromJson(Map<String, dynamic> json) =>
       _$FileElementFromJson(json);
+}
+
+@freezed
+class ImplementsForLeanProdInfo with _$ImplementsForLeanProdInfo {
+  const factory ImplementsForLeanProdInfo({
+    required String name,
+    required int id,
+  }) = _ImplementsForLeanProdInfo;
+
+  factory ImplementsForLeanProdInfo.fromJson(Map<String, dynamic> json) =>
+      _$ImplementsForLeanProdInfoFromJson(json);
 }

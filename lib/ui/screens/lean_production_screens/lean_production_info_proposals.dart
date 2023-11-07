@@ -97,15 +97,6 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
     return BlocListener<LeanProductionFormBloc, LeanProductionFormState>(
       listener: (context, state) {
         if (state is LeanProductionFormStateError) {
-          // ScaffoldMessenger.of(context)
-          //   ..hideCurrentSnackBar()
-          //   ..showSnackBar(
-          //     const SnackBar(
-          //       content: Center(
-          //           child: Text('Предоставьте разрешения для открытия файла!')),
-          //       duration: Duration(seconds: 6),
-          //     ),
-          //   );
           if (_progressDialogKey.currentContext != null) {
             Navigator.of(_progressDialogKey.currentContext!).pop();
           }
@@ -143,7 +134,6 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
                     iconData: getIconByText(modelLeanProduction.status),
                     inputText: 'Статус',
                     nameController: null),
-
                 const SizedBox(
                   height: 10,
                 ),
@@ -187,21 +177,21 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
                   modelLeanProduction: modelLeanProduction,
                   blocLeanProduction: widget.blocLeanProduction,
                 ),
-                // ListView.builder(
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   shrinkWrap: true,
-                //   itemCount: modelLeanProduction.length,
-                //   itemBuilder: (context, index) {
-                //     return Padding(
-                //       padding: const EdgeInsets.only(top: 10.0),
-                //       child: CustomTextFormField(
-                //           readOnly: true,
-                //           iconData: Icons.person_4,
-                //           inputText: 'Исполнитель ${index + 1}',
-                //           nameController: _executorsControllers[index]),
-                //     );
-                //   },
-                // ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: modelLeanProduction.implementers.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: CustomTextFormField(
+                          readOnly: true,
+                          iconData: const Icon(Icons.person_4),
+                          inputText: 'Исполнитель ${index + 1}',
+                          nameController: null),
+                    );
+                  },
+                ),
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
                   title: const Text('Подано реализованным'),

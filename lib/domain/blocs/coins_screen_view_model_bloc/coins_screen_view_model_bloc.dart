@@ -20,18 +20,18 @@ class CoinsScreenViewModelBloc
     required this.walletRepo,
     required this.authRepository,
   }) : super(const CoinsScreenViewModelState.loading()) {
-    on<CoinsScreenViewModelEvent>((event, emit) async {
-      if (event is CoinsScreenViewModelEventFetchInfo) {
-        await onCoinsScreenViewModelState(emit);
-      } else if (event is CoinsScreenViewModelEventGetCoinsInfo) {
-        await onCoinsScreenViewModelEventGetCoinsInfo(emit);
-      } else if (event is CoinsScreenViewModelEventGetCoinsReward) {
-        await onCoinsScreenViewModelEventGetCoinsReward(emit);
-      }
-    });
+    on<CoinsScreenViewModelEvent>(
+      (event, emit) => event.map<Future<void>>(
+        fetchInfo: (event) async => await _onCoinsScreenViewModelState(emit),
+        getCoinsInfo: (event) async =>
+            await _onCoinsScreenViewModelEventGetCoinsInfo(emit),
+        getCoinsReward: (event) async =>
+            await _onCoinsScreenViewModelEventGetCoinsReward(emit),
+      ),
+    );
   }
 
-  Future<void> onCoinsScreenViewModelEventGetCoinsReward(
+  Future<void> _onCoinsScreenViewModelEventGetCoinsReward(
       Emitter<CoinsScreenViewModelState> emit) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -62,7 +62,7 @@ class CoinsScreenViewModelBloc
     }
   }
 
-  Future<void> onCoinsScreenViewModelEventGetCoinsInfo(
+  Future<void> _onCoinsScreenViewModelEventGetCoinsInfo(
       Emitter<CoinsScreenViewModelState> emit) async {
     emit(const CoinsScreenViewModelState.loading());
     try {
@@ -93,7 +93,7 @@ class CoinsScreenViewModelBloc
     }
   }
 
-  Future<void> onCoinsScreenViewModelState(
+  Future<void> _onCoinsScreenViewModelState(
       Emitter<CoinsScreenViewModelState> emit) async {
     emit(const CoinsScreenViewModelState.loading());
     try {
@@ -103,7 +103,7 @@ class CoinsScreenViewModelBloc
           .getCoinsInfo(userToken: accessToken as String)
           .timeout(const Duration(seconds: 10));
       final List<CoinsReward> listCoinsReward = await walletRepo
-          .getInfoCoinsReward(userToken: accessToken as String)
+          .getInfoCoinsReward(userToken: accessToken)
           .timeout(const Duration(seconds: 10));
       final newState = CoinsScreenViewModelState.loaded(
           listCoinsInfoLoaded: listCoinsInfo,

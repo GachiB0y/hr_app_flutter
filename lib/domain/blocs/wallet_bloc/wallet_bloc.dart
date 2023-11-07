@@ -19,19 +19,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     required this.authRepository,
   }) : super(const WalletState.loading()) {
     on<WalletEvent>(
-      (event, emit) async {
-        if (event is WalletEventFetch) {
-          await onWalletEventFetch(emit);
-        } else if (event is WalletEventSendCoinsToOtherUser) {
-          await onWalletEventSendCoinsToOtherUser(event, emit);
-        } else if (event is WalletEventSendCoinsToBracer) {
-          await onWalletEventSendCoinsToBracer(event, emit);
-        }
-      },
+      (event, emit) => event.map<Future<void>>(
+        fetch: (event) async => await _onWalletEventFetch(emit),
+        sendCoinsToBracer: (event) =>
+            _onWalletEventSendCoinsToBracer(event, emit),
+        sendCoinsToOtherUser: (event) async =>
+            await _onWalletEventSendCoinsToOtherUser(event, emit),
+      ),
     );
   }
 
-  Future<void> onWalletEventSendCoinsToOtherUser(
+  Future<void> _onWalletEventSendCoinsToOtherUser(
       WalletEventSendCoinsToOtherUser event, Emitter<WalletState> emit) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -64,7 +62,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     }
   }
 
-  Future<void> onWalletEventFetch(Emitter<WalletState> emit) async {
+  Future<void> _onWalletEventFetch(Emitter<WalletState> emit) async {
     emit(const WalletState.loading());
 
     try {
@@ -83,7 +81,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     }
   }
 
-  Future<void> onWalletEventSendCoinsToBracer(
+  Future<void> _onWalletEventSendCoinsToBracer(
       WalletEventSendCoinsToBracer event, Emitter<WalletState> emit) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();

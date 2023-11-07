@@ -26,21 +26,21 @@ class LeanProductionFormBloc
     required this.authRepository,
     required this.leanRepository,
   }) : super(const LeanProductionFormState.loading()) {
-    on<LeanProductionFormEvent>((event, emit) async {
-      if (event is LeanProductionFormEventSubmitForm) {
-        await onLeanProductionFormEventSubmit(event, emit);
-      } else if (event is LeanProductionFormEventGetMyLeanProductions) {
-        await onLeanProductionFormEventGetMyLeanProductions(event, emit);
-      } else if (event
-          is LeanProductionFormEventDownloadFileWithLeanProduction) {
-        await downloadFileWithLeanProduction(event, emit);
-      } else if (event is LeanProductionFormEventCreateInitState) {
-        emit(const LeanProductionFormState.loading());
-      }
-    });
+    on<LeanProductionFormEvent>(
+      (event, emit) => event.map<Future<void>>(
+          getMyLeanProductions: (event) =>
+              _onLeanProductionFormEventGetMyLeanProductions(event, emit),
+          createInitState: (event) => _createInitState(emit),
+          submitForm: (event) => _onLeanProductionFormEventSubmit(event, emit),
+          downloadFileWithLeanProduction: (event) =>
+              downloadFileWithLeanProduction(event, emit)),
+    );
   }
 
-  Future<void> onLeanProductionFormEventSubmit(
+  Future<void> _createInitState(Emitter<LeanProductionFormState> emit) async =>
+      emit(const LeanProductionFormState.loading());
+
+  Future<void> _onLeanProductionFormEventSubmit(
       LeanProductionFormEventSubmitForm event,
       Emitter<LeanProductionFormState> emit) async {
     try {
@@ -64,7 +64,7 @@ class LeanProductionFormBloc
     }
   }
 
-  Future<void> onLeanProductionFormEventGetMyLeanProductions(
+  Future<void> _onLeanProductionFormEventGetMyLeanProductions(
       LeanProductionFormEventGetMyLeanProductions event,
       Emitter<LeanProductionFormState> emit) async {
     emit(const LeanProductionFormState.loading());

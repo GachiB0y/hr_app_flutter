@@ -16,6 +16,10 @@ _$_MyLeanProductionsEntity _$$_MyLeanProductionsEntityFromJson(
       solution: json['solution'] as String,
       expenses: json['expenses'] as String,
       benefit: json['benefit'] as String,
+      implementers: (json['implementers'] as List<dynamic>)
+          .map((e) =>
+              ImplementsForLeanProdInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
       files: (json['files'] as List<dynamic>)
           .map((e) => FileElement.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,6 +35,7 @@ Map<String, dynamic> _$$_MyLeanProductionsEntityToJson(
       'solution': instance.solution,
       'expenses': instance.expenses,
       'benefit': instance.benefit,
+      'implementers': instance.implementers,
       'files': instance.files,
     };
 
@@ -44,4 +49,18 @@ Map<String, dynamic> _$$_FileElementToJson(_$_FileElement instance) =>
     <String, dynamic>{
       'name': instance.fileName,
       'url': instance.url,
+    };
+
+_$_ImplementsForLeanProdInfo _$$_ImplementsForLeanProdInfoFromJson(
+        Map<String, dynamic> json) =>
+    _$_ImplementsForLeanProdInfo(
+      name: json['name'] as String,
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$$_ImplementsForLeanProdInfoToJson(
+        _$_ImplementsForLeanProdInfo instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'id': instance.id,
     };
