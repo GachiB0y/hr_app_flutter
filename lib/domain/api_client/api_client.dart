@@ -1,6 +1,5 @@
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-import 'dart:io' as io;
 
 abstract interface class IHTTPService {
   Future<StreamedResponse> get(
@@ -13,8 +12,8 @@ abstract interface class IHTTPService {
   Future<StreamedResponse> postWithFile({
     required String uri,
     required String userToken,
-    required io.File imageFile,
-    Map<String, String>? fields,
+    required List<String> paths,
+    Map<String, String>? fieldsNew,
   });
 }
 
@@ -64,8 +63,8 @@ class HTTPServiceImpl implements IHTTPService {
   Future<StreamedResponse> postWithFile({
     required String uri,
     required String userToken,
-    required io.File imageFile,
-    Map<String, String>? fields,
+    required List<String> paths,
+    Map<String, String>? fieldsNew,
   }) async {
     var headers = {
       'accept': 'application/json',
@@ -73,17 +72,20 @@ class HTTPServiceImpl implements IHTTPService {
     };
 
     var request = MultipartRequest('POST', Uri.parse(uri));
-    if (fields != null) {
-      request.fields.addAll({...fields});
+    if (fieldsNew != null) {
+      request.fields.addAll({...fieldsNew});
     }
 
-    var multipartFile = await MultipartFile.fromPath(
-      'file',
-      imageFile.path,
-      filename: imageFile.path.split('/').last,
-      contentType: MediaType('image', 'jpg'),
-    );
-    request.files.add(multipartFile);
+    for (var path in paths) {
+      var multipartFile = await MultipartFile.fromPath(
+        'files',
+        path,
+        filename: path.split('/').last,
+        contentType: MediaType('image', 'jpg'),
+      );
+      request.files.add(multipartFile);
+    }
+
     request.headers.addAll(headers);
 
     StreamedResponse response =

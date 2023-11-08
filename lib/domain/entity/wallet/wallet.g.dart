@@ -8,6 +8,7 @@ part of 'wallet.dart';
 
 _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
       balance: json['balance'] as int,
+      avarageCoins: json['avarage_coins'] as int,
       transactions: (json['transactions'] as List<dynamic>?)
           ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -15,6 +16,7 @@ _$_Wallet _$$_WalletFromJson(Map<String, dynamic> json) => _$_Wallet(
 
 Map<String, dynamic> _$$_WalletToJson(_$_Wallet instance) => <String, dynamic>{
       'balance': instance.balance,
+      'avarage_coins': instance.avarageCoins,
       'transactions': instance.transactions,
     };
 

@@ -94,6 +94,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             padding: const EdgeInsets.only(left: 8),
                             child: const TableScrollWidget())),
                     const InfoBirthdayAndNewPeopleWidget(),
+                    const LeanProductionButton(),
                     const SerachPeopleButtonWidget(),
                   ],
                 ),
@@ -106,8 +107,8 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 }
 
-class SerachPeopleButtonWidget extends StatelessWidget {
-  const SerachPeopleButtonWidget({
+class LeanProductionButton extends StatelessWidget {
+  const LeanProductionButton({
     super.key,
   });
 
@@ -116,12 +117,121 @@ class SerachPeopleButtonWidget extends StatelessWidget {
     final blocUser = context.read<UserBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
+    const double raiudsBorder = 30.0;
+
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin:
-          const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(raiudsBorder),
+          color: ColorsForWidget.colorGreen),
+      child: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            // Image.asset(
+            //   'assets/images/lean_production_img.png',
+            //   width: 50,
+            //   height: 50,
+            // ),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Бережливое производство',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  'предложить идею',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
+            ),
+            const Spacer(),
+            MenuAnchor(
+              style: const MenuStyle(
+                padding: MaterialStatePropertyAll(EdgeInsets.all(8)),
+                elevation: MaterialStatePropertyAll(5.0),
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(raiudsBorder),
+                    ),
+                  ),
+                ),
+                backgroundColor: MaterialStatePropertyAll(
+                  Color(0xffb3f2b2),
+                  // Colors.white
+                ),
+              ),
+              builder: (BuildContext context, MenuController controller,
+                  Widget? child) {
+                return IconButton(
+                  onPressed: () {
+                    if (controller.isOpen) {
+                      controller.close();
+                    } else {
+                      controller.open();
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.more_vert_outlined,
+                    size: 36,
+                    color: Colors.white,
+                  ),
+                  tooltip: 'Показать меню',
+                );
+              },
+              menuChildren: [
+                MenuItemButton(
+                  onPressed: () {
+                    AutoRouter.of(context).push(LeanProductionFormRoute(
+                        authRepository: blocUser.authRepository,
+                        userRepo: blocUser.userRepo,
+                        leanRepository: blocUser.leanProductionRepository));
+                  },
+                  child: const Text('Подать заявление'),
+                ),
+                MenuItemButton(
+                  onPressed: () {
+                    AutoRouter.of(context).push(MyLeanProductionsRoute(
+                        authRepository: blocUser.authRepository,
+                        userRepo: blocUser.userRepo,
+                        leanRepository: blocUser.leanProductionRepository));
+                  },
+                  child: const Text('Мои заявления'),
+                ),
+              ],
+            ),
+          ]),
+        ),
+      ]),
+    );
+  }
+}
+
+class SerachPeopleButtonWidget extends StatelessWidget {
+  const SerachPeopleButtonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final blocUser = context.read<UserBloc>();
+    const double raiudsBorder = 30.0;
+    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    if (textScaleFactor < 1) textScaleFactor = 1;
+    return Container(
+      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
+      margin:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
       child: Stack(children: [
         Padding(
@@ -129,16 +239,14 @@ class SerachPeopleButtonWidget extends StatelessWidget {
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Найти соотрудника',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
-                  ),
+                Text(
+                  'Найти соотрудника',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
                 ),
                 Text(
                   'структура компании',
@@ -157,7 +265,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
               AutoRouter.of(context).push(SearchUserRoute(
                   authRepository: blocUser.authRepository,
@@ -182,76 +290,73 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
     final RookiesBloc blocRookies = context.watch<RookiesBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
+    const double raiudsBorder = 30.0;
 
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
-      margin: const EdgeInsets.all(16.0),
-      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
-      child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  blocBirthDayInfo.state.when(
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    loaded: (birthDayInfo) {
-                      return Text(
-                        birthDayInfo.count.toString(),
-                        style:
-                            const TextStyle(fontSize: 26, color: Colors.white),
-                      );
-                    },
-                    error: () => const Text('Ошибка загрузки.'),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Дни рождения',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
+      child: Row(children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              blocBirthDayInfo.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                loaded: (birthDayInfo) {
+                  return Text(
+                    birthDayInfo.count.toString(),
+                    style: const TextStyle(fontSize: 26, color: Colors.white),
+                  );
+                },
+                error: () => const Text('Ошибка загрузки.'),
               ),
-            ),
-            const VerticalDivider(
-              color: Colors.white,
-              thickness: 2,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  blocRookies.state.when(
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    loaded: (rookiseInfo) {
-                      return Text(
-                        rookiseInfo.count.toString(),
-                        style:
-                            const TextStyle(fontSize: 26, color: Colors.white),
-                      );
-                    },
-                    error: () => const Text('Ошибка загрузки.'),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Новенькие',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
+              const SizedBox(height: 5),
+              const Text(
+                'Дни рождения',
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
-            ),
-          ]),
+            ],
+          ),
+        ),
+        const VerticalDivider(
+          color: Colors.white,
+          thickness: 2,
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              blocRookies.state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                loaded: (rookiseInfo) {
+                  return Text(
+                    rookiseInfo.count.toString(),
+                    style: const TextStyle(fontSize: 26, color: Colors.white),
+                  );
+                },
+                error: () => const Text('Ошибка загрузки.'),
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                'Новенькие',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
@@ -451,6 +556,8 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     final blocEventEntity = context.watch<EventEntityBloc>();
     final blocCategory = context.watch<CategoryBloc>();
 
+    const double radius = 30.0;
+
     return blocEventEntity.state.when(
       loading: () {
         return const Center(
@@ -558,7 +665,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                               image: DecorationImage(
                                   image: imageProvider, fit: BoxFit.cover),
                               color: Colors.grey,
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(radius),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -568,7 +675,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(18),
+                                    borderRadius: BorderRadius.circular(radius),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),

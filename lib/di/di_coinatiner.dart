@@ -1,4 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
@@ -19,17 +24,15 @@ import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hr_app_flutter/main.dart';
-import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:hr_app_flutter/utils/custom_theme.dart';
 
 AppFactory makeAppFactory() => const _AppFactoryDefault();
@@ -71,6 +74,9 @@ class _DIContainer {
 
   UserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
+
+  LeanProductionRepository _makeLeanProductionRepository() =>
+      LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
   ServiceRepository _makeServiceRepository() =>
       ServiceRepositoryImpl(serviceProvider: _makeServiceProvider());
   AuthRepository _makeAuthRepository() => AuthRepositoryImpl(
@@ -81,12 +87,14 @@ class _DIContainer {
 class ScreenFactoryDefault implements ScreenFactory {
   final _DIContainer _diContainer;
   final AppRouter _router = AppRouter();
-  ScreenFactoryDefault(this._diContainer);
+  ScreenFactoryDefault(_DIContainer diContainer) : _diContainer = diContainer;
 
   @override
   MultiBlocProvider createMultiBlocProvider() {
     final AuthRepository authRepository = _diContainer._makeAuthRepository();
     final UserRepository userRepository = _diContainer._makeUserRepository();
+    final LeanProductionRepository leanProductionRepository =
+        _diContainer._makeLeanProductionRepository();
     final EventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
@@ -107,7 +115,9 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
-              userRepo: userRepository, authRepository: authRepository),
+              userRepo: userRepository,
+              authRepository: authRepository,
+              leanProductionRepository: leanProductionRepository),
         ),
         BlocProvider<UserBirthDayInfoBloc>(
           create: (BuildContext context) => UserBirthDayInfoBloc(

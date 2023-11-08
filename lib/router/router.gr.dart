@@ -76,6 +76,34 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const GrassCoinScreen(),
       );
     },
+    LeanProductionFormRoute.name: (routeData) {
+      final args = routeData.argsAs<LeanProductionFormRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: LeanProductionFormScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+          leanRepository: args.leanRepository,
+        )),
+      );
+    },
+    LeanProductionInfoProposalsRoute.name: (routeData) {
+      final args = routeData.argsAs<LeanProductionInfoProposalsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: LeanProductionInfoProposalsScreen(
+          key: args.key,
+          modelLeanProduction: args.modelLeanProduction,
+          blocLeanProduction: args.blocLeanProduction,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+          leanRepository: args.leanRepository,
+        )),
+      );
+    },
     LoaderRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -86,6 +114,19 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const MainAppScreen(),
+      );
+    },
+    MyLeanProductionsRoute.name: (routeData) {
+      final args = routeData.argsAs<MyLeanProductionsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: MyLeanProductionsScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+          leanRepository: args.leanRepository,
+        )),
       );
     },
     ProfileWidgetRoute.name: (routeData) {
@@ -328,6 +369,114 @@ class GrassCoinRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LeanProductionFormScreen]
+class LeanProductionFormRoute
+    extends PageRouteInfo<LeanProductionFormRouteArgs> {
+  LeanProductionFormRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    required LeanProductionRepository leanRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          LeanProductionFormRoute.name,
+          args: LeanProductionFormRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+            leanRepository: leanRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'LeanProductionFormRoute';
+
+  static const PageInfo<LeanProductionFormRouteArgs> page =
+      PageInfo<LeanProductionFormRouteArgs>(name);
+}
+
+class LeanProductionFormRouteArgs {
+  const LeanProductionFormRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+    required this.leanRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  final LeanProductionRepository leanRepository;
+
+  @override
+  String toString() {
+    return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+  }
+}
+
+/// generated route for
+/// [LeanProductionInfoProposalsScreen]
+class LeanProductionInfoProposalsRoute
+    extends PageRouteInfo<LeanProductionInfoProposalsRouteArgs> {
+  LeanProductionInfoProposalsRoute({
+    Key? key,
+    required MyLeanProductionsEntity modelLeanProduction,
+    required LeanProductionFormBloc blocLeanProduction,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    required LeanProductionRepository leanRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          LeanProductionInfoProposalsRoute.name,
+          args: LeanProductionInfoProposalsRouteArgs(
+            key: key,
+            modelLeanProduction: modelLeanProduction,
+            blocLeanProduction: blocLeanProduction,
+            authRepository: authRepository,
+            userRepo: userRepo,
+            leanRepository: leanRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'LeanProductionInfoProposalsRoute';
+
+  static const PageInfo<LeanProductionInfoProposalsRouteArgs> page =
+      PageInfo<LeanProductionInfoProposalsRouteArgs>(name);
+}
+
+class LeanProductionInfoProposalsRouteArgs {
+  const LeanProductionInfoProposalsRouteArgs({
+    this.key,
+    required this.modelLeanProduction,
+    required this.blocLeanProduction,
+    required this.authRepository,
+    required this.userRepo,
+    required this.leanRepository,
+  });
+
+  final Key? key;
+
+  final MyLeanProductionsEntity modelLeanProduction;
+
+  final LeanProductionFormBloc blocLeanProduction;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  final LeanProductionRepository leanRepository;
+
+  @override
+  String toString() {
+    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+  }
+}
+
+/// generated route for
 /// [LoaderScreen]
 class LoaderRoute extends PageRouteInfo<void> {
   const LoaderRoute({List<PageRouteInfo>? children})
@@ -353,6 +502,54 @@ class MainAppRoute extends PageRouteInfo<void> {
   static const String name = 'MainAppRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MyLeanProductionsScreen]
+class MyLeanProductionsRoute extends PageRouteInfo<MyLeanProductionsRouteArgs> {
+  MyLeanProductionsRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    required LeanProductionRepository leanRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          MyLeanProductionsRoute.name,
+          args: MyLeanProductionsRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+            leanRepository: leanRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MyLeanProductionsRoute';
+
+  static const PageInfo<MyLeanProductionsRouteArgs> page =
+      PageInfo<MyLeanProductionsRouteArgs>(name);
+}
+
+class MyLeanProductionsRouteArgs {
+  const MyLeanProductionsRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+    required this.leanRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  final LeanProductionRepository leanRepository;
+
+  @override
+  String toString() {
+    return 'MyLeanProductionsRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+  }
 }
 
 /// generated route for

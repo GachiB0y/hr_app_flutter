@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'schedule_bus_entity.freezed.dart';
 part 'schedule_bus_entity.g.dart';

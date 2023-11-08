@@ -20,18 +20,17 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
     required this.eventEntityRepository,
     required this.authRepository,
   }) : super(const ApprovementNewsState.loading()) {
-    on<ApprovementEvent>((event, emit) async {
-      if (event is ApprovementEventFetch) {
-        await onApprovementEventFetch(emit);
-      } else if (event is ApprovementEventApprovedNews) {
-        await onApprovedNews(event, emit);
-      } else if (event is ApprovementEventMoveInArchiveNews) {
-        await onMoveInArchiveNews(event, emit);
-      }
-    });
+    on<ApprovementEvent>(
+      (event, emit) => event.map<Future<void>>(
+        fetch: (event) async => await _onApprovementEventFetch(emit),
+        approvedNews: (event) async => await _onApprovedNews(event, emit),
+        moveInArchiveNews: (event) async =>
+            await _onMoveInArchiveNews(event, emit),
+      ),
+    );
   }
 
-  Future<void> onApprovedNews(ApprovementEventApprovedNews event,
+  Future<void> _onApprovedNews(ApprovementEventApprovedNews event,
       Emitter<ApprovementNewsState> emit) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -42,7 +41,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
             id: event.id,
           )
           .timeout(const Duration(seconds: 10));
-      await onApprovementEventFetch(emit);
+      await _onApprovementEventFetch(emit);
     } on TimeoutException {
       emit(const ApprovementNewsState.error());
     } catch (e) {
@@ -50,7 +49,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
     }
   }
 
-  Future<void> onMoveInArchiveNews(ApprovementEventMoveInArchiveNews event,
+  Future<void> _onMoveInArchiveNews(ApprovementEventMoveInArchiveNews event,
       Emitter<ApprovementNewsState> emit) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -61,7 +60,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
             id: event.id,
           )
           .timeout(const Duration(seconds: 10));
-      await onApprovementEventFetch(emit);
+      await _onApprovementEventFetch(emit);
     } on TimeoutException {
       emit(const ApprovementNewsState.error());
     } catch (e) {
@@ -69,7 +68,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
     }
   }
 
-  Future<void> onApprovementEventFetch(
+  Future<void> _onApprovementEventFetch(
       Emitter<ApprovementNewsState> emit) async {
     emit(const ApprovementNewsState.loading());
     try {

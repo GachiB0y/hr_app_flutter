@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io' as io;
 
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
@@ -24,7 +23,7 @@ abstract interface class UserProvider {
       {required String userToken, required String phoneNumber});
   Future<bool> sendAvatarWithProfile({
     required String userToken,
-    required io.File imageFile,
+    required List<String> paths,
   });
 }
 
@@ -151,14 +150,16 @@ class UserProviderImpl implements UserProvider {
   }
 
   @override
-  Future<bool> sendAvatarWithProfile(
-      {required String userToken, required io.File imageFile}) async {
+  Future<bool> sendAvatarWithProfile({
+    required String userToken,
+    required List<String> paths,
+  }) async {
     String uri = '$urlAdress/auth/set_avatar';
 
     final response = await _httpService.postWithFile(
       uri: uri,
       userToken: userToken,
-      imageFile: imageFile,
+      paths: paths,
     );
     if (response.statusCode == 201) {
       return true;

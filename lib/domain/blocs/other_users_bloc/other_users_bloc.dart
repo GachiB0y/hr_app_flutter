@@ -22,33 +22,31 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     required this.authRepository,
   }) : super(const OtherUserState.loaded(
             listUsersLoaded: [], currentProfileUser: null)) {
-    on<OtherUsersEvent>((event, emit) async {
-      if (event is OtherUsersEventGethUsersByPhoneNumber) {
-        await onOtherUsersEventGethUsersByPhoneNumber(emit, event);
-      } else if (event is OtherUsersEventClearList) {
-        onOtherUsersEventClearList(emit);
-      } else if (event is OtherUsersEventGethUsersByUserId) {
-        await onOtherUsersEventGethUsersByUserId(emit, event.userId);
-      } else if (event is OtherUsersEventFindUsers) {
-        await onOtherUsersEventFindUsers(emit, event);
-      } else if (event is OtherUsersEventSaveTagsToSend) {
-        await onOtherUsersEvenSaveTagsToSend(emit, event);
-      } else if (event is OtherUsersEventAddTag) {
-        onOtherUsersEventAddTag(emit, event);
-      } else if (event is OtherUsersEventDeleteTag) {
-        onOtherUsersEventDeleteTag(emit, event);
-      } else if (event is OtherUsersEventSendAvatarWithProfile) {
-        await onOtherUsersEventSendAvatarWithProfile(emit, event);
-      }
-    });
+    on<OtherUsersEvent>(
+      (event, emit) => event.map<Future<void>>(
+        gethUsersByPhoneNumber: (event) async =>
+            await _onOtherUsersEventGethUsersByPhoneNumber(emit, event),
+        clearList: (event) => _onOtherUsersEventClearList(emit),
+        gethUsersByUserId: (event) async =>
+            await _onOtherUsersEventGethUsersByUserId(emit, event.userId),
+        findUsers: (event) async =>
+            await _onOtherUsersEventFindUsers(emit, event),
+        saveTagsToSend: (event) async =>
+            await _onOtherUsersEvenSaveTagsToSend(emit, event),
+        addTag: (event) => _onOtherUsersEventAddTag(emit, event),
+        deleteTag: (event) => _onOtherUsersEventDeleteTag(emit, event),
+        sendAvatarWithProfile: (event) async =>
+            await _onOtherUsersEventSendAvatarWithProfile(emit, event),
+      ),
+    );
   }
 
-  void onOtherUsersEventClearList(Emitter<OtherUserState> emit) {
+  Future<void> _onOtherUsersEventClearList(Emitter<OtherUserState> emit) async {
     emit(const OtherUserState.loaded(
         listUsersLoaded: [], currentProfileUser: null));
   }
 
-  Future<void> onOtherUsersEventGethUsersByPhoneNumber(
+  Future<void> _onOtherUsersEventGethUsersByPhoneNumber(
       Emitter<OtherUserState> emit,
       OtherUsersEventGethUsersByPhoneNumber event) async {
     try {
@@ -69,7 +67,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  Future<void> onOtherUsersEventGethUsersByUserId(
+  Future<void> _onOtherUsersEventGethUsersByUserId(
       Emitter<OtherUserState> emit, String userID) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -87,7 +85,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  Future<void> onOtherUsersEventFindUsers(
+  Future<void> _onOtherUsersEventFindUsers(
       Emitter<OtherUserState> emit, OtherUsersEventFindUsers event) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -106,7 +104,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  Future<void> onOtherUsersEvenSaveTagsToSend(
+  Future<void> _onOtherUsersEvenSaveTagsToSend(
       Emitter<OtherUserState> emit, OtherUsersEventSaveTagsToSend event) async {
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
@@ -144,8 +142,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  void onOtherUsersEventAddTag(
-      Emitter<OtherUserState> emit, OtherUsersEventAddTag event) {
+  Future<void> _onOtherUsersEventAddTag(
+      Emitter<OtherUserState> emit, OtherUsersEventAddTag event) async {
     final copyProfile =
         (state as OtherUserStateLoaded).currentProfileUser?.copyWith();
     if (copyProfile != null) {
@@ -163,8 +161,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  void onOtherUsersEventDeleteTag(
-      Emitter<OtherUserState> emit, OtherUsersEventDeleteTag event) {
+  Future<void> _onOtherUsersEventDeleteTag(
+      Emitter<OtherUserState> emit, OtherUsersEventDeleteTag event) async {
     final copyProfile =
         (state as OtherUserStateLoaded).currentProfileUser?.copyWith();
     if (copyProfile != null) {
@@ -182,7 +180,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
     }
   }
 
-  onOtherUsersEventSendAvatarWithProfile(Emitter<OtherUserState> emit,
+  _onOtherUsersEventSendAvatarWithProfile(Emitter<OtherUserState> emit,
       OtherUsersEventSendAvatarWithProfile event) async {
     String? accessToken = await authRepository.cheskIsLiveAccessToken();
     try {

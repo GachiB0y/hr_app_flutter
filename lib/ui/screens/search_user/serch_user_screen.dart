@@ -32,8 +32,6 @@ class SearchUserScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _SearchUserScreenState extends State<SearchUserScreen> {
-  String findText = '';
-  String amountCoins = '';
   Timer? searchDebounce;
 
   @override

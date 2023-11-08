@@ -149,6 +149,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const double radius = 50.0;
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
     final blocEventEntity = context.read<EventEntityBloc>();
     final sizeScreen = MediaQuery.of(context).size;
@@ -168,7 +169,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                   offset: const Offset(0, 6),
                 ),
               ],
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(radius),
               color: ColorsForWidget.colorGreen),
           width: widget.isRow ? sizeWidhtIsRow : null,
           child: Padding(
@@ -200,7 +201,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(radius),
               onTap: () async {
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&

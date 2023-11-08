@@ -215,25 +215,35 @@ class _BodyContentWidgetCoinScreenState
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(right: 20),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.add_circle_outline,
                     size: 45,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '56',
-                        style: TextStyle(fontSize: 20),
+                      blocWallet.state.when(
+                        loading: () {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        loaded: (walletLoaded) {
+                          return Text(
+                            walletLoaded.avarageCoins.toString(),
+                            style: const TextStyle(fontSize: 20),
+                          );
+                        },
+                        error: () => const Text('Nothing found...'),
                       ),
-                      Text(
+                      const Text(
                         'за неделю',
                         style: TextStyle(color: Colors.grey),
                       )

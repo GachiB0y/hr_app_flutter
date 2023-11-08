@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
+import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 
 part 'user_bloc.freezed.dart';
@@ -14,10 +15,12 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepo;
   final AuthRepository authRepository;
+  final LeanProductionRepository leanProductionRepository;
 
   UserBloc({
     required this.userRepo,
     required this.authRepository,
+    required this.leanProductionRepository,
   }) : super(const UserState.loading()) {
     on<UserEvent>((event, emit) async {
       if (event is UserEventFetch) {

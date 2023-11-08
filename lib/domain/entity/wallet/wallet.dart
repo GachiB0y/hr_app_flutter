@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'wallet.freezed.dart';
@@ -7,6 +9,7 @@ part 'wallet.g.dart';
 class Wallet with _$Wallet {
   const factory Wallet(
       {required int balance,
+      @JsonKey(name: 'avarage_coins') required int avarageCoins,
       required List<Transaction>? transactions}) = _Wallet;
 
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
