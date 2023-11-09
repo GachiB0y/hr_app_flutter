@@ -24,7 +24,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
         super(
           initialState ??
               const StatementsState.idle(
-                data: [],
+                data: null,
                 message: 'Initial idle state',
               ),
         ) {

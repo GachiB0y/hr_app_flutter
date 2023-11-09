@@ -184,6 +184,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ServicesScreen(),
       );
     },
+    StatementFormRoute.name: (routeData) {
+      final args = routeData.argsAs<StatementFormRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: StatementFormScreen(
+          key: args.key,
+          repositoryStatements: args.repositoryStatements,
+          authRepository: args.authRepository,
+        )),
+      );
+    },
     UserMainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -742,6 +754,49 @@ class ServicesRoute extends PageRouteInfo<void> {
   static const String name = 'ServicesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StatementFormScreen]
+class StatementFormRoute extends PageRouteInfo<StatementFormRouteArgs> {
+  StatementFormRoute({
+    Key? key,
+    required IStatementsRepository repositoryStatements,
+    required AuthRepository authRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          StatementFormRoute.name,
+          args: StatementFormRouteArgs(
+            key: key,
+            repositoryStatements: repositoryStatements,
+            authRepository: authRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'StatementFormRoute';
+
+  static const PageInfo<StatementFormRouteArgs> page =
+      PageInfo<StatementFormRouteArgs>(name);
+}
+
+class StatementFormRouteArgs {
+  const StatementFormRouteArgs({
+    this.key,
+    required this.repositoryStatements,
+    required this.authRepository,
+  });
+
+  final Key? key;
+
+  final IStatementsRepository repositoryStatements;
+
+  final AuthRepository authRepository;
+
+  @override
+  String toString() {
+    return 'StatementFormRouteArgs{key: $key, repositoryStatements: $repositoryStatements, authRepository: $authRepository}';
+  }
 }
 
 /// generated route for

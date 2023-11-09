@@ -8,6 +8,7 @@ import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
+import 'package:hr_app_flutter/domain/api_client/statement_provider.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
@@ -26,6 +27,7 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
@@ -65,6 +67,8 @@ class _DIContainer {
   EventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(htttpService);
   WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
+  IStatementsProvider _makeStatementsProvider() =>
+      StatementProviderImpl(htttpService);
   UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
   EventEntityRepository _makeEventEntityRepository() =>
       EventEntityRepositoryImpl(
@@ -74,7 +78,8 @@ class _DIContainer {
 
   UserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
-
+  StatementsRepository _makeStatementsRepository() =>
+      StatementsRepository(statementsProvider: _makeStatementsProvider());
   LeanProductionRepository _makeLeanProductionRepository() =>
       LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
   ServiceRepository _makeServiceRepository() =>
@@ -154,17 +159,23 @@ class ScreenFactoryDefault implements ScreenFactory {
           ),
         ),
       ],
-      child: MaterialApp.router(
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<StatementsRepository>(
+              create: (context) => _diContainer._makeStatementsRepository()),
         ],
-        supportedLocales: S.delegate.supportedLocales,
-        title: 'HR App',
-        theme: CustomTheme.lightTheme,
-        routerConfig: _router.config(),
+        child: MaterialApp.router(
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          title: 'HR App',
+          theme: CustomTheme.lightTheme,
+          routerConfig: _router.config(),
+        ),
       ),
     );
   }

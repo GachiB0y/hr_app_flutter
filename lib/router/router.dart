@@ -6,6 +6,7 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
@@ -23,6 +24,7 @@ import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_sen
 import 'package:hr_app_flutter/ui/screens/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/shedule_bus_screen/shedule_bus_screen.dart';
+import 'package:hr_app_flutter/ui/screens/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart';
 
@@ -68,5 +70,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
             page: LeanProductionInfoProposalsRoute.page,
             path: '/info_proposals'),
+        AutoRoute(page: StatementFormRoute.page, path: '/statements_form'),
       ];
 }
