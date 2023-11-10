@@ -11,6 +11,7 @@ import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
@@ -190,19 +191,25 @@ class LeanProductionButton extends StatelessWidget {
               menuChildren: [
                 MenuItemButton(
                   onPressed: () {
+                    final leanProductionRepository =
+                        RepositoryProvider.of<LeanProductionRepository>(
+                            context);
                     AutoRouter.of(context).push(LeanProductionFormRoute(
                         authRepository: blocUser.authRepository,
                         userRepo: blocUser.userRepo,
-                        leanRepository: blocUser.leanProductionRepository));
+                        leanRepository: leanProductionRepository));
                   },
                   child: const Text('Подать заявление'),
                 ),
                 MenuItemButton(
                   onPressed: () {
+                    final leanProductionRepository =
+                        RepositoryProvider.of<LeanProductionRepository>(
+                            context);
                     AutoRouter.of(context).push(MyLeanProductionsRoute(
                         authRepository: blocUser.authRepository,
                         userRepo: blocUser.userRepo,
-                        leanRepository: blocUser.leanProductionRepository));
+                        leanRepository: leanProductionRepository));
                   },
                   child: const Text('Мои заявления'),
                 ),

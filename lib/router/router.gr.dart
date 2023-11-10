@@ -46,6 +46,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthenticationFormScreen(),
       );
     },
+    BagReportRoute.name: (routeData) {
+      final args = routeData.argsAs<BagReportRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: BagReportScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          serviceRepository: args.serviceRepository,
+        )),
+      );
+    },
     BookingMeetingSecondRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -308,6 +320,49 @@ class AuthenticationFormRoute extends PageRouteInfo<void> {
   static const String name = 'AuthenticationFormRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BagReportScreen]
+class BagReportRoute extends PageRouteInfo<BagReportRouteArgs> {
+  BagReportRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required ServiceRepository serviceRepository,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BagReportRoute.name,
+          args: BagReportRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            serviceRepository: serviceRepository,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BagReportRoute';
+
+  static const PageInfo<BagReportRouteArgs> page =
+      PageInfo<BagReportRouteArgs>(name);
+}
+
+class BagReportRouteArgs {
+  const BagReportRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.serviceRepository,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final ServiceRepository serviceRepository;
+
+  @override
+  String toString() {
+    return 'BagReportRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
+  }
 }
 
 /// generated route for

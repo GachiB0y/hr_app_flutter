@@ -11,6 +11,7 @@ import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
+import 'package:hr_app_flutter/ui/screens/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/first_screen_booking_meetings.dart';
 import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/second_screen_booking_meeting.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
@@ -71,5 +72,6 @@ class AppRouter extends _$AppRouter {
             page: LeanProductionInfoProposalsRoute.page,
             path: '/info_proposals'),
         AutoRoute(page: StatementFormRoute.page, path: '/statements_form'),
+        AutoRoute(page: BagReportRoute.page, path: '/bag_report'),
       ];
 }

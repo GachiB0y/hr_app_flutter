@@ -98,8 +98,7 @@ class ScreenFactoryDefault implements ScreenFactory {
   MultiBlocProvider createMultiBlocProvider() {
     final AuthRepository authRepository = _diContainer._makeAuthRepository();
     final UserRepository userRepository = _diContainer._makeUserRepository();
-    final LeanProductionRepository leanProductionRepository =
-        _diContainer._makeLeanProductionRepository();
+
     final EventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
@@ -120,9 +119,9 @@ class ScreenFactoryDefault implements ScreenFactory {
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
-              userRepo: userRepository,
-              authRepository: authRepository,
-              leanProductionRepository: leanProductionRepository),
+            userRepo: userRepository,
+            authRepository: authRepository,
+          ),
         ),
         BlocProvider<UserBirthDayInfoBloc>(
           create: (BuildContext context) => UserBirthDayInfoBloc(
@@ -163,6 +162,9 @@ class ScreenFactoryDefault implements ScreenFactory {
         providers: [
           RepositoryProvider<StatementsRepository>(
               create: (context) => _diContainer._makeStatementsRepository()),
+          RepositoryProvider<LeanProductionRepository>(
+              create: (context) =>
+                  _diContainer._makeLeanProductionRepository()),
         ],
         child: MaterialApp.router(
           localizationsDelegates: const [

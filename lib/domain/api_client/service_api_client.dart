@@ -13,6 +13,8 @@ import 'package:hr_app_flutter/domain/entity/service/service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../entity/bag_report_entity/bag_report_entity.dart';
+
 abstract interface class ServiceProvider {
   Future<List<Service>> getServices({required String userToken});
   Future<ScheduleBus> getScheduleBus({required String userToken});
@@ -24,6 +26,8 @@ abstract interface class ServiceProvider {
 
   Future<void> downloadFileWithLeanProduction(
       {required String url, required String userToken});
+  Future<bool> submitBagReportForm(
+      {required String userToken, required BagReportEntity bagReportEntity});
 }
 
 class ServiceProviderImpl implements ServiceProvider {
@@ -233,6 +237,32 @@ class ServiceProviderImpl implements ServiceProvider {
       }
     } else {
       throw Exception('Error fetching My Proposals');
+    }
+  }
+
+  @override
+  Future<bool> submitBagReportForm(
+      {required String userToken,
+      required BagReportEntity bagReportEntity}) async {
+    String uri = '$urlAdress/report/create';
+
+    final Map<String, String> newFields = {
+      'forminfo':
+          '{"title": ${bagReportEntity.title}, "description": ${bagReportEntity.description}}'
+    };
+
+    final response = await _httpService.postWithFile(
+      uri: uri,
+      userToken: userToken,
+      paths: bagReportEntity.pathsToFiles,
+      fieldsNew: newFields,
+    );
+    if (response.statusCode == 201) {
+      return true;
+    } else if (response.statusCode == 400) {
+      throw ApiClientException(ApiClientExceptionType.addTags);
+    } else {
+      throw Exception('Error submit Bag Report Form');
     }
   }
 }

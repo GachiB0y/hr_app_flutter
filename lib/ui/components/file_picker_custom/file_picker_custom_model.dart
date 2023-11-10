@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class LeanProductionFormScreenModel extends Listenable {
+class FilePickerCustomModel extends Listenable {
   // Создание списка слушателей
   final List<VoidCallback> _listeners = [];
 

@@ -7,6 +7,7 @@ import 'package:hr_app_flutter/domain/blocs/caregory_bloc.dart/category_bloc.dar
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/my_picker_image.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
@@ -34,32 +35,34 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     final blocServiceBloc = context.read<ServiceBloc>();
+    const double raiudsBorder = 30;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: blocServiceBloc.state.when(
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
+        child: RefreshIndicator(
+          color: ColorsForWidget.colorGreen,
+          onRefresh: () {
+            blocServiceBloc.add(const ServiceEvent.fetch(isRow: false));
+            return Future<void>.delayed(const Duration(seconds: 1));
           },
-          loaded: (loadedService, loeadedServiceWidgets) {
-            groupWidgets.clear();
+          child: CustomScrollView(
+            slivers: <Widget>[
+              blocServiceBloc.state.when(
+                loading: () {
+                  return const SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  );
+                },
+                loaded: (loadedService, loeadedServiceWidgets) {
+                  groupWidgets.clear();
 
-            for (var widget in loeadedServiceWidgets) {
-              groupWidgets.add(widget);
-            }
-            return RefreshIndicator(
-              color: ColorsForWidget.colorGreen,
-              onRefresh: () {
-                blocServiceBloc.add(const ServiceEvent.fetch(isRow: false));
-                return Future<void>.delayed(const Duration(seconds: 1));
-              },
-              child: CustomScrollView(
-                // primary: false,
-                slivers: <Widget>[
-                  SliverPadding(
+                  for (var widget in loeadedServiceWidgets) {
+                    groupWidgets.add(widget);
+                  }
+                  return SliverPadding(
                     padding: const EdgeInsets.all(20),
                     sliver: SliverGrid.count(
                       crossAxisSpacing: 10,
@@ -67,12 +70,33 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       crossAxisCount: 2,
                       children: groupWidgets,
                     ),
-                  ),
-                ],
+                  );
+                },
+                error: () =>
+                    const SliverToBoxAdapter(child: Text('Nothing found...')),
               ),
-            );
-          },
-          error: () => const Text('Nothing found...'),
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(raiudsBorder),
+                      color: ColorsForWidget.colorGreen),
+                  child: TextButton(
+                      onPressed: () {
+                        context.pushRoute(BagReportRoute(
+                            authRepository: blocServiceBloc.authRepository,
+                            serviceRepository:
+                                blocServiceBloc.serviceRepository));
+                      },
+                      child: const Text(
+                        'Сообщить об ошибке',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w800),
+                      )),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,9 @@ abstract interface class IStatementsProvider {
       {required final String accessToken});
   Future<StatementEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
+  Future<void> submitStatementForm(
+      {required final String accessToken,
+      required final StatementFormInfo formInfo});
 }
 
 class StatementProviderImpl implements IStatementsProvider {
@@ -50,6 +53,21 @@ class StatementProviderImpl implements IStatementsProvider {
       return result;
     } else {
       throw Exception('Error fetching Statement Form');
+    }
+  }
+
+  @override
+  Future<void> submitStatementForm(
+      {required String accessToken,
+      required StatementFormInfo formInfo}) async {
+    String uri = '$urlAdress/hrlink/createStatement';
+    final String body = json.encode(formInfo.toJson());
+    final response =
+        await _httpService.post(uri: uri, userToken: accessToken, body: body);
+    if (response.statusCode == 201) {
+      return;
+    } else {
+      throw Exception('Error send submit Statement Form!!!');
     }
   }
 }

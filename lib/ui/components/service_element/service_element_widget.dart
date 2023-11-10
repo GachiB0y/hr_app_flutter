@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
@@ -224,6 +225,13 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     serviceRepository: blocService.serviceRepository,
                   ));
                   // context.pushRoute(BookingMeetingsFirstRoute());
+                } else if (widget.service.id == 24) {
+                  final repositoryStatements =
+                      RepositoryProvider.of<StatementsRepository>(context);
+                  context.pushRoute(StatementFormRoute(
+                    authRepository: blocEventEntity.authRepository,
+                    repositoryStatements: repositoryStatements,
+                  ));
                 }
               },
             ),
