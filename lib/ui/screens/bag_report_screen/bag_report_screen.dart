@@ -81,10 +81,23 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
             ..showSnackBar(
               const SnackBar(
                 content:
-                    Center(child: Text('Ошибка отправки.\n Попробуйте снова')),
+                    Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
                 duration: Duration(seconds: 6),
               ),
             );
+        } else if (state is BagReportState$Successful) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Center(
+                    child: Text(
+                  'Данные успешно отправленны!',
+                  style: TextStyle(fontSize: 20),
+                )),
+                duration: Duration(seconds: 2),
+              ),
+            ).closed.then((value) => Navigator.pop(context));
         }
       },
       child: Container(

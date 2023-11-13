@@ -248,7 +248,7 @@ class ServiceProviderImpl implements ServiceProvider {
 
     final Map<String, String> newFields = {
       'forminfo':
-          '{"title": ${bagReportEntity.title}, "description": ${bagReportEntity.description}}'
+          '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
     };
 
     final response = await _httpService.postWithFile(
