@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -12,6 +11,9 @@ import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
+
+import '../../../domain/repository/auth_repository.dart';
+import '../../../domain/repository/user_repository.dart';
 
 @RoutePage()
 class GrassCoinScreen extends StatefulWidget {
@@ -168,7 +170,7 @@ class _BodyContentWidgetCoinScreenState
   @override
   Widget build(BuildContext context) {
     final blocWallet = context.watch<WalletBloc>();
-    final blocUser = context.watch<UserBloc>();
+
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     return SizedBox(
@@ -350,8 +352,10 @@ class _BodyContentWidgetCoinScreenState
                   ),
                   onPressed: () {
                     AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
-                        authRepository: blocUser.authRepository,
-                        userRepo: blocUser.userRepo));
+                      authRepository:
+                          RepositoryProvider.of<AuthRepository>(context),
+                      userRepo: RepositoryProvider.of<UserRepository>(context),
+                    ));
                   },
                   icon: const Icon(Icons.card_giftcard,
                       size: 26, color: Colors.black),

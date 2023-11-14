@@ -354,7 +354,7 @@ FileElement _$FileElementFromJson(Map<String, dynamic> json) {
 mixin _$FileElement {
   @JsonKey(name: 'name')
   String get fileName => throw _privateConstructorUsedError;
-  String get url => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -368,7 +368,7 @@ abstract class $FileElementCopyWith<$Res> {
           FileElement value, $Res Function(FileElement) then) =
       _$FileElementCopyWithImpl<$Res, FileElement>;
   @useResult
-  $Res call({@JsonKey(name: 'name') String fileName, String url});
+  $Res call({@JsonKey(name: 'name') String fileName, String? url});
 }
 
 /// @nodoc
@@ -385,17 +385,17 @@ class _$FileElementCopyWithImpl<$Res, $Val extends FileElement>
   @override
   $Res call({
     Object? fileName = null,
-    Object? url = null,
+    Object? url = freezed,
   }) {
     return _then(_value.copyWith(
       fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
-      url: null == url
+      url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -408,7 +408,7 @@ abstract class _$$_FileElementCopyWith<$Res>
       __$$_FileElementCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'name') String fileName, String url});
+  $Res call({@JsonKey(name: 'name') String fileName, String? url});
 }
 
 /// @nodoc
@@ -423,17 +423,17 @@ class __$$_FileElementCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fileName = null,
-    Object? url = null,
+    Object? url = freezed,
   }) {
     return _then(_$_FileElement(
       fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
-      url: null == url
+      url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -451,7 +451,7 @@ class _$_FileElement implements _FileElement {
   @JsonKey(name: 'name')
   final String fileName;
   @override
-  final String url;
+  final String? url;
 
   @override
   String toString() {
@@ -489,7 +489,7 @@ class _$_FileElement implements _FileElement {
 abstract class _FileElement implements FileElement {
   const factory _FileElement(
       {@JsonKey(name: 'name') required final String fileName,
-      required final String url}) = _$_FileElement;
+      required final String? url}) = _$_FileElement;
 
   factory _FileElement.fromJson(Map<String, dynamic> json) =
       _$_FileElement.fromJson;
@@ -498,7 +498,7 @@ abstract class _FileElement implements FileElement {
   @JsonKey(name: 'name')
   String get fileName;
   @override
-  String get url;
+  String? get url;
   @override
   @JsonKey(ignore: true)
   _$$_FileElementCopyWith<_$_FileElement> get copyWith =>

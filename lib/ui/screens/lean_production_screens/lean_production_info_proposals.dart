@@ -260,7 +260,7 @@ class FileInfoWidget extends StatelessWidget {
                                           LeanProductionFormEvent
                                               .downloadFileWithLeanProduction(
                                         url: modelLeanProduction
-                                            .files[index].url,
+                                            .files[index].url!,
                                       ));
                                     },
                                   ),

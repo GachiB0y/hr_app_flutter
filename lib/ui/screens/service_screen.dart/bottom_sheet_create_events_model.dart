@@ -9,7 +9,7 @@ class BottomSheetCreateEventsModel extends Listenable {
 
   List<String>? selectedItems = [];
   DateTime? startDate = DateTime.now();
-  DateTime? endDate = DateTime.now();
+  DateTime? endDate;
   String? base64Image;
   Uint8List? bytesSend;
   String errorMessage = '';
@@ -35,22 +35,28 @@ class BottomSheetCreateEventsModel extends Listenable {
   }
 
   Future<void> selectDateRange(
-      BuildContext context, dateRangeController) async {
-    final pickedDates = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime(DateTime.now().year + 1),
-      initialDateRange: startDate != null && endDate != null
-          ? DateTimeRange(
-              start: startDate as DateTime, end: endDate as DateTime)
-          : null,
-    );
+      {required BuildContext context,
+      required dateRangeController,
+      required bool isSingleDay}) async {
+    if (isSingleDay) {
+    } else {
+      final pickedDates = await showDateRangePicker(
+        context: context,
+        firstDate: DateTime(DateTime.now().year - 1),
+        lastDate: DateTime(DateTime.now().year + 1),
+        initialDateRange: startDate != null && endDate != null
+            ? DateTimeRange(
+                start: startDate as DateTime, end: endDate as DateTime)
+            : null,
+      );
 
-    if (pickedDates != null) {
-      startDate = pickedDates.start;
-      endDate = pickedDates.end;
-      updateDateRangeText(dateRangeController);
+      if (pickedDates != null) {
+        startDate = pickedDates.start;
+        endDate = pickedDates.end;
+        updateDateRangeText(dateRangeController);
+      }
     }
+
     notifyListeners();
   }
 

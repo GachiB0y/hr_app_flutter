@@ -19,3 +19,20 @@ class CustomFABFromFilePicker extends StatelessWidget {
     );
   }
 }
+
+class CustomFABFromImagePicker extends StatelessWidget {
+  const CustomFABFromImagePicker({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: const Icon(Icons.attach_file),
+      onPressed: () => ChangeNotifierProvaider.read<
+              ChangeNotifierProvaider<FilePickerCustomModel>,
+              FilePickerCustomModel>(context)
+          ?.pickImage(),
+    );
+  }
+}

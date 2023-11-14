@@ -11,10 +11,12 @@ import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
+import '../../domain/repository/user_repository.dart';
 import '../../theme/colors_from_theme.dart';
 
 @RoutePage()
@@ -115,7 +117,6 @@ class LeanProductionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocUser = context.read<UserBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     const double raiudsBorder = 30.0;
@@ -195,8 +196,10 @@ class LeanProductionButton extends StatelessWidget {
                         RepositoryProvider.of<LeanProductionRepository>(
                             context);
                     AutoRouter.of(context).push(LeanProductionFormRoute(
-                        authRepository: blocUser.authRepository,
-                        userRepo: blocUser.userRepo,
+                        authRepository:
+                            RepositoryProvider.of<AuthRepository>(context),
+                        userRepo:
+                            RepositoryProvider.of<UserRepository>(context),
                         leanRepository: leanProductionRepository));
                   },
                   child: const Text('Подать заявление'),
@@ -207,8 +210,10 @@ class LeanProductionButton extends StatelessWidget {
                         RepositoryProvider.of<LeanProductionRepository>(
                             context);
                     AutoRouter.of(context).push(MyLeanProductionsRoute(
-                        authRepository: blocUser.authRepository,
-                        userRepo: blocUser.userRepo,
+                        authRepository:
+                            RepositoryProvider.of<AuthRepository>(context),
+                        userRepo:
+                            RepositoryProvider.of<UserRepository>(context),
                         leanRepository: leanProductionRepository));
                   },
                   child: const Text('Мои заявления'),
@@ -229,7 +234,6 @@ class SerachPeopleButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocUser = context.read<UserBloc>();
     const double raiudsBorder = 30.0;
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
@@ -275,8 +279,9 @@ class SerachPeopleButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
               AutoRouter.of(context).push(SearchUserRoute(
-                  authRepository: blocUser.authRepository,
-                  userRepo: blocUser.userRepo));
+                authRepository: RepositoryProvider.of<AuthRepository>(context),
+                userRepo: RepositoryProvider.of<UserRepository>(context),
+              ));
             },
           ),
         ),

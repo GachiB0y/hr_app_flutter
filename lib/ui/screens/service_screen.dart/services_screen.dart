@@ -119,24 +119,19 @@ class _BottomSheetCreateEventsWidgetState
       TextEditingController();
   final TextEditingController dataTitleController = TextEditingController();
   final TextEditingController dateRangeController = TextEditingController();
+
+  bool isSingleDay = false;
+
   @override
   Widget build(BuildContext context) {
-    List<String> selectedCategories = ChangeNotifierProvaider.watch<
-            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-            BottomSheetCreateEventsModel>(context)
-        ?.selectedItems as List<String>;
-    String errorMessage = ChangeNotifierProvaider.watch<
-            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-            BottomSheetCreateEventsModel>(context)
-        ?.errorMessage as String;
-    DateTime startDate = ChangeNotifierProvaider.watch<
-            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-            BottomSheetCreateEventsModel>(context)
-        ?.startDate as DateTime;
-    DateTime endDate = ChangeNotifierProvaider.watch<
-            ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-            BottomSheetCreateEventsModel>(context)
-        ?.endDate as DateTime;
+    final viewModelBottomSheet = ChangeNotifierProvaider.watch<
+        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+        BottomSheetCreateEventsModel>(context);
+    List<String> selectedCategories =
+        viewModelBottomSheet?.selectedItems as List<String>;
+    String errorMessage = viewModelBottomSheet?.errorMessage as String;
+    DateTime startDate = viewModelBottomSheet?.startDate as DateTime;
+    DateTime? endDate;
 
     final blocEventEntity = context.read<EventEntityBloc>();
     return SingleChildScrollView(
@@ -179,10 +174,19 @@ class _BottomSheetCreateEventsWidgetState
               ScrollWidget(
                 selectedCategories: selectedCategories,
               ),
+              CheckboxMenuButton(
+                  value: isSingleDay,
+                  onChanged: (value) {
+                    setState(() {
+                      isSingleDay = !isSingleDay;
+                    });
+                  },
+                  child: const Text('Однодневный')),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: DateRangePickerWidget(
                   dateRangeController: dateRangeController,
+                  isSingleDay: isSingleDay,
                 ),
               ),
               Padding(
@@ -375,10 +379,12 @@ class _ScrollWidgetState extends State<ScrollWidget> {
 
 class DateRangePickerWidget extends StatefulWidget {
   final TextEditingController dateRangeController;
+  final bool isSingleDay;
 
   const DateRangePickerWidget({
     super.key,
     required this.dateRangeController,
+    required this.isSingleDay,
   });
   @override
   _DateRangePickerWidgetState createState() => _DateRangePickerWidgetState();
@@ -397,7 +403,10 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
       onTap: () => ChangeNotifierProvaider.read<
               ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
               BottomSheetCreateEventsModel>(context)
-          ?.selectDateRange(context, widget.dateRangeController),
+          ?.selectDateRange(
+              dateRangeController: widget.dateRangeController,
+              context: context,
+              isSingleDay: widget.isSingleDay),
       child: AbsorbPointer(
         child: TextFormField(
           controller: widget.dateRangeController,

@@ -47,7 +47,7 @@ class _BagReportScreenState extends State<BagReportScreen> {
           title: const Text('Сообщить об ошибке'),
         ),
         body: const SafeArea(child: BagReportFormWidget()),
-        floatingActionButton: const CustomFABFromFilePicker(),
+        floatingActionButton: const CustomFABFromImagePicker(),
       ),
     );
   }

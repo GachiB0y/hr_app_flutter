@@ -7,7 +7,7 @@ class EventEntityEvent with _$EventEntityEvent {
     required String title,
     required String description,
     required String startDate,
-    required String endDate,
+    required String? endDate,
     required File imageFile,
     required List<String> categories,
   }) = EventEntityEventCreateNewEventEntity;

@@ -26,7 +26,7 @@ class MyLeanProductionsEntity with _$MyLeanProductionsEntity {
 class FileElement with _$FileElement {
   const factory FileElement({
     @JsonKey(name: 'name') required String fileName,
-    required String url,
+    required String? url,
   }) = _FileElement;
 
   factory FileElement.fromJson(Map<String, dynamic> json) =>

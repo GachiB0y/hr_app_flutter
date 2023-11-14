@@ -22,43 +22,49 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final blocUser = context.watch<UserBloc>();
-    return Row(
-      children: [
-        blocUser.state.when(
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-          loaded: (userLoaded) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (BuildContext context, UserState state) {
+        if (state is UserState$Processing) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is UserState$Error) {
+          return const Text('Ошибка загрузки');
+        } else {
+          if (state.data == null) {
+            return const SizedBox.shrink();
+          } else {
+            return Row(
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Text('${'${userLoaded.name} ${userLoaded.nameI}'} ',
-                      softWrap: true,
-                      maxLines: 2,
-                      style: StyleTextCustom.textNameUser),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Text(
-                      softWrap: true,
-                      maxLines: 2,
-                      userLoaded.staffPosition,
-                      style: StyleTextCustom.textJobUserGrey),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                          '${'${state.data?.name} ${state.data?.nameI}'} ',
+                          softWrap: true,
+                          maxLines: 2,
+                          style: StyleTextCustom.textNameUser),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                          softWrap: true,
+                          maxLines: 2,
+                          state.data!.staffPosition,
+                          style: StyleTextCustom.textJobUserGrey),
+                    ),
+                  ],
                 ),
               ],
             );
-          },
-          error: () => const Text('Nothing found...'),
-        ),
-      ],
+          }
+        }
+      },
     );
   }
 }

@@ -12,7 +12,7 @@ abstract class EventEntityRepository {
     required String title,
     required String description,
     required String startDate,
-    required String endDate,
+    required String? endDate,
     required File imageFile,
     required List<String> categories,
   });
@@ -53,7 +53,7 @@ class EventEntityRepositoryImpl implements EventEntityRepository {
       required String title,
       required String description,
       required String startDate,
-      required String endDate,
+      required String? endDate,
       required File imageFile,
       required List<String> categories}) async {
     try {

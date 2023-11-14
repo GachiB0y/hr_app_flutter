@@ -18,7 +18,7 @@ abstract interface class EventsEntityProvider {
     required String title,
     required String description,
     required String startDate,
-    required String endDate,
+    required String? endDate,
     required List<String> paths,
     required List<String> categories,
   });
@@ -76,7 +76,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       required String title,
       required String description,
       required String startDate,
-      required String endDate,
+      required String? endDate,
       required List<String> paths,
       required List<String> categories}) async {
     String uri = '$urlAdress/news/add_feed';

@@ -165,6 +165,10 @@ class ScreenFactoryDefault implements ScreenFactory {
           RepositoryProvider<LeanProductionRepository>(
               create: (context) =>
                   _diContainer._makeLeanProductionRepository()),
+          RepositoryProvider<AuthRepository>(
+              create: (context) => authRepository),
+          RepositoryProvider<UserRepository>(
+              create: (context) => userRepository),
         ],
         child: MaterialApp.router(
           localizationsDelegates: const [

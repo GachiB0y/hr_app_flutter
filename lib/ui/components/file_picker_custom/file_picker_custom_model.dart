@@ -53,6 +53,27 @@ class FilePickerCustomModel extends Listenable {
     }
   }
 
+  void pickImage() async {
+    result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        // allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png', 'docx'],
+        allowMultiple: false);
+
+    if (result != null) {
+      path = result!.files.single.path;
+
+      result!.files.forEach((element) {
+        // paths.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        // fileNames.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        paths.add(element.path);
+        fileNames.add(element.name);
+      });
+      fileName = result!.files.single.name;
+
+      notifyListeners();
+    }
+  }
+
   void deleteFile({required int indexFile}) {
     paths.removeAt(indexFile);
     fileNames.removeAt(indexFile);

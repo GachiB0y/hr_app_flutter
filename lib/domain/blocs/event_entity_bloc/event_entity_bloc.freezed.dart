@@ -23,7 +23,7 @@ mixin _$EventEntityEvent {
             String title,
             String description,
             String startDate,
-            String endDate,
+            String? endDate,
             File imageFile,
             List<String> categories)
         createNewEventEntity,
@@ -36,7 +36,7 @@ mixin _$EventEntityEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -46,7 +46,7 @@ mixin _$EventEntityEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -141,7 +141,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
             String title,
             String description,
             String startDate,
-            String endDate,
+            String? endDate,
             File imageFile,
             List<String> categories)
         createNewEventEntity,
@@ -157,7 +157,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -170,7 +170,7 @@ class _$EventEntityEventFetch implements EventEntityEventFetch {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -235,7 +235,7 @@ abstract class _$$EventEntityEventCreateNewEventEntityCopyWith<$Res> {
       {String title,
       String description,
       String startDate,
-      String endDate,
+      String? endDate,
       File imageFile,
       List<String> categories});
 }
@@ -256,7 +256,7 @@ class __$$EventEntityEventCreateNewEventEntityCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? startDate = null,
-    Object? endDate = null,
+    Object? endDate = freezed,
     Object? imageFile = null,
     Object? categories = null,
   }) {
@@ -273,10 +273,10 @@ class __$$EventEntityEventCreateNewEventEntityCopyWithImpl<$Res>
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String,
-      endDate: null == endDate
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageFile: null == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
@@ -309,7 +309,7 @@ class _$EventEntityEventCreateNewEventEntity
   @override
   final String startDate;
   @override
-  final String endDate;
+  final String? endDate;
   @override
   final File imageFile;
   final List<String> _categories;
@@ -362,7 +362,7 @@ class _$EventEntityEventCreateNewEventEntity
             String title,
             String description,
             String startDate,
-            String endDate,
+            String? endDate,
             File imageFile,
             List<String> categories)
         createNewEventEntity,
@@ -379,7 +379,7 @@ class _$EventEntityEventCreateNewEventEntity
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -393,7 +393,7 @@ class _$EventEntityEventCreateNewEventEntity
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -450,7 +450,7 @@ abstract class EventEntityEventCreateNewEventEntity
           {required final String title,
           required final String description,
           required final String startDate,
-          required final String endDate,
+          required final String? endDate,
           required final File imageFile,
           required final List<String> categories}) =
       _$EventEntityEventCreateNewEventEntity;
@@ -458,7 +458,7 @@ abstract class EventEntityEventCreateNewEventEntity
   String get title;
   String get description;
   String get startDate;
-  String get endDate;
+  String? get endDate;
   File get imageFile;
   List<String> get categories;
   @JsonKey(ignore: true)
@@ -558,7 +558,7 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
             String title,
             String description,
             String startDate,
-            String endDate,
+            String? endDate,
             File imageFile,
             List<String> categories)
         createNewEventEntity,
@@ -574,7 +574,7 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetch,
     TResult? Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
@@ -587,7 +587,7 @@ class _$EventEntityEventFilterNews implements EventEntityEventFilterNews {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetch,
     TResult Function(String title, String description, String startDate,
-            String endDate, File imageFile, List<String> categories)?
+            String? endDate, File imageFile, List<String> categories)?
         createNewEventEntity,
     TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
         filterNews,
