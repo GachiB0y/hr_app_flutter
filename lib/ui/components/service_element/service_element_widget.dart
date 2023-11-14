@@ -11,7 +11,8 @@ import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/painteres_widget.dart';
-import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
+
+import '../../screens/service_screen.dart/bottom_sheet_create_events_widget.dart';
 
 class ServiceElementWidget extends StatefulWidget {
   const ServiceElementWidget({
@@ -128,8 +129,6 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[300],
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(20.0)),
                         ),
                         child: ChangeNotifierProvaider<
                             BottomSheetCreateEventsModel>(
