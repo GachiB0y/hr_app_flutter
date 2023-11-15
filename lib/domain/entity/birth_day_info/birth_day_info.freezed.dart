@@ -193,6 +193,8 @@ mixin _$OneBirthDayInfo {
   String get nameO => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_birth')
   String get dateBirth => throw _privateConstructorUsedError;
+  @JsonKey(name: 'staff_position')
+  String? get staffPosition => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -211,7 +213,8 @@ abstract class $OneBirthDayInfoCopyWith<$Res> {
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
-      @JsonKey(name: 'date_birth') String dateBirth});
+      @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'staff_position') String? staffPosition});
 }
 
 /// @nodoc
@@ -232,6 +235,7 @@ class _$OneBirthDayInfoCopyWithImpl<$Res, $Val extends OneBirthDayInfo>
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? staffPosition = freezed,
   }) {
     return _then(_value.copyWith(
       autoCard: null == autoCard
@@ -254,6 +258,10 @@ class _$OneBirthDayInfoCopyWithImpl<$Res, $Val extends OneBirthDayInfo>
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
               as String,
+      staffPosition: freezed == staffPosition
+          ? _value.staffPosition
+          : staffPosition // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -271,7 +279,8 @@ abstract class _$$_OneBirthDayInfoCopyWith<$Res>
       String name,
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
-      @JsonKey(name: 'date_birth') String dateBirth});
+      @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'staff_position') String? staffPosition});
 }
 
 /// @nodoc
@@ -290,6 +299,7 @@ class __$$_OneBirthDayInfoCopyWithImpl<$Res>
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? staffPosition = freezed,
   }) {
     return _then(_$_OneBirthDayInfo(
       autoCard: null == autoCard
@@ -312,6 +322,10 @@ class __$$_OneBirthDayInfoCopyWithImpl<$Res>
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
               as String,
+      staffPosition: freezed == staffPosition
+          ? _value.staffPosition
+          : staffPosition // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -324,7 +338,8 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
       @JsonKey(name: 'name_o') required this.nameO,
-      @JsonKey(name: 'date_birth') required this.dateBirth});
+      @JsonKey(name: 'date_birth') required this.dateBirth,
+      @JsonKey(name: 'staff_position') required this.staffPosition});
 
   factory _$_OneBirthDayInfo.fromJson(Map<String, dynamic> json) =>
       _$$_OneBirthDayInfoFromJson(json);
@@ -343,10 +358,13 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
   @override
   @JsonKey(name: 'date_birth')
   final String dateBirth;
+  @override
+  @JsonKey(name: 'staff_position')
+  final String? staffPosition;
 
   @override
   String toString() {
-    return 'OneBirthDayInfo(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth)';
+    return 'OneBirthDayInfo(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition)';
   }
 
   @override
@@ -360,13 +378,15 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
             (identical(other.nameI, nameI) || other.nameI == nameI) &&
             (identical(other.nameO, nameO) || other.nameO == nameO) &&
             (identical(other.dateBirth, dateBirth) ||
-                other.dateBirth == dateBirth));
+                other.dateBirth == dateBirth) &&
+            (identical(other.staffPosition, staffPosition) ||
+                other.staffPosition == staffPosition));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, autoCard, name, nameI, nameO, dateBirth);
+  int get hashCode => Object.hash(
+      runtimeType, autoCard, name, nameI, nameO, dateBirth, staffPosition);
 
   @JsonKey(ignore: true)
   @override
@@ -384,12 +404,13 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
 
 abstract class _OneBirthDayInfo implements OneBirthDayInfo {
   const factory _OneBirthDayInfo(
-          {@JsonKey(name: 'auto_card') required final int autoCard,
-          required final String name,
-          @JsonKey(name: 'name_i') required final String nameI,
-          @JsonKey(name: 'name_o') required final String nameO,
-          @JsonKey(name: 'date_birth') required final String dateBirth}) =
-      _$_OneBirthDayInfo;
+      {@JsonKey(name: 'auto_card') required final int autoCard,
+      required final String name,
+      @JsonKey(name: 'name_i') required final String nameI,
+      @JsonKey(name: 'name_o') required final String nameO,
+      @JsonKey(name: 'date_birth') required final String dateBirth,
+      @JsonKey(name: 'staff_position')
+      required final String? staffPosition}) = _$_OneBirthDayInfo;
 
   factory _OneBirthDayInfo.fromJson(Map<String, dynamic> json) =
       _$_OneBirthDayInfo.fromJson;
@@ -408,6 +429,9 @@ abstract class _OneBirthDayInfo implements OneBirthDayInfo {
   @override
   @JsonKey(name: 'date_birth')
   String get dateBirth;
+  @override
+  @JsonKey(name: 'staff_position')
+  String? get staffPosition;
   @override
   @JsonKey(ignore: true)
   _$$_OneBirthDayInfoCopyWith<_$_OneBirthDayInfo> get copyWith =>

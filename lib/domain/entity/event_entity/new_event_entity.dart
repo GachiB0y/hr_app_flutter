@@ -15,7 +15,7 @@ class EventEntity with _$EventEntity {
     required String description,
     required String image,
     @JsonKey(name: 'start_date') required DateTime startDate,
-    @JsonKey(name: 'end_date') required DateTime endDate,
+    @JsonKey(name: 'end_date') required DateTime? endDate,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'is_publish') required bool isPublish,

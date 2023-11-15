@@ -58,6 +58,18 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    BirthDayInfoRoute.name: (routeData) {
+      final args = routeData.argsAs<BirthDayInfoRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: BirthDayInfoScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
+      );
+    },
     BookingMeetingSecondRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -362,6 +374,49 @@ class BagReportRouteArgs {
   @override
   String toString() {
     return 'BagReportRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
+  }
+}
+
+/// generated route for
+/// [BirthDayInfoScreen]
+class BirthDayInfoRoute extends PageRouteInfo<BirthDayInfoRouteArgs> {
+  BirthDayInfoRoute({
+    Key? key,
+    required AuthRepository authRepository,
+    required UserRepository userRepo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BirthDayInfoRoute.name,
+          args: BirthDayInfoRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BirthDayInfoRoute';
+
+  static const PageInfo<BirthDayInfoRouteArgs> page =
+      PageInfo<BirthDayInfoRouteArgs>(name);
+}
+
+class BirthDayInfoRouteArgs {
+  const BirthDayInfoRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+  });
+
+  final Key? key;
+
+  final AuthRepository authRepository;
+
+  final UserRepository userRepo;
+
+  @override
+  String toString() {
+    return 'BirthDayInfoRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
   }
 }
 

@@ -13,7 +13,9 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       image: json['image'] as String,
       startDate: DateTime.parse(json['start_date'] as String),
-      endDate: DateTime.parse(json['end_date'] as String),
+      endDate: json['end_date'] == null
+          ? null
+          : DateTime.parse(json['end_date'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       isPublish: json['is_publish'] as bool,
@@ -31,7 +33,7 @@ Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
       'description': instance.description,
       'image': instance.image,
       'start_date': instance.startDate.toIso8601String(),
-      'end_date': instance.endDate.toIso8601String(),
+      'end_date': instance.endDate?.toIso8601String(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'is_publish': instance.isPublish,

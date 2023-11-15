@@ -82,7 +82,7 @@ class _CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return BodyContentWidgetCoinScreen();
+    return const BodyContentWidgetCoinScreen();
   }
 
   @override

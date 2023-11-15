@@ -157,7 +157,7 @@ class _BottomSheetCreateEventsWidgetState
                               ?.file! as File,
                           categories: selectedCategories,
                           startDate: startDate.toString(),
-                          endDate: endDate.toString()));
+                          endDate: endDate?.toString()));
                       Navigator.pop(context);
                     },
                   ),

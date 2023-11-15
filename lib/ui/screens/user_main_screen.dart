@@ -35,7 +35,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
     context
-        .read<UserBirthDayInfoBloc>()
+        .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
@@ -46,7 +46,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
     context.read<RookiesBloc>().add(const RookiesEvent.fetch());
 
     context
-        .read<UserBirthDayInfoBloc>()
+        .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<WalletBloc>().add(const WalletEvent.fetch());
@@ -297,8 +297,6 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserBirthDayInfoBloc blocBirthDayInfo =
-        context.watch<UserBirthDayInfoBloc>();
     final RookiesBloc blocRookies = context.watch<RookiesBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
@@ -307,35 +305,58 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
     return Container(
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
-      padding: const EdgeInsets.all(16.0),
+      // padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
       child: Row(children: [
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              blocBirthDayInfo.state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                loaded: (birthDayInfo) {
-                  return Text(
-                    birthDayInfo.count.toString(),
-                    style: const TextStyle(fontSize: 26, color: Colors.white),
-                  );
-                },
-                error: () => const Text('Ошибка загрузки.'),
-              ),
-              const SizedBox(height: 5),
-              const Text(
-                'Дни рождения',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
+          child: BlocBuilder<UserBirthDayInfoBLoc, UserBirthDayInfoState>(
+            builder: (BuildContext context, state) {
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(raiudsBorder),
+                    bottomLeft: Radius.circular(raiudsBorder),
+                  ),
+                  onTap: () {
+                    AutoRouter.of(context).push(BirthDayInfoRoute(
+                      authRepository:
+                          RepositoryProvider.of<AuthRepository>(context),
+                      userRepo: RepositoryProvider.of<UserRepository>(context),
+                    ));
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (state is UserBirthDayInfoState$Processing)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      if (state is UserBirthDayInfoState$Error)
+                        const Text('Ошибка загрузки.'),
+                      if (state is UserBirthDayInfoState$Successful ||
+                          state is UserBirthDayInfoState$Idle)
+                        state.data == null
+                            ? const Text(
+                                'Ничего не найденно',
+                              )
+                            : Text(
+                                state.data!.count.toString(),
+                                style: const TextStyle(
+                                    fontSize: 26, color: Colors.white),
+                              ),
+                      const SizedBox(height: 5),
+                      const Text(
+                        'Дни рождения',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
         const VerticalDivider(
@@ -343,29 +364,42 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
           thickness: 2,
         ),
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              blocRookies.state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                loaded: (rookiseInfo) {
-                  return Text(
-                    rookiseInfo.count.toString(),
-                    style: const TextStyle(fontSize: 26, color: Colors.white),
-                  );
-                },
-                error: () => const Text('Ошибка загрузки.'),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                print('TAp');
+              },
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(raiudsBorder),
+                bottomRight: Radius.circular(raiudsBorder),
               ),
-              const SizedBox(height: 5),
-              const Text(
-                'Новенькие',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  blocRookies.state.when(
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    loaded: (rookiseInfo) {
+                      return Text(
+                        rookiseInfo.count.toString(),
+                        style:
+                            const TextStyle(fontSize: 26, color: Colors.white),
+                      );
+                    },
+                    error: () => const Text('Ошибка загрузки.'),
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    'Новенькие',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ]),

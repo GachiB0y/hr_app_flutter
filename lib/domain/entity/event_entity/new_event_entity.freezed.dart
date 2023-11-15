@@ -27,7 +27,7 @@ mixin _$EventEntity {
   @JsonKey(name: 'start_date')
   DateTime get startDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
-  DateTime get endDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -58,7 +58,7 @@ abstract class $EventEntityCopyWith<$Res> {
       String description,
       String image,
       @JsonKey(name: 'start_date') DateTime startDate,
-      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'end_date') DateTime? endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
@@ -87,7 +87,7 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
     Object? description = null,
     Object? image = null,
     Object? startDate = null,
-    Object? endDate = null,
+    Object? endDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -116,10 +116,10 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: null == endDate
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -170,7 +170,7 @@ abstract class _$$_EventEntityCopyWith<$Res>
       String description,
       String image,
       @JsonKey(name: 'start_date') DateTime startDate,
-      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'end_date') DateTime? endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
@@ -198,7 +198,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? description = null,
     Object? image = null,
     Object? startDate = null,
-    Object? endDate = null,
+    Object? endDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -227,10 +227,10 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: null == endDate
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -294,7 +294,7 @@ class _$_EventEntity implements _EventEntity {
   final DateTime startDate;
   @override
   @JsonKey(name: 'end_date')
-  final DateTime endDate;
+  final DateTime? endDate;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -388,7 +388,7 @@ abstract class _EventEntity implements EventEntity {
       required final String description,
       required final String image,
       @JsonKey(name: 'start_date') required final DateTime startDate,
-      @JsonKey(name: 'end_date') required final DateTime endDate,
+      @JsonKey(name: 'end_date') required final DateTime? endDate,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'updated_at') required final DateTime updatedAt,
       @JsonKey(name: 'is_publish') required final bool isPublish,
@@ -412,7 +412,7 @@ abstract class _EventEntity implements EventEntity {
   DateTime get startDate;
   @override
   @JsonKey(name: 'end_date')
-  DateTime get endDate;
+  DateTime? get endDate;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;

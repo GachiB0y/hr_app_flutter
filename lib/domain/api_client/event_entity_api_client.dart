@@ -83,7 +83,7 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
 
     final fields = {
       'some_other_data':
-          '{"title":"$title","description":"$description","start_date":"$startDate","end_date":"$endDate","categories":$categories}'
+          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
     };
     final response = await _httpService.postWithFile(
       uri: uri,

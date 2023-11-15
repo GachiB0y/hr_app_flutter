@@ -133,7 +133,8 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                               phoneNumber: formattedPhoneNumber,
                               code: _smsCodeController.text);
                           if (isAuth == true) {
-                            AutoRouter.of(context).replace(MainAppRoute());
+                            AutoRouter.of(context)
+                                .replace(const MainAppRoute());
                           } else {
                             setState(() {
                               error = 'Not valid CODE';
