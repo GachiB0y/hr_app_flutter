@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/router/router.dart';
 
 abstract class ScreenFactory {
   MultiBlocProvider createMultiBlocProvider();
-  AuthRepository makeAuthRepo();
+  IAuthRepository makeAuthRepo();
   AppRouter makeAppRouter();
 }
 

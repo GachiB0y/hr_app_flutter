@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/repository/auth_repository.dart';
 import '../../../domain/repository/user_repository.dart';
@@ -13,8 +14,8 @@ import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
   BirthDayInfoScreen(
       {super.key, required this.authRepository, required this.userRepo});
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
   final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
 
   @override
@@ -33,8 +34,21 @@ class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: ColorsForWidget.colorGreen,
       appBar: AppBar(
+        actions: const [
+          InfoActionWidget(),
+        ],
         backgroundColor: ColorsForWidget.colorGreen,
-        title: const Text('Именники'),
+        title: const Row(
+          children: [
+            Text(
+              'Именники',
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -56,13 +70,20 @@ class ListInfoBirthDay extends StatefulWidget {
 
 class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   TextEditingController dateRangeController = TextEditingController();
-  String selectedDateRange = '';
+
   @override
   void initState() {
     super.initState();
     context
         .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
+
+    final DateTime dateNow = DateTime.now();
+    final DateTime delayedDate = dateNow.add(const Duration(days: 7));
+    final String formattedDateDelayed =
+        DateFormat('dd MMMM', 'ru').format(delayedDate);
+    final String formattedDateNow = DateFormat('dd MMMM', 'ru').format(dateNow);
+    dateRangeController.text = '$formattedDateNow - $formattedDateDelayed';
   }
 
   @override
@@ -80,30 +101,9 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
               ? const Center(child: Text('Ничего не найденно'))
               : Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(raduis),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                              onTap: () => ChangeNotifierProvaider.watch<
-                                      ChangeNotifierProvaider<
-                                          BottomSheetCreateEventsModel>,
-                                      BottomSheetCreateEventsModel>(context)
-                                  ?.selectDateRange(
-                                      context: context,
-                                      dateRangeController: dateRangeController),
-                              child: const Icon(Icons.calendar_today)),
-                          const SizedBox(width: 10),
-                          Text(
-                            dateRangeController.text,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
+                    DatePickerRangeWidget(
+                      dateRangeController: dateRangeController,
+                      raduis: raduis,
                     ),
                     if (state is UserBirthDayInfoState$Error)
                       Container(
@@ -158,6 +158,75 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                 );
         }
       },
+    );
+  }
+}
+
+class InfoActionWidget extends StatelessWidget {
+  const InfoActionWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+        child: const Tooltip(
+          message: 'Ваши 3 коина за др ждут вас в отделе HR',
+          child: Icon(
+            Icons.question_mark,
+            color: ColorsForWidget.colorGreen,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DatePickerRangeWidget extends StatelessWidget {
+  const DatePickerRangeWidget(
+      {super.key, required this.raduis, required this.dateRangeController});
+
+  final double raduis;
+  final TextEditingController dateRangeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(raduis),
+        color: Colors.white,
+      ),
+      child: Row(
+        children: [
+          GestureDetector(
+              onTap: () async {
+                final model = ChangeNotifierProvaider.watch<
+                    ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+                    BottomSheetCreateEventsModel>(context);
+                await ChangeNotifierProvaider.watch<
+                        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
+                        BottomSheetCreateEventsModel>(context)
+                    ?.selectDateRange(
+                        context: context,
+                        dateRangeController: dateRangeController);
+                if (!context.mounted) return;
+                context.read<UserBirthDayInfoBLoc>().add(
+                    UserBirthDayInfoEvent.fetch(
+                        startDate: model?.startDate, endDate: model?.endDate));
+              },
+              child: const Icon(Icons.calendar_today)),
+          const SizedBox(width: 10),
+          Text(
+            dateRangeController.text,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
     );
   }
 }

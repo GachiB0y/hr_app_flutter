@@ -13,8 +13,8 @@ part 'schedule_bus_event.dart';
 part 'schedule_bus_state.dart';
 
 class ScheduleBusBloc extends Bloc<ScheduleBusEvent, ScheduleBusState> {
-  final ServiceRepository serviceRepository;
-  final AuthRepository authRepository;
+  final IServiceRepository serviceRepository;
+  final IAuthRepository authRepository;
 
   ScheduleBusBloc({
     required this.serviceRepository,

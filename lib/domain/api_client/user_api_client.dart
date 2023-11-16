@@ -7,7 +7,7 @@ import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart'
 import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
-abstract interface class UserProvider {
+abstract interface class IUserProvider {
   Future<User> getUserInfo({required String userToken});
   Future<bool> saveTagsToSend(
       {required String userToken,
@@ -17,7 +17,11 @@ abstract interface class UserProvider {
       {required String userToken, required String userID});
   Future<List<User>> findUser(
       {required String userToken, required String findText});
-  Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
+  Future<BirthDayInfoEntity> getBirthDayInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  });
   Future<Rookies> getRookiesInfo({required String userToken});
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber});
@@ -27,7 +31,7 @@ abstract interface class UserProvider {
   });
 }
 
-class UserProviderImpl implements UserProvider {
+class UserProviderImpl implements IUserProvider {
   final IHTTPService _httpService;
 
   UserProviderImpl(this._httpService);
@@ -66,9 +70,19 @@ class UserProviderImpl implements UserProvider {
   }
 
   @override
-  Future<BirthDayInfoEntity> getBirthDayInfo(
-      {required String userToken}) async {
-    const String uri = '$urlAdress/auth/birthday-list';
+  Future<BirthDayInfoEntity> getBirthDayInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  }) async {
+    late final String uri;
+    if (startDate == null && endDate == null) {
+      uri = '$urlAdress/auth/birthday-list';
+    } else {
+      uri =
+          '$urlAdress/auth/birthday-list?start_date=$startDate&end_date=$endDate';
+    }
+
     final response = await _httpService.get(uri: uri, userToken: userToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();

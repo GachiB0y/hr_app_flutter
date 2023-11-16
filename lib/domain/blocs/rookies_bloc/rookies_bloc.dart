@@ -12,8 +12,8 @@ part 'rookies_event.dart';
 part 'rookies_state.dart';
 
 class RookiesBloc extends Bloc<RookiesEvent, RookiesState> {
-  final UserRepository userRepo;
-  final AuthRepository authRepository;
+  final IUserRepository userRepo;
+  final IAuthRepository authRepository;
 
   RookiesBloc({
     required this.userRepo,

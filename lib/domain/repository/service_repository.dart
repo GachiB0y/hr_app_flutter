@@ -4,19 +4,19 @@ import 'package:hr_app_flutter/domain/entity/service/service.dart';
 
 import '../entity/bag_report_entity/bag_report_entity.dart';
 
-abstract class ServiceRepository {
+abstract interface class IServiceRepository {
   Future<List<Service>> getServices({required String userToken});
   Future<ScheduleBus> getScheduleBus({required String userToken});
   Future<bool> submitBagReportForm(
       {required String userToken, required BagReportEntity bagReportEntity});
 }
 
-class ServiceRepositoryImpl implements ServiceRepository {
+class ServiceRepositoryImpl implements IServiceRepository {
   ServiceRepositoryImpl({
-    required ServiceProvider serviceProvider,
+    required IServiceProvider serviceProvider,
   }) : _serviceProvider = serviceProvider;
 
-  final ServiceProvider _serviceProvider;
+  final IServiceProvider _serviceProvider;
 
   @override
   Future<List<Service>> getServices({required String userToken}) {

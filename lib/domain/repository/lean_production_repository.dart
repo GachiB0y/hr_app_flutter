@@ -2,7 +2,7 @@ import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
 
-abstract class LeanProductionRepository {
+abstract interface class ILeanProductionRepository {
   Future<bool> submitForm(
       {required LeanProductionFormEntity formEntity,
       required String userToken});
@@ -13,12 +13,12 @@ abstract class LeanProductionRepository {
       {required String url, required String userToken});
 }
 
-class LeanProductionRepositoryImpl implements LeanProductionRepository {
+class LeanProductionRepositoryImpl implements ILeanProductionRepository {
   LeanProductionRepositoryImpl({
-    required ServiceProvider serviceProvider,
+    required IServiceProvider serviceProvider,
   }) : _serviceProvider = serviceProvider;
 
-  final ServiceProvider _serviceProvider;
+  final IServiceProvider _serviceProvider;
 
   @override
   Future<bool> submitForm(

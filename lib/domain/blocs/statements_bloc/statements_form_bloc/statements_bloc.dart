@@ -17,7 +17,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
     implements EventSink<StatementsEvent> {
   StatementsBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final AuthRepository authRepository,
+    required final IAuthRepository authRepository,
     final StatementsState? initialState,
   })  : _repositoryStatements = repositoryStatements,
         _authRepository = authRepository,
@@ -38,7 +38,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
   }
 
   final IStatementsRepository _repositoryStatements;
-  final AuthRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetchStatementForm(

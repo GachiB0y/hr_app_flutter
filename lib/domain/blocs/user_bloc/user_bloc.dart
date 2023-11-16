@@ -16,8 +16,8 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState>
     implements EventSink<UserEvent> {
   UserBloc({
-    required final UserRepository userRepo,
-    required final AuthRepository authRepository,
+    required final IUserRepository userRepo,
+    required final IAuthRepository authRepository,
     final UserState? initialState,
   })  : _userRepo = userRepo,
         _authRepository = authRepository,
@@ -39,8 +39,8 @@ class UserBloc extends Bloc<UserEvent, UserState>
     );
   }
 
-  final UserRepository _userRepo;
-  final AuthRepository _authRepository;
+  final IUserRepository _userRepo;
+  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(UserEventFetch event, Emitter<UserState> emit) async {

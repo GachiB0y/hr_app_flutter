@@ -4,7 +4,7 @@ import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:http/http.dart' as http;
 
-abstract interface class AuthProvider {
+abstract interface class IAuthProvider {
   Future<bool> getCodeByPhoneNumber({required String numberPhone});
 
   Future<({String accessToken, String refresToken})> makeToken(
@@ -13,7 +13,7 @@ abstract interface class AuthProvider {
       {required String refreshToken});
 }
 
-class AuthProviderImpl implements AuthProvider {
+class AuthProviderImpl implements IAuthProvider {
   final IHTTPService _httpService;
   const AuthProviderImpl(this._httpService);
   @override

@@ -16,8 +16,8 @@ part 'service_event.dart';
 part 'service_state.dart';
 
 class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
-  final ServiceRepository serviceRepository;
-  final AuthRepository authRepository;
+  final IServiceRepository serviceRepository;
+  final IAuthRepository authRepository;
 
   ServiceBloc({
     required this.serviceRepository,

@@ -193,13 +193,13 @@ class LeanProductionButton extends StatelessWidget {
                 MenuItemButton(
                   onPressed: () {
                     final leanProductionRepository =
-                        RepositoryProvider.of<LeanProductionRepository>(
+                        RepositoryProvider.of<ILeanProductionRepository>(
                             context);
                     AutoRouter.of(context).push(LeanProductionFormRoute(
                         authRepository:
-                            RepositoryProvider.of<AuthRepository>(context),
+                            RepositoryProvider.of<IAuthRepository>(context),
                         userRepo:
-                            RepositoryProvider.of<UserRepository>(context),
+                            RepositoryProvider.of<IUserRepository>(context),
                         leanRepository: leanProductionRepository));
                   },
                   child: const Text('Подать заявление'),
@@ -207,13 +207,13 @@ class LeanProductionButton extends StatelessWidget {
                 MenuItemButton(
                   onPressed: () {
                     final leanProductionRepository =
-                        RepositoryProvider.of<LeanProductionRepository>(
+                        RepositoryProvider.of<ILeanProductionRepository>(
                             context);
                     AutoRouter.of(context).push(MyLeanProductionsRoute(
                         authRepository:
-                            RepositoryProvider.of<AuthRepository>(context),
+                            RepositoryProvider.of<IAuthRepository>(context),
                         userRepo:
-                            RepositoryProvider.of<UserRepository>(context),
+                            RepositoryProvider.of<IUserRepository>(context),
                         leanRepository: leanProductionRepository));
                   },
                   child: const Text('Мои заявления'),
@@ -279,8 +279,8 @@ class SerachPeopleButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
               AutoRouter.of(context).push(SearchUserRoute(
-                authRepository: RepositoryProvider.of<AuthRepository>(context),
-                userRepo: RepositoryProvider.of<UserRepository>(context),
+                authRepository: RepositoryProvider.of<IAuthRepository>(context),
+                userRepo: RepositoryProvider.of<IUserRepository>(context),
               ));
             },
           ),
@@ -323,8 +323,8 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
                   onTap: () {
                     AutoRouter.of(context).push(BirthDayInfoRoute(
                       authRepository:
-                          RepositoryProvider.of<AuthRepository>(context),
-                      userRepo: RepositoryProvider.of<UserRepository>(context),
+                          RepositoryProvider.of<IAuthRepository>(context),
+                      userRepo: RepositoryProvider.of<IUserRepository>(context),
                     ));
                   },
                   child: Column(

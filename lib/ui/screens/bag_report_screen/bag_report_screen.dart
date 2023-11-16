@@ -18,8 +18,8 @@ class BagReportScreen extends StatefulWidget implements AutoRouteWrapper {
       {super.key,
       required this.authRepository,
       required this.serviceRepository});
-  final AuthRepository authRepository;
-  final ServiceRepository serviceRepository;
+  final IAuthRepository authRepository;
+  final IServiceRepository serviceRepository;
   @override
   State<BagReportScreen> createState() => _BagReportScreenState();
 

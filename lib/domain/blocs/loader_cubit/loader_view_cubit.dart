@@ -4,7 +4,7 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 enum LoaderViewCubitState { authorized, notAuthorized, unknown }
 
 class LoaderViewCubit extends Cubit<LoaderViewCubitState> {
-  final AuthRepository authRepository;
+  final IAuthRepository authRepository;
 
   LoaderViewCubit({required this.authRepository})
       : super(LoaderViewCubitState.unknown) {

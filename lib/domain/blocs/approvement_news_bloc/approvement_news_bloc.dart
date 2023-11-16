@@ -13,8 +13,8 @@ part 'approvement_news_event.dart';
 part 'approvement_news_state.dart';
 
 class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
-  final EventEntityRepository eventEntityRepository;
-  final AuthRepository authRepository;
+  final IEventEntityRepository eventEntityRepository;
+  final IAuthRepository authRepository;
 
   ApprovementNewsBloc({
     required this.eventEntityRepository,

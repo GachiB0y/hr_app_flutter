@@ -19,9 +19,9 @@ class MyLeanProductionsScreen extends StatefulWidget
       required this.userRepo,
       required this.leanRepository});
 
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
-  final LeanProductionRepository leanRepository;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
+  final ILeanProductionRepository leanRepository;
 
   @override
   State<MyLeanProductionsScreen> createState() =>

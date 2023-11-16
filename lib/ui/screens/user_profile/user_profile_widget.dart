@@ -17,8 +17,8 @@ import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget_model
 @RoutePage()
 class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
   final int userId;
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
   const ProfileWidgetScreen({
     Key? key,
     required this.userId,

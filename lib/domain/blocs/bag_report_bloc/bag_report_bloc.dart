@@ -14,9 +14,9 @@ part 'bag_report_event.dart';
 class BagReportBLoC extends Bloc<BagReportEvent, BagReportState>
     implements EventSink<BagReportEvent> {
   BagReportBLoC({
-    required final ServiceRepository repositoryService,
+    required final IServiceRepository repositoryService,
     final BagReportState? initialState,
-    required final AuthRepository authRepository,
+    required final IAuthRepository authRepository,
   })  : _repositoryService = repositoryService,
         _authRepository = authRepository,
         super(
@@ -37,8 +37,8 @@ class BagReportBLoC extends Bloc<BagReportEvent, BagReportState>
     );
   }
 
-  final ServiceRepository _repositoryService;
-  final AuthRepository _authRepository;
+  final IServiceRepository _repositoryService;
+  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(

@@ -16,7 +16,7 @@ class StatementFormScreen extends StatelessWidget implements AutoRouteWrapper {
       required this.repositoryStatements,
       required this.authRepository});
   final IStatementsRepository repositoryStatements;
-  final AuthRepository authRepository;
+  final IAuthRepository authRepository;
 
   @override
   Widget build(BuildContext context) {

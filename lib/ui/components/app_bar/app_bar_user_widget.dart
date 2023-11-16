@@ -59,8 +59,8 @@ class Avatar extends StatelessWidget {
             onTap: () {
               context.pushRoute(ProfileWidgetRoute(
                 userId: state.data!.autoCard,
-                authRepository: RepositoryProvider.of<AuthRepository>(context),
-                userRepo: RepositoryProvider.of<UserRepository>(context),
+                authRepository: RepositoryProvider.of<IAuthRepository>(context),
+                userRepo: RepositoryProvider.of<IUserRepository>(context),
               ));
             },
             child: Padding(

@@ -16,19 +16,21 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserBirthDayInfoEvent {
+  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
+    required TResult Function(DateTime? startDate, DateTime? endDate) fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
+    TResult? Function(DateTime? startDate, DateTime? endDate)? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
+    TResult Function(DateTime? startDate, DateTime? endDate)? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +50,10 @@ mixin _$UserBirthDayInfoEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UserBirthDayInfoEventCopyWith<UserBirthDayInfoEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +61,8 @@ abstract class $UserBirthDayInfoEventCopyWith<$Res> {
   factory $UserBirthDayInfoEventCopyWith(UserBirthDayInfoEvent value,
           $Res Function(UserBirthDayInfoEvent) then) =
       _$UserBirthDayInfoEventCopyWithImpl<$Res, UserBirthDayInfoEvent>;
+  @useResult
+  $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
@@ -67,14 +75,36 @@ class _$UserBirthDayInfoEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$UserBirthDayInfoEventFetchCopyWith<$Res> {
+abstract class _$$UserBirthDayInfoEventFetchCopyWith<$Res>
+    implements $UserBirthDayInfoEventCopyWith<$Res> {
   factory _$$UserBirthDayInfoEventFetchCopyWith(
           _$UserBirthDayInfoEventFetch value,
           $Res Function(_$UserBirthDayInfoEventFetch) then) =
       __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
@@ -86,52 +116,86 @@ class __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>
       _$UserBirthDayInfoEventFetch _value,
       $Res Function(_$UserBirthDayInfoEventFetch) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+  }) {
+    return _then(_$UserBirthDayInfoEventFetch(
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
-  const _$UserBirthDayInfoEventFetch() : super._();
+  const _$UserBirthDayInfoEventFetch({this.startDate, this.endDate})
+      : super._();
+
+  @override
+  final DateTime? startDate;
+  @override
+  final DateTime? endDate;
 
   @override
   String toString() {
-    return 'UserBirthDayInfoEvent.fetch()';
+    return 'UserBirthDayInfoEvent.fetch(startDate: $startDate, endDate: $endDate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoEventFetch);
+            other is _$UserBirthDayInfoEventFetch &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, startDate, endDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
+      get copyWith => __$$UserBirthDayInfoEventFetchCopyWithImpl<
+          _$UserBirthDayInfoEventFetch>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
+    required TResult Function(DateTime? startDate, DateTime? endDate) fetch,
   }) {
-    return fetch();
+    return fetch(startDate, endDate);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
+    TResult? Function(DateTime? startDate, DateTime? endDate)? fetch,
   }) {
-    return fetch?.call();
+    return fetch?.call(startDate, endDate);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
+    TResult Function(DateTime? startDate, DateTime? endDate)? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch();
+      return fetch(startDate, endDate);
     }
     return orElse();
   }
@@ -166,6 +230,17 @@ class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
 }
 
 abstract class UserBirthDayInfoEventFetch extends UserBirthDayInfoEvent {
-  const factory UserBirthDayInfoEventFetch() = _$UserBirthDayInfoEventFetch;
+  const factory UserBirthDayInfoEventFetch(
+      {final DateTime? startDate,
+      final DateTime? endDate}) = _$UserBirthDayInfoEventFetch;
   const UserBirthDayInfoEventFetch._() : super._();
+
+  @override
+  DateTime? get startDate;
+  @override
+  DateTime? get endDate;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
+      get copyWith => throw _privateConstructorUsedError;
 }

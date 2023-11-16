@@ -1,7 +1,7 @@
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/data_provider/session_data_provider.dart';
 
-abstract class AuthRepository {
+abstract interface class IAuthRepository {
   Future<bool> isAuth();
 
   Future<bool> isExistToken({required bool isRefrshToken});
@@ -17,14 +17,14 @@ abstract class AuthRepository {
   bool isLiveToken({required String jwtToken});
 }
 
-class AuthRepositoryImpl implements AuthRepository {
+class AuthRepositoryImpl implements IAuthRepository {
   AuthRepositoryImpl({
-    required AuthProvider authProvider,
+    required IAuthProvider authProvider,
     required SessionDataProvdier sessionDataProvdier,
   })  : _authProvider = authProvider,
         _sessionDataProvdier = sessionDataProvdier;
 
-  final AuthProvider _authProvider;
+  final IAuthProvider _authProvider;
   final SessionDataProvdier _sessionDataProvdier;
 
   @override

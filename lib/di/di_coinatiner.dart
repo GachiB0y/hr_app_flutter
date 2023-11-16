@@ -62,29 +62,29 @@ class _DIContainer {
 
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
-  AuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
-  ServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
-  EventsEntityProvider _makeEventsEntityProvider() =>
+  IAuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
+  IServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
+  IEventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(htttpService);
-  WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
+  IWalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
   IStatementsProvider _makeStatementsProvider() =>
       StatementProviderImpl(htttpService);
-  UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
-  EventEntityRepository _makeEventEntityRepository() =>
+  IUserProvider _makeUserProvider() => UserProviderImpl(htttpService);
+  IEventEntityRepository _makeEventEntityRepository() =>
       EventEntityRepositoryImpl(
           eventEntityProvider: _makeEventsEntityProvider());
   WalletRepository _makeWalletRepository() =>
       WalletRepositoryImpl(walletProvider: _makeWalletProvider());
 
-  UserRepository _makeUserRepository() =>
+  IUserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
   StatementsRepository _makeStatementsRepository() =>
       StatementsRepository(statementsProvider: _makeStatementsProvider());
-  LeanProductionRepository _makeLeanProductionRepository() =>
+  ILeanProductionRepository _makeLeanProductionRepository() =>
       LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
-  ServiceRepository _makeServiceRepository() =>
+  IServiceRepository _makeServiceRepository() =>
       ServiceRepositoryImpl(serviceProvider: _makeServiceProvider());
-  AuthRepository _makeAuthRepository() => AuthRepositoryImpl(
+  IAuthRepository _makeAuthRepository() => AuthRepositoryImpl(
       authProvider: _makeAuthProvider(),
       sessionDataProvdier: _makeSessionDataProvdier());
 }
@@ -96,10 +96,10 @@ class ScreenFactoryDefault implements ScreenFactory {
 
   @override
   MultiBlocProvider createMultiBlocProvider() {
-    final AuthRepository authRepository = _diContainer._makeAuthRepository();
-    final UserRepository userRepository = _diContainer._makeUserRepository();
+    final IAuthRepository authRepository = _diContainer._makeAuthRepository();
+    final IUserRepository userRepository = _diContainer._makeUserRepository();
 
-    final EventEntityRepository eventEntityRepository =
+    final IEventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
     return MultiBlocProvider(
@@ -162,12 +162,12 @@ class ScreenFactoryDefault implements ScreenFactory {
         providers: [
           RepositoryProvider<StatementsRepository>(
               create: (context) => _diContainer._makeStatementsRepository()),
-          RepositoryProvider<LeanProductionRepository>(
+          RepositoryProvider<ILeanProductionRepository>(
               create: (context) =>
                   _diContainer._makeLeanProductionRepository()),
-          RepositoryProvider<AuthRepository>(
+          RepositoryProvider<IAuthRepository>(
               create: (context) => authRepository),
-          RepositoryProvider<UserRepository>(
+          RepositoryProvider<IUserRepository>(
               create: (context) => userRepository),
         ],
         child: MaterialApp.router(
@@ -187,7 +187,7 @@ class ScreenFactoryDefault implements ScreenFactory {
   }
 
   @override
-  AuthRepository makeAuthRepo() {
+  IAuthRepository makeAuthRepo() {
     return _diContainer._makeAuthRepository();
   }
 

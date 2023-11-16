@@ -21,10 +21,10 @@ abstract interface class WalletRepository {
 
 class WalletRepositoryImpl implements WalletRepository {
   WalletRepositoryImpl({
-    required WalletProvider walletProvider,
+    required IWalletProvider walletProvider,
   }) : _walletProvider = walletProvider;
 
-  final WalletProvider _walletProvider;
+  final IWalletProvider _walletProvider;
 
   @override
   Future<Wallet> getWallet({required String accessToken}) async {

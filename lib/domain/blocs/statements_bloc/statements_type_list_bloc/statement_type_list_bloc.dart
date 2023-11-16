@@ -17,7 +17,7 @@ class StatementTypeListBLoC
     implements EventSink<StatementTypeListEvent> {
   StatementTypeListBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final AuthRepository authRepository,
+    required final IAuthRepository authRepository,
     final StatementTypeListState? initialState,
   })  : _repositoryStatements = repositoryStatements,
         _authRepository = authRepository,
@@ -40,7 +40,7 @@ class StatementTypeListBLoC
   }
 
   final IStatementsRepository _repositoryStatements;
-  final AuthRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(FetchStatementTypeListEvent event,

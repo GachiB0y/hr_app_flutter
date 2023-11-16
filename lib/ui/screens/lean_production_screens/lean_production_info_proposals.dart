@@ -24,9 +24,9 @@ class LeanProductionInfoProposalsScreen extends StatelessWidget
 
   final MyLeanProductionsEntity modelLeanProduction;
   final LeanProductionFormBloc blocLeanProduction;
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
-  final LeanProductionRepository leanRepository;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
+  final ILeanProductionRepository leanRepository;
 
   @override
   Widget wrappedRoute(BuildContext context) {

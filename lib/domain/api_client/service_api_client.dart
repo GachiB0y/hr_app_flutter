@@ -15,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../entity/bag_report_entity/bag_report_entity.dart';
 
-abstract interface class ServiceProvider {
+abstract interface class IServiceProvider {
   Future<List<Service>> getServices({required String userToken});
   Future<ScheduleBus> getScheduleBus({required String userToken});
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
@@ -30,7 +30,7 @@ abstract interface class ServiceProvider {
       {required String userToken, required BagReportEntity bagReportEntity});
 }
 
-class ServiceProviderImpl implements ServiceProvider {
+class ServiceProviderImpl implements IServiceProvider {
   final IHTTPService _httpService;
   ServiceProviderImpl(this._httpService);
 

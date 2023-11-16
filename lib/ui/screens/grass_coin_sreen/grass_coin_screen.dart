@@ -353,8 +353,8 @@ class _BodyContentWidgetCoinScreenState
                   onPressed: () {
                     AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
                       authRepository:
-                          RepositoryProvider.of<AuthRepository>(context),
-                      userRepo: RepositoryProvider.of<UserRepository>(context),
+                          RepositoryProvider.of<IAuthRepository>(context),
+                      userRepo: RepositoryProvider.of<IUserRepository>(context),
                     ));
                   },
                   icon: const Icon(Icons.card_giftcard,

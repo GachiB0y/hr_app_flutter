@@ -13,8 +13,8 @@ part 'event_entity_event.dart';
 part 'event_entity_state.dart';
 
 class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
-  final EventEntityRepository eventEntityRepository;
-  final AuthRepository authRepository;
+  final IEventEntityRepository eventEntityRepository;
+  final IAuthRepository authRepository;
 
   EventEntityBloc({
     required this.eventEntityRepository,

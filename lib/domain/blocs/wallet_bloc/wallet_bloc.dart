@@ -13,7 +13,7 @@ part 'wallet_state.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletRepository walletRepo;
-  final AuthRepository authRepository;
+  final IAuthRepository authRepository;
   WalletBloc({
     required this.walletRepo,
     required this.authRepository,
@@ -67,11 +67,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     try {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
-      final Wallet _walletLoaded = await walletRepo
+      final Wallet walletLoaded = await walletRepo
           .getWallet(accessToken: accessToken as String)
           .timeout(const Duration(seconds: 10));
 
-      final state = WalletState.loaded(walletLoaded: _walletLoaded);
+      final state = WalletState.loaded(walletLoaded: walletLoaded);
 
       emit(state);
     } on TimeoutException {

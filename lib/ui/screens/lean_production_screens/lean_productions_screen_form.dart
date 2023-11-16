@@ -25,9 +25,9 @@ class LeanProductionFormScreen extends StatelessWidget
       required this.authRepository,
       required this.userRepo,
       required this.leanRepository});
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
-  final LeanProductionRepository leanRepository;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
+  final ILeanProductionRepository leanRepository;
   final _model = FilePickerCustomModel();
 
   @override
@@ -72,8 +72,8 @@ class LeanProductionFormScreen extends StatelessWidget
 class MyFormWidget extends StatefulWidget {
   const MyFormWidget(
       {super.key, required this.authRepository, required this.userRepo});
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
 
   @override
   _MyFormWidgetState createState() => _MyFormWidgetState();
@@ -107,8 +107,12 @@ class _MyFormWidgetState extends State<MyFormWidget> {
     _costController.dispose();
     _benefitController.dispose();
     _authorController.dispose();
-    _executorsControllers.forEach((controller) => controller.dispose());
-    _executorsIdControllers.forEach((controller) => controller.dispose());
+    for (var controller in _executorsControllers) {
+      controller.dispose();
+    }
+    for (var controller in _executorsIdControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -343,8 +347,8 @@ class ImplementersInputWidget extends StatefulWidget {
         _nameController = nameController,
         _iconData = iconData,
         _inputText = inputText;
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
 
   final TextEditingController _nameController;
   final TextEditingController _idController;

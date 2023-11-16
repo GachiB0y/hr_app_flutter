@@ -12,8 +12,8 @@ part 'one_news_event.dart';
 part 'one_news_state.dart';
 
 class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
-  final EventEntityRepository eventEntityRepository;
-  final AuthRepository authRepository;
+  final IEventEntityRepository eventEntityRepository;
+  final IAuthRepository authRepository;
 
   OneNewsBloc({
     required this.eventEntityRepository,

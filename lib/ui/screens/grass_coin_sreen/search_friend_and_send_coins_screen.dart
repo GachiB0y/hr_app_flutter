@@ -14,8 +14,8 @@ class SearchFriendAndSendCoinsScreen extends StatefulWidget
   const SearchFriendAndSendCoinsScreen(
       {Key? key, required this.authRepository, required this.userRepo})
       : super(key: key);
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
   @override
   _SearchFriendAndSendCoinsScreenState createState() =>
       _SearchFriendAndSendCoinsScreenState();

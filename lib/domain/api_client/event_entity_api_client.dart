@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 
-abstract interface class EventsEntityProvider {
+abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
   Future<EventEntity> getNewsById({
     required String accessToken,
@@ -32,7 +32,7 @@ abstract interface class EventsEntityProvider {
   });
 }
 
-class EventsEntityProviderImpl implements EventsEntityProvider {
+class EventsEntityProviderImpl implements IEventsEntityProvider {
   final IHTTPService _httpService;
   const EventsEntityProviderImpl(this._httpService);
 

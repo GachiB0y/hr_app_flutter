@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 
-abstract class EventEntityRepository {
+abstract interface class IEventEntityRepository {
   Future<List<EventEntity>> getEvents({required String accessToken});
   Future<List<EventEntity>> getApprovmentEvents({required String accessToken});
   Future<List<Category>> getCategory({required String accessToken});
@@ -30,12 +30,12 @@ abstract class EventEntityRepository {
   });
 }
 
-class EventEntityRepositoryImpl implements EventEntityRepository {
+class EventEntityRepositoryImpl implements IEventEntityRepository {
   const EventEntityRepositoryImpl({
-    required EventsEntityProvider eventEntityProvider,
+    required IEventsEntityProvider eventEntityProvider,
   }) : _eventEntityProvider = eventEntityProvider;
 
-  final EventsEntityProvider _eventEntityProvider;
+  final IEventsEntityProvider _eventEntityProvider;
 
   @override
   Future<List<EventEntity>> getEvents({required String accessToken}) async {

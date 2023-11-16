@@ -11,5 +11,7 @@ class UserBirthDayInfoEvent with _$UserBirthDayInfoEvent {
   const UserBirthDayInfoEvent._();
 
   /// Fetch
-  const factory UserBirthDayInfoEvent.fetch() = UserBirthDayInfoEventFetch;
+  const factory UserBirthDayInfoEvent.fetch(
+      {final DateTime? startDate,
+      final DateTime? endDate}) = UserBirthDayInfoEventFetch;
 }
