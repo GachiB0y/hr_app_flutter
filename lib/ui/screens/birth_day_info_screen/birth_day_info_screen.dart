@@ -69,6 +69,7 @@ class ListInfoBirthDay extends StatefulWidget {
 }
 
 class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
+  final ScrollController _scrollController = ScrollController();
   TextEditingController dateRangeController = TextEditingController();
 
   @override
@@ -122,35 +123,38 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                           borderRadius: BorderRadius.circular(raduis),
                           color: Colors.white,
                         ),
-                        child: ListView.builder(
-                          itemCount: state.data!.birthdays.length,
-                          itemBuilder: (context, index) {
-                            String dateBirthDay =
-                                state.data!.birthdays[index].dateBirth;
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      text:
-                                          '${dateBirthDay.substring(0, dateBirthDay.length - 5).replaceAll("-", ".")}  - ',
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text:
-                                          '${state.data!.birthdays[index].name} ${state.data!.birthdays[index].nameI}\n',
-                                    ),
-                                    TextSpan(
+                        child: Scrollbar(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: state.data!.birthdays.length,
+                            itemBuilder: (context, index) {
+                              String dateBirthDay =
+                                  state.data!.birthdays[index].dateBirth;
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
                                         text:
-                                            '(${state.data!.birthdays[index].staffPosition ?? 'Не найденно'})',
+                                            '${dateBirthDay.substring(0, dateBirthDay.length - 5).replaceAll("-", ".")}  - ',
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.normal)),
-                                  ])),
-                            );
-                          },
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text:
+                                            '${state.data!.birthdays[index].name} ${state.data!.birthdays[index].nameI}\n',
+                                      ),
+                                      TextSpan(
+                                          text:
+                                              '(${state.data!.birthdays[index].staffPosition ?? 'Не найденно'})',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.normal)),
+                                    ])),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

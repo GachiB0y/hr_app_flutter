@@ -127,8 +127,8 @@ class ScreenFactoryDefault implements ScreenFactory {
           create: (BuildContext context) => UserBirthDayInfoBLoc(
               userRepo: userRepository, authRepository: authRepository),
         ),
-        BlocProvider<RookiesBloc>(
-          create: (BuildContext context) => RookiesBloc(
+        BlocProvider<RookiesBLoC>(
+          create: (BuildContext context) => RookiesBLoC(
               userRepo: userRepository, authRepository: authRepository),
         ),
         BlocProvider<AuthViewCubit>(
