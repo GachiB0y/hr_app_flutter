@@ -307,105 +307,126 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(raiudsBorder),
           color: ColorsForWidget.colorGreen),
-      child: Row(children: [
-        Expanded(
-          child: BlocBuilder<UserBirthDayInfoBLoc, UserBirthDayInfoState>(
-            builder: (BuildContext context, state) {
-              return Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(raiudsBorder),
-                    bottomLeft: Radius.circular(raiudsBorder),
-                  ),
-                  onTap: () {
-                    AutoRouter.of(context).push(BirthDayInfoRoute(
-                      authRepository:
-                          RepositoryProvider.of<IAuthRepository>(context),
-                      userRepo: RepositoryProvider.of<IUserRepository>(context),
-                    ));
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (state is UserBirthDayInfoState$Processing)
-                        const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      if (state is UserBirthDayInfoState$Error)
-                        const Text('Ошибка загрузки.'),
-                      if (state is UserBirthDayInfoState$Successful ||
-                          state is UserBirthDayInfoState$Idle)
-                        state.data == null
-                            ? const Text(
-                                'Ничего не найденно',
-                              )
-                            : Text(
-                                state.data!.count.toString(),
-                                style: const TextStyle(
-                                    fontSize: 26, color: Colors.white),
-                              ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        'Дни рождения',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
+      child: const Row(children: [
+        BirthDayInfoElementWidget(
+          raiudsBorder: raiudsBorder,
         ),
-        const VerticalDivider(
+        VerticalDivider(
           color: Colors.white,
           thickness: 2,
         ),
-        Expanded(
-          child: BlocBuilder<RookiesBLoC, RookiesState>(
-              builder: (BuildContext context, state) {
-            return Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  print('TAp');
-                },
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(raiudsBorder),
-                  bottomRight: Radius.circular(raiudsBorder),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (state is RookiesState$Processing)
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    if (state is RookiesState$Error)
-                      const Text('Ошибка загрузки.'),
-                    if (state is RookiesState$Successful ||
-                        state is RookiesState$Idle)
-                      state.data == null
-                          ? const Text(
-                              'Ничего не найденно',
-                            )
-                          : Text(
-                              state.data!.count.toString(),
-                              style: const TextStyle(
-                                  fontSize: 26, color: Colors.white),
-                            ),
-                    const SizedBox(height: 5),
-                    const Text(
-                      'Новенькие',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+        RookiesInfoElementWidget(
+          raiudsBorder: raiudsBorder,
         ),
       ]),
+    );
+  }
+}
+
+class RookiesInfoElementWidget extends StatelessWidget {
+  const RookiesInfoElementWidget({super.key, required this.raiudsBorder});
+  final double raiudsBorder;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: BlocBuilder<RookiesBLoC, RookiesState>(
+          builder: (BuildContext context, state) {
+        return Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(raiudsBorder),
+              bottomRight: Radius.circular(raiudsBorder),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (state is RookiesState$Processing)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                if (state is RookiesState$Error) const Text('Ошибка загрузки.'),
+                if (state is RookiesState$Successful ||
+                    state is RookiesState$Idle)
+                  state.data == null
+                      ? const Text(
+                          'Ничего не найденно',
+                        )
+                      : Text(
+                          state.data!.count.toString(),
+                          style: const TextStyle(
+                              fontSize: 26, color: Colors.white),
+                        ),
+                const SizedBox(height: 5),
+                const Text(
+                  'Новенькие',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class BirthDayInfoElementWidget extends StatelessWidget {
+  const BirthDayInfoElementWidget({super.key, required this.raiudsBorder});
+  final double raiudsBorder;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: BlocBuilder<UserBirthDayInfoBLoc, UserBirthDayInfoState>(
+        builder: (BuildContext context, state) {
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(raiudsBorder),
+                bottomLeft: Radius.circular(raiudsBorder),
+              ),
+              onTap: () {
+                AutoRouter.of(context).push(BirthDayInfoRoute(
+                  authRepository:
+                      RepositoryProvider.of<IAuthRepository>(context),
+                  userRepo: RepositoryProvider.of<IUserRepository>(context),
+                ));
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (state is UserBirthDayInfoState$Processing)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  if (state is UserBirthDayInfoState$Error)
+                    const Text('Ошибка загрузки.'),
+                  if (state is UserBirthDayInfoState$Successful ||
+                      state is UserBirthDayInfoState$Idle)
+                    state.data == null
+                        ? const Text(
+                            'Ничего не найденно',
+                          )
+                        : Text(
+                            state.data!.count.toString(),
+                            style: const TextStyle(
+                                fontSize: 26, color: Colors.white),
+                          ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    'Дни рождения',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
