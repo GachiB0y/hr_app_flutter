@@ -6,7 +6,11 @@ import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
 abstract interface class IUserRepository {
-  Future<Rookies> getRookiesInfo({required String userToken});
+  Future<Rookies> getRookiesInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  });
   Future<bool> saveTagsToSend(
       {required String userToken,
       required List<TagUser> tags,
@@ -69,9 +73,14 @@ class UserRepositoryImpl implements IUserRepository {
   }
 
   @override
-  Future<Rookies> getRookiesInfo({required String userToken}) {
+  Future<Rookies> getRookiesInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  }) {
     try {
-      return _userProvider.getRookiesInfo(userToken: userToken);
+      return _userProvider.getRookiesInfo(
+          userToken: userToken, startDate: startDate, endDate: endDate);
     } catch (e) {
       rethrow;
     }

@@ -26,6 +26,7 @@ _$_OneRookiesInfo _$$_OneRookiesInfoFromJson(Map<String, dynamic> json) =>
       nameI: json['name_i'] as String,
       nameO: json['name_o'] as String,
       dateBirth: json['date_birth'] as String,
+      joinDate: json['join_date'] as String,
       staffPosition: json['staff_position'] as String,
     );
 
@@ -36,5 +37,6 @@ Map<String, dynamic> _$$_OneRookiesInfoToJson(_$_OneRookiesInfo instance) =>
       'name_i': instance.nameI,
       'name_o': instance.nameO,
       'date_birth': instance.dateBirth,
+      'join_date': instance.joinDate,
       'staff_position': instance.staffPosition,
     };

@@ -25,6 +25,7 @@ class OneRookiesInfo with _$OneRookiesInfo {
     @JsonKey(name: 'name_i') required String nameI,
     @JsonKey(name: 'name_o') required String nameO,
     @JsonKey(name: 'date_birth') required String dateBirth,
+    @JsonKey(name: 'join_date') required String joinDate,
     @JsonKey(name: 'staff_position') required String staffPosition,
   }) = _OneRookiesInfo;
 

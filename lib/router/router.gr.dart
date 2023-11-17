@@ -166,6 +166,18 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    RookiesInfoRoute.name: (routeData) {
+      final args = routeData.argsAs<RookiesInfoRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: RookiesInfoScreen(
+          key: args.key,
+          authRepository: args.authRepository,
+          userRepo: args.userRepo,
+        )),
+      );
+    },
     ScheduleBusRoute.name: (routeData) {
       final args = routeData.argsAs<ScheduleBusRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -719,6 +731,49 @@ class ProfileWidgetRouteArgs {
   @override
   String toString() {
     return 'ProfileWidgetRouteArgs{key: $key, userId: $userId, authRepository: $authRepository, userRepo: $userRepo}';
+  }
+}
+
+/// generated route for
+/// [RookiesInfoScreen]
+class RookiesInfoRoute extends PageRouteInfo<RookiesInfoRouteArgs> {
+  RookiesInfoRoute({
+    Key? key,
+    required IAuthRepository authRepository,
+    required IUserRepository userRepo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RookiesInfoRoute.name,
+          args: RookiesInfoRouteArgs(
+            key: key,
+            authRepository: authRepository,
+            userRepo: userRepo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'RookiesInfoRoute';
+
+  static const PageInfo<RookiesInfoRouteArgs> page =
+      PageInfo<RookiesInfoRouteArgs>(name);
+}
+
+class RookiesInfoRouteArgs {
+  const RookiesInfoRouteArgs({
+    this.key,
+    required this.authRepository,
+    required this.userRepo,
+  });
+
+  final Key? key;
+
+  final IAuthRepository authRepository;
+
+  final IUserRepository userRepo;
+
+  @override
+  String toString() {
+    return 'RookiesInfoRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
   }
 }
 

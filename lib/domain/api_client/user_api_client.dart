@@ -22,7 +22,11 @@ abstract interface class IUserProvider {
     final DateTime? startDate,
     final DateTime? endDate,
   });
-  Future<Rookies> getRookiesInfo({required String userToken});
+  Future<Rookies> getRookiesInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  });
   Future<List<User>> getUserByPhoneNumber(
       {required String userToken, required String phoneNumber});
   Future<bool> sendAvatarWithProfile({
@@ -96,8 +100,17 @@ class UserProviderImpl implements IUserProvider {
   }
 
   @override
-  Future<Rookies> getRookiesInfo({required String userToken}) async {
-    const String uri = '$urlAdress/auth/rookies';
+  Future<Rookies> getRookiesInfo({
+    required final String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  }) async {
+    late final String uri;
+    if (startDate == null && endDate == null) {
+      uri = '$urlAdress/auth/rookies';
+    } else {
+      uri = '$urlAdress/auth/rookies?start_date=$startDate&end_date=$endDate';
+    }
     final response = await _httpService.get(uri: uri, userToken: userToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/domain/blocs/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:intl/intl.dart';
@@ -11,17 +12,16 @@ import '../../../library/custom_provider/inherit_widget.dart';
 import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 
 @RoutePage()
-class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
-  BirthDayInfoScreen(
+class RookiesInfoScreen extends StatelessWidget implements AutoRouteWrapper {
+  RookiesInfoScreen(
       {super.key, required this.authRepository, required this.userRepo});
   final IAuthRepository authRepository;
   final IUserRepository userRepo;
   final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
-
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<UserBirthDayInfoBLoc>(
-      create: (BuildContext context) => UserBirthDayInfoBLoc(
+    return BlocProvider<RookiesBLoC>(
+      create: (BuildContext context) => RookiesBLoC(
         authRepository: authRepository,
         userRepo: userRepo,
       ),
@@ -34,14 +34,11 @@ class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: ColorsForWidget.colorGreen,
       appBar: AppBar(
-        actions: const [
-          InfoActionWidget(),
-        ],
         backgroundColor: ColorsForWidget.colorGreen,
         title: const Row(
           children: [
             Text(
-              'Именники',
+              'Новые соотрудники',
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
             SizedBox(
@@ -75,23 +72,22 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<UserBirthDayInfoBLoc>()
-        .add(const UserBirthDayInfoEvent.fetch());
+
+    context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
 
     final DateTime dateNow = DateTime.now();
-    final DateTime delayedDate = dateNow.add(const Duration(days: 7));
+    final DateTime delayedDate = dateNow.add(const Duration(days: -7));
     final String formattedDateDelayed =
         DateFormat('dd MMMM', 'ru').format(delayedDate);
     final String formattedDateNow = DateFormat('dd MMMM', 'ru').format(dateNow);
-    dateRangeController.text = '$formattedDateNow - $formattedDateDelayed';
+    dateRangeController.text = '$formattedDateDelayed - $formattedDateNow ';
   }
 
   @override
   Widget build(BuildContext context) {
     double raduis = 30.0;
 
-    return BlocBuilder<UserBirthDayInfoBLoc, UserBirthDayInfoState>(
+    return BlocBuilder<RookiesBLoC, RookiesState>(
       builder: (context, state) {
         if (state is UserBirthDayInfoState$Processing) {
           return const Center(
@@ -127,17 +123,17 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                           controller: _scrollController,
                           child: ListView.builder(
                             controller: _scrollController,
-                            itemCount: state.data!.birthdays.length,
+                            itemCount: state.data!.rookies.length,
                             itemBuilder: (context, index) {
-                              String dateBirthDay =
-                                  state.data!.birthdays[index].dateBirth;
+                              String joinDate =
+                                  state.data!.rookies[index].joinDate;
                               return Padding(
                                 padding: const EdgeInsets.only(
                                     top: 8.0, bottom: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         text:
-                                            '${dateBirthDay.substring(0, dateBirthDay.length - 5).replaceAll("-", ".")}  - ',
+                                            '${joinDate.substring(0, joinDate.length - 5).replaceAll("-", ".")}  - ',
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -145,11 +141,11 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                                         children: <TextSpan>[
                                       TextSpan(
                                         text:
-                                            '${state.data!.birthdays[index].name} ${state.data!.birthdays[index].nameI}\n',
+                                            '${state.data!.rookies[index].name} ${state.data!.rookies[index].nameI}\n',
                                       ),
                                       TextSpan(
                                           text:
-                                              '(${state.data!.birthdays[index].staffPosition ?? 'Не найденно'})',
+                                              '(${state.data!.rookies[index].staffPosition})',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.normal)),
                                     ])),
@@ -163,30 +159,6 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                 );
         }
       },
-    );
-  }
-}
-
-class InfoActionWidget extends StatelessWidget {
-  const InfoActionWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-        child: const Tooltip(
-          message: 'Ваши 3 коина за др ждут вас в отделе HR',
-          child: Icon(
-            Icons.question_mark,
-            color: ColorsForWidget.colorGreen,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -220,9 +192,8 @@ class DatePickerRangeWidget extends StatelessWidget {
                         context: context,
                         dateRangeController: dateRangeController);
                 if (!context.mounted) return;
-                context.read<UserBirthDayInfoBLoc>().add(
-                    UserBirthDayInfoEvent.fetch(
-                        startDate: model?.startDate, endDate: model?.endDate));
+                context.read<RookiesBLoC>().add(RookiesEvent.fetch(
+                    startDate: model?.startDate, endDate: model?.endDate));
               },
               child: const Icon(Icons.calendar_today)),
           const SizedBox(width: 10),

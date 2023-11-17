@@ -335,7 +335,12 @@ class RookiesInfoElementWidget extends StatelessWidget {
         return Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              AutoRouter.of(context).push(RookiesInfoRoute(
+                authRepository: RepositoryProvider.of<IAuthRepository>(context),
+                userRepo: RepositoryProvider.of<IUserRepository>(context),
+              ));
+            },
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(raiudsBorder),
               bottomRight: Radius.circular(raiudsBorder),

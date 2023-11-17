@@ -32,6 +32,7 @@ import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart'
 import '../domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
 import '../ui/screens/birth_day_info_screen/birth_day_info_screen.dart';
 import '../ui/screens/lean_production_screens/lean_production_info_proposals.dart';
+import '../ui/screens/rookies_info_screen/rookies_info_screen.dart';
 part 'router.gr.dart';
 
 @AutoRouterConfig()
@@ -75,5 +76,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: StatementFormRoute.page, path: '/statements_form'),
         AutoRoute(page: BagReportRoute.page, path: '/bag_report'),
         AutoRoute(page: BirthDayInfoRoute.page, path: '/info_birth_day'),
+        AutoRoute(page: RookiesInfoRoute.page, path: '/info_rookies'),
       ];
 }
