@@ -66,3 +66,22 @@ Map<String, dynamic> _$$_WriterToJson(_$_Writer instance) => <String, dynamic>{
       'name': instance.middleName,
       'name_o': instance.lastName,
     };
+
+_$_EventEntityViewModel _$$_EventEntityViewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_EventEntityViewModel(
+      listEventEntityLoaded: (json['listEventEntityLoaded'] as List<dynamic>)
+          .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      filteredListEventEntity:
+          (json['filteredListEventEntity'] as List<dynamic>)
+              .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
+              .toList(),
+    );
+
+Map<String, dynamic> _$$_EventEntityViewModelToJson(
+        _$_EventEntityViewModel instance) =>
+    <String, dynamic>{
+      'listEventEntityLoaded': instance.listEventEntityLoaded,
+      'filteredListEventEntity': instance.filteredListEventEntity,
+    };

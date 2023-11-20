@@ -795,3 +795,188 @@ abstract class _Writer implements Writer {
   _$$_WriterCopyWith<_$_Writer> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+EventEntityViewModel _$EventEntityViewModelFromJson(Map<String, dynamic> json) {
+  return _EventEntityViewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EventEntityViewModel {
+  List<EventEntity> get listEventEntityLoaded =>
+      throw _privateConstructorUsedError;
+  List<EventEntity> get filteredListEventEntity =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EventEntityViewModelCopyWith<EventEntityViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EventEntityViewModelCopyWith<$Res> {
+  factory $EventEntityViewModelCopyWith(EventEntityViewModel value,
+          $Res Function(EventEntityViewModel) then) =
+      _$EventEntityViewModelCopyWithImpl<$Res, EventEntityViewModel>;
+  @useResult
+  $Res call(
+      {List<EventEntity> listEventEntityLoaded,
+      List<EventEntity> filteredListEventEntity});
+}
+
+/// @nodoc
+class _$EventEntityViewModelCopyWithImpl<$Res,
+        $Val extends EventEntityViewModel>
+    implements $EventEntityViewModelCopyWith<$Res> {
+  _$EventEntityViewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listEventEntityLoaded = null,
+    Object? filteredListEventEntity = null,
+  }) {
+    return _then(_value.copyWith(
+      listEventEntityLoaded: null == listEventEntityLoaded
+          ? _value.listEventEntityLoaded
+          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+      filteredListEventEntity: null == filteredListEventEntity
+          ? _value.filteredListEventEntity
+          : filteredListEventEntity // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_EventEntityViewModelCopyWith<$Res>
+    implements $EventEntityViewModelCopyWith<$Res> {
+  factory _$$_EventEntityViewModelCopyWith(_$_EventEntityViewModel value,
+          $Res Function(_$_EventEntityViewModel) then) =
+      __$$_EventEntityViewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<EventEntity> listEventEntityLoaded,
+      List<EventEntity> filteredListEventEntity});
+}
+
+/// @nodoc
+class __$$_EventEntityViewModelCopyWithImpl<$Res>
+    extends _$EventEntityViewModelCopyWithImpl<$Res, _$_EventEntityViewModel>
+    implements _$$_EventEntityViewModelCopyWith<$Res> {
+  __$$_EventEntityViewModelCopyWithImpl(_$_EventEntityViewModel _value,
+      $Res Function(_$_EventEntityViewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listEventEntityLoaded = null,
+    Object? filteredListEventEntity = null,
+  }) {
+    return _then(_$_EventEntityViewModel(
+      listEventEntityLoaded: null == listEventEntityLoaded
+          ? _value._listEventEntityLoaded
+          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+      filteredListEventEntity: null == filteredListEventEntity
+          ? _value._filteredListEventEntity
+          : filteredListEventEntity // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EventEntityViewModel implements _EventEntityViewModel {
+  const _$_EventEntityViewModel(
+      {required final List<EventEntity> listEventEntityLoaded,
+      required final List<EventEntity> filteredListEventEntity})
+      : _listEventEntityLoaded = listEventEntityLoaded,
+        _filteredListEventEntity = filteredListEventEntity;
+
+  factory _$_EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_EventEntityViewModelFromJson(json);
+
+  final List<EventEntity> _listEventEntityLoaded;
+  @override
+  List<EventEntity> get listEventEntityLoaded {
+    if (_listEventEntityLoaded is EqualUnmodifiableListView)
+      return _listEventEntityLoaded;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listEventEntityLoaded);
+  }
+
+  final List<EventEntity> _filteredListEventEntity;
+  @override
+  List<EventEntity> get filteredListEventEntity {
+    if (_filteredListEventEntity is EqualUnmodifiableListView)
+      return _filteredListEventEntity;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredListEventEntity);
+  }
+
+  @override
+  String toString() {
+    return 'EventEntityViewModel(listEventEntityLoaded: $listEventEntityLoaded, filteredListEventEntity: $filteredListEventEntity)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventEntityViewModel &&
+            const DeepCollectionEquality()
+                .equals(other._listEventEntityLoaded, _listEventEntityLoaded) &&
+            const DeepCollectionEquality().equals(
+                other._filteredListEventEntity, _filteredListEventEntity));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_listEventEntityLoaded),
+      const DeepCollectionEquality().hash(_filteredListEventEntity));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
+      __$$_EventEntityViewModelCopyWithImpl<_$_EventEntityViewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EventEntityViewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EventEntityViewModel implements EventEntityViewModel {
+  const factory _EventEntityViewModel(
+          {required final List<EventEntity> listEventEntityLoaded,
+          required final List<EventEntity> filteredListEventEntity}) =
+      _$_EventEntityViewModel;
+
+  factory _EventEntityViewModel.fromJson(Map<String, dynamic> json) =
+      _$_EventEntityViewModel.fromJson;
+
+  @override
+  List<EventEntity> get listEventEntityLoaded;
+  @override
+  List<EventEntity> get filteredListEventEntity;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

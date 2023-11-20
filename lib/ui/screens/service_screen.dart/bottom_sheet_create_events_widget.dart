@@ -147,7 +147,7 @@ class _BottomSheetCreateEventsWidgetState
                         return;
                       }
 
-                      blocEventEntity.add(EventEntityEvent.createNewEventEntity(
+                      blocEventEntity.add(EventEntityEvent.create(
                           title: dataTitleController.text,
                           description: dataDescriptionController.text,
                           imageFile: ChangeNotifierProvaider.read<

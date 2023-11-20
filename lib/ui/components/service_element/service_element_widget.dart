@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -12,6 +13,7 @@ import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/painteres_widget.dart';
 
+import '../../../domain/repository/auth_repository.dart';
 import '../../screens/service_screen.dart/bottom_sheet_create_events_widget.dart';
 
 class ServiceElementWidget extends StatefulWidget {
@@ -214,9 +216,11 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
                   AutoRouter.of(context).push(ApproveNewsRoute(
-                      authRepository: blocEventEntity.authRepository,
-                      eventEntityRepository:
-                          blocEventEntity.eventEntityRepository));
+                    authRepository:
+                        RepositoryProvider.of<IAuthRepository>(context),
+                    eventEntityRepository:
+                        RepositoryProvider.of<IEventEntityRepository>(context),
+                  ));
                 } else if (widget.service.id == 25) {
                   final blocService = context.read<ServiceBloc>();
                   context.pushRoute(ScheduleBusRoute(
@@ -228,7 +232,8 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                   final repositoryStatements =
                       RepositoryProvider.of<StatementsRepository>(context);
                   context.pushRoute(StatementFormRoute(
-                    authRepository: blocEventEntity.authRepository,
+                    authRepository:
+                        RepositoryProvider.of<IAuthRepository>(context),
                     repositoryStatements: repositoryStatements,
                   ));
                 }
