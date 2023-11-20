@@ -6,7 +6,7 @@ class StatementsEvent with _$StatementsEvent {
   const StatementsEvent._();
 
   /// Create
-  const factory StatementsEvent.create({required StatementEntity itemsForm}) =
+  const factory StatementsEvent.create({required StatementFormInfo itemsForm}) =
       StatementsEventCreate;
 
   /// Fetch

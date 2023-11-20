@@ -3,7 +3,7 @@ import 'package:hr_app_flutter/domain/entity/statements/statements.dart';
 import '../api_client/statement_provider.dart';
 
 abstract interface class IStatementsRepository {
-  Future<List<StatementFieldEntity>> fetchListTypeStatements(
+  Future<List<StatementFielTypedEntity>> fetchListTypeStatements(
       {required final String accessToken});
   Future<StatementEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
@@ -17,7 +17,7 @@ class StatementsRepository implements IStatementsRepository {
   final IStatementsProvider _statementsProvider;
 
   @override
-  Future<List<StatementFieldEntity>> fetchListTypeStatements(
+  Future<List<StatementFielTypedEntity>> fetchListTypeStatements(
       {required String accessToken}) {
     try {
       return _statementsProvider.fetchListTypeStatements(

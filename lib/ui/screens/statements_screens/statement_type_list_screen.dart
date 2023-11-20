@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/statements/statements.dart';
-
 import '../../../domain/repository/auth_repository.dart';
 import '../../../domain/repository/statements_repository.dart';
 
@@ -55,7 +53,7 @@ class DropdownWidget extends StatefulWidget {
 }
 
 class _DropdownWidgetState extends State<DropdownWidget> {
-  List<StatementFieldEntity> filteredStatementFields = [];
+  List<StatementFielTypedEntity> filteredStatementFields = [];
 
   TextEditingController filterController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -69,7 +67,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
   }
 
   void filterStatementFields(
-      String filter, List<StatementFieldEntity>? oldList) {
+      String filter, List<StatementFielTypedEntity>? oldList) {
     setState(() {
       filteredStatementFields = oldList!
           .where((statementField) =>
@@ -90,20 +88,21 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         child: Center(
           child: Column(
             children: [
-              DropdownMenu<StatementFieldEntity>(
+              DropdownMenu<StatementFielTypedEntity>(
                 menuStyle: const MenuStyle(
                     maximumSize: MaterialStatePropertyAll(Size(300, 300))),
                 width: 300,
                 menuHeight: 300,
                 controller: colorController,
-                onSelected: (StatementFieldEntity? value) {
+                onSelected: (StatementFielTypedEntity? value) {
                   if (value != null) {
-                    blocStatements.add(StatementsEvent.fetch(id: value.id));
+                    blocStatements
+                        .add(StatementsEvent.fetch(id: value.documentType));
                   }
                 },
                 dropdownMenuEntries:
                     blocStatementsTypeList.state.data!.map((statementField) {
-                  return DropdownMenuEntry<StatementFieldEntity>(
+                  return DropdownMenuEntry<StatementFielTypedEntity>(
                       value: statementField,
                       label: statementField.name,
                       style: const ButtonStyle(
@@ -141,6 +140,15 @@ class _StatementsHRLinkFormWidgetState
     extends State<StatementsHRLinkFormWidget> {
   List<TemplateField> textFieldsData = [];
   List<TextEditingController> listController = [];
+  Map<String, String?> convertListToMap(List<TemplateField> textFieldsData) {
+    Map<String, String?> resultMap = {};
+
+    for (TemplateField field in textFieldsData) {
+      resultMap[field.name] = field.value;
+    }
+
+    return resultMap;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +160,7 @@ class _StatementsHRLinkFormWidgetState
         return state.data != null
             ? Column(
                 children: [
-                  for (int i = 0; i < state.data!.templateFields.length; i++)
+                  for (int i = 0; i < state.data!.template.length; i++)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: SizedBox(
@@ -164,7 +172,7 @@ class _StatementsHRLinkFormWidgetState
                             } else {
                               setState(() {
                                 final newInput = TemplateField(
-                                    id: state.data!.templateFields[i].id,
+                                    name: state.data!.template[i].name,
                                     value: value!);
                                 textFieldsData.add(newInput);
                               });
@@ -173,7 +181,7 @@ class _StatementsHRLinkFormWidgetState
                           },
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
-                            labelText: state.data?.templateFields[i].name,
+                            labelText: state.data?.template[i].name,
                           ),
                         ),
                       ),
@@ -182,18 +190,22 @@ class _StatementsHRLinkFormWidgetState
                     onPressed: () {
                       if (widget._formKey.currentState != null) {
                         if (widget._formKey.currentState!.validate()) {
-                          // Собрать все данные из TextField
-                          List<TemplateField> allData = [];
-                          for (int i = 0;
-                              i < state.data!.templateFields.length;
-                              i++) {
-                            allData.add(textFieldsData[i]);
-                          }
+                          final Map<String, String?> resultMap =
+                              convertListToMap(textFieldsData);
+                          final TemplateFormStatementsEntity
+                              templateFormStatementsEntity =
+                              TemplateFormStatementsEntity.fromJson(resultMap);
 
+                          final StatementFormInfo formInfo = StatementFormInfo(
+                              documentType: state.data!.documentType,
+                              template: templateFormStatementsEntity);
+                          // context
+                          //     .read<StatementsBLoC>()
+                          //     .add(StatementsEvent.create(itemsForm: formInfo));
                           // Делать что-то с данными, например, отправить на сервер
-                          // listController.map((e) => print(e.text));
-                          // print(allData);
-                          allData.map((e) => print('${e.id} - ${e.value}'));
+
+                          print(
+                              '${formInfo.documentType} ${formInfo.template.firstName}');
                         }
                       }
                     },
