@@ -10,11 +10,6 @@ import 'package:mockito/mockito.dart';
 
 import 'event_entity_test.mocks.dart';
 
-// @GenerateNiceMocks(
-//     [MockSpec<IAuthRepository>(), MockSpec<IEventEntityRepository>()])
-// import 'event_entity_test.mock.dart';
-// @GenerateMocks([IAuthRepository])
-// @GenerateMocks([IEventEntityRepository])
 @GenerateMocks([
   IAuthRepository,
   IEventEntityRepository,
@@ -34,8 +29,6 @@ import 'event_entity_test.mocks.dart';
     onMissingStub: OnMissingStub.returnDefault,
   ),
 ])
-// import 'event_entity_test.mock.dart';
-
 class FakeEventEntity extends Fake implements EventEntity {}
 
 final EventEntity _mockEventEntity = MockNewsEntity();
@@ -192,6 +185,96 @@ void main() {
           idleState,
         ]),
       );
+    });
+  });
+
+  group('EventEntity', () {
+    group('fromJson', () {
+      final dateNow = DateTime.now();
+      test('returns correct EventEntity object', () {
+        expect(
+            EventEntity.fromJson(
+              <String, dynamic>{
+                'id': 22,
+                'title': 'Sample Event',
+                'description': 'This is a sample event',
+                'image': 'sample_image.jpg',
+                'start_date': dateNow.toString(),
+                'end_date': dateNow.add(const Duration(days: 1)).toString(),
+                'created_at': dateNow.toString(),
+                'updated_at': dateNow.toString(),
+                'is_publish': true,
+                'is_archived': false,
+                'categories': [
+                  {
+                    'id': 1,
+                    'name': 'Category 1',
+                  },
+                  {
+                    'id': 2,
+                    'name': 'Category 2',
+                  }
+                ],
+                'writer': {
+                  'user_id': 8900,
+                  'name_i': 'Aleks',
+                  'name': 'Volkov',
+                  'name_o': 'Yrich',
+                }
+              },
+            ),
+            isA<EventEntity>()
+                .having((eventEntity) => eventEntity.id, 'id', 22)
+                .having(
+                    (eventEntity) => eventEntity.title, 'title', 'Sample Event')
+                .having((eventEntity) => eventEntity.description, 'description',
+                    'This is a sample event')
+                .having((eventEntity) => eventEntity.image, 'image',
+                    'sample_image.jpg')
+                .having(
+                  (eventEntity) => eventEntity.startDate,
+                  'startDate',
+                  dateNow,
+                )
+                .having((eventEntity) => eventEntity.endDate, 'endDate',
+                    dateNow.add(const Duration(days: 1)))
+                .having(
+                  (eventEntity) => eventEntity.createdAt,
+                  'createdAt',
+                  dateNow,
+                )
+                .having(
+                  (eventEntity) => eventEntity.updatedAt,
+                  'updatedAt',
+                  dateNow,
+                )
+                .having(
+                  (eventEntity) => eventEntity.isPublish,
+                  'isPublish',
+                  true,
+                )
+                .having(
+                  (eventEntity) => eventEntity.isArchived,
+                  'isArchived',
+                  false,
+                )
+                .having(
+              (eventEntity) => eventEntity.categories,
+              'categories',
+              [
+                const Category(name: 'Category 1', id: 1),
+                const Category(name: 'Category 2', id: 2)
+              ],
+            ).having(
+              (w) => w.writer,
+              'writer',
+              const Writer(
+                  id: 8900,
+                  firstName: 'Aleks',
+                  middleName: 'Volkov',
+                  lastName: 'Yrich'),
+            ));
+      });
     });
   });
 }
