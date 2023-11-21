@@ -169,6 +169,8 @@ class ScreenFactoryDefault implements ScreenFactory {
               create: (context) => authRepository),
           RepositoryProvider<IUserRepository>(
               create: (context) => userRepository),
+          RepositoryProvider<IEventEntityRepository>(
+              create: (context) => eventEntityRepository),
         ],
         child: MaterialApp.router(
           localizationsDelegates: const [

@@ -10,92 +10,8 @@ import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 
 part 'event_entity_bloc.freezed.dart';
-// part 'event_entity_bloc.g.dart';
 part 'event_entity_event.dart';
 part 'event_entity_state.dart';
-
-// class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState> {
-//   final IEventEntityRepository eventEntityRepository;
-//   final IAuthRepository authRepository;
-
-//   EventEntityBloc({
-//     required this.eventEntityRepository,
-//     required this.authRepository,
-//   }) : super(const EventEntityState.loading()) {
-//     on<EventEntityEvent>(
-//       (event, emit) => event.map<Future<void>>(
-//         fetch: (event) async => await _oneEventEntityFetch(emit),
-//         filterNews: (event) => _eventFilterNews(event, emit),
-//         createNewEventEntity: (event) async =>
-//             await _createNewEventEntity(event, emit),
-//       ),
-//     );
-//   }
-
-//   Future<void> _createNewEventEntity(EventEntityEventCreateNewEventEntity event,
-//       Emitter<EventEntityState> emit) async {
-//     try {
-//       String? accessToken = await authRepository.cheskIsLiveAccessToken();
-
-//       await eventEntityRepository.createNewEventEntity(
-//           accessToken: accessToken as String,
-//           title: event.title,
-//           description: event.description,
-//           imageFile: event.imageFile,
-//           categories: event.categories,
-//           startDate: event.startDate,
-//           endDate: event.endDate);
-//     } on TimeoutException {
-//       emit(const EventEntityState.error());
-//     } catch (e) {
-//       emit(const EventEntityState.error());
-//     }
-//   }
-
-//   Future<void> _eventFilterNews(
-//       EventEntityEventFilterNews event, Emitter<EventEntityState> emit) async {
-//     List<EventEntity> filteredEventEntity = filterListCategory(
-//         idTab: event.idTab, listEventEntityLoaded: event.listEventEntityLoaded);
-//     emit(EventEntityState.loaded(
-//       listEventEntityLoaded: event.listEventEntityLoaded,
-//       filteredListEventEntity: filteredEventEntity,
-//     ));
-//   }
-
-//   List<EventEntity> filterListCategory(
-//       {required List<EventEntity> listEventEntityLoaded, required int idTab}) {
-//     final List<EventEntity> filteredEventEntity = listEventEntityLoaded
-//         .where(
-//             (item) => item.categories.any((category) => category.id == idTab))
-//         .toList();
-//     return filteredEventEntity;
-//   }
-
-//   Future<void> _oneEventEntityFetch(Emitter<EventEntityState> emit) async {
-//     emit(const EventEntityState.loading());
-//     try {
-//       String? accessToken = await authRepository.cheskIsLiveAccessToken();
-//       List<EventEntity> listEventEntityLoaded = await eventEntityRepository
-//           .getEvents(
-//             accessToken: accessToken as String,
-//           )
-//           .timeout(const Duration(seconds: 10));
-//       List<EventEntity> filteredEventEntity = filterListCategory(
-//         listEventEntityLoaded: listEventEntityLoaded,
-//         idTab: 1,
-//       );
-
-//       emit(EventEntityState.loaded(
-//         listEventEntityLoaded: listEventEntityLoaded,
-//         filteredListEventEntity: filteredEventEntity,
-//       ));
-//     } on TimeoutException {
-//       emit(const EventEntityState.error());
-//     } catch (e) {
-//       emit(const EventEntityState.error());
-//     }
-//   }
-// }
 
 /// Business Logic Component EventEntityBLoC
 class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
@@ -134,6 +50,8 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
   Future<void> _fetch(
       EventEntityEventFetch event, Emitter<EventEntityState> emit) async {
     try {
+      emit(EventEntityState.processing(data: state.data));
+
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       List<EventEntity> listEventEntityLoaded = await _eventEntityRepository
           .getEvents(
@@ -162,6 +80,8 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
   Future<void> _createNewEventEntity(
       EventEntityEventCreate event, Emitter<EventEntityState> emit) async {
     try {
+      emit(EventEntityState.processing(data: state.data));
+
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final bool isCreate = await _eventEntityRepository.createNewEventEntity(
@@ -175,13 +95,13 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
       if (isCreate) {
         emit(EventEntityState.successful(data: state.data));
       } else {
-        emit(const EventEntityState.error());
+        emit(EventEntityState.error(data: state.data));
       }
     } on TimeoutException {
-      emit(const EventEntityState.error());
+      emit(EventEntityState.error(data: state.data));
       rethrow;
     } catch (e) {
-      emit(const EventEntityState.error());
+      emit(EventEntityState.error(data: state.data));
       rethrow;
     } finally {
       emit(EventEntityState.idle(data: state.data));
@@ -205,5 +125,6 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     final newState =
         state.data?.copyWith(filteredListEventEntity: filteredEventEntity);
     emit(EventEntityState.successful(data: newState));
+    emit(EventEntityState.idle(data: state.data));
   }
 }

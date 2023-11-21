@@ -635,153 +635,156 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
     const double radius = 30.0;
 
     return BlocBuilder<EventEntityBloc, EventEntityState>(
-        builder: (context, state) {
-      if (state.data == null) {
-        return const Center(child: Text('Ничего не найденно!'));
-      }
-      if (state is EventEntityState$Processing) {
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
-        );
-      } else if (state is EventEntityState$Error) {
-        return const Center(child: Text('Ошибка загрузки сервисов!'));
-      } else {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            blocCategory.state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                },
-                loaded: (listCategoryLoaded) {
-                  return SizedBox(
-                    height: 50,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: listCategoryLoaded.length,
-                      itemBuilder: (context, index) {
-                        String tab = listCategoryLoaded[index].name;
+      builder: (context, state) {
+        if (state.data == null) {
+          return const Center(child: Text('Ничего не найденно!'));
+        }
+        if (state is EventEntityState$Processing) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        } else if (state is EventEntityState$Error) {
+          return const Center(child: Text('Ошибка загрузки сервисов!'));
+        } else {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              blocCategory.state.when(
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  },
+                  loaded: (listCategoryLoaded) {
+                    return SizedBox(
+                      height: 50,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: listCategoryLoaded.length,
+                        itemBuilder: (context, index) {
+                          String tab = listCategoryLoaded[index].name;
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                context.read<EventEntityBloc>().add(
-                                    EventEntityEvent.update(
-                                        idTab: listCategoryLoaded[index].id,
-                                        listEventEntityLoaded:
-                                            state.data!.listEventEntityLoaded));
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  context.read<EventEntityBloc>().add(
+                                      EventEntityEvent.update(
+                                          idTab: listCategoryLoaded[index].id,
+                                          listEventEntityLoaded: state
+                                              .data!.listEventEntityLoaded));
 
-                                selectedTab = index;
-                              });
-                            },
-                            child: Container(
-                              decoration: index == selectedTab
-                                  ? const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors
-                                                .black, // Цвет подчеркивания
-                                            width: 1.5 // Толщина подчеркивания
-                                            ),
+                                  selectedTab = index;
+                                });
+                              },
+                              child: Container(
+                                decoration: index == selectedTab
+                                    ? const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors
+                                                  .black, // Цвет подчеркивания
+                                              width:
+                                                  1.5 // Толщина подчеркивания
+                                              ),
+                                        ),
+                                      )
+                                    : null,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 6.0),
+                                    child: Text(
+                                      tab,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: index == selectedTab
+                                            ? Colors.black
+                                            : Colors.grey,
                                       ),
-                                    )
-                                  : null,
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 6.0),
-                                  child: Text(
-                                    tab,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: index == selectedTab
-                                          ? Colors.black
-                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  error: () =>
+                      const Center(child: Text('Ошибка загрузки сервисов!'))),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2.7,
+                child: ListView.builder(
+                  itemExtent: MediaQuery.of(context).size.width / 1.5,
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(16),
+                  itemCount: state.data!.filteredListEventEntity
+                      .length, // начинаем с выбранной вкладки
+                  itemBuilder: (context, index) {
+                    EventEntity item = state
+                        .data!.filteredListEventEntity.reversed
+                        .toList()[index];
+                    // получаем элемент для текущей вкладки
+                    return GestureDetector(
+                      onTap: () {
+                        context.pushRoute(AboutNewsRoute(
+                          id: item.id,
+                          authRepository:
+                              RepositoryProvider.of<IAuthRepository>(context),
+                          eventEntityRepository:
+                              RepositoryProvider.of<IEventEntityRepository>(
+                                  context),
+                        ));
                       },
-                    ),
-                  );
-                },
-                error: () =>
-                    const Center(child: Text('Ошибка загрузки сервисов!'))),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2.7,
-              child: ListView.builder(
-                itemExtent: MediaQuery.of(context).size.width / 1.5,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.all(16),
-                itemCount: state.data!.filteredListEventEntity
-                    .length, // начинаем с выбранной вкладки
-                itemBuilder: (context, index) {
-                  EventEntity item = state
-                      .data!.filteredListEventEntity.reversed
-                      .toList()[index];
-                  // получаем элемент для текущей вкладки
-                  return GestureDetector(
-                    onTap: () {
-                      context.pushRoute(AboutNewsRoute(
-                        id: item.id,
-                        authRepository:
-                            RepositoryProvider.of<IAuthRepository>(context),
-                        eventEntityRepository:
-                            RepositoryProvider.of<IEventEntityRepository>(
-                                context),
-                      ));
-                    },
-                    child: CachedNetworkImage(
-                        fadeInDuration: const Duration(milliseconds: 100),
-                        imageUrl: item.image,
-                        imageBuilder: (context, imageProvider) {
-                          return Container(
-                            margin:
-                                const EdgeInsets.only(bottom: 16, right: 16.0),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover),
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(radius),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Spacer(),
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(radius),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      item.title,
-                                      style: const TextStyle(fontSize: 16),
+                      child: CachedNetworkImage(
+                          fadeInDuration: const Duration(milliseconds: 100),
+                          imageUrl: item.image,
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 16, right: 16.0),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(radius),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Spacer(),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(radius),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        item.title,
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                  );
-                },
+                                ],
+                              ),
+                            );
+                          }),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        );
-      }
-    });
+            ],
+          );
+        }
+      },
+    );
 
     //   return blocEventEntity.state.when(
     //     loading: () {

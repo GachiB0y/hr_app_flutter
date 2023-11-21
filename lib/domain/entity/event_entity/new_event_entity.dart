@@ -20,7 +20,7 @@ class EventEntity with _$EventEntity {
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'is_publish') required bool isPublish,
     @JsonKey(name: 'is_archived') required bool isArchived,
-    @JsonKey(name: 'categories') required List<Category> categories,
+    required List<Category> categories,
     required Writer writer,
   }) = _EventEntity;
 

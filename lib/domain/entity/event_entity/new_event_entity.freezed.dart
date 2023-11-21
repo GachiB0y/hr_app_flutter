@@ -36,7 +36,6 @@ mixin _$EventEntity {
   bool get isPublish => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_archived')
   bool get isArchived => throw _privateConstructorUsedError;
-  @JsonKey(name: 'categories')
   List<Category> get categories => throw _privateConstructorUsedError;
   Writer get writer => throw _privateConstructorUsedError;
 
@@ -63,7 +62,7 @@ abstract class $EventEntityCopyWith<$Res> {
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'categories') List<Category> categories,
+      List<Category> categories,
       Writer writer});
 
   $WriterCopyWith<$Res> get writer;
@@ -175,7 +174,7 @@ abstract class _$$_EventEntityCopyWith<$Res>
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'categories') List<Category> categories,
+      List<Category> categories,
       Writer writer});
 
   @override
@@ -274,7 +273,7 @@ class _$_EventEntity implements _EventEntity {
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'is_publish') required this.isPublish,
       @JsonKey(name: 'is_archived') required this.isArchived,
-      @JsonKey(name: 'categories') required final List<Category> categories,
+      required final List<Category> categories,
       required this.writer})
       : _categories = categories;
 
@@ -309,7 +308,6 @@ class _$_EventEntity implements _EventEntity {
   final bool isArchived;
   final List<Category> _categories;
   @override
-  @JsonKey(name: 'categories')
   List<Category> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
@@ -393,7 +391,7 @@ abstract class _EventEntity implements EventEntity {
       @JsonKey(name: 'updated_at') required final DateTime updatedAt,
       @JsonKey(name: 'is_publish') required final bool isPublish,
       @JsonKey(name: 'is_archived') required final bool isArchived,
-      @JsonKey(name: 'categories') required final List<Category> categories,
+      required final List<Category> categories,
       required final Writer writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
@@ -426,7 +424,6 @@ abstract class _EventEntity implements EventEntity {
   @JsonKey(name: 'is_archived')
   bool get isArchived;
   @override
-  @JsonKey(name: 'categories')
   List<Category> get categories;
   @override
   Writer get writer;
