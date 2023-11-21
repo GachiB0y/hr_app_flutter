@@ -65,5 +65,26 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
 
   /// Submit event handler
   Future<void> _submitFormAndSend(
-      StatementsEventCreate event, Emitter<StatementsState> emit) async {}
+      StatementsEventCreate event, Emitter<StatementsState> emit) async {
+    try {
+      emit(StatementsState.processing(data: state.data));
+      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
+      await _repositoryStatements.submitStatementForm(
+        accessToken: accessToken as String,
+        formInfo: event.itemsForm,
+      );
+      emit(StatementsState.successful(data: state.data));
+    } on TimeoutException {
+      emit(StatementsState.error(
+          data: state.data, message: 'Ошибка ожидания  запроса!'));
+      // ignore: unused_catch_stack
+    } on Object catch (err, stackTrace) {
+      //l.e('An error occurred in the StatementsBLoC: $err', stackTrace);
+      emit(StatementsState.error(data: state.data));
+      rethrow;
+    } finally {
+      emit(StatementsState.idle(data: state.data));
+    }
+  }
 }

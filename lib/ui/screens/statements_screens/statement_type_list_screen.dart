@@ -154,8 +154,33 @@ class _StatementsHRLinkFormWidgetState
   Widget build(BuildContext context) {
     // final blocStatements = context.watch<StatementsBLoC>();
 
-    return BlocBuilder<StatementsBLoC, StatementsState>(
-        builder: (context, state) {
+    return BlocConsumer<StatementsBLoC, StatementsState>(
+        listener: (context, state) {
+      if (state is StatementsState$Error) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            const SnackBar(
+              content:
+                  Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
+              duration: Duration(seconds: 6),
+            ),
+          );
+      } else if (state is StatementsState$Successful) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            const SnackBar(
+              content: Center(
+                  child: Text(
+                'Данные успешно отправленны!',
+                style: TextStyle(fontSize: 20),
+              )),
+              duration: Duration(seconds: 2),
+            ),
+          ).closed.then((value) => Navigator.pop(context));
+      }
+    }, builder: (context, state) {
       if (state is StatementsState$Idle) {
         return state.data != null
             ? Column(
@@ -181,7 +206,7 @@ class _StatementsHRLinkFormWidgetState
                           },
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
-                            labelText: state.data?.template[i].name,
+                            labelText: state.data?.template[i].value,
                           ),
                         ),
                       ),
@@ -199,9 +224,9 @@ class _StatementsHRLinkFormWidgetState
                           final StatementFormInfo formInfo = StatementFormInfo(
                               documentType: state.data!.documentType,
                               template: templateFormStatementsEntity);
-                          // context
-                          //     .read<StatementsBLoC>()
-                          //     .add(StatementsEvent.create(itemsForm: formInfo));
+                          context
+                              .read<StatementsBLoC>()
+                              .add(StatementsEvent.create(itemsForm: formInfo));
                           // Делать что-то с данными, например, отправить на сервер
 
                           print(

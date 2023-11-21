@@ -22,16 +22,15 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<List<StatementFielTypedEntity>> fetchListTypeStatements(
       {required String accessToken}) async {
-    String uri = '$urlAdress/hrlink/getTemplates';
+    String uri = '$urlAdress/hrlink/document_template';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<StatementFielTypedEntity> result =
-          (jsonData['result'] as List<dynamic>)
-              .map((item) => StatementFielTypedEntity.fromJson(item))
-              .toList();
+      final List<StatementFielTypedEntity> result = (jsonData as List<dynamic>)
+          .map((item) => StatementFielTypedEntity.fromJson(item))
+          .toList();
       return result;
     } else {
       throw Exception('Error fetching List Type Statements');
@@ -41,14 +40,13 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<StatementEntity> fetchStatementForm(
       {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/hrlink/getTemplates?templateId=$id';
+    String uri = '$urlAdress/hrlink/document_template?document_type=$id';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final StatementEntity result =
-          StatementEntity.fromJson(jsonData['result'][0]);
+      final StatementEntity result = StatementEntity.fromJson(jsonData);
 
       return result;
     } else {

@@ -7,6 +7,9 @@ abstract interface class IStatementsRepository {
       {required final String accessToken});
   Future<StatementEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
+  Future<void> submitStatementForm(
+      {required final String accessToken,
+      required final StatementFormInfo formInfo});
 }
 
 class StatementsRepository implements IStatementsRepository {
@@ -33,6 +36,19 @@ class StatementsRepository implements IStatementsRepository {
     try {
       return _statementsProvider.fetchStatementForm(
           accessToken: accessToken, id: id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> submitStatementForm(
+      {required String accessToken, required StatementFormInfo formInfo}) {
+    try {
+      return _statementsProvider.submitStatementForm(
+        accessToken: accessToken,
+        formInfo: formInfo,
+      );
     } catch (e) {
       rethrow;
     }
