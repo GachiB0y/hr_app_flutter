@@ -73,7 +73,7 @@ class _DIContainer {
   IEventEntityRepository _makeEventEntityRepository() =>
       EventEntityRepositoryImpl(
           eventEntityProvider: _makeEventsEntityProvider());
-  WalletRepository _makeWalletRepository() =>
+  IWalletRepository _makeWalletRepository() =>
       WalletRepositoryImpl(walletProvider: _makeWalletProvider());
 
   IUserRepository _makeUserRepository() =>
@@ -112,8 +112,8 @@ class ScreenFactoryDefault implements ScreenFactory {
               eventEntityRepository: eventEntityRepository,
               authRepository: authRepository),
         ),
-        BlocProvider<WalletBloc>(
-          create: (BuildContext context) => WalletBloc(
+        BlocProvider<WalletBLoC>(
+          create: (BuildContext context) => WalletBLoC(
               walletRepo: _diContainer._makeWalletRepository(),
               authRepository: authRepository),
         ),

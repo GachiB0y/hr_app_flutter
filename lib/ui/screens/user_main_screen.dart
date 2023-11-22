@@ -17,6 +17,7 @@ import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
+import '../../domain/entity/wallet/wallet.dart';
 import '../../domain/repository/user_repository.dart';
 import '../../theme/colors_from_theme.dart';
 
@@ -34,7 +35,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
     super.initState();
     context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
-    context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context.read<WalletBLoC>().add(const WalletEvent.fetch());
     context
         .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
@@ -50,7 +51,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
         .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
-    context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context.read<WalletBLoC>().add(const WalletEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
     context.read<UserBloc>().add(const UserEvent
         .fetch()); //  Только обновить т.к сам блок инициализируется в АппБаре
@@ -505,108 +506,158 @@ class ElementForScrollBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
-    final blocWallet = context.watch<WalletBloc>();
+    // final blocWallet = context.watch<WalletBLoC>();
     final double leftPadding = index == 0 ? 16.0 : 8.0;
     final double rightPadding = index == listService.length ? 16.0 : 8.0;
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
 
     if (index == 0) {
-      return Padding(
-        padding: EdgeInsets.only(
-          left: leftPadding,
-          right: rightPadding,
-        ),
-        child: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, 6),
-            ),
-          ], borderRadius: BorderRadius.circular(50), color: Colors.white),
-          width: (sizeScreen.width / 2.2) * textScaleFactor,
-          child: Stack(children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          'assets/images/icon_crown.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                        Column(
-                          children: [
-                            const Text(
-                              '1208',
-                              style: TextStyle(fontSize: 28),
-                            ),
-                            Text(
-                              S.of(context).userMainScrenText_index,
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                          ],
-                        ),
-                      ]),
-                  const Divider(),
-                  blocWallet.state.when(
-                    loading: () {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    loaded: (walletLoaded) => Row(
+      return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: leftPadding,
+            right: rightPadding,
+          ),
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, 6),
+              ),
+            ], borderRadius: BorderRadius.circular(50), color: Colors.white),
+            width: (sizeScreen.width / 2.2) * textScaleFactor,
+            child: Stack(children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ColorFiltered(
-                            colorFilter: const ColorFilter.mode(
-                                ColorsForWidget.colorGreen, BlendMode.srcATop),
-                            child: Image.asset(
-                              'assets/images/grass_icon_main.png',
-                              width: 50,
-                              height: 50,
-                            ),
+                          Image.asset(
+                            'assets/images/icon_crown.png',
+                            width: 50,
+                            height: 50,
                           ),
                           Column(
                             children: [
-                              Text(
-                                walletLoaded.balance.toString(),
-                                style: const TextStyle(fontSize: 28),
+                              const Text(
+                                '1208',
+                                style: TextStyle(fontSize: 28),
                               ),
                               Text(
-                                S.of(context).userMainScreenText_balance,
+                                S.of(context).userMainScrenText_index,
                                 style: TextStyle(color: Colors.grey[600]),
                               ),
                             ],
                           ),
                         ]),
-                    error: () => const Text('Nothing found...'),
-                  ),
-                ],
+                    const Divider(),
+
+                    switch (state) {
+                      WalletState$Idle(:final data) => RowBalanceCountWidget(
+                          data: data,
+                        ),
+                      WalletState$Processing() => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      WalletState$Successful(:final data) =>
+                        RowBalanceCountWidget(
+                          data: data,
+                        ),
+                      WalletState$Error() =>
+                        const Text('Ничего не найденно...'),
+                      _ => const Text('Default'),
+                    }
+                    // blocWallet.state.when(
+                    //   loading: () {
+                    //     return const Center(
+                    //       child: CircularProgressIndicator(),
+                    //     );
+                    //   },
+                    //   loaded: (walletLoaded) => Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //       children: [
+                    //         ColorFiltered(
+                    //           colorFilter: const ColorFilter.mode(
+                    //               ColorsForWidget.colorGreen, BlendMode.srcATop),
+                    //           child: Image.asset(
+                    //             'assets/images/grass_icon_main.png',
+                    //             width: 50,
+                    //             height: 50,
+                    //           ),
+                    //         ),
+                    //         Column(
+                    //           children: [
+                    //             Text(
+                    //               walletLoaded.balance.toString(),
+                    //               style: const TextStyle(fontSize: 28),
+                    //             ),
+                    //             Text(
+                    //               S.of(context).userMainScreenText_balance,
+                    //               style: TextStyle(color: Colors.grey[600]),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ]),
+                    //   error: () => const Text('Nothing found...'),
+                    // ),
+                  ],
+                ),
               ),
-            ),
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(30),
-                onTap: () {},
-              ),
-            )
-          ]),
-        ),
-      );
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(30),
+                  onTap: () {},
+                ),
+              )
+            ]),
+          ),
+        );
+      });
     } else {
       return Padding(
         padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
         child: groupWidgets[index],
       );
     }
+  }
+}
+
+class RowBalanceCountWidget extends StatelessWidget {
+  const RowBalanceCountWidget({super.key, this.data});
+  final Wallet? data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      ColorFiltered(
+        colorFilter: const ColorFilter.mode(
+            ColorsForWidget.colorGreen, BlendMode.srcATop),
+        child: Image.asset(
+          'assets/images/grass_icon_main.png',
+          width: 50,
+          height: 50,
+        ),
+      ),
+      Column(
+        children: [
+          Text(
+            data != null ? data!.balance.toString() : 'Ничего не найденно...',
+            style: const TextStyle(fontSize: 28),
+          ),
+          Text(
+            S.of(context).userMainScreenText_balance,
+            style: TextStyle(color: Colors.grey[600]),
+          ),
+        ],
+      ),
+    ]);
   }
 }
 

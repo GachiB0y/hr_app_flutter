@@ -60,7 +60,7 @@ class _SearchFriendAndSendCoinsScreenState
           actions: [
             TextButton(
               onPressed: () {
-                final blocWallet = context.read<WalletBloc>();
+                final blocWallet = context.read<WalletBLoC>();
                 blocWallet.add(WalletEvent.sendCoinsToOtherUser(
                     amount: int.parse(amountCoins),
                     userId: autoCard,
