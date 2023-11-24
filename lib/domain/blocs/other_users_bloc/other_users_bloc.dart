@@ -14,8 +14,8 @@ part 'other_users_event.dart';
 part 'other_users_state.dart';
 
 class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUserState> {
-  final UserRepository userRepo;
-  final AuthRepository authRepository;
+  final IUserRepository userRepo;
+  final IAuthRepository authRepository;
 
   OtherUsersBloc({
     required this.userRepo,

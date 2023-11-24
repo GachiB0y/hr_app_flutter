@@ -7,6 +7,9 @@ import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
+import '../../../domain/repository/auth_repository.dart';
+import '../../../domain/repository/user_repository.dart';
+
 class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
   const AppBarUserWdiget({super.key});
 
@@ -43,34 +46,37 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocUser = context.watch<UserBloc>();
     double radius = MediaQuery.of(context).size.width / 8;
 
-    return GestureDetector(
-      onTap: () {
-        context.pushRoute(ProfileWidgetRoute(
-          userId: (blocUser.state as UserStateLoaded).userLoaded.autoCard,
-          authRepository: blocUser.authRepository,
-          userRepo: blocUser.userRepo,
-        ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: blocUser.state.when(loading: () {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (BuildContext context, state) {
+        if (state.data == null) {
           return const SizedBox.shrink();
-        }, loaded: (user) {
-          return CachedNetworkImage(
-              imageUrl: user.avatar,
-              imageBuilder: (context, imageProvider) {
-                return CircleAvatar(
-                  radius: radius,
-                  backgroundImage: imageProvider,
-                );
-              });
-        }, error: () {
+        } else if (state is UserState$Error) {
           return const Text('Ошибка загрузки');
-        }),
-      ),
+        } else {
+          return GestureDetector(
+            onTap: () {
+              context.pushRoute(ProfileWidgetRoute(
+                userId: state.data!.autoCard,
+                authRepository: RepositoryProvider.of<IAuthRepository>(context),
+                userRepo: RepositoryProvider.of<IUserRepository>(context),
+              ));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: CachedNetworkImage(
+                  imageUrl: state.data!.avatar,
+                  imageBuilder: (context, imageProvider) {
+                    return CircleAvatar(
+                      radius: radius,
+                      backgroundImage: imageProvider,
+                    );
+                  }),
+            ),
+          );
+        }
+      },
     );
   }
 }

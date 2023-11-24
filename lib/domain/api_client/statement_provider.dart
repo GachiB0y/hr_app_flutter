@@ -6,10 +6,13 @@ import '../../constants.dart';
 import 'api_client.dart';
 
 abstract interface class IStatementsProvider {
-  Future<List<StatementFieldEntity>> fetchListTypeStatements(
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required final String accessToken});
-  Future<List<StatementEntity>> fetchStatementForm(
+  Future<StatementEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
+  Future<void> submitStatementForm(
+      {required final String accessToken,
+      required final StatementFormInfo formInfo});
 }
 
 class StatementProviderImpl implements IStatementsProvider {
@@ -17,18 +20,17 @@ class StatementProviderImpl implements IStatementsProvider {
   StatementProviderImpl(this._httpService);
 
   @override
-  Future<List<StatementFieldEntity>> fetchListTypeStatements(
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required String accessToken}) async {
-    String uri = '$urlAdress/admin/avalible_services_list';
+    String uri = '$urlAdress/hrlink/document_template';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<StatementFieldEntity> result =
-          (jsonData['result'] as List<dynamic>)
-              .map((item) => StatementFieldEntity.fromJson(item))
-              .toList();
+      final List<StatementFieldTypeEntity> result = (jsonData as List<dynamic>)
+          .map((item) => StatementFieldTypeEntity.fromJson(item))
+          .toList();
       return result;
     } else {
       throw Exception('Error fetching List Type Statements');
@@ -36,9 +38,34 @@ class StatementProviderImpl implements IStatementsProvider {
   }
 
   @override
-  Future<List<StatementEntity>> fetchStatementForm(
+  Future<StatementEntity> fetchStatementForm(
       {required String accessToken, required String id}) async {
-    // TODO: implement fetchStatementForm
-    throw UnimplementedError();
+    String uri = '$urlAdress/hrlink/document_template?document_type=$id';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final StatementEntity result = StatementEntity.fromJson(jsonData);
+
+      return result;
+    } else {
+      throw Exception('Error fetching Statement Form');
+    }
+  }
+
+  @override
+  Future<void> submitStatementForm(
+      {required String accessToken,
+      required StatementFormInfo formInfo}) async {
+    String uri = '$urlAdress/hrlink/createStatement';
+    final String body = json.encode(formInfo.toJson());
+    final response =
+        await _httpService.post(uri: uri, userToken: accessToken, body: body);
+    if (response.statusCode == 201) {
+      return;
+    } else {
+      throw Exception('Error send submit Statement Form!!!');
+    }
   }
 }

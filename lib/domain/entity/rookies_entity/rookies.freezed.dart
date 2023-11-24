@@ -186,6 +186,8 @@ mixin _$OneRookiesInfo {
   String get nameO => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_birth')
   String get dateBirth => throw _privateConstructorUsedError;
+  @JsonKey(name: 'join_date')
+  String get joinDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'staff_position')
   String get staffPosition => throw _privateConstructorUsedError;
 
@@ -207,6 +209,7 @@ abstract class $OneRookiesInfoCopyWith<$Res> {
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
       @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'join_date') String joinDate,
       @JsonKey(name: 'staff_position') String staffPosition});
 }
 
@@ -228,6 +231,7 @@ class _$OneRookiesInfoCopyWithImpl<$Res, $Val extends OneRookiesInfo>
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? joinDate = null,
     Object? staffPosition = null,
   }) {
     return _then(_value.copyWith(
@@ -251,6 +255,10 @@ class _$OneRookiesInfoCopyWithImpl<$Res, $Val extends OneRookiesInfo>
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
               as String,
+      joinDate: null == joinDate
+          ? _value.joinDate
+          : joinDate // ignore: cast_nullable_to_non_nullable
+              as String,
       staffPosition: null == staffPosition
           ? _value.staffPosition
           : staffPosition // ignore: cast_nullable_to_non_nullable
@@ -273,6 +281,7 @@ abstract class _$$_OneRookiesInfoCopyWith<$Res>
       @JsonKey(name: 'name_i') String nameI,
       @JsonKey(name: 'name_o') String nameO,
       @JsonKey(name: 'date_birth') String dateBirth,
+      @JsonKey(name: 'join_date') String joinDate,
       @JsonKey(name: 'staff_position') String staffPosition});
 }
 
@@ -292,6 +301,7 @@ class __$$_OneRookiesInfoCopyWithImpl<$Res>
     Object? nameI = null,
     Object? nameO = null,
     Object? dateBirth = null,
+    Object? joinDate = null,
     Object? staffPosition = null,
   }) {
     return _then(_$_OneRookiesInfo(
@@ -315,6 +325,10 @@ class __$$_OneRookiesInfoCopyWithImpl<$Res>
           ? _value.dateBirth
           : dateBirth // ignore: cast_nullable_to_non_nullable
               as String,
+      joinDate: null == joinDate
+          ? _value.joinDate
+          : joinDate // ignore: cast_nullable_to_non_nullable
+              as String,
       staffPosition: null == staffPosition
           ? _value.staffPosition
           : staffPosition // ignore: cast_nullable_to_non_nullable
@@ -332,6 +346,7 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
       @JsonKey(name: 'name_i') required this.nameI,
       @JsonKey(name: 'name_o') required this.nameO,
       @JsonKey(name: 'date_birth') required this.dateBirth,
+      @JsonKey(name: 'join_date') required this.joinDate,
       @JsonKey(name: 'staff_position') required this.staffPosition});
 
   factory _$_OneRookiesInfo.fromJson(Map<String, dynamic> json) =>
@@ -352,12 +367,15 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
   @JsonKey(name: 'date_birth')
   final String dateBirth;
   @override
+  @JsonKey(name: 'join_date')
+  final String joinDate;
+  @override
   @JsonKey(name: 'staff_position')
   final String staffPosition;
 
   @override
   String toString() {
-    return 'OneRookiesInfo(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, staffPosition: $staffPosition)';
+    return 'OneRookiesInfo(autoCard: $autoCard, name: $name, nameI: $nameI, nameO: $nameO, dateBirth: $dateBirth, joinDate: $joinDate, staffPosition: $staffPosition)';
   }
 
   @override
@@ -372,14 +390,16 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
             (identical(other.nameO, nameO) || other.nameO == nameO) &&
             (identical(other.dateBirth, dateBirth) ||
                 other.dateBirth == dateBirth) &&
+            (identical(other.joinDate, joinDate) ||
+                other.joinDate == joinDate) &&
             (identical(other.staffPosition, staffPosition) ||
                 other.staffPosition == staffPosition));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, autoCard, name, nameI, nameO, dateBirth, staffPosition);
+  int get hashCode => Object.hash(runtimeType, autoCard, name, nameI, nameO,
+      dateBirth, joinDate, staffPosition);
 
   @JsonKey(ignore: true)
   @override
@@ -402,6 +422,7 @@ abstract class _OneRookiesInfo implements OneRookiesInfo {
       @JsonKey(name: 'name_i') required final String nameI,
       @JsonKey(name: 'name_o') required final String nameO,
       @JsonKey(name: 'date_birth') required final String dateBirth,
+      @JsonKey(name: 'join_date') required final String joinDate,
       @JsonKey(name: 'staff_position')
       required final String staffPosition}) = _$_OneRookiesInfo;
 
@@ -422,6 +443,9 @@ abstract class _OneRookiesInfo implements OneRookiesInfo {
   @override
   @JsonKey(name: 'date_birth')
   String get dateBirth;
+  @override
+  @JsonKey(name: 'join_date')
+  String get joinDate;
   @override
   @JsonKey(name: 'staff_position')
   String get staffPosition;

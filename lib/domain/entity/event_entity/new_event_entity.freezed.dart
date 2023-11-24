@@ -27,7 +27,7 @@ mixin _$EventEntity {
   @JsonKey(name: 'start_date')
   DateTime get startDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
-  DateTime get endDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -36,7 +36,6 @@ mixin _$EventEntity {
   bool get isPublish => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_archived')
   bool get isArchived => throw _privateConstructorUsedError;
-  @JsonKey(name: 'categories')
   List<Category> get categories => throw _privateConstructorUsedError;
   Writer get writer => throw _privateConstructorUsedError;
 
@@ -58,12 +57,12 @@ abstract class $EventEntityCopyWith<$Res> {
       String description,
       String image,
       @JsonKey(name: 'start_date') DateTime startDate,
-      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'end_date') DateTime? endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'categories') List<Category> categories,
+      List<Category> categories,
       Writer writer});
 
   $WriterCopyWith<$Res> get writer;
@@ -87,7 +86,7 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
     Object? description = null,
     Object? image = null,
     Object? startDate = null,
-    Object? endDate = null,
+    Object? endDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -116,10 +115,10 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: null == endDate
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -170,12 +169,12 @@ abstract class _$$_EventEntityCopyWith<$Res>
       String description,
       String image,
       @JsonKey(name: 'start_date') DateTime startDate,
-      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'end_date') DateTime? endDate,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'is_publish') bool isPublish,
       @JsonKey(name: 'is_archived') bool isArchived,
-      @JsonKey(name: 'categories') List<Category> categories,
+      List<Category> categories,
       Writer writer});
 
   @override
@@ -198,7 +197,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? description = null,
     Object? image = null,
     Object? startDate = null,
-    Object? endDate = null,
+    Object? endDate = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? isPublish = null,
@@ -227,10 +226,10 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: null == endDate
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -274,7 +273,7 @@ class _$_EventEntity implements _EventEntity {
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'is_publish') required this.isPublish,
       @JsonKey(name: 'is_archived') required this.isArchived,
-      @JsonKey(name: 'categories') required final List<Category> categories,
+      required final List<Category> categories,
       required this.writer})
       : _categories = categories;
 
@@ -294,7 +293,7 @@ class _$_EventEntity implements _EventEntity {
   final DateTime startDate;
   @override
   @JsonKey(name: 'end_date')
-  final DateTime endDate;
+  final DateTime? endDate;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -309,7 +308,6 @@ class _$_EventEntity implements _EventEntity {
   final bool isArchived;
   final List<Category> _categories;
   @override
-  @JsonKey(name: 'categories')
   List<Category> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
@@ -388,12 +386,12 @@ abstract class _EventEntity implements EventEntity {
       required final String description,
       required final String image,
       @JsonKey(name: 'start_date') required final DateTime startDate,
-      @JsonKey(name: 'end_date') required final DateTime endDate,
+      @JsonKey(name: 'end_date') required final DateTime? endDate,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'updated_at') required final DateTime updatedAt,
       @JsonKey(name: 'is_publish') required final bool isPublish,
       @JsonKey(name: 'is_archived') required final bool isArchived,
-      @JsonKey(name: 'categories') required final List<Category> categories,
+      required final List<Category> categories,
       required final Writer writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
@@ -412,7 +410,7 @@ abstract class _EventEntity implements EventEntity {
   DateTime get startDate;
   @override
   @JsonKey(name: 'end_date')
-  DateTime get endDate;
+  DateTime? get endDate;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
@@ -426,7 +424,6 @@ abstract class _EventEntity implements EventEntity {
   @JsonKey(name: 'is_archived')
   bool get isArchived;
   @override
-  @JsonKey(name: 'categories')
   List<Category> get categories;
   @override
   Writer get writer;
@@ -793,5 +790,190 @@ abstract class _Writer implements Writer {
   @override
   @JsonKey(ignore: true)
   _$$_WriterCopyWith<_$_Writer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+EventEntityViewModel _$EventEntityViewModelFromJson(Map<String, dynamic> json) {
+  return _EventEntityViewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EventEntityViewModel {
+  List<EventEntity> get listEventEntityLoaded =>
+      throw _privateConstructorUsedError;
+  List<EventEntity> get filteredListEventEntity =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EventEntityViewModelCopyWith<EventEntityViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EventEntityViewModelCopyWith<$Res> {
+  factory $EventEntityViewModelCopyWith(EventEntityViewModel value,
+          $Res Function(EventEntityViewModel) then) =
+      _$EventEntityViewModelCopyWithImpl<$Res, EventEntityViewModel>;
+  @useResult
+  $Res call(
+      {List<EventEntity> listEventEntityLoaded,
+      List<EventEntity> filteredListEventEntity});
+}
+
+/// @nodoc
+class _$EventEntityViewModelCopyWithImpl<$Res,
+        $Val extends EventEntityViewModel>
+    implements $EventEntityViewModelCopyWith<$Res> {
+  _$EventEntityViewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listEventEntityLoaded = null,
+    Object? filteredListEventEntity = null,
+  }) {
+    return _then(_value.copyWith(
+      listEventEntityLoaded: null == listEventEntityLoaded
+          ? _value.listEventEntityLoaded
+          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+      filteredListEventEntity: null == filteredListEventEntity
+          ? _value.filteredListEventEntity
+          : filteredListEventEntity // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_EventEntityViewModelCopyWith<$Res>
+    implements $EventEntityViewModelCopyWith<$Res> {
+  factory _$$_EventEntityViewModelCopyWith(_$_EventEntityViewModel value,
+          $Res Function(_$_EventEntityViewModel) then) =
+      __$$_EventEntityViewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<EventEntity> listEventEntityLoaded,
+      List<EventEntity> filteredListEventEntity});
+}
+
+/// @nodoc
+class __$$_EventEntityViewModelCopyWithImpl<$Res>
+    extends _$EventEntityViewModelCopyWithImpl<$Res, _$_EventEntityViewModel>
+    implements _$$_EventEntityViewModelCopyWith<$Res> {
+  __$$_EventEntityViewModelCopyWithImpl(_$_EventEntityViewModel _value,
+      $Res Function(_$_EventEntityViewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listEventEntityLoaded = null,
+    Object? filteredListEventEntity = null,
+  }) {
+    return _then(_$_EventEntityViewModel(
+      listEventEntityLoaded: null == listEventEntityLoaded
+          ? _value._listEventEntityLoaded
+          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+      filteredListEventEntity: null == filteredListEventEntity
+          ? _value._filteredListEventEntity
+          : filteredListEventEntity // ignore: cast_nullable_to_non_nullable
+              as List<EventEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EventEntityViewModel implements _EventEntityViewModel {
+  const _$_EventEntityViewModel(
+      {required final List<EventEntity> listEventEntityLoaded,
+      required final List<EventEntity> filteredListEventEntity})
+      : _listEventEntityLoaded = listEventEntityLoaded,
+        _filteredListEventEntity = filteredListEventEntity;
+
+  factory _$_EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_EventEntityViewModelFromJson(json);
+
+  final List<EventEntity> _listEventEntityLoaded;
+  @override
+  List<EventEntity> get listEventEntityLoaded {
+    if (_listEventEntityLoaded is EqualUnmodifiableListView)
+      return _listEventEntityLoaded;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listEventEntityLoaded);
+  }
+
+  final List<EventEntity> _filteredListEventEntity;
+  @override
+  List<EventEntity> get filteredListEventEntity {
+    if (_filteredListEventEntity is EqualUnmodifiableListView)
+      return _filteredListEventEntity;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredListEventEntity);
+  }
+
+  @override
+  String toString() {
+    return 'EventEntityViewModel(listEventEntityLoaded: $listEventEntityLoaded, filteredListEventEntity: $filteredListEventEntity)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventEntityViewModel &&
+            const DeepCollectionEquality()
+                .equals(other._listEventEntityLoaded, _listEventEntityLoaded) &&
+            const DeepCollectionEquality().equals(
+                other._filteredListEventEntity, _filteredListEventEntity));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_listEventEntityLoaded),
+      const DeepCollectionEquality().hash(_filteredListEventEntity));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
+      __$$_EventEntityViewModelCopyWithImpl<_$_EventEntityViewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EventEntityViewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EventEntityViewModel implements EventEntityViewModel {
+  const factory _EventEntityViewModel(
+          {required final List<EventEntity> listEventEntityLoaded,
+          required final List<EventEntity> filteredListEventEntity}) =
+      _$_EventEntityViewModel;
+
+  factory _EventEntityViewModel.fromJson(Map<String, dynamic> json) =
+      _$_EventEntityViewModel.fromJson;
+
+  @override
+  List<EventEntity> get listEventEntityLoaded;
+  @override
+  List<EventEntity> get filteredListEventEntity;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

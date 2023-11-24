@@ -5,12 +5,16 @@ import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.
 import 'package:hr_app_flutter/domain/blocs/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/domain/blocs/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/service/service.dart';
+import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/painteres_widget.dart';
-import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
+
+import '../../../domain/repository/auth_repository.dart';
+import '../../screens/service_screen.dart/bottom_sheet_create_events_widget.dart';
 
 class ServiceElementWidget extends StatefulWidget {
   const ServiceElementWidget({
@@ -47,99 +51,125 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return DraggableScrollableSheet(
-          initialChildSize:
-              0.8, // Измените это значение, чтобы задать начальный размер листа
-          minChildSize:
-              0.8, // Измените это значение, чтобы задать минимальный размер листа
-          maxChildSize:
-              1.0, // Измените это значение, чтобы задать максимальный размер листа
-          expand: true,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                          ),
-                          height: 26,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 26,
-                        width: 52,
-                        child: CustomPaint(
-                          // size: Size(50, 50),
-                          painter: PainterLeft(),
-                        ),
-                      ),
-                      Container(
-                        width: 25.0,
-                        height: 5.0,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                      Container(
-                        // Контейнер "летающей" ручки
-                        width: 50.0,
-                        height: 5.0,
-
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                      Container(
-                        width: 25.0,
-                        height: 5.0,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 26,
-                        width: 52,
-                        child: CustomPaint(
-                          // size: Size(50, 50),
-                          painter: PainterRight(),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 26,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ),
-                    ],
+        return BlocListener<EventEntityBloc, EventEntityState>(
+          listener: (BuildContext context, EventEntityState state) {
+            if (state is EventEntityState$Error) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                    content: Center(
+                        child: Text('Ошибка отправки.\nПопробуйте снова.')),
+                    duration: Duration(seconds: 6),
                   ),
-                  Expanded(
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(20.0)),
-                        ),
-                        child: ChangeNotifierProvaider<
-                            BottomSheetCreateEventsModel>(
-                          model: _model,
-                          child: const BottomSheetCreateEventsWidget(),
-                        )),
+                );
+            } else if (state is EventEntityState$Successful) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                    content: Center(
+                        child: Text(
+                      'Данные успешно отправленны!',
+                      style: TextStyle(fontSize: 20),
+                    )),
+                    duration: Duration(seconds: 2),
                   ),
-                ],
-              ),
-            );
+                ).closed.then((value) => Navigator.pop(context));
+            }
           },
+          child: DraggableScrollableSheet(
+            initialChildSize:
+                0.8, // Измените это значение, чтобы задать начальный размер листа
+            minChildSize:
+                0.8, // Измените это значение, чтобы задать минимальный размер листа
+            maxChildSize:
+                1.0, // Измените это значение, чтобы задать максимальный размер листа
+            expand: true,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                            ),
+                            height: 26,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 26,
+                          width: 52,
+                          child: CustomPaint(
+                            // size: Size(50, 50),
+                            painter: PainterLeft(),
+                          ),
+                        ),
+                        Container(
+                          width: 25.0,
+                          height: 5.0,
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                        Container(
+                          // Контейнер "летающей" ручки
+                          width: 50.0,
+                          height: 5.0,
+
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                        Container(
+                          width: 25.0,
+                          height: 5.0,
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 26,
+                          width: 52,
+                          child: CustomPaint(
+                            // size: Size(50, 50),
+                            painter: PainterRight(),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 26,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                          ),
+                          child: ChangeNotifierProvaider<
+                              BottomSheetCreateEventsModel>(
+                            model: _model,
+                            child: const BottomSheetCreateEventsWidget(),
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         );
       },
     ).whenComplete(() {
@@ -151,7 +181,6 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
   Widget build(BuildContext context) {
     const double radius = 50.0;
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
-    final blocEventEntity = context.read<EventEntityBloc>();
     final sizeScreen = MediaQuery.of(context).size;
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
@@ -214,9 +243,11 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
                   AutoRouter.of(context).push(ApproveNewsRoute(
-                      authRepository: blocEventEntity.authRepository,
-                      eventEntityRepository:
-                          blocEventEntity.eventEntityRepository));
+                    authRepository:
+                        RepositoryProvider.of<IAuthRepository>(context),
+                    eventEntityRepository:
+                        RepositoryProvider.of<IEventEntityRepository>(context),
+                  ));
                 } else if (widget.service.id == 25) {
                   final blocService = context.read<ServiceBloc>();
                   context.pushRoute(ScheduleBusRoute(
@@ -224,6 +255,14 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     serviceRepository: blocService.serviceRepository,
                   ));
                   // context.pushRoute(BookingMeetingsFirstRoute());
+                } else if (widget.service.id == 24) {
+                  final repositoryStatements =
+                      RepositoryProvider.of<StatementsRepository>(context);
+                  context.pushRoute(StatementFormRoute(
+                    authRepository:
+                        RepositoryProvider.of<IAuthRepository>(context),
+                    repositoryStatements: repositoryStatements,
+                  ));
                 }
               },
             ),

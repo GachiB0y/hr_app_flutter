@@ -13,8 +13,8 @@ class ApproveNewsScreen extends StatefulWidget implements AutoRouteWrapper {
       {super.key,
       required this.authRepository,
       required this.eventEntityRepository});
-  final AuthRepository authRepository;
-  final EventEntityRepository eventEntityRepository;
+  final IAuthRepository authRepository;
+  final IEventEntityRepository eventEntityRepository;
 
   @override
   State<ApproveNewsScreen> createState() => _ApproveNewsScreenState();

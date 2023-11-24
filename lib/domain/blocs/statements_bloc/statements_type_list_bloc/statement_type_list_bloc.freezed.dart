@@ -16,20 +16,19 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StatementTypeListEvent {
-  int get id => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) fetch,
+    required TResult Function() fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? fetch,
+    TResult? Function()? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,10 +48,6 @@ mixin _$StatementTypeListEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $StatementTypeListEventCopyWith<StatementTypeListEvent> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -60,8 +55,6 @@ abstract class $StatementTypeListEventCopyWith<$Res> {
   factory $StatementTypeListEventCopyWith(StatementTypeListEvent value,
           $Res Function(StatementTypeListEvent) then) =
       _$StatementTypeListEventCopyWithImpl<$Res, StatementTypeListEvent>;
-  @useResult
-  $Res call({int id});
 }
 
 /// @nodoc
@@ -74,31 +67,14 @@ class _$StatementTypeListEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$FetchStatementTypeListEventCopyWith<$Res>
-    implements $StatementTypeListEventCopyWith<$Res> {
+abstract class _$$FetchStatementTypeListEventCopyWith<$Res> {
   factory _$$FetchStatementTypeListEventCopyWith(
           _$FetchStatementTypeListEvent value,
           $Res Function(_$FetchStatementTypeListEvent) then) =
       __$$FetchStatementTypeListEventCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id});
 }
 
 /// @nodoc
@@ -110,76 +86,52 @@ class __$$FetchStatementTypeListEventCopyWithImpl<$Res>
       _$FetchStatementTypeListEvent _value,
       $Res Function(_$FetchStatementTypeListEvent) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-  }) {
-    return _then(_$FetchStatementTypeListEvent(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$FetchStatementTypeListEvent extends FetchStatementTypeListEvent {
-  const _$FetchStatementTypeListEvent({required this.id}) : super._();
-
-  @override
-  final int id;
+  const _$FetchStatementTypeListEvent() : super._();
 
   @override
   String toString() {
-    return 'StatementTypeListEvent.fetch(id: $id)';
+    return 'StatementTypeListEvent.fetch()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchStatementTypeListEvent &&
-            (identical(other.id, id) || other.id == id));
+            other is _$FetchStatementTypeListEvent);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FetchStatementTypeListEventCopyWith<_$FetchStatementTypeListEvent>
-      get copyWith => __$$FetchStatementTypeListEventCopyWithImpl<
-          _$FetchStatementTypeListEvent>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) fetch,
+    required TResult Function() fetch,
   }) {
-    return fetch(id);
+    return fetch();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? fetch,
+    TResult? Function()? fetch,
   }) {
-    return fetch?.call(id);
+    return fetch?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? fetch,
+    TResult Function()? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch(id);
+      return fetch();
     }
     return orElse();
   }
@@ -214,14 +166,6 @@ class _$FetchStatementTypeListEvent extends FetchStatementTypeListEvent {
 }
 
 abstract class FetchStatementTypeListEvent extends StatementTypeListEvent {
-  const factory FetchStatementTypeListEvent({required final int id}) =
-      _$FetchStatementTypeListEvent;
+  const factory FetchStatementTypeListEvent() = _$FetchStatementTypeListEvent;
   const FetchStatementTypeListEvent._() : super._();
-
-  @override
-  int get id;
-  @override
-  @JsonKey(ignore: true)
-  _$$FetchStatementTypeListEventCopyWith<_$FetchStatementTypeListEvent>
-      get copyWith => throw _privateConstructorUsedError;
 }

@@ -16,8 +16,8 @@ class SearchUserScreen extends StatefulWidget implements AutoRouteWrapper {
   const SearchUserScreen(
       {Key? key, required this.authRepository, required this.userRepo})
       : super(key: key);
-  final AuthRepository authRepository;
-  final UserRepository userRepo;
+  final IAuthRepository authRepository;
+  final IUserRepository userRepo;
   @override
   _SearchUserScreenState createState() => _SearchUserScreenState();
 

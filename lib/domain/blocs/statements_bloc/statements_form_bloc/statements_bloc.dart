@@ -17,14 +17,14 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
     implements EventSink<StatementsEvent> {
   StatementsBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final AuthRepository authRepository,
+    required final IAuthRepository authRepository,
     final StatementsState? initialState,
   })  : _repositoryStatements = repositoryStatements,
         _authRepository = authRepository,
         super(
           initialState ??
               const StatementsState.idle(
-                data: [],
+                data: null,
                 message: 'Initial idle state',
               ),
         ) {
@@ -38,7 +38,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
   }
 
   final IStatementsRepository _repositoryStatements;
-  final AuthRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetchStatementForm(
@@ -47,8 +47,8 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       emit(StatementsState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
-      final newData = await _repositoryStatements.fetchStatementForm(
-          accessToken: accessToken as String, id: event.id);
+      final StatementEntity newData = await _repositoryStatements
+          .fetchStatementForm(accessToken: accessToken as String, id: event.id);
       emit(StatementsState.successful(data: newData));
     } on TimeoutException {
       emit(StatementsState.error(
@@ -65,5 +65,26 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
 
   /// Submit event handler
   Future<void> _submitFormAndSend(
-      StatementsEventCreate event, Emitter<StatementsState> emit) async {}
+      StatementsEventCreate event, Emitter<StatementsState> emit) async {
+    try {
+      emit(StatementsState.processing(data: state.data));
+      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
+      await _repositoryStatements.submitStatementForm(
+        accessToken: accessToken as String,
+        formInfo: event.itemsForm,
+      );
+      emit(StatementsState.successful(data: state.data));
+    } on TimeoutException {
+      emit(StatementsState.error(
+          data: state.data, message: 'Ошибка ожидания  запроса!'));
+      // ignore: unused_catch_stack
+    } on Object catch (err, stackTrace) {
+      //l.e('An error occurred in the StatementsBLoC: $err', stackTrace);
+      emit(StatementsState.error(data: state.data));
+      rethrow;
+    } finally {
+      emit(StatementsState.idle(data: state.data));
+    }
+  }
 }

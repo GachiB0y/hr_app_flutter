@@ -13,7 +13,9 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       image: json['image'] as String,
       startDate: DateTime.parse(json['start_date'] as String),
-      endDate: DateTime.parse(json['end_date'] as String),
+      endDate: json['end_date'] == null
+          ? null
+          : DateTime.parse(json['end_date'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       isPublish: json['is_publish'] as bool,
@@ -31,7 +33,7 @@ Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
       'description': instance.description,
       'image': instance.image,
       'start_date': instance.startDate.toIso8601String(),
-      'end_date': instance.endDate.toIso8601String(),
+      'end_date': instance.endDate?.toIso8601String(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'is_publish': instance.isPublish,
@@ -63,4 +65,23 @@ Map<String, dynamic> _$$_WriterToJson(_$_Writer instance) => <String, dynamic>{
       'name_i': instance.firstName,
       'name': instance.middleName,
       'name_o': instance.lastName,
+    };
+
+_$_EventEntityViewModel _$$_EventEntityViewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_EventEntityViewModel(
+      listEventEntityLoaded: (json['listEventEntityLoaded'] as List<dynamic>)
+          .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      filteredListEventEntity:
+          (json['filteredListEventEntity'] as List<dynamic>)
+              .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
+              .toList(),
+    );
+
+Map<String, dynamic> _$$_EventEntityViewModelToJson(
+        _$_EventEntityViewModel instance) =>
+    <String, dynamic>{
+      'listEventEntityLoaded': instance.listEventEntityLoaded,
+      'filteredListEventEntity': instance.filteredListEventEntity,
     };

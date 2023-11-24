@@ -29,6 +29,7 @@ _$_OneBirthDayInfo _$$_OneBirthDayInfoFromJson(Map<String, dynamic> json) =>
       nameI: json['name_i'] as String,
       nameO: json['name_o'] as String,
       dateBirth: json['date_birth'] as String,
+      staffPosition: json['staff_position'] as String?,
     );
 
 Map<String, dynamic> _$$_OneBirthDayInfoToJson(_$_OneBirthDayInfo instance) =>
@@ -38,4 +39,5 @@ Map<String, dynamic> _$$_OneBirthDayInfoToJson(_$_OneBirthDayInfo instance) =>
       'name_i': instance.nameI,
       'name_o': instance.nameO,
       'date_birth': instance.dateBirth,
+      'staff_position': instance.staffPosition,
     };

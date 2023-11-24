@@ -11,8 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class ScheduleBusScreen extends StatefulWidget implements AutoRouteWrapper {
-  final AuthRepository authRepository;
-  final ServiceRepository serviceRepository;
+  final IAuthRepository authRepository;
+  final IServiceRepository serviceRepository;
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -151,9 +151,9 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
   }
 
   Future<void> _launchUrl(String url) async {
-    final Uri _url = Uri.parse(url);
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+    final Uri url0 = Uri.parse(url);
+    if (!await launchUrl(url0)) {
+      throw Exception('Could not launch $url0');
     }
   }
 

@@ -42,7 +42,7 @@ Map<String, dynamic> _$$_MyLeanProductionsEntityToJson(
 _$_FileElement _$$_FileElementFromJson(Map<String, dynamic> json) =>
     _$_FileElement(
       fileName: json['name'] as String,
-      url: json['url'] as String,
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$$_FileElementToJson(_$_FileElement instance) =>

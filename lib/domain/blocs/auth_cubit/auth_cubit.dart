@@ -52,7 +52,7 @@ class AuthViewCubitSuccesAuthState extends AuthViewCubitState {
 }
 
 class AuthViewCubit extends Cubit<AuthViewCubitState> {
-  final AuthRepository authRepository;
+  final IAuthRepository authRepository;
   AuthViewCubit({required this.authRepository})
       : super(AuthViewCubitFormFillInProgressState());
 

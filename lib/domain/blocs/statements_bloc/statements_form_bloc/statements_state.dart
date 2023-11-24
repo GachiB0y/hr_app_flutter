@@ -3,7 +3,7 @@ part of 'statements_bloc.dart';
 /// {@template statements_state_placeholder}
 /// Entity placeholder for StatementsState
 /// {@endtemplate}
-typedef StatementsEntity = List<StatementEntity>?;
+typedef StatementsEntity = StatementEntity?;
 
 /// {@template statements_state}
 /// StatementsState.

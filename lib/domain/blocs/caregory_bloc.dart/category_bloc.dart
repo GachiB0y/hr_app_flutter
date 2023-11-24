@@ -12,8 +12,8 @@ part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  final EventEntityRepository eventEntityRepository;
-  final AuthRepository authRepository;
+  final IEventEntityRepository eventEntityRepository;
+  final IAuthRepository authRepository;
 
   CategoryBloc({
     required this.eventEntityRepository,

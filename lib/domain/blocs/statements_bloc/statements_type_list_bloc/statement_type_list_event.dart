@@ -6,6 +6,5 @@ class StatementTypeListEvent with _$StatementTypeListEvent {
   const StatementTypeListEvent._();
 
   /// Fetch
-  const factory StatementTypeListEvent.fetch({required int id}) =
-      FetchStatementTypeListEvent;
+  const factory StatementTypeListEvent.fetch() = FetchStatementTypeListEvent;
 }

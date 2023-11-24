@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/blocs/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -12,6 +11,9 @@ import 'package:hr_app_flutter/ui/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/ui/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
+
+import '../../../domain/repository/auth_repository.dart';
+import '../../../domain/repository/user_repository.dart';
 
 @RoutePage()
 class GrassCoinScreen extends StatefulWidget {
@@ -29,7 +31,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
   }
 
   void getInfoForInit() {
-    context.read<WalletBloc>().add(const WalletEvent.fetch());
+    context.read<WalletBLoC>().add(const WalletEvent.fetch());
     context
         .read<CoinsScreenViewModelBloc>()
         .add(const CoinsScreenViewModelEvent.fetchInfo());
@@ -80,7 +82,7 @@ class _CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return BodyContentWidgetCoinScreen();
+    return const BodyContentWidgetCoinScreen();
   }
 
   @override
@@ -149,7 +151,7 @@ class _BodyContentWidgetCoinScreenState
           actions: [
             TextButton(
               onPressed: () {
-                final blocWallet = context.read<WalletBloc>();
+                final blocWallet = context.read<WalletBLoC>();
                 blocWallet.add(
                   WalletEvent.sendCoinsToBracer(
                     amount: int.parse(amountCoins),
@@ -167,10 +169,9 @@ class _BodyContentWidgetCoinScreenState
 
   @override
   Widget build(BuildContext context) {
-    final blocWallet = context.watch<WalletBloc>();
-    final blocUser = context.watch<UserBloc>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
+
     return SizedBox(
       height: (360 * textScaleFactor),
       child: Column(
@@ -183,76 +184,12 @@ class _BodyContentWidgetCoinScreenState
           const SizedBox(
             height: 10,
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
+          const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ColorFiltered(
-                  colorFilter: const ColorFilter.mode(
-                      ColorsForWidget.colorGreen, BlendMode.srcATop),
-                  child: Image.asset(
-                    'assets/images/grass_icon_main.png',
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                blocWallet.state.when(
-                  loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  loaded: (walletLoaded) {
-                    return Text(
-                      walletLoaded.balance.toString(),
-                      style: const TextStyle(
-                          fontSize: 40, fontWeight: FontWeight.w500),
-                    );
-                  },
-                  error: () => const Text('Nothing found...'),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.add_circle_outline,
-                    size: 45,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      blocWallet.state.when(
-                        loading: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        loaded: (walletLoaded) {
-                          return Text(
-                            walletLoaded.avarageCoins.toString(),
-                            style: const TextStyle(fontSize: 20),
-                          );
-                        },
-                        error: () => const Text('Nothing found...'),
-                      ),
-                      const Text(
-                        'за неделю',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ]),
+                RowBalanceCountWidget(),
+                RowAvarageCoinCountWidget(),
+              ]),
           const SizedBox(
             height: 20,
           ),
@@ -350,8 +287,10 @@ class _BodyContentWidgetCoinScreenState
                   ),
                   onPressed: () {
                     AutoRouter.of(context).push(SearchFriendAndSendCoinsRoute(
-                        authRepository: blocUser.authRepository,
-                        userRepo: blocUser.userRepo));
+                      authRepository:
+                          RepositoryProvider.of<IAuthRepository>(context),
+                      userRepo: RepositoryProvider.of<IUserRepository>(context),
+                    ));
                   },
                   icon: const Icon(Icons.card_giftcard,
                       size: 26, color: Colors.black),
@@ -375,6 +314,125 @@ class _BodyContentWidgetCoinScreenState
         ],
       ),
     );
+  }
+}
+
+class RowAvarageCoinCountWidget extends StatelessWidget {
+  const RowAvarageCoinCountWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.add_circle_outline,
+              size: 45,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                switch (state) {
+                  WalletState$Idle(:final data) => Text(
+                      data != null
+                          ? data.avarageCoins.toString()
+                          : 'Ничего не найденно...',
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  WalletState$Processing _ => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  WalletState$Successful(:final data) => Text(
+                      data != null
+                          ? data.avarageCoins.toString()
+                          : 'Ничего не найденно...',
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  WalletState$Error _ => const Text('Ничего не найденно...'),
+                  _ => const Text('Default'),
+                },
+                // blocWallet.state.when(
+                //   loading: () {
+                //     return const Center(
+                //       child: CircularProgressIndicator(),
+                //     );
+                //   },
+                //   loaded: (walletLoaded) {
+                //     return Text(
+                //       walletLoaded.avarageCoins.toString(),
+                //       style: const TextStyle(fontSize: 20),
+                //     );
+                //   },
+                //   error: () => const Text('Nothing found...'),
+                // ),
+                const Text(
+                  'за неделю',
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class RowBalanceCountWidget extends StatelessWidget {
+  const RowBalanceCountWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
+      return Row(
+        children: [
+          ColorFiltered(
+            colorFilter: const ColorFilter.mode(
+                ColorsForWidget.colorGreen, BlendMode.srcATop),
+            child: Image.asset(
+              'assets/images/grass_icon_main.png',
+              width: 40,
+              height: 40,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          switch (state) {
+            WalletState$Idle(:final data) => Text(
+                data != null
+                    ? data.balance.toString()
+                    : 'Ничего не найденно...',
+                style: data != null
+                    ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
+                    : null,
+              ),
+            WalletState$Processing() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            WalletState$Successful(:final data) => Text(
+                data != null
+                    ? data.balance.toString()
+                    : 'Ничего не найденно...',
+                style: data != null
+                    ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
+                    : null,
+              ),
+            WalletState$Error() => const Text('Ничего не найденно...'),
+            _ => const Text('Default'),
+          }
+        ],
+      );
+    });
   }
 }
 
@@ -452,106 +510,206 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocWallet = context.watch<WalletBloc>();
+    // final blocWallet = context.watch<WalletBLoC>();
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
-    return blocWallet.state.when(
-      loading: () {
-        return const SliverToBoxAdapter(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      },
-      loaded: (walletLoaded) {
-        if (walletLoaded.transactions != null) {
-          DateTime today = DateTime.now();
-          // Группировка элементов по дате
-          Map<String, List<Transaction>> groups = {};
-          walletLoaded.transactions?.forEach((item) {
-            final DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
-            String dateString = DateFormat('d MMM EEE, y.').format(date);
-            bool isSameDay = compareDates(today, date);
-            bool isYesterday = compareYesterday(date);
-            if (isSameDay) {
-              dateString = 'Сегодня';
-            } else if (isYesterday) {
-              dateString = 'Вчера';
-            }
 
-            if (groups[dateString] == null) {
-              groups[dateString] = [];
-            }
-            groups[dateString]?.add(item);
-          });
+    return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
+      if (state.data?.transactions != null) {
+        DateTime today = DateTime.now();
+        // Группировка элементов по дате
+        Map<String, List<Transaction>> groups = {};
+        state.data!.transactions?.forEach((item) {
+          final DateTime date =
+              DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
+          String dateString = DateFormat('d MMM EEE, y.').format(date);
+          bool isSameDay = compareDates(today, date);
+          bool isYesterday = compareYesterday(date);
+          if (isSameDay) {
+            dateString = 'Сегодня';
+          } else if (isYesterday) {
+            dateString = 'Вчера';
+          }
 
-          // Создание списка групп
-          List<Widget> groupWidgets = [];
-          groups.forEach((dateString, groupItems) {
-            groupWidgets.add(
-              Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 5.0),
-                    height: 25 * textScaleFactor,
-                    child: ListTile(
-                      title: Text(
-                        dateString,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
-                      ),
+          if (groups[dateString] == null) {
+            groups[dateString] = [];
+          }
+          groups[dateString]?.add(item);
+        });
+
+        // Создание списка групп
+        List<Widget> groupWidgets = [];
+        groups.forEach((dateString, groupItems) {
+          groupWidgets.add(
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 5.0),
+                  height: 25 * textScaleFactor,
+                  child: ListTile(
+                    title: Text(
+                      dateString,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
                     ),
                   ),
-                  ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: groupItems
-                        .map(
-                          (item) => ListTile(
-                            title: item.typeTtransaction == 0
-                                ? Text(item.sender)
-                                : Text(item.recipient),
-                            subtitle: Text(
-                              item.typeTtransaction == 0
-                                  ? 'Зачисление'
-                                  : 'Перевод',
-                              style: const TextStyle(color: Colors.grey),
-                            ),
-                            trailing: SizedBox(
-                              width: 80,
-                              height: 50,
-                              child: TralingHistoryWidget(
-                                item: item,
-                              ),
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: groupItems
+                      .map(
+                        (item) => ListTile(
+                          title: item.typeTtransaction == 0
+                              ? Text(item.sender)
+                              : Text(item.recipient),
+                          subtitle: Text(
+                            item.typeTtransaction == 0
+                                ? 'Зачисление'
+                                : 'Перевод',
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          trailing: SizedBox(
+                            width: 80,
+                            height: 50,
+                            child: TralingHistoryWidget(
+                              item: item,
                             ),
                           ),
-                        )
-                        .toList(),
-                  ),
-                  const Divider(),
-                ],
-              ),
-            );
-          });
-
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Column(
-                  children: groupWidgets,
-                );
-              },
-              childCount: 1,
+                        ),
+                      )
+                      .toList(),
+                ),
+                const Divider(),
+              ],
             ),
           );
-        } else {
-          return const SliverToBoxAdapter(
-              child: Center(child: Text('Ничего не найдено')));
-        }
-      },
-      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
-    );
+        });
+        return switch (state) {
+          WalletState$Idle() => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Column(
+                    children: groupWidgets,
+                  );
+                },
+                childCount: 1,
+              ),
+            ),
+          WalletState$Processing() => const SliverToBoxAdapter(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          WalletState$Successful() =>
+            const SliverToBoxAdapter(child: Text('Состояние Successful.')),
+          WalletState$Error() =>
+            const SliverToBoxAdapter(child: Text('Ничего не найденно...')),
+          _ => const Text('Default'),
+        };
+      } else {
+        return const SliverToBoxAdapter(
+            child: Center(child: Text('Ничего не найдено')));
+      }
+    });
+
+    // return blocWallet.state.when(
+    //   loading: () {
+    //     return const SliverToBoxAdapter(
+    //       child: Center(
+    //         child: CircularProgressIndicator(),
+    //       ),
+    //     );
+    //   },
+    //   loaded: (walletLoaded) {
+    //     if (walletLoaded.transactions != null) {
+    //       DateTime today = DateTime.now();
+    //       // Группировка элементов по дате
+    //       Map<String, List<Transaction>> groups = {};
+    //       walletLoaded.transactions?.forEach((item) {
+    //         final DateTime date =
+    //             DateTime.fromMillisecondsSinceEpoch(item.createAt * 1000);
+    //         String dateString = DateFormat('d MMM EEE, y.').format(date);
+    //         bool isSameDay = compareDates(today, date);
+    //         bool isYesterday = compareYesterday(date);
+    //         if (isSameDay) {
+    //           dateString = 'Сегодня';
+    //         } else if (isYesterday) {
+    //           dateString = 'Вчера';
+    //         }
+
+    //         if (groups[dateString] == null) {
+    //           groups[dateString] = [];
+    //         }
+    //         groups[dateString]?.add(item);
+    //       });
+
+    //       // Создание списка групп
+    //       List<Widget> groupWidgets = [];
+    //       groups.forEach((dateString, groupItems) {
+    //         groupWidgets.add(
+    //           Column(
+    //             children: [
+    //               Container(
+    //                 margin: const EdgeInsets.only(bottom: 5.0),
+    //                 height: 25 * textScaleFactor,
+    //                 child: ListTile(
+    //                   title: Text(
+    //                     dateString,
+    //                     style: const TextStyle(
+    //                         fontWeight: FontWeight.w600, fontSize: 18),
+    //                   ),
+    //                 ),
+    //               ),
+    //               ListView(
+    //                 shrinkWrap: true,
+    //                 physics: const NeverScrollableScrollPhysics(),
+    //                 children: groupItems
+    //                     .map(
+    //                       (item) => ListTile(
+    //                         title: item.typeTtransaction == 0
+    //                             ? Text(item.sender)
+    //                             : Text(item.recipient),
+    //                         subtitle: Text(
+    //                           item.typeTtransaction == 0
+    //                               ? 'Зачисление'
+    //                               : 'Перевод',
+    //                           style: const TextStyle(color: Colors.grey),
+    //                         ),
+    //                         trailing: SizedBox(
+    //                           width: 80,
+    //                           height: 50,
+    //                           child: TralingHistoryWidget(
+    //                             item: item,
+    //                           ),
+    //                         ),
+    //                       ),
+    //                     )
+    //                     .toList(),
+    //               ),
+    //               const Divider(),
+    //             ],
+    //           ),
+    //         );
+    //       });
+
+    //       return SliverList(
+    //         delegate: SliverChildBuilderDelegate(
+    //           (BuildContext context, int index) {
+    //             return Column(
+    //               children: groupWidgets,
+    //             );
+    //           },
+    //           childCount: 1,
+    //         ),
+    //       );
+    //     } else {
+    //       return const SliverToBoxAdapter(
+    //           child: Center(child: Text('Ничего не найдено')));
+    //     }
+    //   },
+    //   error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
+    // );
   }
 }
 

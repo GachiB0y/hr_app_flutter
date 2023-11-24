@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.
 import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_reward.dart';
 import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
 
-abstract interface class WalletProvider {
+abstract interface class IWalletProvider {
   Future<({int balance, int avarageCoins})> getBalance(
       {required String userToken});
   Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
@@ -22,7 +22,7 @@ abstract interface class WalletProvider {
   });
 }
 
-class WalletProviderImpl implements WalletProvider {
+class WalletProviderImpl implements IWalletProvider {
   final IHTTPService _httpService;
   WalletProviderImpl(this._httpService);
 

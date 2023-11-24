@@ -17,9 +17,9 @@ part 'lean_production_form_state.dart';
 
 class LeanProductionFormBloc
     extends Bloc<LeanProductionFormEvent, LeanProductionFormState> {
-  final UserRepository userRepo;
-  final AuthRepository authRepository;
-  final LeanProductionRepository leanRepository;
+  final IUserRepository userRepo;
+  final IAuthRepository authRepository;
+  final ILeanProductionRepository leanRepository;
 
   LeanProductionFormBloc({
     required this.userRepo,

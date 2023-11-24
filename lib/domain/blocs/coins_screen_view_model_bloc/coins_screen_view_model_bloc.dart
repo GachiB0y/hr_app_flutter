@@ -14,8 +14,8 @@ part 'coins_screen_view_model_state.dart';
 
 class CoinsScreenViewModelBloc
     extends Bloc<CoinsScreenViewModelEvent, CoinsScreenViewModelState> {
-  final WalletRepository walletRepo;
-  final AuthRepository authRepository;
+  final IWalletRepository walletRepo;
+  final IAuthRepository authRepository;
   CoinsScreenViewModelBloc({
     required this.walletRepo,
     required this.authRepository,

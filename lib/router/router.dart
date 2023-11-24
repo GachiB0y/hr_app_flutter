@@ -6,10 +6,12 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/ui/screens/about_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/approve_news_screen.dart';
 import 'package:hr_app_flutter/ui/screens/auth_screen.dart';
+import 'package:hr_app_flutter/ui/screens/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/first_screen_booking_meetings.dart';
 import 'package:hr_app_flutter/ui/screens/booking_mettings_screens/second_screen_booking_meeting.dart';
 import 'package:hr_app_flutter/ui/screens/company_screen.dart';
@@ -23,11 +25,14 @@ import 'package:hr_app_flutter/ui/screens/grass_coin_sreen/search_friend_and_sen
 import 'package:hr_app_flutter/ui/screens/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/ui/screens/service_screen.dart/services_screen.dart';
 import 'package:hr_app_flutter/ui/screens/shedule_bus_screen/shedule_bus_screen.dart';
+import 'package:hr_app_flutter/ui/screens/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_main_screen.dart';
 import 'package:hr_app_flutter/ui/screens/user_profile/user_profile_widget.dart';
 
 import '../domain/entity/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
+import '../ui/screens/birth_day_info_screen/birth_day_info_screen.dart';
 import '../ui/screens/lean_production_screens/lean_production_info_proposals.dart';
+import '../ui/screens/rookies_info_screen/rookies_info_screen.dart';
 part 'router.gr.dart';
 
 @AutoRouterConfig()
@@ -68,5 +73,9 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
             page: LeanProductionInfoProposalsRoute.page,
             path: '/info_proposals'),
+        AutoRoute(page: StatementFormRoute.page, path: '/statements_form'),
+        AutoRoute(page: BagReportRoute.page, path: '/bag_report'),
+        AutoRoute(page: BirthDayInfoRoute.page, path: '/info_birth_day'),
+        AutoRoute(page: RookiesInfoRoute.page, path: '/info_rookies'),
       ];
 }

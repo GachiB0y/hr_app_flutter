@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class LeanProductionFormScreenModel extends Listenable {
+class FilePickerCustomModel extends Listenable {
   // Создание списка слушателей
   final List<VoidCallback> _listeners = [];
 
@@ -37,6 +37,27 @@ class LeanProductionFormScreenModel extends Listenable {
       type: FileType.custom,
       allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png', 'docx'],
     );
+
+    if (result != null) {
+      path = result!.files.single.path;
+
+      result!.files.forEach((element) {
+        // paths.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        // fileNames.clear(); // ЗАГЛУШКА НА ОДИН ФАИЛ
+        paths.add(element.path);
+        fileNames.add(element.name);
+      });
+      fileName = result!.files.single.name;
+
+      notifyListeners();
+    }
+  }
+
+  void pickImage() async {
+    result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        // allowedExtensions: ['pdf', 'txt', 'doc', 'jpg', 'png', 'docx'],
+        allowMultiple: false);
 
     if (result != null) {
       path = result!.files.single.path;

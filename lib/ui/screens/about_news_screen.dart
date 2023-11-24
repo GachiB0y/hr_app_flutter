@@ -16,9 +16,9 @@ class AboutNewsScreen extends StatefulWidget implements AutoRouteWrapper {
 
   final int id;
 
-  final AuthRepository authRepository;
+  final IAuthRepository authRepository;
 
-  final EventEntityRepository eventEntityRepository;
+  final IEventEntityRepository eventEntityRepository;
 
   @override
   State<AboutNewsScreen> createState() => _AboutNewsScreenState();

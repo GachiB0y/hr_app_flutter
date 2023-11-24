@@ -5,15 +5,23 @@ import 'package:hr_app_flutter/domain/entity/birth_day_info/birth_day_info.dart'
 import 'package:hr_app_flutter/domain/entity/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/domain/entity/user/user.dart';
 
-abstract class UserRepository {
-  Future<Rookies> getRookiesInfo({required String userToken});
+abstract interface class IUserRepository {
+  Future<Rookies> getRookiesInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  });
   Future<bool> saveTagsToSend(
       {required String userToken,
       required List<TagUser> tags,
       required int userId});
   Future<User> getUserInfoById(
       {required String userToken, required String userID});
-  Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken});
+  Future<BirthDayInfoEntity> getBirthDayInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  });
   Future<List<User>> findUser(
       {required String userToken, required String findText});
   Future<User> getUserInfo({required String userToken});
@@ -23,12 +31,12 @@ abstract class UserRepository {
       {required String userToken, required io.File imageFile});
 }
 
-class UserRepositoryImpl implements UserRepository {
+class UserRepositoryImpl implements IUserRepository {
   UserRepositoryImpl({
-    required UserProvider userProvider,
+    required IUserProvider userProvider,
   }) : _userProvider = userProvider;
 
-  final UserProvider _userProvider;
+  final IUserProvider _userProvider;
 
   @override
   Future<User> getUserInfo({required String userToken}) {
@@ -51,18 +59,28 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<BirthDayInfoEntity> getBirthDayInfo({required String userToken}) {
+  Future<BirthDayInfoEntity> getBirthDayInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  }) {
     try {
-      return _userProvider.getBirthDayInfo(userToken: userToken);
+      return _userProvider.getBirthDayInfo(
+          userToken: userToken, startDate: startDate, endDate: endDate);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<Rookies> getRookiesInfo({required String userToken}) {
+  Future<Rookies> getRookiesInfo({
+    required String userToken,
+    final DateTime? startDate,
+    final DateTime? endDate,
+  }) {
     try {
-      return _userProvider.getRookiesInfo(userToken: userToken);
+      return _userProvider.getRookiesInfo(
+          userToken: userToken, startDate: startDate, endDate: endDate);
     } catch (e) {
       rethrow;
     }

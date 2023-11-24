@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/domain/api_client/api_client_exception.dart';
 import 'package:hr_app_flutter/constants.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
 
-abstract interface class EventsEntityProvider {
+abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents({required String accessToken});
   Future<EventEntity> getNewsById({
     required String accessToken,
@@ -18,7 +18,7 @@ abstract interface class EventsEntityProvider {
     required String title,
     required String description,
     required String startDate,
-    required String endDate,
+    required String? endDate,
     required List<String> paths,
     required List<String> categories,
   });
@@ -32,7 +32,7 @@ abstract interface class EventsEntityProvider {
   });
 }
 
-class EventsEntityProviderImpl implements EventsEntityProvider {
+class EventsEntityProviderImpl implements IEventsEntityProvider {
   final IHTTPService _httpService;
   const EventsEntityProviderImpl(this._httpService);
 
@@ -76,14 +76,14 @@ class EventsEntityProviderImpl implements EventsEntityProvider {
       required String title,
       required String description,
       required String startDate,
-      required String endDate,
+      required String? endDate,
       required List<String> paths,
       required List<String> categories}) async {
     String uri = '$urlAdress/news/add_feed';
 
     final fields = {
       'some_other_data':
-          '{"title":"$title","description":"$description","start_date":"$startDate","end_date":"$endDate","categories":$categories}'
+          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
     };
     final response = await _httpService.postWithFile(
       uri: uri,

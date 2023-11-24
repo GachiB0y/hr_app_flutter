@@ -15,13 +15,13 @@ class EventEntity with _$EventEntity {
     required String description,
     required String image,
     @JsonKey(name: 'start_date') required DateTime startDate,
-    @JsonKey(name: 'end_date') required DateTime endDate,
+    @JsonKey(name: 'end_date') required DateTime? endDate,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'is_publish') required bool isPublish,
     @JsonKey(name: 'is_archived') required bool isArchived,
-    @JsonKey(name: 'categories') required List<Category> categories,
-    required Writer writer, // ПОЗЖЕ ПЕРЕДЕЛАТЬ НА Writer
+    required List<Category> categories,
+    required Writer writer,
   }) = _EventEntity;
 
   factory EventEntity.fromJson(Map<String, dynamic> json) =>
@@ -49,4 +49,15 @@ class Writer with _$Writer {
   }) = _Writer;
 
   factory Writer.fromJson(Map<String, dynamic> json) => _$WriterFromJson(json);
+}
+
+@freezed
+class EventEntityViewModel with _$EventEntityViewModel {
+  const factory EventEntityViewModel({
+    required List<EventEntity> listEventEntityLoaded,
+    required List<EventEntity> filteredListEventEntity,
+  }) = _EventEntityViewModel;
+
+  factory EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
+      _$EventEntityViewModelFromJson(json);
 }

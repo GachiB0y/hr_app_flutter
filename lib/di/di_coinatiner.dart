@@ -8,6 +8,7 @@ import 'package:hr_app_flutter/domain/api_client/api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/auth_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/event_entity_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/service_api_client.dart';
+import 'package:hr_app_flutter/domain/api_client/statement_provider.dart';
 import 'package:hr_app_flutter/domain/api_client/user_api_client.dart';
 import 'package:hr_app_flutter/domain/api_client/wallet_api_client.dart';
 import 'package:hr_app_flutter/domain/blocs/auth_cubit/auth_cubit.dart';
@@ -26,6 +27,7 @@ import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
 import 'package:hr_app_flutter/domain/repository/lean_production_repository.dart';
 import 'package:hr_app_flutter/domain/repository/service_repository.dart';
+import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
 import 'package:hr_app_flutter/domain/repository/user_repository.dart';
 import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
@@ -33,7 +35,7 @@ import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_sto
 import 'package:hr_app_flutter/main.dart';
 import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/utils/custom_theme.dart';
+import 'package:hr_app_flutter/theme/color_schemes.g.dart';
 
 AppFactory makeAppFactory() => const _AppFactoryDefault();
 
@@ -60,26 +62,29 @@ class _DIContainer {
 
   SessionDataProvdier _makeSessionDataProvdier() =>
       const SessionDataProvdierDefault(secureStorage: secureStorageDefault);
-  AuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
-  ServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
-  EventsEntityProvider _makeEventsEntityProvider() =>
+  IAuthProvider _makeAuthProvider() => const AuthProviderImpl(htttpService);
+  IServiceProvider _makeServiceProvider() => ServiceProviderImpl(htttpService);
+  IEventsEntityProvider _makeEventsEntityProvider() =>
       const EventsEntityProviderImpl(htttpService);
-  WalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
-  UserProvider _makeUserProvider() => UserProviderImpl(htttpService);
-  EventEntityRepository _makeEventEntityRepository() =>
+  IWalletProvider _makeWalletProvider() => WalletProviderImpl(htttpService);
+  IStatementsProvider _makeStatementsProvider() =>
+      StatementProviderImpl(htttpService);
+  IUserProvider _makeUserProvider() => UserProviderImpl(htttpService);
+  IEventEntityRepository _makeEventEntityRepository() =>
       EventEntityRepositoryImpl(
           eventEntityProvider: _makeEventsEntityProvider());
-  WalletRepository _makeWalletRepository() =>
+  IWalletRepository _makeWalletRepository() =>
       WalletRepositoryImpl(walletProvider: _makeWalletProvider());
 
-  UserRepository _makeUserRepository() =>
+  IUserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
-
-  LeanProductionRepository _makeLeanProductionRepository() =>
+  StatementsRepository _makeStatementsRepository() =>
+      StatementsRepository(statementsProvider: _makeStatementsProvider());
+  ILeanProductionRepository _makeLeanProductionRepository() =>
       LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
-  ServiceRepository _makeServiceRepository() =>
+  IServiceRepository _makeServiceRepository() =>
       ServiceRepositoryImpl(serviceProvider: _makeServiceProvider());
-  AuthRepository _makeAuthRepository() => AuthRepositoryImpl(
+  IAuthRepository _makeAuthRepository() => AuthRepositoryImpl(
       authProvider: _makeAuthProvider(),
       sessionDataProvdier: _makeSessionDataProvdier());
 }
@@ -91,11 +96,10 @@ class ScreenFactoryDefault implements ScreenFactory {
 
   @override
   MultiBlocProvider createMultiBlocProvider() {
-    final AuthRepository authRepository = _diContainer._makeAuthRepository();
-    final UserRepository userRepository = _diContainer._makeUserRepository();
-    final LeanProductionRepository leanProductionRepository =
-        _diContainer._makeLeanProductionRepository();
-    final EventEntityRepository eventEntityRepository =
+    final IAuthRepository authRepository = _diContainer._makeAuthRepository();
+    final IUserRepository userRepository = _diContainer._makeUserRepository();
+
+    final IEventEntityRepository eventEntityRepository =
         _diContainer._makeEventEntityRepository();
 
     return MultiBlocProvider(
@@ -108,23 +112,23 @@ class ScreenFactoryDefault implements ScreenFactory {
               eventEntityRepository: eventEntityRepository,
               authRepository: authRepository),
         ),
-        BlocProvider<WalletBloc>(
-          create: (BuildContext context) => WalletBloc(
+        BlocProvider<WalletBLoC>(
+          create: (BuildContext context) => WalletBLoC(
               walletRepo: _diContainer._makeWalletRepository(),
               authRepository: authRepository),
         ),
         BlocProvider<UserBloc>(
           create: (BuildContext context) => UserBloc(
-              userRepo: userRepository,
-              authRepository: authRepository,
-              leanProductionRepository: leanProductionRepository),
+            userRepo: userRepository,
+            authRepository: authRepository,
+          ),
         ),
-        BlocProvider<UserBirthDayInfoBloc>(
-          create: (BuildContext context) => UserBirthDayInfoBloc(
+        BlocProvider<UserBirthDayInfoBLoc>(
+          create: (BuildContext context) => UserBirthDayInfoBLoc(
               userRepo: userRepository, authRepository: authRepository),
         ),
-        BlocProvider<RookiesBloc>(
-          create: (BuildContext context) => RookiesBloc(
+        BlocProvider<RookiesBLoC>(
+          create: (BuildContext context) => RookiesBLoC(
               userRepo: userRepository, authRepository: authRepository),
         ),
         BlocProvider<AuthViewCubit>(
@@ -154,23 +158,40 @@ class ScreenFactoryDefault implements ScreenFactory {
           ),
         ),
       ],
-      child: MaterialApp.router(
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<StatementsRepository>(
+              create: (context) => _diContainer._makeStatementsRepository()),
+          RepositoryProvider<ILeanProductionRepository>(
+              create: (context) =>
+                  _diContainer._makeLeanProductionRepository()),
+          RepositoryProvider<IAuthRepository>(
+              create: (context) => authRepository),
+          RepositoryProvider<IUserRepository>(
+              create: (context) => userRepository),
+          RepositoryProvider<IEventEntityRepository>(
+              create: (context) => eventEntityRepository),
         ],
-        supportedLocales: S.delegate.supportedLocales,
-        title: 'HR App',
-        theme: CustomTheme.lightTheme,
-        routerConfig: _router.config(),
+        child: MaterialApp.router(
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          title: 'HR App',
+          theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+          darkTheme:
+              ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+          routerConfig: _router.config(),
+        ),
       ),
     );
   }
 
   @override
-  AuthRepository makeAuthRepo() {
+  IAuthRepository makeAuthRepo() {
     return _diContainer._makeAuthRepository();
   }
 

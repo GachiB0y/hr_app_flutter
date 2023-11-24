@@ -16,19 +16,21 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserBirthDayInfoEvent {
+  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
+    required TResult Function(DateTime? startDate, DateTime? endDate) fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
+    TResult? Function(DateTime? startDate, DateTime? endDate)? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
+    TResult Function(DateTime? startDate, DateTime? endDate)? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +50,10 @@ mixin _$UserBirthDayInfoEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UserBirthDayInfoEventCopyWith<UserBirthDayInfoEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +61,8 @@ abstract class $UserBirthDayInfoEventCopyWith<$Res> {
   factory $UserBirthDayInfoEventCopyWith(UserBirthDayInfoEvent value,
           $Res Function(UserBirthDayInfoEvent) then) =
       _$UserBirthDayInfoEventCopyWithImpl<$Res, UserBirthDayInfoEvent>;
+  @useResult
+  $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
@@ -67,14 +75,36 @@ class _$UserBirthDayInfoEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$UserBirthDayInfoEventFetchCopyWith<$Res> {
+abstract class _$$UserBirthDayInfoEventFetchCopyWith<$Res>
+    implements $UserBirthDayInfoEventCopyWith<$Res> {
   factory _$$UserBirthDayInfoEventFetchCopyWith(
           _$UserBirthDayInfoEventFetch value,
           $Res Function(_$UserBirthDayInfoEventFetch) then) =
       __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
@@ -86,52 +116,86 @@ class __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>
       _$UserBirthDayInfoEventFetch _value,
       $Res Function(_$UserBirthDayInfoEventFetch) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+  }) {
+    return _then(_$UserBirthDayInfoEventFetch(
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$UserBirthDayInfoEventFetch implements UserBirthDayInfoEventFetch {
-  const _$UserBirthDayInfoEventFetch();
+class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
+  const _$UserBirthDayInfoEventFetch({this.startDate, this.endDate})
+      : super._();
+
+  @override
+  final DateTime? startDate;
+  @override
+  final DateTime? endDate;
 
   @override
   String toString() {
-    return 'UserBirthDayInfoEvent.fetch()';
+    return 'UserBirthDayInfoEvent.fetch(startDate: $startDate, endDate: $endDate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoEventFetch);
+            other is _$UserBirthDayInfoEventFetch &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, startDate, endDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
+      get copyWith => __$$UserBirthDayInfoEventFetchCopyWithImpl<
+          _$UserBirthDayInfoEventFetch>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetch,
+    required TResult Function(DateTime? startDate, DateTime? endDate) fetch,
   }) {
-    return fetch();
+    return fetch(startDate, endDate);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetch,
+    TResult? Function(DateTime? startDate, DateTime? endDate)? fetch,
   }) {
-    return fetch?.call();
+    return fetch?.call(startDate, endDate);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetch,
+    TResult Function(DateTime? startDate, DateTime? endDate)? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch();
+      return fetch(startDate, endDate);
     }
     return orElse();
   }
@@ -165,529 +229,18 @@ class _$UserBirthDayInfoEventFetch implements UserBirthDayInfoEventFetch {
   }
 }
 
-abstract class UserBirthDayInfoEventFetch implements UserBirthDayInfoEvent {
-  const factory UserBirthDayInfoEventFetch() = _$UserBirthDayInfoEventFetch;
-}
-
-UserBirthDayInfoState _$UserBirthDayInfoStateFromJson(
-    Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'loading':
-      return UserBirthDayInfoStateLoading.fromJson(json);
-    case 'loaded':
-      return UserBirthDayInfoStateLoaded.fromJson(json);
-    case 'error':
-      return UserBirthDayInfoStateError.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(
-          json,
-          'runtimeType',
-          'UserBirthDayInfoState',
-          'Invalid union type "${json['runtimeType']}"!');
-  }
-}
-
-/// @nodoc
-mixin _$UserBirthDayInfoState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(BirthDayInfoEntity birthDayInfoLoaded) loaded,
-    required TResult Function() error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult? Function()? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserBirthDayInfoStateLoading value) loading,
-    required TResult Function(UserBirthDayInfoStateLoaded value) loaded,
-    required TResult Function(UserBirthDayInfoStateError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult? Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult? Function(UserBirthDayInfoStateError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult Function(UserBirthDayInfoStateError value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UserBirthDayInfoStateCopyWith<$Res> {
-  factory $UserBirthDayInfoStateCopyWith(UserBirthDayInfoState value,
-          $Res Function(UserBirthDayInfoState) then) =
-      _$UserBirthDayInfoStateCopyWithImpl<$Res, UserBirthDayInfoState>;
-}
-
-/// @nodoc
-class _$UserBirthDayInfoStateCopyWithImpl<$Res,
-        $Val extends UserBirthDayInfoState>
-    implements $UserBirthDayInfoStateCopyWith<$Res> {
-  _$UserBirthDayInfoStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$UserBirthDayInfoStateLoadingCopyWith<$Res> {
-  factory _$$UserBirthDayInfoStateLoadingCopyWith(
-          _$UserBirthDayInfoStateLoading value,
-          $Res Function(_$UserBirthDayInfoStateLoading) then) =
-      __$$UserBirthDayInfoStateLoadingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UserBirthDayInfoStateLoadingCopyWithImpl<$Res>
-    extends _$UserBirthDayInfoStateCopyWithImpl<$Res,
-        _$UserBirthDayInfoStateLoading>
-    implements _$$UserBirthDayInfoStateLoadingCopyWith<$Res> {
-  __$$UserBirthDayInfoStateLoadingCopyWithImpl(
-      _$UserBirthDayInfoStateLoading _value,
-      $Res Function(_$UserBirthDayInfoStateLoading) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$UserBirthDayInfoStateLoading implements UserBirthDayInfoStateLoading {
-  const _$UserBirthDayInfoStateLoading({final String? $type})
-      : $type = $type ?? 'loading';
-
-  factory _$UserBirthDayInfoStateLoading.fromJson(Map<String, dynamic> json) =>
-      _$$UserBirthDayInfoStateLoadingFromJson(json);
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
+abstract class UserBirthDayInfoEventFetch extends UserBirthDayInfoEvent {
+  const factory UserBirthDayInfoEventFetch(
+      {final DateTime? startDate,
+      final DateTime? endDate}) = _$UserBirthDayInfoEventFetch;
+  const UserBirthDayInfoEventFetch._() : super._();
 
   @override
-  String toString() {
-    return 'UserBirthDayInfoState.loading()';
-  }
-
+  DateTime? get startDate;
   @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoStateLoading);
-  }
-
+  DateTime? get endDate;
+  @override
   @JsonKey(ignore: true)
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(BirthDayInfoEntity birthDayInfoLoaded) loaded,
-    required TResult Function() error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult? Function()? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserBirthDayInfoStateLoading value) loading,
-    required TResult Function(UserBirthDayInfoStateLoaded value) loaded,
-    required TResult Function(UserBirthDayInfoStateError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult? Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult? Function(UserBirthDayInfoStateError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult Function(UserBirthDayInfoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserBirthDayInfoStateLoadingToJson(
-      this,
-    );
-  }
-}
-
-abstract class UserBirthDayInfoStateLoading implements UserBirthDayInfoState {
-  const factory UserBirthDayInfoStateLoading() = _$UserBirthDayInfoStateLoading;
-
-  factory UserBirthDayInfoStateLoading.fromJson(Map<String, dynamic> json) =
-      _$UserBirthDayInfoStateLoading.fromJson;
-}
-
-/// @nodoc
-abstract class _$$UserBirthDayInfoStateLoadedCopyWith<$Res> {
-  factory _$$UserBirthDayInfoStateLoadedCopyWith(
-          _$UserBirthDayInfoStateLoaded value,
-          $Res Function(_$UserBirthDayInfoStateLoaded) then) =
-      __$$UserBirthDayInfoStateLoadedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({BirthDayInfoEntity birthDayInfoLoaded});
-
-  $BirthDayInfoEntityCopyWith<$Res> get birthDayInfoLoaded;
-}
-
-/// @nodoc
-class __$$UserBirthDayInfoStateLoadedCopyWithImpl<$Res>
-    extends _$UserBirthDayInfoStateCopyWithImpl<$Res,
-        _$UserBirthDayInfoStateLoaded>
-    implements _$$UserBirthDayInfoStateLoadedCopyWith<$Res> {
-  __$$UserBirthDayInfoStateLoadedCopyWithImpl(
-      _$UserBirthDayInfoStateLoaded _value,
-      $Res Function(_$UserBirthDayInfoStateLoaded) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? birthDayInfoLoaded = null,
-  }) {
-    return _then(_$UserBirthDayInfoStateLoaded(
-      birthDayInfoLoaded: null == birthDayInfoLoaded
-          ? _value.birthDayInfoLoaded
-          : birthDayInfoLoaded // ignore: cast_nullable_to_non_nullable
-              as BirthDayInfoEntity,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $BirthDayInfoEntityCopyWith<$Res> get birthDayInfoLoaded {
-    return $BirthDayInfoEntityCopyWith<$Res>(_value.birthDayInfoLoaded,
-        (value) {
-      return _then(_value.copyWith(birthDayInfoLoaded: value));
-    });
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$UserBirthDayInfoStateLoaded implements UserBirthDayInfoStateLoaded {
-  const _$UserBirthDayInfoStateLoaded(
-      {required this.birthDayInfoLoaded, final String? $type})
-      : $type = $type ?? 'loaded';
-
-  factory _$UserBirthDayInfoStateLoaded.fromJson(Map<String, dynamic> json) =>
-      _$$UserBirthDayInfoStateLoadedFromJson(json);
-
-  @override
-  final BirthDayInfoEntity birthDayInfoLoaded;
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
-  @override
-  String toString() {
-    return 'UserBirthDayInfoState.loaded(birthDayInfoLoaded: $birthDayInfoLoaded)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoStateLoaded &&
-            (identical(other.birthDayInfoLoaded, birthDayInfoLoaded) ||
-                other.birthDayInfoLoaded == birthDayInfoLoaded));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, birthDayInfoLoaded);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserBirthDayInfoStateLoadedCopyWith<_$UserBirthDayInfoStateLoaded>
-      get copyWith => __$$UserBirthDayInfoStateLoadedCopyWithImpl<
-          _$UserBirthDayInfoStateLoaded>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(BirthDayInfoEntity birthDayInfoLoaded) loaded,
-    required TResult Function() error,
-  }) {
-    return loaded(birthDayInfoLoaded);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult? Function()? error,
-  }) {
-    return loaded?.call(birthDayInfoLoaded);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(birthDayInfoLoaded);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserBirthDayInfoStateLoading value) loading,
-    required TResult Function(UserBirthDayInfoStateLoaded value) loaded,
-    required TResult Function(UserBirthDayInfoStateError value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult? Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult? Function(UserBirthDayInfoStateError value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult Function(UserBirthDayInfoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserBirthDayInfoStateLoadedToJson(
-      this,
-    );
-  }
-}
-
-abstract class UserBirthDayInfoStateLoaded implements UserBirthDayInfoState {
-  const factory UserBirthDayInfoStateLoaded(
-          {required final BirthDayInfoEntity birthDayInfoLoaded}) =
-      _$UserBirthDayInfoStateLoaded;
-
-  factory UserBirthDayInfoStateLoaded.fromJson(Map<String, dynamic> json) =
-      _$UserBirthDayInfoStateLoaded.fromJson;
-
-  BirthDayInfoEntity get birthDayInfoLoaded;
-  @JsonKey(ignore: true)
-  _$$UserBirthDayInfoStateLoadedCopyWith<_$UserBirthDayInfoStateLoaded>
+  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
       get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UserBirthDayInfoStateErrorCopyWith<$Res> {
-  factory _$$UserBirthDayInfoStateErrorCopyWith(
-          _$UserBirthDayInfoStateError value,
-          $Res Function(_$UserBirthDayInfoStateError) then) =
-      __$$UserBirthDayInfoStateErrorCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UserBirthDayInfoStateErrorCopyWithImpl<$Res>
-    extends _$UserBirthDayInfoStateCopyWithImpl<$Res,
-        _$UserBirthDayInfoStateError>
-    implements _$$UserBirthDayInfoStateErrorCopyWith<$Res> {
-  __$$UserBirthDayInfoStateErrorCopyWithImpl(
-      _$UserBirthDayInfoStateError _value,
-      $Res Function(_$UserBirthDayInfoStateError) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$UserBirthDayInfoStateError implements UserBirthDayInfoStateError {
-  const _$UserBirthDayInfoStateError({final String? $type})
-      : $type = $type ?? 'error';
-
-  factory _$UserBirthDayInfoStateError.fromJson(Map<String, dynamic> json) =>
-      _$$UserBirthDayInfoStateErrorFromJson(json);
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
-  @override
-  String toString() {
-    return 'UserBirthDayInfoState.error()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoStateError);
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(BirthDayInfoEntity birthDayInfoLoaded) loaded,
-    required TResult Function() error,
-  }) {
-    return error();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult? Function()? error,
-  }) {
-    return error?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(BirthDayInfoEntity birthDayInfoLoaded)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserBirthDayInfoStateLoading value) loading,
-    required TResult Function(UserBirthDayInfoStateLoaded value) loaded,
-    required TResult Function(UserBirthDayInfoStateError value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult? Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult? Function(UserBirthDayInfoStateError value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserBirthDayInfoStateLoading value)? loading,
-    TResult Function(UserBirthDayInfoStateLoaded value)? loaded,
-    TResult Function(UserBirthDayInfoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserBirthDayInfoStateErrorToJson(
-      this,
-    );
-  }
-}
-
-abstract class UserBirthDayInfoStateError implements UserBirthDayInfoState {
-  const factory UserBirthDayInfoStateError() = _$UserBirthDayInfoStateError;
-
-  factory UserBirthDayInfoStateError.fromJson(Map<String, dynamic> json) =
-      _$UserBirthDayInfoStateError.fromJson;
 }
