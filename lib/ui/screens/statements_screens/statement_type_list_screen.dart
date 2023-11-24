@@ -53,7 +53,7 @@ class DropdownWidget extends StatefulWidget {
 }
 
 class _DropdownWidgetState extends State<DropdownWidget> {
-  List<StatementFielTypedEntity> filteredStatementFields = [];
+  List<StatementFieldTypeEntity> filteredStatementFields = [];
 
   TextEditingController filterController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -67,7 +67,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
   }
 
   void filterStatementFields(
-      String filter, List<StatementFielTypedEntity>? oldList) {
+      String filter, List<StatementFieldTypeEntity>? oldList) {
     setState(() {
       filteredStatementFields = oldList!
           .where((statementField) =>
@@ -88,13 +88,13 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         child: Center(
           child: Column(
             children: [
-              DropdownMenu<StatementFielTypedEntity>(
+              DropdownMenu<StatementFieldTypeEntity>(
                 menuStyle: const MenuStyle(
                     maximumSize: MaterialStatePropertyAll(Size(300, 300))),
                 width: 300,
                 menuHeight: 300,
                 controller: colorController,
-                onSelected: (StatementFielTypedEntity? value) {
+                onSelected: (StatementFieldTypeEntity? value) {
                   if (value != null) {
                     blocStatements
                         .add(StatementsEvent.fetch(id: value.documentType));
@@ -102,7 +102,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                 },
                 dropdownMenuEntries:
                     blocStatementsTypeList.state.data!.map((statementField) {
-                  return DropdownMenuEntry<StatementFielTypedEntity>(
+                  return DropdownMenuEntry<StatementFieldTypeEntity>(
                       value: statementField,
                       label: statementField.name,
                       style: const ButtonStyle(
@@ -138,6 +138,7 @@ class StatementsHRLinkFormWidget extends StatefulWidget {
 
 class _StatementsHRLinkFormWidgetState
     extends State<StatementsHRLinkFormWidget> {
+  bool isSumbitting = false;
   List<TemplateField> textFieldsData = [];
   List<TextEditingController> listController = [];
   Map<String, String?> convertListToMap(List<TemplateField> textFieldsData) {
@@ -152,33 +153,41 @@ class _StatementsHRLinkFormWidgetState
 
   @override
   Widget build(BuildContext context) {
-    // final blocStatements = context.watch<StatementsBLoC>();
-
     return BlocConsumer<StatementsBLoC, StatementsState>(
         listener: (context, state) {
       if (state is StatementsState$Error) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            const SnackBar(
-              content:
-                  Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
-              duration: Duration(seconds: 6),
-            ),
-          );
+        if (isSumbitting) {
+          setState(() {
+            isSumbitting = false;
+          });
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content:
+                    Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
+                duration: Duration(seconds: 6),
+              ),
+            );
+        }
       } else if (state is StatementsState$Successful) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            const SnackBar(
-              content: Center(
-                  child: Text(
-                'Данные успешно отправленны!',
-                style: TextStyle(fontSize: 20),
-              )),
-              duration: Duration(seconds: 2),
-            ),
-          ).closed.then((value) => Navigator.pop(context));
+        if (isSumbitting) {
+          setState(() {
+            isSumbitting = false;
+          });
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Center(
+                    child: Text(
+                  'Данные успешно отправленны!',
+                  style: TextStyle(fontSize: 20),
+                )),
+                duration: Duration(seconds: 2),
+              ),
+            ).closed.then((value) => Navigator.pop(context));
+        }
       }
     }, builder: (context, state) {
       if (state is StatementsState$Idle) {
@@ -224,17 +233,21 @@ class _StatementsHRLinkFormWidgetState
                           final StatementFormInfo formInfo = StatementFormInfo(
                               documentType: state.data!.documentType,
                               template: templateFormStatementsEntity);
+
                           context
                               .read<StatementsBLoC>()
                               .add(StatementsEvent.create(itemsForm: formInfo));
                           // Делать что-то с данными, например, отправить на сервер
+                          setState(() {
+                            isSumbitting = true;
+                          });
 
                           print(
                               '${formInfo.documentType} ${formInfo.template.firstName}');
                         }
                       }
                     },
-                    child: const Text('Submit'),
+                    child: const Text('Отправить'),
                   ),
                 ],
               )

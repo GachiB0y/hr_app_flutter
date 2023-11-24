@@ -20,15 +20,15 @@ Map<String, dynamic> _$$_StatementEntityToJson(_$_StatementEntity instance) =>
       'template': instance.template,
     };
 
-_$_StatementFielTypedEntity _$$_StatementFielTypedEntityFromJson(
+_$_StatementFieldTypeEntity _$$_StatementFieldTypeEntityFromJson(
         Map<String, dynamic> json) =>
-    _$_StatementFielTypedEntity(
+    _$_StatementFieldTypeEntity(
       documentType: json['document_type'] as String,
       name: json['field_body'] as String,
     );
 
-Map<String, dynamic> _$$_StatementFielTypedEntityToJson(
-        _$_StatementFielTypedEntity instance) =>
+Map<String, dynamic> _$$_StatementFieldTypeEntityToJson(
+        _$_StatementFieldTypeEntity instance) =>
     <String, dynamic>{
       'document_type': instance.documentType,
       'field_body': instance.name,
@@ -60,6 +60,7 @@ _$_TemplateFormStatementsEntity _$$_TemplateFormStatementsEntityFromJson(
       businessTripPlace: json['business_trip_place'] as String?,
       purposeTrip: json['purpose_trip'] as String?,
       expensesTravelExpenses: json['expenses_travel_expenses'] as String?,
+      reason: json['reason'] as String?,
       expensesAilyMoney: json['expenses_aily_money'] as String?,
       expensesLivingPlace: json['expenses_living_place'] as String?,
     );
@@ -76,6 +77,7 @@ Map<String, dynamic> _$$_TemplateFormStatementsEntityToJson(
       'business_trip_place': instance.businessTripPlace,
       'purpose_trip': instance.purposeTrip,
       'expenses_travel_expenses': instance.expensesTravelExpenses,
+      'reason': instance.reason,
       'expenses_aily_money': instance.expensesAilyMoney,
       'expenses_living_place': instance.expensesLivingPlace,
     };

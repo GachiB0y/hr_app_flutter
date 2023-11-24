@@ -6,7 +6,7 @@ import '../../constants.dart';
 import 'api_client.dart';
 
 abstract interface class IStatementsProvider {
-  Future<List<StatementFielTypedEntity>> fetchListTypeStatements(
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required final String accessToken});
   Future<StatementEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
@@ -20,7 +20,7 @@ class StatementProviderImpl implements IStatementsProvider {
   StatementProviderImpl(this._httpService);
 
   @override
-  Future<List<StatementFielTypedEntity>> fetchListTypeStatements(
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required String accessToken}) async {
     String uri = '$urlAdress/hrlink/document_template';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
@@ -28,8 +28,8 @@ class StatementProviderImpl implements IStatementsProvider {
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final List<StatementFielTypedEntity> result = (jsonData as List<dynamic>)
-          .map((item) => StatementFielTypedEntity.fromJson(item))
+      final List<StatementFieldTypeEntity> result = (jsonData as List<dynamic>)
+          .map((item) => StatementFieldTypeEntity.fromJson(item))
           .toList();
       return result;
     } else {

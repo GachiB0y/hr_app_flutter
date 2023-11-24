@@ -412,8 +412,9 @@ class RowBalanceCountWidget extends StatelessWidget {
                 data != null
                     ? data.balance.toString()
                     : 'Ничего не найденно...',
-                style:
-                    const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
+                style: data != null
+                    ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
+                    : null,
               ),
             WalletState$Processing() => const Center(
                 child: CircularProgressIndicator(),
@@ -422,28 +423,13 @@ class RowBalanceCountWidget extends StatelessWidget {
                 data != null
                     ? data.balance.toString()
                     : 'Ничего не найденно...',
-                style:
-                    const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
+                style: data != null
+                    ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
+                    : null,
               ),
             WalletState$Error() => const Text('Ничего не найденно...'),
             _ => const Text('Default'),
           }
-
-          // blocWallet.state.when(
-          //   loading: () {
-          //     return const Center(
-          //       child: CircularProgressIndicator(),
-          //     );
-          //   },
-          //   loaded: (walletLoaded) {
-          //     return Text(
-          //       walletLoaded.balance.toString(),
-          //       style: const TextStyle(
-          //           fontSize: 40, fontWeight: FontWeight.w500),
-          //     );
-          //   },
-          //   error: () => const Text('Nothing found...'),
-          // ),
         ],
       );
     });

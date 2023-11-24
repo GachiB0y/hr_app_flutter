@@ -48,7 +48,7 @@ class StatementTypeListBLoC
     try {
       emit(StatementTypeListState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      final List<StatementFielTypedEntity> newData = await _repositoryStatements
+      final List<StatementFieldTypeEntity> newData = await _repositoryStatements
           .fetchListTypeStatements(accessToken: accessToken as String);
       emit(StatementTypeListState.successful(data: newData));
     } on TimeoutException {

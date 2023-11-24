@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
@@ -37,6 +39,8 @@ class FakeAuthRepoImpl extends Fake implements IAuthRepository {}
 
 class FakeEventEntityRepoImpl extends Fake implements IEventEntityRepository {}
 
+const String accessToken = 'test_access_token';
+
 void main() {
   group('EventEntity Test BLoC', () {
     // Создайте экземпляры мок-объектов
@@ -66,10 +70,36 @@ void main() {
       expect(eventEntityBloc.state, idleState);
     });
 
+    blocTest<EventEntityBloc, EventEntityState>(
+        'emits [processing, error, idle] when getEvents  Exception throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+              .thenThrow(Exception('oops'));
+        },
+        build: () => EventEntityBloc(
+            authRepository: mockAuthRepository,
+            eventEntityRepository: mockEventEntityRepository),
+        act: (bloc) => bloc.add(const EventEntityEventFetch()),
+        errors: () => [isA<Exception>()]);
+    blocTest<EventEntityBloc, EventEntityState>(
+        'emits [processing, error, idle] when getEvents  TimeOutException throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+              .thenThrow(TimeoutException('oops'));
+        },
+        build: () => EventEntityBloc(
+            authRepository: mockAuthRepository,
+            eventEntityRepository: mockEventEntityRepository),
+        act: (bloc) => bloc.add(const EventEntityEventFetch()),
+        errors: () => [isA<TimeoutException>()]);
+
     test('Fetch event should emit successful state with data', () async {
       // Arrange
 
-      const String accessToken = 'test_access_token';
       final List<EventEntity> listEventEntityLoaded = [_mockEventEntity];
       final List<EventEntity> filteredEventEntity = [];
       final viewModel = EventEntityViewModel(

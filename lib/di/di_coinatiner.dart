@@ -35,7 +35,7 @@ import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_sto
 import 'package:hr_app_flutter/main.dart';
 import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/utils/custom_theme.dart';
+import 'package:hr_app_flutter/theme/color_schemes.g.dart';
 
 AppFactory makeAppFactory() => const _AppFactoryDefault();
 
@@ -181,7 +181,9 @@ class ScreenFactoryDefault implements ScreenFactory {
           ],
           supportedLocales: S.delegate.supportedLocales,
           title: 'HR App',
-          theme: CustomTheme.lightTheme,
+          theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+          darkTheme:
+              ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
           routerConfig: _router.config(),
         ),
       ),

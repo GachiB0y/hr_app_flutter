@@ -18,14 +18,14 @@ class StatementEntity with _$StatementEntity {
 }
 
 @freezed
-class StatementFielTypedEntity with _$StatementFielTypedEntity {
-  const factory StatementFielTypedEntity({
+class StatementFieldTypeEntity with _$StatementFieldTypeEntity {
+  const factory StatementFieldTypeEntity({
     @JsonKey(name: 'document_type') required final String documentType,
     @JsonKey(name: 'field_body') required final String name,
-  }) = _StatementFielTypedEntity;
+  }) = _StatementFieldTypeEntity;
 
-  factory StatementFielTypedEntity.fromJson(Map<String, dynamic> json) =>
-      _$StatementFielTypedEntityFromJson(json);
+  factory StatementFieldTypeEntity.fromJson(Map<String, dynamic> json) =>
+      _$StatementFieldTypeEntityFromJson(json);
 }
 
 @freezed
@@ -51,6 +51,7 @@ class TemplateFormStatementsEntity with _$TemplateFormStatementsEntity {
     @JsonKey(name: 'purpose_trip') final String? purposeTrip,
     @JsonKey(name: 'expenses_travel_expenses')
     final String? expensesTravelExpenses,
+    final String? reason,
     @JsonKey(name: 'expenses_aily_money') final String? expensesAilyMoney,
     @JsonKey(name: 'expenses_living_place') final String? expensesLivingPlace,
   }) = _TemplateFormStatementsEntity;
