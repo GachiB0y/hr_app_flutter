@@ -1,16 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hr_app_flutter/domain/blocs/statements_bloc/statements_form_bloc/statements_bloc.dart';
-import 'package:hr_app_flutter/domain/blocs/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
-
-import 'package:hr_app_flutter/domain/entity/statements/statements.dart';
-
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
-import 'package:hr_app_flutter/domain/repository/statements_repository.dart';
-
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
+import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
+import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
+import 'package:hr_app_flutter/features/statements/model/statements/statements.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
 import 'statements_test.mocks.dart';
 
 @GenerateNiceMocks(

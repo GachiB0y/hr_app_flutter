@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hr_app_flutter/domain/blocs/event_entity_bloc/event_entity_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart';
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
-import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

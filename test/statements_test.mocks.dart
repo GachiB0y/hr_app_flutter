@@ -5,10 +5,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:hr_app_flutter/domain/entity/statements/statements.dart' as _i2;
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart' as _i3;
-import 'package:hr_app_flutter/domain/repository/statements_repository.dart'
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
+    as _i3;
+import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart'
     as _i5;
+import 'package:hr_app_flutter/features/statements/model/statements/statements.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 

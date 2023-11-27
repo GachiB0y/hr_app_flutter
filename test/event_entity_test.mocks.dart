@@ -6,10 +6,12 @@
 import 'dart:async' as _i4;
 import 'dart:io' as _i6;
 
-import 'package:hr_app_flutter/domain/entity/event_entity/new_event_entity.dart'
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
+    as _i3;
+import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart'
+    as _i5;
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart'
     as _i2;
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart' as _i3;
-import 'package:hr_app_flutter/domain/repository/event_entity_repo.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/bloc_observable.dart';
-import 'package:hr_app_flutter/di/di_coinatiner.dart';
+import 'package:hr_app_flutter/core/bloc/bloc_observable.dart';
+import 'package:hr_app_flutter/core/components/di_container/di_coinatiner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AppFactory {

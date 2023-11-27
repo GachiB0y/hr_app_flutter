@@ -4,11 +4,12 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hr_app_flutter/domain/blocs/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart';
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart';
 
-import 'package:hr_app_flutter/domain/repository/wallet_repository.dart';
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
+
+import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
+import 'package:hr_app_flutter/features/wallet/model/wallet/wallet.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -61,7 +62,7 @@ void main() {
 
     // Создайте экземпляр вашего BLoC
     late WalletBLoC walletBloc;
-    late WalletBLoC walletBlocThrow;
+
     const String accessToken = 'test_access_token';
 
     setUp(() {
@@ -71,9 +72,6 @@ void main() {
       mockWalletRepositoryRelaxed = MockIWalletRepository();
       walletBloc = WalletBLoC(
           authRepository: mockAuthRepository, walletRepo: mockWalletRepository);
-      walletBlocThrow = WalletBLoC(
-          authRepository: mockAuthRepository,
-          walletRepo: mockWalletRepositoryRelaxed);
     });
 
     tearDown(() {
@@ -126,7 +124,7 @@ void main() {
         act: (bloc) => bloc.add(const FetchWalletEvent()),
         errors: () => [isA<Exception>()]);
     blocTest<WalletBLoC, WalletState>(
-        'emits [processing, error, idle] when getWallet  TimeOutException throws',
+        'emits [processing, error, idle] when getWallet  Timeout Exception throws',
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);

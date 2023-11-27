@@ -5,13 +5,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:hr_app_flutter/domain/entity/coins_screen/coins_info/coins_info.dart'
+import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
+    as _i3;
+import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart'
+    as _i5;
+import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_info/coins_info.dart'
     as _i6;
-import 'package:hr_app_flutter/domain/entity/coins_screen/coins_reward/coins_reward.dart'
+import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart'
     as _i7;
-import 'package:hr_app_flutter/domain/entity/wallet/wallet.dart' as _i2;
-import 'package:hr_app_flutter/domain/repository/auth_repository.dart' as _i3;
-import 'package:hr_app_flutter/domain/repository/wallet_repository.dart' as _i5;
+import 'package:hr_app_flutter/features/wallet/model/wallet/wallet.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
