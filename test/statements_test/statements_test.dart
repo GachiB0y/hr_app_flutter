@@ -13,16 +13,14 @@ import 'statements_test.mocks.dart';
   [
     MockSpec<IAuthRepository>(),
     MockSpec<IStatementsRepository>(),
-    MockSpec<StatementEntity>(),
+    MockSpec<StatementTempalteEntity>(),
   ],
 )
-final StatementEntity _mockWallet = MockStatementEntity();
-
 const TemplateField fieldFirts =
     TemplateField(name: 'field_first_name', value: 'First Name');
 const TemplateField fieldSecond =
     TemplateField(name: 'field_second_name', value: 'Last Name');
-const statements = StatementEntity(
+const statements = StatementTempalteEntity(
     documentType: 'test_document_type', template: [fieldFirts, fieldSecond]);
 
 const StatementFieldTypeEntity typeFieldFirst = StatementFieldTypeEntity(
@@ -30,8 +28,10 @@ const StatementFieldTypeEntity typeFieldFirst = StatementFieldTypeEntity(
 const StatementFieldTypeEntity typeFieldSecond = StatementFieldTypeEntity(
     documentType: 'extra_vaction', name: 'Application for leave (unpaid)');
 
-const StatementFormInfo formInof = StatementFormInfo(
-    documentType: 'test_document_type', template: formInfotempalte);
+const StatementFormInfoToSubmit formInof = StatementFormInfoToSubmit(
+    documentType: 'test_document_type',
+    template: formInfotempalte,
+    participantsTo: 'guid');
 
 const TemplateFormStatementsEntity formInfotempalte =
     TemplateFormStatementsEntity(firstName: 'Volkov', lastName: 'Aleks');

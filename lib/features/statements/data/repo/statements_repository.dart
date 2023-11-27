@@ -4,11 +4,11 @@ import '../rest_clietns/statement_provider.dart';
 abstract interface class IStatementsRepository {
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required final String accessToken});
-  Future<StatementEntity> fetchStatementForm(
+  Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
   Future<void> submitStatementForm(
       {required final String accessToken,
-      required final StatementFormInfo formInfo});
+      required final StatementFormInfoToSubmit formInfo});
 }
 
 class StatementsRepository implements IStatementsRepository {
@@ -30,7 +30,7 @@ class StatementsRepository implements IStatementsRepository {
   }
 
   @override
-  Future<StatementEntity> fetchStatementForm(
+  Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id}) {
     try {
       return _statementsProvider.fetchStatementForm(
@@ -42,7 +42,8 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<void> submitStatementForm(
-      {required String accessToken, required StatementFormInfo formInfo}) {
+      {required String accessToken,
+      required StatementFormInfoToSubmit formInfo}) {
     try {
       return _statementsProvider.submitStatementForm(
         accessToken: accessToken,

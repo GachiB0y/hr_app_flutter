@@ -6,15 +6,17 @@ part of 'statements.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StatementEntity _$$_StatementEntityFromJson(Map<String, dynamic> json) =>
-    _$_StatementEntity(
+_$_StatementTempalteEntity _$$_StatementTempalteEntityFromJson(
+        Map<String, dynamic> json) =>
+    _$_StatementTempalteEntity(
       documentType: json['document_type'] as String,
       template: (json['template'] as List<dynamic>)
           .map((e) => TemplateField.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_StatementEntityToJson(_$_StatementEntity instance) =>
+Map<String, dynamic> _$$_StatementTempalteEntityToJson(
+        _$_StatementTempalteEntity instance) =>
     <String, dynamic>{
       'document_type': instance.documentType,
       'template': instance.template,
@@ -34,17 +36,20 @@ Map<String, dynamic> _$$_StatementFieldTypeEntityToJson(
       'field_body': instance.name,
     };
 
-_$_StatementFormInfo _$$_StatementFormInfoFromJson(Map<String, dynamic> json) =>
-    _$_StatementFormInfo(
+_$_StatementFormInfoToSubmit _$$_StatementFormInfoToSubmitFromJson(
+        Map<String, dynamic> json) =>
+    _$_StatementFormInfoToSubmit(
       documentType: json['document_type'] as String,
+      participantsTo: json['participants_to'] as String,
       template: TemplateFormStatementsEntity.fromJson(
           json['template'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_StatementFormInfoToJson(
-        _$_StatementFormInfo instance) =>
+Map<String, dynamic> _$$_StatementFormInfoToSubmitToJson(
+        _$_StatementFormInfoToSubmit instance) =>
     <String, dynamic>{
       'document_type': instance.documentType,
+      'participants_to': instance.participantsTo,
       'template': instance.template,
     };
 
@@ -56,13 +61,16 @@ _$_TemplateFormStatementsEntity _$$_TemplateFormStatementsEntityFromJson(
       patronymic: json['patronymic'] as String?,
       startDate: json['start_date'] as String?,
       endDate: json['end_date'] as String?,
-      weekendDays: json['weekend_days'] as String?,
+      workDays: json['work_days'] as int?,
       businessTripPlace: json['business_trip_place'] as String?,
       purposeTrip: json['purpose_trip'] as String?,
-      expensesTravelExpenses: json['expenses_travel_expenses'] as String?,
+      expensesTravelExpenses: json['expenses_travel_expenses'] as int?,
       reason: json['reason'] as String?,
-      expensesAilyMoney: json['expenses_aily_money'] as String?,
-      expensesLivingPlace: json['expenses_living_place'] as String?,
+      expensesDailyMoney: json['expenses_daily_money'] as int?,
+      expensesLivingPlace: json['expenses_living_place'] as int?,
+      resultRub: json['result_rub'] as int?,
+      resultKop: json['result_kop'] as int?,
+      itemExpenditure: json['item_expenditure'] as String?,
     );
 
 Map<String, dynamic> _$$_TemplateFormStatementsEntityToJson(
@@ -73,13 +81,16 @@ Map<String, dynamic> _$$_TemplateFormStatementsEntityToJson(
       'patronymic': instance.patronymic,
       'start_date': instance.startDate,
       'end_date': instance.endDate,
-      'weekend_days': instance.weekendDays,
+      'work_days': instance.workDays,
       'business_trip_place': instance.businessTripPlace,
       'purpose_trip': instance.purposeTrip,
       'expenses_travel_expenses': instance.expensesTravelExpenses,
       'reason': instance.reason,
-      'expenses_aily_money': instance.expensesAilyMoney,
+      'expenses_daily_money': instance.expensesDailyMoney,
       'expenses_living_place': instance.expensesLivingPlace,
+      'result_rub': instance.resultRub,
+      'result_kop': instance.resultKop,
+      'item_expenditure': instance.itemExpenditure,
     };
 
 _$_TemplateField _$$_TemplateFieldFromJson(Map<String, dynamic> json) =>

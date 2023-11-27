@@ -7,14 +7,14 @@ part 'statements.freezed.dart';
 part 'statements.g.dart';
 
 @freezed
-class StatementEntity with _$StatementEntity {
-  const factory StatementEntity({
+class StatementTempalteEntity with _$StatementTempalteEntity {
+  const factory StatementTempalteEntity({
     @JsonKey(name: 'document_type') required final String documentType,
     required List<TemplateField> template,
-  }) = _StatementEntity;
+  }) = _StatementTempalteEntity;
 
-  factory StatementEntity.fromJson(Map<String, dynamic> json) =>
-      _$StatementEntityFromJson(json);
+  factory StatementTempalteEntity.fromJson(Map<String, dynamic> json) =>
+      _$StatementTempalteEntityFromJson(json);
 }
 
 @freezed
@@ -29,13 +29,14 @@ class StatementFieldTypeEntity with _$StatementFieldTypeEntity {
 }
 
 @freezed
-class StatementFormInfo with _$StatementFormInfo {
-  const factory StatementFormInfo({
+class StatementFormInfoToSubmit with _$StatementFormInfoToSubmit {
+  const factory StatementFormInfoToSubmit({
     @JsonKey(name: 'document_type') required final String documentType,
+    @JsonKey(name: 'participants_to') required final String participantsTo,
     required final TemplateFormStatementsEntity template,
-  }) = _StatementFormInfo;
-  factory StatementFormInfo.fromJson(Map<String, dynamic> json) =>
-      _$StatementFormInfoFromJson(json);
+  }) = _StatementFormInfoToSubmit;
+  factory StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =>
+      _$StatementFormInfoToSubmitFromJson(json);
 }
 
 @freezed
@@ -46,14 +47,17 @@ class TemplateFormStatementsEntity with _$TemplateFormStatementsEntity {
     final String? patronymic,
     @JsonKey(name: 'start_date') final String? startDate,
     @JsonKey(name: 'end_date') final String? endDate,
-    @JsonKey(name: 'weekend_days') final String? weekendDays,
+    @JsonKey(name: 'work_days') final int? workDays,
     @JsonKey(name: 'business_trip_place') final String? businessTripPlace,
     @JsonKey(name: 'purpose_trip') final String? purposeTrip,
     @JsonKey(name: 'expenses_travel_expenses')
-    final String? expensesTravelExpenses,
+    final int? expensesTravelExpenses,
     final String? reason,
-    @JsonKey(name: 'expenses_aily_money') final String? expensesAilyMoney,
-    @JsonKey(name: 'expenses_living_place') final String? expensesLivingPlace,
+    @JsonKey(name: 'expenses_daily_money') final int? expensesDailyMoney,
+    @JsonKey(name: 'expenses_living_place') final int? expensesLivingPlace,
+    @JsonKey(name: 'result_rub') final int? resultRub,
+    @JsonKey(name: 'result_kop') final int? resultKop,
+    @JsonKey(name: 'item_expenditure') final String? itemExpenditure,
   }) = _TemplateFormStatementsEntity;
   factory TemplateFormStatementsEntity.fromJson(Map<String, dynamic> json) =>
       _$TemplateFormStatementsEntityFromJson(json);

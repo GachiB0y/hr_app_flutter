@@ -89,7 +89,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         child: Center(
           child: Column(
             children: [
+              const SizedBox(
+                height: 15,
+              ),
               DropdownMenu<StatementFieldTypeEntity>(
+                label: const Text('Тип заявления'),
                 menuStyle: const MenuStyle(
                     maximumSize: MaterialStatePropertyAll(Size(300, 300))),
                 width: 300,
@@ -231,9 +235,11 @@ class _StatementsHRLinkFormWidgetState
                               templateFormStatementsEntity =
                               TemplateFormStatementsEntity.fromJson(resultMap);
 
-                          final StatementFormInfo formInfo = StatementFormInfo(
-                              documentType: state.data!.documentType,
-                              template: templateFormStatementsEntity);
+                          final StatementFormInfoToSubmit formInfo =
+                              StatementFormInfoToSubmit(
+                                  documentType: state.data!.documentType,
+                                  template: templateFormStatementsEntity,
+                                  participantsTo: '');
 
                           context
                               .read<StatementsBLoC>()

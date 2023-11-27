@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$StatementsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(StatementFormInfo itemsForm) create,
+    required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(StatementFormInfo itemsForm)? create,
+    TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(StatementFormInfo itemsForm)? create,
+    TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
     required TResult orElse(),
   }) =>
@@ -80,9 +80,9 @@ abstract class _$$StatementsEventCreateCopyWith<$Res> {
           $Res Function(_$StatementsEventCreate) then) =
       __$$StatementsEventCreateCopyWithImpl<$Res>;
   @useResult
-  $Res call({StatementFormInfo itemsForm});
+  $Res call({StatementFormInfoToSubmit itemsForm});
 
-  $StatementFormInfoCopyWith<$Res> get itemsForm;
+  $StatementFormInfoToSubmitCopyWith<$Res> get itemsForm;
 }
 
 /// @nodoc
@@ -102,14 +102,14 @@ class __$$StatementsEventCreateCopyWithImpl<$Res>
       itemsForm: null == itemsForm
           ? _value.itemsForm
           : itemsForm // ignore: cast_nullable_to_non_nullable
-              as StatementFormInfo,
+              as StatementFormInfoToSubmit,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $StatementFormInfoCopyWith<$Res> get itemsForm {
-    return $StatementFormInfoCopyWith<$Res>(_value.itemsForm, (value) {
+  $StatementFormInfoToSubmitCopyWith<$Res> get itemsForm {
+    return $StatementFormInfoToSubmitCopyWith<$Res>(_value.itemsForm, (value) {
       return _then(_value.copyWith(itemsForm: value));
     });
   }
@@ -121,7 +121,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   const _$StatementsEventCreate({required this.itemsForm}) : super._();
 
   @override
-  final StatementFormInfo itemsForm;
+  final StatementFormInfoToSubmit itemsForm;
 
   @override
   String toString() {
@@ -150,7 +150,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(StatementFormInfo itemsForm) create,
+    required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
   }) {
     return create(itemsForm);
@@ -159,7 +159,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(StatementFormInfo itemsForm)? create,
+    TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
   }) {
     return create?.call(itemsForm);
@@ -168,7 +168,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(StatementFormInfo itemsForm)? create,
+    TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
     required TResult orElse(),
   }) {
@@ -212,10 +212,11 @@ class _$StatementsEventCreate extends StatementsEventCreate {
 
 abstract class StatementsEventCreate extends StatementsEvent {
   const factory StatementsEventCreate(
-      {required final StatementFormInfo itemsForm}) = _$StatementsEventCreate;
+          {required final StatementFormInfoToSubmit itemsForm}) =
+      _$StatementsEventCreate;
   const StatementsEventCreate._() : super._();
 
-  StatementFormInfo get itemsForm;
+  StatementFormInfoToSubmit get itemsForm;
   @JsonKey(ignore: true)
   _$$StatementsEventCreateCopyWith<_$StatementsEventCreate> get copyWith =>
       throw _privateConstructorUsedError;
@@ -286,7 +287,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(StatementFormInfo itemsForm) create,
+    required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
   }) {
     return fetch(id);
@@ -295,7 +296,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(StatementFormInfo itemsForm)? create,
+    TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
   }) {
     return fetch?.call(id);
@@ -304,7 +305,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(StatementFormInfo itemsForm)? create,
+    TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
     required TResult orElse(),
   }) {

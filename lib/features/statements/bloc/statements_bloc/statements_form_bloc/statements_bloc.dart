@@ -46,7 +46,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       emit(StatementsState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
-      final StatementEntity newData = await _repositoryStatements
+      final StatementTempalteEntity newData = await _repositoryStatements
           .fetchStatementForm(accessToken: accessToken as String, id: event.id);
       emit(StatementsState.successful(data: newData));
     } on TimeoutException {

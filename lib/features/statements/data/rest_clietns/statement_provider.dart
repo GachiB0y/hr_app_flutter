@@ -7,11 +7,11 @@ import '../../model/statements/statements.dart';
 abstract interface class IStatementsProvider {
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required final String accessToken});
-  Future<StatementEntity> fetchStatementForm(
+  Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
   Future<void> submitStatementForm(
       {required final String accessToken,
-      required final StatementFormInfo formInfo});
+      required final StatementFormInfoToSubmit formInfo});
 }
 
 class StatementProviderImpl implements IStatementsProvider {
@@ -37,7 +37,7 @@ class StatementProviderImpl implements IStatementsProvider {
   }
 
   @override
-  Future<StatementEntity> fetchStatementForm(
+  Future<StatementTempalteEntity> fetchStatementForm(
       {required String accessToken, required String id}) async {
     String uri = '$urlAdress/hrlink/document_template?document_type=$id';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
@@ -45,7 +45,8 @@ class StatementProviderImpl implements IStatementsProvider {
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
-      final StatementEntity result = StatementEntity.fromJson(jsonData);
+      final StatementTempalteEntity result =
+          StatementTempalteEntity.fromJson(jsonData);
 
       return result;
     } else {
@@ -56,7 +57,7 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<void> submitStatementForm(
       {required String accessToken,
-      required StatementFormInfo formInfo}) async {
+      required StatementFormInfoToSubmit formInfo}) async {
     String uri = '$urlAdress/hrlink/createStatement';
     final String body = json.encode(formInfo.toJson());
     final response =
