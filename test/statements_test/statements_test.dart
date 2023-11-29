@@ -4,6 +4,7 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
+import 'package:hr_app_flutter/features/statements/model/participant/participant.dart';
 import 'package:hr_app_flutter/features/statements/model/statements/statements.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -21,8 +22,16 @@ const TemplateField fieldFirts =
 const TemplateField fieldSecond =
     TemplateField(name: 'field_second_name', value: 'Last Name');
 const statements = StatementTempalteEntity(
-    documentType: 'test_document_type', template: [fieldFirts, fieldSecond]);
+    documentType: 'test_document_type',
+    template: [fieldFirts, fieldSecond],
+    isParticipants: false);
 
+const ParticipantEntity participantFirst = ParticipantEntity(
+    lastName: 'Волков',
+    firstName: 'Александр',
+    patronymic: 'Юрьевич',
+    id: 'guid',
+    position: 'Специалист');
 const StatementFieldTypeEntity typeFieldFirst = StatementFieldTypeEntity(
     documentType: 'annual_vaction', name: 'Application for leave');
 const StatementFieldTypeEntity typeFieldSecond = StatementFieldTypeEntity(
@@ -85,7 +94,7 @@ void main() {
         errors: () => [isA<Exception>()]);
 
     blocTest<StatementsBLoC, StatementsState>(
-      'emits StatementsState.successful when fetch event is added',
+      'emits StatementsState.successful when Fetch event is added',
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);

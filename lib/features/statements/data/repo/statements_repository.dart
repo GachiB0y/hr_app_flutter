@@ -1,3 +1,4 @@
+import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 import '../rest_clietns/statement_provider.dart';
 
@@ -9,6 +10,8 @@ abstract interface class IStatementsRepository {
   Future<void> submitStatementForm(
       {required final String accessToken,
       required final StatementFormInfoToSubmit formInfo});
+  Future<List<ParticipantEntity>> findParticipant(
+      {required final String accessToken, required final String name});
 }
 
 class StatementsRepository implements IStatementsRepository {
@@ -48,6 +51,19 @@ class StatementsRepository implements IStatementsRepository {
       return _statementsProvider.submitStatementForm(
         accessToken: accessToken,
         formInfo: formInfo,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ParticipantEntity>> findParticipant(
+      {required String accessToken, required String name}) {
+    try {
+      return _statementsProvider.findParticipant(
+        accessToken: accessToken,
+        name: name,
       );
     } catch (e) {
       rethrow;

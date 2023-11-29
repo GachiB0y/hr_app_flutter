@@ -23,6 +23,8 @@ StatementTempalteEntity _$StatementTempalteEntityFromJson(
 mixin _$StatementTempalteEntity {
   @JsonKey(name: 'document_type')
   String get documentType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'select_participants')
+  bool get isParticipants => throw _privateConstructorUsedError;
   List<TemplateField> get template => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,6 +41,7 @@ abstract class $StatementTempalteEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      @JsonKey(name: 'select_participants') bool isParticipants,
       List<TemplateField> template});
 }
 
@@ -57,6 +60,7 @@ class _$StatementTempalteEntityCopyWithImpl<$Res,
   @override
   $Res call({
     Object? documentType = null,
+    Object? isParticipants = null,
     Object? template = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +68,10 @@ class _$StatementTempalteEntityCopyWithImpl<$Res,
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
+      isParticipants: null == isParticipants
+          ? _value.isParticipants
+          : isParticipants // ignore: cast_nullable_to_non_nullable
+              as bool,
       template: null == template
           ? _value.template
           : template // ignore: cast_nullable_to_non_nullable
@@ -82,6 +90,7 @@ abstract class _$$_StatementTempalteEntityCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      @JsonKey(name: 'select_participants') bool isParticipants,
       List<TemplateField> template});
 }
 
@@ -98,6 +107,7 @@ class __$$_StatementTempalteEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? documentType = null,
+    Object? isParticipants = null,
     Object? template = null,
   }) {
     return _then(_$_StatementTempalteEntity(
@@ -105,6 +115,10 @@ class __$$_StatementTempalteEntityCopyWithImpl<$Res>
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
+      isParticipants: null == isParticipants
+          ? _value.isParticipants
+          : isParticipants // ignore: cast_nullable_to_non_nullable
+              as bool,
       template: null == template
           ? _value._template
           : template // ignore: cast_nullable_to_non_nullable
@@ -118,6 +132,7 @@ class __$$_StatementTempalteEntityCopyWithImpl<$Res>
 class _$_StatementTempalteEntity implements _StatementTempalteEntity {
   const _$_StatementTempalteEntity(
       {@JsonKey(name: 'document_type') required this.documentType,
+      @JsonKey(name: 'select_participants') required this.isParticipants,
       required final List<TemplateField> template})
       : _template = template;
 
@@ -127,6 +142,9 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
   @override
   @JsonKey(name: 'document_type')
   final String documentType;
+  @override
+  @JsonKey(name: 'select_participants')
+  final bool isParticipants;
   final List<TemplateField> _template;
   @override
   List<TemplateField> get template {
@@ -137,7 +155,7 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
 
   @override
   String toString() {
-    return 'StatementTempalteEntity(documentType: $documentType, template: $template)';
+    return 'StatementTempalteEntity(documentType: $documentType, isParticipants: $isParticipants, template: $template)';
   }
 
   @override
@@ -147,12 +165,14 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
             other is _$_StatementTempalteEntity &&
             (identical(other.documentType, documentType) ||
                 other.documentType == documentType) &&
+            (identical(other.isParticipants, isParticipants) ||
+                other.isParticipants == isParticipants) &&
             const DeepCollectionEquality().equals(other._template, _template));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, documentType,
+  int get hashCode => Object.hash(runtimeType, documentType, isParticipants,
       const DeepCollectionEquality().hash(_template));
 
   @JsonKey(ignore: true)
@@ -173,9 +193,10 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
 
 abstract class _StatementTempalteEntity implements StatementTempalteEntity {
   const factory _StatementTempalteEntity(
-          {@JsonKey(name: 'document_type') required final String documentType,
-          required final List<TemplateField> template}) =
-      _$_StatementTempalteEntity;
+      {@JsonKey(name: 'document_type') required final String documentType,
+      @JsonKey(name: 'select_participants') required final bool isParticipants,
+      required final List<TemplateField>
+          template}) = _$_StatementTempalteEntity;
 
   factory _StatementTempalteEntity.fromJson(Map<String, dynamic> json) =
       _$_StatementTempalteEntity.fromJson;
@@ -183,6 +204,9 @@ abstract class _StatementTempalteEntity implements StatementTempalteEntity {
   @override
   @JsonKey(name: 'document_type')
   String get documentType;
+  @override
+  @JsonKey(name: 'select_participants')
+  bool get isParticipants;
   @override
   List<TemplateField> get template;
   @override

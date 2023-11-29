@@ -20,11 +20,7 @@ ParticipantEntity _$ParticipantEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ParticipantEntity {
-  @JsonKey(name: 'document_type')
-  String get documentType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
   String get patronymic => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
@@ -43,9 +39,8 @@ abstract class $ParticipantEntityCopyWith<$Res> {
       _$ParticipantEntityCopyWithImpl<$Res, ParticipantEntity>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'last_name') String lastName,
-      @JsonKey(name: 'first_name') String firstName,
+      {String lastName,
+      String firstName,
       String patronymic,
       String id,
       String position});
@@ -64,7 +59,6 @@ class _$ParticipantEntityCopyWithImpl<$Res, $Val extends ParticipantEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentType = null,
     Object? lastName = null,
     Object? firstName = null,
     Object? patronymic = null,
@@ -72,10 +66,6 @@ class _$ParticipantEntityCopyWithImpl<$Res, $Val extends ParticipantEntity>
     Object? position = null,
   }) {
     return _then(_value.copyWith(
-      documentType: null == documentType
-          ? _value.documentType
-          : documentType // ignore: cast_nullable_to_non_nullable
-              as String,
       lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -109,9 +99,8 @@ abstract class _$$_ParticipantEntityCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'last_name') String lastName,
-      @JsonKey(name: 'first_name') String firstName,
+      {String lastName,
+      String firstName,
       String patronymic,
       String id,
       String position});
@@ -128,7 +117,6 @@ class __$$_ParticipantEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentType = null,
     Object? lastName = null,
     Object? firstName = null,
     Object? patronymic = null,
@@ -136,10 +124,6 @@ class __$$_ParticipantEntityCopyWithImpl<$Res>
     Object? position = null,
   }) {
     return _then(_$_ParticipantEntity(
-      documentType: null == documentType
-          ? _value.documentType
-          : documentType // ignore: cast_nullable_to_non_nullable
-              as String,
       lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -168,9 +152,8 @@ class __$$_ParticipantEntityCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ParticipantEntity implements _ParticipantEntity {
   const _$_ParticipantEntity(
-      {@JsonKey(name: 'document_type') required this.documentType,
-      @JsonKey(name: 'last_name') required this.lastName,
-      @JsonKey(name: 'first_name') required this.firstName,
+      {required this.lastName,
+      required this.firstName,
       required this.patronymic,
       required this.id,
       required this.position});
@@ -179,13 +162,8 @@ class _$_ParticipantEntity implements _ParticipantEntity {
       _$$_ParticipantEntityFromJson(json);
 
   @override
-  @JsonKey(name: 'document_type')
-  final String documentType;
-  @override
-  @JsonKey(name: 'last_name')
   final String lastName;
   @override
-  @JsonKey(name: 'first_name')
   final String firstName;
   @override
   final String patronymic;
@@ -196,7 +174,7 @@ class _$_ParticipantEntity implements _ParticipantEntity {
 
   @override
   String toString() {
-    return 'ParticipantEntity(documentType: $documentType, lastName: $lastName, firstName: $firstName, patronymic: $patronymic, id: $id, position: $position)';
+    return 'ParticipantEntity(lastName: $lastName, firstName: $firstName, patronymic: $patronymic, id: $id, position: $position)';
   }
 
   @override
@@ -204,8 +182,6 @@ class _$_ParticipantEntity implements _ParticipantEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ParticipantEntity &&
-            (identical(other.documentType, documentType) ||
-                other.documentType == documentType) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.firstName, firstName) ||
@@ -219,8 +195,8 @@ class _$_ParticipantEntity implements _ParticipantEntity {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, documentType, lastName, firstName, patronymic, id, position);
+  int get hashCode =>
+      Object.hash(runtimeType, lastName, firstName, patronymic, id, position);
 
   @JsonKey(ignore: true)
   @override
@@ -239,9 +215,8 @@ class _$_ParticipantEntity implements _ParticipantEntity {
 
 abstract class _ParticipantEntity implements ParticipantEntity {
   const factory _ParticipantEntity(
-      {@JsonKey(name: 'document_type') required final String documentType,
-      @JsonKey(name: 'last_name') required final String lastName,
-      @JsonKey(name: 'first_name') required final String firstName,
+      {required final String lastName,
+      required final String firstName,
       required final String patronymic,
       required final String id,
       required final String position}) = _$_ParticipantEntity;
@@ -250,13 +225,8 @@ abstract class _ParticipantEntity implements ParticipantEntity {
       _$_ParticipantEntity.fromJson;
 
   @override
-  @JsonKey(name: 'document_type')
-  String get documentType;
-  @override
-  @JsonKey(name: 'last_name')
   String get lastName;
   @override
-  @JsonKey(name: 'first_name')
   String get firstName;
   @override
   String get patronymic;

@@ -10,6 +10,7 @@ _$_StatementTempalteEntity _$$_StatementTempalteEntityFromJson(
         Map<String, dynamic> json) =>
     _$_StatementTempalteEntity(
       documentType: json['document_type'] as String,
+      isParticipants: json['select_participants'] as bool,
       template: (json['template'] as List<dynamic>)
           .map((e) => TemplateField.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -19,6 +20,7 @@ Map<String, dynamic> _$$_StatementTempalteEntityToJson(
         _$_StatementTempalteEntity instance) =>
     <String, dynamic>{
       'document_type': instance.documentType,
+      'select_participants': instance.isParticipants,
       'template': instance.template,
     };
 

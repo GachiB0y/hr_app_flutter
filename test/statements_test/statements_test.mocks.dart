@@ -9,10 +9,12 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart'
     as _i5;
+import 'package:hr_app_flutter/features/statements/model/participant/participant.dart'
+    as _i6;
 import 'package:hr_app_flutter/features/statements/model/statements/statements.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -237,6 +239,26 @@ class MockIStatementsRepository extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+  @override
+  _i4.Future<List<_i6.ParticipantEntity>> findParticipant({
+    required String? accessToken,
+    required String? name,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #findParticipant,
+          [],
+          {
+            #accessToken: accessToken,
+            #name: name,
+          },
+        ),
+        returnValue: _i4.Future<List<_i6.ParticipantEntity>>.value(
+            <_i6.ParticipantEntity>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i6.ParticipantEntity>>.value(
+                <_i6.ParticipantEntity>[]),
+      ) as _i4.Future<List<_i6.ParticipantEntity>>);
 }
 
 /// A class which mocks [StatementTempalteEntity].
@@ -247,15 +269,21 @@ class MockStatementTempalteEntity extends _i1.Mock
   @override
   String get documentType => (super.noSuchMethod(
         Invocation.getter(#documentType),
-        returnValue: _i6.dummyValue<String>(
+        returnValue: _i7.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),
-        returnValueForMissingStub: _i6.dummyValue<String>(
+        returnValueForMissingStub: _i7.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),
       ) as String);
+  @override
+  bool get isParticipants => (super.noSuchMethod(
+        Invocation.getter(#isParticipants),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
   @override
   List<_i2.TemplateField> get template => (super.noSuchMethod(
         Invocation.getter(#template),

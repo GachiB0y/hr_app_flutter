@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
 
 import '../../../../core/constant/constants.dart';
+import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 
 abstract interface class IStatementsProvider {
@@ -12,6 +13,8 @@ abstract interface class IStatementsProvider {
   Future<void> submitStatementForm(
       {required final String accessToken,
       required final StatementFormInfoToSubmit formInfo});
+  Future<List<ParticipantEntity>> findParticipant(
+      {required final String accessToken, required final String name});
 }
 
 class StatementProviderImpl implements IStatementsProvider {
@@ -66,6 +69,26 @@ class StatementProviderImpl implements IStatementsProvider {
       return;
     } else {
       throw Exception('Error send submit Statement Form!!!');
+    }
+  }
+
+  @override
+  Future<List<ParticipantEntity>> findParticipant(
+      {required String accessToken, required String name}) async {
+    String uri = '$urlAdress/hrlink/getEmployees?search=$name&offset=0&limit=5';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final List<ParticipantEntity> result =
+          (jsonData['colleagues'] as List<dynamic>)
+              .map((item) => ParticipantEntity.fromJson(item))
+              .toList();
+
+      return result;
+    } else {
+      throw Exception('Error fetching Statement Form');
     }
   }
 }

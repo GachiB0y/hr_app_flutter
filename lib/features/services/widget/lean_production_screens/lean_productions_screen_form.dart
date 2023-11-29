@@ -13,7 +13,6 @@ import '../../../../core/widget/components/custom_text_form_field/custom_text_fo
 import '../../../../core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
 import '../../../../core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
-import '../../../user/model/user/user.dart';
 import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 
@@ -59,27 +58,24 @@ class LeanProductionFormScreen extends StatelessWidget
           backgroundColor: Colors.grey[200],
           title: const Text('Подача заявления'),
         ),
-        body: MyFormWidget(
-          authRepository: authRepository,
-          userRepo: userRepo,
-        ),
+        body: const LeanProductionFormWidget(),
         floatingActionButton: const CustomFABFromFilePicker(),
       ),
     );
   }
 }
 
-class MyFormWidget extends StatefulWidget {
-  const MyFormWidget(
-      {super.key, required this.authRepository, required this.userRepo});
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
+class LeanProductionFormWidget extends StatefulWidget {
+  const LeanProductionFormWidget({
+    super.key,
+  });
 
   @override
-  _MyFormWidgetState createState() => _MyFormWidgetState();
+  _LeanProductionFormWidgetState createState() =>
+      _LeanProductionFormWidgetState();
 }
 
-class _MyFormWidgetState extends State<MyFormWidget> {
+class _LeanProductionFormWidgetState extends State<LeanProductionFormWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _employeeNameController = TextEditingController();
@@ -201,8 +197,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                     return Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: ImplementersInputWidget(
-                        authRepository: widget.authRepository,
-                        userRepo: widget.userRepo,
                         iconData: Icons.person_4,
                         inputText: 'Исполнитель ${index + 1}',
                         nameController: _executorsControllers[index],
@@ -337,8 +331,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
 class ImplementersInputWidget extends StatefulWidget {
   const ImplementersInputWidget({
     super.key,
-    required this.authRepository,
-    required this.userRepo,
     required TextEditingController nameController,
     required TextEditingController idController,
     required IconData? iconData,
@@ -347,8 +339,6 @@ class ImplementersInputWidget extends StatefulWidget {
         _nameController = nameController,
         _iconData = iconData,
         _inputText = inputText;
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
 
   final TextEditingController _nameController;
   final TextEditingController _idController;
@@ -361,7 +351,6 @@ class ImplementersInputWidget extends StatefulWidget {
 }
 
 class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
-  List<User> filteredUserList = [];
   Timer? searchDebounce;
   final FocusNode focusNodeSearch = FocusNode();
   bool isFocus = false;

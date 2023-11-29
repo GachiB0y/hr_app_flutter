@@ -3,13 +3,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'statements.freezed.dart';
-
 part 'statements.g.dart';
 
 @freezed
 class StatementTempalteEntity with _$StatementTempalteEntity {
   const factory StatementTempalteEntity({
     @JsonKey(name: 'document_type') required final String documentType,
+    @JsonKey(name: 'select_participants') required final bool isParticipants,
     required List<TemplateField> template,
   }) = _StatementTempalteEntity;
 

@@ -181,9 +181,8 @@ class ScreenFactoryDefault implements ScreenFactory {
           ],
           supportedLocales: S.delegate.supportedLocales,
           title: 'HR App',
-          theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-          darkTheme:
-              ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+          theme: lightThemeData,
+          darkTheme: darkThemeData,
           routerConfig: _router.config(),
         ),
       ),
