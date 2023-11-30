@@ -20,18 +20,21 @@ mixin _$StatementsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
+    required TResult Function(String code) signDocument,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
+    TResult? Function(String code)? signDocument,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
+    TResult Function(String code)? signDocument,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$StatementsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(StatementsEventCreate value) create,
     required TResult Function(StatementsEventFetch value) fetch,
+    required TResult Function(StatementsEventSignDocument value) signDocument,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(StatementsEventCreate value)? create,
     TResult? Function(StatementsEventFetch value)? fetch,
+    TResult? Function(StatementsEventSignDocument value)? signDocument,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(StatementsEventCreate value)? create,
     TResult Function(StatementsEventFetch value)? fetch,
+    TResult Function(StatementsEventSignDocument value)? signDocument,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -152,6 +158,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult when<TResult extends Object?>({
     required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
+    required TResult Function(String code) signDocument,
   }) {
     return create(itemsForm);
   }
@@ -161,6 +168,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
+    TResult? Function(String code)? signDocument,
   }) {
     return create?.call(itemsForm);
   }
@@ -170,6 +178,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
+    TResult Function(String code)? signDocument,
     required TResult orElse(),
   }) {
     if (create != null) {
@@ -183,6 +192,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult map<TResult extends Object?>({
     required TResult Function(StatementsEventCreate value) create,
     required TResult Function(StatementsEventFetch value) fetch,
+    required TResult Function(StatementsEventSignDocument value) signDocument,
   }) {
     return create(this);
   }
@@ -192,6 +202,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(StatementsEventCreate value)? create,
     TResult? Function(StatementsEventFetch value)? fetch,
+    TResult? Function(StatementsEventSignDocument value)? signDocument,
   }) {
     return create?.call(this);
   }
@@ -201,6 +212,7 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(StatementsEventCreate value)? create,
     TResult Function(StatementsEventFetch value)? fetch,
+    TResult Function(StatementsEventSignDocument value)? signDocument,
     required TResult orElse(),
   }) {
     if (create != null) {
@@ -289,6 +301,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult when<TResult extends Object?>({
     required TResult Function(StatementFormInfoToSubmit itemsForm) create,
     required TResult Function(String id) fetch,
+    required TResult Function(String code) signDocument,
   }) {
     return fetch(id);
   }
@@ -298,6 +311,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult? Function(String id)? fetch,
+    TResult? Function(String code)? signDocument,
   }) {
     return fetch?.call(id);
   }
@@ -307,6 +321,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(StatementFormInfoToSubmit itemsForm)? create,
     TResult Function(String id)? fetch,
+    TResult Function(String code)? signDocument,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -320,6 +335,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult map<TResult extends Object?>({
     required TResult Function(StatementsEventCreate value) create,
     required TResult Function(StatementsEventFetch value) fetch,
+    required TResult Function(StatementsEventSignDocument value) signDocument,
   }) {
     return fetch(this);
   }
@@ -329,6 +345,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(StatementsEventCreate value)? create,
     TResult? Function(StatementsEventFetch value)? fetch,
+    TResult? Function(StatementsEventSignDocument value)? signDocument,
   }) {
     return fetch?.call(this);
   }
@@ -338,6 +355,7 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(StatementsEventCreate value)? create,
     TResult Function(StatementsEventFetch value)? fetch,
+    TResult Function(StatementsEventSignDocument value)? signDocument,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -356,4 +374,148 @@ abstract class StatementsEventFetch extends StatementsEvent {
   @JsonKey(ignore: true)
   _$$StatementsEventFetchCopyWith<_$StatementsEventFetch> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$StatementsEventSignDocumentCopyWith<$Res> {
+  factory _$$StatementsEventSignDocumentCopyWith(
+          _$StatementsEventSignDocument value,
+          $Res Function(_$StatementsEventSignDocument) then) =
+      __$$StatementsEventSignDocumentCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String code});
+}
+
+/// @nodoc
+class __$$StatementsEventSignDocumentCopyWithImpl<$Res>
+    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventSignDocument>
+    implements _$$StatementsEventSignDocumentCopyWith<$Res> {
+  __$$StatementsEventSignDocumentCopyWithImpl(
+      _$StatementsEventSignDocument _value,
+      $Res Function(_$StatementsEventSignDocument) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? code = null,
+  }) {
+    return _then(_$StatementsEventSignDocument(
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$StatementsEventSignDocument extends StatementsEventSignDocument {
+  const _$StatementsEventSignDocument({required this.code}) : super._();
+
+  @override
+  final String code;
+
+  @override
+  String toString() {
+    return 'StatementsEvent.signDocument(code: $code)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StatementsEventSignDocument &&
+            (identical(other.code, code) || other.code == code));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StatementsEventSignDocumentCopyWith<_$StatementsEventSignDocument>
+      get copyWith => __$$StatementsEventSignDocumentCopyWithImpl<
+          _$StatementsEventSignDocument>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(StatementFormInfoToSubmit itemsForm) create,
+    required TResult Function(String id) fetch,
+    required TResult Function(String code) signDocument,
+  }) {
+    return signDocument(code);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(StatementFormInfoToSubmit itemsForm)? create,
+    TResult? Function(String id)? fetch,
+    TResult? Function(String code)? signDocument,
+  }) {
+    return signDocument?.call(code);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(StatementFormInfoToSubmit itemsForm)? create,
+    TResult Function(String id)? fetch,
+    TResult Function(String code)? signDocument,
+    required TResult orElse(),
+  }) {
+    if (signDocument != null) {
+      return signDocument(code);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StatementsEventCreate value) create,
+    required TResult Function(StatementsEventFetch value) fetch,
+    required TResult Function(StatementsEventSignDocument value) signDocument,
+  }) {
+    return signDocument(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StatementsEventCreate value)? create,
+    TResult? Function(StatementsEventFetch value)? fetch,
+    TResult? Function(StatementsEventSignDocument value)? signDocument,
+  }) {
+    return signDocument?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StatementsEventCreate value)? create,
+    TResult Function(StatementsEventFetch value)? fetch,
+    TResult Function(StatementsEventSignDocument value)? signDocument,
+    required TResult orElse(),
+  }) {
+    if (signDocument != null) {
+      return signDocument(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class StatementsEventSignDocument extends StatementsEvent {
+  const factory StatementsEventSignDocument({required final String code}) =
+      _$StatementsEventSignDocument;
+  const StatementsEventSignDocument._() : super._();
+
+  String get code;
+  @JsonKey(ignore: true)
+  _$$StatementsEventSignDocumentCopyWith<_$StatementsEventSignDocument>
+      get copyWith => throw _privateConstructorUsedError;
 }

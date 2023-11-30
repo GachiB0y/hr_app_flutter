@@ -6,11 +6,30 @@ part of 'statements.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_StatementViewModel _$$_StatementViewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_StatementViewModel(
+      tempalteEntity: json['tempalteEntity'] == null
+          ? null
+          : StatementTempalteEntity.fromJson(
+              json['tempalteEntity'] as Map<String, dynamic>),
+      isSmsApprove: json['isSmsApprove'] as bool? ?? false,
+      isSigningStatment: json['isSigningStatment'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_StatementViewModelToJson(
+        _$_StatementViewModel instance) =>
+    <String, dynamic>{
+      'tempalteEntity': instance.tempalteEntity,
+      'isSmsApprove': instance.isSmsApprove,
+      'isSigningStatment': instance.isSigningStatment,
+    };
+
 _$_StatementTempalteEntity _$$_StatementTempalteEntityFromJson(
         Map<String, dynamic> json) =>
     _$_StatementTempalteEntity(
       documentType: json['document_type'] as String,
-      isParticipants: json['select_participants'] as bool,
+      isParticipants: json['select_participants'] as bool?,
       template: (json['template'] as List<dynamic>)
           .map((e) => TemplateField.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -42,7 +61,7 @@ _$_StatementFormInfoToSubmit _$$_StatementFormInfoToSubmitFromJson(
         Map<String, dynamic> json) =>
     _$_StatementFormInfoToSubmit(
       documentType: json['document_type'] as String,
-      participantsTo: json['participants_to'] as String,
+      participantsTo: json['participantsTo'] as String,
       template: TemplateFormStatementsEntity.fromJson(
           json['template'] as Map<String, dynamic>),
     );
@@ -51,7 +70,7 @@ Map<String, dynamic> _$$_StatementFormInfoToSubmitToJson(
         _$_StatementFormInfoToSubmit instance) =>
     <String, dynamic>{
       'document_type': instance.documentType,
-      'participants_to': instance.participantsTo,
+      'participantsTo': instance.participantsTo,
       'template': instance.template,
     };
 

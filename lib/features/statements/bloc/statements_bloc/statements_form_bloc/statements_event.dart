@@ -12,4 +12,8 @@ class StatementsEvent with _$StatementsEvent {
   /// Fetch
   const factory StatementsEvent.fetch({required String id}) =
       StatementsEventFetch;
+
+  /// SignDocument
+  const factory StatementsEvent.signDocument({required String code}) =
+      StatementsEventSignDocument;
 }

@@ -6,10 +6,22 @@ part 'statements.freezed.dart';
 part 'statements.g.dart';
 
 @freezed
+class StatementViewModel with _$StatementViewModel {
+  const factory StatementViewModel({
+    required final StatementTempalteEntity? tempalteEntity,
+    @Default(false) bool isSmsApprove,
+    @Default(false) bool isSigningStatment,
+  }) = _StatementViewModel;
+
+  factory StatementViewModel.fromJson(Map<String, dynamic> json) =>
+      _$StatementViewModelFromJson(json);
+}
+
+@freezed
 class StatementTempalteEntity with _$StatementTempalteEntity {
   const factory StatementTempalteEntity({
     @JsonKey(name: 'document_type') required final String documentType,
-    @JsonKey(name: 'select_participants') required final bool isParticipants,
+    @JsonKey(name: 'select_participants') required final bool? isParticipants,
     required List<TemplateField> template,
   }) = _StatementTempalteEntity;
 
@@ -32,7 +44,8 @@ class StatementFieldTypeEntity with _$StatementFieldTypeEntity {
 class StatementFormInfoToSubmit with _$StatementFormInfoToSubmit {
   const factory StatementFormInfoToSubmit({
     @JsonKey(name: 'document_type') required final String documentType,
-    @JsonKey(name: 'participants_to') required final String participantsTo,
+    // @JsonKey(name: 'participants_to')
+    required final String participantsTo,
     required final TemplateFormStatementsEntity template,
   }) = _StatementFormInfoToSubmit;
   factory StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =>

@@ -51,9 +51,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final dateModel = ChangeNotifierProvaider.watch<
-        ChangeNotifierProvaider<CustomDatePickerModel>,
-        CustomDatePickerModel>(context);
     return GestureDetector(
       onTap: () {
         _selectDate(context);
@@ -68,8 +65,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              DateFormat('dd.MM.yyyy')
-                  .format(dateModel?.selectedDate ?? DateTime.now()),
+              DateFormat('dd.MM.yyyy').format(ChangeNotifierProvaider.watch<
+                          ChangeNotifierProvaider<CustomDatePickerModel>,
+                          CustomDatePickerModel>(context)
+                      ?.selectedDate ??
+                  DateTime.now()),
               style: const TextStyle(fontSize: 16),
             ),
             const Icon(Icons.calendar_today),

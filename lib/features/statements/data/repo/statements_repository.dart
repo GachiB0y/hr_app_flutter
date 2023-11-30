@@ -1,3 +1,4 @@
+import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 import '../rest_clietns/statement_provider.dart';
@@ -7,11 +8,13 @@ abstract interface class IStatementsRepository {
       {required final String accessToken});
   Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
-  Future<void> submitStatementForm(
+  Future<TypeOfAppplicationSigning> submitStatementForm(
       {required final String accessToken,
       required final StatementFormInfoToSubmit formInfo});
   Future<List<ParticipantEntity>> findParticipant(
       {required final String accessToken, required final String name});
+  Future<void> signDocumentBySmsCode(
+      {required final String accessToken, required final String code});
 }
 
 class StatementsRepository implements IStatementsRepository {
@@ -44,7 +47,7 @@ class StatementsRepository implements IStatementsRepository {
   }
 
   @override
-  Future<void> submitStatementForm(
+  Future<TypeOfAppplicationSigning> submitStatementForm(
       {required String accessToken,
       required StatementFormInfoToSubmit formInfo}) {
     try {
@@ -64,6 +67,19 @@ class StatementsRepository implements IStatementsRepository {
       return _statementsProvider.findParticipant(
         accessToken: accessToken,
         name: name,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> signDocumentBySmsCode(
+      {required String accessToken, required String code}) {
+    try {
+      return _statementsProvider.signDocumentBySmsCode(
+        accessToken: accessToken,
+        code: code,
       );
     } catch (e) {
       rethrow;

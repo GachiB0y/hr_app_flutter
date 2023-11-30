@@ -25,6 +25,8 @@ const statements = StatementTempalteEntity(
     documentType: 'test_document_type',
     template: [fieldFirts, fieldSecond],
     isParticipants: false);
+const viewModel =
+    StatementViewModel(tempalteEntity: statements, isSmsApprove: false);
 
 const ParticipantEntity participantFirst = ParticipantEntity(
     lastName: 'Волков',
@@ -78,7 +80,7 @@ void main() {
     });
 
     blocTest<StatementsBLoC, StatementsState>(
-        'emits [processing, error, idle] when fetchStatementForm  Exception throws',
+        'emits [processing, error, idle] when fetch Statement Form  Exception throws',
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
@@ -91,6 +93,38 @@ void main() {
             repositoryStatements: mockStatementsRepository),
         act: (bloc) =>
             bloc.add(StatementsEventFetch(id: statements.documentType)),
+        errors: () => [isA<Exception>()]);
+
+    blocTest<StatementsBLoC, StatementsState>(
+        'emits [processing, error, idle] when Create  Exception throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockStatementsRepository.submitStatementForm(
+                  accessToken: accessToken, formInfo: formInof))
+              .thenThrow(Exception('oops'));
+        },
+        build: () => StatementsBLoC(
+            authRepository: mockAuthRepository,
+            repositoryStatements: mockStatementsRepository),
+        act: (bloc) =>
+            bloc.add(const StatementsEventCreate(itemsForm: formInof)),
+        errors: () => [isA<Exception>()]);
+
+    blocTest<StatementsBLoC, StatementsState>(
+        'emits [processing, error, idle] when Signing Document  Exception throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockStatementsRepository.signDocumentBySmsCode(
+                  accessToken: accessToken, code: '2007'))
+              .thenThrow(Exception('oops'));
+        },
+        build: () => StatementsBLoC(
+            authRepository: mockAuthRepository,
+            repositoryStatements: mockStatementsRepository),
+        act: (bloc) =>
+            bloc.add(const StatementsEventSignDocument(code: '2007')),
         errors: () => [isA<Exception>()]);
 
     blocTest<StatementsBLoC, StatementsState>(
@@ -110,7 +144,7 @@ void main() {
         successfulState.having(
           (state) => state.data,
           'data',
-          statements,
+          viewModel,
         ),
         idleState
       ],
@@ -123,7 +157,7 @@ void main() {
             .thenAnswer((_) async => accessToken);
         when(mockStatementsRepository.submitStatementForm(
                 accessToken: accessToken, formInfo: formInof))
-            .thenAnswer((_) async => statements);
+            .thenAnswer((_) async => TypeOfAppplicationSigning.daefult);
       },
       build: () => statementsBloc,
       act: (bloc) => bloc.add(const StatementsEventCreate(itemsForm: formInof)),
@@ -133,6 +167,30 @@ void main() {
           (state) => state.data,
           'data',
           null,
+        ),
+        idleState
+      ],
+    );
+
+    blocTest<StatementsBLoC, StatementsState>(
+      'emits StatementsState.successful when Signing Document event is added',
+      setUp: () {
+        when(mockAuthRepository.cheskIsLiveAccessToken())
+            .thenAnswer((_) async => accessToken);
+        when(mockStatementsRepository.fetchStatementForm(
+                accessToken: accessToken, id: statements.documentType))
+            .thenAnswer((_) async => statements);
+      },
+      seed: () => const StatementsState$Idle(
+          data: StatementViewModel(tempalteEntity: statements)),
+      build: () => statementsBloc,
+      act: (bloc) => bloc.add(const StatementsEventSignDocument(code: '2007')),
+      expect: () => <dynamic>[
+        processingState,
+        successfulState.having(
+          (state) => state.data,
+          'data',
+          viewModel.copyWith(isSigningStatment: true),
         ),
         idleState
       ],

@@ -11,6 +11,11 @@ part 'statements_bloc.freezed.dart';
 part 'statements_event.dart';
 part 'statements_state.dart';
 
+enum TypeOfAppplicationSigning {
+  daefult,
+  smsCode,
+}
+
 /// Business Logic Component StatementsBLoC
 class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
     implements EventSink<StatementsEvent> {
@@ -31,6 +36,7 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       (event, emit) => event.map<Future<void>>(
         fetch: (event) => _fetchStatementForm(event, emit),
         create: (event) => _submitFormAndSend(event, emit),
+        signDocument: (event) => _signDocumentBySMSCode(event, emit),
       ),
       transformer: bloc_concurrency.sequential(),
     );
@@ -46,8 +52,12 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       emit(StatementsState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
-      final StatementTempalteEntity newData = await _repositoryStatements
-          .fetchStatementForm(accessToken: accessToken as String, id: event.id);
+      final StatementTempalteEntity newTempalteEntity =
+          await _repositoryStatements.fetchStatementForm(
+              accessToken: accessToken as String, id: event.id);
+
+      final newData = StatementViewModel(
+          isSmsApprove: false, tempalteEntity: newTempalteEntity);
       emit(StatementsState.successful(data: newData));
     } on TimeoutException {
       emit(StatementsState.error(
@@ -69,11 +79,47 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       emit(StatementsState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
-      await _repositoryStatements.submitStatementForm(
+      final TypeOfAppplicationSigning typeSigning =
+          await _repositoryStatements.submitStatementForm(
         accessToken: accessToken as String,
         formInfo: event.itemsForm,
       );
-      emit(StatementsState.successful(data: state.data));
+      switch (typeSigning) {
+        case TypeOfAppplicationSigning.smsCode:
+          {
+            final newData = state.data?.copyWith(isSmsApprove: true);
+
+            emit(StatementsState.successful(data: newData));
+          }
+        case TypeOfAppplicationSigning.daefult:
+          emit(StatementsState.successful(data: state.data));
+      }
+    } on TimeoutException {
+      emit(StatementsState.error(
+          data: state.data, message: 'Ошибка ожидания  запроса!'));
+      // ignore: unused_catch_stack
+    } on Object catch (err, stackTrace) {
+      //l.e('An error occurred in the StatementsBLoC: $err', stackTrace);
+      emit(StatementsState.error(data: state.data));
+      rethrow;
+    } finally {
+      emit(StatementsState.idle(data: state.data));
+    }
+  }
+
+  /// Sign document by SMS code event handler
+  Future<void> _signDocumentBySMSCode(
+      StatementsEventSignDocument event, Emitter<StatementsState> emit) async {
+    try {
+      emit(StatementsState.processing(data: state.data));
+      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
+      await _repositoryStatements.signDocumentBySmsCode(
+        accessToken: accessToken as String,
+        code: event.code,
+      );
+      final newData = state.data?.copyWith(isSigningStatment: true);
+      emit(StatementsState.successful(data: newData));
     } on TimeoutException {
       emit(StatementsState.error(
           data: state.data, message: 'Ошибка ожидания  запроса!'));

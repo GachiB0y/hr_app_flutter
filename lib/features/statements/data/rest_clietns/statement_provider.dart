@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
 
 import '../../../../core/constant/constants.dart';
+import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 
@@ -10,9 +11,11 @@ abstract interface class IStatementsProvider {
       {required final String accessToken});
   Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
-  Future<void> submitStatementForm(
+  Future<TypeOfAppplicationSigning> submitStatementForm(
       {required final String accessToken,
       required final StatementFormInfoToSubmit formInfo});
+  Future<void> signDocumentBySmsCode(
+      {required final String accessToken, required final String code});
   Future<List<ParticipantEntity>> findParticipant(
       {required final String accessToken, required final String name});
 }
@@ -58,15 +61,21 @@ class StatementProviderImpl implements IStatementsProvider {
   }
 
   @override
-  Future<void> submitStatementForm(
+  Future<TypeOfAppplicationSigning> submitStatementForm(
       {required String accessToken,
       required StatementFormInfoToSubmit formInfo}) async {
-    String uri = '$urlAdress/hrlink/createStatement';
+    String uri = '$urlAdress/hrlink/create_document';
     final String body = json.encode(formInfo.toJson());
     final response =
         await _httpService.post(uri: uri, userToken: accessToken, body: body);
     if (response.statusCode == 201) {
-      return;
+      final jsonResponse = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonResponse);
+      final bool isSms = jsonData['form_sms'];
+      if (isSms) {
+        return TypeOfAppplicationSigning.smsCode;
+      }
+      return TypeOfAppplicationSigning.daefult;
     } else {
       throw Exception('Error send submit Statement Form!!!');
     }
@@ -89,6 +98,22 @@ class StatementProviderImpl implements IStatementsProvider {
       return result;
     } else {
       throw Exception('Error fetching Statement Form');
+    }
+  }
+
+  @override
+  Future<void> signDocumentBySmsCode(
+      {required String accessToken, required String code}) async {
+    String uri = '$urlAdress/hrlink/sign_document?code=$code';
+
+    final response = await _httpService.put(
+      uri: uri,
+      userToken: accessToken,
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Error send submit Statement Form!!!');
     }
   }
 }

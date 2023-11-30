@@ -14,6 +14,212 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+StatementViewModel _$StatementViewModelFromJson(Map<String, dynamic> json) {
+  return _StatementViewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StatementViewModel {
+  StatementTempalteEntity? get tempalteEntity =>
+      throw _privateConstructorUsedError;
+  bool get isSmsApprove => throw _privateConstructorUsedError;
+  bool get isSigningStatment => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StatementViewModelCopyWith<StatementViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StatementViewModelCopyWith<$Res> {
+  factory $StatementViewModelCopyWith(
+          StatementViewModel value, $Res Function(StatementViewModel) then) =
+      _$StatementViewModelCopyWithImpl<$Res, StatementViewModel>;
+  @useResult
+  $Res call(
+      {StatementTempalteEntity? tempalteEntity,
+      bool isSmsApprove,
+      bool isSigningStatment});
+
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity;
+}
+
+/// @nodoc
+class _$StatementViewModelCopyWithImpl<$Res, $Val extends StatementViewModel>
+    implements $StatementViewModelCopyWith<$Res> {
+  _$StatementViewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tempalteEntity = freezed,
+    Object? isSmsApprove = null,
+    Object? isSigningStatment = null,
+  }) {
+    return _then(_value.copyWith(
+      tempalteEntity: freezed == tempalteEntity
+          ? _value.tempalteEntity
+          : tempalteEntity // ignore: cast_nullable_to_non_nullable
+              as StatementTempalteEntity?,
+      isSmsApprove: null == isSmsApprove
+          ? _value.isSmsApprove
+          : isSmsApprove // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSigningStatment: null == isSigningStatment
+          ? _value.isSigningStatment
+          : isSigningStatment // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity {
+    if (_value.tempalteEntity == null) {
+      return null;
+    }
+
+    return $StatementTempalteEntityCopyWith<$Res>(_value.tempalteEntity!,
+        (value) {
+      return _then(_value.copyWith(tempalteEntity: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_StatementViewModelCopyWith<$Res>
+    implements $StatementViewModelCopyWith<$Res> {
+  factory _$$_StatementViewModelCopyWith(_$_StatementViewModel value,
+          $Res Function(_$_StatementViewModel) then) =
+      __$$_StatementViewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {StatementTempalteEntity? tempalteEntity,
+      bool isSmsApprove,
+      bool isSigningStatment});
+
+  @override
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity;
+}
+
+/// @nodoc
+class __$$_StatementViewModelCopyWithImpl<$Res>
+    extends _$StatementViewModelCopyWithImpl<$Res, _$_StatementViewModel>
+    implements _$$_StatementViewModelCopyWith<$Res> {
+  __$$_StatementViewModelCopyWithImpl(
+      _$_StatementViewModel _value, $Res Function(_$_StatementViewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tempalteEntity = freezed,
+    Object? isSmsApprove = null,
+    Object? isSigningStatment = null,
+  }) {
+    return _then(_$_StatementViewModel(
+      tempalteEntity: freezed == tempalteEntity
+          ? _value.tempalteEntity
+          : tempalteEntity // ignore: cast_nullable_to_non_nullable
+              as StatementTempalteEntity?,
+      isSmsApprove: null == isSmsApprove
+          ? _value.isSmsApprove
+          : isSmsApprove // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSigningStatment: null == isSigningStatment
+          ? _value.isSigningStatment
+          : isSigningStatment // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_StatementViewModel implements _StatementViewModel {
+  const _$_StatementViewModel(
+      {required this.tempalteEntity,
+      this.isSmsApprove = false,
+      this.isSigningStatment = false});
+
+  factory _$_StatementViewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_StatementViewModelFromJson(json);
+
+  @override
+  final StatementTempalteEntity? tempalteEntity;
+  @override
+  @JsonKey()
+  final bool isSmsApprove;
+  @override
+  @JsonKey()
+  final bool isSigningStatment;
+
+  @override
+  String toString() {
+    return 'StatementViewModel(tempalteEntity: $tempalteEntity, isSmsApprove: $isSmsApprove, isSigningStatment: $isSigningStatment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StatementViewModel &&
+            (identical(other.tempalteEntity, tempalteEntity) ||
+                other.tempalteEntity == tempalteEntity) &&
+            (identical(other.isSmsApprove, isSmsApprove) ||
+                other.isSmsApprove == isSmsApprove) &&
+            (identical(other.isSigningStatment, isSigningStatment) ||
+                other.isSigningStatment == isSigningStatment));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, tempalteEntity, isSmsApprove, isSigningStatment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StatementViewModelCopyWith<_$_StatementViewModel> get copyWith =>
+      __$$_StatementViewModelCopyWithImpl<_$_StatementViewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StatementViewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StatementViewModel implements StatementViewModel {
+  const factory _StatementViewModel(
+      {required final StatementTempalteEntity? tempalteEntity,
+      final bool isSmsApprove,
+      final bool isSigningStatment}) = _$_StatementViewModel;
+
+  factory _StatementViewModel.fromJson(Map<String, dynamic> json) =
+      _$_StatementViewModel.fromJson;
+
+  @override
+  StatementTempalteEntity? get tempalteEntity;
+  @override
+  bool get isSmsApprove;
+  @override
+  bool get isSigningStatment;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StatementViewModelCopyWith<_$_StatementViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 StatementTempalteEntity _$StatementTempalteEntityFromJson(
     Map<String, dynamic> json) {
   return _StatementTempalteEntity.fromJson(json);
@@ -24,7 +230,7 @@ mixin _$StatementTempalteEntity {
   @JsonKey(name: 'document_type')
   String get documentType => throw _privateConstructorUsedError;
   @JsonKey(name: 'select_participants')
-  bool get isParticipants => throw _privateConstructorUsedError;
+  bool? get isParticipants => throw _privateConstructorUsedError;
   List<TemplateField> get template => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +247,7 @@ abstract class $StatementTempalteEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'select_participants') bool isParticipants,
+      @JsonKey(name: 'select_participants') bool? isParticipants,
       List<TemplateField> template});
 }
 
@@ -60,7 +266,7 @@ class _$StatementTempalteEntityCopyWithImpl<$Res,
   @override
   $Res call({
     Object? documentType = null,
-    Object? isParticipants = null,
+    Object? isParticipants = freezed,
     Object? template = null,
   }) {
     return _then(_value.copyWith(
@@ -68,10 +274,10 @@ class _$StatementTempalteEntityCopyWithImpl<$Res,
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
-      isParticipants: null == isParticipants
+      isParticipants: freezed == isParticipants
           ? _value.isParticipants
           : isParticipants // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       template: null == template
           ? _value.template
           : template // ignore: cast_nullable_to_non_nullable
@@ -90,7 +296,7 @@ abstract class _$$_StatementTempalteEntityCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'select_participants') bool isParticipants,
+      @JsonKey(name: 'select_participants') bool? isParticipants,
       List<TemplateField> template});
 }
 
@@ -107,7 +313,7 @@ class __$$_StatementTempalteEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? documentType = null,
-    Object? isParticipants = null,
+    Object? isParticipants = freezed,
     Object? template = null,
   }) {
     return _then(_$_StatementTempalteEntity(
@@ -115,10 +321,10 @@ class __$$_StatementTempalteEntityCopyWithImpl<$Res>
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
-      isParticipants: null == isParticipants
+      isParticipants: freezed == isParticipants
           ? _value.isParticipants
           : isParticipants // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       template: null == template
           ? _value._template
           : template // ignore: cast_nullable_to_non_nullable
@@ -144,7 +350,7 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
   final String documentType;
   @override
   @JsonKey(name: 'select_participants')
-  final bool isParticipants;
+  final bool? isParticipants;
   final List<TemplateField> _template;
   @override
   List<TemplateField> get template {
@@ -194,7 +400,7 @@ class _$_StatementTempalteEntity implements _StatementTempalteEntity {
 abstract class _StatementTempalteEntity implements StatementTempalteEntity {
   const factory _StatementTempalteEntity(
       {@JsonKey(name: 'document_type') required final String documentType,
-      @JsonKey(name: 'select_participants') required final bool isParticipants,
+      @JsonKey(name: 'select_participants') required final bool? isParticipants,
       required final List<TemplateField>
           template}) = _$_StatementTempalteEntity;
 
@@ -206,7 +412,7 @@ abstract class _StatementTempalteEntity implements StatementTempalteEntity {
   String get documentType;
   @override
   @JsonKey(name: 'select_participants')
-  bool get isParticipants;
+  bool? get isParticipants;
   @override
   List<TemplateField> get template;
   @override
@@ -396,8 +602,8 @@ StatementFormInfoToSubmit _$StatementFormInfoToSubmitFromJson(
 /// @nodoc
 mixin _$StatementFormInfoToSubmit {
   @JsonKey(name: 'document_type')
-  String get documentType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'participants_to')
+  String get documentType =>
+      throw _privateConstructorUsedError; // @JsonKey(name: 'participants_to')
   String get participantsTo => throw _privateConstructorUsedError;
   TemplateFormStatementsEntity get template =>
       throw _privateConstructorUsedError;
@@ -416,7 +622,7 @@ abstract class $StatementFormInfoToSubmitCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'participants_to') String participantsTo,
+      String participantsTo,
       TemplateFormStatementsEntity template});
 
   $TemplateFormStatementsEntityCopyWith<$Res> get template;
@@ -477,7 +683,7 @@ abstract class _$$_StatementFormInfoToSubmitCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
-      @JsonKey(name: 'participants_to') String participantsTo,
+      String participantsTo,
       TemplateFormStatementsEntity template});
 
   @override
@@ -523,7 +729,7 @@ class __$$_StatementFormInfoToSubmitCopyWithImpl<$Res>
 class _$_StatementFormInfoToSubmit implements _StatementFormInfoToSubmit {
   const _$_StatementFormInfoToSubmit(
       {@JsonKey(name: 'document_type') required this.documentType,
-      @JsonKey(name: 'participants_to') required this.participantsTo,
+      required this.participantsTo,
       required this.template});
 
   factory _$_StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =>
@@ -532,8 +738,8 @@ class _$_StatementFormInfoToSubmit implements _StatementFormInfoToSubmit {
   @override
   @JsonKey(name: 'document_type')
   final String documentType;
+// @JsonKey(name: 'participants_to')
   @override
-  @JsonKey(name: 'participants_to')
   final String participantsTo;
   @override
   final TemplateFormStatementsEntity template;
@@ -578,10 +784,10 @@ class _$_StatementFormInfoToSubmit implements _StatementFormInfoToSubmit {
 
 abstract class _StatementFormInfoToSubmit implements StatementFormInfoToSubmit {
   const factory _StatementFormInfoToSubmit(
-      {@JsonKey(name: 'document_type') required final String documentType,
-      @JsonKey(name: 'participants_to') required final String participantsTo,
-      required final TemplateFormStatementsEntity
-          template}) = _$_StatementFormInfoToSubmit;
+          {@JsonKey(name: 'document_type') required final String documentType,
+          required final String participantsTo,
+          required final TemplateFormStatementsEntity template}) =
+      _$_StatementFormInfoToSubmit;
 
   factory _StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =
       _$_StatementFormInfoToSubmit.fromJson;
@@ -589,8 +795,7 @@ abstract class _StatementFormInfoToSubmit implements StatementFormInfoToSubmit {
   @override
   @JsonKey(name: 'document_type')
   String get documentType;
-  @override
-  @JsonKey(name: 'participants_to')
+  @override // @JsonKey(name: 'participants_to')
   String get participantsTo;
   @override
   TemplateFormStatementsEntity get template;

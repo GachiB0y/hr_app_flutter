@@ -7,14 +7,16 @@ import 'dart:async' as _i4;
 
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
+import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_form_bloc/statements_bloc.dart'
+    as _i6;
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart'
     as _i5;
 import 'package:hr_app_flutter/features/statements/model/participant/participant.dart'
-    as _i6;
+    as _i7;
 import 'package:hr_app_flutter/features/statements/model/statements/statements.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -223,7 +225,7 @@ class MockIStatementsRepository extends _i1.Mock
         )),
       ) as _i4.Future<_i2.StatementTempalteEntity>);
   @override
-  _i4.Future<void> submitStatementForm({
+  _i4.Future<_i6.TypeOfAppplicationSigning> submitStatementForm({
     required String? accessToken,
     required _i2.StatementFormInfoToSubmit? formInfo,
   }) =>
@@ -236,11 +238,14 @@ class MockIStatementsRepository extends _i1.Mock
             #formInfo: formInfo,
           },
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i4.Future<_i6.TypeOfAppplicationSigning>.value(
+            _i6.TypeOfAppplicationSigning.daefult),
+        returnValueForMissingStub:
+            _i4.Future<_i6.TypeOfAppplicationSigning>.value(
+                _i6.TypeOfAppplicationSigning.daefult),
+      ) as _i4.Future<_i6.TypeOfAppplicationSigning>);
   @override
-  _i4.Future<List<_i6.ParticipantEntity>> findParticipant({
+  _i4.Future<List<_i7.ParticipantEntity>> findParticipant({
     required String? accessToken,
     required String? name,
   }) =>
@@ -253,12 +258,29 @@ class MockIStatementsRepository extends _i1.Mock
             #name: name,
           },
         ),
-        returnValue: _i4.Future<List<_i6.ParticipantEntity>>.value(
-            <_i6.ParticipantEntity>[]),
+        returnValue: _i4.Future<List<_i7.ParticipantEntity>>.value(
+            <_i7.ParticipantEntity>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i6.ParticipantEntity>>.value(
-                <_i6.ParticipantEntity>[]),
-      ) as _i4.Future<List<_i6.ParticipantEntity>>);
+            _i4.Future<List<_i7.ParticipantEntity>>.value(
+                <_i7.ParticipantEntity>[]),
+      ) as _i4.Future<List<_i7.ParticipantEntity>>);
+  @override
+  _i4.Future<void> signDocumentBySmsCode({
+    required String? accessToken,
+    required String? code,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signDocumentBySmsCode,
+          [],
+          {
+            #accessToken: accessToken,
+            #code: code,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [StatementTempalteEntity].
@@ -269,21 +291,15 @@ class MockStatementTempalteEntity extends _i1.Mock
   @override
   String get documentType => (super.noSuchMethod(
         Invocation.getter(#documentType),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),
       ) as String);
-  @override
-  bool get isParticipants => (super.noSuchMethod(
-        Invocation.getter(#isParticipants),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
   @override
   List<_i2.TemplateField> get template => (super.noSuchMethod(
         Invocation.getter(#template),
