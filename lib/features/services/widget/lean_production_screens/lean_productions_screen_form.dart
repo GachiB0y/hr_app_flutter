@@ -53,9 +53,8 @@ class LeanProductionFormScreen extends StatelessWidget
     return ChangeNotifierProvaider<FilePickerCustomModel>(
       model: _model,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('Подача заявления'),
         ),
         body: const LeanProductionFormWidget(),
@@ -272,7 +271,11 @@ class _LeanProductionFormWidgetState extends State<LeanProductionFormWidget> {
                 ),
                 Center(
                   child: ElevatedButton(
-                    child: const Text('Отправить'),
+                    child: Text(
+                      'Отправить',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState != null) {
                         if (_formKey.currentState!.validate()) {

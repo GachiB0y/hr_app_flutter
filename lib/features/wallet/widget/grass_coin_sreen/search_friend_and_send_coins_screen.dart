@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
 
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
@@ -86,7 +85,7 @@ class _SearchFriendAndSendCoinsScreenState
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: ColorsForWidget.colorGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: TextField(
           keyboardType: TextInputType.phone,
           inputFormatters: [InternationalPhoneFormatter()],

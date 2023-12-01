@@ -54,9 +54,8 @@ class _StatementFormScreenState extends State<StatementFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        // elevation: 0,
+        backgroundColor: Theme.of(context).canvasColor,
         scrolledUnderElevation: 0,
         title: const Text('Подача заявления'),
       ),
@@ -334,7 +333,12 @@ class _StatementsTampleteFormWidgetState
                     onPressed: () {
                       _submitForm(context, state);
                     },
-                    child: Text(isShowInputCode ? 'Подписать' : 'Отправить'),
+                    child: Text(
+                      isShowInputCode ? 'Подписать' : 'Отправить',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                 ],
               )

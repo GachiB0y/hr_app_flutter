@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
@@ -89,11 +88,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           const SizedBox(height: 16),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      10), // Здесь вы можете указать нужное значение радиуса
-                ),
-                backgroundColor: ColorsForWidget.colorGreen),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    10), // Здесь вы можете указать нужное значение радиуса
+              ),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
             onPressed: () {
               // Действия при нажатии кнопки "Выбрать"
             },

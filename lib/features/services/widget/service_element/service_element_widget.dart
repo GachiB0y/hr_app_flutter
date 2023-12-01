@@ -6,7 +6,6 @@ import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/painteres_widget.dart';
 
@@ -190,16 +189,17 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
       children: [
         Container(
           decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(radius),
-              color: ColorsForWidget.colorGreen),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, 6),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(radius),
+            color: Theme.of(context).colorScheme.primary,
+          ),
           width: widget.isRow ? sizeWidhtIsRow : null,
           child: Padding(
             padding: const EdgeInsets.all(20.0),

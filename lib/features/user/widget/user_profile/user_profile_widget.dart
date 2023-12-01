@@ -8,7 +8,6 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 import '../../../auth/bloc/loader_cubit/loader_view_cubit.dart';
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
@@ -63,6 +62,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
       model: _model,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
           actions: const [
             SaveButtonWidget(),
             LogoutButtonWidget(),
@@ -226,8 +226,8 @@ class AvatarProfileWidget extends StatelessWidget {
                 top: 0,
                 right: 0,
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: ColorsForWidget.colorGrey,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.outline,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -363,7 +363,7 @@ class _TagsWidgetState extends State<TagsWidget> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    backgroundColor: Colors.grey[200],
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ))
               .toList(),
         ),

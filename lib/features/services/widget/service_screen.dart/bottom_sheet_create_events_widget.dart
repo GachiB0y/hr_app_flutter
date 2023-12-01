@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../library/custom_provider/inherit_widget.dart';
-import '../../../../theme/colors_from_theme.dart';
 import '../../../news/bloc/caregory_bloc.dart/category_bloc.dart';
 import '../../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'bottom_sheet_create_events_model.dart';
@@ -128,7 +127,8 @@ class _BottomSheetCreateEventsWidgetState
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          ColorsForWidget.colorGreen),
+                        Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     child: const Text(
                       'Создать',

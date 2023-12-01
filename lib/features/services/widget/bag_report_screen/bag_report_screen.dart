@@ -41,9 +41,8 @@ class _BagReportScreenState extends State<BagReportScreen> {
     return ChangeNotifierProvaider<FilePickerCustomModel>(
       model: _model,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Theme.of(context).canvasColor,
           title: const Text('Сообщить об ошибке'),
         ),
         body: const SafeArea(child: BagReportFormWidget()),
@@ -137,7 +136,11 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
                 height: 8.0,
               ),
               ElevatedButton(
-                child: const Text('Отправить'),
+                child: Text(
+                  'Отправить',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
                 onPressed: () {
                   if (_formKeyBagReport.currentState != null) {
                     if (_formKeyBagReport.currentState!.validate() &&

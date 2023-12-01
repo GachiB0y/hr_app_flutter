@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 import '../../bloc/service_bloc/service_bloc.dart';
 
@@ -32,10 +31,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
     const double raiudsBorder = 30;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: RefreshIndicator(
-          color: ColorsForWidget.colorGreen,
+          color: Theme.of(context).colorScheme.primary,
           onRefresh: () {
             blocServiceBloc.add(const ServiceEvent.fetch(isRow: false));
             return Future<void>.delayed(const Duration(seconds: 1));
@@ -73,8 +71,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 child: Container(
                   margin: const EdgeInsets.only(left: 16.0, right: 16.0),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(raiudsBorder),
-                      color: ColorsForWidget.colorGreen),
+                    borderRadius: BorderRadius.circular(raiudsBorder),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   child: TextButton(
                       onPressed: () {
                         context.pushRoute(BagReportRoute(

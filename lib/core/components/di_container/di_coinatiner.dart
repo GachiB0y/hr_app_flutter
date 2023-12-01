@@ -23,7 +23,7 @@ import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_sto
 import 'package:hr_app_flutter/main.dart';
 import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/color_schemes.g.dart';
+import 'package:hr_app_flutter/theme/color_schemes.dart';
 
 import '../../../features/auth/bloc/auth_cubit/auth_cubit.dart';
 import '../../../features/auth/bloc/loader_cubit/loader_view_cubit.dart';

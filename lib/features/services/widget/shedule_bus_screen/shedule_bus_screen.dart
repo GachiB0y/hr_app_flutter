@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../bloc/schedule_bus_bloc/schedule_bus_bloc.dart';
@@ -72,7 +71,7 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
                 return Container(
                   margin: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: ColorsForWidget.colorGreen,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -172,39 +171,7 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
           ),
         ),
       ),
-      body:
-          //  CustomScrollView(
-          //   slivers: widget.city.destinations
-          //       .map(
-          //         (destination) => Spinner(
-          //           child: Container(
-          //             margin: const EdgeInsets.only(
-          //                 left: 16.0, right: 16.0, bottom: 16.0),
-          //             decoration: BoxDecoration(
-          //               color: ColorsForWidget.colorGreen,
-          //               borderRadius: BorderRadius.circular(10),
-          //               boxShadow: [
-          //                 BoxShadow(
-          //                   color: Colors.black.withOpacity(0.2),
-          //                   blurRadius: 5,
-          //                   offset: const Offset(0, 3),
-          //                 ),
-          //               ],
-          //             ),
-          //             child: ListTile(
-          //               title: Text(destination.namePath),
-          //               onTap: () async {
-          //                 print('TAP');
-          //                 await _launchUrl(destination.link);
-          //               },
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          //       .toList(),
-          // ),
-
-          ListView.builder(
+      body: ListView.builder(
         itemExtent: 100 * textScaleFactor,
         controller: _scrollController,
         itemCount: widget.city.destinations.length,
@@ -213,7 +180,7 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
           return Container(
             margin: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: ColorsForWidget.colorGreen,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
@@ -234,7 +201,7 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
       ),
       floatingActionButton: _isListViewVisible
           ? FloatingActionButton(
-              backgroundColor: ColorsForWidget.colorGrey,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               onPressed: () {
                 // Действие, которое должно выполняться при нажатии на FloatingActionButton
               },

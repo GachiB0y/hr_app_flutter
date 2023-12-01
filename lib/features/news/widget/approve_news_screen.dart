@@ -125,7 +125,13 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                                   .id
                                                   .toString()));
                                     },
-                                    child: const Text('Подтвердить'),
+                                    child: Text(
+                                      'Подтвердить',
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                    ),
                                   ),
                                   ElevatedButton(
                                     style: ButtonStyle(
@@ -139,7 +145,13 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                                   .id
                                                   .toString()));
                                     },
-                                    child: const Text('Отколнить'),
+                                    child: Text(
+                                      'Отколнить',
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface),
+                                    ),
                                   ),
                                 ],
                               ),

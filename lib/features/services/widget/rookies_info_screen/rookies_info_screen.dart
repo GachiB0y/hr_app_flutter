@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:intl/intl.dart';
 
 import '../../../auth/data/repo/auth_repository.dart';
@@ -32,9 +31,9 @@ class RookiesInfoScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsForWidget.colorGreen,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-        backgroundColor: ColorsForWidget.colorGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Row(
           children: [
             Text(

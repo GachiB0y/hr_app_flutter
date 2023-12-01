@@ -5,7 +5,6 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/core/utils/get_icon_by_text_func.dart';
 import 'package:intl/intl.dart';
 
@@ -55,19 +54,18 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
         context.watch<LeanProductionFormBloc>();
     const double radius = 30.0;
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
-        title: const Row(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: Row(
           children: [
             Icon(
               Icons.description,
-              color: ColorsForWidget.colorGreen,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
-            Text('Мои заявления')
+            const Text('Мои заявления')
           ],
         ),
       ),

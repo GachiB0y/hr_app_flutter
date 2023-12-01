@@ -43,9 +43,8 @@ class LeanProductionInfoProposalsScreen extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Text('Заявление №${modelLeanProduction.number}'),
       ),
       body: InfoProposalsForm(

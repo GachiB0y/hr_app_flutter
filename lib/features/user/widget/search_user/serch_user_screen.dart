@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
 
@@ -47,7 +46,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: ColorsForWidget.colorGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: TextField(
           decoration: InputDecoration(
             prefixIcon: IconButton(
