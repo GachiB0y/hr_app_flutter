@@ -372,105 +372,164 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final blocOtherUsers = context.watch<OtherUsersBloc>();
-
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0), color: Colors.white),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(inputText),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  icon: Icon(iconData),
-                  border: InputBorder.none,
-                ),
-                onTap: () {
-                  setState(() {
-                    isFocus = true;
-                  });
-                },
-                onSubmitted: (value) {
-                  setState(() {
-                    isFocus = false;
-                  });
-                },
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    searchDebounce?.cancel();
-                    searchDebounce =
-                        Timer(const Duration(milliseconds: 700), () {
-                      blocOtherUsers
-                          .add(OtherUsersEvent.findUsers(findText: value));
+    return BlocBuilder<OtherUsersBloc, OtherUsersState>(
+        builder: (context, state) {
+      return Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(inputText),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    icon: Icon(iconData),
+                    border: InputBorder.none,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      isFocus = true;
                     });
-                  }
-                },
-              ),
-            ],
+                  },
+                  onSubmitted: (value) {
+                    setState(() {
+                      isFocus = false;
+                    });
+                  },
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      searchDebounce?.cancel();
+                      searchDebounce =
+                          Timer(const Duration(milliseconds: 700), () {
+                        context
+                            .read<OtherUsersBloc>()
+                            .add(OtherUsersEvent.findUsers(findText: value));
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        blocOtherUsers.state.when(
-          loading: (listUsersLoaded, currentUserProfile) {
-            return const SizedBox.shrink();
-          },
-          loaded: (listUsersLoaded, currentUserProfile) {
-            return listUsersLoaded.isEmpty
-                ? const SizedBox.shrink()
-                : isFocus
-                    ? Container(
-                        constraints:
-                            const BoxConstraints(minHeight: 70, maxHeight: 240),
-                        padding: const EdgeInsets.all(16.0),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 0),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.white),
-                        child: Scrollbar(
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            itemExtent: 70,
-                            itemCount: listUsersLoaded.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                    '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
-                                subtitle:
-                                    Text(listUsersLoaded[index].staffPosition),
-                                onTap: () {
-                                  nameController.text =
-                                      '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
-                                  idController.text = listUsersLoaded[index]
-                                      .autoCard
-                                      .toString();
-                                  setState(() {
-                                    isFocus = false;
-                                  });
-                                },
-                              );
-                            },
+          if (state is OtherUsersState$Processing) ...[
+            const SizedBox.shrink(),
+          ] else if (state is OtherUsersState$Error) ...[
+            const Center(child: Text('Пользователь не найден.')),
+          ] else if (state is OtherUsersState$Idle ||
+              state is OtherUsersState$Successful) ...[
+            if (state.data != null) ...[
+              state.data!.isEmpty
+                  ? const SizedBox.shrink()
+                  : isFocus
+                      ? Container(
+                          constraints: const BoxConstraints(
+                              minHeight: 70, maxHeight: 240),
+                          padding: const EdgeInsets.all(16.0),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 2,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: Colors.white),
+                          child: Scrollbar(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              itemExtent: 70,
+                              itemCount: state.data!.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                      '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}'),
+                                  subtitle:
+                                      Text(state.data![index].staffPosition),
+                                  onTap: () {
+                                    nameController.text =
+                                        '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}';
+                                    idController.text =
+                                        state.data![index].autoCard.toString();
+                                    setState(() {
+                                      isFocus = false;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      )
-                    : const SizedBox.shrink();
-          },
-          error: (e) => const Center(child: Text('Пользователь не найден.')),
-        ),
-      ],
-    );
+                        )
+                      : const SizedBox.shrink(),
+            ] else ...[
+              const SizedBox.shrink()
+            ]
+          ]
+
+          // blocOtherUsers.state.when(
+          //   loading: (listUsersLoaded, currentUserProfile) {
+          //     return const SizedBox.shrink();
+          //   },
+          //   loaded: (listUsersLoaded, currentUserProfile) {
+          //     return listUsersLoaded.isEmpty
+          //         ? const SizedBox.shrink()
+          //         : isFocus
+          //             ? Container(
+          //                 constraints:
+          //                     const BoxConstraints(minHeight: 70, maxHeight: 240),
+          //                 padding: const EdgeInsets.all(16.0),
+          //                 width: double.infinity,
+          //                 decoration: BoxDecoration(
+          //                     boxShadow: [
+          //                       BoxShadow(
+          //                         color: Colors.black.withOpacity(0.4),
+          //                         spreadRadius: 2,
+          //                         blurRadius: 2,
+          //                         offset: const Offset(0, 0),
+          //                       ),
+          //                     ],
+          //                     borderRadius: BorderRadius.circular(30.0),
+          //                     color: Colors.white),
+          //                 child: Scrollbar(
+          //                   child: ListView.builder(
+          //                     controller: _scrollController,
+          //                     itemExtent: 70,
+          //                     itemCount: listUsersLoaded.length,
+          //                     itemBuilder: (context, index) {
+          //                       return ListTile(
+          //                         title: Text(
+          //                             '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
+          //                         subtitle:
+          //                             Text(listUsersLoaded[index].staffPosition),
+          //                         onTap: () {
+          //                           nameController.text =
+          //                               '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
+          //                           idController.text = listUsersLoaded[index]
+          //                               .autoCard
+          //                               .toString();
+          //                           setState(() {
+          //                             isFocus = false;
+          //                           });
+          //                         },
+          //                       );
+          //                     },
+          //                   ),
+          //                 ),
+          //               )
+          //             : const SizedBox.shrink();
+          //   },
+          //   error: (e) => const Center(child: Text('Пользователь не найден.')),
+          // ),
+        ],
+      );
+    });
   }
 }

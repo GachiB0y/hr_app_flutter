@@ -58,7 +58,7 @@ class Avatar extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               context.pushRoute(ProfileWidgetRoute(
-                userId: state.data!.autoCard,
+                userId: state.data!.authUser.autoCard,
                 authRepository: RepositoryProvider.of<IAuthRepository>(context),
                 userRepo: RepositoryProvider.of<IUserRepository>(context),
               ));
@@ -66,7 +66,7 @@ class Avatar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: CachedNetworkImage(
-                  imageUrl: state.data!.avatar,
+                  imageUrl: state.data!.authUser.avatar,
                   imageBuilder: (context, imageProvider) {
                     return CircleAvatar(
                       radius: radius,

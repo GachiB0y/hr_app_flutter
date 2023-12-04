@@ -67,8 +67,11 @@ class _SearchFriendAndSendCoinsScreenState
                     message: 'LOL'));
                 blocWallet.add(const WalletEvent.fetch());
 
-                Navigator.of(context).pop(); // Закрыть Алерт
-                Navigator.of(context).pop(); // Закрть последнюю вкладку
+                /// Закрыть Алерт.
+                Navigator.of(context).pop();
+
+                /// Закрть последнюю вкладку.
+                Navigator.of(context).pop();
               },
               child: const Text('Подтвердить'),
             ),
@@ -80,8 +83,6 @@ class _SearchFriendAndSendCoinsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final blocOtherUsers = context.watch<OtherUsersBloc>();
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -94,8 +95,9 @@ class _SearchFriendAndSendCoinsScreenState
               onPressed: () {
                 final formattedPhoneNumber =
                     phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                blocOtherUsers.add(OtherUsersEvent.gethUsersByPhoneNumber(
-                    phoneNumber: formattedPhoneNumber));
+                context.read<OtherUsersBloc>().add(
+                    OtherUsersEvent.gethUsersByPhoneNumber(
+                        phoneNumber: formattedPhoneNumber));
               },
               icon: const Icon(Icons.search),
             ),
@@ -122,34 +124,75 @@ class _SearchFriendAndSendCoinsScreenState
                 style: TextStyle(fontSize: 18),
               ),
             ),
-            blocOtherUsers.state.when(
-              loaded: (listUsersLoaded, currentUserProfile) {
-                return Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: listUsersLoaded.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(
-                            '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
-                        subtitle: Text(listUsersLoaded[index].staffPosition),
-                        onTap: () {
-                          showPopupWindow(listUsersLoaded[index].autoCard);
-                        },
-                      );
-                    },
-                  ),
-                );
-              },
-              loading: (listUsersLoaded, currentUserProfile) {
-                return const SizedBox.shrink();
-              },
-              error: (e) => const SafeArea(
-                  child: Center(child: Text('Пользователь не найден.'))),
+            _ResultSearchWidget(
+              callbackShowPopupWindow: showPopupWindow,
             )
+            // blocOtherUsers.state.when(
+            //   loaded: (listUsersLoaded, currentUserProfile) {
+            //     return Expanded(
+            //       child: ListView.builder(
+            //         shrinkWrap: true,
+            //         itemCount: listUsersLoaded.length,
+            //         itemBuilder: (BuildContext context, int index) {
+            //           return ListTile(
+            //             title: Text(
+            //                 '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
+            //             subtitle: Text(listUsersLoaded[index].staffPosition),
+            //             onTap: () {
+            //               showPopupWindow(listUsersLoaded[index].autoCard);
+            //             },
+            //           );
+            //         },
+            //       ),
+            //     );
+            //   },
+            //   loading: (listUsersLoaded, currentUserProfile) {
+            //     return const SizedBox.shrink();
+            //   },
+            //   error: (e) => const SafeArea(
+            //       child: Center(child: Text('Пользователь не найден.'))),
+            // )
           ],
         ),
       ),
     );
+  }
+}
+
+class _ResultSearchWidget extends StatelessWidget {
+  const _ResultSearchWidget({super.key, required this.callbackShowPopupWindow});
+  final Function(int) callbackShowPopupWindow;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OtherUsersBloc, OtherUsersState>(
+        builder: (context, state) {
+      if (state is OtherUsersState$Processing) {
+        return const SizedBox.shrink();
+      } else if (state is OtherUsersState$Error) {
+        return const Center(child: Text('Пользователь не найден.'));
+      } else {
+        if (state.data != null) {
+          return Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: state.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(
+                      '${state.data![index].nameI} ${state.data![index].name}'),
+                  subtitle: Text(state.data![index].staffPosition),
+                  onTap: () {
+                    callbackShowPopupWindow(state.data![index].autoCard);
+                  },
+                );
+              },
+            ),
+          );
+        } else {
+          return const Center(child: Text('Пользователь не найден.'));
+        }
+      }
+    });
   }
 }
