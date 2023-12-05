@@ -12,12 +12,19 @@ class UserEvent with _$UserEvent {
   const factory UserEvent.gethUserByUserId({required String userId}) =
       UserEventGethUserByUserId;
 
+  /// Save tags
   const factory UserEvent.saveTagsToSend(
       {required List<TagUser> tags,
       required int userId}) = UserEventSaveTagsToSend;
+
+  /// Add tag
   const factory UserEvent.addTag({required TagUser tag}) = UserEventAddTag;
+
+  /// Delete tag
   const factory UserEvent.deleteTag({required TagUser tag}) =
       UserEventDeleteTag;
+
+  /// Send avatar
   const factory UserEvent.sendAvatarWithProfile(
       {required io.File imageFile,
       required int userId}) = UserEventSendAvatarWithProfile;

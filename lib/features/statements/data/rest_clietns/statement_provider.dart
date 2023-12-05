@@ -27,7 +27,7 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required String accessToken}) async {
-    String uri = '$urlAdress/hrlink/document_template';
+    String uri = '$urlAdress/documents/document_template';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
@@ -45,7 +45,7 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<StatementTempalteEntity> fetchStatementForm(
       {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/hrlink/document_template?document_type=$id';
+    String uri = '$urlAdress/documents/document_template?document_type=$id';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
@@ -64,7 +64,7 @@ class StatementProviderImpl implements IStatementsProvider {
   Future<TypeOfAppplicationSigning> submitStatementForm(
       {required String accessToken,
       required StatementFormInfoToSubmit formInfo}) async {
-    String uri = '$urlAdress/hrlink/create_document';
+    String uri = '$urlAdress/documents/create_document';
     final String body = json.encode(formInfo.toJson());
     final response =
         await _httpService.post(uri: uri, userToken: accessToken, body: body);
@@ -84,7 +84,8 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<List<ParticipantEntity>> findParticipant(
       {required String accessToken, required String name}) async {
-    String uri = '$urlAdress/hrlink/getEmployees?search=$name&offset=0&limit=5';
+    String uri =
+        '$urlAdress/documents/getEmployees?search=$name&offset=0&limit=5';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
@@ -104,7 +105,7 @@ class StatementProviderImpl implements IStatementsProvider {
   @override
   Future<void> signDocumentBySmsCode(
       {required String accessToken, required String code}) async {
-    String uri = '$urlAdress/hrlink/sign_document?code=$code';
+    String uri = '$urlAdress/documents/sign_document?code=$code';
 
     final response = await _httpService.put(
       uri: uri,

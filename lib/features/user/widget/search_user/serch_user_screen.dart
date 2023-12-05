@@ -80,60 +80,6 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
               ),
             ),
             _ResultSearchWidget(),
-            // blocOtherUsers.state.when(
-            //   loaded: (listUsersLoaded, currentUserProfile) {
-            //     return Expanded(
-            //       child: ListView.builder(
-            //         itemExtent: 84,
-            //         itemCount: listUsersLoaded.length,
-            //         itemBuilder: (BuildContext context, int index) {
-            //           return Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             children: [
-            //               ListTile(
-            //                 leading: SizedBox(
-            //                   width: MediaQuery.of(context).size.width / 8,
-            //                   child: CachedNetworkImage(
-            //                       imageUrl: listUsersLoaded[index].avatar,
-            //                       imageBuilder: (context, imageProvider) {
-            //                         return CircleAvatar(
-            //                           backgroundImage: imageProvider,
-            //                           radius:
-            //                               MediaQuery.of(context).size.width / 8,
-            //                         );
-            //                       }),
-            //                 ),
-            //                 title: Text(
-            //                   '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}',
-            //                   overflow: TextOverflow.ellipsis,
-            //                 ),
-            //                 subtitle: Text(
-            //                   listUsersLoaded[index].staffPosition,
-            //                   overflow: TextOverflow.ellipsis,
-            //                 ),
-            //                 onTap: () {
-            //                   context.pushRoute(ProfileWidgetRoute(
-            //                     userId: listUsersLoaded[index].autoCard,
-            //                     authRepository: blocOtherUsers.authRepository,
-            //                     userRepo: blocOtherUsers.userRepo,
-            //                   ));
-            //                 },
-            //               ),
-            //               const Divider(
-            //                 height: 2,
-            //               ),
-            //             ],
-            //           );
-            //         },
-            //       ),
-            //     );
-            //   },
-            //   loading: (listUsersLoaded, currentUserProfile) {
-            //     return const SizedBox.shrink();
-            //   },
-            //   error: (e) => const SafeArea(
-            //       child: Center(child: Text('Пользователь не найден.'))),
-            // )
           ],
         ),
       ),
@@ -142,9 +88,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
 }
 
 class _ResultSearchWidget extends StatelessWidget {
-  const _ResultSearchWidget({
-    super.key,
-  });
+  const _ResultSearchWidget();
 
   @override
   Widget build(BuildContext context) {

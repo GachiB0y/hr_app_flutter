@@ -66,84 +66,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
             LogoutButtonWidget(),
           ],
         ),
-        body: const SafeArea(child: UserInfoForm()
-            // blocOtherUsers.state.when(
-            //   loading: (listUsersLoaded, currentUserProfile) {
-            //     return const Center(
-            //       child: CircularProgressIndicator.adaptive(),
-            //     );
-            //   },
-            //   loaded: (listUserLoaded, user) {
-            //     if (user != null) {
-            //       return CustomScrollView(
-            //         slivers: [
-            //           SliverToBoxAdapter(
-            //             child: Padding(
-            //               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            //               child: Column(
-            //                 children: [
-            //                   const AvatarProfileWidget(),
-            //                   const SizedBox(height: 16),
-            //                   Text(
-            //                     '${user.name} ${user.nameI}',
-            //                     style: const TextStyle(
-            //                       fontSize: 24,
-            //                       fontWeight: FontWeight.bold,
-            //                     ),
-            //                     softWrap: true,
-            //                     maxLines: 3,
-            //                   ),
-            //                   const SizedBox(height: 8),
-            //                   Row(
-            //                     mainAxisAlignment: MainAxisAlignment.center,
-            //                     children: [
-            //                       const Icon(Icons.phone),
-            //                       Text(
-            //                         ' + ${user.phoneOne}',
-            //                         style: const TextStyle(fontSize: 16),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                   const SizedBox(height: 8),
-            //                   Row(
-            //                     mainAxisAlignment: MainAxisAlignment.center,
-            //                     children: [
-            //                       const Flexible(
-            //                         child: Text(
-            //                           'Должность: ',
-            //                           style: TextStyle(fontSize: 16),
-            //                         ),
-            //                       ),
-            //                       Flexible(
-            //                         child: Text(
-            //                           user.staffPosition,
-            //                           style: const TextStyle(fontSize: 16),
-            //                           softWrap: true,
-            //                           maxLines: 6,
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                   const TagsWidget(),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       );
-            //     } else {
-            //       return const Center(
-            //         child: Text('СКЕЛЕТОН СКЕЛЕТОН СКЕЛЕТОН'),
-            //       );
-            //     }
-            //   },
-            //   error: (e) {
-            //     return e == null
-            //         ? const Text('Пользователь не найден.')
-            //         : Center(child: Text(e));
-            //   },
-            // ),
-            ),
+        body: const SafeArea(child: UserInfoForm()),
       ),
     );
   }
@@ -239,33 +162,38 @@ class LogoutButtonWidget extends StatelessWidget {
         true) {
       return const SizedBox.shrink();
     } else {
-      return Padding(
-        padding: const EdgeInsets.only(
-          right: 20.0,
-        ),
-        child: Container(
-          height: 34,
-          width: 34,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(70, 255, 255, 255),
-            borderRadius: BorderRadius.circular(17),
-          ),
-          child: MaterialButton(
-            onPressed: () async {
-              await context.read<LoaderViewCubit>().logout();
-              if (!context.mounted) return;
-              AutoRouter.of(context).replace(const AuthenticationFormRoute());
-            },
-            textColor: Colors.black,
-            padding: const EdgeInsets.all(2),
-            shape: const CircleBorder(),
-            child: const Icon(
-              Icons.logout,
-              size: 35,
-            ),
-          ),
-        ),
-      );
+      return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        return state.data!.currentProfileUser!.self
+            ? Padding(
+                padding: const EdgeInsets.only(
+                  right: 20.0,
+                ),
+                child: Container(
+                  height: 34,
+                  width: 34,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(70, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(17),
+                  ),
+                  child: MaterialButton(
+                    onPressed: () async {
+                      await context.read<LoaderViewCubit>().logout();
+                      if (!context.mounted) return;
+                      AutoRouter.of(context)
+                          .replace(const AuthenticationFormRoute());
+                    },
+                    textColor: Colors.black,
+                    padding: const EdgeInsets.all(2),
+                    shape: const CircleBorder(),
+                    child: const Icon(
+                      Icons.logout,
+                      size: 35,
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox.shrink();
+      });
     }
   }
 }
@@ -422,10 +350,6 @@ class _TagsWidgetState extends State<TagsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final blocOtherUsers = context.watch<OtherUsersBloc>();
-    // final tags =
-    //     (blocOtherUsers.state as OtherUserStateLoaded).currentProfileUser?.tags;
-
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserState$Processing) {
         return const Center(

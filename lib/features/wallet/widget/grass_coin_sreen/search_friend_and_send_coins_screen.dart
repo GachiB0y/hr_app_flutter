@@ -127,31 +127,6 @@ class _SearchFriendAndSendCoinsScreenState
             _ResultSearchWidget(
               callbackShowPopupWindow: showPopupWindow,
             )
-            // blocOtherUsers.state.when(
-            //   loaded: (listUsersLoaded, currentUserProfile) {
-            //     return Expanded(
-            //       child: ListView.builder(
-            //         shrinkWrap: true,
-            //         itemCount: listUsersLoaded.length,
-            //         itemBuilder: (BuildContext context, int index) {
-            //           return ListTile(
-            //             title: Text(
-            //                 '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name}'),
-            //             subtitle: Text(listUsersLoaded[index].staffPosition),
-            //             onTap: () {
-            //               showPopupWindow(listUsersLoaded[index].autoCard);
-            //             },
-            //           );
-            //         },
-            //       ),
-            //     );
-            //   },
-            //   loading: (listUsersLoaded, currentUserProfile) {
-            //     return const SizedBox.shrink();
-            //   },
-            //   error: (e) => const SafeArea(
-            //       child: Center(child: Text('Пользователь не найден.'))),
-            // )
           ],
         ),
       ),
