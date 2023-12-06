@@ -7,28 +7,28 @@ import '../../model/user/user.dart';
 
 abstract interface class IUserRepository {
   Future<Rookies> getRookiesInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   });
   Future<bool> saveTagsToSend(
-      {required String userToken,
+      {required String accessToken,
       required List<TagUser> tags,
       required int userId});
   Future<User> getUserInfoById(
-      {required String userToken, required String userID});
+      {required String accessToken, required String userID});
   Future<BirthDayInfoEntity> getBirthDayInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   });
   Future<List<User>> findUser(
-      {required String userToken, required String findText});
-  Future<User> getUserInfo({required String userToken});
+      {required String accessToken, required String findText});
+  Future<User> getUserInfo({required String accessToken});
   Future<List<User>> getUserByPhoneNumber(
-      {required String userToken, required String phoneNumber});
+      {required String accessToken, required String phoneNumber});
   Future<bool> sendAvatarWithProfile(
-      {required String userToken, required io.File imageFile});
+      {required String accessToken, required io.File imageFile});
 }
 
 class UserRepositoryImpl implements IUserRepository {
@@ -39,9 +39,9 @@ class UserRepositoryImpl implements IUserRepository {
   final IUserProvider _userProvider;
 
   @override
-  Future<User> getUserInfo({required String userToken}) {
+  Future<User> getUserInfo({required String accessToken}) {
     try {
-      return _userProvider.getUserInfo(userToken: userToken);
+      return _userProvider.getUserInfo(userToken: accessToken);
     } catch (e) {
       rethrow;
     }
@@ -49,10 +49,10 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<List<User>> getUserByPhoneNumber(
-      {required String userToken, required String phoneNumber}) {
+      {required String accessToken, required String phoneNumber}) {
     try {
       return _userProvider.getUserByPhoneNumber(
-          userToken: userToken, phoneNumber: phoneNumber);
+          userToken: accessToken, phoneNumber: phoneNumber);
     } catch (e) {
       rethrow;
     }
@@ -60,13 +60,13 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<BirthDayInfoEntity> getBirthDayInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   }) {
     try {
       return _userProvider.getBirthDayInfo(
-          userToken: userToken, startDate: startDate, endDate: endDate);
+          userToken: accessToken, startDate: startDate, endDate: endDate);
     } catch (e) {
       rethrow;
     }
@@ -74,13 +74,13 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<Rookies> getRookiesInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   }) {
     try {
       return _userProvider.getRookiesInfo(
-          userToken: userToken, startDate: startDate, endDate: endDate);
+          userToken: accessToken, startDate: startDate, endDate: endDate);
     } catch (e) {
       rethrow;
     }
@@ -88,10 +88,10 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<User> getUserInfoById(
-      {required String userToken, required String userID}) {
+      {required String accessToken, required String userID}) {
     try {
       return _userProvider.getUserInfoById(
-          userToken: userToken, userID: userID);
+          userToken: accessToken, userID: userID);
     } catch (e) {
       rethrow;
     }
@@ -99,9 +99,9 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<List<User>> findUser(
-      {required String userToken, required String findText}) {
+      {required String accessToken, required String findText}) {
     try {
-      return _userProvider.findUser(userToken: userToken, findText: findText);
+      return _userProvider.findUser(userToken: accessToken, findText: findText);
     } catch (e) {
       rethrow;
     }
@@ -109,7 +109,7 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<bool> saveTagsToSend(
-      {required String userToken,
+      {required String accessToken,
       required List<TagUser> tags,
       required int userId}) {
     try {
@@ -118,7 +118,7 @@ class UserRepositoryImpl implements IUserRepository {
         newListTags.add(element.name);
       }
       return _userProvider.saveTagsToSend(
-          userToken: userToken, tags: newListTags, userId: userId);
+          userToken: accessToken, tags: newListTags, userId: userId);
     } catch (e) {
       rethrow;
     }
@@ -126,12 +126,12 @@ class UserRepositoryImpl implements IUserRepository {
 
   @override
   Future<bool> sendAvatarWithProfile(
-      {required String userToken, required io.File imageFile}) {
+      {required String accessToken, required io.File imageFile}) {
     try {
       final List<String> pathsNew = [];
       pathsNew.add(imageFile.path);
       return _userProvider.sendAvatarWithProfile(
-        userToken: userToken,
+        userToken: accessToken,
         paths: pathsNew,
       );
     } catch (e) {

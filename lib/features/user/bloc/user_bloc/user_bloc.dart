@@ -62,7 +62,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       User userLoaded = await _userRepo
-          .getUserInfo(userToken: accessToken as String)
+          .getUserInfo(accessToken: accessToken as String)
           .timeout(const Duration(seconds: 10));
 
       final UserProfileViewModel newData =
@@ -87,7 +87,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       User currentProfileUser = await _userRepo
           .getUserInfoById(
-              userToken: accessToken as String, userID: event.userId)
+              accessToken: accessToken as String, userID: event.userId)
           .timeout(const Duration(seconds: 10));
 
       emit(UserState.successful(
@@ -112,7 +112,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       bool isSendTags = await _userRepo
           .saveTagsToSend(
-              userToken: accessToken as String,
+              accessToken: accessToken as String,
               tags: event.tags,
               userId: event.userId)
           .timeout(const Duration(seconds: 10));
@@ -120,7 +120,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       if (isSendTags) {
         User currentProfileUser = await _userRepo
             .getUserInfoById(
-                userToken: accessToken, userID: event.userId.toString())
+                accessToken: accessToken, userID: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:
@@ -189,12 +189,12 @@ class UserBloc extends Bloc<UserEvent, UserState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       bool isSendAvatar = await _userRepo
           .sendAvatarWithProfile(
-              userToken: accessToken as String, imageFile: event.imageFile)
+              accessToken: accessToken as String, imageFile: event.imageFile)
           .timeout(const Duration(seconds: 10));
       if (isSendAvatar) {
         User currentProfileUser = await _userRepo
             .getUserInfoById(
-                userToken: accessToken, userID: event.userId.toString())
+                accessToken: accessToken, userID: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:

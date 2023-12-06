@@ -57,7 +57,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       List<User> listUsersLoaded = await _userRepo
           .getUserByPhoneNumber(
-              userToken: accessToken as String, phoneNumber: event.phoneNumber)
+              accessToken: accessToken as String,
+              phoneNumber: event.phoneNumber)
           .timeout(const Duration(seconds: 10));
 
       emit(OtherUsersState.successful(data: listUsersLoaded));
@@ -86,7 +87,8 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
       emit(OtherUsersState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       List<User> listUsersLoaded = await _userRepo
-          .findUser(userToken: accessToken as String, findText: event.findText)
+          .findUser(
+              accessToken: accessToken as String, findText: event.findText)
           .timeout(const Duration(seconds: 10));
 
       emit(OtherUsersState.successful(data: listUsersLoaded));
