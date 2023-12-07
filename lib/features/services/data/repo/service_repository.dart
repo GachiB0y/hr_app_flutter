@@ -5,10 +5,10 @@ import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceRepository {
-  Future<List<Service>> getServices({required String userToken});
-  Future<ScheduleBus> getScheduleBus({required String userToken});
+  Future<List<Service>> getServices({required String accessToken});
+  Future<ScheduleBus> getScheduleBus({required String accessToken});
   Future<bool> submitBagReportForm(
-      {required String userToken, required BagReportEntity bagReportEntity});
+      {required String accessToken, required BagReportEntity bagReportEntity});
 }
 
 class ServiceRepositoryImpl implements IServiceRepository {
@@ -19,18 +19,18 @@ class ServiceRepositoryImpl implements IServiceRepository {
   final IServiceProvider _serviceProvider;
 
   @override
-  Future<List<Service>> getServices({required String userToken}) {
+  Future<List<Service>> getServices({required String accessToken}) {
     try {
-      return _serviceProvider.getServices(userToken: userToken);
+      return _serviceProvider.getServices(userToken: accessToken);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<ScheduleBus> getScheduleBus({required String userToken}) {
+  Future<ScheduleBus> getScheduleBus({required String accessToken}) {
     try {
-      return _serviceProvider.getScheduleBus(userToken: userToken);
+      return _serviceProvider.getScheduleBus(userToken: accessToken);
     } catch (e) {
       rethrow;
     }
@@ -38,10 +38,10 @@ class ServiceRepositoryImpl implements IServiceRepository {
 
   @override
   Future<bool> submitBagReportForm(
-      {required String userToken, required BagReportEntity bagReportEntity}) {
+      {required String accessToken, required BagReportEntity bagReportEntity}) {
     try {
       return _serviceProvider.submitBagReportForm(
-          userToken: userToken, bagReportEntity: bagReportEntity);
+          userToken: accessToken, bagReportEntity: bagReportEntity);
     } catch (e) {
       rethrow;
     }
