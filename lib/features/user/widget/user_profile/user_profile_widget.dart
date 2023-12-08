@@ -163,36 +163,38 @@ class LogoutButtonWidget extends StatelessWidget {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        return state.data!.currentProfileUser!.self
-            ? Padding(
-                padding: const EdgeInsets.only(
-                  right: 20.0,
-                ),
-                child: Container(
-                  height: 34,
-                  width: 34,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(70, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(17),
-                  ),
-                  child: MaterialButton(
-                    onPressed: () async {
-                      await context.read<LoaderViewCubit>().logout();
-                      if (!context.mounted) return;
-                      AutoRouter.of(context)
-                          .replace(const AuthenticationFormRoute());
-                    },
-                    textColor: Colors.black,
-                    padding: const EdgeInsets.all(2),
-                    shape: const CircleBorder(),
-                    child: const Icon(
-                      Icons.logout,
-                      size: 35,
+        return state.data!.currentProfileUser == null
+            ? const SizedBox.shrink()
+            : state.data!.currentProfileUser!.self
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      right: 20.0,
                     ),
-                  ),
-                ),
-              )
-            : const SizedBox.shrink();
+                    child: Container(
+                      height: 34,
+                      width: 34,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(70, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(17),
+                      ),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          await context.read<LoaderViewCubit>().logout();
+                          if (!context.mounted) return;
+                          AutoRouter.of(context)
+                              .replace(const AuthenticationFormRoute());
+                        },
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.all(2),
+                        shape: const CircleBorder(),
+                        child: const Icon(
+                          Icons.logout,
+                          size: 35,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink();
       });
     }
   }
