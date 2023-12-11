@@ -17,8 +17,6 @@ import 'user_test.mocks.dart';
   [
     MockSpec<IUserRepository>(),
     MockSpec<File>(),
-    // MockSpec<User>(),
-    // MockSpec<UserProfileViewModel>()
   ],
 )
 void main() {

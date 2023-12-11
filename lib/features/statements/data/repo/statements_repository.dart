@@ -26,10 +26,11 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
-      {required String accessToken}) {
+      {required String accessToken}) async {
     try {
-      return _statementsProvider.fetchListTypeStatements(
-          accessToken: accessToken);
+      final List<StatementFieldTypeEntity> result = await _statementsProvider
+          .fetchListTypeStatements(accessToken: accessToken);
+      return result;
     } catch (e) {
       rethrow;
     }
@@ -37,10 +38,11 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<StatementTempalteEntity> fetchStatementForm(
-      {required final String accessToken, required final String id}) {
+      {required final String accessToken, required final String id}) async {
     try {
-      return _statementsProvider.fetchStatementForm(
-          accessToken: accessToken, id: id);
+      final StatementTempalteEntity result = await _statementsProvider
+          .fetchStatementForm(accessToken: accessToken, id: id);
+      return result;
     } catch (e) {
       rethrow;
     }
@@ -49,12 +51,14 @@ class StatementsRepository implements IStatementsRepository {
   @override
   Future<TypeOfAppplicationSigning> submitStatementForm(
       {required String accessToken,
-      required StatementFormInfoToSubmit formInfo}) {
+      required StatementFormInfoToSubmit formInfo}) async {
     try {
-      return _statementsProvider.submitStatementForm(
+      final TypeOfAppplicationSigning result =
+          await _statementsProvider.submitStatementForm(
         accessToken: accessToken,
         formInfo: formInfo,
       );
+      return result;
     } catch (e) {
       rethrow;
     }
@@ -62,12 +66,14 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<List<ParticipantEntity>> findParticipant(
-      {required String accessToken, required String name}) {
+      {required String accessToken, required String name}) async {
     try {
-      return _statementsProvider.findParticipant(
+      final List<ParticipantEntity> result =
+          await _statementsProvider.findParticipant(
         accessToken: accessToken,
         name: name,
       );
+      return result;
     } catch (e) {
       rethrow;
     }
@@ -75,9 +81,9 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<void> signDocumentBySmsCode(
-      {required String accessToken, required String code}) {
+      {required String accessToken, required String code}) async {
     try {
-      return _statementsProvider.signDocumentBySmsCode(
+      return await _statementsProvider.signDocumentBySmsCode(
         accessToken: accessToken,
         code: code,
       );
