@@ -17,7 +17,7 @@ import 'statements_repo_test.mocks.dart';
   ],
 )
 void main() {
-  group('WeatherRepository', () {
+  group('StatementsRepository', () {
     late IStatementsProvider statementsApiClient;
     late IStatementsRepository statementsRepository;
     const String accessToken = 'test_access_token';

@@ -822,22 +822,22 @@ mixin _$TemplateFormStatementsEntity {
   @JsonKey(name: 'end_date')
   String? get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'work_days')
-  int? get workDays => throw _privateConstructorUsedError;
+  String? get workDays => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_trip_place')
   String? get businessTripPlace => throw _privateConstructorUsedError;
   @JsonKey(name: 'purpose_trip')
   String? get purposeTrip => throw _privateConstructorUsedError;
   @JsonKey(name: 'expenses_travel_expenses')
-  int? get expensesTravelExpenses => throw _privateConstructorUsedError;
+  String? get expensesTravelExpenses => throw _privateConstructorUsedError;
   String? get reason => throw _privateConstructorUsedError;
   @JsonKey(name: 'expenses_daily_money')
-  int? get expensesDailyMoney => throw _privateConstructorUsedError;
+  String? get expensesDailyMoney => throw _privateConstructorUsedError;
   @JsonKey(name: 'expenses_living_place')
-  int? get expensesLivingPlace => throw _privateConstructorUsedError;
+  String? get expensesLivingPlace => throw _privateConstructorUsedError;
   @JsonKey(name: 'result_rub')
-  int? get resultRub => throw _privateConstructorUsedError;
+  String? get resultRub => throw _privateConstructorUsedError;
   @JsonKey(name: 'result_kop')
-  int? get resultKop => throw _privateConstructorUsedError;
+  String? get resultKop => throw _privateConstructorUsedError;
   @JsonKey(name: 'item_expenditure')
   String? get itemExpenditure => throw _privateConstructorUsedError;
 
@@ -861,15 +861,15 @@ abstract class $TemplateFormStatementsEntityCopyWith<$Res> {
       String? patronymic,
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'work_days') int? workDays,
+      @JsonKey(name: 'work_days') String? workDays,
       @JsonKey(name: 'business_trip_place') String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') String? purposeTrip,
-      @JsonKey(name: 'expenses_travel_expenses') int? expensesTravelExpenses,
+      @JsonKey(name: 'expenses_travel_expenses') String? expensesTravelExpenses,
       String? reason,
-      @JsonKey(name: 'expenses_daily_money') int? expensesDailyMoney,
-      @JsonKey(name: 'expenses_living_place') int? expensesLivingPlace,
-      @JsonKey(name: 'result_rub') int? resultRub,
-      @JsonKey(name: 'result_kop') int? resultKop,
+      @JsonKey(name: 'expenses_daily_money') String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') String? resultRub,
+      @JsonKey(name: 'result_kop') String? resultKop,
       @JsonKey(name: 'item_expenditure') String? itemExpenditure});
 }
 
@@ -927,7 +927,7 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
       workDays: freezed == workDays
           ? _value.workDays
           : workDays // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       businessTripPlace: freezed == businessTripPlace
           ? _value.businessTripPlace
           : businessTripPlace // ignore: cast_nullable_to_non_nullable
@@ -939,7 +939,7 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
       expensesTravelExpenses: freezed == expensesTravelExpenses
           ? _value.expensesTravelExpenses
           : expensesTravelExpenses // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -947,19 +947,19 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
       expensesDailyMoney: freezed == expensesDailyMoney
           ? _value.expensesDailyMoney
           : expensesDailyMoney // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       expensesLivingPlace: freezed == expensesLivingPlace
           ? _value.expensesLivingPlace
           : expensesLivingPlace // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       resultRub: freezed == resultRub
           ? _value.resultRub
           : resultRub // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       resultKop: freezed == resultKop
           ? _value.resultKop
           : resultKop // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       itemExpenditure: freezed == itemExpenditure
           ? _value.itemExpenditure
           : itemExpenditure // ignore: cast_nullable_to_non_nullable
@@ -983,15 +983,15 @@ abstract class _$$_TemplateFormStatementsEntityCopyWith<$Res>
       String? patronymic,
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'work_days') int? workDays,
+      @JsonKey(name: 'work_days') String? workDays,
       @JsonKey(name: 'business_trip_place') String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') String? purposeTrip,
-      @JsonKey(name: 'expenses_travel_expenses') int? expensesTravelExpenses,
+      @JsonKey(name: 'expenses_travel_expenses') String? expensesTravelExpenses,
       String? reason,
-      @JsonKey(name: 'expenses_daily_money') int? expensesDailyMoney,
-      @JsonKey(name: 'expenses_living_place') int? expensesLivingPlace,
-      @JsonKey(name: 'result_rub') int? resultRub,
-      @JsonKey(name: 'result_kop') int? resultKop,
+      @JsonKey(name: 'expenses_daily_money') String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') String? resultRub,
+      @JsonKey(name: 'result_kop') String? resultKop,
       @JsonKey(name: 'item_expenditure') String? itemExpenditure});
 }
 
@@ -1048,7 +1048,7 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
       workDays: freezed == workDays
           ? _value.workDays
           : workDays // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       businessTripPlace: freezed == businessTripPlace
           ? _value.businessTripPlace
           : businessTripPlace // ignore: cast_nullable_to_non_nullable
@@ -1060,7 +1060,7 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
       expensesTravelExpenses: freezed == expensesTravelExpenses
           ? _value.expensesTravelExpenses
           : expensesTravelExpenses // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -1068,19 +1068,19 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
       expensesDailyMoney: freezed == expensesDailyMoney
           ? _value.expensesDailyMoney
           : expensesDailyMoney // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       expensesLivingPlace: freezed == expensesLivingPlace
           ? _value.expensesLivingPlace
           : expensesLivingPlace // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       resultRub: freezed == resultRub
           ? _value.resultRub
           : resultRub // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       resultKop: freezed == resultKop
           ? _value.resultKop
           : resultKop // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       itemExpenditure: freezed == itemExpenditure
           ? _value.itemExpenditure
           : itemExpenditure // ignore: cast_nullable_to_non_nullable
@@ -1128,7 +1128,7 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
   final String? endDate;
   @override
   @JsonKey(name: 'work_days')
-  final int? workDays;
+  final String? workDays;
   @override
   @JsonKey(name: 'business_trip_place')
   final String? businessTripPlace;
@@ -1137,21 +1137,21 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
   final String? purposeTrip;
   @override
   @JsonKey(name: 'expenses_travel_expenses')
-  final int? expensesTravelExpenses;
+  final String? expensesTravelExpenses;
   @override
   final String? reason;
   @override
   @JsonKey(name: 'expenses_daily_money')
-  final int? expensesDailyMoney;
+  final String? expensesDailyMoney;
   @override
   @JsonKey(name: 'expenses_living_place')
-  final int? expensesLivingPlace;
+  final String? expensesLivingPlace;
   @override
   @JsonKey(name: 'result_rub')
-  final int? resultRub;
+  final String? resultRub;
   @override
   @JsonKey(name: 'result_kop')
-  final int? resultKop;
+  final String? resultKop;
   @override
   @JsonKey(name: 'item_expenditure')
   final String? itemExpenditure;
@@ -1239,16 +1239,16 @@ abstract class _TemplateFormStatementsEntity
       final String? patronymic,
       @JsonKey(name: 'start_date') final String? startDate,
       @JsonKey(name: 'end_date') final String? endDate,
-      @JsonKey(name: 'work_days') final int? workDays,
+      @JsonKey(name: 'work_days') final String? workDays,
       @JsonKey(name: 'business_trip_place') final String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') final String? purposeTrip,
       @JsonKey(name: 'expenses_travel_expenses')
-      final int? expensesTravelExpenses,
+      final String? expensesTravelExpenses,
       final String? reason,
-      @JsonKey(name: 'expenses_daily_money') final int? expensesDailyMoney,
-      @JsonKey(name: 'expenses_living_place') final int? expensesLivingPlace,
-      @JsonKey(name: 'result_rub') final int? resultRub,
-      @JsonKey(name: 'result_kop') final int? resultKop,
+      @JsonKey(name: 'expenses_daily_money') final String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') final String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') final String? resultRub,
+      @JsonKey(name: 'result_kop') final String? resultKop,
       @JsonKey(name: 'item_expenditure')
       final String? itemExpenditure}) = _$_TemplateFormStatementsEntity;
 
@@ -1271,7 +1271,7 @@ abstract class _TemplateFormStatementsEntity
   String? get endDate;
   @override
   @JsonKey(name: 'work_days')
-  int? get workDays;
+  String? get workDays;
   @override
   @JsonKey(name: 'business_trip_place')
   String? get businessTripPlace;
@@ -1280,21 +1280,21 @@ abstract class _TemplateFormStatementsEntity
   String? get purposeTrip;
   @override
   @JsonKey(name: 'expenses_travel_expenses')
-  int? get expensesTravelExpenses;
+  String? get expensesTravelExpenses;
   @override
   String? get reason;
   @override
   @JsonKey(name: 'expenses_daily_money')
-  int? get expensesDailyMoney;
+  String? get expensesDailyMoney;
   @override
   @JsonKey(name: 'expenses_living_place')
-  int? get expensesLivingPlace;
+  String? get expensesLivingPlace;
   @override
   @JsonKey(name: 'result_rub')
-  int? get resultRub;
+  String? get resultRub;
   @override
   @JsonKey(name: 'result_kop')
-  int? get resultKop;
+  String? get resultKop;
   @override
   @JsonKey(name: 'item_expenditure')
   String? get itemExpenditure;

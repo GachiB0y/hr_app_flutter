@@ -60,16 +60,16 @@ class TemplateFormStatementsEntity with _$TemplateFormStatementsEntity {
     final String? patronymic,
     @JsonKey(name: 'start_date') final String? startDate,
     @JsonKey(name: 'end_date') final String? endDate,
-    @JsonKey(name: 'work_days') final int? workDays,
+    @JsonKey(name: 'work_days') final String? workDays,
     @JsonKey(name: 'business_trip_place') final String? businessTripPlace,
     @JsonKey(name: 'purpose_trip') final String? purposeTrip,
     @JsonKey(name: 'expenses_travel_expenses')
-    final int? expensesTravelExpenses,
+    final String? expensesTravelExpenses,
     final String? reason,
-    @JsonKey(name: 'expenses_daily_money') final int? expensesDailyMoney,
-    @JsonKey(name: 'expenses_living_place') final int? expensesLivingPlace,
-    @JsonKey(name: 'result_rub') final int? resultRub,
-    @JsonKey(name: 'result_kop') final int? resultKop,
+    @JsonKey(name: 'expenses_daily_money') final String? expensesDailyMoney,
+    @JsonKey(name: 'expenses_living_place') final String? expensesLivingPlace,
+    @JsonKey(name: 'result_rub') final String? resultRub,
+    @JsonKey(name: 'result_kop') final String? resultKop,
     @JsonKey(name: 'item_expenditure') final String? itemExpenditure,
   }) = _TemplateFormStatementsEntity;
   factory TemplateFormStatementsEntity.fromJson(Map<String, dynamic> json) =>
