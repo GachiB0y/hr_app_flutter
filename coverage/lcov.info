@@ -1365,6 +1365,17 @@ DA:6,1
 LF:1
 LH:1
 end_of_record
+SF:lib/features/services/data/repo/lean_production_repository.dart
+DA:18,1
+DA:24,1
+DA:29,2
+DA:36,1
+DA:40,2
+DA:48,1
+DA:52,2
+LF:7
+LH:7
+end_of_record
 SF:lib/features/wallet/data/repo/wallet_repository.dart
 DA:23,1
 DA:29,1
