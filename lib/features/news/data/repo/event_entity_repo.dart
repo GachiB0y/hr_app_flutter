@@ -60,7 +60,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
     try {
       final List<String> pathsNew = [];
       pathsNew.add(imageFile.path);
-      return await _eventEntityProvider.createNewEventEntity(
+      final bool result = await _eventEntityProvider.createNewEventEntity(
           accessToken: accessToken,
           title: title,
           description: description,
@@ -68,6 +68,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
           categories: categories,
           startDate: startDate,
           endDate: endDate);
+      return result;
     } catch (e) {
       rethrow;
     }
