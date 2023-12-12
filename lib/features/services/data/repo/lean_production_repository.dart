@@ -27,7 +27,7 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
       required String userToken}) {
     try {
       return _serviceProvider.sendFormLeanProduction(
-          userToken: userToken, formEntity: formEntity);
+          accessToken: userToken, formEntity: formEntity);
     } catch (e) {
       rethrow;
     }
@@ -38,7 +38,7 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
       {required String userToken}) {
     try {
       return _serviceProvider.getMyLeanProductions(
-        userToken: userToken,
+        accessToken: userToken,
       );
     } catch (e) {
       rethrow;
@@ -50,7 +50,7 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
       {required String url, required String userToken}) {
     try {
       return _serviceProvider.downloadFileWithLeanProduction(
-        userToken: userToken,
+        accessToken: userToken,
         url: url,
       );
     } catch (e) {

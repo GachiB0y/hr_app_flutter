@@ -16,18 +16,18 @@ import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceProvider {
-  Future<List<Service>> getServices({required String userToken});
-  Future<ScheduleBus> getScheduleBus({required String userToken});
+  Future<List<Service>> getServices({required String accessToken});
+  Future<ScheduleBus> getScheduleBus({required String accessToken});
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String userToken});
+      {required String accessToken});
   Future<bool> sendFormLeanProduction(
       {required LeanProductionFormEntity formEntity,
-      required String userToken});
+      required String accessToken});
 
   Future<void> downloadFileWithLeanProduction(
-      {required String url, required String userToken});
+      {required String url, required String accessToken});
   Future<bool> submitBagReportForm(
-      {required String userToken, required BagReportEntity bagReportEntity});
+      {required String accessToken, required BagReportEntity bagReportEntity});
 }
 
 class ServiceProviderImpl implements IServiceProvider {
@@ -35,9 +35,9 @@ class ServiceProviderImpl implements IServiceProvider {
   ServiceProviderImpl(this._httpService);
 
   @override
-  Future<List<Service>> getServices({required String userToken}) async {
+  Future<List<Service>> getServices({required String accessToken}) async {
     String uri = '$urlAdress/admin/avalible_services_list';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -52,9 +52,9 @@ class ServiceProviderImpl implements IServiceProvider {
   }
 
   @override
-  Future<ScheduleBus> getScheduleBus({required String userToken}) async {
+  Future<ScheduleBus> getScheduleBus({required String accessToken}) async {
     String uri = '$urlAdress/bus/get_destination';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -69,7 +69,7 @@ class ServiceProviderImpl implements IServiceProvider {
   @override
   Future<bool> sendFormLeanProduction(
       {required LeanProductionFormEntity formEntity,
-      required String userToken}) async {
+      required String accessToken}) async {
     String uri = '$urlAdress/lean_fabrication/create_proposal?';
 
     final Map<String, String> newFields = {
@@ -79,7 +79,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
     final response = await _httpService.postWithFile(
       uri: uri,
-      userToken: userToken,
+      userToken: accessToken,
       paths: formEntity.paths,
       fieldsNew: newFields,
     );
@@ -94,9 +94,9 @@ class ServiceProviderImpl implements IServiceProvider {
 
   @override
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String userToken}) async {
+      {required String accessToken}) async {
     String uri = '$urlAdress/lean_fabrication/my_proposals';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -177,10 +177,10 @@ class ServiceProviderImpl implements IServiceProvider {
 
   @override
   Future<void> downloadFileWithLeanProduction(
-      {required String url, required String userToken}) async {
+      {required String url, required String accessToken}) async {
     String uri = '$urlAdress/lean_fabrication/download_file?url=$url';
     final response =
-        await _httpService.post(uri: uri, userToken: userToken, body: null);
+        await _httpService.post(uri: uri, userToken: accessToken, body: null);
 
     final fileName = url.split('/').last;
 
@@ -242,7 +242,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
   @override
   Future<bool> submitBagReportForm(
-      {required String userToken,
+      {required String accessToken,
       required BagReportEntity bagReportEntity}) async {
     String uri = '$urlAdress/report/create';
 
@@ -253,7 +253,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
     final response = await _httpService.postWithFile(
       uri: uri,
-      userToken: userToken,
+      userToken: accessToken,
       paths: bagReportEntity.pathsToFiles,
       fieldsNew: newFields,
     );
