@@ -122,7 +122,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userID: '4761'))
+                accessToken: accessToken, userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -145,7 +145,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userID: '4761'))
+                accessToken: accessToken, userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -168,7 +168,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userID: '4761'))
+                accessToken: accessToken, userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -194,7 +194,7 @@ void main() {
             userId: 4761,
             tags: [newTag])).thenAnswer((_) async => true);
         when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userID: '4761'))
+                accessToken: accessToken, userId: '4761'))
             .thenAnswer((_) async => newUser);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -222,7 +222,7 @@ void main() {
           imageFile: file,
         )).thenAnswer((_) async => true);
         when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userID: '4761'))
+                accessToken: accessToken, userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),

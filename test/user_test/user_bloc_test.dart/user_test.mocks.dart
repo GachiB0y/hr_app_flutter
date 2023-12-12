@@ -211,7 +211,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
   @override
   _i7.Future<_i3.User> getUserInfoById({
     required String? accessToken,
-    required String? userID,
+    required String? userId,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -219,7 +219,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           [],
           {
             #accessToken: accessToken,
-            #userID: userID,
+            #userId: userId,
           },
         ),
         returnValue: _i7.Future<_i3.User>.value(_FakeUser_1(
@@ -229,7 +229,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             [],
             {
               #accessToken: accessToken,
-              #userID: userID,
+              #userId: userId,
             },
           ),
         )),
@@ -240,7 +240,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             [],
             {
               #accessToken: accessToken,
-              #userID: userID,
+              #userId: userId,
             },
           ),
         )),

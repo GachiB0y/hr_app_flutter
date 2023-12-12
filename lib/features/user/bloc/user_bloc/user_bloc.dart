@@ -87,7 +87,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       User currentProfileUser = await _userRepo
           .getUserInfoById(
-              accessToken: accessToken as String, userID: event.userId)
+              accessToken: accessToken as String, userId: event.userId)
           .timeout(const Duration(seconds: 10));
 
       emit(UserState.successful(
@@ -120,7 +120,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       if (isSendTags) {
         User currentProfileUser = await _userRepo
             .getUserInfoById(
-                accessToken: accessToken, userID: event.userId.toString())
+                accessToken: accessToken, userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:
@@ -194,7 +194,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       if (isSendAvatar) {
         User currentProfileUser = await _userRepo
             .getUserInfoById(
-                accessToken: accessToken, userID: event.userId.toString())
+                accessToken: accessToken, userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:
