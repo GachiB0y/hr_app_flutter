@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/app_bar_user_widget.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/title_app_bar_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
 

@@ -7,7 +7,7 @@ import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
 import '../../services/bloc/service_bloc/service_bloc.dart';
 import '../../services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';

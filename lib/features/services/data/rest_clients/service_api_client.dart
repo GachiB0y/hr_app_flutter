@@ -190,6 +190,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
     if (response.statusCode == 200) {
       try {
+        ///  Выбираем директорию для сохранения в зависимочти от платформы
         Directory? directory;
         if (Platform.isAndroid) {
           directory = await getExternalStorageDirectory();
@@ -199,6 +200,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
         final jsonResponse = await response.stream.toBytes();
 
+        /// Создаем путь сохраненного файла
         String filePath = '${directory!.path}/$fileName';
 
         File file = File(filePath);

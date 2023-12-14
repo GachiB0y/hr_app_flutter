@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/title_app_bar_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
 
-import '../../../../features/auth/data/repo/auth_repository.dart';
-import '../../../../features/user/bloc/user_bloc/user_bloc.dart';
-import '../../../../features/user/data/repo/user_repository.dart';
+import '../../../../auth/data/repo/auth_repository.dart';
+import '../../../../user/bloc/user_bloc/user_bloc.dart';
+import '../../../../user/data/repo/user_repository.dart';
 
 class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
   const AppBarUserWdiget({super.key});

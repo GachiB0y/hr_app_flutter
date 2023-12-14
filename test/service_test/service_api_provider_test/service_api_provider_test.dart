@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
+import 'package:hr_app_flutter/features/services/model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
 
 import 'package:hr_app_flutter/features/services/model/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:mockito/annotations.dart';
@@ -12,8 +13,9 @@ import 'package:http/http.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
 
+import '../../service_repo_test/service_repo_test.mocks.dart';
 import '../lean_production_repo_test/lean_production_repo_test.mocks.dart';
-import 'lean_prodaction_api_provider_test.mocks.dart';
+import 'service_api_provider_test.mocks.dart';
 
 @GenerateNiceMocks(
   [
@@ -108,7 +110,7 @@ void main() {
   });
 
   group('getScheduleBus', () {
-    test('fetches services successfully', () async {
+    test('fetches scheduleBus successfully', () async {
       // Arrange
       const String accessToken = 'your_access_token';
       const String uri = '$urlAdress/bus/get_destination';
@@ -153,7 +155,7 @@ void main() {
       verify(mockHTTPService.get(uri: uri, userToken: accessToken)).called(1);
     });
 
-    test('throws exception when fetching services fails', () async {
+    test('throws exception when fetching scheduleBus fails', () async {
       // Arrange
       const String accessToken = 'your_access_token';
       const String uri = '$urlAdress/bus/get_destination';
@@ -174,7 +176,7 @@ void main() {
       verify(mockHTTPService.get(uri: uri, userToken: accessToken)).called(1);
     });
   });
-
+//sendFormLeanProduction
   group('sendFormLeanProduction', () {
     final formEntity = MockLeanProductionFormEntity();
 
@@ -206,7 +208,8 @@ void main() {
       expect(isSend, equals(true));
     });
 
-    test('throws exception when fetching services fails', () async {
+    test('throws exception when fetching sendFormLeanProduction fails',
+        () async {
       // Arrange
       const String accessToken = 'your_access_token';
       const String uri = '$urlAdress/lean_fabrication/create_proposal?';
@@ -237,35 +240,42 @@ void main() {
   });
 //getMyLeanProductions
   group('getMyLeanProductions', () {
-    test('fetches services successfully', () async {
+    test('fetches MyLeanProductions successfully', () async {
       // Arrange
       const String accessToken = 'your_access_token';
       const String uri = '$urlAdress/lean_fabrication/my_proposals';
+      const String dateString = '2023-12-14T10:02:01';
+      final DateTime dateTime = DateTime.parse(dateString);
 
       final jsonData = {
-        'result': {
-          "offers": {
-            "realized": false,
-            "first_implementer": 0,
-            "second_implementer": 0,
-            "third_implementer": 0,
-            "issue": "test issue",
-            "solution": "test solution",
-            "expenses": "test expenses",
-            "benefit": "test benefit"
-          },
+        "result": {
+          "offers": [
+            {
+              "realized": false,
+              "date": '2023-12-14T10:02:01',
+              "number": "000000302",
+              "status": "На обработке",
+              "issue": "test issue",
+              "solution": "test solution",
+              "expenses": "test expenses",
+              "implementers": [],
+              "benefit": "test benefit",
+              "files": []
+            },
+          ]
         }
       };
-      final expectedServices = <Service>[
-        const Service(
-            id: 22,
-            name: "Новости",
-            permissions: Permissions(
-                approveService: true,
-                createService: true,
-                deleteService: true,
-                updateService: true)),
-      ];
+
+      final expectedLeanProductions = MyLeanProductionsEntity(
+          date: dateTime,
+          number: '000000302',
+          status: 'На обработке',
+          issue: 'test issue',
+          solution: 'test solution',
+          expenses: 'test expenses',
+          benefit: 'test benefit',
+          implementers: [],
+          files: []);
 
       final byteStream =
           ByteStream.fromBytes(utf8.encode(json.encode(jsonData)));
@@ -278,15 +288,15 @@ void main() {
           .thenAnswer((_) async => response);
 
       // Act
-      final services =
+      final leanProductions =
           await serviceApiClient.getMyLeanProductions(accessToken: accessToken);
 
       // Assert
-      expect(services, equals(expectedServices));
+      expect(leanProductions, equals([expectedLeanProductions]));
       verify(mockHTTPService.get(uri: uri, userToken: accessToken)).called(1);
     });
 
-    test('throws exception when fetching services fails', () async {
+    test('throws exception when fetching LeanProductions fails', () async {
       // Arrange
       const String accessToken = 'your_access_token';
       const String uri = '$urlAdress/lean_fabrication/my_proposals';
@@ -305,6 +315,70 @@ void main() {
         throwsException,
       );
       verify(mockHTTPService.get(uri: uri, userToken: accessToken)).called(1);
+    });
+  });
+
+  //submitBagReportForm
+  group('submitBagReportForm', () {
+    final bagReportEntity = MockBagReportEntity();
+
+    test('fetches services successfully', () async {
+      // Arrange
+      const String accessToken = 'your_access_token';
+      const String uri = '$urlAdress/report/create';
+      final Map<String, String> newFields = {
+        'forminfo':
+            '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
+      };
+      final response = StreamedResponse(
+        const Stream.empty(),
+        201,
+        headers: {'content-type': 'application/json'},
+      );
+      when(mockHTTPService.postWithFile(
+              uri: uri,
+              userToken: accessToken,
+              paths: bagReportEntity.pathsToFiles,
+              fieldsNew: newFields))
+          .thenAnswer((_) async => response);
+
+      // Act
+      final isSend = await serviceApiClient.submitBagReportForm(
+        accessToken: accessToken,
+        bagReportEntity: bagReportEntity,
+      );
+
+      // Assert
+      expect(isSend, equals(true));
+    });
+
+    test('throws exception when fetching submitBagReportForm fails', () async {
+      // Arrange
+      const String accessToken = 'your_access_token';
+      const String uri = '$urlAdress/report/create';
+      final Map<String, String> newFields = {
+        'forminfo':
+            '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
+      };
+      final response = StreamedResponse(
+        const Stream.empty(),
+        400,
+        headers: {'content-type': 'application/json'},
+      );
+
+      when(mockHTTPService.postWithFile(
+              uri: uri,
+              userToken: accessToken,
+              paths: bagReportEntity.pathsToFiles,
+              fieldsNew: newFields))
+          .thenAnswer((_) async => response);
+
+      // Act & Assert
+      expect(
+        () => serviceApiClient.submitBagReportForm(
+            accessToken: accessToken, bagReportEntity: bagReportEntity),
+        throwsException,
+      );
     });
   });
 }
