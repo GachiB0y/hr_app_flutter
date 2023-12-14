@@ -80,7 +80,8 @@ class TemplateFormStatementsEntity with _$TemplateFormStatementsEntity {
 class TemplateField with _$TemplateField {
   const factory TemplateField({
     @JsonKey(name: 'field_name') required final String name,
-    @JsonKey(name: 'field_body') required final String value,
+    @JsonKey(name: 'field_body') required final String body,
+    @JsonKey(name: 'field_data_type') required final String dataType,
   }) = _TemplateField;
 
   factory TemplateField.fromJson(Map<String, dynamic> json) =>

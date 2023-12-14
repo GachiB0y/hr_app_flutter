@@ -1313,7 +1313,9 @@ mixin _$TemplateField {
   @JsonKey(name: 'field_name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'field_body')
-  String get value => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
+  @JsonKey(name: 'field_data_type')
+  String get dataType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1329,7 +1331,8 @@ abstract class $TemplateFieldCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'field_name') String name,
-      @JsonKey(name: 'field_body') String value});
+      @JsonKey(name: 'field_body') String body,
+      @JsonKey(name: 'field_data_type') String dataType});
 }
 
 /// @nodoc
@@ -1346,16 +1349,21 @@ class _$TemplateFieldCopyWithImpl<$Res, $Val extends TemplateField>
   @override
   $Res call({
     Object? name = null,
-    Object? value = null,
+    Object? body = null,
+    Object? dataType = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataType: null == dataType
+          ? _value.dataType
+          : dataType // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -1371,7 +1379,8 @@ abstract class _$$_TemplateFieldCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'field_name') String name,
-      @JsonKey(name: 'field_body') String value});
+      @JsonKey(name: 'field_body') String body,
+      @JsonKey(name: 'field_data_type') String dataType});
 }
 
 /// @nodoc
@@ -1386,16 +1395,21 @@ class __$$_TemplateFieldCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? value = null,
+    Object? body = null,
+    Object? dataType = null,
   }) {
     return _then(_$_TemplateField(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataType: null == dataType
+          ? _value.dataType
+          : dataType // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -1406,7 +1420,8 @@ class __$$_TemplateFieldCopyWithImpl<$Res>
 class _$_TemplateField implements _TemplateField {
   const _$_TemplateField(
       {@JsonKey(name: 'field_name') required this.name,
-      @JsonKey(name: 'field_body') required this.value});
+      @JsonKey(name: 'field_body') required this.body,
+      @JsonKey(name: 'field_data_type') required this.dataType});
 
   factory _$_TemplateField.fromJson(Map<String, dynamic> json) =>
       _$$_TemplateFieldFromJson(json);
@@ -1416,11 +1431,14 @@ class _$_TemplateField implements _TemplateField {
   final String name;
   @override
   @JsonKey(name: 'field_body')
-  final String value;
+  final String body;
+  @override
+  @JsonKey(name: 'field_data_type')
+  final String dataType;
 
   @override
   String toString() {
-    return 'TemplateField(name: $name, value: $value)';
+    return 'TemplateField(name: $name, body: $body, dataType: $dataType)';
   }
 
   @override
@@ -1429,12 +1447,14 @@ class _$_TemplateField implements _TemplateField {
         (other.runtimeType == runtimeType &&
             other is _$_TemplateField &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.dataType, dataType) ||
+                other.dataType == dataType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value);
+  int get hashCode => Object.hash(runtimeType, name, body, dataType);
 
   @JsonKey(ignore: true)
   @override
@@ -1453,7 +1473,8 @@ class _$_TemplateField implements _TemplateField {
 abstract class _TemplateField implements TemplateField {
   const factory _TemplateField(
           {@JsonKey(name: 'field_name') required final String name,
-          @JsonKey(name: 'field_body') required final String value}) =
+          @JsonKey(name: 'field_body') required final String body,
+          @JsonKey(name: 'field_data_type') required final String dataType}) =
       _$_TemplateField;
 
   factory _TemplateField.fromJson(Map<String, dynamic> json) =
@@ -1464,7 +1485,10 @@ abstract class _TemplateField implements TemplateField {
   String get name;
   @override
   @JsonKey(name: 'field_body')
-  String get value;
+  String get body;
+  @override
+  @JsonKey(name: 'field_data_type')
+  String get dataType;
   @override
   @JsonKey(ignore: true)
   _$$_TemplateFieldCopyWith<_$_TemplateField> get copyWith =>

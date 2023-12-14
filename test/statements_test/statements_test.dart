@@ -18,9 +18,9 @@ import 'statements_test.mocks.dart';
   ],
 )
 const TemplateField fieldFirts =
-    TemplateField(name: 'field_first_name', value: 'First Name');
+    TemplateField(name: 'field_first_name', body: 'First Name', dataType: '');
 const TemplateField fieldSecond =
-    TemplateField(name: 'field_second_name', value: 'Last Name');
+    TemplateField(name: 'field_second_name', body: 'Last Name', dataType: '');
 const statements = StatementTempalteEntity(
     documentType: 'test_document_type',
     template: [fieldFirts, fieldSecond],

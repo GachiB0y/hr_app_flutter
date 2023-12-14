@@ -34,7 +34,7 @@ class StatementViewModelWidget extends Listenable {
     Map<String, String?> resultMap = {};
 
     for (TemplateField field in textFieldsData) {
-      resultMap[field.name] = field.value;
+      resultMap[field.name] = field.body;
     }
 
     return resultMap;

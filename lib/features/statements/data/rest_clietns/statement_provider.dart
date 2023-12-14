@@ -66,6 +66,7 @@ class StatementProviderImpl implements IStatementsProvider {
       required StatementFormInfoToSubmit formInfo}) async {
     String uri = '$urlAdress/documents/create_document';
     final String body = json.encode(formInfo.toJson());
+    print(body);
     final response =
         await _httpService.post(uri: uri, userToken: accessToken, body: body);
     if (response.statusCode == 201) {

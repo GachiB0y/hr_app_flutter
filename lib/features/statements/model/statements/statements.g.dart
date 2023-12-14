@@ -117,11 +117,13 @@ Map<String, dynamic> _$$_TemplateFormStatementsEntityToJson(
 _$_TemplateField _$$_TemplateFieldFromJson(Map<String, dynamic> json) =>
     _$_TemplateField(
       name: json['field_name'] as String,
-      value: json['field_body'] as String,
+      body: json['field_body'] as String,
+      dataType: json['field_data_type'] as String,
     );
 
 Map<String, dynamic> _$$_TemplateFieldToJson(_$_TemplateField instance) =>
     <String, dynamic>{
       'field_name': instance.name,
-      'field_body': instance.value,
+      'field_body': instance.body,
+      'field_data_type': instance.dataType,
     };

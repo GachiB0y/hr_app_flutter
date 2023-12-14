@@ -34,12 +34,14 @@ void main() {
 // Создаем шаблон заявления
     const TemplateField fieldFirst = TemplateField(
       name: 'field_first_name',
-      value: 'Фамилия',
+      body: 'Фамилия',
+      dataType: '',
     );
 
     TemplateField fieldSecond = const TemplateField(
       name: 'field_second_name',
-      value: 'Имя',
+      body: 'Имя',
+      dataType: '',
     );
     final List<TemplateField> template = [fieldFirst, fieldSecond];
     final StatementTempalteEntity statementsTemplate = StatementTempalteEntity(

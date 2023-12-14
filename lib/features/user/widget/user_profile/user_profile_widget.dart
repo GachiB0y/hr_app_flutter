@@ -151,7 +151,7 @@ class LogoutButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (UserScope.of(context).isSave == true) {
+    if (UserScope.of(context).state.isSave == true) {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
@@ -214,11 +214,12 @@ class AvatarProfileWidget extends StatelessWidget {
                           imageBuilder: (context, imageProvider) {
                             return CircleAvatar(
                               radius: radius,
-                              backgroundImage:
-                                  viewModel.myImage.imageFile != null
-                                      ? FileImage(
-                                          viewModel.myImage.imageFile as File)
-                                      : imageProvider,
+                              backgroundImage: viewModel
+                                          .state.myImage.imageFile !=
+                                      null
+                                  ? FileImage(
+                                      viewModel.state.myImage.imageFile as File)
+                                  : imageProvider,
                             );
                           }),
                       state.data!.currentProfileUser!.self
@@ -235,17 +236,21 @@ class AvatarProfileWidget extends StatelessWidget {
                                   onPressed: () async {
                                     /// Действия при нажатии на иконку редактирования
                                     await UserScope.of(context, listen: false)
+                                        .state
                                         .selectImage();
                                     final imageFile =
                                         UserScope.of(context, listen: false)
+                                            .state
                                             .myImage
                                             .imageFile;
                                     if (imageFile != null) {
                                       final File file = File(imageFile.path);
                                       if (context.mounted) {
                                         UserScope.of(context, listen: false)
+                                            .state
                                             .file = file;
                                         UserScope.of(context, listen: false)
+                                            .state
                                             .changeIsSave(
                                                 newValue: true, isTags: false);
                                       }
@@ -271,14 +276,14 @@ class SaveButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (UserScope.of(context).isSave) {
+    if (UserScope.of(context).state.isSave) {
       return TextButton(
         child: const Text('Сохранить'),
         onPressed: () {
           final blocUsers = context.read<UserBloc>();
           final currentProfileUser = blocUsers.state.data?.currentProfileUser;
           final isChangeTags =
-              UserScope.of(context, listen: false).isChangeTags;
+              UserScope.of(context, listen: false).state.isChangeTags;
 
           if (currentProfileUser == null) return;
           if (isChangeTags == true) {
@@ -286,13 +291,15 @@ class SaveButtonWidget extends StatelessWidget {
                 tags: currentProfileUser.tags,
                 userId: currentProfileUser.autoCard));
           }
-          if (UserScope.of(context, listen: false).file != null) {
+          if (UserScope.of(context, listen: false).state.file != null) {
             blocUsers.add(UserEvent.sendAvatarWithProfile(
                 userId: currentProfileUser.autoCard,
-                imageFile: UserScope.of(context, listen: false).file as File));
+                imageFile:
+                    UserScope.of(context, listen: false).state.file as File));
           }
 
           UserScope.of(context, listen: false)
+              .state
               .changeIsSave(newValue: false, isTags: false);
         },
       );
@@ -341,6 +348,7 @@ class _TagsWidgetState extends State<TagsWidget> {
                                   label: Text(tag.name),
                                   onDeleted: () {
                                     UserScope.of(context, listen: false)
+                                        .state
                                         .changeIsSave(
                                             newValue: true, isTags: true);
                                     context
@@ -370,6 +378,7 @@ class _TagsWidgetState extends State<TagsWidget> {
                                   onPressed: () {
                                     if (tagController.text.isNotEmpty) {
                                       UserScope.of(context, listen: false)
+                                          .state
                                           .changeIsSave(
                                               newValue: true, isTags: true);
 

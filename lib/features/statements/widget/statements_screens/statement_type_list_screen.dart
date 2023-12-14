@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/statements/bloc/participants_bloc/participants_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../auth/data/repo/auth_repository.dart';
 import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
@@ -194,7 +195,7 @@ class _StatementsTampleteFormWidgetState
     Map<String, String?> resultMap = {};
 
     for (TemplateField field in textFieldsData) {
-      resultMap[field.name] = field.value;
+      resultMap[field.name] = field.body;
     }
 
     return resultMap;
@@ -253,32 +254,77 @@ class _StatementsTampleteFormWidgetState
             listWidget = state.data!.tempalteEntity!.template
                 .map((TemplateField element) {
               TextEditingController controller = TextEditingController();
+              late final Widget textField;
+              if (element.dataType == "datetime") {
+                textField = TextFormField(
+                  enabled: isEnableTextField,
+                  controller: controller,
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return 'Поле обязательно для заполнения';
+                    } else {
+                      setState(() {
+                        final newInput = TemplateField(
+                          name: element.name,
+                          body: value!,
+                          dataType: element.dataType,
+                        );
+                        textFieldsData.add(newInput);
+                      });
+                    }
+                    return null;
+                  },
+                  onTap: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    ).then((selectedDate) {
+                      if (selectedDate != null) {
+                        final formatter = DateFormat('dd.MM.yyyy', 'ru');
+                        controller.text = formatter.format(selectedDate);
+                      }
+                    });
+                  },
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    labelText: element.body,
+                  ),
+                );
+              } else {
+                textField = TextFormField(
+                  enabled: isEnableTextField,
+                  controller: controller,
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return 'Поле обязательно для заполнения';
+                    } else {
+                      setState(() {
+                        final newInput = TemplateField(
+                            name: element.name,
+                            body: value!,
+                            dataType: element.dataType);
+                        textFieldsData.add(newInput);
+                      });
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    labelText: element.body,
+                  ),
+                );
+              }
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: SizedBox(
                   width: 300,
-                  child: TextFormField(
-                    enabled: isEnableTextField,
-                    controller: controller,
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return 'Поле обязательно для заполнения';
-                      } else {
-                        setState(() {
-                          final newInput =
-                              TemplateField(name: element.name, value: value!);
-                          textFieldsData.add(newInput);
-                        });
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
-                      labelText: element.value,
-                    ),
-                  ),
+                  child: textField,
                 ),
               );
             }).toList();
