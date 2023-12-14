@@ -4,16 +4,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
+import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
 import '../../../auth/bloc/loader_cubit/loader_view_cubit.dart';
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
 import '../../model/user/user.dart';
-import 'user_profile_widget_model.dart';
 
 @RoutePage()
 class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -45,19 +44,16 @@ class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
 class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   late final User user;
 
-  late final UserProfileWidgetModel _model;
   @override
   void initState() {
     super.initState();
-    _model = UserProfileWidgetModel();
     final blocUsers = context.read<UserBloc>();
     blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId.toString()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvaider<UserProfileWidgetModel>(
-      model: _model,
+    return UserScope(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -155,11 +151,7 @@ class LogoutButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (ChangeNotifierProvaider.watch<
-                ChangeNotifierProvaider<UserProfileWidgetModel>,
-                UserProfileWidgetModel>(context)!
-            .isSave ==
-        true) {
+    if (UserScope.of(context).isSave == true) {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
@@ -207,9 +199,8 @@ class AvatarProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double radius = MediaQuery.of(context).size.width / 4;
 
-    final viewModel = ChangeNotifierProvaider.watch<
-        ChangeNotifierProvaider<UserProfileWidgetModel>,
-        UserProfileWidgetModel>(context);
+    final viewModel = UserScope.of(context);
+
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserState$Successful || state is UserState$Idle) {
         return state.data == null
@@ -224,9 +215,9 @@ class AvatarProfileWidget extends StatelessWidget {
                             return CircleAvatar(
                               radius: radius,
                               backgroundImage:
-                                  viewModel?.myImage.imageFile != null
+                                  viewModel.myImage.imageFile != null
                                       ? FileImage(
-                                          viewModel?.myImage.imageFile as File)
+                                          viewModel.myImage.imageFile as File)
                                       : imageProvider,
                             );
                           }),
@@ -243,22 +234,19 @@ class AvatarProfileWidget extends StatelessWidget {
                                   icon: const Icon(Icons.edit),
                                   onPressed: () async {
                                     /// Действия при нажатии на иконку редактирования
-                                    await viewModel?.selectImage();
+                                    await UserScope.of(context, listen: false)
+                                        .selectImage();
                                     final imageFile =
-                                        viewModel?.myImage.imageFile;
+                                        UserScope.of(context, listen: false)
+                                            .myImage
+                                            .imageFile;
                                     if (imageFile != null) {
                                       final File file = File(imageFile.path);
                                       if (context.mounted) {
-                                        ChangeNotifierProvaider.watch<
-                                                ChangeNotifierProvaider<
-                                                    UserProfileWidgetModel>,
-                                                UserProfileWidgetModel>(context)
-                                            ?.file = file;
-                                        ChangeNotifierProvaider.read<
-                                                ChangeNotifierProvaider<
-                                                    UserProfileWidgetModel>,
-                                                UserProfileWidgetModel>(context)
-                                            ?.changeIsSave(
+                                        UserScope.of(context, listen: false)
+                                            .file = file;
+                                        UserScope.of(context, listen: false)
+                                            .changeIsSave(
                                                 newValue: true, isTags: false);
                                       }
                                     }
@@ -283,47 +271,29 @@ class SaveButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (ChangeNotifierProvaider.watch<
-                ChangeNotifierProvaider<UserProfileWidgetModel>,
-                UserProfileWidgetModel>(context) !=
-            null &&
-        ChangeNotifierProvaider.watch<
-                ChangeNotifierProvaider<UserProfileWidgetModel>,
-                UserProfileWidgetModel>(context)!
-            .isSave) {
+    if (UserScope.of(context).isSave) {
       return TextButton(
         child: const Text('Сохранить'),
         onPressed: () {
           final blocUsers = context.read<UserBloc>();
           final currentProfileUser = blocUsers.state.data?.currentProfileUser;
-          final isChangeTags = ChangeNotifierProvaider.read<
-                  ChangeNotifierProvaider<UserProfileWidgetModel>,
-                  UserProfileWidgetModel>(context)
-              ?.isChangeTags;
+          final isChangeTags =
+              UserScope.of(context, listen: false).isChangeTags;
 
           if (currentProfileUser == null) return;
-          if (isChangeTags != null && isChangeTags == true) {
+          if (isChangeTags == true) {
             blocUsers.add(UserEvent.saveTagsToSend(
                 tags: currentProfileUser.tags,
                 userId: currentProfileUser.autoCard));
           }
-          if (ChangeNotifierProvaider.read<
-                      ChangeNotifierProvaider<UserProfileWidgetModel>,
-                      UserProfileWidgetModel>(context)
-                  ?.file !=
-              null) {
+          if (UserScope.of(context, listen: false).file != null) {
             blocUsers.add(UserEvent.sendAvatarWithProfile(
                 userId: currentProfileUser.autoCard,
-                imageFile: ChangeNotifierProvaider.read<
-                        ChangeNotifierProvaider<UserProfileWidgetModel>,
-                        UserProfileWidgetModel>(context)
-                    ?.file as File));
+                imageFile: UserScope.of(context, listen: false).file as File));
           }
 
-          ChangeNotifierProvaider.read<
-                  ChangeNotifierProvaider<UserProfileWidgetModel>,
-                  UserProfileWidgetModel>(context)
-              ?.changeIsSave(newValue: false, isTags: false);
+          UserScope.of(context, listen: false)
+              .changeIsSave(newValue: false, isTags: false);
         },
       );
     } else {
@@ -370,11 +340,8 @@ class _TagsWidgetState extends State<TagsWidget> {
                             .map((tag) => Chip(
                                   label: Text(tag.name),
                                   onDeleted: () {
-                                    ChangeNotifierProvaider.read<
-                                            ChangeNotifierProvaider<
-                                                UserProfileWidgetModel>,
-                                            UserProfileWidgetModel>(context)
-                                        ?.changeIsSave(
+                                    UserScope.of(context, listen: false)
+                                        .changeIsSave(
                                             newValue: true, isTags: true);
                                     context
                                         .read<UserBloc>()
@@ -402,11 +369,8 @@ class _TagsWidgetState extends State<TagsWidget> {
                                   icon: const Icon(Icons.add),
                                   onPressed: () {
                                     if (tagController.text.isNotEmpty) {
-                                      ChangeNotifierProvaider.read<
-                                              ChangeNotifierProvaider<
-                                                  UserProfileWidgetModel>,
-                                              UserProfileWidgetModel>(context)
-                                          ?.changeIsSave(
+                                      UserScope.of(context, listen: false)
+                                          .changeIsSave(
                                               newValue: true, isTags: true);
 
                                       context.read<UserBloc>().add(
