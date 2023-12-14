@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 
-import '../../../../library/custom_provider/inherit_widget.dart';
 import '../../../news/bloc/caregory_bloc.dart/category_bloc.dart';
 import '../../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'bottom_sheet_create_events_model.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/widget/components/custom_date_picker/custom_date_pikcer_model.dart';
 import 'package:intl/intl.dart';
 

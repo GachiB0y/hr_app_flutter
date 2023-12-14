@@ -19,7 +19,6 @@ import 'package:hr_app_flutter/features/statements/data/repo/statements_reposito
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
-import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hr_app_flutter/main.dart';
 import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -35,6 +34,7 @@ import '../../../features/services/bloc/user_birth_day_info_bloc/user_birth_day_
 import '../../../features/user/bloc/user_bloc/user_bloc.dart';
 import '../../../features/wallet/bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import '../../../features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
+import '../database/flutter_secure_storage/flutter_secure_storage.dart';
 import '../database/rest_clients/api_client.dart';
 
 AppFactory makeAppFactory() => const _AppFactoryDefault();

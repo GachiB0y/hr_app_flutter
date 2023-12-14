@@ -4,10 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
 import '../../../auth/bloc/loader_cubit/loader_view_cubit.dart';

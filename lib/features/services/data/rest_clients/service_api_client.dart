@@ -16,7 +16,9 @@ import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceProvider {
-  Future<List<Service>> getServices({required String accessToken});
+  Future<List<Service>> getServices({
+    required String accessToken,
+  });
   Future<ScheduleBus> getScheduleBus({required String accessToken});
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
       {required String accessToken});
@@ -35,7 +37,9 @@ class ServiceProviderImpl implements IServiceProvider {
   ServiceProviderImpl(this._httpService);
 
   @override
-  Future<List<Service>> getServices({required String accessToken}) async {
+  Future<List<Service>> getServices({
+    required String accessToken,
+  }) async {
     String uri = '$urlAdress/admin/avalible_services_list';
     final response = await _httpService.get(uri: uri, userToken: accessToken);
 

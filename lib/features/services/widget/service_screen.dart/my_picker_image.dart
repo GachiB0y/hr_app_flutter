@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/model/image.dart';
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/statements/bloc/participants_bloc/participants_bloc.dart';
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 
 import '../../../auth/data/repo/auth_repository.dart';
 import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';

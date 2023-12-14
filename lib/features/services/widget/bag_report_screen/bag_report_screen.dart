@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/widget/components/custom_text_form_field/custom_text_form_field.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
 
 import '../../bloc/bag_report_bloc/bag_report_bloc.dart';
 import '../../data/repo/service_repository.dart';
