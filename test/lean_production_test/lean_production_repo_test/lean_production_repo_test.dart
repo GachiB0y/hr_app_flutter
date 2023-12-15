@@ -6,7 +6,7 @@ import 'package:hr_app_flutter/features/services/model/lean_productions_entity/m
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../service_repo_test/service_repo_test.mocks.dart';
+import '../../service_test/service_repo_test/service_repo_test.mocks.dart';
 import 'lean_production_repo_test.mocks.dart';
 
 @GenerateNiceMocks(

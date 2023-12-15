@@ -13,23 +13,21 @@ import 'package:http/http.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
 
-import '../../service_repo_test/service_repo_test.mocks.dart';
-import '../lean_production_repo_test/lean_production_repo_test.mocks.dart';
+import '../service_repo_test/service_repo_test.mocks.dart';
+import '../../lean_production_test/lean_production_repo_test/lean_production_repo_test.mocks.dart';
 import 'service_api_provider_test.mocks.dart';
 
 @GenerateNiceMocks(
   [
     MockSpec<HTTPServiceImpl>(),
-    // MockSpec<LeanProductionFormEntity>(),
     MockSpec<StreamedResponse>(
       onMissingStub: OnMissingStub.returnDefault,
     ),
   ],
 )
 void main() {
-  late HTTPServiceImpl mockHTTPService; // = MockHTTPServiceImpl();
-  late ServiceProviderImpl
-      serviceApiClient; // = ServiceProviderImpl(mockHTTPService);
+  late HTTPServiceImpl mockHTTPService;
+  late ServiceProviderImpl serviceApiClient;
   setUp(() {
 // Создаем экземпляры мок-объектов
     mockHTTPService = MockHTTPServiceImpl();
