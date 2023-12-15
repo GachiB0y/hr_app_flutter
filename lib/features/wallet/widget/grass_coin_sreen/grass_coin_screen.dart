@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/app_bar_user_widget.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/title_app_bar_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
 
 import 'package:intl/intl.dart';
 
@@ -42,10 +41,9 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     if (textScaleFactor < 1) textScaleFactor = 1;
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: RefreshIndicator(
-          color: ColorsForWidget.colorGreen,
+          color: Theme.of(context).colorScheme.primary,
           onRefresh: () {
             getInfoForInit();
             return Future<void>.delayed(const Duration(milliseconds: 100));
@@ -56,7 +54,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                 pinned: true,
                 snap: true,
                 floating: true,
-                backgroundColor: Colors.grey[200],
+                backgroundColor: Theme.of(context).colorScheme.background,
                 surfaceTintColor: Colors.transparent,
                 leadingWidth: 90,
                 leading: const Avatar(),
@@ -113,7 +111,7 @@ class _BodyContentWidgetCoinScreenState
   void _showBottomSheet(BuildContext context, {required bool isCoinsInfo}) {
     showModalBottomSheet(
       showDragHandle: true,
-      backgroundColor: ColorsForWidget.colorGrey,
+      backgroundColor: Theme.of(context).colorScheme.outline,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
@@ -208,7 +206,7 @@ class _BodyContentWidgetCoinScreenState
                 onPressed: () => _showBottomSheet(context, isCoinsInfo: true),
                 icon: Container(
                   decoration: BoxDecoration(
-                      color: ColorsForWidget.colorGreen,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(30)),
                   child: const Icon(Icons.question_mark_rounded,
                       size: 18, color: Colors.white),
@@ -236,10 +234,10 @@ class _BodyContentWidgetCoinScreenState
                   padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                 ),
                 onPressed: () => _showBottomSheet(context, isCoinsInfo: false),
-                icon: const Icon(
+                icon: Icon(
                   MyCustomIcon.iconRub,
                   size: 18,
-                  color: ColorsForWidget.colorGreen,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 label: const Text(
                   'Как заработать коины?',
@@ -358,23 +356,10 @@ class RowAvarageCoinCountWidget extends StatelessWidget {
                   WalletState$Error _ => const Text('Ничего не найденно...'),
                   _ => const Text('Default'),
                 },
-                // blocWallet.state.when(
-                //   loading: () {
-                //     return const Center(
-                //       child: CircularProgressIndicator(),
-                //     );
-                //   },
-                //   loaded: (walletLoaded) {
-                //     return Text(
-                //       walletLoaded.avarageCoins.toString(),
-                //       style: const TextStyle(fontSize: 20),
-                //     );
-                //   },
-                //   error: () => const Text('Nothing found...'),
-                // ),
-                const Text(
+                Text(
                   'за неделю',
-                  style: TextStyle(color: Colors.grey),
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.outline),
                 )
               ],
             ),
@@ -396,8 +381,8 @@ class RowBalanceCountWidget extends StatelessWidget {
       return Row(
         children: [
           ColorFiltered(
-            colorFilter: const ColorFilter.mode(
-                ColorsForWidget.colorGreen, BlendMode.srcATop),
+            colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary, BlendMode.srcATop),
             child: Image.asset(
               'assets/images/grass_icon_main.png',
               width: 40,
@@ -466,8 +451,8 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
           width: 5,
         ),
         ColorFiltered(
-          colorFilter: const ColorFilter.mode(
-              ColorsForWidget.colorGreen, BlendMode.srcATop),
+          colorFilter: ColorFilter.mode(
+              Theme.of(context).colorScheme.primary, BlendMode.srcATop),
           child: Image.asset(
             'assets/images/grass_icon_main.png',
             width: 15,
@@ -642,9 +627,9 @@ class CardListCoinsInfoBottomSheet extends StatelessWidget {
                             'Награда: ${listCoinsInfoLoaded[index].price.toString()}',
                             style: const TextStyle(fontSize: 16),
                           ),
-                          const Icon(
+                          Icon(
                             MyCustomIcon.iconLogoGrass,
-                            color: ColorsForWidget.colorGreen,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ],
                       ),
@@ -667,9 +652,9 @@ class CardListCoinsInfoBottomSheet extends StatelessWidget {
                             'Цена: ${listCoinsRewardLoaded[index].price.toString()}',
                             style: const TextStyle(fontSize: 16),
                           ),
-                          const Icon(
+                          Icon(
                             MyCustomIcon.iconLogoGrass,
-                            color: ColorsForWidget.colorGreen,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ],
                       ),

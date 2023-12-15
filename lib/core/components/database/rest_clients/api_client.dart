@@ -4,6 +4,10 @@ import 'package:http_parser/http_parser.dart';
 abstract interface class IHTTPService {
   Future<StreamedResponse> get(
       {required String uri, required String userToken});
+  Future<dynamic> getTest({required String uri, required String userToken});
+
+  Future<StreamedResponse> put(
+      {required String uri, required String userToken});
   Future<StreamedResponse> post({
     required String uri,
     required String? body,
@@ -19,6 +23,21 @@ abstract interface class IHTTPService {
 
 class HTTPServiceImpl implements IHTTPService {
   const HTTPServiceImpl();
+  @override
+  Future<dynamic> getTest(
+      {required String uri, required String userToken}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $userToken'
+    };
+    var request = Request('GET', Uri.parse(uri));
+
+    request.headers.addAll(headers);
+
+    StreamedResponse response =
+        await request.send().timeout(const Duration(seconds: 8));
+    return response;
+  }
 
   @override
   Future<StreamedResponse> get(
@@ -37,10 +56,27 @@ class HTTPServiceImpl implements IHTTPService {
   }
 
   @override
-  Future<StreamedResponse> post(
-      {required String uri,
-      required String? body,
-      required String? userToken}) async {
+  Future<StreamedResponse> put(
+      {required String uri, required String userToken}) async {
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $userToken'
+    };
+    var request = Request('PUT', Uri.parse(uri));
+
+    request.headers.addAll(headers);
+
+    StreamedResponse response =
+        await request.send().timeout(const Duration(seconds: 8));
+    return response;
+  }
+
+  @override
+  Future<StreamedResponse> post({
+    required String uri,
+    required String? body,
+    required String? userToken,
+  }) async {
     var headers = {
       'accept': 'application/json',
       'Content-Type': 'application/json'
@@ -55,7 +91,7 @@ class HTTPServiceImpl implements IHTTPService {
     request.headers.addAll(headers);
 
     StreamedResponse response =
-        await request.send().timeout(const Duration(seconds: 8));
+        await request.send().timeout(const Duration(seconds: 100));
     return response;
   }
 

@@ -3,7 +3,7 @@ part of 'user_bloc.dart';
 /// {@template user_state_placeholder}
 /// Entity placeholder for UserState
 /// {@endtemplate}
-typedef UserEntity = User;
+typedef UserEntity = UserProfileViewModel;
 
 /// {@template user_state}
 /// UserState.

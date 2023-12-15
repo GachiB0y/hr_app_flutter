@@ -1,5 +1,6 @@
-import 'package:hr_app_flutter/library/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+
+import '../flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class _Keys {
   static const sessionId = 'session_id';

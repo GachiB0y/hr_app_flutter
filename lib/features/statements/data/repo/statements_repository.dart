@@ -1,14 +1,20 @@
+import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
+import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 import '../rest_clietns/statement_provider.dart';
 
 abstract interface class IStatementsRepository {
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
       {required final String accessToken});
-  Future<StatementEntity> fetchStatementForm(
+  Future<StatementTempalteEntity> fetchStatementForm(
       {required final String accessToken, required final String id});
-  Future<void> submitStatementForm(
+  Future<TypeOfAppplicationSigning> submitStatementForm(
       {required final String accessToken,
-      required final StatementFormInfo formInfo});
+      required final StatementFormInfoToSubmit formInfo});
+  Future<List<ParticipantEntity>> findParticipant(
+      {required final String accessToken, required final String name});
+  Future<void> signDocumentBySmsCode(
+      {required final String accessToken, required final String code});
 }
 
 class StatementsRepository implements IStatementsRepository {
@@ -20,33 +26,66 @@ class StatementsRepository implements IStatementsRepository {
 
   @override
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
-      {required String accessToken}) {
+      {required String accessToken}) async {
     try {
-      return _statementsProvider.fetchListTypeStatements(
-          accessToken: accessToken);
+      final List<StatementFieldTypeEntity> result = await _statementsProvider
+          .fetchListTypeStatements(accessToken: accessToken);
+      return result;
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<StatementEntity> fetchStatementForm(
-      {required final String accessToken, required final String id}) {
+  Future<StatementTempalteEntity> fetchStatementForm(
+      {required final String accessToken, required final String id}) async {
     try {
-      return _statementsProvider.fetchStatementForm(
-          accessToken: accessToken, id: id);
+      final StatementTempalteEntity result = await _statementsProvider
+          .fetchStatementForm(accessToken: accessToken, id: id);
+      return result;
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<void> submitStatementForm(
-      {required String accessToken, required StatementFormInfo formInfo}) {
+  Future<TypeOfAppplicationSigning> submitStatementForm(
+      {required String accessToken,
+      required StatementFormInfoToSubmit formInfo}) async {
     try {
-      return _statementsProvider.submitStatementForm(
+      final TypeOfAppplicationSigning result =
+          await _statementsProvider.submitStatementForm(
         accessToken: accessToken,
         formInfo: formInfo,
+      );
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ParticipantEntity>> findParticipant(
+      {required String accessToken, required String name}) async {
+    try {
+      final List<ParticipantEntity> result =
+          await _statementsProvider.findParticipant(
+        accessToken: accessToken,
+        name: name,
+      );
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> signDocumentBySmsCode(
+      {required String accessToken, required String code}) async {
+    try {
+      return await _statementsProvider.signDocumentBySmsCode(
+        accessToken: accessToken,
+        code: code,
       );
     } catch (e) {
       rethrow;

@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
 
@@ -47,7 +46,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: ColorsForWidget.colorGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: TextField(
           decoration: InputDecoration(
             prefixIcon: IconButton(
@@ -70,73 +69,87 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
           },
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 16),
-            const Center(
+            SizedBox(height: 16),
+            Center(
               child: Text(
                 'Найденные пользователи:',
                 style: TextStyle(fontSize: 18),
               ),
             ),
-            blocOtherUsers.state.when(
-              loaded: (listUsersLoaded, currentUserProfile) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemExtent: 84,
-                    itemCount: listUsersLoaded.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            leading: SizedBox(
-                              width: MediaQuery.of(context).size.width / 8,
-                              child: CachedNetworkImage(
-                                  imageUrl: listUsersLoaded[index].avatar,
-                                  imageBuilder: (context, imageProvider) {
-                                    return CircleAvatar(
-                                      backgroundImage: imageProvider,
-                                      radius:
-                                          MediaQuery.of(context).size.width / 8,
-                                    );
-                                  }),
-                            ),
-                            title: Text(
-                              '${listUsersLoaded[index].nameI} ${listUsersLoaded[index].name} ${listUsersLoaded[index].nameO}',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Text(
-                              listUsersLoaded[index].staffPosition,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            onTap: () {
-                              context.pushRoute(ProfileWidgetRoute(
-                                userId: listUsersLoaded[index].autoCard,
-                                authRepository: blocOtherUsers.authRepository,
-                                userRepo: blocOtherUsers.userRepo,
-                              ));
-                            },
-                          ),
-                          const Divider(
-                            height: 2,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                );
-              },
-              loading: (listUsersLoaded, currentUserProfile) {
-                return const SizedBox.shrink();
-              },
-              error: (e) => const SafeArea(
-                  child: Center(child: Text('Пользователь не найден.'))),
-            )
+            _ResultSearchWidget(),
           ],
         ),
       ),
     );
+  }
+}
+
+class _ResultSearchWidget extends StatelessWidget {
+  const _ResultSearchWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OtherUsersBloc, OtherUsersState>(
+        builder: (context, state) {
+      if (state is OtherUsersState$Processing) {
+        const SizedBox.shrink();
+      } else if (state is OtherUsersState$Idle ||
+          state is OtherUsersState$Successful) {
+        if (state.data != null) {
+          return Expanded(
+            child: ListView.builder(
+              itemExtent: 84,
+              itemCount: state.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: SizedBox(
+                        width: MediaQuery.of(context).size.width / 8,
+                        child: CachedNetworkImage(
+                            imageUrl: state.data![index].avatar,
+                            imageBuilder: (context, imageProvider) {
+                              return CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: MediaQuery.of(context).size.width / 8,
+                              );
+                            }),
+                      ),
+                      title: Text(
+                        '${state.data![index].nameI} ${state.data![index].name} ${state.data![index].nameO}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        state.data![index].staffPosition,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () {
+                        context.pushRoute(ProfileWidgetRoute(
+                          userId: state.data![index].autoCard,
+                          authRepository:
+                              RepositoryProvider.of<IAuthRepository>(context),
+                          userRepo:
+                              RepositoryProvider.of<IUserRepository>(context),
+                        ));
+                      },
+                    ),
+                    const Divider(
+                      height: 2,
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        } else {
+          return const Center(child: Text('Пользователь не найден.'));
+        }
+      }
+      return const Center(child: Text('Пользователь не найден.'));
+    });
   }
 }

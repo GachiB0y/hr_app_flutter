@@ -3,17 +3,16 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
 
-import '../../../../library/custom_provider/inherit_widget.dart';
 import '../../../../core/widget/components/custom_text_form_field/custom_text_form_field.dart';
 import '../../../../core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
 import '../../../../core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
-import '../../../user/model/user/user.dart';
 import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 
@@ -54,32 +53,28 @@ class LeanProductionFormScreen extends StatelessWidget
     return ChangeNotifierProvaider<FilePickerCustomModel>(
       model: _model,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('Подача заявления'),
         ),
-        body: MyFormWidget(
-          authRepository: authRepository,
-          userRepo: userRepo,
-        ),
+        body: const LeanProductionFormWidget(),
         floatingActionButton: const CustomFABFromFilePicker(),
       ),
     );
   }
 }
 
-class MyFormWidget extends StatefulWidget {
-  const MyFormWidget(
-      {super.key, required this.authRepository, required this.userRepo});
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
+class LeanProductionFormWidget extends StatefulWidget {
+  const LeanProductionFormWidget({
+    super.key,
+  });
 
   @override
-  _MyFormWidgetState createState() => _MyFormWidgetState();
+  _LeanProductionFormWidgetState createState() =>
+      _LeanProductionFormWidgetState();
 }
 
-class _MyFormWidgetState extends State<MyFormWidget> {
+class _LeanProductionFormWidgetState extends State<LeanProductionFormWidget> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _employeeNameController = TextEditingController();
@@ -201,8 +196,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                     return Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: ImplementersInputWidget(
-                        authRepository: widget.authRepository,
-                        userRepo: widget.userRepo,
                         iconData: Icons.person_4,
                         inputText: 'Исполнитель ${index + 1}',
                         nameController: _executorsControllers[index],
@@ -278,7 +271,11 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                 ),
                 Center(
                   child: ElevatedButton(
-                    child: const Text('Отправить'),
+                    child: Text(
+                      'Отправить',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState != null) {
                         if (_formKey.currentState!.validate()) {
@@ -337,8 +334,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
 class ImplementersInputWidget extends StatefulWidget {
   const ImplementersInputWidget({
     super.key,
-    required this.authRepository,
-    required this.userRepo,
     required TextEditingController nameController,
     required TextEditingController idController,
     required IconData? iconData,
@@ -347,8 +342,6 @@ class ImplementersInputWidget extends StatefulWidget {
         _nameController = nameController,
         _iconData = iconData,
         _inputText = inputText;
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
 
   final TextEditingController _nameController;
   final TextEditingController _idController;
@@ -361,7 +354,6 @@ class ImplementersInputWidget extends StatefulWidget {
 }
 
 class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
-  List<User> filteredUserList = [];
   Timer? searchDebounce;
   final FocusNode focusNodeSearch = FocusNode();
   bool isFocus = false;
@@ -380,105 +372,164 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final blocOtherUsers = context.watch<OtherUsersBloc>();
-
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0), color: Colors.white),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(inputText),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  icon: Icon(iconData),
-                  border: InputBorder.none,
-                ),
-                onTap: () {
-                  setState(() {
-                    isFocus = true;
-                  });
-                },
-                onSubmitted: (value) {
-                  setState(() {
-                    isFocus = false;
-                  });
-                },
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    searchDebounce?.cancel();
-                    searchDebounce =
-                        Timer(const Duration(milliseconds: 700), () {
-                      blocOtherUsers
-                          .add(OtherUsersEvent.findUsers(findText: value));
+    return BlocBuilder<OtherUsersBloc, OtherUsersState>(
+        builder: (context, state) {
+      return Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(inputText),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    icon: Icon(iconData),
+                    border: InputBorder.none,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      isFocus = true;
                     });
-                  }
-                },
-              ),
-            ],
+                  },
+                  onSubmitted: (value) {
+                    setState(() {
+                      isFocus = false;
+                    });
+                  },
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      searchDebounce?.cancel();
+                      searchDebounce =
+                          Timer(const Duration(milliseconds: 700), () {
+                        context
+                            .read<OtherUsersBloc>()
+                            .add(OtherUsersEvent.findUsers(findText: value));
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        blocOtherUsers.state.when(
-          loading: (listUsersLoaded, currentUserProfile) {
-            return const SizedBox.shrink();
-          },
-          loaded: (listUsersLoaded, currentUserProfile) {
-            return listUsersLoaded.isEmpty
-                ? const SizedBox.shrink()
-                : isFocus
-                    ? Container(
-                        constraints:
-                            const BoxConstraints(minHeight: 70, maxHeight: 240),
-                        padding: const EdgeInsets.all(16.0),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 0),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.white),
-                        child: Scrollbar(
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            itemExtent: 70,
-                            itemCount: listUsersLoaded.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                    '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
-                                subtitle:
-                                    Text(listUsersLoaded[index].staffPosition),
-                                onTap: () {
-                                  nameController.text =
-                                      '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
-                                  idController.text = listUsersLoaded[index]
-                                      .autoCard
-                                      .toString();
-                                  setState(() {
-                                    isFocus = false;
-                                  });
-                                },
-                              );
-                            },
+          if (state is OtherUsersState$Processing) ...[
+            const SizedBox.shrink(),
+          ] else if (state is OtherUsersState$Error) ...[
+            const Center(child: Text('Пользователь не найден.')),
+          ] else if (state is OtherUsersState$Idle ||
+              state is OtherUsersState$Successful) ...[
+            if (state.data != null) ...[
+              state.data!.isEmpty
+                  ? const SizedBox.shrink()
+                  : isFocus
+                      ? Container(
+                          constraints: const BoxConstraints(
+                              minHeight: 70, maxHeight: 240),
+                          padding: const EdgeInsets.all(16.0),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 2,
+                                  blurRadius: 2,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(30.0),
+                              color: Colors.white),
+                          child: Scrollbar(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              itemExtent: 70,
+                              itemCount: state.data!.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                      '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}'),
+                                  subtitle:
+                                      Text(state.data![index].staffPosition),
+                                  onTap: () {
+                                    nameController.text =
+                                        '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}';
+                                    idController.text =
+                                        state.data![index].autoCard.toString();
+                                    setState(() {
+                                      isFocus = false;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      )
-                    : const SizedBox.shrink();
-          },
-          error: (e) => const Center(child: Text('Пользователь не найден.')),
-        ),
-      ],
-    );
+                        )
+                      : const SizedBox.shrink(),
+            ] else ...[
+              const SizedBox.shrink()
+            ]
+          ]
+
+          // blocOtherUsers.state.when(
+          //   loading: (listUsersLoaded, currentUserProfile) {
+          //     return const SizedBox.shrink();
+          //   },
+          //   loaded: (listUsersLoaded, currentUserProfile) {
+          //     return listUsersLoaded.isEmpty
+          //         ? const SizedBox.shrink()
+          //         : isFocus
+          //             ? Container(
+          //                 constraints:
+          //                     const BoxConstraints(minHeight: 70, maxHeight: 240),
+          //                 padding: const EdgeInsets.all(16.0),
+          //                 width: double.infinity,
+          //                 decoration: BoxDecoration(
+          //                     boxShadow: [
+          //                       BoxShadow(
+          //                         color: Colors.black.withOpacity(0.4),
+          //                         spreadRadius: 2,
+          //                         blurRadius: 2,
+          //                         offset: const Offset(0, 0),
+          //                       ),
+          //                     ],
+          //                     borderRadius: BorderRadius.circular(30.0),
+          //                     color: Colors.white),
+          //                 child: Scrollbar(
+          //                   child: ListView.builder(
+          //                     controller: _scrollController,
+          //                     itemExtent: 70,
+          //                     itemCount: listUsersLoaded.length,
+          //                     itemBuilder: (context, index) {
+          //                       return ListTile(
+          //                         title: Text(
+          //                             '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
+          //                         subtitle:
+          //                             Text(listUsersLoaded[index].staffPosition),
+          //                         onTap: () {
+          //                           nameController.text =
+          //                               '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
+          //                           idController.text = listUsersLoaded[index]
+          //                               .autoCard
+          //                               .toString();
+          //                           setState(() {
+          //                             isFocus = false;
+          //                           });
+          //                         },
+          //                       );
+          //                     },
+          //                   ),
+          //                 ),
+          //               )
+          //             : const SizedBox.shrink();
+          //   },
+          //   error: (e) => const Center(child: Text('Пользователь не найден.')),
+          // ),
+        ],
+      );
+    });
   }
 }

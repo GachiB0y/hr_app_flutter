@@ -34,7 +34,7 @@ class ScheduleBusBloc extends Bloc<ScheduleBusEvent, ScheduleBusState> {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
       ScheduleBus scheduleBus = await serviceRepository
           .getScheduleBus(
-            userToken: accessToken as String,
+            accessToken: accessToken as String,
           )
           .timeout(const Duration(seconds: 10));
       final newState = ScheduleBusState.loaded(scheduleBusLoaded: scheduleBus);

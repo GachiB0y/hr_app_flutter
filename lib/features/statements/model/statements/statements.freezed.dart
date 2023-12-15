@@ -14,37 +14,248 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-StatementEntity _$StatementEntityFromJson(Map<String, dynamic> json) {
-  return _StatementEntity.fromJson(json);
+StatementViewModel _$StatementViewModelFromJson(Map<String, dynamic> json) {
+  return _StatementViewModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$StatementEntity {
-  @JsonKey(name: 'document_type')
-  String get documentType => throw _privateConstructorUsedError;
-  List<TemplateField> get template => throw _privateConstructorUsedError;
+mixin _$StatementViewModel {
+  StatementTempalteEntity? get tempalteEntity =>
+      throw _privateConstructorUsedError;
+  bool get isSmsApprove => throw _privateConstructorUsedError;
+  bool get isSigningStatment => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $StatementEntityCopyWith<StatementEntity> get copyWith =>
+  $StatementViewModelCopyWith<StatementViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StatementEntityCopyWith<$Res> {
-  factory $StatementEntityCopyWith(
-          StatementEntity value, $Res Function(StatementEntity) then) =
-      _$StatementEntityCopyWithImpl<$Res, StatementEntity>;
+abstract class $StatementViewModelCopyWith<$Res> {
+  factory $StatementViewModelCopyWith(
+          StatementViewModel value, $Res Function(StatementViewModel) then) =
+      _$StatementViewModelCopyWithImpl<$Res, StatementViewModel>;
+  @useResult
+  $Res call(
+      {StatementTempalteEntity? tempalteEntity,
+      bool isSmsApprove,
+      bool isSigningStatment});
+
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity;
+}
+
+/// @nodoc
+class _$StatementViewModelCopyWithImpl<$Res, $Val extends StatementViewModel>
+    implements $StatementViewModelCopyWith<$Res> {
+  _$StatementViewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tempalteEntity = freezed,
+    Object? isSmsApprove = null,
+    Object? isSigningStatment = null,
+  }) {
+    return _then(_value.copyWith(
+      tempalteEntity: freezed == tempalteEntity
+          ? _value.tempalteEntity
+          : tempalteEntity // ignore: cast_nullable_to_non_nullable
+              as StatementTempalteEntity?,
+      isSmsApprove: null == isSmsApprove
+          ? _value.isSmsApprove
+          : isSmsApprove // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSigningStatment: null == isSigningStatment
+          ? _value.isSigningStatment
+          : isSigningStatment // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity {
+    if (_value.tempalteEntity == null) {
+      return null;
+    }
+
+    return $StatementTempalteEntityCopyWith<$Res>(_value.tempalteEntity!,
+        (value) {
+      return _then(_value.copyWith(tempalteEntity: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_StatementViewModelCopyWith<$Res>
+    implements $StatementViewModelCopyWith<$Res> {
+  factory _$$_StatementViewModelCopyWith(_$_StatementViewModel value,
+          $Res Function(_$_StatementViewModel) then) =
+      __$$_StatementViewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {StatementTempalteEntity? tempalteEntity,
+      bool isSmsApprove,
+      bool isSigningStatment});
+
+  @override
+  $StatementTempalteEntityCopyWith<$Res>? get tempalteEntity;
+}
+
+/// @nodoc
+class __$$_StatementViewModelCopyWithImpl<$Res>
+    extends _$StatementViewModelCopyWithImpl<$Res, _$_StatementViewModel>
+    implements _$$_StatementViewModelCopyWith<$Res> {
+  __$$_StatementViewModelCopyWithImpl(
+      _$_StatementViewModel _value, $Res Function(_$_StatementViewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tempalteEntity = freezed,
+    Object? isSmsApprove = null,
+    Object? isSigningStatment = null,
+  }) {
+    return _then(_$_StatementViewModel(
+      tempalteEntity: freezed == tempalteEntity
+          ? _value.tempalteEntity
+          : tempalteEntity // ignore: cast_nullable_to_non_nullable
+              as StatementTempalteEntity?,
+      isSmsApprove: null == isSmsApprove
+          ? _value.isSmsApprove
+          : isSmsApprove // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSigningStatment: null == isSigningStatment
+          ? _value.isSigningStatment
+          : isSigningStatment // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_StatementViewModel implements _StatementViewModel {
+  const _$_StatementViewModel(
+      {required this.tempalteEntity,
+      this.isSmsApprove = false,
+      this.isSigningStatment = false});
+
+  factory _$_StatementViewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_StatementViewModelFromJson(json);
+
+  @override
+  final StatementTempalteEntity? tempalteEntity;
+  @override
+  @JsonKey()
+  final bool isSmsApprove;
+  @override
+  @JsonKey()
+  final bool isSigningStatment;
+
+  @override
+  String toString() {
+    return 'StatementViewModel(tempalteEntity: $tempalteEntity, isSmsApprove: $isSmsApprove, isSigningStatment: $isSigningStatment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StatementViewModel &&
+            (identical(other.tempalteEntity, tempalteEntity) ||
+                other.tempalteEntity == tempalteEntity) &&
+            (identical(other.isSmsApprove, isSmsApprove) ||
+                other.isSmsApprove == isSmsApprove) &&
+            (identical(other.isSigningStatment, isSigningStatment) ||
+                other.isSigningStatment == isSigningStatment));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, tempalteEntity, isSmsApprove, isSigningStatment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StatementViewModelCopyWith<_$_StatementViewModel> get copyWith =>
+      __$$_StatementViewModelCopyWithImpl<_$_StatementViewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StatementViewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StatementViewModel implements StatementViewModel {
+  const factory _StatementViewModel(
+      {required final StatementTempalteEntity? tempalteEntity,
+      final bool isSmsApprove,
+      final bool isSigningStatment}) = _$_StatementViewModel;
+
+  factory _StatementViewModel.fromJson(Map<String, dynamic> json) =
+      _$_StatementViewModel.fromJson;
+
+  @override
+  StatementTempalteEntity? get tempalteEntity;
+  @override
+  bool get isSmsApprove;
+  @override
+  bool get isSigningStatment;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StatementViewModelCopyWith<_$_StatementViewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+StatementTempalteEntity _$StatementTempalteEntityFromJson(
+    Map<String, dynamic> json) {
+  return _StatementTempalteEntity.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StatementTempalteEntity {
+  @JsonKey(name: 'document_type')
+  String get documentType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'select_participants')
+  bool? get isParticipants => throw _privateConstructorUsedError;
+  List<TemplateField> get template => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StatementTempalteEntityCopyWith<StatementTempalteEntity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StatementTempalteEntityCopyWith<$Res> {
+  factory $StatementTempalteEntityCopyWith(StatementTempalteEntity value,
+          $Res Function(StatementTempalteEntity) then) =
+      _$StatementTempalteEntityCopyWithImpl<$Res, StatementTempalteEntity>;
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      @JsonKey(name: 'select_participants') bool? isParticipants,
       List<TemplateField> template});
 }
 
 /// @nodoc
-class _$StatementEntityCopyWithImpl<$Res, $Val extends StatementEntity>
-    implements $StatementEntityCopyWith<$Res> {
-  _$StatementEntityCopyWithImpl(this._value, this._then);
+class _$StatementTempalteEntityCopyWithImpl<$Res,
+        $Val extends StatementTempalteEntity>
+    implements $StatementTempalteEntityCopyWith<$Res> {
+  _$StatementTempalteEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -55,6 +266,7 @@ class _$StatementEntityCopyWithImpl<$Res, $Val extends StatementEntity>
   @override
   $Res call({
     Object? documentType = null,
+    Object? isParticipants = freezed,
     Object? template = null,
   }) {
     return _then(_value.copyWith(
@@ -62,6 +274,10 @@ class _$StatementEntityCopyWithImpl<$Res, $Val extends StatementEntity>
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
+      isParticipants: freezed == isParticipants
+          ? _value.isParticipants
+          : isParticipants // ignore: cast_nullable_to_non_nullable
+              as bool?,
       template: null == template
           ? _value.template
           : template // ignore: cast_nullable_to_non_nullable
@@ -71,37 +287,44 @@ class _$StatementEntityCopyWithImpl<$Res, $Val extends StatementEntity>
 }
 
 /// @nodoc
-abstract class _$$_StatementEntityCopyWith<$Res>
-    implements $StatementEntityCopyWith<$Res> {
-  factory _$$_StatementEntityCopyWith(
-          _$_StatementEntity value, $Res Function(_$_StatementEntity) then) =
-      __$$_StatementEntityCopyWithImpl<$Res>;
+abstract class _$$_StatementTempalteEntityCopyWith<$Res>
+    implements $StatementTempalteEntityCopyWith<$Res> {
+  factory _$$_StatementTempalteEntityCopyWith(_$_StatementTempalteEntity value,
+          $Res Function(_$_StatementTempalteEntity) then) =
+      __$$_StatementTempalteEntityCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      @JsonKey(name: 'select_participants') bool? isParticipants,
       List<TemplateField> template});
 }
 
 /// @nodoc
-class __$$_StatementEntityCopyWithImpl<$Res>
-    extends _$StatementEntityCopyWithImpl<$Res, _$_StatementEntity>
-    implements _$$_StatementEntityCopyWith<$Res> {
-  __$$_StatementEntityCopyWithImpl(
-      _$_StatementEntity _value, $Res Function(_$_StatementEntity) _then)
+class __$$_StatementTempalteEntityCopyWithImpl<$Res>
+    extends _$StatementTempalteEntityCopyWithImpl<$Res,
+        _$_StatementTempalteEntity>
+    implements _$$_StatementTempalteEntityCopyWith<$Res> {
+  __$$_StatementTempalteEntityCopyWithImpl(_$_StatementTempalteEntity _value,
+      $Res Function(_$_StatementTempalteEntity) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? documentType = null,
+    Object? isParticipants = freezed,
     Object? template = null,
   }) {
-    return _then(_$_StatementEntity(
+    return _then(_$_StatementTempalteEntity(
       documentType: null == documentType
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
               as String,
+      isParticipants: freezed == isParticipants
+          ? _value.isParticipants
+          : isParticipants // ignore: cast_nullable_to_non_nullable
+              as bool?,
       template: null == template
           ? _value._template
           : template // ignore: cast_nullable_to_non_nullable
@@ -112,18 +335,22 @@ class __$$_StatementEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StatementEntity implements _StatementEntity {
-  const _$_StatementEntity(
+class _$_StatementTempalteEntity implements _StatementTempalteEntity {
+  const _$_StatementTempalteEntity(
       {@JsonKey(name: 'document_type') required this.documentType,
+      @JsonKey(name: 'select_participants') required this.isParticipants,
       required final List<TemplateField> template})
       : _template = template;
 
-  factory _$_StatementEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_StatementEntityFromJson(json);
+  factory _$_StatementTempalteEntity.fromJson(Map<String, dynamic> json) =>
+      _$$_StatementTempalteEntityFromJson(json);
 
   @override
   @JsonKey(name: 'document_type')
   final String documentType;
+  @override
+  @JsonKey(name: 'select_participants')
+  final bool? isParticipants;
   final List<TemplateField> _template;
   @override
   List<TemplateField> get template {
@@ -134,55 +361,64 @@ class _$_StatementEntity implements _StatementEntity {
 
   @override
   String toString() {
-    return 'StatementEntity(documentType: $documentType, template: $template)';
+    return 'StatementTempalteEntity(documentType: $documentType, isParticipants: $isParticipants, template: $template)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StatementEntity &&
+            other is _$_StatementTempalteEntity &&
             (identical(other.documentType, documentType) ||
                 other.documentType == documentType) &&
+            (identical(other.isParticipants, isParticipants) ||
+                other.isParticipants == isParticipants) &&
             const DeepCollectionEquality().equals(other._template, _template));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, documentType,
+  int get hashCode => Object.hash(runtimeType, documentType, isParticipants,
       const DeepCollectionEquality().hash(_template));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StatementEntityCopyWith<_$_StatementEntity> get copyWith =>
-      __$$_StatementEntityCopyWithImpl<_$_StatementEntity>(this, _$identity);
+  _$$_StatementTempalteEntityCopyWith<_$_StatementTempalteEntity>
+      get copyWith =>
+          __$$_StatementTempalteEntityCopyWithImpl<_$_StatementTempalteEntity>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StatementEntityToJson(
+    return _$$_StatementTempalteEntityToJson(
       this,
     );
   }
 }
 
-abstract class _StatementEntity implements StatementEntity {
-  const factory _StatementEntity(
+abstract class _StatementTempalteEntity implements StatementTempalteEntity {
+  const factory _StatementTempalteEntity(
       {@JsonKey(name: 'document_type') required final String documentType,
-      required final List<TemplateField> template}) = _$_StatementEntity;
+      @JsonKey(name: 'select_participants') required final bool? isParticipants,
+      required final List<TemplateField>
+          template}) = _$_StatementTempalteEntity;
 
-  factory _StatementEntity.fromJson(Map<String, dynamic> json) =
-      _$_StatementEntity.fromJson;
+  factory _StatementTempalteEntity.fromJson(Map<String, dynamic> json) =
+      _$_StatementTempalteEntity.fromJson;
 
   @override
   @JsonKey(name: 'document_type')
   String get documentType;
   @override
+  @JsonKey(name: 'select_participants')
+  bool? get isParticipants;
+  @override
   List<TemplateField> get template;
   @override
   @JsonKey(ignore: true)
-  _$$_StatementEntityCopyWith<_$_StatementEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_StatementTempalteEntityCopyWith<_$_StatementTempalteEntity>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 StatementFieldTypeEntity _$StatementFieldTypeEntityFromJson(
@@ -358,40 +594,45 @@ abstract class _StatementFieldTypeEntity implements StatementFieldTypeEntity {
       get copyWith => throw _privateConstructorUsedError;
 }
 
-StatementFormInfo _$StatementFormInfoFromJson(Map<String, dynamic> json) {
-  return _StatementFormInfo.fromJson(json);
+StatementFormInfoToSubmit _$StatementFormInfoToSubmitFromJson(
+    Map<String, dynamic> json) {
+  return _StatementFormInfoToSubmit.fromJson(json);
 }
 
 /// @nodoc
-mixin _$StatementFormInfo {
+mixin _$StatementFormInfoToSubmit {
   @JsonKey(name: 'document_type')
-  String get documentType => throw _privateConstructorUsedError;
+  String get documentType =>
+      throw _privateConstructorUsedError; // @JsonKey(name: 'participants_to')
+  String get participantsTo => throw _privateConstructorUsedError;
   TemplateFormStatementsEntity get template =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $StatementFormInfoCopyWith<StatementFormInfo> get copyWith =>
+  $StatementFormInfoToSubmitCopyWith<StatementFormInfoToSubmit> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StatementFormInfoCopyWith<$Res> {
-  factory $StatementFormInfoCopyWith(
-          StatementFormInfo value, $Res Function(StatementFormInfo) then) =
-      _$StatementFormInfoCopyWithImpl<$Res, StatementFormInfo>;
+abstract class $StatementFormInfoToSubmitCopyWith<$Res> {
+  factory $StatementFormInfoToSubmitCopyWith(StatementFormInfoToSubmit value,
+          $Res Function(StatementFormInfoToSubmit) then) =
+      _$StatementFormInfoToSubmitCopyWithImpl<$Res, StatementFormInfoToSubmit>;
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      String participantsTo,
       TemplateFormStatementsEntity template});
 
   $TemplateFormStatementsEntityCopyWith<$Res> get template;
 }
 
 /// @nodoc
-class _$StatementFormInfoCopyWithImpl<$Res, $Val extends StatementFormInfo>
-    implements $StatementFormInfoCopyWith<$Res> {
-  _$StatementFormInfoCopyWithImpl(this._value, this._then);
+class _$StatementFormInfoToSubmitCopyWithImpl<$Res,
+        $Val extends StatementFormInfoToSubmit>
+    implements $StatementFormInfoToSubmitCopyWith<$Res> {
+  _$StatementFormInfoToSubmitCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -402,12 +643,17 @@ class _$StatementFormInfoCopyWithImpl<$Res, $Val extends StatementFormInfo>
   @override
   $Res call({
     Object? documentType = null,
+    Object? participantsTo = null,
     Object? template = null,
   }) {
     return _then(_value.copyWith(
       documentType: null == documentType
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
+              as String,
+      participantsTo: null == participantsTo
+          ? _value.participantsTo
+          : participantsTo // ignore: cast_nullable_to_non_nullable
               as String,
       template: null == template
           ? _value.template
@@ -427,15 +673,17 @@ class _$StatementFormInfoCopyWithImpl<$Res, $Val extends StatementFormInfo>
 }
 
 /// @nodoc
-abstract class _$$_StatementFormInfoCopyWith<$Res>
-    implements $StatementFormInfoCopyWith<$Res> {
-  factory _$$_StatementFormInfoCopyWith(_$_StatementFormInfo value,
-          $Res Function(_$_StatementFormInfo) then) =
-      __$$_StatementFormInfoCopyWithImpl<$Res>;
+abstract class _$$_StatementFormInfoToSubmitCopyWith<$Res>
+    implements $StatementFormInfoToSubmitCopyWith<$Res> {
+  factory _$$_StatementFormInfoToSubmitCopyWith(
+          _$_StatementFormInfoToSubmit value,
+          $Res Function(_$_StatementFormInfoToSubmit) then) =
+      __$$_StatementFormInfoToSubmitCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'document_type') String documentType,
+      String participantsTo,
       TemplateFormStatementsEntity template});
 
   @override
@@ -443,23 +691,30 @@ abstract class _$$_StatementFormInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StatementFormInfoCopyWithImpl<$Res>
-    extends _$StatementFormInfoCopyWithImpl<$Res, _$_StatementFormInfo>
-    implements _$$_StatementFormInfoCopyWith<$Res> {
-  __$$_StatementFormInfoCopyWithImpl(
-      _$_StatementFormInfo _value, $Res Function(_$_StatementFormInfo) _then)
+class __$$_StatementFormInfoToSubmitCopyWithImpl<$Res>
+    extends _$StatementFormInfoToSubmitCopyWithImpl<$Res,
+        _$_StatementFormInfoToSubmit>
+    implements _$$_StatementFormInfoToSubmitCopyWith<$Res> {
+  __$$_StatementFormInfoToSubmitCopyWithImpl(
+      _$_StatementFormInfoToSubmit _value,
+      $Res Function(_$_StatementFormInfoToSubmit) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? documentType = null,
+    Object? participantsTo = null,
     Object? template = null,
   }) {
-    return _then(_$_StatementFormInfo(
+    return _then(_$_StatementFormInfoToSubmit(
       documentType: null == documentType
           ? _value.documentType
           : documentType // ignore: cast_nullable_to_non_nullable
+              as String,
+      participantsTo: null == participantsTo
+          ? _value.participantsTo
+          : participantsTo // ignore: cast_nullable_to_non_nullable
               as String,
       template: null == template
           ? _value.template
@@ -471,73 +726,83 @@ class __$$_StatementFormInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StatementFormInfo implements _StatementFormInfo {
-  const _$_StatementFormInfo(
+class _$_StatementFormInfoToSubmit implements _StatementFormInfoToSubmit {
+  const _$_StatementFormInfoToSubmit(
       {@JsonKey(name: 'document_type') required this.documentType,
+      required this.participantsTo,
       required this.template});
 
-  factory _$_StatementFormInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_StatementFormInfoFromJson(json);
+  factory _$_StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =>
+      _$$_StatementFormInfoToSubmitFromJson(json);
 
   @override
   @JsonKey(name: 'document_type')
   final String documentType;
+// @JsonKey(name: 'participants_to')
+  @override
+  final String participantsTo;
   @override
   final TemplateFormStatementsEntity template;
 
   @override
   String toString() {
-    return 'StatementFormInfo(documentType: $documentType, template: $template)';
+    return 'StatementFormInfoToSubmit(documentType: $documentType, participantsTo: $participantsTo, template: $template)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StatementFormInfo &&
+            other is _$_StatementFormInfoToSubmit &&
             (identical(other.documentType, documentType) ||
                 other.documentType == documentType) &&
+            (identical(other.participantsTo, participantsTo) ||
+                other.participantsTo == participantsTo) &&
             (identical(other.template, template) ||
                 other.template == template));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, documentType, template);
+  int get hashCode =>
+      Object.hash(runtimeType, documentType, participantsTo, template);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StatementFormInfoCopyWith<_$_StatementFormInfo> get copyWith =>
-      __$$_StatementFormInfoCopyWithImpl<_$_StatementFormInfo>(
-          this, _$identity);
+  _$$_StatementFormInfoToSubmitCopyWith<_$_StatementFormInfoToSubmit>
+      get copyWith => __$$_StatementFormInfoToSubmitCopyWithImpl<
+          _$_StatementFormInfoToSubmit>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StatementFormInfoToJson(
+    return _$$_StatementFormInfoToSubmitToJson(
       this,
     );
   }
 }
 
-abstract class _StatementFormInfo implements StatementFormInfo {
-  const factory _StatementFormInfo(
+abstract class _StatementFormInfoToSubmit implements StatementFormInfoToSubmit {
+  const factory _StatementFormInfoToSubmit(
           {@JsonKey(name: 'document_type') required final String documentType,
+          required final String participantsTo,
           required final TemplateFormStatementsEntity template}) =
-      _$_StatementFormInfo;
+      _$_StatementFormInfoToSubmit;
 
-  factory _StatementFormInfo.fromJson(Map<String, dynamic> json) =
-      _$_StatementFormInfo.fromJson;
+  factory _StatementFormInfoToSubmit.fromJson(Map<String, dynamic> json) =
+      _$_StatementFormInfoToSubmit.fromJson;
 
   @override
   @JsonKey(name: 'document_type')
   String get documentType;
+  @override // @JsonKey(name: 'participants_to')
+  String get participantsTo;
   @override
   TemplateFormStatementsEntity get template;
   @override
   @JsonKey(ignore: true)
-  _$$_StatementFormInfoCopyWith<_$_StatementFormInfo> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_StatementFormInfoToSubmitCopyWith<_$_StatementFormInfoToSubmit>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 TemplateFormStatementsEntity _$TemplateFormStatementsEntityFromJson(
@@ -556,8 +821,8 @@ mixin _$TemplateFormStatementsEntity {
   String? get startDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
   String? get endDate => throw _privateConstructorUsedError;
-  @JsonKey(name: 'weekend_days')
-  String? get weekendDays => throw _privateConstructorUsedError;
+  @JsonKey(name: 'work_days')
+  String? get workDays => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_trip_place')
   String? get businessTripPlace => throw _privateConstructorUsedError;
   @JsonKey(name: 'purpose_trip')
@@ -565,10 +830,16 @@ mixin _$TemplateFormStatementsEntity {
   @JsonKey(name: 'expenses_travel_expenses')
   String? get expensesTravelExpenses => throw _privateConstructorUsedError;
   String? get reason => throw _privateConstructorUsedError;
-  @JsonKey(name: 'expenses_aily_money')
-  String? get expensesAilyMoney => throw _privateConstructorUsedError;
+  @JsonKey(name: 'expenses_daily_money')
+  String? get expensesDailyMoney => throw _privateConstructorUsedError;
   @JsonKey(name: 'expenses_living_place')
   String? get expensesLivingPlace => throw _privateConstructorUsedError;
+  @JsonKey(name: 'result_rub')
+  String? get resultRub => throw _privateConstructorUsedError;
+  @JsonKey(name: 'result_kop')
+  String? get resultKop => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_expenditure')
+  String? get itemExpenditure => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -590,13 +861,16 @@ abstract class $TemplateFormStatementsEntityCopyWith<$Res> {
       String? patronymic,
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'weekend_days') String? weekendDays,
+      @JsonKey(name: 'work_days') String? workDays,
       @JsonKey(name: 'business_trip_place') String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') String? purposeTrip,
       @JsonKey(name: 'expenses_travel_expenses') String? expensesTravelExpenses,
       String? reason,
-      @JsonKey(name: 'expenses_aily_money') String? expensesAilyMoney,
-      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace});
+      @JsonKey(name: 'expenses_daily_money') String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') String? resultRub,
+      @JsonKey(name: 'result_kop') String? resultKop,
+      @JsonKey(name: 'item_expenditure') String? itemExpenditure});
 }
 
 /// @nodoc
@@ -618,13 +892,16 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
     Object? patronymic = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? weekendDays = freezed,
+    Object? workDays = freezed,
     Object? businessTripPlace = freezed,
     Object? purposeTrip = freezed,
     Object? expensesTravelExpenses = freezed,
     Object? reason = freezed,
-    Object? expensesAilyMoney = freezed,
+    Object? expensesDailyMoney = freezed,
     Object? expensesLivingPlace = freezed,
+    Object? resultRub = freezed,
+    Object? resultKop = freezed,
+    Object? itemExpenditure = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: freezed == firstName
@@ -647,9 +924,9 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      weekendDays: freezed == weekendDays
-          ? _value.weekendDays
-          : weekendDays // ignore: cast_nullable_to_non_nullable
+      workDays: freezed == workDays
+          ? _value.workDays
+          : workDays // ignore: cast_nullable_to_non_nullable
               as String?,
       businessTripPlace: freezed == businessTripPlace
           ? _value.businessTripPlace
@@ -667,13 +944,25 @@ class _$TemplateFormStatementsEntityCopyWithImpl<$Res,
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String?,
-      expensesAilyMoney: freezed == expensesAilyMoney
-          ? _value.expensesAilyMoney
-          : expensesAilyMoney // ignore: cast_nullable_to_non_nullable
+      expensesDailyMoney: freezed == expensesDailyMoney
+          ? _value.expensesDailyMoney
+          : expensesDailyMoney // ignore: cast_nullable_to_non_nullable
               as String?,
       expensesLivingPlace: freezed == expensesLivingPlace
           ? _value.expensesLivingPlace
           : expensesLivingPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resultRub: freezed == resultRub
+          ? _value.resultRub
+          : resultRub // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resultKop: freezed == resultKop
+          ? _value.resultKop
+          : resultKop // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemExpenditure: freezed == itemExpenditure
+          ? _value.itemExpenditure
+          : itemExpenditure // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -694,13 +983,16 @@ abstract class _$$_TemplateFormStatementsEntityCopyWith<$Res>
       String? patronymic,
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'weekend_days') String? weekendDays,
+      @JsonKey(name: 'work_days') String? workDays,
       @JsonKey(name: 'business_trip_place') String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') String? purposeTrip,
       @JsonKey(name: 'expenses_travel_expenses') String? expensesTravelExpenses,
       String? reason,
-      @JsonKey(name: 'expenses_aily_money') String? expensesAilyMoney,
-      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace});
+      @JsonKey(name: 'expenses_daily_money') String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') String? resultRub,
+      @JsonKey(name: 'result_kop') String? resultKop,
+      @JsonKey(name: 'item_expenditure') String? itemExpenditure});
 }
 
 /// @nodoc
@@ -721,13 +1013,16 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
     Object? patronymic = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? weekendDays = freezed,
+    Object? workDays = freezed,
     Object? businessTripPlace = freezed,
     Object? purposeTrip = freezed,
     Object? expensesTravelExpenses = freezed,
     Object? reason = freezed,
-    Object? expensesAilyMoney = freezed,
+    Object? expensesDailyMoney = freezed,
     Object? expensesLivingPlace = freezed,
+    Object? resultRub = freezed,
+    Object? resultKop = freezed,
+    Object? itemExpenditure = freezed,
   }) {
     return _then(_$_TemplateFormStatementsEntity(
       firstName: freezed == firstName
@@ -750,9 +1045,9 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      weekendDays: freezed == weekendDays
-          ? _value.weekendDays
-          : weekendDays // ignore: cast_nullable_to_non_nullable
+      workDays: freezed == workDays
+          ? _value.workDays
+          : workDays // ignore: cast_nullable_to_non_nullable
               as String?,
       businessTripPlace: freezed == businessTripPlace
           ? _value.businessTripPlace
@@ -770,13 +1065,25 @@ class __$$_TemplateFormStatementsEntityCopyWithImpl<$Res>
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String?,
-      expensesAilyMoney: freezed == expensesAilyMoney
-          ? _value.expensesAilyMoney
-          : expensesAilyMoney // ignore: cast_nullable_to_non_nullable
+      expensesDailyMoney: freezed == expensesDailyMoney
+          ? _value.expensesDailyMoney
+          : expensesDailyMoney // ignore: cast_nullable_to_non_nullable
               as String?,
       expensesLivingPlace: freezed == expensesLivingPlace
           ? _value.expensesLivingPlace
           : expensesLivingPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resultRub: freezed == resultRub
+          ? _value.resultRub
+          : resultRub // ignore: cast_nullable_to_non_nullable
+              as String?,
+      resultKop: freezed == resultKop
+          ? _value.resultKop
+          : resultKop // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemExpenditure: freezed == itemExpenditure
+          ? _value.itemExpenditure
+          : itemExpenditure // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -791,13 +1098,16 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
       this.patronymic,
       @JsonKey(name: 'start_date') this.startDate,
       @JsonKey(name: 'end_date') this.endDate,
-      @JsonKey(name: 'weekend_days') this.weekendDays,
+      @JsonKey(name: 'work_days') this.workDays,
       @JsonKey(name: 'business_trip_place') this.businessTripPlace,
       @JsonKey(name: 'purpose_trip') this.purposeTrip,
       @JsonKey(name: 'expenses_travel_expenses') this.expensesTravelExpenses,
       this.reason,
-      @JsonKey(name: 'expenses_aily_money') this.expensesAilyMoney,
-      @JsonKey(name: 'expenses_living_place') this.expensesLivingPlace});
+      @JsonKey(name: 'expenses_daily_money') this.expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') this.expensesLivingPlace,
+      @JsonKey(name: 'result_rub') this.resultRub,
+      @JsonKey(name: 'result_kop') this.resultKop,
+      @JsonKey(name: 'item_expenditure') this.itemExpenditure});
 
   factory _$_TemplateFormStatementsEntity.fromJson(Map<String, dynamic> json) =>
       _$$_TemplateFormStatementsEntityFromJson(json);
@@ -817,8 +1127,8 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
   @JsonKey(name: 'end_date')
   final String? endDate;
   @override
-  @JsonKey(name: 'weekend_days')
-  final String? weekendDays;
+  @JsonKey(name: 'work_days')
+  final String? workDays;
   @override
   @JsonKey(name: 'business_trip_place')
   final String? businessTripPlace;
@@ -831,15 +1141,24 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
   @override
   final String? reason;
   @override
-  @JsonKey(name: 'expenses_aily_money')
-  final String? expensesAilyMoney;
+  @JsonKey(name: 'expenses_daily_money')
+  final String? expensesDailyMoney;
   @override
   @JsonKey(name: 'expenses_living_place')
   final String? expensesLivingPlace;
+  @override
+  @JsonKey(name: 'result_rub')
+  final String? resultRub;
+  @override
+  @JsonKey(name: 'result_kop')
+  final String? resultKop;
+  @override
+  @JsonKey(name: 'item_expenditure')
+  final String? itemExpenditure;
 
   @override
   String toString() {
-    return 'TemplateFormStatementsEntity(firstName: $firstName, lastName: $lastName, patronymic: $patronymic, startDate: $startDate, endDate: $endDate, weekendDays: $weekendDays, businessTripPlace: $businessTripPlace, purposeTrip: $purposeTrip, expensesTravelExpenses: $expensesTravelExpenses, reason: $reason, expensesAilyMoney: $expensesAilyMoney, expensesLivingPlace: $expensesLivingPlace)';
+    return 'TemplateFormStatementsEntity(firstName: $firstName, lastName: $lastName, patronymic: $patronymic, startDate: $startDate, endDate: $endDate, workDays: $workDays, businessTripPlace: $businessTripPlace, purposeTrip: $purposeTrip, expensesTravelExpenses: $expensesTravelExpenses, reason: $reason, expensesDailyMoney: $expensesDailyMoney, expensesLivingPlace: $expensesLivingPlace, resultRub: $resultRub, resultKop: $resultKop, itemExpenditure: $itemExpenditure)';
   }
 
   @override
@@ -856,8 +1175,8 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
-            (identical(other.weekendDays, weekendDays) ||
-                other.weekendDays == weekendDays) &&
+            (identical(other.workDays, workDays) ||
+                other.workDays == workDays) &&
             (identical(other.businessTripPlace, businessTripPlace) ||
                 other.businessTripPlace == businessTripPlace) &&
             (identical(other.purposeTrip, purposeTrip) ||
@@ -865,10 +1184,16 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
             (identical(other.expensesTravelExpenses, expensesTravelExpenses) ||
                 other.expensesTravelExpenses == expensesTravelExpenses) &&
             (identical(other.reason, reason) || other.reason == reason) &&
-            (identical(other.expensesAilyMoney, expensesAilyMoney) ||
-                other.expensesAilyMoney == expensesAilyMoney) &&
+            (identical(other.expensesDailyMoney, expensesDailyMoney) ||
+                other.expensesDailyMoney == expensesDailyMoney) &&
             (identical(other.expensesLivingPlace, expensesLivingPlace) ||
-                other.expensesLivingPlace == expensesLivingPlace));
+                other.expensesLivingPlace == expensesLivingPlace) &&
+            (identical(other.resultRub, resultRub) ||
+                other.resultRub == resultRub) &&
+            (identical(other.resultKop, resultKop) ||
+                other.resultKop == resultKop) &&
+            (identical(other.itemExpenditure, itemExpenditure) ||
+                other.itemExpenditure == itemExpenditure));
   }
 
   @JsonKey(ignore: true)
@@ -880,13 +1205,16 @@ class _$_TemplateFormStatementsEntity implements _TemplateFormStatementsEntity {
       patronymic,
       startDate,
       endDate,
-      weekendDays,
+      workDays,
       businessTripPlace,
       purposeTrip,
       expensesTravelExpenses,
       reason,
-      expensesAilyMoney,
-      expensesLivingPlace);
+      expensesDailyMoney,
+      expensesLivingPlace,
+      resultRub,
+      resultKop,
+      itemExpenditure);
 
   @JsonKey(ignore: true)
   @override
@@ -911,15 +1239,18 @@ abstract class _TemplateFormStatementsEntity
       final String? patronymic,
       @JsonKey(name: 'start_date') final String? startDate,
       @JsonKey(name: 'end_date') final String? endDate,
-      @JsonKey(name: 'weekend_days') final String? weekendDays,
+      @JsonKey(name: 'work_days') final String? workDays,
       @JsonKey(name: 'business_trip_place') final String? businessTripPlace,
       @JsonKey(name: 'purpose_trip') final String? purposeTrip,
       @JsonKey(name: 'expenses_travel_expenses')
       final String? expensesTravelExpenses,
       final String? reason,
-      @JsonKey(name: 'expenses_aily_money') final String? expensesAilyMoney,
-      @JsonKey(name: 'expenses_living_place')
-      final String? expensesLivingPlace}) = _$_TemplateFormStatementsEntity;
+      @JsonKey(name: 'expenses_daily_money') final String? expensesDailyMoney,
+      @JsonKey(name: 'expenses_living_place') final String? expensesLivingPlace,
+      @JsonKey(name: 'result_rub') final String? resultRub,
+      @JsonKey(name: 'result_kop') final String? resultKop,
+      @JsonKey(name: 'item_expenditure')
+      final String? itemExpenditure}) = _$_TemplateFormStatementsEntity;
 
   factory _TemplateFormStatementsEntity.fromJson(Map<String, dynamic> json) =
       _$_TemplateFormStatementsEntity.fromJson;
@@ -939,8 +1270,8 @@ abstract class _TemplateFormStatementsEntity
   @JsonKey(name: 'end_date')
   String? get endDate;
   @override
-  @JsonKey(name: 'weekend_days')
-  String? get weekendDays;
+  @JsonKey(name: 'work_days')
+  String? get workDays;
   @override
   @JsonKey(name: 'business_trip_place')
   String? get businessTripPlace;
@@ -953,11 +1284,20 @@ abstract class _TemplateFormStatementsEntity
   @override
   String? get reason;
   @override
-  @JsonKey(name: 'expenses_aily_money')
-  String? get expensesAilyMoney;
+  @JsonKey(name: 'expenses_daily_money')
+  String? get expensesDailyMoney;
   @override
   @JsonKey(name: 'expenses_living_place')
   String? get expensesLivingPlace;
+  @override
+  @JsonKey(name: 'result_rub')
+  String? get resultRub;
+  @override
+  @JsonKey(name: 'result_kop')
+  String? get resultKop;
+  @override
+  @JsonKey(name: 'item_expenditure')
+  String? get itemExpenditure;
   @override
   @JsonKey(ignore: true)
   _$$_TemplateFormStatementsEntityCopyWith<_$_TemplateFormStatementsEntity>
@@ -973,7 +1313,9 @@ mixin _$TemplateField {
   @JsonKey(name: 'field_name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'field_body')
-  String get value => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
+  @JsonKey(name: 'field_data_type')
+  String get dataType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -989,7 +1331,8 @@ abstract class $TemplateFieldCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'field_name') String name,
-      @JsonKey(name: 'field_body') String value});
+      @JsonKey(name: 'field_body') String body,
+      @JsonKey(name: 'field_data_type') String dataType});
 }
 
 /// @nodoc
@@ -1006,16 +1349,21 @@ class _$TemplateFieldCopyWithImpl<$Res, $Val extends TemplateField>
   @override
   $Res call({
     Object? name = null,
-    Object? value = null,
+    Object? body = null,
+    Object? dataType = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataType: null == dataType
+          ? _value.dataType
+          : dataType // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -1031,7 +1379,8 @@ abstract class _$$_TemplateFieldCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'field_name') String name,
-      @JsonKey(name: 'field_body') String value});
+      @JsonKey(name: 'field_body') String body,
+      @JsonKey(name: 'field_data_type') String dataType});
 }
 
 /// @nodoc
@@ -1046,16 +1395,21 @@ class __$$_TemplateFieldCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? value = null,
+    Object? body = null,
+    Object? dataType = null,
   }) {
     return _then(_$_TemplateField(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      dataType: null == dataType
+          ? _value.dataType
+          : dataType // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -1066,7 +1420,8 @@ class __$$_TemplateFieldCopyWithImpl<$Res>
 class _$_TemplateField implements _TemplateField {
   const _$_TemplateField(
       {@JsonKey(name: 'field_name') required this.name,
-      @JsonKey(name: 'field_body') required this.value});
+      @JsonKey(name: 'field_body') required this.body,
+      @JsonKey(name: 'field_data_type') required this.dataType});
 
   factory _$_TemplateField.fromJson(Map<String, dynamic> json) =>
       _$$_TemplateFieldFromJson(json);
@@ -1076,11 +1431,14 @@ class _$_TemplateField implements _TemplateField {
   final String name;
   @override
   @JsonKey(name: 'field_body')
-  final String value;
+  final String body;
+  @override
+  @JsonKey(name: 'field_data_type')
+  final String dataType;
 
   @override
   String toString() {
-    return 'TemplateField(name: $name, value: $value)';
+    return 'TemplateField(name: $name, body: $body, dataType: $dataType)';
   }
 
   @override
@@ -1089,12 +1447,14 @@ class _$_TemplateField implements _TemplateField {
         (other.runtimeType == runtimeType &&
             other is _$_TemplateField &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.dataType, dataType) ||
+                other.dataType == dataType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, value);
+  int get hashCode => Object.hash(runtimeType, name, body, dataType);
 
   @JsonKey(ignore: true)
   @override
@@ -1113,7 +1473,8 @@ class _$_TemplateField implements _TemplateField {
 abstract class _TemplateField implements TemplateField {
   const factory _TemplateField(
           {@JsonKey(name: 'field_name') required final String name,
-          @JsonKey(name: 'field_body') required final String value}) =
+          @JsonKey(name: 'field_body') required final String body,
+          @JsonKey(name: 'field_data_type') required final String dataType}) =
       _$_TemplateField;
 
   factory _TemplateField.fromJson(Map<String, dynamic> json) =
@@ -1124,7 +1485,10 @@ abstract class _TemplateField implements TemplateField {
   String get name;
   @override
   @JsonKey(name: 'field_body')
-  String get value;
+  String get body;
+  @override
+  @JsonKey(name: 'field_data_type')
+  String get dataType;
   @override
   @JsonKey(ignore: true)
   _$$_TemplateFieldCopyWith<_$_TemplateField> get copyWith =>

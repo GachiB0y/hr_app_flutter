@@ -28,7 +28,7 @@ class BagReportBLoC extends Bloc<BagReportEvent, BagReportState>
         ) {
     on<BagReportEvent>(
       (event, emit) => event.map<Future<void>>(
-        create: (event) => _fetch(event, emit),
+        create: (event) => _create(event, emit),
       ),
       transformer: bloc_concurrency.sequential(),
       //transformer: bloc_concurrency.restartable(),
@@ -40,15 +40,15 @@ class BagReportBLoC extends Bloc<BagReportEvent, BagReportState>
   final IServiceRepository _repositoryService;
   final IAuthRepository _authRepository;
 
-  /// Fetch event handler
-  Future<void> _fetch(
+  /// Create event handler
+  Future<void> _create(
       BagReportEventCreate event, Emitter<BagReportState> emit) async {
     try {
       emit(BagReportState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final isSend = await _repositoryService.submitBagReportForm(
-          userToken: accessToken as String, bagReportEntity: event.formInfo);
+          accessToken: accessToken as String, bagReportEntity: event.formInfo);
       if (isSend) {
         emit(BagReportState.successful(data: state.data));
       } else {

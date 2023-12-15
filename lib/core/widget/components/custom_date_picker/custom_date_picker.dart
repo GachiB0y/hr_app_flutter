@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:hr_app_flutter/library/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/widget/components/custom_date_picker/custom_date_pikcer_model.dart';
 import 'package:intl/intl.dart';
 
@@ -51,9 +50,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final dateModel = ChangeNotifierProvaider.watch<
-        ChangeNotifierProvaider<CustomDatePickerModel>,
-        CustomDatePickerModel>(context);
     return GestureDetector(
       onTap: () {
         _selectDate(context);
@@ -68,8 +64,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              DateFormat('dd.MM.yyyy')
-                  .format(dateModel?.selectedDate ?? DateTime.now()),
+              DateFormat('dd.MM.yyyy').format(ChangeNotifierProvaider.watch<
+                          ChangeNotifierProvaider<CustomDatePickerModel>,
+                          CustomDatePickerModel>(context)
+                      ?.selectedDate ??
+                  DateTime.now()),
               style: const TextStyle(fontSize: 16),
             ),
             const Icon(Icons.calendar_today),

@@ -7,14 +7,13 @@ import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/core/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
 import '../../services/bloc/service_bloc/service_bloc.dart';
 import '../../services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import '../../services/model/service/service.dart';
 import '../../user/bloc/user_bloc/user_bloc.dart';
 import '../../user/data/repo/user_repository.dart';
-import '../../../theme/colors_from_theme.dart';
 import '../../wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import '../../wallet/model/wallet/wallet.dart';
 import '../bloc/caregory_bloc.dart/category_bloc.dart';
@@ -64,13 +63,12 @@ class _UserMainScreenState extends State<UserMainScreen> {
     if (textScaleFactor < 1) textScaleFactor = 1;
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 1.0),
             child: RefreshIndicator(
-              color: ColorsForWidget.colorGreen,
+              color: Theme.of(context).colorScheme.primary,
               backgroundColor: Colors.white,
               onRefresh: _refreshEventsList,
               child: SingleChildScrollView(
@@ -128,8 +126,9 @@ class LeanProductionButton extends StatelessWidget {
       margin:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(raiudsBorder),
-          color: ColorsForWidget.colorGreen),
+        borderRadius: BorderRadius.circular(raiudsBorder),
+        color: Theme.of(context).colorScheme.primary,
+      ),
       child: Stack(children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -244,8 +243,9 @@ class SerachPeopleButtonWidget extends StatelessWidget {
       margin:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(raiudsBorder),
-          color: ColorsForWidget.colorGreen),
+        borderRadius: BorderRadius.circular(raiudsBorder),
+        color: Theme.of(context).colorScheme.primary,
+      ),
       child: Stack(children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -307,8 +307,9 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
       height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
       margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(raiudsBorder),
-          color: ColorsForWidget.colorGreen),
+        borderRadius: BorderRadius.circular(raiudsBorder),
+        color: Theme.of(context).colorScheme.primary,
+      ),
       child: const Row(children: [
         BirthDayInfoElementWidget(
           raiudsBorder: raiudsBorder,
@@ -603,8 +604,8 @@ class RowBalanceCountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       ColorFiltered(
-        colorFilter: const ColorFilter.mode(
-            ColorsForWidget.colorGreen, BlendMode.srcATop),
+        colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.primary, BlendMode.srcATop),
         child: Image.asset(
           'assets/images/grass_icon_main.png',
           width: 50,

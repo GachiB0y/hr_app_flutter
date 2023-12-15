@@ -52,7 +52,7 @@ class RookiesBLoC extends Bloc<RookiesEvent, RookiesState>
 
       Rookies rookiesLoaded = await _userRepo
           .getRookiesInfo(
-              userToken: accessToken as String,
+              accessToken: accessToken as String,
               startDate: event.startDate,
               endDate: event.endDate)
           .timeout(const Duration(seconds: 10));

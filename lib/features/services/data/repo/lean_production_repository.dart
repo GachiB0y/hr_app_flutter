@@ -6,12 +6,12 @@ import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_p
 abstract interface class ILeanProductionRepository {
   Future<bool> submitForm(
       {required LeanProductionFormEntity formEntity,
-      required String userToken});
+      required String accessToken});
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String userToken});
+      {required String accessToken});
 
   Future<void> downloadFileWithLeanProduction(
-      {required String url, required String userToken});
+      {required String url, required String accessToken});
 }
 
 class LeanProductionRepositoryImpl implements ILeanProductionRepository {
@@ -24,10 +24,10 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
   @override
   Future<bool> submitForm(
       {required LeanProductionFormEntity formEntity,
-      required String userToken}) {
+      required String accessToken}) async {
     try {
-      return _serviceProvider.sendFormLeanProduction(
-          userToken: userToken, formEntity: formEntity);
+      return await _serviceProvider.sendFormLeanProduction(
+          accessToken: accessToken, formEntity: formEntity);
     } catch (e) {
       rethrow;
     }
@@ -35,10 +35,10 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
 
   @override
   Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String userToken}) {
+      {required String accessToken}) async {
     try {
-      return _serviceProvider.getMyLeanProductions(
-        userToken: userToken,
+      return await _serviceProvider.getMyLeanProductions(
+        accessToken: accessToken,
       );
     } catch (e) {
       rethrow;
@@ -47,10 +47,10 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
 
   @override
   Future<void> downloadFileWithLeanProduction(
-      {required String url, required String userToken}) {
+      {required String url, required String accessToken}) async {
     try {
-      return _serviceProvider.downloadFileWithLeanProduction(
-        userToken: userToken,
+      return await _serviceProvider.downloadFileWithLeanProduction(
+        accessToken: accessToken,
         url: url,
       );
     } catch (e) {

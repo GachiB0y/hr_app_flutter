@@ -36,7 +36,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       String? accessToken = await authRepository.cheskIsLiveAccessToken();
       List<Service> servicesLoaded = await serviceRepository
           .getServices(
-            userToken: accessToken as String,
+            accessToken: accessToken as String,
           )
           .timeout(const Duration(seconds: 10));
 

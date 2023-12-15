@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 @RoutePage()
 class BookingMeetingsFirstScreen extends StatelessWidget {
@@ -34,7 +33,7 @@ class BookingMeetingButton extends StatelessWidget {
           const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: ColorsForWidget.colorGreen),
+          color: Theme.of(context).colorScheme.primary),
       child: Stack(children: [
         const Center(
           child: Text(
@@ -72,7 +71,7 @@ class MyBookingButton extends StatelessWidget {
           const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: ColorsForWidget.colorGreen),
+          color: Theme.of(context).colorScheme.primary),
       child: Stack(children: [
         const Center(
           child: Text(

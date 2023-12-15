@@ -6,10 +6,14 @@ class StatementsEvent with _$StatementsEvent {
   const StatementsEvent._();
 
   /// Create
-  const factory StatementsEvent.create({required StatementFormInfo itemsForm}) =
-      StatementsEventCreate;
+  const factory StatementsEvent.create(
+      {required StatementFormInfoToSubmit itemsForm}) = StatementsEventCreate;
 
   /// Fetch
   const factory StatementsEvent.fetch({required String id}) =
       StatementsEventFetch;
+
+  /// SignDocument
+  const factory StatementsEvent.signDocument({required String code}) =
+      StatementsEventSignDocument;
 }

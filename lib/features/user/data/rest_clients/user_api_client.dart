@@ -8,29 +8,29 @@ import '../../../services/model/rookies_entity/rookies.dart';
 import '../../model/user/user.dart';
 
 abstract interface class IUserProvider {
-  Future<User> getUserInfo({required String userToken});
+  Future<User> getUserInfo({required String accessToken});
   Future<bool> saveTagsToSend(
-      {required String userToken,
+      {required String accessToken,
       required List<String> tags,
       required int userId});
   Future<User> getUserInfoById(
-      {required String userToken, required String userID});
+      {required String accessToken, required String userId});
   Future<List<User>> findUser(
-      {required String userToken, required String findText});
+      {required String accessToken, required String findText});
   Future<BirthDayInfoEntity> getBirthDayInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   });
   Future<Rookies> getRookiesInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   });
   Future<List<User>> getUserByPhoneNumber(
-      {required String userToken, required String phoneNumber});
+      {required String accessToken, required String phoneNumber});
   Future<bool> sendAvatarWithProfile({
-    required String userToken,
+    required String accessToken,
     required List<String> paths,
   });
 }
@@ -41,9 +41,9 @@ class UserProviderImpl implements IUserProvider {
   UserProviderImpl(this._httpService);
 
   @override
-  Future<User> getUserInfo({required String userToken}) async {
+  Future<User> getUserInfo({required String accessToken}) async {
     String uri = '$urlAdress/auth/profile';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -57,9 +57,9 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<List<User>> getUserByPhoneNumber(
-      {required String userToken, required String phoneNumber}) async {
+      {required String accessToken, required String phoneNumber}) async {
     String uri = '$urlAdress/auth/find_by_phone/$phoneNumber';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -75,7 +75,7 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<BirthDayInfoEntity> getBirthDayInfo({
-    required String userToken,
+    required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
@@ -87,7 +87,7 @@ class UserProviderImpl implements IUserProvider {
           '$urlAdress/auth/birthday-list?start_date=$startDate&end_date=$endDate';
     }
 
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -101,7 +101,7 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<Rookies> getRookiesInfo({
-    required final String userToken,
+    required final String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
@@ -111,7 +111,7 @@ class UserProviderImpl implements IUserProvider {
     } else {
       uri = '$urlAdress/auth/rookies?start_date=$startDate&end_date=$endDate';
     }
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -124,9 +124,9 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<User> getUserInfoById(
-      {required String userToken, required String userID}) async {
-    String uri = '$urlAdress/auth/find_by_id/$userID';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+      {required String accessToken, required String userId}) async {
+    String uri = '$urlAdress/auth/find_by_id/$userId';
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -139,9 +139,9 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<List<User>> findUser(
-      {required String userToken, required String findText}) async {
+      {required String accessToken, required String findText}) async {
     String uri = '$urlAdress/auth/find_user?name=$findText';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -157,7 +157,7 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<bool> saveTagsToSend(
-      {required String userToken,
+      {required String accessToken,
       required List<String> tags,
       required int userId}) async {
     String uri = '$urlAdress/auth/add_tags_to_user';
@@ -166,7 +166,7 @@ class UserProviderImpl implements IUserProvider {
       "tags": tags,
     });
     final response =
-        await _httpService.post(uri: uri, userToken: userToken, body: body);
+        await _httpService.post(uri: uri, userToken: accessToken, body: body);
     if (response.statusCode == 200) {
       return true;
     } else if (response.statusCode == 400) {
@@ -178,14 +178,14 @@ class UserProviderImpl implements IUserProvider {
 
   @override
   Future<bool> sendAvatarWithProfile({
-    required String userToken,
+    required String accessToken,
     required List<String> paths,
   }) async {
     String uri = '$urlAdress/auth/set_avatar';
 
     final response = await _httpService.postWithFile(
       uri: uri,
-      userToken: userToken,
+      userToken: accessToken,
       paths: paths,
     );
     if (response.statusCode == 201) {

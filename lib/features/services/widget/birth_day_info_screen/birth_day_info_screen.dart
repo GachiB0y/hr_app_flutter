@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:intl/intl.dart';
 
 import '../../../auth/data/repo/auth_repository.dart';
 import '../../../user/data/repo/user_repository.dart';
-import '../../../../library/custom_provider/inherit_widget.dart';
 import '../../bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 
@@ -32,12 +31,12 @@ class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsForWidget.colorGreen,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         actions: const [
           InfoActionWidget(),
         ],
-        backgroundColor: ColorsForWidget.colorGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Row(
           children: [
             Text(
@@ -179,11 +178,11 @@ class InfoActionWidget extends StatelessWidget {
           color: Colors.white,
           shape: BoxShape.circle,
         ),
-        child: const Tooltip(
+        child: Tooltip(
           message: 'Ваши 3 коина за др ждут вас в отделе HR',
           child: Icon(
             Icons.question_mark,
-            color: ColorsForWidget.colorGreen,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

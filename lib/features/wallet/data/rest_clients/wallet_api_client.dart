@@ -8,17 +8,17 @@ import '../../model/wallet/wallet.dart';
 
 abstract interface class IWalletProvider {
   Future<({int balance, int avarageCoins})> getBalance(
-      {required String userToken});
-  Future<List<CoinsInfo>> getCoinsInfo({required String userToken});
-  Future<List<CoinsReward>> getInfoCoinsReward({required String userToken});
-  Future<List<Transaction>?> getTransactions({required String userToken});
+      {required String accessToken});
+  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken});
+  Future<List<CoinsReward>> getInfoCoinsReward({required String accessToken});
+  Future<List<Transaction>?> getTransactions({required String accessToken});
   Future<int> sendCoinsToOtherUser(
-      {required String userToken,
+      {required String accessToken,
       required int amount,
       required int userId,
       required String message});
   Future<int> sendCoinsToBracer({
-    required String userToken,
+    required String accessToken,
     required int amount,
   });
 }
@@ -29,9 +29,9 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<({int balance, int avarageCoins})> getBalance(
-      {required String userToken}) async {
+      {required String accessToken}) async {
     String uri = '$urlAdress/coins/balance';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -46,9 +46,9 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<List<Transaction>?> getTransactions(
-      {required String userToken}) async {
+      {required String accessToken}) async {
     String uri = '$urlAdress/coins/transactions';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -67,7 +67,7 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<int> sendCoinsToOtherUser(
-      {required String userToken,
+      {required String accessToken,
       required int amount,
       required int userId,
       required String message}) async {
@@ -75,7 +75,7 @@ class WalletProviderImpl implements IWalletProvider {
     final String body = json
         .encode({"recipient": userId, "amount": amount, "message": message});
     final response =
-        await _httpService.post(uri: uri, userToken: userToken, body: body);
+        await _httpService.post(uri: uri, userToken: accessToken, body: body);
     if (response.statusCode == 201) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);
@@ -88,13 +88,13 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<int> sendCoinsToBracer({
-    required String userToken,
+    required String accessToken,
     required int amount,
   }) async {
     String uri = '$urlAdress/coins/transfer-to-bracer';
     final String body = json.encode({"amount": amount});
     final response =
-        await _httpService.post(uri: uri, userToken: userToken, body: body);
+        await _httpService.post(uri: uri, userToken: accessToken, body: body);
 
     if (response.statusCode == 201) {
       final jsonResponse = await response.stream.bytesToString();
@@ -108,9 +108,9 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<List<CoinsReward>> getInfoCoinsReward(
-      {required String userToken}) async {
+      {required String accessToken}) async {
     String uri = '$urlAdress/coins/coins_reward';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
 
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
@@ -126,9 +126,9 @@ class WalletProviderImpl implements IWalletProvider {
   }
 
   @override
-  Future<List<CoinsInfo>> getCoinsInfo({required String userToken}) async {
+  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken}) async {
     String uri = '$urlAdress/coins/info';
-    final response = await _httpService.get(uri: uri, userToken: userToken);
+    final response = await _httpService.get(uri: uri, userToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonResponse);

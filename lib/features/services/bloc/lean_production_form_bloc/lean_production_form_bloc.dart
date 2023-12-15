@@ -48,7 +48,7 @@ class LeanProductionFormBloc
 
       await leanRepository
           .submitForm(
-              userToken: accessToken as String, formEntity: event.formEntity)
+              accessToken: accessToken as String, formEntity: event.formEntity)
           .timeout(const Duration(seconds: 10));
 
       emit(const LeanProductionFormState.loaded(isSubmitting: true));
@@ -73,7 +73,7 @@ class LeanProductionFormBloc
 
       final List<MyLeanProductionsEntity> myProposals = await leanRepository
           .getMyLeanProductions(
-            userToken: accessToken as String,
+            accessToken: accessToken as String,
           )
           .timeout(const Duration(seconds: 10));
 
@@ -99,7 +99,7 @@ class LeanProductionFormBloc
       emit(isLoadingState);
       await leanRepository
           .downloadFileWithLeanProduction(
-            userToken: accessToken as String,
+            accessToken: accessToken as String,
             url: event.url,
           )
           .timeout(const Duration(seconds: 100));

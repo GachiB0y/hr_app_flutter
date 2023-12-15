@@ -5,7 +5,6 @@ import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/core/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
@@ -59,7 +58,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
               bottomNavigationBar: state.modalOpened
                   ? null
                   : BottomNavigationBar(
-                      selectedItemColor: ColorsForWidget.colorGreen,
+                      selectedItemColor: Theme.of(context).colorScheme.primary,
                       unselectedItemColor: Colors.black,
                       currentIndex: tabsRouter.activeIndex,
                       onTap: (index) => _openPage(index, tabsRouter),

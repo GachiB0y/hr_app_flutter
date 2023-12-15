@@ -4,6 +4,7 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
+import 'package:hr_app_flutter/features/statements/model/participant/participant.dart';
 import 'package:hr_app_flutter/features/statements/model/statements/statements.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -13,25 +14,35 @@ import 'statements_test.mocks.dart';
   [
     MockSpec<IAuthRepository>(),
     MockSpec<IStatementsRepository>(),
-    MockSpec<StatementEntity>(),
+    MockSpec<StatementTempalteEntity>(),
   ],
 )
-final StatementEntity _mockWallet = MockStatementEntity();
-
 const TemplateField fieldFirts =
-    TemplateField(name: 'field_first_name', value: 'First Name');
+    TemplateField(name: 'field_first_name', body: 'First Name', dataType: '');
 const TemplateField fieldSecond =
-    TemplateField(name: 'field_second_name', value: 'Last Name');
-const statements = StatementEntity(
-    documentType: 'test_document_type', template: [fieldFirts, fieldSecond]);
+    TemplateField(name: 'field_second_name', body: 'Last Name', dataType: '');
+const statements = StatementTempalteEntity(
+    documentType: 'test_document_type',
+    template: [fieldFirts, fieldSecond],
+    isParticipants: false);
+const viewModel =
+    StatementViewModel(tempalteEntity: statements, isSmsApprove: false);
 
+const ParticipantEntity participantFirst = ParticipantEntity(
+    lastName: 'Волков',
+    firstName: 'Александр',
+    patronymic: 'Юрьевич',
+    id: 'guid',
+    position: 'Специалист');
 const StatementFieldTypeEntity typeFieldFirst = StatementFieldTypeEntity(
     documentType: 'annual_vaction', name: 'Application for leave');
 const StatementFieldTypeEntity typeFieldSecond = StatementFieldTypeEntity(
     documentType: 'extra_vaction', name: 'Application for leave (unpaid)');
 
-const StatementFormInfo formInof = StatementFormInfo(
-    documentType: 'test_document_type', template: formInfotempalte);
+const StatementFormInfoToSubmit formInof = StatementFormInfoToSubmit(
+    documentType: 'test_document_type',
+    template: formInfotempalte,
+    participantsTo: 'guid');
 
 const TemplateFormStatementsEntity formInfotempalte =
     TemplateFormStatementsEntity(firstName: 'Volkov', lastName: 'Aleks');
@@ -69,7 +80,7 @@ void main() {
     });
 
     blocTest<StatementsBLoC, StatementsState>(
-        'emits [processing, error, idle] when fetchStatementForm  Exception throws',
+        'emits [processing, error, idle] when fetch Statement Form  Exception throws',
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
@@ -85,7 +96,39 @@ void main() {
         errors: () => [isA<Exception>()]);
 
     blocTest<StatementsBLoC, StatementsState>(
-      'emits StatementsState.successful when fetch event is added',
+        'emits [processing, error, idle] when Create  Exception throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockStatementsRepository.submitStatementForm(
+                  accessToken: accessToken, formInfo: formInof))
+              .thenThrow(Exception('oops'));
+        },
+        build: () => StatementsBLoC(
+            authRepository: mockAuthRepository,
+            repositoryStatements: mockStatementsRepository),
+        act: (bloc) =>
+            bloc.add(const StatementsEventCreate(itemsForm: formInof)),
+        errors: () => [isA<Exception>()]);
+
+    blocTest<StatementsBLoC, StatementsState>(
+        'emits [processing, error, idle] when Signing Document  Exception throws',
+        setUp: () {
+          when(mockAuthRepository.cheskIsLiveAccessToken())
+              .thenAnswer((_) async => accessToken);
+          when(mockStatementsRepository.signDocumentBySmsCode(
+                  accessToken: accessToken, code: '2007'))
+              .thenThrow(Exception('oops'));
+        },
+        build: () => StatementsBLoC(
+            authRepository: mockAuthRepository,
+            repositoryStatements: mockStatementsRepository),
+        act: (bloc) =>
+            bloc.add(const StatementsEventSignDocument(code: '2007')),
+        errors: () => [isA<Exception>()]);
+
+    blocTest<StatementsBLoC, StatementsState>(
+      'emits StatementsState.successful when Fetch event is added',
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
@@ -101,7 +144,7 @@ void main() {
         successfulState.having(
           (state) => state.data,
           'data',
-          statements,
+          viewModel,
         ),
         idleState
       ],
@@ -114,7 +157,7 @@ void main() {
             .thenAnswer((_) async => accessToken);
         when(mockStatementsRepository.submitStatementForm(
                 accessToken: accessToken, formInfo: formInof))
-            .thenAnswer((_) async => statements);
+            .thenAnswer((_) async => TypeOfAppplicationSigning.daefult);
       },
       build: () => statementsBloc,
       act: (bloc) => bloc.add(const StatementsEventCreate(itemsForm: formInof)),
@@ -124,6 +167,30 @@ void main() {
           (state) => state.data,
           'data',
           null,
+        ),
+        idleState
+      ],
+    );
+
+    blocTest<StatementsBLoC, StatementsState>(
+      'emits StatementsState.successful when Signing Document event is added',
+      setUp: () {
+        when(mockAuthRepository.cheskIsLiveAccessToken())
+            .thenAnswer((_) async => accessToken);
+        when(mockStatementsRepository.fetchStatementForm(
+                accessToken: accessToken, id: statements.documentType))
+            .thenAnswer((_) async => statements);
+      },
+      seed: () => const StatementsState$Idle(
+          data: StatementViewModel(tempalteEntity: statements)),
+      build: () => statementsBloc,
+      act: (bloc) => bloc.add(const StatementsEventSignDocument(code: '2007')),
+      expect: () => <dynamic>[
+        processingState,
+        successfulState.having(
+          (state) => state.data,
+          'data',
+          viewModel.copyWith(isSigningStatment: true),
         ),
         idleState
       ],
