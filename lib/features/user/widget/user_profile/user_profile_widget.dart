@@ -4,9 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
@@ -17,13 +17,9 @@ import '../../model/user/user.dart';
 @RoutePage()
 class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
   final int userId;
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
   const ProfileWidgetScreen({
     Key? key,
     required this.userId,
-    required this.authRepository,
-    required this.userRepo,
   }) : super(key: key);
 
   @override
@@ -33,8 +29,8 @@ class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<OtherUsersBloc>(
       create: (BuildContext context) => OtherUsersBloc(
-        authRepository: authRepository,
-        userRepo: userRepo,
+        authRepository: DependenciesScope.of(context).authRepository,
+        userRepo: DependenciesScope.of(context).userRepository,
       ),
       child: this,
     );
@@ -171,10 +167,13 @@ class LogoutButtonWidget extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () async {
-                          await context.read<LoaderViewCubit>().logout();
+                          // await context.read<LoaderViewCubit>().logout();
+                          AuthScope.of(context).signOut();
                           if (!context.mounted) return;
-                          AutoRouter.of(context)
-                              .replace(const AuthenticationFormRoute());
+                          // AutoRouter.of(context)
+                          //     .replace(const AuthenticationFormRoute());
+                          // AutoRouter.of(context)
+                          //     .navigate(const AuthenticationFormRoute());
                         },
                         textColor: Colors.black,
                         padding: const EdgeInsets.all(2),

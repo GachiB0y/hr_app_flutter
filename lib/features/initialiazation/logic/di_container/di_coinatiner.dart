@@ -9,7 +9,7 @@ import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_c
 import 'package:hr_app_flutter/features/statements/data/rest_clietns/statement_provider.dart';
 import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.dart';
 import 'package:hr_app_flutter/features/wallet/data/rest_clients/wallet_api_client.dart';
-import 'package:hr_app_flutter/core/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
@@ -24,18 +24,18 @@ import 'package:hr_app_flutter/my_app.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/theme/color_schemes.dart';
 
-import '../../../features/auth/bloc/auth_cubit/auth_cubit.dart';
-import '../../../features/auth/bloc/loader_cubit/loader_view_cubit.dart';
-import '../../../features/news/bloc/caregory_bloc.dart/category_bloc.dart';
-import '../../../features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
-import '../../../features/services/bloc/rookies_bloc/rookies_bloc.dart';
-import '../../../features/services/bloc/service_bloc/service_bloc.dart';
-import '../../../features/services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
-import '../../../features/user/bloc/user_bloc/user_bloc.dart';
-import '../../../features/wallet/bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
-import '../../../features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
-import '../database/flutter_secure_storage/flutter_secure_storage.dart';
-import '../database/rest_clients/api_client.dart';
+import '../../../auth/bloc/auth_cubit/auth_cubit.dart';
+import '../../../auth/bloc/loader_cubit/loader_view_cubit.dart';
+import '../../../news/bloc/caregory_bloc.dart/category_bloc.dart';
+import '../../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
+import '../../../services/bloc/rookies_bloc/rookies_bloc.dart';
+import '../../../services/bloc/service_bloc/service_bloc.dart';
+import '../../../services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
+import '../../../user/bloc/user_bloc/user_bloc.dart';
+import '../../../wallet/bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
+import '../../../wallet/bloc/wallet_bloc/wallet_bloc.dart';
+import '../../../../core/components/database/flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../../core/components/database/rest_clients/api_client.dart';
 
 AppFactory makeAppFactory() => const _AppFactoryDefault();
 
@@ -78,8 +78,8 @@ class _DIContainer {
 
   IUserRepository _makeUserRepository() =>
       UserRepositoryImpl(userProvider: _makeUserProvider());
-  StatementsRepository _makeStatementsRepository() =>
-      StatementsRepository(statementsProvider: _makeStatementsProvider());
+  IStatementsRepository _makeStatementsRepository() =>
+      StatementsRepositoryImpl(statementsProvider: _makeStatementsProvider());
   ILeanProductionRepository _makeLeanProductionRepository() =>
       LeanProductionRepositoryImpl(serviceProvider: _makeServiceProvider());
   IServiceRepository _makeServiceRepository() =>
@@ -160,7 +160,7 @@ class ScreenFactoryDefault implements ScreenFactory {
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<StatementsRepository>(
+          RepositoryProvider<IStatementsRepository>(
               create: (context) => _diContainer._makeStatementsRepository()),
           RepositoryProvider<ILeanProductionRepository>(
               create: (context) =>

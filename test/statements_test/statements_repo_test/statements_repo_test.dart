@@ -63,7 +63,7 @@ void main() {
 // Создаем экземпляры мок-объектов
       statementsApiClient = MockStatementProviderImpl();
 // Создаем репозиторий
-      statementsRepository = StatementsRepository(
+      statementsRepository = StatementsRepositoryImpl(
         statementsProvider: statementsApiClient,
       );
     });

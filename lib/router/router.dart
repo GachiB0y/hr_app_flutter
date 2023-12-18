@@ -1,11 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
-import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
-import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
-import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/booking_mettings_screens/first_screen_booking_meetings.dart';
 import 'package:hr_app_flutter/features/services/widget/booking_mettings_screens/second_screen_booking_meeting.dart';

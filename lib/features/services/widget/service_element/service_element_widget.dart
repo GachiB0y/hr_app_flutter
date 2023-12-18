@@ -1,17 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
-import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
-import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/painteres_widget.dart';
 
-import '../../../auth/data/repo/auth_repository.dart';
 import '../../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
-import '../../bloc/service_bloc/service_bloc.dart';
 import '../../model/service/service.dart';
 import '../service_screen.dart/bottom_sheet_create_events_widget.dart';
 
@@ -242,27 +238,12 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
-                  AutoRouter.of(context).push(ApproveNewsRoute(
-                    authRepository:
-                        RepositoryProvider.of<IAuthRepository>(context),
-                    eventEntityRepository:
-                        RepositoryProvider.of<IEventEntityRepository>(context),
-                  ));
+                  AutoRouter.of(context).push(const ApproveNewsRoute());
                 } else if (widget.service.id == 25) {
-                  final blocService = context.read<ServiceBloc>();
-                  context.pushRoute(ScheduleBusRoute(
-                    authRepository: blocService.authRepository,
-                    serviceRepository: blocService.serviceRepository,
-                  ));
+                  context.pushRoute(const ScheduleBusRoute());
                   // context.pushRoute(BookingMeetingsFirstRoute());
                 } else if (widget.service.id == 24) {
-                  final repositoryStatements =
-                      RepositoryProvider.of<StatementsRepository>(context);
-                  context.pushRoute(StatementFormRoute(
-                    authRepository:
-                        RepositoryProvider.of<IAuthRepository>(context),
-                    repositoryStatements: repositoryStatements,
-                  ));
+                  context.pushRoute(const StatementFormRoute());
                 }
               },
             ),

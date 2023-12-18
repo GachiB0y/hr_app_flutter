@@ -4,43 +4,43 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/statements/bloc/participants_bloc/participants_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../auth/data/repo/auth_repository.dart';
 import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import '../../bloc/statements_bloc/statements_type_list_bloc/statement_type_list_bloc.dart';
-import '../../data/repo/statements_repository.dart';
 import '../../model/statements/statements.dart';
 import 'statemetn_view_model.dart';
 
 @RoutePage()
 class StatementFormScreen extends StatefulWidget implements AutoRouteWrapper {
-  const StatementFormScreen(
-      {super.key,
-      required this.repositoryStatements,
-      required this.authRepository});
-  final IStatementsRepository repositoryStatements;
-  final IAuthRepository authRepository;
+  const StatementFormScreen({
+    super.key,
+  });
+
   @override
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider<StatementTypeListBLoC>(
         create: (BuildContext context) => StatementTypeListBLoC(
-          authRepository: authRepository,
-          repositoryStatements: repositoryStatements,
+          authRepository: DependenciesScope.of(context).authRepository,
+          repositoryStatements:
+              DependenciesScope.of(context).statementsRepository,
         ),
       ),
       BlocProvider<StatementsBLoC>(
         create: (BuildContext context) => StatementsBLoC(
-          authRepository: authRepository,
-          repositoryStatements: repositoryStatements,
+          authRepository: DependenciesScope.of(context).authRepository,
+          repositoryStatements:
+              DependenciesScope.of(context).statementsRepository,
         ),
       ),
       BlocProvider<ParticipantsBLoC>(
         create: (BuildContext context) => ParticipantsBLoC(
-          authRepository: authRepository,
-          repositoryStatements: repositoryStatements,
+          authRepository: DependenciesScope.of(context).authRepository,
+          repositoryStatements:
+              DependenciesScope.of(context).statementsRepository,
         ),
       ),
     ], child: this);

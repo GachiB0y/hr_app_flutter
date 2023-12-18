@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
+import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
 
@@ -25,6 +27,17 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
   String? error;
 
   @override
+  void didChangeDependencies() {
+    final auth = AuthScope.of(context);
+
+    if (auth.authenticated) {
+      AutoRouter.of(context).replace(const MainAppRoute());
+    }
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _phoneNumberController.dispose();
     _smsCodeController.dispose();
@@ -33,7 +46,7 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cubitAuth = context.watch<AuthViewCubit>();
+    // final cubitAuth = context.watch<AuthViewCubit>();
     return Scaffold(
       backgroundColor: Colors.green,
       body: Center(
@@ -75,30 +88,36 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
               ),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   if (_phoneNumberController.text.length == 18) {
                     final String originalPhoneNumber =
                         _phoneNumberController.text;
                     formattedPhoneNumber =
                         originalPhoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                    try {
-                      final bool isCode = await cubitAuth.getCode(
-                          phoneNumber: formattedPhoneNumber);
 
-                      if (isCode == true) {
-                        setState(() {
-                          _showSMSCodeField = true;
-                        });
-                      } else {
-                        setState(() {
-                          error = 'Номер телефона не найден!';
-                        });
-                      }
-                    } catch (e) {
-                      setState(() {
-                        error = e.toString();
-                      });
-                    }
+                    AuthScope.of(context, listen: false)
+                        .getCode(formattedPhoneNumber);
+                    setState(() {
+                      _showSMSCodeField = true;
+                    });
+                    // try {
+                    //   final bool isCode = await cubitAuth.getCode(
+                    //       phoneNumber: formattedPhoneNumber);
+
+                    //   if (isCode == true) {
+                    //     setState(() {
+                    //       _showSMSCodeField = true;
+                    //     });
+                    //   } else {
+                    //     setState(() {
+                    //       error = 'Номер телефона не найден!';
+                    //     });
+                    //   }
+                    // } catch (e) {
+                    //   setState(() {
+                    //     error = e.toString();
+                    //   });
+                    // }
                   } else {
                     setState(() {
                       error = 'Неправильный номер телефона!';
@@ -128,22 +147,32 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
                     ),
                     const SizedBox(height: 20.0),
                     ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          final bool isAuth = await cubitAuth.auth(
+                      onPressed: () {
+                        final phone = _phoneNumberController.text;
+                        final code = _smsCodeController.text;
+                        final enabled = phone.isNotEmpty && code.isNotEmpty;
+
+                        if (enabled) {
+                          AuthScope.of(context, listen: false).auth(
                               phoneNumber: formattedPhoneNumber,
                               code: _smsCodeController.text);
-                          if (isAuth == true) {
-                            AutoRouter.of(context)
-                                .replace(const MainAppRoute());
-                          } else {
-                            setState(() {
-                              error = 'Not valid CODE';
-                            });
-                          }
-                        } catch (e) {
-                          error = e.toString();
                         }
+
+                        // try {
+                        //   final bool isAuth = await cubitAuth.auth(
+                        //       phoneNumber: formattedPhoneNumber,
+                        //       code: _smsCodeController.text);
+                        //   if (isAuth == true) {
+                        //     AutoRouter.of(context)
+                        //         .replace(const MainAppRoute());
+                        //   } else {
+                        //     setState(() {
+                        //       error = 'Not valid CODE';
+                        //     });
+                        //   }
+                        // } catch (e) {
+                        //   error = e.toString();
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

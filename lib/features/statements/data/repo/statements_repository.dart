@@ -17,8 +17,8 @@ abstract interface class IStatementsRepository {
       {required final String accessToken, required final String code});
 }
 
-class StatementsRepository implements IStatementsRepository {
-  StatementsRepository({
+class StatementsRepositoryImpl implements IStatementsRepository {
+  StatementsRepositoryImpl({
     required IStatementsProvider statementsProvider,
   }) : _statementsProvider = statementsProvider;
 

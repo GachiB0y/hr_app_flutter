@@ -2,9 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
-import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
@@ -13,7 +10,6 @@ import '../../services/bloc/service_bloc/service_bloc.dart';
 import '../../services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import '../../services/model/service/service.dart';
 import '../../user/bloc/user_bloc/user_bloc.dart';
-import '../../user/data/repo/user_repository.dart';
 import '../../wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import '../../wallet/model/wallet/wallet.dart';
 import '../bloc/caregory_bloc.dart/category_bloc.dart';
@@ -193,29 +189,13 @@ class LeanProductionButton extends StatelessWidget {
               menuChildren: [
                 MenuItemButton(
                   onPressed: () {
-                    final leanProductionRepository =
-                        RepositoryProvider.of<ILeanProductionRepository>(
-                            context);
-                    AutoRouter.of(context).push(LeanProductionFormRoute(
-                        authRepository:
-                            RepositoryProvider.of<IAuthRepository>(context),
-                        userRepo:
-                            RepositoryProvider.of<IUserRepository>(context),
-                        leanRepository: leanProductionRepository));
+                    AutoRouter.of(context).push(LeanProductionFormRoute());
                   },
                   child: const Text('Подать заявление'),
                 ),
                 MenuItemButton(
                   onPressed: () {
-                    final leanProductionRepository =
-                        RepositoryProvider.of<ILeanProductionRepository>(
-                            context);
-                    AutoRouter.of(context).push(MyLeanProductionsRoute(
-                        authRepository:
-                            RepositoryProvider.of<IAuthRepository>(context),
-                        userRepo:
-                            RepositoryProvider.of<IUserRepository>(context),
-                        leanRepository: leanProductionRepository));
+                    AutoRouter.of(context).push(const MyLeanProductionsRoute());
                   },
                   child: const Text('Мои заявления'),
                 ),
@@ -280,10 +260,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
-              AutoRouter.of(context).push(SearchUserRoute(
-                authRepository: RepositoryProvider.of<IAuthRepository>(context),
-                userRepo: RepositoryProvider.of<IUserRepository>(context),
-              ));
+              AutoRouter.of(context).push(const SearchUserRoute());
             },
           ),
         ),
@@ -339,10 +316,7 @@ class RookiesInfoElementWidget extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              AutoRouter.of(context).push(RookiesInfoRoute(
-                authRepository: RepositoryProvider.of<IAuthRepository>(context),
-                userRepo: RepositoryProvider.of<IUserRepository>(context),
-              ));
+              AutoRouter.of(context).push(RookiesInfoRoute());
             },
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(raiudsBorder),
@@ -398,11 +372,7 @@ class BirthDayInfoElementWidget extends StatelessWidget {
                 bottomLeft: Radius.circular(raiudsBorder),
               ),
               onTap: () {
-                AutoRouter.of(context).push(BirthDayInfoRoute(
-                  authRepository:
-                      RepositoryProvider.of<IAuthRepository>(context),
-                  userRepo: RepositoryProvider.of<IUserRepository>(context),
-                ));
+                AutoRouter.of(context).push(BirthDayInfoRoute());
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -750,11 +720,6 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                       onTap: () {
                         context.pushRoute(AboutNewsRoute(
                           id: item.id,
-                          authRepository:
-                              RepositoryProvider.of<IAuthRepository>(context),
-                          eventEntityRepository:
-                              RepositoryProvider.of<IEventEntityRepository>(
-                                  context),
                         ));
                       },
                       child: CachedNetworkImage(
