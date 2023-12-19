@@ -35,7 +35,7 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: LoaderRoute.page, path: '/'),
         AutoRoute(page: AuthenticationFormRoute.page, path: '/auth'),
-        AutoRoute(page: MainAppRoute.page, path: '/main_screen', children: [
+        AutoRoute(page: MainAppRoute.page, path: '/main', children: [
           AutoRoute(page: UserMainRoute.page, path: 'user_main'),
           AutoRoute(page: GrassCoinRoute.page, path: 'coin'),
           AutoRoute(page: ServicesRoute.page, path: 'services'),
@@ -50,12 +50,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user'),
         AutoRoute(page: SearchUserRoute.page, path: '/search_user'),
         AutoRoute(page: ScheduleBusRoute.page, path: '/schedule_bus'),
-        AutoRoute(
-            page: BookingMeetingsFirstRoute.page,
-            path: '/booking_meetings_first'),
-        AutoRoute(
-            page: BookingMeetingSecondRoute.page,
-            path: '/booking_meetings_second'),
         AutoRoute(
             page: LeanProductionFormRoute.page, path: '/lean_production_form'),
         AutoRoute(

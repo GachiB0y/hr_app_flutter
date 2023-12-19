@@ -1,13 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
-import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/main_app_screen.dart';
 import 'package:hr_app_flutter/router/router.dart';
-
-import '../bloc/loader_cubit/loader_view_cubit.dart';
 
 @RoutePage()
 class LoaderScreen extends StatefulWidget {
@@ -39,9 +34,6 @@ class _LoaderScreenState extends State<LoaderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return AuthScope.of(context).authenticated
-    //     ? const MainAppScreen()
-    //     : const AuthenticationFormScreen();
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),

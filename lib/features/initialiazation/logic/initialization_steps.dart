@@ -121,6 +121,7 @@ mixin InitializationSteps {
       //     .first;
       // logger.verbose('Resolved auth state: $resolvedState');
       progress.dependencies.authBloc = authBloc;
+      authBloc.add(const AuthEvent.checkAuth());
     },
   };
 }

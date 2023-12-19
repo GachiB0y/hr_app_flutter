@@ -1,13 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
-
-import '../bloc/auth_cubit/auth_cubit.dart';
 
 @RoutePage()
 class AuthenticationFormScreen extends StatefulWidget {

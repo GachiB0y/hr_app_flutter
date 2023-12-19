@@ -167,13 +167,12 @@ class LogoutButtonWidget extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () async {
-                          // await context.read<LoaderViewCubit>().logout();
                           AuthScope.of(context).signOut();
-                          if (!context.mounted) return;
-                          // AutoRouter.of(context)
-                          //     .replace(const AuthenticationFormRoute());
-                          // AutoRouter.of(context)
-                          //     .navigate(const AuthenticationFormRoute());
+
+                          // context.router.removeLast();
+                          context.router.replaceAll([const LoaderRoute()]);
+                          // context.router.stackData.clear();
+                          // context.router.pushNamed('/');
                         },
                         textColor: Colors.black,
                         padding: const EdgeInsets.all(2),

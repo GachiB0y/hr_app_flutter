@@ -23,7 +23,7 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
                 message: 'Initial idle state',
               ),
         ) {
-    _checkAuthInit();
+    // _checkAuthInit();
     on<AuthEvent>(
       (event, emit) => event.map<Future<void>>(
         getCode: (event) => _getCode(event, emit),
@@ -67,7 +67,9 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
   Future<void> _checkAuthInit() async {
     final isAuth = await _authRepository.isAuth();
     isAuth
+        // ignore: invalid_use_of_visible_for_testing_member
         ? emit(const AuthState.idle(data: AuthenticationStatus.authenticated))
+        // ignore: invalid_use_of_visible_for_testing_member
         : emit(
             const AuthState.idle(data: AuthenticationStatus.unauthenticated));
   }
@@ -111,7 +113,7 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
   /// Logout user
   Future<void> _logout(LogoutAuthEvent event, Emitter<AuthState> emit) async {
     try {
-      // emit(const AuthState.idle(data: AuthenticationStatus.unauthenticated));
+      emit(const AuthState.idle(data: AuthenticationStatus.unauthenticated));
 
       await _authRepository.logout();
       emit(const AuthState.idle(data: AuthenticationStatus.unauthenticated));
