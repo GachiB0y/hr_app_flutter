@@ -59,7 +59,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
                   ? null
                   : BottomNavigationBar(
                       selectedItemColor: Theme.of(context).colorScheme.primary,
-                      unselectedItemColor: Colors.black,
+                      unselectedItemColor:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
                       currentIndex: tabsRouter.activeIndex,
                       onTap: (index) => _openPage(index, tabsRouter),
                       items: [

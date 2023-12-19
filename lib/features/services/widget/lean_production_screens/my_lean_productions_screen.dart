@@ -48,7 +48,7 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
     const double radius = 30.0;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Row(
           children: [
             Icon(
@@ -87,7 +87,10 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
                       contentPadding: const EdgeInsets.all(16.0),
                       title: Text(
                         'Заявление №${myProposals[index].number}',
-                        style: const TextStyle(fontSize: 18),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color:
+                                Theme.of(context).colorScheme.onInverseSurface),
                       ),
                       subtitle: Text(DateFormat('dd.MM.yyyy')
                           .format(myProposals[index].date)),

@@ -50,11 +50,14 @@ class _BottomSheetCreateEventsWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(
                   'Создать событие',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.outline),
                 ),
               ),
               const SizedBox(
@@ -87,7 +90,11 @@ class _BottomSheetCreateEventsWidgetState
                       isSingleDay = !isSingleDay;
                     });
                   },
-                  child: const Text('Весь день')),
+                  child: Text(
+                    'Весь день',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.outline),
+                  )),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: DateRangePickerWidget(

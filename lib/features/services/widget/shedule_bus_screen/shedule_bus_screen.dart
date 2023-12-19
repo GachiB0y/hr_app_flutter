@@ -43,6 +43,7 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
         title: const Text(
           'Список городов',
           style: TextStyle(

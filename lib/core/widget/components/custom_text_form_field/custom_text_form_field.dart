@@ -23,11 +23,15 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+        borderRadius: BorderRadius.circular(30.0),
+        color: Theme.of(context).colorScheme.onPrimary,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_inputText),
+          Text(_inputText,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onInverseSurface)),
           TextFormField(
             initialValue: initialValue,
             readOnly: readOnly,
@@ -35,7 +39,7 @@ class CustomTextFormField extends StatelessWidget {
             minLines: 1,
             controller: _nameController,
             decoration: InputDecoration(
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).colorScheme.onPrimary,
               filled: true,
               icon: _iconData,
               border: InputBorder.none,

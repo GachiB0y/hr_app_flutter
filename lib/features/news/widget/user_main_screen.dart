@@ -191,13 +191,23 @@ class LeanProductionButton extends StatelessWidget {
                   onPressed: () {
                     AutoRouter.of(context).push(LeanProductionFormRoute());
                   },
-                  child: const Text('Подать заявление'),
+                  child: Text(
+                    'Подать заявление',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                    ),
+                  ),
                 ),
                 MenuItemButton(
                   onPressed: () {
                     AutoRouter.of(context).push(const MyLeanProductionsRoute());
                   },
-                  child: const Text('Мои заявления'),
+                  child: Text(
+                    'Мои заявления',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -516,13 +526,19 @@ class ElementForScrollBarWidget extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              const Text(
+                              Text(
                                 '1208',
-                                style: TextStyle(fontSize: 28),
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onInverseSurface),
                               ),
                               Text(
                                 S.of(context).userMainScrenText_index,
-                                style: TextStyle(color: Colors.grey[600]),
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.outline),
                               ),
                             ],
                           ),
@@ -586,11 +602,13 @@ class RowBalanceCountWidget extends StatelessWidget {
         children: [
           Text(
             data != null ? data!.balance.toString() : 'Ничего не найденно...',
-            style: const TextStyle(fontSize: 28),
+            style: TextStyle(
+                fontSize: 28,
+                color: Theme.of(context).colorScheme.onInverseSurface),
           ),
           Text(
             S.of(context).userMainScreenText_balance,
-            style: TextStyle(color: Colors.grey[600]),
+            style: TextStyle(color: Theme.of(context).colorScheme.outline),
           ),
         ],
       ),
@@ -668,11 +686,12 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                               },
                               child: Container(
                                 decoration: index == selectedTab
-                                    ? const BoxDecoration(
+                                    ? BoxDecoration(
                                         border: Border(
                                           bottom: BorderSide(
-                                              color: Colors
-                                                  .black, // Цвет подчеркивания
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary, // Цвет подчеркивания
                                               width:
                                                   1.5 // Толщина подчеркивания
                                               ),
@@ -686,11 +705,14 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                                     child: Text(
                                       tab,
                                       style: TextStyle(
-                                        fontSize: 18,
-                                        color: index == selectedTab
-                                            ? Colors.black
-                                            : Colors.grey,
-                                      ),
+                                          fontSize: 18,
+                                          color: index == selectedTab
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .outline),
                                     ),
                                   ),
                                 ),
@@ -751,7 +773,8 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         item.title,
-                                        style: const TextStyle(fontSize: 16),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.black),
                                       ),
                                     ),
                                   ),

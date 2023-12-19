@@ -116,19 +116,26 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                     height: 15,
                   ),
                   DropdownMenu<StatementFieldTypeEntity>(
-                    inputDecorationTheme: const InputDecorationTheme(
-                      fillColor: Colors.white,
+                    inputDecorationTheme: InputDecorationTheme(
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
                       filled: true,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
-                    label: const Text('Тип заявления'),
-                    menuStyle: const MenuStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll<Color>(Colors.white),
-                        surfaceTintColor:
-                            MaterialStatePropertyAll<Color>(Colors.transparent),
-                        elevation: MaterialStatePropertyAll<double>(10.0),
-                        maximumSize: MaterialStatePropertyAll(Size(300, 300))),
+                    label: Text(
+                      'Тип заявления',
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onInverseSurface),
+                    ),
+                    menuStyle: MenuStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                          Theme.of(context).colorScheme.onPrimary,
+                        ),
+                        surfaceTintColor: const MaterialStatePropertyAll<Color>(
+                            Colors.transparent),
+                        elevation: const MaterialStatePropertyAll<double>(10.0),
+                        maximumSize:
+                            const MaterialStatePropertyAll(Size(300, 300))),
                     width: 300,
                     menuHeight: 300,
                     controller: colorController,
@@ -144,11 +151,14 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                       return DropdownMenuEntry<StatementFieldTypeEntity>(
                           value: statementField,
                           label: statementField.name,
-                          style: const ButtonStyle(
-                              maximumSize:
-                                  MaterialStatePropertyAll(Size(300, 300)),
-                              textStyle: MaterialStatePropertyAll(
-                                  TextStyle(overflow: TextOverflow.ellipsis))));
+                          style: ButtonStyle(
+                              maximumSize: const MaterialStatePropertyAll(
+                                  Size(300, 300)),
+                              textStyle: MaterialStatePropertyAll(TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onInverseSurface))));
                     }).toList(),
                   ),
                   const SizedBox(
@@ -288,11 +298,13 @@ class _StatementsTampleteFormWidgetState
                     });
                   },
                   decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(),
-                    labelText: element.body,
-                  ),
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
+                      filled: true,
+                      border: const OutlineInputBorder(),
+                      labelText: element.body,
+                      labelStyle: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onInverseSurface)),
                 );
               } else {
                 textField = TextFormField(
@@ -313,11 +325,13 @@ class _StatementsTampleteFormWidgetState
                     return null;
                   },
                   decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(),
-                    labelText: element.body,
-                  ),
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
+                      filled: true,
+                      border: const OutlineInputBorder(),
+                      labelText: element.body,
+                      labelStyle: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onInverseSurface)),
                 );
               }
               return Padding(
@@ -363,10 +377,11 @@ class _StatementsTampleteFormWidgetState
                                 },
                                 controller: _inputSMSCodeController,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    fillColor: Colors.white,
+                                decoration: InputDecoration(
+                                    fillColor:
+                                        Theme.of(context).colorScheme.onPrimary,
                                     filled: true,
-                                    border: OutlineInputBorder(),
+                                    border: const OutlineInputBorder(),
                                     labelText: 'Код из СМС',
                                     hintText: 'Введите код из СМС'),
                               ),
@@ -496,11 +511,12 @@ class _ParticipantInputWidgetState extends State<ParticipantInputWidget> {
               TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: const OutlineInputBorder(),
-                  labelText: inputText,
-                ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: const OutlineInputBorder(),
+                    labelText: inputText,
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onInverseSurface)),
                 onTap: () {
                   setState(() {
                     isFocus = true;

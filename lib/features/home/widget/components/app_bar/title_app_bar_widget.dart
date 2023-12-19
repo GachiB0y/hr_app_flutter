@@ -42,10 +42,15 @@ class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Text(
-                          '${'${state.data?.authUser.name} ${state.data?.authUser.nameI}'} ',
-                          softWrap: true,
-                          maxLines: 2,
-                          style: StyleTextCustom.textNameUser),
+                        '${'${state.data?.authUser.name} ${state.data?.authUser.nameI}'} ',
+                        softWrap: true,
+                        maxLines: 2,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
