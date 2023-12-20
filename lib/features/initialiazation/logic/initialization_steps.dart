@@ -12,12 +12,17 @@ import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
+import 'package:hr_app_flutter/features/settings/data/locale_datasource.dart';
+import 'package:hr_app_flutter/features/settings/data/settings_repository.dart';
+import 'package:hr_app_flutter/features/settings/data/theme_datasource.dart';
+import 'package:hr_app_flutter/features/settings/data/theme_mode_codec.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/features/statements/data/rest_clietns/statement_provider.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/rest_clients/wallet_api_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// A function which represents a single initialization step.
 typedef StepAction = FutureOr<void>? Function(InitializationProgress progress);
@@ -37,20 +42,24 @@ mixin InitializationSteps {
 
       progress.dependencies.sessionDataProvdier = sessionDataProvdier;
     },
-    // 'Settings Repository': (progress) {
-    //   final sharedPreferences = progress.dependencies.sharedPreferences;
-    //   final themeDataSource = ThemeDataSourceImpl(
-    //     sharedPreferences: sharedPreferences,
-    //     codec: const ThemeModeCodec(),
-    //   );
-    //   final localeDataSource = LocaleDataSourceImpl(
-    //     sharedPreferences: sharedPreferences,
-    //   );
-    //   progress.dependencies.settingsRepository = SettingsRepositoryImpl(
-    //     themeDataSource: themeDataSource,
-    //     localeDataSource: localeDataSource,
-    //   );
-    // },
+    'Shared Preferences': (progress) async {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      progress.dependencies.sharedPreferences = sharedPreferences;
+    },
+    'Settings Repository': (progress) {
+      final sharedPreferences = progress.dependencies.sharedPreferences;
+      final themeDataSource = ThemeDataSourceImpl(
+        sharedPreferences: sharedPreferences,
+        codec: const ThemeModeCodec(),
+      );
+      final localeDataSource = LocaleDataSourceImpl(
+        sharedPreferences: sharedPreferences,
+      );
+      progress.dependencies.settingsRepository = SettingsRepositoryImpl(
+        themeDataSource: themeDataSource,
+        localeDataSource: localeDataSource,
+      );
+    },
     'AuthRepository': (progress) async {
       const IHTTPService htttpService = HTTPServiceImpl();
       const authProvider = AuthProviderImpl(htttpService);
@@ -112,7 +121,6 @@ mixin InitializationSteps {
 
       progress.dependencies.leanProductionRepository = leanProductionRepository;
     },
-
     'AuthBloc': (progress) async {
       final authRepository = progress.dependencies.authRepository;
       final authBloc = AuthBLoC(authRepository: authRepository);

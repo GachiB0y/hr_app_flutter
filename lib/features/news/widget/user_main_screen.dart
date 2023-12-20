@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/generated/l10n.dart';
+import 'package:hr_app_flutter/core/localization/localization.dart';
+
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
@@ -535,7 +536,8 @@ class ElementForScrollBarWidget extends StatelessWidget {
                                         .onInverseSurface),
                               ),
                               Text(
-                                S.of(context).userMainScrenText_index,
+                                Localization.of(context)
+                                    .userMainScrenText_index,
                                 style: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.outline),
@@ -607,7 +609,7 @@ class RowBalanceCountWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onInverseSurface),
           ),
           Text(
-            S.of(context).userMainScreenText_balance,
+            Localization.of(context).userMainScreenText_balance,
             style: TextStyle(color: Theme.of(context).colorScheme.outline),
           ),
         ],

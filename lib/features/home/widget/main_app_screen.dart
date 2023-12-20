@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
+import 'package:hr_app_flutter/core/localization/localization.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
-import 'package:hr_app_flutter/generated/l10n.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
@@ -66,22 +66,24 @@ class _MainAppScreenState extends State<MainAppScreen> {
                       items: [
                         BottomNavigationBarItem(
                             icon: const Icon(MyCustomIcon.iconHome, size: 28),
-                            label: S.of(context).tabBarText_main),
+                            label: Localization.of(context).tabBarText_main),
                         BottomNavigationBarItem(
                             icon: const Icon(MyCustomIcon.iconRub, size: 30),
-                            label: S.of(context).tabBarText_grassCoin),
+                            label:
+                                Localization.of(context).tabBarText_grassCoin),
                         BottomNavigationBarItem(
                             icon: const Icon(MyCustomIcon.iconLogoGrass,
                                 size: 36),
-                            label: S.of(context).tabBarText_company),
+                            label: Localization.of(context).tabBarText_company),
                         BottomNavigationBarItem(
                             icon: const Icon(MyCustomIcon.iconBook, size: 30),
-                            label: S.of(context).tabBarText_education),
+                            label:
+                                Localization.of(context).tabBarText_education),
                         BottomNavigationBarItem(
                             icon: const Icon(
                               MyCustomIcon.iconService,
                             ),
-                            label: S.of(context).tabBarText_service),
+                            label: Localization.of(context).tabBarText_service),
                       ],
                     ),
             );

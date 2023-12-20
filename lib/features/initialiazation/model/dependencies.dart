@@ -6,9 +6,11 @@ import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
+import 'package:hr_app_flutter/features/settings/data/settings_repository.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// {@template dependencies}
 /// Dependencies container
@@ -16,6 +18,12 @@ import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart'
 base class Dependencies {
   /// {@macro dependencies}
   Dependencies();
+
+  /// Shared preferences
+  late final SharedPreferences sharedPreferences;
+
+  /// Theme repository
+  late final SettingsRepository settingsRepository;
 
   /// HTTPService
   late final IHTTPService htttpService;

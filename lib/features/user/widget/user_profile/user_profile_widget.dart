@@ -10,7 +10,6 @@ import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
-import '../../../auth/bloc/loader_cubit/loader_view_cubit.dart';
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
 import '../../model/user/user.dart';
 
