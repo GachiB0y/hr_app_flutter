@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
@@ -54,6 +55,7 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
           backgroundColor: Theme.of(context).colorScheme.background,
           actions: const [
             SaveButtonWidget(),
+            ToggleThemeWidget(),
             LogoutButtonWidget(),
           ],
         ),
@@ -61,6 +63,24 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
       ),
     );
   }
+}
+
+/// {@template user_profile_widget}
+/// ToggleThemeWidget widget.
+/// {@endtemplate}
+class ToggleThemeWidget extends StatelessWidget {
+  /// {@macro user_profile_widget}
+  const ToggleThemeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+        onPressed: () {
+          SettingsScope.of(context, listen: false).toggleThemeMode();
+        },
+        icon: Icon(SettingsScope.of(context).theme.mode == ThemeMode.light
+            ? Icons.dark_mode
+            : Icons.light_mode),
+      );
 }
 
 class UserInfoForm extends StatelessWidget {
@@ -157,29 +177,21 @@ class LogoutButtonWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       right: 20.0,
                     ),
-                    child: Container(
-                      height: 34,
-                      width: 34,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(70, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(17),
-                      ),
-                      child: MaterialButton(
-                        onPressed: () async {
-                          AuthScope.of(context).signOut();
+                    child: IconButton(
+                      onPressed: () async {
+                        AuthScope.of(context).signOut();
 
-                          // context.router.removeLast();
-                          context.router.replaceAll([const LoaderRoute()]);
-                          // context.router.stackData.clear();
-                          // context.router.pushNamed('/');
-                        },
-                        textColor: Colors.black,
-                        padding: const EdgeInsets.all(2),
-                        shape: const CircleBorder(),
-                        child: const Icon(
-                          Icons.logout,
-                          size: 35,
-                        ),
+                        // context.router.removeLast();
+                        context.router.replaceAll([const LoaderRoute()]);
+                        // context.router.stackData.clear();
+                        // context.router.pushNamed('/');
+                      },
+                      padding: const EdgeInsets.all(2),
+                      color: Colors.transparent,
+                      icon: Icon(
+                        Icons.logout,
+                        size: 35,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                   )

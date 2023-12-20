@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show Locale;
+import 'package:flutter/material.dart' show Locale, ThemeMode;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
@@ -59,6 +59,9 @@ sealed class SettingsEvent with _$SettingsEvent {
     /// The new locale.
     required Locale locale,
   }) = _UpdateLocaleSettingsEvent;
+
+  /// Event to toggle the theme mode.
+  const factory SettingsEvent.toggleTeheme() = _ToggleThemeSettingsEvent;
 }
 
 /// {@template settings_bloc}
@@ -79,6 +82,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       (event, emit) => event.map(
         updateTheme: (event) => _updateTheme(event, emit),
         updateLocale: (event) => _updateLocale(event, emit),
+        toggleTeheme: (event) => _toggleTeheme(event, emit),
       ),
     );
   }
@@ -131,6 +135,45 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emitter(
         SettingsState.idle(appTheme: state.appTheme, locale: event.locale),
       );
+    } on Object catch (e) {
+      emitter(
+        SettingsState.error(
+          appTheme: state.appTheme,
+          locale: state.locale,
+          message: e.toString(),
+        ),
+      );
+      rethrow;
+    }
+  }
+
+  Future<void> _toggleTeheme(
+    _ToggleThemeSettingsEvent event,
+    Emitter<SettingsState> emitter,
+  ) async {
+    emitter(
+      _ProcessingSettingsState(
+        appTheme: state.appTheme,
+        locale: state.locale,
+      ),
+    );
+
+    try {
+      final ThemeMode currentThemeMode = state.appTheme.mode;
+      final currentTheme = state.appTheme;
+      if (currentThemeMode == ThemeMode.dark) {
+        final newAppTheme =
+            AppTheme(seed: currentTheme.seed, mode: ThemeMode.light);
+        emitter(
+          SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
+        );
+      } else {
+        final newAppTheme =
+            AppTheme(seed: currentTheme.seed, mode: ThemeMode.dark);
+        emitter(
+          SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
+        );
+      }
     } on Object catch (e) {
       emitter(
         SettingsState.error(

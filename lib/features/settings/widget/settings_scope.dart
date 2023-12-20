@@ -17,6 +17,9 @@ abstract interface class ThemeScopeController {
 
   /// Set the theme accent color to [color].
   void setThemeSeedColor(Color color);
+
+  /// Toggle the theme mode to [themeMode].
+  void toggleThemeMode();
 }
 
 /// {@template locale_scope_controller}
@@ -142,6 +145,13 @@ class _SettingsScopeState extends State<SettingsScope>
           child: widget.child,
         ),
       );
+
+  @override
+  void toggleThemeMode() {
+    _settingsBloc.add(
+      const SettingsEvent.toggleTeheme(),
+    );
+  }
 }
 
 class _InheritedSettingsScope extends InheritedModel<_SettingsScopeAspect> {

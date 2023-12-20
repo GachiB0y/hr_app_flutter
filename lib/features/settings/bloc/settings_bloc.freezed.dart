@@ -634,18 +634,21 @@ mixin _$SettingsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(AppTheme appTheme) updateTheme,
     required TResult Function(Locale locale) updateLocale,
+    required TResult Function() toggleTeheme,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AppTheme appTheme)? updateTheme,
     TResult? Function(Locale locale)? updateLocale,
+    TResult? Function()? toggleTeheme,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AppTheme appTheme)? updateTheme,
     TResult Function(Locale locale)? updateLocale,
+    TResult Function()? toggleTeheme,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -653,18 +656,21 @@ mixin _$SettingsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdateThemeSettingsEvent value) updateTheme,
     required TResult Function(_UpdateLocaleSettingsEvent value) updateLocale,
+    required TResult Function(_ToggleThemeSettingsEvent value) toggleTeheme,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult? Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult? Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -758,6 +764,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(AppTheme appTheme) updateTheme,
     required TResult Function(Locale locale) updateLocale,
+    required TResult Function() toggleTeheme,
   }) {
     return updateTheme(appTheme);
   }
@@ -767,6 +774,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AppTheme appTheme)? updateTheme,
     TResult? Function(Locale locale)? updateLocale,
+    TResult? Function()? toggleTeheme,
   }) {
     return updateTheme?.call(appTheme);
   }
@@ -776,6 +784,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AppTheme appTheme)? updateTheme,
     TResult Function(Locale locale)? updateLocale,
+    TResult Function()? toggleTeheme,
     required TResult orElse(),
   }) {
     if (updateTheme != null) {
@@ -789,6 +798,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdateThemeSettingsEvent value) updateTheme,
     required TResult Function(_UpdateLocaleSettingsEvent value) updateLocale,
+    required TResult Function(_ToggleThemeSettingsEvent value) toggleTeheme,
   }) {
     return updateTheme(this);
   }
@@ -798,6 +808,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult? Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult? Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
   }) {
     return updateTheme?.call(this);
   }
@@ -807,6 +818,7 @@ class _$_UpdateThemeSettingsEvent extends _UpdateThemeSettingsEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
     required TResult orElse(),
   }) {
     if (updateTheme != null) {
@@ -898,6 +910,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(AppTheme appTheme) updateTheme,
     required TResult Function(Locale locale) updateLocale,
+    required TResult Function() toggleTeheme,
   }) {
     return updateLocale(locale);
   }
@@ -907,6 +920,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AppTheme appTheme)? updateTheme,
     TResult? Function(Locale locale)? updateLocale,
+    TResult? Function()? toggleTeheme,
   }) {
     return updateLocale?.call(locale);
   }
@@ -916,6 +930,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AppTheme appTheme)? updateTheme,
     TResult Function(Locale locale)? updateLocale,
+    TResult Function()? toggleTeheme,
     required TResult orElse(),
   }) {
     if (updateLocale != null) {
@@ -929,6 +944,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdateThemeSettingsEvent value) updateTheme,
     required TResult Function(_UpdateLocaleSettingsEvent value) updateLocale,
+    required TResult Function(_ToggleThemeSettingsEvent value) toggleTeheme,
   }) {
     return updateLocale(this);
   }
@@ -938,6 +954,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult? Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult? Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
   }) {
     return updateLocale?.call(this);
   }
@@ -947,6 +964,7 @@ class _$_UpdateLocaleSettingsEvent extends _UpdateLocaleSettingsEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdateThemeSettingsEvent value)? updateTheme,
     TResult Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
     required TResult orElse(),
   }) {
     if (updateLocale != null) {
@@ -966,4 +984,115 @@ abstract class _UpdateLocaleSettingsEvent extends SettingsEvent {
   @JsonKey(ignore: true)
   _$$_UpdateLocaleSettingsEventCopyWith<_$_UpdateLocaleSettingsEvent>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ToggleThemeSettingsEventCopyWith<$Res> {
+  factory _$$_ToggleThemeSettingsEventCopyWith(
+          _$_ToggleThemeSettingsEvent value,
+          $Res Function(_$_ToggleThemeSettingsEvent) then) =
+      __$$_ToggleThemeSettingsEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ToggleThemeSettingsEventCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$_ToggleThemeSettingsEvent>
+    implements _$$_ToggleThemeSettingsEventCopyWith<$Res> {
+  __$$_ToggleThemeSettingsEventCopyWithImpl(_$_ToggleThemeSettingsEvent _value,
+      $Res Function(_$_ToggleThemeSettingsEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_ToggleThemeSettingsEvent extends _ToggleThemeSettingsEvent {
+  const _$_ToggleThemeSettingsEvent() : super._();
+
+  @override
+  String toString() {
+    return 'SettingsEvent.toggleTeheme()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ToggleThemeSettingsEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AppTheme appTheme) updateTheme,
+    required TResult Function(Locale locale) updateLocale,
+    required TResult Function() toggleTeheme,
+  }) {
+    return toggleTeheme();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(AppTheme appTheme)? updateTheme,
+    TResult? Function(Locale locale)? updateLocale,
+    TResult? Function()? toggleTeheme,
+  }) {
+    return toggleTeheme?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AppTheme appTheme)? updateTheme,
+    TResult Function(Locale locale)? updateLocale,
+    TResult Function()? toggleTeheme,
+    required TResult orElse(),
+  }) {
+    if (toggleTeheme != null) {
+      return toggleTeheme();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UpdateThemeSettingsEvent value) updateTheme,
+    required TResult Function(_UpdateLocaleSettingsEvent value) updateLocale,
+    required TResult Function(_ToggleThemeSettingsEvent value) toggleTeheme,
+  }) {
+    return toggleTeheme(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_UpdateThemeSettingsEvent value)? updateTheme,
+    TResult? Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult? Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
+  }) {
+    return toggleTeheme?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UpdateThemeSettingsEvent value)? updateTheme,
+    TResult Function(_UpdateLocaleSettingsEvent value)? updateLocale,
+    TResult Function(_ToggleThemeSettingsEvent value)? toggleTeheme,
+    required TResult orElse(),
+  }) {
+    if (toggleTeheme != null) {
+      return toggleTeheme(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ToggleThemeSettingsEvent extends SettingsEvent {
+  const factory _ToggleThemeSettingsEvent() = _$_ToggleThemeSettingsEvent;
+  const _ToggleThemeSettingsEvent._() : super._();
 }
