@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart' show Locale, ThemeMode;
+import 'dart:ui';
+
+import 'package:flutter/material.dart' show Brightness, Locale, ThemeMode;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
@@ -159,20 +161,34 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     );
 
     try {
-      final ThemeMode currentThemeMode = state.appTheme.mode;
-      final currentTheme = state.appTheme;
-      if (currentThemeMode == ThemeMode.dark) {
+      final AppTheme currentTheme = state.appTheme;
+
+      if (currentTheme.mode == ThemeMode.dark) {
         final newAppTheme =
             AppTheme(seed: currentTheme.seed, mode: ThemeMode.light);
         emitter(
           SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
         );
-      } else {
+      } else if (currentTheme.mode == ThemeMode.light) {
         final newAppTheme =
             AppTheme(seed: currentTheme.seed, mode: ThemeMode.dark);
         emitter(
           SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
         );
+      } else {
+        if (PlatformDispatcher.instance.platformBrightness == Brightness.dark) {
+          final newAppTheme =
+              AppTheme(seed: currentTheme.seed, mode: ThemeMode.light);
+          emitter(
+            SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
+          );
+        } else {
+          final newAppTheme =
+              AppTheme(seed: currentTheme.seed, mode: ThemeMode.dark);
+          emitter(
+            SettingsState.idle(appTheme: newAppTheme, locale: state.locale),
+          );
+        }
       }
     } on Object catch (e) {
       emitter(
