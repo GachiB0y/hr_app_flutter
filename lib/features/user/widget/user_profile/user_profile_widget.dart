@@ -179,12 +179,9 @@ class LogoutButtonWidget extends StatelessWidget {
                     ),
                     child: IconButton(
                       onPressed: () async {
-                        AuthScope.of(context).signOut();
+                        AuthScope.of(context, listen: false).signOut();
 
-                        // context.router.removeLast();
                         context.router.replaceAll([const LoaderRoute()]);
-                        // context.router.stackData.clear();
-                        // context.router.pushNamed('/');
                       },
                       padding: const EdgeInsets.all(2),
                       color: Colors.transparent,

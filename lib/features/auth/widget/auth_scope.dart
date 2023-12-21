@@ -25,6 +25,8 @@ abstract interface class AuthController {
 
   /// Current authentication status.
   bool get authenticated;
+
+  AuthBLoC get authBloc;
 }
 
 /// {@template auth_scope}
@@ -103,6 +105,9 @@ class _AuthScopeState extends State<AuthScope> implements AuthController {
   @override
   bool get authenticated =>
       _authState.data == AuthenticationStatus.authenticated;
+
+  @override
+  AuthBLoC get authBloc => _authBloc;
 
   @override
   void signOut() {

@@ -29,6 +29,7 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
     // Setup bloc observer and transformer
     Bloc.observer = const AppBlocObserver();
     Bloc.transformer = bloc_concurrency.sequential();
+    await Future.delayed(const Duration(seconds: 3));
 
     final result = await processInitialization(
       steps: initializationSteps,

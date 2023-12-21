@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
-import 'package:hr_app_flutter/core/localization/generated/l10n.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
-import 'package:hr_app_flutter/theme/color_schemes.dart';
 
 /// {@template material_context}
 /// [MaterialContext] is an entry point to the material context.
@@ -29,7 +26,7 @@ class _MaterialContextState extends State<MaterialContext> {
     final theme = SettingsScope.themeOf(context).theme;
 
     final locale = SettingsScope.localeOf(context).locale;
-
+    // final auth = AuthScope.of(context);
     return MaterialApp.router(
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,

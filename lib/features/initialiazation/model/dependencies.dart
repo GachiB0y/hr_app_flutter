@@ -2,6 +2,7 @@ import 'package:hr_app_flutter/core/components/database/data_provider/session_da
 import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
@@ -58,6 +59,9 @@ base class Dependencies {
 
   /// Authentication bloc
   late final AuthBLoC authBloc;
+
+  ///MainAppScreenViewCubit
+  late final MainAppScreenViewCubit mainAppScreenViewCubit;
 
   // /// Theme repository
   // late final SettingsRepository settingsRepository;
