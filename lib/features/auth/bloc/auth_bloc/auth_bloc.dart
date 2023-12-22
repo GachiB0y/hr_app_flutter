@@ -23,7 +23,6 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
                 message: 'Initial idle state',
               ),
         ) {
-    // _checkAuthInit();
     on<AuthEvent>(
       (event, emit) => event.map<Future<void>>(
         getCode: (event) => _getCode(event, emit),
@@ -59,17 +58,6 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
     final isAuth = await _authRepository.isAuth();
     isAuth
         ? emit(const AuthState.idle(data: AuthenticationStatus.authenticated))
-        : emit(
-            const AuthState.idle(data: AuthenticationStatus.unauthenticated));
-  }
-
-  // Check is Auth user, when BLoC init
-  Future<void> _checkAuthInit() async {
-    final isAuth = await _authRepository.isAuth();
-    isAuth
-        // ignore: invalid_use_of_visible_for_testing_member
-        ? emit(const AuthState.idle(data: AuthenticationStatus.authenticated))
-        // ignore: invalid_use_of_visible_for_testing_member
         : emit(
             const AuthState.idle(data: AuthenticationStatus.unauthenticated));
   }
@@ -124,19 +112,4 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
       ));
     }
   }
-
-  // /// Fetch event handler
-  // Future<void> _fetch(FetchAuthEvent event, Emitter<AuthState> emit) async {
-  //   try {
-  //     emit(AuthState.processing(data: state.data));
-  //     final newData = await _repository.fetch(event.id);
-  //     emit(AuthState.successful(data: newData));
-  //   } on Object catch (err, stackTrace) {
-  //     //l.e('An error occurred in the AuthBLoC: $err', stackTrace);
-  //     emit(AuthState.error(data: state.data));
-  //     rethrow;
-  //   } finally {
-  //     emit(AuthState.idle(data: state.data));
-  //   }
-  // }
 }

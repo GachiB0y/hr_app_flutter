@@ -55,7 +55,7 @@ class AuthRepositoryImpl implements IAuthRepository {
         return isLive;
       }
     } else {
-      return isExist;
+      return false;
     }
   }
 
