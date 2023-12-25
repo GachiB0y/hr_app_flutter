@@ -3,21 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
 
-class TitleAppBarWidget extends StatefulWidget {
+class TitleAppBarWidget extends StatelessWidget {
   const TitleAppBarWidget({
     super.key,
   });
-
-  @override
-  State<TitleAppBarWidget> createState() => _TitleAppBarWidgetState();
-}
-
-class _TitleAppBarWidgetState extends State<TitleAppBarWidget> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<UserBloc>().add(const UserEvent.fetch());
-  }
 
   @override
   Widget build(BuildContext context) {

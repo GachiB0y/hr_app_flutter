@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/features/app/widget/splash_screen.dart';
+
 import 'core/utils/logger.dart';
 import 'features/app/logic/app_runner.dart';
 import 'features/initialiazation/logic/initialization_processor.dart';
@@ -16,7 +19,12 @@ void main() {
   logger.runLogging(
     () {
       runZonedGuarded(
-        () => AppRunner().initializeAndRun(hook),
+        () async {
+          runApp(const InitializationSplashScreen());
+          // await Future.delayed(const Duration(milliseconds: 5));
+
+          AppRunner().initializeAndRun(hook);
+        },
         logger.logZoneError,
       );
     },
