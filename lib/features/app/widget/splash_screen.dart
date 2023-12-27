@@ -11,9 +11,9 @@ class InitializationSplashScreen extends StatelessWidget {
             Brightness.dark
         ? ThemeData.dark()
         : ThemeData.light();
-    return Material(
-      color: theme.primaryColor,
-      child: const Directionality(
+    return const Material(
+      // color: theme.primaryColor,
+      child: Directionality(
         textDirection: TextDirection.ltr,
         child: Center(
           child: Text('LOading...'),

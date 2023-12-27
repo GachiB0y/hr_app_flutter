@@ -21,7 +21,6 @@ void main() {
       runZonedGuarded(
         () async {
           runApp(const InitializationSplashScreen());
-          // await Future.delayed(const Duration(milliseconds: 5));
 
           AppRunner().initializeAndRun(hook);
         },

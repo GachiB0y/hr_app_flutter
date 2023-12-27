@@ -22,7 +22,7 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
       _$initializeAndRun ??= Future<void>(() async {
         final bindings = WidgetsFlutterBinding.ensureInitialized()
           ..deferFirstFrame();
-        // // Preserve splash screen
+        // Preserve splash screen
         // FlutterNativeSplash.preserve(widgetsBinding: bindings);
 
         // Override logging

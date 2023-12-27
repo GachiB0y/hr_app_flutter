@@ -38,7 +38,6 @@ class _LoaderScreenState extends State<LoaderScreen> {
 
   Future<void> _onLoaderViewCubitStateChange(
       BuildContext context, AuthState state) async {
-    // await Future.delayed(const Duration(seconds: 3));
     final bool isAuth = state.data == AuthenticationStatus.authenticated;
     final nextScreen =
         isAuth ? const MainAppRoute() : const AuthenticationFormRoute();
