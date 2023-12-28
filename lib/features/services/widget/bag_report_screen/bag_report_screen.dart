@@ -6,20 +6,17 @@ import 'package:hr_app_flutter/core/widget/components/custom_text_form_field/cus
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 
 import '../../bloc/bag_report_bloc/bag_report_bloc.dart';
-import '../../data/repo/service_repository.dart';
 import '../../model/bag_report_entity/bag_report_entity.dart';
 
 @RoutePage()
 class BagReportScreen extends StatefulWidget implements AutoRouteWrapper {
-  const BagReportScreen(
-      {super.key,
-      required this.authRepository,
-      required this.serviceRepository});
-  final IAuthRepository authRepository;
-  final IServiceRepository serviceRepository;
+  const BagReportScreen({
+    super.key,
+  });
+
   @override
   State<BagReportScreen> createState() => _BagReportScreenState();
 
@@ -27,8 +24,9 @@ class BagReportScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<BagReportBLoC>(
         create: (BuildContext context) => BagReportBLoC(
-              authRepository: authRepository,
-              repositoryService: serviceRepository,
+              authRepository: DependenciesScope.of(context).authRepository,
+              repositoryService:
+                  DependenciesScope.of(context).serviceRepository,
             ),
         child: this);
   }

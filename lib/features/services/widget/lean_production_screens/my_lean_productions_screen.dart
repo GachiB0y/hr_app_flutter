@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/core/utils/get_icon_by_text_func.dart';
 import 'package:intl/intl.dart';
@@ -13,15 +11,9 @@ import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 @RoutePage()
 class MyLeanProductionsScreen extends StatefulWidget
     implements AutoRouteWrapper {
-  const MyLeanProductionsScreen(
-      {super.key,
-      required this.authRepository,
-      required this.userRepo,
-      required this.leanRepository});
-
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
-  final ILeanProductionRepository leanRepository;
+  const MyLeanProductionsScreen({
+    super.key,
+  });
 
   @override
   State<MyLeanProductionsScreen> createState() =>
@@ -30,9 +22,10 @@ class MyLeanProductionsScreen extends StatefulWidget
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<LeanProductionFormBloc>(
       create: (BuildContext context) => LeanProductionFormBloc(
-          authRepository: authRepository,
-          userRepo: userRepo,
-          leanRepository: leanRepository),
+          authRepository: DependenciesScope.of(context).authRepository,
+          userRepo: DependenciesScope.of(context).userRepository,
+          leanRepository:
+              DependenciesScope.of(context).leanProductionRepository),
       child: this,
     );
   }
@@ -55,7 +48,7 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
     const double radius = 30.0;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Row(
           children: [
             Icon(
@@ -94,7 +87,10 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
                       contentPadding: const EdgeInsets.all(16.0),
                       title: Text(
                         'Заявление №${myProposals[index].number}',
-                        style: const TextStyle(fontSize: 18),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color:
+                                Theme.of(context).colorScheme.onInverseSurface),
                       ),
                       subtitle: Text(DateFormat('dd.MM.yyyy')
                           .format(myProposals[index].date)),
@@ -111,15 +107,11 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
                         ],
                       ),
                       onTap: () {
-                        AutoRouter.of(context).push(
-                            LeanProductionInfoProposalsRoute(
-                                modelLeanProduction: myProposals[index],
-                                blocLeanProduction: blocLeanProduction,
-                                authRepository:
-                                    blocLeanProduction.authRepository,
-                                userRepo: blocLeanProduction.userRepo,
-                                leanRepository:
-                                    blocLeanProduction.leanRepository));
+                        AutoRouter.of(context)
+                            .push(LeanProductionInfoProposalsRoute(
+                          modelLeanProduction: myProposals[index],
+                          blocLeanProduction: blocLeanProduction,
+                        ));
                       },
                     ),
                   );

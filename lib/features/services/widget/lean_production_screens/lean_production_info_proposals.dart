@@ -2,12 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/rest_clients/api_client_exception.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
-import '../../data/repo/lean_production_repository.dart';
-import '../../../user/data/repo/user_repository.dart';
 import '../../../../core/utils/get_icon_by_text_func.dart';
 import '../../../../core/widget/components/custom_text_form_field/custom_text_form_field.dart';
 import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
@@ -15,27 +13,23 @@ import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_p
 @RoutePage()
 class LeanProductionInfoProposalsScreen extends StatelessWidget
     implements AutoRouteWrapper {
-  const LeanProductionInfoProposalsScreen(
-      {super.key,
-      required this.modelLeanProduction,
-      required this.blocLeanProduction,
-      required this.authRepository,
-      required this.userRepo,
-      required this.leanRepository});
+  const LeanProductionInfoProposalsScreen({
+    super.key,
+    required this.modelLeanProduction,
+    required this.blocLeanProduction,
+  });
 
   final MyLeanProductionsEntity modelLeanProduction;
   final LeanProductionFormBloc blocLeanProduction;
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
-  final ILeanProductionRepository leanRepository;
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<LeanProductionFormBloc>(
       create: (BuildContext context) => LeanProductionFormBloc(
-          authRepository: authRepository,
-          userRepo: userRepo,
-          leanRepository: leanRepository),
+          authRepository: DependenciesScope.of(context).authRepository,
+          userRepo: DependenciesScope.of(context).userRepository,
+          leanRepository:
+              DependenciesScope.of(context).leanProductionRepository),
       child: this,
     );
   }

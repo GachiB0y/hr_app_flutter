@@ -4,9 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
 
 import '../../../../core/widget/components/custom_text_form_field/custom_text_form_field.dart';
@@ -19,14 +17,10 @@ import '../../model/lean_productions_entity/lean_production_form_entity/lean_pro
 @RoutePage()
 class LeanProductionFormScreen extends StatelessWidget
     implements AutoRouteWrapper {
-  LeanProductionFormScreen(
-      {super.key,
-      required this.authRepository,
-      required this.userRepo,
-      required this.leanRepository});
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
-  final ILeanProductionRepository leanRepository;
+  LeanProductionFormScreen({
+    super.key,
+  });
+
   final _model = FilePickerCustomModel();
 
   @override
@@ -35,13 +29,15 @@ class LeanProductionFormScreen extends StatelessWidget
       providers: [
         BlocProvider<OtherUsersBloc>(
           create: (BuildContext context) => OtherUsersBloc(
-              authRepository: authRepository, userRepo: userRepo),
+              authRepository: DependenciesScope.of(context).authRepository,
+              userRepo: DependenciesScope.of(context).userRepository),
         ),
         BlocProvider<LeanProductionFormBloc>(
           create: (BuildContext context) => LeanProductionFormBloc(
-              authRepository: authRepository,
-              userRepo: userRepo,
-              leanRepository: leanRepository),
+              authRepository: DependenciesScope.of(context).authRepository,
+              userRepo: DependenciesScope.of(context).userRepository,
+              leanRepository:
+                  DependenciesScope.of(context).leanProductionRepository),
         )
       ],
       child: this,
@@ -383,7 +379,9 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(inputText),
+                Text(inputText,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onInverseSurface)),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
@@ -473,61 +471,6 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
               const SizedBox.shrink()
             ]
           ]
-
-          // blocOtherUsers.state.when(
-          //   loading: (listUsersLoaded, currentUserProfile) {
-          //     return const SizedBox.shrink();
-          //   },
-          //   loaded: (listUsersLoaded, currentUserProfile) {
-          //     return listUsersLoaded.isEmpty
-          //         ? const SizedBox.shrink()
-          //         : isFocus
-          //             ? Container(
-          //                 constraints:
-          //                     const BoxConstraints(minHeight: 70, maxHeight: 240),
-          //                 padding: const EdgeInsets.all(16.0),
-          //                 width: double.infinity,
-          //                 decoration: BoxDecoration(
-          //                     boxShadow: [
-          //                       BoxShadow(
-          //                         color: Colors.black.withOpacity(0.4),
-          //                         spreadRadius: 2,
-          //                         blurRadius: 2,
-          //                         offset: const Offset(0, 0),
-          //                       ),
-          //                     ],
-          //                     borderRadius: BorderRadius.circular(30.0),
-          //                     color: Colors.white),
-          //                 child: Scrollbar(
-          //                   child: ListView.builder(
-          //                     controller: _scrollController,
-          //                     itemExtent: 70,
-          //                     itemCount: listUsersLoaded.length,
-          //                     itemBuilder: (context, index) {
-          //                       return ListTile(
-          //                         title: Text(
-          //                             '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}'),
-          //                         subtitle:
-          //                             Text(listUsersLoaded[index].staffPosition),
-          //                         onTap: () {
-          //                           nameController.text =
-          //                               '${listUsersLoaded[index].name} ${listUsersLoaded[index].nameI} ${listUsersLoaded[index].nameO}';
-          //                           idController.text = listUsersLoaded[index]
-          //                               .autoCard
-          //                               .toString();
-          //                           setState(() {
-          //                             isFocus = false;
-          //                           });
-          //                         },
-          //                       );
-          //                     },
-          //                   ),
-          //                 ),
-          //               )
-          //             : const SizedBox.shrink();
-          //   },
-          //   error: (e) => const Center(child: Text('Пользователь не найден.')),
-          // ),
         ],
       );
     });

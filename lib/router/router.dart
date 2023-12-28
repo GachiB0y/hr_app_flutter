@@ -1,11 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
-import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
-import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
-import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/booking_mettings_screens/first_screen_booking_meetings.dart';
 import 'package:hr_app_flutter/features/services/widget/booking_mettings_screens/second_screen_booking_meeting.dart';
@@ -41,7 +35,7 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: LoaderRoute.page, path: '/'),
         AutoRoute(page: AuthenticationFormRoute.page, path: '/auth'),
-        AutoRoute(page: MainAppRoute.page, path: '/main_screen', children: [
+        AutoRoute(page: MainAppRoute.page, path: '/main', children: [
           AutoRoute(page: UserMainRoute.page, path: 'user_main'),
           AutoRoute(page: GrassCoinRoute.page, path: 'coin'),
           AutoRoute(page: ServicesRoute.page, path: 'services'),
@@ -56,12 +50,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ProfileWidgetRoute.page, path: '/profile_user'),
         AutoRoute(page: SearchUserRoute.page, path: '/search_user'),
         AutoRoute(page: ScheduleBusRoute.page, path: '/schedule_bus'),
-        AutoRoute(
-            page: BookingMeetingsFirstRoute.page,
-            path: '/booking_meetings_first'),
-        AutoRoute(
-            page: BookingMeetingSecondRoute.page,
-            path: '/booking_meetings_second'),
         AutoRoute(
             page: LeanProductionFormRoute.page, path: '/lean_production_form'),
         AutoRoute(

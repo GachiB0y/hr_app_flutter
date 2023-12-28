@@ -23,21 +23,13 @@ abstract class _$AppRouter extends RootStackRouter {
             child: AboutNewsScreen(
           key: args.key,
           id: args.id,
-          authRepository: args.authRepository,
-          eventEntityRepository: args.eventEntityRepository,
         )),
       );
     },
     ApproveNewsRoute.name: (routeData) {
-      final args = routeData.argsAs<ApproveNewsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: ApproveNewsScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          eventEntityRepository: args.eventEntityRepository,
-        )),
+        child: WrappedRoute(child: const ApproveNewsScreen()),
       );
     },
     AuthenticationFormRoute.name: (routeData) {
@@ -47,27 +39,17 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     BagReportRoute.name: (routeData) {
-      final args = routeData.argsAs<BagReportRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: BagReportScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          serviceRepository: args.serviceRepository,
-        )),
+        child: WrappedRoute(child: const BagReportScreen()),
       );
     },
     BirthDayInfoRoute.name: (routeData) {
-      final args = routeData.argsAs<BirthDayInfoRouteArgs>();
+      final args = routeData.argsAs<BirthDayInfoRouteArgs>(
+          orElse: () => const BirthDayInfoRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: BirthDayInfoScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-        )),
+        child: WrappedRoute(child: BirthDayInfoScreen(key: args.key)),
       );
     },
     BookingMeetingSecondRoute.name: (routeData) {
@@ -101,16 +83,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     LeanProductionFormRoute.name: (routeData) {
-      final args = routeData.argsAs<LeanProductionFormRouteArgs>();
+      final args = routeData.argsAs<LeanProductionFormRouteArgs>(
+          orElse: () => const LeanProductionFormRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: LeanProductionFormScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-          leanRepository: args.leanRepository,
-        )),
+        child: WrappedRoute(child: LeanProductionFormScreen(key: args.key)),
       );
     },
     LeanProductionInfoProposalsRoute.name: (routeData) {
@@ -122,9 +99,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           modelLeanProduction: args.modelLeanProduction,
           blocLeanProduction: args.blocLeanProduction,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-          leanRepository: args.leanRepository,
         )),
       );
     },
@@ -141,16 +115,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MyLeanProductionsRoute.name: (routeData) {
-      final args = routeData.argsAs<MyLeanProductionsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: MyLeanProductionsScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-          leanRepository: args.leanRepository,
-        )),
+        child: WrappedRoute(child: const MyLeanProductionsScreen()),
       );
     },
     ProfileWidgetRoute.name: (routeData) {
@@ -161,57 +128,33 @@ abstract class _$AppRouter extends RootStackRouter {
             child: ProfileWidgetScreen(
           key: args.key,
           userId: args.userId,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
         )),
       );
     },
     RookiesInfoRoute.name: (routeData) {
-      final args = routeData.argsAs<RookiesInfoRouteArgs>();
+      final args = routeData.argsAs<RookiesInfoRouteArgs>(
+          orElse: () => const RookiesInfoRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: RookiesInfoScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-        )),
+        child: WrappedRoute(child: RookiesInfoScreen(key: args.key)),
       );
     },
     ScheduleBusRoute.name: (routeData) {
-      final args = routeData.argsAs<ScheduleBusRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: ScheduleBusScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          serviceRepository: args.serviceRepository,
-        )),
+        child: WrappedRoute(child: const ScheduleBusScreen()),
       );
     },
     SearchFriendAndSendCoinsRoute.name: (routeData) {
-      final args = routeData.argsAs<SearchFriendAndSendCoinsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: SearchFriendAndSendCoinsScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-        )),
+        child: WrappedRoute(child: const SearchFriendAndSendCoinsScreen()),
       );
     },
     SearchUserRoute.name: (routeData) {
-      final args = routeData.argsAs<SearchUserRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: SearchUserScreen(
-          key: args.key,
-          authRepository: args.authRepository,
-          userRepo: args.userRepo,
-        )),
+        child: WrappedRoute(child: const SearchUserScreen()),
       );
     },
     ServicesRoute.name: (routeData) {
@@ -221,15 +164,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     StatementFormRoute.name: (routeData) {
-      final args = routeData.argsAs<StatementFormRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: StatementFormScreen(
-          key: args.key,
-          repositoryStatements: args.repositoryStatements,
-          authRepository: args.authRepository,
-        )),
+        child: WrappedRoute(child: const StatementFormScreen()),
       );
     },
     UserMainRoute.name: (routeData) {
@@ -247,16 +184,12 @@ class AboutNewsRoute extends PageRouteInfo<AboutNewsRouteArgs> {
   AboutNewsRoute({
     Key? key,
     required int id,
-    required IAuthRepository authRepository,
-    required IEventEntityRepository eventEntityRepository,
     List<PageRouteInfo>? children,
   }) : super(
           AboutNewsRoute.name,
           args: AboutNewsRouteArgs(
             key: key,
             id: id,
-            authRepository: authRepository,
-            eventEntityRepository: eventEntityRepository,
           ),
           initialChildren: children,
         );
@@ -271,65 +204,30 @@ class AboutNewsRouteArgs {
   const AboutNewsRouteArgs({
     this.key,
     required this.id,
-    required this.authRepository,
-    required this.eventEntityRepository,
   });
 
   final Key? key;
 
   final int id;
 
-  final IAuthRepository authRepository;
-
-  final IEventEntityRepository eventEntityRepository;
-
   @override
   String toString() {
-    return 'AboutNewsRouteArgs{key: $key, id: $id, authRepository: $authRepository, eventEntityRepository: $eventEntityRepository}';
+    return 'AboutNewsRouteArgs{key: $key, id: $id}';
   }
 }
 
 /// generated route for
 /// [ApproveNewsScreen]
-class ApproveNewsRoute extends PageRouteInfo<ApproveNewsRouteArgs> {
-  ApproveNewsRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IEventEntityRepository eventEntityRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class ApproveNewsRoute extends PageRouteInfo<void> {
+  const ApproveNewsRoute({List<PageRouteInfo>? children})
+      : super(
           ApproveNewsRoute.name,
-          args: ApproveNewsRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            eventEntityRepository: eventEntityRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'ApproveNewsRoute';
 
-  static const PageInfo<ApproveNewsRouteArgs> page =
-      PageInfo<ApproveNewsRouteArgs>(name);
-}
-
-class ApproveNewsRouteArgs {
-  const ApproveNewsRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.eventEntityRepository,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IEventEntityRepository eventEntityRepository;
-
-  @override
-  String toString() {
-    return 'ApproveNewsRouteArgs{key: $key, authRepository: $authRepository, eventEntityRepository: $eventEntityRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -348,45 +246,16 @@ class AuthenticationFormRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [BagReportScreen]
-class BagReportRoute extends PageRouteInfo<BagReportRouteArgs> {
-  BagReportRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IServiceRepository serviceRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class BagReportRoute extends PageRouteInfo<void> {
+  const BagReportRoute({List<PageRouteInfo>? children})
+      : super(
           BagReportRoute.name,
-          args: BagReportRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            serviceRepository: serviceRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'BagReportRoute';
 
-  static const PageInfo<BagReportRouteArgs> page =
-      PageInfo<BagReportRouteArgs>(name);
-}
-
-class BagReportRouteArgs {
-  const BagReportRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.serviceRepository,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IServiceRepository serviceRepository;
-
-  @override
-  String toString() {
-    return 'BagReportRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -394,16 +263,10 @@ class BagReportRouteArgs {
 class BirthDayInfoRoute extends PageRouteInfo<BirthDayInfoRouteArgs> {
   BirthDayInfoRoute({
     Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
     List<PageRouteInfo>? children,
   }) : super(
           BirthDayInfoRoute.name,
-          args: BirthDayInfoRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-          ),
+          args: BirthDayInfoRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -414,21 +277,13 @@ class BirthDayInfoRoute extends PageRouteInfo<BirthDayInfoRouteArgs> {
 }
 
 class BirthDayInfoRouteArgs {
-  const BirthDayInfoRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-  });
+  const BirthDayInfoRouteArgs({this.key});
 
   final Key? key;
 
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
   @override
   String toString() {
-    return 'BirthDayInfoRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+    return 'BirthDayInfoRouteArgs{key: $key}';
   }
 }
 
@@ -508,18 +363,10 @@ class LeanProductionFormRoute
     extends PageRouteInfo<LeanProductionFormRouteArgs> {
   LeanProductionFormRoute({
     Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
-    required ILeanProductionRepository leanRepository,
     List<PageRouteInfo>? children,
   }) : super(
           LeanProductionFormRoute.name,
-          args: LeanProductionFormRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-            leanRepository: leanRepository,
-          ),
+          args: LeanProductionFormRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -530,24 +377,13 @@ class LeanProductionFormRoute
 }
 
 class LeanProductionFormRouteArgs {
-  const LeanProductionFormRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-    required this.leanRepository,
-  });
+  const LeanProductionFormRouteArgs({this.key});
 
   final Key? key;
 
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
-  final ILeanProductionRepository leanRepository;
-
   @override
   String toString() {
-    return 'LeanProductionFormRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+    return 'LeanProductionFormRouteArgs{key: $key}';
   }
 }
 
@@ -559,9 +395,6 @@ class LeanProductionInfoProposalsRoute
     Key? key,
     required MyLeanProductionsEntity modelLeanProduction,
     required LeanProductionFormBloc blocLeanProduction,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
-    required ILeanProductionRepository leanRepository,
     List<PageRouteInfo>? children,
   }) : super(
           LeanProductionInfoProposalsRoute.name,
@@ -569,9 +402,6 @@ class LeanProductionInfoProposalsRoute
             key: key,
             modelLeanProduction: modelLeanProduction,
             blocLeanProduction: blocLeanProduction,
-            authRepository: authRepository,
-            userRepo: userRepo,
-            leanRepository: leanRepository,
           ),
           initialChildren: children,
         );
@@ -587,9 +417,6 @@ class LeanProductionInfoProposalsRouteArgs {
     this.key,
     required this.modelLeanProduction,
     required this.blocLeanProduction,
-    required this.authRepository,
-    required this.userRepo,
-    required this.leanRepository,
   });
 
   final Key? key;
@@ -598,15 +425,9 @@ class LeanProductionInfoProposalsRouteArgs {
 
   final LeanProductionFormBloc blocLeanProduction;
 
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
-  final ILeanProductionRepository leanRepository;
-
   @override
   String toString() {
-    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
+    return 'LeanProductionInfoProposalsRouteArgs{key: $key, modelLeanProduction: $modelLeanProduction, blocLeanProduction: $blocLeanProduction}';
   }
 }
 
@@ -640,50 +461,16 @@ class MainAppRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MyLeanProductionsScreen]
-class MyLeanProductionsRoute extends PageRouteInfo<MyLeanProductionsRouteArgs> {
-  MyLeanProductionsRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
-    required ILeanProductionRepository leanRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class MyLeanProductionsRoute extends PageRouteInfo<void> {
+  const MyLeanProductionsRoute({List<PageRouteInfo>? children})
+      : super(
           MyLeanProductionsRoute.name,
-          args: MyLeanProductionsRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-            leanRepository: leanRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'MyLeanProductionsRoute';
 
-  static const PageInfo<MyLeanProductionsRouteArgs> page =
-      PageInfo<MyLeanProductionsRouteArgs>(name);
-}
-
-class MyLeanProductionsRouteArgs {
-  const MyLeanProductionsRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-    required this.leanRepository,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
-  final ILeanProductionRepository leanRepository;
-
-  @override
-  String toString() {
-    return 'MyLeanProductionsRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo, leanRepository: $leanRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -692,16 +479,12 @@ class ProfileWidgetRoute extends PageRouteInfo<ProfileWidgetRouteArgs> {
   ProfileWidgetRoute({
     Key? key,
     required int userId,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
     List<PageRouteInfo>? children,
   }) : super(
           ProfileWidgetRoute.name,
           args: ProfileWidgetRouteArgs(
             key: key,
             userId: userId,
-            authRepository: authRepository,
-            userRepo: userRepo,
           ),
           initialChildren: children,
         );
@@ -716,21 +499,15 @@ class ProfileWidgetRouteArgs {
   const ProfileWidgetRouteArgs({
     this.key,
     required this.userId,
-    required this.authRepository,
-    required this.userRepo,
   });
 
   final Key? key;
 
   final int userId;
 
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
   @override
   String toString() {
-    return 'ProfileWidgetRouteArgs{key: $key, userId: $userId, authRepository: $authRepository, userRepo: $userRepo}';
+    return 'ProfileWidgetRouteArgs{key: $key, userId: $userId}';
   }
 }
 
@@ -739,16 +516,10 @@ class ProfileWidgetRouteArgs {
 class RookiesInfoRoute extends PageRouteInfo<RookiesInfoRouteArgs> {
   RookiesInfoRoute({
     Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
     List<PageRouteInfo>? children,
   }) : super(
           RookiesInfoRoute.name,
-          args: RookiesInfoRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-          ),
+          args: RookiesInfoRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -759,152 +530,56 @@ class RookiesInfoRoute extends PageRouteInfo<RookiesInfoRouteArgs> {
 }
 
 class RookiesInfoRouteArgs {
-  const RookiesInfoRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-  });
+  const RookiesInfoRouteArgs({this.key});
 
   final Key? key;
 
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
   @override
   String toString() {
-    return 'RookiesInfoRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
+    return 'RookiesInfoRouteArgs{key: $key}';
   }
 }
 
 /// generated route for
 /// [ScheduleBusScreen]
-class ScheduleBusRoute extends PageRouteInfo<ScheduleBusRouteArgs> {
-  ScheduleBusRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IServiceRepository serviceRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class ScheduleBusRoute extends PageRouteInfo<void> {
+  const ScheduleBusRoute({List<PageRouteInfo>? children})
+      : super(
           ScheduleBusRoute.name,
-          args: ScheduleBusRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            serviceRepository: serviceRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'ScheduleBusRoute';
 
-  static const PageInfo<ScheduleBusRouteArgs> page =
-      PageInfo<ScheduleBusRouteArgs>(name);
-}
-
-class ScheduleBusRouteArgs {
-  const ScheduleBusRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.serviceRepository,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IServiceRepository serviceRepository;
-
-  @override
-  String toString() {
-    return 'ScheduleBusRouteArgs{key: $key, authRepository: $authRepository, serviceRepository: $serviceRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
 /// [SearchFriendAndSendCoinsScreen]
-class SearchFriendAndSendCoinsRoute
-    extends PageRouteInfo<SearchFriendAndSendCoinsRouteArgs> {
-  SearchFriendAndSendCoinsRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
-    List<PageRouteInfo>? children,
-  }) : super(
+class SearchFriendAndSendCoinsRoute extends PageRouteInfo<void> {
+  const SearchFriendAndSendCoinsRoute({List<PageRouteInfo>? children})
+      : super(
           SearchFriendAndSendCoinsRoute.name,
-          args: SearchFriendAndSendCoinsRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchFriendAndSendCoinsRoute';
 
-  static const PageInfo<SearchFriendAndSendCoinsRouteArgs> page =
-      PageInfo<SearchFriendAndSendCoinsRouteArgs>(name);
-}
-
-class SearchFriendAndSendCoinsRouteArgs {
-  const SearchFriendAndSendCoinsRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
-  @override
-  String toString() {
-    return 'SearchFriendAndSendCoinsRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
 /// [SearchUserScreen]
-class SearchUserRoute extends PageRouteInfo<SearchUserRouteArgs> {
-  SearchUserRoute({
-    Key? key,
-    required IAuthRepository authRepository,
-    required IUserRepository userRepo,
-    List<PageRouteInfo>? children,
-  }) : super(
+class SearchUserRoute extends PageRouteInfo<void> {
+  const SearchUserRoute({List<PageRouteInfo>? children})
+      : super(
           SearchUserRoute.name,
-          args: SearchUserRouteArgs(
-            key: key,
-            authRepository: authRepository,
-            userRepo: userRepo,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchUserRoute';
 
-  static const PageInfo<SearchUserRouteArgs> page =
-      PageInfo<SearchUserRouteArgs>(name);
-}
-
-class SearchUserRouteArgs {
-  const SearchUserRouteArgs({
-    this.key,
-    required this.authRepository,
-    required this.userRepo,
-  });
-
-  final Key? key;
-
-  final IAuthRepository authRepository;
-
-  final IUserRepository userRepo;
-
-  @override
-  String toString() {
-    return 'SearchUserRouteArgs{key: $key, authRepository: $authRepository, userRepo: $userRepo}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -923,45 +598,16 @@ class ServicesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [StatementFormScreen]
-class StatementFormRoute extends PageRouteInfo<StatementFormRouteArgs> {
-  StatementFormRoute({
-    Key? key,
-    required IStatementsRepository repositoryStatements,
-    required IAuthRepository authRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class StatementFormRoute extends PageRouteInfo<void> {
+  const StatementFormRoute({List<PageRouteInfo>? children})
+      : super(
           StatementFormRoute.name,
-          args: StatementFormRouteArgs(
-            key: key,
-            repositoryStatements: repositoryStatements,
-            authRepository: authRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'StatementFormRoute';
 
-  static const PageInfo<StatementFormRouteArgs> page =
-      PageInfo<StatementFormRouteArgs>(name);
-}
-
-class StatementFormRouteArgs {
-  const StatementFormRouteArgs({
-    this.key,
-    required this.repositoryStatements,
-    required this.authRepository,
-  });
-
-  final Key? key;
-
-  final IStatementsRepository repositoryStatements;
-
-  final IAuthRepository authRepository;
-
-  @override
-  String toString() {
-    return 'StatementFormRouteArgs{key: $key, repositoryStatements: $repositoryStatements, authRepository: $authRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

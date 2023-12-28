@@ -3,27 +3,26 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
 import '../../bloc/other_users_bloc/other_users_bloc.dart';
 
 @RoutePage()
 class SearchUserScreen extends StatefulWidget implements AutoRouteWrapper {
-  const SearchUserScreen(
-      {Key? key, required this.authRepository, required this.userRepo})
-      : super(key: key);
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
+  const SearchUserScreen({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _SearchUserScreenState createState() => _SearchUserScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<OtherUsersBloc>(
-      create: (BuildContext context) =>
-          OtherUsersBloc(authRepository: authRepository, userRepo: userRepo),
+      create: (BuildContext context) => OtherUsersBloc(
+          authRepository: DependenciesScope.of(context).authRepository,
+          userRepo: DependenciesScope.of(context).userRepository),
       child: this,
     );
   }
@@ -130,10 +129,6 @@ class _ResultSearchWidget extends StatelessWidget {
                       onTap: () {
                         context.pushRoute(ProfileWidgetRoute(
                           userId: state.data![index].autoCard,
-                          authRepository:
-                              RepositoryProvider.of<IAuthRepository>(context),
-                          userRepo:
-                              RepositoryProvider.of<IUserRepository>(context),
                         ));
                       },
                     ),

@@ -2,20 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/router/router.dart';
 
 import '../bloc/approvement_news_bloc/approvement_news_bloc.dart';
 
 @RoutePage()
 class ApproveNewsScreen extends StatefulWidget implements AutoRouteWrapper {
-  const ApproveNewsScreen(
-      {super.key,
-      required this.authRepository,
-      required this.eventEntityRepository});
-  final IAuthRepository authRepository;
-  final IEventEntityRepository eventEntityRepository;
+  const ApproveNewsScreen({
+    super.key,
+  });
 
   @override
   State<ApproveNewsScreen> createState() => _ApproveNewsScreenState();
@@ -24,8 +20,9 @@ class ApproveNewsScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<ApprovementNewsBloc>(
       create: (BuildContext context) => ApprovementNewsBloc(
-        authRepository: authRepository,
-        eventEntityRepository: eventEntityRepository,
+        authRepository: DependenciesScope.of(context).authRepository,
+        eventEntityRepository:
+            DependenciesScope.of(context).eventEntityRepository,
       ),
       child: this,
     );
@@ -65,10 +62,8 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                 return GestureDetector(
                   onTap: () {
                     context.pushRoute(AboutNewsRoute(
-                        id: loadedApprovementNews[index].id,
-                        authRepository: blocApprovementNews.authRepository,
-                        eventEntityRepository:
-                            blocApprovementNews.eventEntityRepository));
+                      id: loadedApprovementNews[index].id,
+                    ));
                   },
                   child: CachedNetworkImage(
                       fadeInDuration: const Duration(milliseconds: 100),

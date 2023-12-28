@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 const String host =
-    'https://grass-app-api.grass.su'; //'http://10.3.29.20'  'https://apihuntflow.grass.su'
+    'https://grass-app-api.grass.su'; //'http://10.3.50.96'  'https://grass-app-api.grass.su'
 const String port = ''; //':9100'
 const String urlAdress = '$host$port';
 

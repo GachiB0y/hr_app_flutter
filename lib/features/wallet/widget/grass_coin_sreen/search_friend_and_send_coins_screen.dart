@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
 
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
@@ -11,11 +10,10 @@ import '../../bloc/wallet_bloc/wallet_bloc.dart';
 @RoutePage()
 class SearchFriendAndSendCoinsScreen extends StatefulWidget
     implements AutoRouteWrapper {
-  const SearchFriendAndSendCoinsScreen(
-      {Key? key, required this.authRepository, required this.userRepo})
-      : super(key: key);
-  final IAuthRepository authRepository;
-  final IUserRepository userRepo;
+  const SearchFriendAndSendCoinsScreen({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _SearchFriendAndSendCoinsScreenState createState() =>
       _SearchFriendAndSendCoinsScreenState();
@@ -23,8 +21,9 @@ class SearchFriendAndSendCoinsScreen extends StatefulWidget
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<OtherUsersBloc>(
-      create: (BuildContext context) =>
-          OtherUsersBloc(authRepository: authRepository, userRepo: userRepo),
+      create: (BuildContext context) => OtherUsersBloc(
+          authRepository: DependenciesScope.of(context).authRepository,
+          userRepo: DependenciesScope.of(context).userRepository),
       child: this,
     );
   }

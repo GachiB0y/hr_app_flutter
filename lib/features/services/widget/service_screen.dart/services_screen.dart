@@ -76,10 +76,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   ),
                   child: TextButton(
                       onPressed: () {
-                        context.pushRoute(BagReportRoute(
-                            authRepository: blocServiceBloc.authRepository,
-                            serviceRepository:
-                                blocServiceBloc.serviceRepository));
+                        context.pushRoute(const BagReportRoute());
                       },
                       child: const Text(
                         'Сообщить об ошибке',

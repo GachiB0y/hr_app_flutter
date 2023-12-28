@@ -2,8 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../bloc/schedule_bus_bloc/schedule_bus_bloc.dart';
@@ -11,24 +10,20 @@ import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 
 @RoutePage()
 class ScheduleBusScreen extends StatefulWidget implements AutoRouteWrapper {
-  final IAuthRepository authRepository;
-  final IServiceRepository serviceRepository;
-
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<ScheduleBusBloc>(
       create: (BuildContext context) => ScheduleBusBloc(
-        authRepository: authRepository,
-        serviceRepository: serviceRepository,
+        authRepository: DependenciesScope.of(context).authRepository,
+        serviceRepository: DependenciesScope.of(context).serviceRepository,
       ),
       child: this,
     );
   }
 
-  const ScheduleBusScreen(
-      {super.key,
-      required this.authRepository,
-      required this.serviceRepository});
+  const ScheduleBusScreen({
+    super.key,
+  });
 
   @override
   State<ScheduleBusScreen> createState() => _ScheduleBusScreenState();
@@ -48,6 +43,7 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
         title: const Text(
           'Список городов',
           style: TextStyle(

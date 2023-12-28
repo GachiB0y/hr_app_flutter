@@ -2,13 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
 
-import '../../../../auth/data/repo/auth_repository.dart';
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
-import '../../../../user/data/repo/user_repository.dart';
 
 class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
   const AppBarUserWdiget({super.key});
@@ -59,8 +56,6 @@ class Avatar extends StatelessWidget {
             onTap: () {
               context.pushRoute(ProfileWidgetRoute(
                 userId: state.data!.authUser.autoCard,
-                authRepository: RepositoryProvider.of<IAuthRepository>(context),
-                userRepo: RepositoryProvider.of<IUserRepository>(context),
               ));
             },
             child: Padding(
