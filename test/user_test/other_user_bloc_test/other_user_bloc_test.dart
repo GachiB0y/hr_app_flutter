@@ -1,7 +1,7 @@
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
-import 'package:hr_app_flutter/features/user/model/user/user.dart';
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
 import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,7 +24,7 @@ void main() {
       const TagUser(id: 25, name: "Vagodrocher🇩🇪")
     ];
     //Создаем пользователя
-    User user = User(
+    UserInfo user = UserInfo(
       autoCard: 4761,
       name: 'Минаев',
       nameI: 'Дмитрий',

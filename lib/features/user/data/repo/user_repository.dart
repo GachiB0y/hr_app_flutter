@@ -3,7 +3,7 @@ import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.d
 
 import '../../../services/model/birth_day_info/birth_day_info.dart';
 import '../../../services/model/rookies_entity/rookies.dart';
-import '../../model/user/user.dart';
+import '../../model/user/user_info.dart';
 
 abstract interface class IUserRepository {
   Future<Rookies> getRookiesInfo({
@@ -15,17 +15,17 @@ abstract interface class IUserRepository {
       {required String accessToken,
       required List<TagUser> tags,
       required int userId});
-  Future<User> getUserInfoById(
+  Future<UserInfo> getUserInfoById(
       {required String accessToken, required String userId});
   Future<BirthDayInfoEntity> getBirthDayInfo({
     required String accessToken,
     final DateTime? startDate,
     final DateTime? endDate,
   });
-  Future<List<User>> findUser(
+  Future<List<UserInfo>> findUser(
       {required String accessToken, required String findText});
-  Future<User> getUserInfo({required String accessToken});
-  Future<List<User>> getUserByPhoneNumber(
+  Future<UserInfo> getUserInfo({required String accessToken});
+  Future<List<UserInfo>> getUserByPhoneNumber(
       {required String accessToken, required String phoneNumber});
   Future<bool> sendAvatarWithProfile(
       {required String accessToken, required io.File imageFile});
@@ -39,9 +39,9 @@ class UserRepositoryImpl implements IUserRepository {
   final IUserProvider _userProvider;
 
   @override
-  Future<User> getUserInfo({required String accessToken}) async {
+  Future<UserInfo> getUserInfo({required String accessToken}) async {
     try {
-      final User result =
+      final UserInfo result =
           await _userProvider.getUserInfo(accessToken: accessToken);
       return result;
     } catch (e) {
@@ -50,10 +50,10 @@ class UserRepositoryImpl implements IUserRepository {
   }
 
   @override
-  Future<List<User>> getUserByPhoneNumber(
+  Future<List<UserInfo>> getUserByPhoneNumber(
       {required String accessToken, required String phoneNumber}) async {
     try {
-      final List<User> result = await _userProvider.getUserByPhoneNumber(
+      final List<UserInfo> result = await _userProvider.getUserByPhoneNumber(
           accessToken: accessToken, phoneNumber: phoneNumber);
       return result;
     } catch (e) {
@@ -92,10 +92,10 @@ class UserRepositoryImpl implements IUserRepository {
   }
 
   @override
-  Future<User> getUserInfoById(
+  Future<UserInfo> getUserInfoById(
       {required String accessToken, required String userId}) async {
     try {
-      final User result = await _userProvider.getUserInfoById(
+      final UserInfo result = await _userProvider.getUserInfoById(
           accessToken: accessToken, userId: userId);
       return result;
     } catch (e) {
@@ -104,10 +104,10 @@ class UserRepositoryImpl implements IUserRepository {
   }
 
   @override
-  Future<List<User>> findUser(
+  Future<List<UserInfo>> findUser(
       {required String accessToken, required String findText}) async {
     try {
-      final List<User> result = await _userProvider.findUser(
+      final List<UserInfo> result = await _userProvider.findUser(
           accessToken: accessToken, findText: findText);
       return result;
     } catch (e) {

@@ -1,16 +1,14 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/core/utils/get_icon_by_text_func.dart';
 import 'package:intl/intl.dart';
+import 'package:octopus/octopus.dart';
 
 import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 
-@RoutePage()
-class MyLeanProductionsScreen extends StatefulWidget
-    implements AutoRouteWrapper {
+class MyLeanProductionsScreen extends StatefulWidget {
   const MyLeanProductionsScreen({
     super.key,
   });
@@ -18,33 +16,29 @@ class MyLeanProductionsScreen extends StatefulWidget
   @override
   State<MyLeanProductionsScreen> createState() =>
       _MyLeanProductionsScreenState();
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<LeanProductionFormBloc>(
-      create: (BuildContext context) => LeanProductionFormBloc(
-          authRepository: DependenciesScope.of(context).authRepository,
-          userRepo: DependenciesScope.of(context).userRepository,
-          leanRepository:
-              DependenciesScope.of(context).leanProductionRepository),
-      child: this,
-    );
-  }
 }
 
 class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
+  late final LeanProductionFormBloc blocLeanProduction;
   @override
   void initState() {
     super.initState();
 
-    final blocLeanProduction = context.read<LeanProductionFormBloc>();
+    blocLeanProduction = LeanProductionFormBloc(
+        authRepository: DependenciesScope.of(context).authRepository,
+        repository: DependenciesScope.of(context).leanProductionRepository);
     blocLeanProduction
         .add(const LeanProductionFormEvent.getMyLeanProductions());
   }
 
   @override
+  void dispose() {
+    blocLeanProduction.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final LeanProductionFormBloc blocLeanProduction =
-        context.watch<LeanProductionFormBloc>();
     const double radius = 30.0;
     return Scaffold(
       appBar: AppBar(
@@ -64,65 +58,79 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: blocLeanProduction.state.when(
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          },
-          loaded: (myProposals, isSubmitted, isLoadingFile) {
-            return ListView.builder(
-                itemCount: myProposals!.length,
-                itemBuilder: ((BuildContext context, int index) {
-                  return Card(
-                    color: Colors.white,
-                    // Color(0xffb3f2b2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(radius),
-                    ),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(radius),
-                      ),
-                      contentPadding: const EdgeInsets.all(16.0),
-                      title: Text(
-                        'Заявление №${myProposals[index].number}',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color:
-                                Theme.of(context).colorScheme.onInverseSurface),
-                      ),
-                      subtitle: Text(DateFormat('dd.MM.yyyy')
-                          .format(myProposals[index].date)),
-                      trailing: Column(
-                        children: [
-                          getIconByText(myProposals[index].status),
-                          const SizedBox(
-                            height: 10,
+        child: BlocBuilder<LeanProductionFormBloc, LeanProductionFormState>(
+            bloc: blocLeanProduction,
+            builder: (context, state) {
+              if (state is LeanProductionFormState$Processing) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              } else if (state is LeanProductionFormState$Idle ||
+                  state is LeanProductionFormState$Successful) {
+                if (state.data!.myProposals != null) {
+                  final myProposals = state.data!.myProposals;
+                  return ListView.builder(
+                      itemCount: myProposals!.length,
+                      itemBuilder: ((BuildContext context, int index) {
+                        return Card(
+                          color: Colors.white,
+                          // Color(0xffb3f2b2),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(radius),
                           ),
-                          Text(
-                            myProposals[index].status,
-                            style: TextStyle(color: Colors.grey[600]),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(radius),
+                            ),
+                            contentPadding: const EdgeInsets.all(16.0),
+                            title: Text(
+                              'Заявление №${myProposals[index].number}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onInverseSurface),
+                            ),
+                            subtitle: Text(DateFormat('dd.MM.yyyy')
+                                .format(myProposals[index].date)),
+                            trailing: Column(
+                              children: [
+                                getIconByText(myProposals[index].status),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  myProposals[index].status,
+                                  style: TextStyle(color: Colors.grey[600]),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              context.octopus
+                                  .setState((stateRoute) => stateRoute
+                                    ..add(Routes.infoProposals.node(
+                                      arguments: <String, String>{
+                                        'id': index.toString(),
+                                        'number': myProposals[index].number
+                                      },
+                                    )));
+                            },
                           ),
-                        ],
-                      ),
-                      onTap: () {
-                        AutoRouter.of(context)
-                            .push(LeanProductionInfoProposalsRoute(
-                          modelLeanProduction: myProposals[index],
-                          blocLeanProduction: blocLeanProduction,
-                        ));
-                      },
-                    ),
+                        );
+                      }));
+                } else {
+                  return const Center(
+                    child: Text('Нет заявлении'),
                   );
-                }));
-          },
-          error: (e, exception) => const SafeArea(
-            child: Center(
-              child: Text('Ошибка.Заявления не найденны.'),
-            ),
-          ),
-        ),
+                }
+              } else {
+                return const SafeArea(
+                  child: Center(
+                    child: Text('Ошибка.Заявления не найденны.'),
+                  ),
+                );
+              }
+            }),
       ),
     );
   }

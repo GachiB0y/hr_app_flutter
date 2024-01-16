@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'user_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+_$_UserInfo _$$_UserInfoFromJson(Map<String, dynamic> json) => _$_UserInfo(
       autoCard: json['auto_card'] as int,
       name: json['name'] as String,
       nameI: json['name_i'] as String,
@@ -24,7 +24,8 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       self: json['self'] as bool,
     );
 
-Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
+Map<String, dynamic> _$$_UserInfoToJson(_$_UserInfo instance) =>
+    <String, dynamic>{
       'auto_card': instance.autoCard,
       'name': instance.name,
       'name_i': instance.nameI,

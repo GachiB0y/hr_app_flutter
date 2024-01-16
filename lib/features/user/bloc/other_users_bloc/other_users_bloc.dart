@@ -7,7 +7,7 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
-import '../../model/user/user.dart';
+import '../../model/user/user_info.dart';
 
 part 'other_users_bloc.freezed.dart';
 part 'other_users_event.dart';
@@ -55,7 +55,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
     try {
       emit(OtherUsersState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      List<User> listUsersLoaded = await _userRepo
+      List<UserInfo> listUsersLoaded = await _userRepo
           .getUserByPhoneNumber(
               accessToken: accessToken as String,
               phoneNumber: event.phoneNumber)
@@ -86,7 +86,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
     try {
       emit(OtherUsersState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      List<User> listUsersLoaded = await _userRepo
+      List<UserInfo> listUsersLoaded = await _userRepo
           .findUser(
               accessToken: accessToken as String, findText: event.findText)
           .timeout(const Duration(seconds: 10));

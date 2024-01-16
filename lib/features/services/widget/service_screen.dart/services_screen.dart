@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:octopus/octopus.dart';
 
 import '../../bloc/service_bloc/service_bloc.dart';
 
-@RoutePage()
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({
     Key? key,
@@ -76,7 +75,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   ),
                   child: TextButton(
                       onPressed: () {
-                        context.pushRoute(const BagReportRoute());
+                        Octopus.of(context).push(Routes.bagReport);
                       },
                       child: const Text(
                         'Сообщить об ошибке',

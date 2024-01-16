@@ -5,14 +5,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart'
+    as _i5;
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart'
-    as _i5;
-import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_info/coins_info.dart'
     as _i6;
-import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart'
+import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_info/coins_info.dart'
     as _i7;
+import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart'
+    as _i8;
 import 'package:hr_app_flutter/features/wallet/model/wallet/wallet.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -84,27 +86,16 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<bool> getCode({required String? numberPhone}) =>
+  _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCode,
           [],
           {#numberPhone: numberPhone},
         ),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<String?> makeJwtTokens({required String? refreshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #makeJwtTokens,
-          [],
-          {#refreshToken: refreshToken},
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
         Invocation.method(
@@ -124,13 +115,13 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<void> login({
+  _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
     required String? code,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #login,
+          #signInWithPhoneAndCode,
           [],
           {
             #numberPhone: numberPhone,
@@ -159,12 +150,22 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+  @override
+  _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAuthStateChanges,
+          [],
+        ),
+        returnValue: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+      ) as _i4.Stream<_i5.AuthenticationStatus>);
 }
 
 /// A class which mocks [IWalletRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIWalletRepository extends _i1.Mock implements _i5.IWalletRepository {
+class MockIWalletRepository extends _i1.Mock implements _i6.IWalletRepository {
   @override
   _i4.Future<_i2.Wallet> getWallet({required String? accessToken}) =>
       (super.noSuchMethod(
@@ -191,7 +192,7 @@ class MockIWalletRepository extends _i1.Mock implements _i5.IWalletRepository {
         )),
       ) as _i4.Future<_i2.Wallet>);
   @override
-  _i4.Future<List<_i6.CoinsInfo>> getCoinsInfo(
+  _i4.Future<List<_i7.CoinsInfo>> getCoinsInfo(
           {required String? accessToken}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -199,12 +200,12 @@ class MockIWalletRepository extends _i1.Mock implements _i5.IWalletRepository {
           [],
           {#accessToken: accessToken},
         ),
-        returnValue: _i4.Future<List<_i6.CoinsInfo>>.value(<_i6.CoinsInfo>[]),
+        returnValue: _i4.Future<List<_i7.CoinsInfo>>.value(<_i7.CoinsInfo>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i6.CoinsInfo>>.value(<_i6.CoinsInfo>[]),
-      ) as _i4.Future<List<_i6.CoinsInfo>>);
+            _i4.Future<List<_i7.CoinsInfo>>.value(<_i7.CoinsInfo>[]),
+      ) as _i4.Future<List<_i7.CoinsInfo>>);
   @override
-  _i4.Future<List<_i7.CoinsReward>> getInfoCoinsReward(
+  _i4.Future<List<_i8.CoinsReward>> getInfoCoinsReward(
           {required String? accessToken}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -213,10 +214,10 @@ class MockIWalletRepository extends _i1.Mock implements _i5.IWalletRepository {
           {#accessToken: accessToken},
         ),
         returnValue:
-            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
+            _i4.Future<List<_i8.CoinsReward>>.value(<_i8.CoinsReward>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
-      ) as _i4.Future<List<_i7.CoinsReward>>);
+            _i4.Future<List<_i8.CoinsReward>>.value(<_i8.CoinsReward>[]),
+      ) as _i4.Future<List<_i8.CoinsReward>>);
   @override
   _i4.Future<int> sendCoinsToOtherUser({
     required String? accessToken,

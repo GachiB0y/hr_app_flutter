@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,19 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../bloc/schedule_bus_bloc/schedule_bus_bloc.dart';
 import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 
-@RoutePage()
-class ScheduleBusScreen extends StatefulWidget implements AutoRouteWrapper {
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<ScheduleBusBloc>(
-      create: (BuildContext context) => ScheduleBusBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        serviceRepository: DependenciesScope.of(context).serviceRepository,
-      ),
-      child: this,
-    );
-  }
-
+class ScheduleBusScreen extends StatefulWidget {
   const ScheduleBusScreen({
     super.key,
   });
@@ -30,17 +17,25 @@ class ScheduleBusScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
+  late final ScheduleBusBloc blocScheduleBus;
   @override
   void initState() {
     super.initState();
-    final blocScheduleBus = context.read<ScheduleBusBloc>();
+    blocScheduleBus = ScheduleBusBloc(
+      authRepository: DependenciesScope.of(context).authRepository,
+      serviceRepository: DependenciesScope.of(context).serviceRepository,
+    );
     blocScheduleBus.add(const ScheduleBusEvent.fetch());
   }
 
   @override
-  Widget build(BuildContext context) {
-    final blocScheduleBus = context.watch<ScheduleBusBloc>();
+  void dispose() {
+    blocScheduleBus.close();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
@@ -53,54 +48,58 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
         ),
       ),
       body: SafeArea(
-        child: blocScheduleBus.state.when(
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          },
-          loaded: (scheduleBus) {
-            return ListView.builder(
-              itemCount: scheduleBus.result.length,
-              itemBuilder: (context, index) {
-                final city = scheduleBus.result[index];
-                return Container(
-                  margin: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      city.country,
-                      softWrap: true,
-                      maxLines: 3,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DestinationListWidget(city: city),
+        child: BlocBuilder<ScheduleBusBloc, ScheduleBusState>(
+            bloc: blocScheduleBus,
+            builder: (context, state) {
+              return state.when(
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                },
+                loaded: (scheduleBus) {
+                  return ListView.builder(
+                    itemCount: scheduleBus.result.length,
+                    itemBuilder: (context, index) {
+                      final city = scheduleBus.result[index];
+                      return Container(
+                        margin: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            city.country,
+                            softWrap: true,
+                            maxLines: 3,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DestinationListWidget(city: city),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
-                  ),
-                );
-              },
-            );
-          },
-          error: (e) => e == null
-              ? const Center(child: Text('Ошибка загрузки.'))
-              : Center(child: Text(e)),
-        ),
+                  );
+                },
+                error: (e) => e == null
+                    ? const Center(child: Text('Ошибка загрузки.'))
+                    : Center(child: Text(e)),
+              );
+            }),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
@@ -7,9 +6,7 @@ import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
 import '../../bloc/wallet_bloc/wallet_bloc.dart';
 
-@RoutePage()
-class SearchFriendAndSendCoinsScreen extends StatefulWidget
-    implements AutoRouteWrapper {
+class SearchFriendAndSendCoinsScreen extends StatefulWidget {
   const SearchFriendAndSendCoinsScreen({
     Key? key,
   }) : super(key: key);
@@ -17,27 +14,20 @@ class SearchFriendAndSendCoinsScreen extends StatefulWidget
   @override
   _SearchFriendAndSendCoinsScreenState createState() =>
       _SearchFriendAndSendCoinsScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<OtherUsersBloc>(
-      create: (BuildContext context) => OtherUsersBloc(
-          authRepository: DependenciesScope.of(context).authRepository,
-          userRepo: DependenciesScope.of(context).userRepository),
-      child: this,
-    );
-  }
 }
 
 class _SearchFriendAndSendCoinsScreenState
     extends State<SearchFriendAndSendCoinsScreen> {
   String phoneNumber = '';
   String amountCoins = '';
+  late final OtherUsersBloc _otherUsersBloc;
 
   @override
   void initState() {
     super.initState();
-    context.read<OtherUsersBloc>().add(const OtherUsersEvent.clearList());
+    _otherUsersBloc = OtherUsersBloc(
+        authRepository: DependenciesScope.of(context).authRepository,
+        userRepo: DependenciesScope.of(context).userRepository);
   }
 
   void showPopupWindow(int autoCard) {
@@ -94,9 +84,8 @@ class _SearchFriendAndSendCoinsScreenState
               onPressed: () {
                 final formattedPhoneNumber =
                     phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-                context.read<OtherUsersBloc>().add(
-                    OtherUsersEvent.gethUsersByPhoneNumber(
-                        phoneNumber: formattedPhoneNumber));
+                _otherUsersBloc.add(OtherUsersEvent.gethUsersByPhoneNumber(
+                    phoneNumber: formattedPhoneNumber));
               },
               icon: const Icon(Icons.search),
             ),

@@ -49,22 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  auto_route:
-    dependency: "direct main"
-    description:
-      name: auto_route
-      sha256: "72f21e8b6cbbe25f02ea69183e024996530bf495cc1b077a49e0ec6726f0c271"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.8.3"
-  auto_route_generator:
-    dependency: "direct dev"
-    description:
-      name: auto_route_generator
-      sha256: e7aa9ab44b77cd31a4619d94db645ab5736e543fd0b4c6058c281249e479dfb8
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.3.1"
   bloc:
     dependency: transitive
     description:
@@ -313,6 +297,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "797e1e341c3dd2f69f2dad42564a6feff3bfb87187d05abb93b9609e6f1645c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.0"
   fake_async:
     dependency: transitive
     description:
@@ -781,6 +773,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  octopus:
+    dependency: "direct main"
+    description:
+      name: octopus
+      sha256: b6ab8b3e18f245a4ff013721d929eba3f22cf8d7d9b516cbbc0a9631c183f72f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   open_file:
     dependency: "direct main"
     description:
@@ -958,7 +958,7 @@ packages:
     source: hosted
     version: "1.2.3"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"

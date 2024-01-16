@@ -1,14 +1,17 @@
+import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
 import 'package:hr_app_flutter/features/settings/data/settings_repository.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
+import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +22,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 base class Dependencies {
   /// {@macro dependencies}
   Dependencies();
+
+  /// The state from the closest instance of this class.
+  factory Dependencies.of(BuildContext context) =>
+      DependenciesScope.of(context);
 
   /// Shared preferences
   late final SharedPreferences sharedPreferences;
@@ -62,6 +69,9 @@ base class Dependencies {
 
   ///MainAppScreenViewCubit
   late final MainAppScreenViewCubit mainAppScreenViewCubit;
+
+  /// User bloc
+  late final UserBloc userBloc;
 
   // /// Theme repository
   // late final SettingsRepository settingsRepository;

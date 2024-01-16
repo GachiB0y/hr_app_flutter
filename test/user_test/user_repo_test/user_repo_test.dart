@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/features/services/model/birth_day_info/birth_day_
 import 'package:hr_app_flutter/features/services/model/rookies_entity/rookies.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.dart';
-import 'package:hr_app_flutter/features/user/model/user/user.dart';
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -15,7 +15,7 @@ import 'user_repo_test.mocks.dart';
 @GenerateNiceMocks(
   [
     MockSpec<IUserProvider>(),
-    MockSpec<User>(),
+    MockSpec<UserInfo>(),
     MockSpec<BirthDayInfoEntity>(),
     MockSpec<Rookies>(),
   ],
@@ -62,7 +62,7 @@ void main() {
 
       test('succesfull when getUserInfo get', () async {
 //Создаем User
-        final User userMock = MockUser();
+        final UserInfo userMock = MockUserInfo();
 
         when(userApiClient.getUserInfo(accessToken: accessToken))
             .thenAnswer((_) async => userMock);
@@ -100,9 +100,9 @@ void main() {
 
       test('succesfull when getUserByPhoneNumber get', () async {
 //Создаем User
-        final User userMock = MockUser();
+        final UserInfo userMock = MockUserInfo();
 // Созадем list Users
-        final List<User> listUser = [userMock];
+        final List<UserInfo> listUser = [userMock];
         when(userApiClient.getUserByPhoneNumber(
                 accessToken: accessToken, phoneNumber: ''))
             .thenAnswer((_) async => listUser);
@@ -224,7 +224,7 @@ void main() {
 
       test('succesfull when getUserInfoById get', () async {
 //Создаем User
-        final User userMock = MockUser();
+        final UserInfo userMock = MockUserInfo();
 
         when(userApiClient.getUserInfoById(
                 accessToken: accessToken, userId: ''))
@@ -262,9 +262,9 @@ void main() {
 
       test('succesfull when findUser get', () async {
 //Создаем User
-        final User userMock = MockUser();
+        final UserInfo userMock = MockUserInfo();
 // Созадем list Users
-        final List<User> listUser = [userMock];
+        final List<UserInfo> listUser = [userMock];
         when(userApiClient.findUser(accessToken: accessToken, findText: ''))
             .thenAnswer((_) async => listUser);
 

@@ -1,22 +1,16 @@
 import 'dart:io';
-
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
-import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
-import 'package:hr_app_flutter/router/router.dart';
 
-import '../../bloc/other_users_bloc/other_users_bloc.dart';
-import '../../model/user/user.dart';
+import '../../model/user/user_info.dart';
 
-@RoutePage()
-class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
-  final int userId;
+class ProfileWidgetScreen extends StatefulWidget {
+  final String? userId;
   const ProfileWidgetScreen({
     Key? key,
     required this.userId,
@@ -24,27 +18,16 @@ class ProfileWidgetScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   State<ProfileWidgetScreen> createState() => _ProfileWidgetScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<OtherUsersBloc>(
-      create: (BuildContext context) => OtherUsersBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository,
-      ),
-      child: this,
-    );
-  }
 }
 
 class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
-  late final User user;
+  late final UserEntity user;
 
   @override
   void initState() {
     super.initState();
     final blocUsers = context.read<UserBloc>();
-    blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId.toString()));
+    blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId!));
   }
 
   @override
@@ -181,7 +164,7 @@ class LogoutButtonWidget extends StatelessWidget {
                       onPressed: () async {
                         AuthScope.of(context, listen: false).signOut();
 
-                        context.router.replaceAll([const LoaderRoute()]);
+                        // context.router.replaceAll([const LoaderRoute()]);
                       },
                       padding: const EdgeInsets.all(2),
                       color: Colors.transparent,

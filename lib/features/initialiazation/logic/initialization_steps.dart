@@ -1,11 +1,17 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/core/components/database/flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
+import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_api_client.dart';
+import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
+import 'package:hr_app_flutter/features/auth/data/rest_clients/refresh_client.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/initialization_progress.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
@@ -19,6 +25,7 @@ import 'package:hr_app_flutter/features/settings/data/theme_datasource.dart';
 import 'package:hr_app_flutter/features/settings/data/theme_mode_codec.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/features/statements/data/rest_clietns/statement_provider.dart';
+import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
@@ -64,10 +71,38 @@ mixin InitializationSteps {
     'AuthRepository': (progress) async {
       const IHTTPService htttpService = HTTPServiceImpl();
       const authProvider = AuthProviderImpl(htttpService);
+      final interceptedDio = Dio();
+      final justDio = Dio(
+        BaseOptions(
+          baseUrl: 'https://grass-app-api.grass.su/',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      final restClient = RestClientDio(
+        baseUrl: 'https://auther.lazebny.io/',
+        dio: interceptedDio,
+      );
+      final authDataSource = AuthDataSourceImpl(
+        client: justDio,
+        sharedPreferences: progress.dependencies.sharedPreferences,
+      );
+
+      final refreshClient = RefreshClientImpl(client: justDio);
+
+      final oauthInterceptor = OAuthInterceptor(
+        storage: authDataSource,
+        refreshClient: refreshClient,
+      );
+      interceptedDio.interceptors.add(oauthInterceptor);
 
       final authRepository = AuthRepositoryImpl(
           authProvider: authProvider,
-          sessionDataProvdier: progress.dependencies.sessionDataProvdier);
+          sessionDataProvdier: progress.dependencies.sessionDataProvdier,
+          authStatusDataSource: oauthInterceptor,
+          authDataSource: authDataSource);
 
       progress.dependencies.authRepository = authRepository;
       progress.dependencies.htttpService = htttpService;
@@ -125,17 +160,24 @@ mixin InitializationSteps {
     'AuthBloc': (progress) async {
       final authRepository = progress.dependencies.authRepository;
       final authBloc = AuthBLoC(authRepository: authRepository);
-      // final resolvedState = await authBloc.stream
-      //     .where((event) => event.data != AuthenticationStatus.initial)
-      //     .first;
-      // logger.verbose('Resolved auth state: $resolvedState');
+      final resolvedState = await authBloc.stream
+          .where((event) => event.data != AuthenticationStatus.initial)
+          .first;
+      logger.verbose('Resolved auth state: $resolvedState');
       progress.dependencies.authBloc = authBloc;
-      // authBloc.add(const AuthEvent.checkAuth());
     },
     'MainAppScreenViewCubit': (progress) async {
       MainAppScreenViewCubit mainCubit = MainAppScreenViewCubit();
 
       progress.dependencies.mainAppScreenViewCubit = mainCubit;
+    },
+    'UserBloc': (progress) async {
+      final authRepository = progress.dependencies.authRepository;
+      final userRepository = progress.dependencies.userRepository;
+      final userBloc =
+          UserBloc(authRepository: authRepository, userRepo: userRepository);
+
+      progress.dependencies.userBloc = userBloc;
     },
   };
 }

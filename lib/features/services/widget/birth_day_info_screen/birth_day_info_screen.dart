@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
@@ -8,24 +7,12 @@ import 'package:intl/intl.dart';
 import '../../bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 
-@RoutePage()
-class BirthDayInfoScreen extends StatelessWidget implements AutoRouteWrapper {
+class BirthDayInfoScreen extends StatelessWidget {
   BirthDayInfoScreen({
     super.key,
   });
 
   final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<UserBirthDayInfoBLoc>(
-      create: (BuildContext context) => UserBirthDayInfoBLoc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository,
-      ),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +56,17 @@ class ListInfoBirthDay extends StatefulWidget {
 class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   final ScrollController _scrollController = ScrollController();
   TextEditingController dateRangeController = TextEditingController();
-
+  late final UserBirthDayInfoBLoc userBirthDayInfoBLoc;
   @override
   void initState() {
     super.initState();
-    context
-        .read<UserBirthDayInfoBLoc>()
-        .add(const UserBirthDayInfoEvent.fetch());
+
+    userBirthDayInfoBLoc = UserBirthDayInfoBLoc(
+      authRepository: DependenciesScope.of(context).authRepository,
+      userRepo: DependenciesScope.of(context).userRepository,
+    );
+
+    userBirthDayInfoBLoc.add(const UserBirthDayInfoEvent.fetch());
 
     final DateTime dateNow = DateTime.now();
     final DateTime delayedDate = dateNow.add(const Duration(days: 7));
@@ -86,10 +77,17 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   }
 
   @override
+  void dispose() {
+    userBirthDayInfoBLoc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double raduis = 30.0;
 
     return BlocBuilder<UserBirthDayInfoBLoc, UserBirthDayInfoState>(
+      bloc: userBirthDayInfoBLoc,
       builder: (context, state) {
         if (state is UserBirthDayInfoState$Processing) {
           return const Center(
@@ -103,6 +101,7 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                     DatePickerRangeWidget(
                       dateRangeController: dateRangeController,
                       raduis: raduis,
+                      userBirthDayInfoBLoc: userBirthDayInfoBLoc,
                     ),
                     if (state is UserBirthDayInfoState$Error)
                       Container(
@@ -191,10 +190,14 @@ class InfoActionWidget extends StatelessWidget {
 
 class DatePickerRangeWidget extends StatelessWidget {
   const DatePickerRangeWidget(
-      {super.key, required this.raduis, required this.dateRangeController});
+      {super.key,
+      required this.raduis,
+      required this.dateRangeController,
+      required this.userBirthDayInfoBLoc});
 
   final double raduis;
   final TextEditingController dateRangeController;
+  final UserBirthDayInfoBLoc userBirthDayInfoBLoc;
 
   @override
   Widget build(BuildContext context) {
@@ -218,9 +221,8 @@ class DatePickerRangeWidget extends StatelessWidget {
                         context: context,
                         dateRangeController: dateRangeController);
                 if (!context.mounted) return;
-                context.read<UserBirthDayInfoBLoc>().add(
-                    UserBirthDayInfoEvent.fetch(
-                        startDate: model?.startDate, endDate: model?.endDate));
+                userBirthDayInfoBLoc.add(UserBirthDayInfoEvent.fetch(
+                    startDate: model?.startDate, endDate: model?.endDate));
               },
               child: const Icon(Icons.calendar_today)),
           const SizedBox(width: 10),

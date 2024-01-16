@@ -1,49 +1,35 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/core/utils/date_formatter.dart';
-
 import '../bloc/one_news_bloc/one_news_bloc.dart';
 
-@RoutePage()
-class AboutNewsScreen extends StatefulWidget implements AutoRouteWrapper {
+class AboutNewsScreen extends StatefulWidget {
   const AboutNewsScreen({
     super.key,
     required this.id,
   });
 
-  final int id;
+  final String? id;
 
   @override
   State<AboutNewsScreen> createState() => _AboutNewsScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<OneNewsBloc>(
-      create: (BuildContext context) => OneNewsBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        eventEntityRepository:
-            DependenciesScope.of(context).eventEntityRepository,
-      ),
-      child: this,
-    );
-  }
 }
 
 class _AboutNewsScreenState extends State<AboutNewsScreen> {
+  late final OneNewsBloc blocNews;
+
   @override
   void initState() {
     super.initState();
-    context
-        .read<OneNewsBloc>()
-        .add(OneNewsEvent.fetch(id: widget.id.toString()));
+    blocNews = OneNewsBloc(
+      authRepository: DependenciesScope.of(context).authRepository,
+      eventEntityRepository:
+          DependenciesScope.of(context).eventEntityRepository,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final blocNews = context.watch<OneNewsBloc>();
-
     return Scaffold(
       body: blocNews.state.when(
           loading: () => const Center(

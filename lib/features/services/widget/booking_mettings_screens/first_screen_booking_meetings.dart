@@ -1,8 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/router/router.dart';
 
-@RoutePage()
 class BookingMeetingsFirstScreen extends StatelessWidget {
   const BookingMeetingsFirstScreen({super.key});
 
@@ -49,7 +46,7 @@ class BookingMeetingButton extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(50),
             onTap: () {
-              context.pushRoute(const BookingMeetingSecondRoute());
+              // context.pushRoute(const BookingMeetingSecondRoute());
             },
           ),
         ),

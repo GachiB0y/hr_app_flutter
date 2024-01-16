@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:hr_app_flutter/core/constant/constants.dart';
 
-import '../../../../core/components/database/rest_clients/api_client.dart';
-import '../../../../core/components/database/rest_clients/api_client_exception.dart';
+import '../../../../core/components/rest_clients/api_client.dart';
+import '../../../../core/components/rest_clients/api_client_exception.dart';
 import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventsEntityProvider {

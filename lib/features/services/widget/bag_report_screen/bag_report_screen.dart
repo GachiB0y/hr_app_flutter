@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
@@ -11,25 +10,13 @@ import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scop
 import '../../bloc/bag_report_bloc/bag_report_bloc.dart';
 import '../../model/bag_report_entity/bag_report_entity.dart';
 
-@RoutePage()
-class BagReportScreen extends StatefulWidget implements AutoRouteWrapper {
+class BagReportScreen extends StatefulWidget {
   const BagReportScreen({
     super.key,
   });
 
   @override
   State<BagReportScreen> createState() => _BagReportScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<BagReportBLoC>(
-        create: (BuildContext context) => BagReportBLoC(
-              authRepository: DependenciesScope.of(context).authRepository,
-              repositoryService:
-                  DependenciesScope.of(context).serviceRepository,
-            ),
-        child: this);
-  }
 }
 
 class _BagReportScreenState extends State<BagReportScreen> {
@@ -63,14 +50,29 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
   final TextEditingController inputControllerDescription =
       TextEditingController();
   final TextEditingController inputControllerTitle = TextEditingController();
+  late final BagReportBLoC blocBagReport;
+  @override
+  void initState() {
+    blocBagReport = BagReportBLoC(
+      authRepository: DependenciesScope.of(context).authRepository,
+      repositoryService: DependenciesScope.of(context).serviceRepository,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    blocBagReport.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final blocBagReport = context.read<BagReportBLoC>();
     final model = ChangeNotifierProvaider.watch<
         ChangeNotifierProvaider<FilePickerCustomModel>,
         FilePickerCustomModel>(context);
     return BlocListener<BagReportBLoC, BagReportState>(
+      bloc: blocBagReport,
       listener: (context, state) {
         if (state is BagReportState$Error) {
           ScaffoldMessenger.of(context)

@@ -2,12 +2,12 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'user_info.freezed.dart';
+part 'user_info.g.dart';
 
 @freezed
-class User with _$User {
-  const factory User({
+class UserInfo with _$UserInfo {
+  const factory UserInfo({
     @JsonKey(name: 'auto_card') required int autoCard,
     required String name,
     @JsonKey(name: 'name_i') required String nameI,
@@ -21,9 +21,10 @@ class User with _$User {
     required List<TagUser> tags,
     @Default(false) @JsonKey(name: 'edit_tags') bool editTags,
     required bool self,
-  }) = _User;
+  }) = _UserInfo;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory UserInfo.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoFromJson(json);
 }
 
 @freezed

@@ -19,7 +19,7 @@ part of 'other_users_bloc.dart';
 /// {@template other_users_state_placeholder}
 /// Entity placeholder for OtherUsersState
 /// {@endtemplate}
-typedef OtherUsersEntity = List<User>;
+typedef OtherUsersEntity = List<UserInfo>;
 
 /// {@template other_users_state}
 /// OtherUsersState.
