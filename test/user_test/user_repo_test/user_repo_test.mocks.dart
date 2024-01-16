@@ -11,7 +11,7 @@ import 'package:hr_app_flutter/features/services/model/rookies_entity/rookies.da
     as _i4;
 import 'package:hr_app_flutter/features/user/data/rest_clients/user_api_client.dart'
     as _i5;
-import 'package:hr_app_flutter/features/user/model/user/user.dart' as _i2;
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 
@@ -28,8 +28,8 @@ import 'package:mockito/src/dummies.dart' as _i7;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUser_0 extends _i1.SmartFake implements _i2.User {
-  _FakeUser_0(
+class _FakeUserInfo_0 extends _i1.SmartFake implements _i2.UserInfo {
+  _FakeUserInfo_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -59,9 +59,9 @@ class _FakeRookies_2 extends _i1.SmartFake implements _i4.Rookies {
         );
 }
 
-class _Fake$UserCopyWith_3<$Res> extends _i1.SmartFake
-    implements _i2.$UserCopyWith<$Res> {
-  _Fake$UserCopyWith_3(
+class _Fake$UserInfoCopyWith_3<$Res> extends _i1.SmartFake
+    implements _i2.$UserInfoCopyWith<$Res> {
+  _Fake$UserInfoCopyWith_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -97,14 +97,14 @@ class _Fake$RookiesCopyWith_5<$Res> extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
   @override
-  _i6.Future<_i2.User> getUserInfo({required String? accessToken}) =>
+  _i6.Future<_i2.UserInfo> getUserInfo({required String? accessToken}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserInfo,
           [],
           {#accessToken: accessToken},
         ),
-        returnValue: _i6.Future<_i2.User>.value(_FakeUser_0(
+        returnValue: _i6.Future<_i2.UserInfo>.value(_FakeUserInfo_0(
           this,
           Invocation.method(
             #getUserInfo,
@@ -112,7 +112,8 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             {#accessToken: accessToken},
           ),
         )),
-        returnValueForMissingStub: _i6.Future<_i2.User>.value(_FakeUser_0(
+        returnValueForMissingStub:
+            _i6.Future<_i2.UserInfo>.value(_FakeUserInfo_0(
           this,
           Invocation.method(
             #getUserInfo,
@@ -120,7 +121,7 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             {#accessToken: accessToken},
           ),
         )),
-      ) as _i6.Future<_i2.User>);
+      ) as _i6.Future<_i2.UserInfo>);
   @override
   _i6.Future<bool> saveTagsToSend({
     required String? accessToken,
@@ -141,7 +142,7 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
         returnValueForMissingStub: _i6.Future<bool>.value(false),
       ) as _i6.Future<bool>);
   @override
-  _i6.Future<_i2.User> getUserInfoById({
+  _i6.Future<_i2.UserInfo> getUserInfoById({
     required String? accessToken,
     required String? userId,
   }) =>
@@ -154,7 +155,7 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             #userId: userId,
           },
         ),
-        returnValue: _i6.Future<_i2.User>.value(_FakeUser_0(
+        returnValue: _i6.Future<_i2.UserInfo>.value(_FakeUserInfo_0(
           this,
           Invocation.method(
             #getUserInfoById,
@@ -165,7 +166,8 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             },
           ),
         )),
-        returnValueForMissingStub: _i6.Future<_i2.User>.value(_FakeUser_0(
+        returnValueForMissingStub:
+            _i6.Future<_i2.UserInfo>.value(_FakeUserInfo_0(
           this,
           Invocation.method(
             #getUserInfoById,
@@ -176,9 +178,9 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             },
           ),
         )),
-      ) as _i6.Future<_i2.User>);
+      ) as _i6.Future<_i2.UserInfo>);
   @override
-  _i6.Future<List<_i2.User>> findUser({
+  _i6.Future<List<_i2.UserInfo>> findUser({
     required String? accessToken,
     required String? findText,
   }) =>
@@ -191,10 +193,10 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             #findText: findText,
           },
         ),
-        returnValue: _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
+        returnValue: _i6.Future<List<_i2.UserInfo>>.value(<_i2.UserInfo>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
-      ) as _i6.Future<List<_i2.User>>);
+            _i6.Future<List<_i2.UserInfo>>.value(<_i2.UserInfo>[]),
+      ) as _i6.Future<List<_i2.UserInfo>>);
   @override
   _i6.Future<_i3.BirthDayInfoEntity> getBirthDayInfo({
     required String? accessToken,
@@ -280,7 +282,7 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
         )),
       ) as _i6.Future<_i4.Rookies>);
   @override
-  _i6.Future<List<_i2.User>> getUserByPhoneNumber({
+  _i6.Future<List<_i2.UserInfo>> getUserByPhoneNumber({
     required String? accessToken,
     required String? phoneNumber,
   }) =>
@@ -293,10 +295,10 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
             #phoneNumber: phoneNumber,
           },
         ),
-        returnValue: _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
+        returnValue: _i6.Future<List<_i2.UserInfo>>.value(<_i2.UserInfo>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
-      ) as _i6.Future<List<_i2.User>>);
+            _i6.Future<List<_i2.UserInfo>>.value(<_i2.UserInfo>[]),
+      ) as _i6.Future<List<_i2.UserInfo>>);
   @override
   _i6.Future<bool> sendAvatarWithProfile({
     required String? accessToken,
@@ -316,10 +318,10 @@ class MockIUserProvider extends _i1.Mock implements _i5.IUserProvider {
       ) as _i6.Future<bool>);
 }
 
-/// A class which mocks [User].
+/// A class which mocks [UserInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUser extends _i1.Mock implements _i2.User {
+class MockUserInfo extends _i1.Mock implements _i2.UserInfo {
   @override
   int get autoCard => (super.noSuchMethod(
         Invocation.getter(#autoCard),
@@ -405,17 +407,17 @@ class MockUser extends _i1.Mock implements _i2.User {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i2.$UserCopyWith<_i2.User> get copyWith => (super.noSuchMethod(
+  _i2.$UserInfoCopyWith<_i2.UserInfo> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
-        returnValue: _Fake$UserCopyWith_3<_i2.User>(
+        returnValue: _Fake$UserInfoCopyWith_3<_i2.UserInfo>(
           this,
           Invocation.getter(#copyWith),
         ),
-        returnValueForMissingStub: _Fake$UserCopyWith_3<_i2.User>(
+        returnValueForMissingStub: _Fake$UserInfoCopyWith_3<_i2.UserInfo>(
           this,
           Invocation.getter(#copyWith),
         ),
-      ) as _i2.$UserCopyWith<_i2.User>);
+      ) as _i2.$UserInfoCopyWith<_i2.UserInfo>);
   @override
   Map<String, dynamic> toJson() => (super.noSuchMethod(
         Invocation.method(

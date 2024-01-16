@@ -1,16 +1,5 @@
 part of "auth_bloc.dart";
 
-enum AuthenticationStatus {
-  /// The initial state of the authentication status
-  initial,
-
-  /// The user is authenticated
-  authenticated,
-
-  /// The user is unauthenticated
-  unauthenticated;
-}
-
 /// {@template auth_state_placeholder}
 /// Entity placeholder for AuthState
 /// {@endtemplate}

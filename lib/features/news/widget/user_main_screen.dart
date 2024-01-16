@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
-
-import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:octopus/octopus.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
 import '../../services/bloc/service_bloc/service_bloc.dart';
 import '../../services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
@@ -17,7 +16,6 @@ import '../bloc/caregory_bloc.dart/category_bloc.dart';
 import '../bloc/event_entity_bloc/event_entity_bloc.dart';
 import '../model/event_entity/new_event_entity.dart';
 
-@RoutePage()
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({super.key});
 
@@ -190,7 +188,7 @@ class LeanProductionButton extends StatelessWidget {
               menuChildren: [
                 MenuItemButton(
                   onPressed: () {
-                    AutoRouter.of(context).push(LeanProductionFormRoute());
+                    Octopus.of(context).push(Routes.leanProductionForm);
                   },
                   child: Text(
                     'Подать заявление',
@@ -201,7 +199,7 @@ class LeanProductionButton extends StatelessWidget {
                 ),
                 MenuItemButton(
                   onPressed: () {
-                    AutoRouter.of(context).push(const MyLeanProductionsRoute());
+                    Octopus.of(context).push(Routes.myLeanProductions);
                   },
                   child: Text(
                     'Мои заявления',
@@ -271,7 +269,7 @@ class SerachPeopleButtonWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(raiudsBorder),
             onTap: () {
-              AutoRouter.of(context).push(const SearchUserRoute());
+              Octopus.of(context).push(Routes.searchUser);
             },
           ),
         ),
@@ -327,7 +325,7 @@ class RookiesInfoElementWidget extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              AutoRouter.of(context).push(RookiesInfoRoute());
+              Octopus.of(context).push(Routes.rookieInfo);
             },
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(raiudsBorder),
@@ -383,7 +381,7 @@ class BirthDayInfoElementWidget extends StatelessWidget {
                 bottomLeft: Radius.circular(raiudsBorder),
               ),
               onTap: () {
-                AutoRouter.of(context).push(BirthDayInfoRoute());
+                Octopus.of(context).push(Routes.infoBirthDay);
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -742,9 +740,13 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                     // получаем элемент для текущей вкладки
                     return GestureDetector(
                       onTap: () {
-                        context.pushRoute(AboutNewsRoute(
-                          id: item.id,
-                        ));
+                        context.octopus.setState((stateRoute) => stateRoute
+                          ..findByName('user-main')
+                              ?.add(Routes.profileUser.node(
+                            arguments: <String, String>{
+                              'id': item.id.toString()
+                            },
+                          )));
                       },
                       child: CachedNetworkImage(
                           fadeInDuration: const Duration(milliseconds: 100),

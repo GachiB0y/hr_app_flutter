@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client_exception.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -10,61 +9,63 @@ import '../../../../core/utils/get_icon_by_text_func.dart';
 import '../../../../core/widget/components/custom_text_form_field/custom_text_form_field.dart';
 import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
 
-@RoutePage()
-class LeanProductionInfoProposalsScreen extends StatelessWidget
-    implements AutoRouteWrapper {
+class LeanProductionInfoProposalsScreen extends StatelessWidget {
   const LeanProductionInfoProposalsScreen({
     super.key,
-    required this.modelLeanProduction,
-    required this.blocLeanProduction,
+    required this.number,
+    required this.id,
   });
 
-  final MyLeanProductionsEntity modelLeanProduction;
-  final LeanProductionFormBloc blocLeanProduction;
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<LeanProductionFormBloc>(
-      create: (BuildContext context) => LeanProductionFormBloc(
-          authRepository: DependenciesScope.of(context).authRepository,
-          userRepo: DependenciesScope.of(context).userRepository,
-          leanRepository:
-              DependenciesScope.of(context).leanProductionRepository),
-      child: this,
-    );
-  }
+  final String? number;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text('Заявление №${modelLeanProduction.number}'),
+        title: Text('Заявление №${number!}'),
       ),
       body: InfoProposalsForm(
-        modelLeanProduction: modelLeanProduction,
-        blocLeanProduction: blocLeanProduction,
+        id: id,
       ),
     );
   }
 }
 
 class InfoProposalsForm extends StatefulWidget {
-  const InfoProposalsForm(
-      {super.key,
-      required this.modelLeanProduction,
-      required this.blocLeanProduction});
+  const InfoProposalsForm({
+    super.key,
+    required this.id,
+  });
 
-  final MyLeanProductionsEntity modelLeanProduction;
-  final LeanProductionFormBloc blocLeanProduction;
+  final String? id;
 
   @override
   _InfoProposalsFormState createState() => _InfoProposalsFormState();
 }
 
 class _InfoProposalsFormState extends State<InfoProposalsForm> {
-  MyLeanProductionsEntity get modelLeanProduction => widget.modelLeanProduction;
   final GlobalKey<State> _progressDialogKey = GlobalKey<State>();
+  late final LeanProductionFormBloc blocLeanProduction;
+
+  get id => int.parse(widget.id!);
+
+  @override
+  void initState() {
+    super.initState();
+    blocLeanProduction = LeanProductionFormBloc(
+        authRepository: DependenciesScope.of(context).authRepository,
+        repository: DependenciesScope.of(context).leanProductionRepository);
+    blocLeanProduction
+        .add(const LeanProductionFormEvent.getMyLeanProductions());
+  }
+
+  @override
+  void dispose() {
+    blocLeanProduction.close();
+    super.dispose();
+  }
 
   showProgressDialog(BuildContext context, GlobalKey<State> key) {
     showDialog(
@@ -88,134 +89,155 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LeanProductionFormBloc, LeanProductionFormState>(
-      listener: (context, state) {
-        if (state is LeanProductionFormStateError) {
-          if (_progressDialogKey.currentContext != null) {
-            Navigator.of(_progressDialogKey.currentContext!).pop();
-          }
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return MyBottomSheet(
-                exceptionType: state.exception,
-              );
-            },
-          );
-          context
-              .read<LeanProductionFormBloc>()
-              .add(const LeanProductionFormEvent.createInitState());
-        } else if (state is LeanProductionFormStateLoaded) {
-          if (state.isLoadingFile == true) {
-            showProgressDialog(context, _progressDialogKey);
-          } else if (state.isLoadingFile == false) {
+    return BlocConsumer<LeanProductionFormBloc, LeanProductionFormState>(
+        bloc: blocLeanProduction,
+        listener: (context, state) {
+          if (state is LeanProductionFormState$Error) {
             if (_progressDialogKey.currentContext != null) {
               Navigator.of(_progressDialogKey.currentContext!).pop();
             }
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return MyBottomSheet(
+                  exceptionType: state.data!.exception,
+                );
+              },
+            );
+            // context
+            //     .read<LeanProductionFormBloc>()
+            //     .add(const LeanProductionFormEvent.createInitState());
+          } else if (state is LeanProductionFormState$Processing) {
+            if (state.data!.isLoadingFile == true) {
+              showProgressDialog(context, _progressDialogKey);
+            } else if (state.data!.isLoadingFile == false) {
+              if (_progressDialogKey.currentContext != null) {
+                Navigator.of(_progressDialogKey.currentContext!).pop();
+              }
+            }
           }
-        }
-      },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextFormField(
-                    initialValue: modelLeanProduction.status,
-                    readOnly: true,
-                    iconData: getIconByText(modelLeanProduction.status),
-                    inputText: 'Статус',
-                    nameController: null),
-                const SizedBox(
-                  height: 10,
+        },
+        builder: (BuildContext context, LeanProductionFormState state) {
+          if (state is LeanProductionFormState$Processing) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is LeanProductionFormState$Idle ||
+              state is LeanProductionFormState$Successful) {
+            if (state.data!.myProposals != null &&
+                state.data!.myProposals!.isNotEmpty) {
+              final modelLeanProduction = state.data!.myProposals![id];
+
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextFormField(
+                            initialValue: modelLeanProduction.status,
+                            readOnly: true,
+                            iconData: getIconByText(modelLeanProduction.status),
+                            inputText: 'Статус',
+                            nameController: null),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextFormField(
+                            initialValue: modelLeanProduction.issue,
+                            readOnly: true,
+                            iconData: const Icon(Icons.receipt),
+                            inputText: 'Суть проблемы',
+                            nameController: null),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextFormField(
+                            initialValue: modelLeanProduction.solution,
+                            readOnly: true,
+                            iconData: const Icon(Icons.question_mark_outlined),
+                            inputText: 'Как решить',
+                            nameController: null),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextFormField(
+                            initialValue: modelLeanProduction.expenses,
+                            readOnly: true,
+                            iconData: const Icon(Icons.paid),
+                            inputText: 'Ориентировочные затраты',
+                            nameController: null),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextFormField(
+                            initialValue: modelLeanProduction.benefit,
+                            readOnly: true,
+                            iconData: const Icon(Icons.star),
+                            inputText: 'Польза предложения',
+                            nameController: null),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        FileInfoWidget(
+                          modelLeanProduction: modelLeanProduction,
+                          newblocLeanProduction: blocLeanProduction,
+                        ),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: modelLeanProduction.implementers.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: CustomTextFormField(
+                                  readOnly: true,
+                                  iconData: const Icon(Icons.person_4),
+                                  inputText: 'Исполнитель ${index + 1}',
+                                  nameController: null),
+                            );
+                          },
+                        ),
+                        CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: const Text('Подано реализованным'),
+                          value: false,
+                          onChanged: (value) {},
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                CustomTextFormField(
-                    initialValue: modelLeanProduction.issue,
-                    readOnly: true,
-                    iconData: const Icon(Icons.receipt),
-                    inputText: 'Суть проблемы',
-                    nameController: null),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextFormField(
-                    initialValue: modelLeanProduction.solution,
-                    readOnly: true,
-                    iconData: const Icon(Icons.question_mark_outlined),
-                    inputText: 'Как решить',
-                    nameController: null),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextFormField(
-                    initialValue: modelLeanProduction.expenses,
-                    readOnly: true,
-                    iconData: const Icon(Icons.paid),
-                    inputText: 'Ориентировочные затраты',
-                    nameController: null),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextFormField(
-                    initialValue: modelLeanProduction.benefit,
-                    readOnly: true,
-                    iconData: const Icon(Icons.star),
-                    inputText: 'Польза предложения',
-                    nameController: null),
-                const SizedBox(
-                  height: 10,
-                ),
-                FileInfoWidget(
-                  modelLeanProduction: modelLeanProduction,
-                  blocLeanProduction: widget.blocLeanProduction,
-                ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: modelLeanProduction.implementers.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: CustomTextFormField(
-                          readOnly: true,
-                          iconData: const Icon(Icons.person_4),
-                          inputText: 'Исполнитель ${index + 1}',
-                          nameController: null),
-                    );
-                  },
-                ),
-                CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Подано реализованным'),
-                  value: false,
-                  onChanged: (value) {},
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              );
+            } else {
+              return const Center(
+                child: Text('Нет заявлении'),
+              );
+            }
+          } else {
+            return const SafeArea(
+              child: Center(
+                child: Text('Ошибка.Заявления не найденны.'),
+              ),
+            );
+          }
+        });
   }
 }
 
 class FileInfoWidget extends StatelessWidget {
-  const FileInfoWidget(
-      {super.key,
-      required this.modelLeanProduction,
-      required this.blocLeanProduction});
+  const FileInfoWidget({
+    super.key,
+    required this.modelLeanProduction,
+    required this.newblocLeanProduction,
+  });
   final MyLeanProductionsEntity modelLeanProduction;
-  final LeanProductionFormBloc blocLeanProduction;
+  final LeanProductionFormBloc newblocLeanProduction;
 
   @override
   Widget build(BuildContext context) {
-    final LeanProductionFormBloc newblocLeanProduction =
-        context.read<LeanProductionFormBloc>();
     return Container(
       padding: const EdgeInsets.all(16.0),
       width: double.infinity,

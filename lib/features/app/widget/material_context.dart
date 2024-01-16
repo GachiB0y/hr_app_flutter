@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
-import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
+import 'package:hr_app_flutter/core/router/router_state_mixin.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
-import 'package:hr_app_flutter/router/router.dart';
 
 /// {@template material_context}
 /// [MaterialContext] is an entry point to the material context.
@@ -17,10 +16,12 @@ class MaterialContext extends StatefulWidget {
   State<MaterialContext> createState() => _MaterialContextState();
 }
 
-class _MaterialContextState extends State<MaterialContext> {
-  late final auth = AuthScope.of(context);
-  late final loggedIn = auth.authenticated;
-  final AppRouter router = AppRouter();
+class _MaterialContextState extends State<MaterialContext>
+    with RouterStateMixin {
+  // late final auth = AuthScope.of(context);
+  // late final loggedIn = auth.authenticated;
+  // late final AppRouter router = AppRouter(loggedIn: loggedIn);
+
   @override
   Widget build(BuildContext context) {
     final theme = SettingsScope.themeOf(context).theme;
@@ -34,7 +35,11 @@ class _MaterialContextState extends State<MaterialContext> {
       localizationsDelegates: Localization.localizationDelegates,
       supportedLocales: Localization.supportedLocales,
       locale: locale,
-      routerConfig: router.config(),
+      routerConfig: router.config,
+      builder: (context, child) => MediaQuery(
+          data:
+              MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+          child: child!),
     );
   }
 }

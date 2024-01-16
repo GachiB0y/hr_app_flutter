@@ -14,7 +14,7 @@ import 'package:hr_app_flutter/features/services/model/rookies_entity/rookies.da
     as _i2;
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart'
     as _i6;
-import 'package:hr_app_flutter/features/user/model/user/user.dart' as _i3;
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
 
@@ -41,8 +41,8 @@ class _FakeRookies_0 extends _i1.SmartFake implements _i2.Rookies {
         );
 }
 
-class _FakeUser_1 extends _i1.SmartFake implements _i3.User {
-  _FakeUser_1(
+class _FakeUserInfo_1 extends _i1.SmartFake implements _i3.UserInfo {
+  _FakeUserInfo_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -209,7 +209,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
         returnValueForMissingStub: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
   @override
-  _i7.Future<_i3.User> getUserInfoById({
+  _i7.Future<_i3.UserInfo> getUserInfoById({
     required String? accessToken,
     required String? userId,
   }) =>
@@ -222,7 +222,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #userId: userId,
           },
         ),
-        returnValue: _i7.Future<_i3.User>.value(_FakeUser_1(
+        returnValue: _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfoById,
@@ -233,7 +233,8 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             },
           ),
         )),
-        returnValueForMissingStub: _i7.Future<_i3.User>.value(_FakeUser_1(
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfoById,
@@ -244,7 +245,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             },
           ),
         )),
-      ) as _i7.Future<_i3.User>);
+      ) as _i7.Future<_i3.UserInfo>);
   @override
   _i7.Future<_i4.BirthDayInfoEntity> getBirthDayInfo({
     required String? accessToken,
@@ -289,7 +290,7 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
         )),
       ) as _i7.Future<_i4.BirthDayInfoEntity>);
   @override
-  _i7.Future<List<_i3.User>> findUser({
+  _i7.Future<List<_i3.UserInfo>> findUser({
     required String? accessToken,
     required String? findText,
   }) =>
@@ -302,19 +303,19 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #findText: findText,
           },
         ),
-        returnValue: _i7.Future<List<_i3.User>>.value(<_i3.User>[]),
+        returnValue: _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
         returnValueForMissingStub:
-            _i7.Future<List<_i3.User>>.value(<_i3.User>[]),
-      ) as _i7.Future<List<_i3.User>>);
+            _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
+      ) as _i7.Future<List<_i3.UserInfo>>);
   @override
-  _i7.Future<_i3.User> getUserInfo({required String? accessToken}) =>
+  _i7.Future<_i3.UserInfo> getUserInfo({required String? accessToken}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserInfo,
           [],
           {#accessToken: accessToken},
         ),
-        returnValue: _i7.Future<_i3.User>.value(_FakeUser_1(
+        returnValue: _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfo,
@@ -322,7 +323,8 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             {#accessToken: accessToken},
           ),
         )),
-        returnValueForMissingStub: _i7.Future<_i3.User>.value(_FakeUser_1(
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfo,
@@ -330,9 +332,9 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             {#accessToken: accessToken},
           ),
         )),
-      ) as _i7.Future<_i3.User>);
+      ) as _i7.Future<_i3.UserInfo>);
   @override
-  _i7.Future<List<_i3.User>> getUserByPhoneNumber({
+  _i7.Future<List<_i3.UserInfo>> getUserByPhoneNumber({
     required String? accessToken,
     required String? phoneNumber,
   }) =>
@@ -345,10 +347,10 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #phoneNumber: phoneNumber,
           },
         ),
-        returnValue: _i7.Future<List<_i3.User>>.value(<_i3.User>[]),
+        returnValue: _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
         returnValueForMissingStub:
-            _i7.Future<List<_i3.User>>.value(<_i3.User>[]),
-      ) as _i7.Future<List<_i3.User>>);
+            _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
+      ) as _i7.Future<List<_i3.UserInfo>>);
   @override
   _i7.Future<bool> sendAvatarWithProfile({
     required String? accessToken,

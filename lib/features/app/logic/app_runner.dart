@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hr_app_flutter/core/utils/bloc_observable.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/app/widget/app.dart';
@@ -32,7 +31,7 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
         // Setup bloc observer and transformer
         Bloc.observer = const AppBlocObserver();
         Bloc.transformer = bloc_concurrency.sequential();
-        await Future.delayed(const Duration(seconds: 5));
+        // await Future.delayed(const Duration(seconds: 5));
 
         final result = await processInitialization(
           steps: initializationSteps,

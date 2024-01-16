@@ -20,8 +20,8 @@ UserProfileViewModel _$UserProfileViewModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserProfileViewModel {
-  User get authUser => throw _privateConstructorUsedError;
-  User? get currentProfileUser => throw _privateConstructorUsedError;
+  UserInfo get authUser => throw _privateConstructorUsedError;
+  UserInfo? get currentProfileUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,10 +35,10 @@ abstract class $UserProfileViewModelCopyWith<$Res> {
           $Res Function(UserProfileViewModel) then) =
       _$UserProfileViewModelCopyWithImpl<$Res, UserProfileViewModel>;
   @useResult
-  $Res call({User authUser, User? currentProfileUser});
+  $Res call({UserInfo authUser, UserInfo? currentProfileUser});
 
-  $UserCopyWith<$Res> get authUser;
-  $UserCopyWith<$Res>? get currentProfileUser;
+  $UserInfoCopyWith<$Res> get authUser;
+  $UserInfoCopyWith<$Res>? get currentProfileUser;
 }
 
 /// @nodoc
@@ -62,30 +62,30 @@ class _$UserProfileViewModelCopyWithImpl<$Res,
       authUser: null == authUser
           ? _value.authUser
           : authUser // ignore: cast_nullable_to_non_nullable
-              as User,
+              as UserInfo,
       currentProfileUser: freezed == currentProfileUser
           ? _value.currentProfileUser
           : currentProfileUser // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserInfo?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get authUser {
-    return $UserCopyWith<$Res>(_value.authUser, (value) {
+  $UserInfoCopyWith<$Res> get authUser {
+    return $UserInfoCopyWith<$Res>(_value.authUser, (value) {
       return _then(_value.copyWith(authUser: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get currentProfileUser {
+  $UserInfoCopyWith<$Res>? get currentProfileUser {
     if (_value.currentProfileUser == null) {
       return null;
     }
 
-    return $UserCopyWith<$Res>(_value.currentProfileUser!, (value) {
+    return $UserInfoCopyWith<$Res>(_value.currentProfileUser!, (value) {
       return _then(_value.copyWith(currentProfileUser: value) as $Val);
     });
   }
@@ -99,12 +99,12 @@ abstract class _$$_UserProfileViewModelCopyWith<$Res>
       __$$_UserProfileViewModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User authUser, User? currentProfileUser});
+  $Res call({UserInfo authUser, UserInfo? currentProfileUser});
 
   @override
-  $UserCopyWith<$Res> get authUser;
+  $UserInfoCopyWith<$Res> get authUser;
   @override
-  $UserCopyWith<$Res>? get currentProfileUser;
+  $UserInfoCopyWith<$Res>? get currentProfileUser;
 }
 
 /// @nodoc
@@ -125,11 +125,11 @@ class __$$_UserProfileViewModelCopyWithImpl<$Res>
       authUser: null == authUser
           ? _value.authUser
           : authUser // ignore: cast_nullable_to_non_nullable
-              as User,
+              as UserInfo,
       currentProfileUser: freezed == currentProfileUser
           ? _value.currentProfileUser
           : currentProfileUser // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserInfo?,
     ));
   }
 }
@@ -144,9 +144,9 @@ class _$_UserProfileViewModel implements _UserProfileViewModel {
       _$$_UserProfileViewModelFromJson(json);
 
   @override
-  final User authUser;
+  final UserInfo authUser;
   @override
-  final User? currentProfileUser;
+  final UserInfo? currentProfileUser;
 
   @override
   String toString() {
@@ -185,16 +185,16 @@ class _$_UserProfileViewModel implements _UserProfileViewModel {
 
 abstract class _UserProfileViewModel implements UserProfileViewModel {
   const factory _UserProfileViewModel(
-      {required final User authUser,
-      required final User? currentProfileUser}) = _$_UserProfileViewModel;
+      {required final UserInfo authUser,
+      required final UserInfo? currentProfileUser}) = _$_UserProfileViewModel;
 
   factory _UserProfileViewModel.fromJson(Map<String, dynamic> json) =
       _$_UserProfileViewModel.fromJson;
 
   @override
-  User get authUser;
+  UserInfo get authUser;
   @override
-  User? get currentProfileUser;
+  UserInfo? get currentProfileUser;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileViewModelCopyWith<_$_UserProfileViewModel> get copyWith =>

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
@@ -9,23 +8,12 @@ import '../../bloc/rookies_bloc/rookies_bloc.dart';
 import '../../bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 
-@RoutePage()
-class RookiesInfoScreen extends StatelessWidget implements AutoRouteWrapper {
+class RookiesInfoScreen extends StatelessWidget {
   RookiesInfoScreen({
     super.key,
   });
 
   final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<RookiesBLoC>(
-      create: (BuildContext context) => RookiesBLoC(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository,
-      ),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +54,17 @@ class ListInfoBirthDay extends StatefulWidget {
 class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   final ScrollController _scrollController = ScrollController();
   TextEditingController dateRangeController = TextEditingController();
+  late final RookiesBLoC rookiesBLoC;
 
   @override
   void initState() {
     super.initState();
+    rookiesBLoC = RookiesBLoC(
+      authRepository: DependenciesScope.of(context).authRepository,
+      userRepo: DependenciesScope.of(context).userRepository,
+    );
 
-    context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
+    rookiesBLoC.add(const RookiesEvent.fetch());
 
     final DateTime dateNow = DateTime.now();
     final DateTime delayedDate = dateNow.add(const Duration(days: -7));
@@ -82,10 +75,17 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   }
 
   @override
+  void dispose() {
+    rookiesBLoC.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double raduis = 30.0;
 
     return BlocBuilder<RookiesBLoC, RookiesState>(
+      bloc: rookiesBLoC,
       builder: (context, state) {
         if (state is UserBirthDayInfoState$Processing) {
           return const Center(
@@ -99,6 +99,7 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
                     DatePickerRangeWidget(
                       dateRangeController: dateRangeController,
                       raduis: raduis,
+                      rookiesBLoC: rookiesBLoC,
                     ),
                     if (state is UserBirthDayInfoState$Error)
                       Container(
@@ -163,10 +164,14 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
 
 class DatePickerRangeWidget extends StatelessWidget {
   const DatePickerRangeWidget(
-      {super.key, required this.raduis, required this.dateRangeController});
+      {super.key,
+      required this.raduis,
+      required this.dateRangeController,
+      required this.rookiesBLoC});
 
   final double raduis;
   final TextEditingController dateRangeController;
+  final RookiesBLoC rookiesBLoC;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +195,7 @@ class DatePickerRangeWidget extends StatelessWidget {
                         context: context,
                         dateRangeController: dateRangeController);
                 if (!context.mounted) return;
-                context.read<RookiesBLoC>().add(RookiesEvent.fetch(
+                rookiesBLoC.add(RookiesEvent.fetch(
                     startDate: model?.startDate, endDate: model?.endDate));
               },
               child: const Icon(Icons.calendar_today)),

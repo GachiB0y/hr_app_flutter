@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client_exception.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';

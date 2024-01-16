@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../core/components/database/rest_clients/api_client.dart';
+import '../../../../core/components/rest_clients/api_client.dart';
 
 abstract interface class IAuthProvider {
   Future<bool> getCodeByPhoneNumber({required String numberPhone});

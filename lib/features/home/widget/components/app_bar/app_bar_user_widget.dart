@@ -1,10 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
-
+import 'package:octopus/octopus.dart';
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
 
 class AppBarUserWdiget extends StatefulWidget implements PreferredSizeWidget {
@@ -54,9 +53,12 @@ class Avatar extends StatelessWidget {
         } else {
           return GestureDetector(
             onTap: () {
-              context.pushRoute(ProfileWidgetRoute(
-                userId: state.data!.authUser.autoCard,
-              ));
+              Octopus.of(context).setState((stateRoute) => stateRoute
+                ..add(Routes.profileUser.node(
+                  arguments: <String, String>{
+                    'id': state.data!.authUser.autoCard.toString()
+                  },
+                )));
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0),

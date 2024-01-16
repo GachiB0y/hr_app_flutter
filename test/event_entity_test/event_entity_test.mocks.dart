@@ -4,16 +4,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
-import 'dart:io' as _i6;
+import 'dart:io' as _i7;
 
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart'
+    as _i5;
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart'
-    as _i5;
+    as _i6;
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -115,25 +117,16 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<bool> getCode({required String? numberPhone}) =>
+  _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCode,
           [],
           {#numberPhone: numberPhone},
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<String?> makeJwtTokens({required String? refreshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #makeJwtTokens,
-          [],
-          {#refreshToken: refreshToken},
-        ),
-        returnValue: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
         Invocation.method(
@@ -151,13 +144,13 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<void> login({
+  _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
     required String? code,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #login,
+          #signInWithPhoneAndCode,
           [],
           {
             #numberPhone: numberPhone,
@@ -185,13 +178,22 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         ),
         returnValue: false,
       ) as bool);
+  @override
+  _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAuthStateChanges,
+          [],
+        ),
+        returnValue: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+      ) as _i4.Stream<_i5.AuthenticationStatus>);
 }
 
 /// A class which mocks [IEventEntityRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIEventEntityRepository extends _i1.Mock
-    implements _i5.IEventEntityRepository {
+    implements _i6.IEventEntityRepository {
   MockIEventEntityRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -236,7 +238,7 @@ class MockIEventEntityRepository extends _i1.Mock
     required String? description,
     required String? startDate,
     required String? endDate,
-    required _i6.File? imageFile,
+    required _i7.File? imageFile,
     required List<String>? categories,
   }) =>
       (super.noSuchMethod(
@@ -331,7 +333,7 @@ class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get title => (super.noSuchMethod(
         Invocation.getter(#title),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#title),
         ),
@@ -339,7 +341,7 @@ class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get description => (super.noSuchMethod(
         Invocation.getter(#description),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#description),
         ),
@@ -347,7 +349,7 @@ class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get image => (super.noSuchMethod(
         Invocation.getter(#image),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#image),
         ),
@@ -433,7 +435,7 @@ class MockCategory extends _i1.Mock implements _i2.Category {
   @override
   String get name => (super.noSuchMethod(
         Invocation.getter(#name),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
@@ -490,27 +492,16 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<bool> getCode({required String? numberPhone}) =>
+  _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCode,
           [],
           {#numberPhone: numberPhone},
         ),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<String?> makeJwtTokens({required String? refreshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #makeJwtTokens,
-          [],
-          {#refreshToken: refreshToken},
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
         Invocation.method(
@@ -530,13 +521,13 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<void> login({
+  _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
     required String? code,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #login,
+          #signInWithPhoneAndCode,
           [],
           {
             #numberPhone: numberPhone,
@@ -565,13 +556,23 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+  @override
+  _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAuthStateChanges,
+          [],
+        ),
+        returnValue: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+      ) as _i4.Stream<_i5.AuthenticationStatus>);
 }
 
 /// A class which mocks [IEventEntityRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockEventEntityRepo extends _i1.Mock
-    implements _i5.IEventEntityRepository {
+    implements _i6.IEventEntityRepository {
   @override
   _i4.Future<List<_i2.EventEntity>> getEvents({required String? accessToken}) =>
       (super.noSuchMethod(
@@ -618,7 +619,7 @@ class MockEventEntityRepo extends _i1.Mock
     required String? description,
     required String? startDate,
     required String? endDate,
-    required _i6.File? imageFile,
+    required _i7.File? imageFile,
     required List<String>? categories,
   }) =>
       (super.noSuchMethod(
@@ -725,11 +726,11 @@ class MockNewsEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get title => (super.noSuchMethod(
         Invocation.getter(#title),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#title),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#title),
         ),
@@ -737,11 +738,11 @@ class MockNewsEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get description => (super.noSuchMethod(
         Invocation.getter(#description),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#description),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#description),
         ),
@@ -749,11 +750,11 @@ class MockNewsEntity extends _i1.Mock implements _i2.EventEntity {
   @override
   String get image => (super.noSuchMethod(
         Invocation.getter(#image),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i8.dummyValue<String>(
           this,
           Invocation.getter(#image),
         ),
-        returnValueForMissingStub: _i7.dummyValue<String>(
+        returnValueForMissingStub: _i8.dummyValue<String>(
           this,
           Invocation.getter(#image),
         ),

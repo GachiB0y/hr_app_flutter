@@ -4,12 +4,12 @@ import 'dart:async';
 import 'dart:io' as io;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client_exception.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
-import '../../model/user/user.dart';
+import '../../model/user/user_info.dart';
 import '../../model/user_view_model/user_view_model.dart';
 
 part 'user_bloc.freezed.dart';
@@ -35,14 +35,13 @@ class UserBloc extends Bloc<UserEvent, UserState>
     on<UserEvent>(
       (event, emit) => event.map<Future<void>>(
         fetch: (event) => _fetch(event, emit),
-        gethUserByUserId: (event) =>
-            _onOtherUsersEventGetUserByUserId(event, emit),
+        gethUserByUserId: (event) => _onUserEventGetUserByUserId(event, emit),
         saveTagsToSend: (event) async =>
-            await _onOtherUsersEvenSaveTagsToSend(emit, event),
-        addTag: (event) => _onOtherUsersEventAddTag(emit, event),
-        deleteTag: (event) => _onOtherUsersEventDeleteTag(emit, event),
+            await _onUserEvenSaveTagsToSend(emit, event),
+        addTag: (event) => _onUserEventAddTag(emit, event),
+        deleteTag: (event) => _onUserEventDeleteTag(emit, event),
         sendAvatarWithProfile: (event) async =>
-            await _onOtherUsersEventSendAvatarWithProfile(emit, event),
+            await _onUserEventSendAvatarWithProfile(emit, event),
       ),
       transformer: bloc_concurrency.sequential(),
       //transformer: bloc_concurrency.restartable(),
@@ -61,7 +60,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
 
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
-      User userLoaded = await _userRepo
+      UserInfo userLoaded = await _userRepo
           .getUserInfo(accessToken: accessToken as String)
           .timeout(const Duration(seconds: 10));
 
@@ -78,14 +77,14 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   /// Get user by user id
-  Future<void> _onOtherUsersEventGetUserByUserId(
+  Future<void> _onUserEventGetUserByUserId(
     UserEventGethUserByUserId event,
     Emitter<UserState> emit,
   ) async {
     try {
       emit(UserState.processing(data: state.data));
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      User currentProfileUser = await _userRepo
+      UserInfo currentProfileUser = await _userRepo
           .getUserInfoById(
               accessToken: accessToken as String, userId: event.userId)
           .timeout(const Duration(seconds: 10));
@@ -96,7 +95,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
       emit(UserState.error(
           data: state.data, message: 'Время ожидания истекло!'));
     } on Object catch (err, stackTrace) {
-      //l.e('An error occurred in the OtherUsersBLoC: $err', stackTrace);
+      //l.e('An error occurred in the UsersBLoC: $err', stackTrace);
       emit(UserState.error(data: state.data));
       rethrow;
     } finally {
@@ -105,7 +104,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   /// Save tags to send
-  Future<void> _onOtherUsersEvenSaveTagsToSend(
+  Future<void> _onUserEvenSaveTagsToSend(
       Emitter<UserState> emit, UserEventSaveTagsToSend event) async {
     try {
       emit(UserState.processing(data: state.data));
@@ -118,7 +117,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
           .timeout(const Duration(seconds: 10));
 
       if (isSendTags) {
-        User currentProfileUser = await _userRepo
+        UserInfo currentProfileUser = await _userRepo
             .getUserInfoById(
                 accessToken: accessToken, userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
@@ -140,7 +139,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
           message:
               'Ошибка сохранения. Обновите страницу и попробуйте еще раз.'));
     } on Object catch (err, stackTrace) {
-      //l.e('An error occurred in the OtherUsersBLoC: $err', stackTrace);
+      //l.e('An error occurred in the UserBLoC: $err', stackTrace);
       emit(UserState.error(data: state.data));
       rethrow;
     } finally {
@@ -149,9 +148,9 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   /// Add tag
-  Future<void> _onOtherUsersEventAddTag(
+  Future<void> _onUserEventAddTag(
       Emitter<UserState> emit, UserEventAddTag event) async {
-    final User? copyProfile = state.data?.currentProfileUser?.copyWith();
+    final UserInfo? copyProfile = state.data?.currentProfileUser?.copyWith();
     if (copyProfile != null) {
       final newListTags = [...copyProfile.tags];
       newListTags.add(event.tag);
@@ -166,7 +165,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   /// Delete tag
-  Future<void> _onOtherUsersEventDeleteTag(
+  Future<void> _onUserEventDeleteTag(
       Emitter<UserState> emit, UserEventDeleteTag event) async {
     final copyProfile = state.data?.currentProfileUser?.copyWith();
     if (copyProfile != null) {
@@ -182,7 +181,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   /// Send avatar
-  _onOtherUsersEventSendAvatarWithProfile(
+  _onUserEventSendAvatarWithProfile(
       Emitter<UserState> emit, UserEventSendAvatarWithProfile event) async {
     try {
       emit(UserState.processing(data: state.data));
@@ -192,7 +191,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
               accessToken: accessToken as String, imageFile: event.imageFile)
           .timeout(const Duration(seconds: 10));
       if (isSendAvatar) {
-        User currentProfileUser = await _userRepo
+        UserInfo currentProfileUser = await _userRepo
             .getUserInfoById(
                 accessToken: accessToken, userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
@@ -214,7 +213,7 @@ class UserBloc extends Bloc<UserEvent, UserState>
           message:
               'Ошибка сохранения. Обновите страницу и попробуйте еще раз.'));
     } on Object catch (err, stackTrace) {
-      //l.e('An error occurred in the OtherUsersBLoC: $err', stackTrace);
+      //l.e('An error occurred in the UserBLoC: $err', stackTrace);
       emit(UserState.error(data: state.data));
       rethrow;
     } finally {

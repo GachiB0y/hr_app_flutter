@@ -5,18 +5,20 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart'
+    as _i5;
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
 import 'package:hr_app_flutter/features/statements/bloc/statements_bloc/statements_form_bloc/statements_bloc.dart'
-    as _i6;
-import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart'
-    as _i5;
-import 'package:hr_app_flutter/features/statements/model/participant/participant.dart'
     as _i7;
+import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart'
+    as _i6;
+import 'package:hr_app_flutter/features/statements/model/participant/participant.dart'
+    as _i8;
 import 'package:hr_app_flutter/features/statements/model/statements/statements.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:mockito/src/dummies.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -87,27 +89,16 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<bool> getCode({required String? numberPhone}) =>
+  _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCode,
           [],
           {#numberPhone: numberPhone},
         ),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<String?> makeJwtTokens({required String? refreshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #makeJwtTokens,
-          [],
-          {#refreshToken: refreshToken},
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
         Invocation.method(
@@ -127,13 +118,13 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValueForMissingStub: _i4.Future<String?>.value(),
       ) as _i4.Future<String?>);
   @override
-  _i4.Future<void> login({
+  _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
     required String? code,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #login,
+          #signInWithPhoneAndCode,
           [],
           {
             #numberPhone: numberPhone,
@@ -162,13 +153,23 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+  @override
+  _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAuthStateChanges,
+          [],
+        ),
+        returnValue: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i5.AuthenticationStatus>.empty(),
+      ) as _i4.Stream<_i5.AuthenticationStatus>);
 }
 
 /// A class which mocks [IStatementsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIStatementsRepository extends _i1.Mock
-    implements _i5.IStatementsRepository {
+    implements _i6.IStatementsRepository {
   @override
   _i4.Future<List<_i2.StatementFieldTypeEntity>> fetchListTypeStatements(
           {required String? accessToken}) =>
@@ -225,7 +226,7 @@ class MockIStatementsRepository extends _i1.Mock
         )),
       ) as _i4.Future<_i2.StatementTempalteEntity>);
   @override
-  _i4.Future<_i6.TypeOfAppplicationSigning> submitStatementForm({
+  _i4.Future<_i7.TypeOfAppplicationSigning> submitStatementForm({
     required String? accessToken,
     required _i2.StatementFormInfoToSubmit? formInfo,
   }) =>
@@ -238,14 +239,14 @@ class MockIStatementsRepository extends _i1.Mock
             #formInfo: formInfo,
           },
         ),
-        returnValue: _i4.Future<_i6.TypeOfAppplicationSigning>.value(
-            _i6.TypeOfAppplicationSigning.daefult),
+        returnValue: _i4.Future<_i7.TypeOfAppplicationSigning>.value(
+            _i7.TypeOfAppplicationSigning.daefult),
         returnValueForMissingStub:
-            _i4.Future<_i6.TypeOfAppplicationSigning>.value(
-                _i6.TypeOfAppplicationSigning.daefult),
-      ) as _i4.Future<_i6.TypeOfAppplicationSigning>);
+            _i4.Future<_i7.TypeOfAppplicationSigning>.value(
+                _i7.TypeOfAppplicationSigning.daefult),
+      ) as _i4.Future<_i7.TypeOfAppplicationSigning>);
   @override
-  _i4.Future<List<_i7.ParticipantEntity>> findParticipant({
+  _i4.Future<List<_i8.ParticipantEntity>> findParticipant({
     required String? accessToken,
     required String? name,
   }) =>
@@ -258,12 +259,12 @@ class MockIStatementsRepository extends _i1.Mock
             #name: name,
           },
         ),
-        returnValue: _i4.Future<List<_i7.ParticipantEntity>>.value(
-            <_i7.ParticipantEntity>[]),
+        returnValue: _i4.Future<List<_i8.ParticipantEntity>>.value(
+            <_i8.ParticipantEntity>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i7.ParticipantEntity>>.value(
-                <_i7.ParticipantEntity>[]),
-      ) as _i4.Future<List<_i7.ParticipantEntity>>);
+            _i4.Future<List<_i8.ParticipantEntity>>.value(
+                <_i8.ParticipantEntity>[]),
+      ) as _i4.Future<List<_i8.ParticipantEntity>>);
   @override
   _i4.Future<void> signDocumentBySmsCode({
     required String? accessToken,
@@ -291,11 +292,11 @@ class MockStatementTempalteEntity extends _i1.Mock
   @override
   String get documentType => (super.noSuchMethod(
         Invocation.getter(#documentType),
-        returnValue: _i8.dummyValue<String>(
+        returnValue: _i9.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),
-        returnValueForMissingStub: _i8.dummyValue<String>(
+        returnValueForMissingStub: _i9.dummyValue<String>(
           this,
           Invocation.getter(#documentType),
         ),

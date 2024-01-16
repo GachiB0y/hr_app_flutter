@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
-import '../../../../core/components/database/rest_clients/api_client_exception.dart';
+import '../../../../core/components/rest_clients/api_client_exception.dart';
 import '../../model/event_entity/new_event_entity.dart';
 
 part 'approvement_news_bloc.freezed.dart';

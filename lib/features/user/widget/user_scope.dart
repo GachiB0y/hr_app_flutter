@@ -17,10 +17,6 @@ class UserScope extends StatefulWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  static _InheritedUserScope? maybeOf(BuildContext context,
-          {bool listen = true}) =>
-      _InheritedUserScope.maybeOf(context, listen: listen);
-
   static _InheritedUserScope of(BuildContext context, {bool listen = true}) =>
       _InheritedUserScope.of(context, listen: listen);
   @override

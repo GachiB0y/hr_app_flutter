@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
-import 'package:hr_app_flutter/features/user/model/user/user.dart';
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
 import 'package:hr_app_flutter/features/user/model/user_view_model/user_view_model.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -35,7 +35,7 @@ void main() {
       const TagUser(id: 25, name: "Vagodrocher🇩🇪")
     ];
     //Создаем пользователя
-    User user = User(
+    UserInfo user = UserInfo(
       autoCard: 4761,
       name: 'Минаев',
       nameI: 'Дмитрий',
@@ -47,7 +47,7 @@ void main() {
       self: true,
     );
     //Создаем пользователя с новым тэгом
-    late User newUser;
+    late UserInfo newUser;
     //Создаем  новый тэг
     TagUser newTag = const TagUser(id: 228, name: "Новый тэг");
 

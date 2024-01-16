@@ -1,18 +1,15 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
-import 'package:hr_app_flutter/router/router.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
-
 import 'package:intl/intl.dart';
-
+import 'package:octopus/octopus.dart';
 import '../../bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import '../../bloc/wallet_bloc/wallet_bloc.dart';
 import '../../model/wallet/wallet.dart';
 
-@RoutePage()
 class GrassCoinScreen extends StatefulWidget {
   const GrassCoinScreen({super.key});
 
@@ -282,8 +279,7 @@ class _BodyContentWidgetCoinScreenState
                         MaterialStateProperty.all(const EdgeInsets.all(16)),
                   ),
                   onPressed: () {
-                    AutoRouter.of(context)
-                        .push(const SearchFriendAndSendCoinsRoute());
+                    Octopus.of(context).push(Routes.searchFriendAndSendCoins);
                   },
                   icon: const Icon(Icons.card_giftcard,
                       size: 26, color: Colors.black),

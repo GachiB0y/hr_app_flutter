@@ -9,10 +9,11 @@ part of 'user_view_model.dart';
 _$_UserProfileViewModel _$$_UserProfileViewModelFromJson(
         Map<String, dynamic> json) =>
     _$_UserProfileViewModel(
-      authUser: User.fromJson(json['authUser'] as Map<String, dynamic>),
+      authUser: UserInfo.fromJson(json['authUser'] as Map<String, dynamic>),
       currentProfileUser: json['currentProfileUser'] == null
           ? null
-          : User.fromJson(json['currentProfileUser'] as Map<String, dynamic>),
+          : UserInfo.fromJson(
+              json['currentProfileUser'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_UserProfileViewModelToJson(

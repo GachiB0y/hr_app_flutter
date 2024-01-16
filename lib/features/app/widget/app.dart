@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/bloc/auth_cubit/auth_cubit.dart';
-import 'package:hr_app_flutter/features/auth/bloc/loader_cubit/loader_view_cubit.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart';
@@ -73,16 +71,6 @@ class App extends StatelessWidget {
               BlocProvider<RookiesBLoC>(
                 create: (BuildContext context) => RookiesBLoC(
                   userRepo: DependenciesScope.of(context).userRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
-                ),
-              ),
-              BlocProvider<AuthViewCubit>(
-                create: (BuildContext context) => AuthViewCubit(
-                  authRepository: DependenciesScope.of(context).authRepository,
-                ),
-              ),
-              BlocProvider<LoaderViewCubit>(
-                create: (BuildContext context) => LoaderViewCubit(
                   authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),

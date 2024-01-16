@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:hr_app_flutter/core/components/database/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 
 import '../../model/coins_screen/coins_info/coins_info.dart';
