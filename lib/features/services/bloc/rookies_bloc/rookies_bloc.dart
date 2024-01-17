@@ -51,10 +51,7 @@ class RookiesBLoC extends Bloc<RookiesEvent, RookiesState>
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       Rookies rookiesLoaded = await _userRepo
-          .getRookiesInfo(
-              accessToken: accessToken as String,
-              startDate: event.startDate,
-              endDate: event.endDate)
+          .getRookiesInfo(startDate: event.startDate, endDate: event.endDate)
           .timeout(const Duration(seconds: 10));
 
       emit(RookiesState.successful(data: rookiesLoaded));

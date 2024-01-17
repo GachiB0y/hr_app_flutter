@@ -22,10 +22,15 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
   void initState() {
     super.initState();
     blocNews = OneNewsBloc(
-      authRepository: DependenciesScope.of(context).authRepository,
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
     );
+  }
+
+  @override
+  void dispose() {
+    blocNews.close();
+    super.dispose();
   }
 
   @override

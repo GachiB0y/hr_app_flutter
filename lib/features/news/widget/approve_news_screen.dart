@@ -22,11 +22,16 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
   void initState() {
     super.initState();
     approvementNewsBloc = ApprovementNewsBloc(
-      authRepository: DependenciesScope.of(context).authRepository,
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
     );
     approvementNewsBloc.add(const ApprovementEvent.fetch());
+  }
+
+  @override
+  void dispose() {
+    approvementNewsBloc.close();
+    super.dispose();
   }
 
   @override

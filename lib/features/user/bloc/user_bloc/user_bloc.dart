@@ -5,7 +5,6 @@ import 'dart:io' as io;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
@@ -21,10 +20,10 @@ class UserBloc extends Bloc<UserEvent, UserState>
     implements EventSink<UserEvent> {
   UserBloc({
     required final IUserRepository userRepo,
-    required final IAuthRepository authRepository,
+    // required final IAuthRepository authRepository,
     final UserState? initialState,
   })  : _userRepo = userRepo,
-        _authRepository = authRepository,
+        // _authRepository = authRepository,
         super(
           initialState ??
               const UserState.idle(
@@ -51,18 +50,14 @@ class UserBloc extends Bloc<UserEvent, UserState>
   }
 
   final IUserRepository _userRepo;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(UserEventFetch event, Emitter<UserState> emit) async {
     try {
       emit(UserState.processing(data: state.data));
 
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-
-      UserInfo userLoaded = await _userRepo
-          .getUserInfo(accessToken: accessToken as String)
-          .timeout(const Duration(seconds: 10));
+      UserInfo userLoaded =
+          await _userRepo.getUserInfo().timeout(const Duration(seconds: 10));
 
       final UserProfileViewModel newData =
           UserProfileViewModel(authUser: userLoaded, currentProfileUser: null);
@@ -83,10 +78,9 @@ class UserBloc extends Bloc<UserEvent, UserState>
   ) async {
     try {
       emit(UserState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
       UserInfo currentProfileUser = await _userRepo
-          .getUserInfoById(
-              accessToken: accessToken as String, userId: event.userId)
+          .getUserInfoById(userId: event.userId)
           .timeout(const Duration(seconds: 10));
 
       emit(UserState.successful(
@@ -108,18 +102,14 @@ class UserBloc extends Bloc<UserEvent, UserState>
       Emitter<UserState> emit, UserEventSaveTagsToSend event) async {
     try {
       emit(UserState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
       bool isSendTags = await _userRepo
-          .saveTagsToSend(
-              accessToken: accessToken as String,
-              tags: event.tags,
-              userId: event.userId)
+          .saveTagsToSend(tags: event.tags, userId: event.userId)
           .timeout(const Duration(seconds: 10));
 
       if (isSendTags) {
         UserInfo currentProfileUser = await _userRepo
-            .getUserInfoById(
-                accessToken: accessToken, userId: event.userId.toString())
+            .getUserInfoById(userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:
@@ -185,15 +175,13 @@ class UserBloc extends Bloc<UserEvent, UserState>
       Emitter<UserState> emit, UserEventSendAvatarWithProfile event) async {
     try {
       emit(UserState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
       bool isSendAvatar = await _userRepo
-          .sendAvatarWithProfile(
-              accessToken: accessToken as String, imageFile: event.imageFile)
+          .sendAvatarWithProfile(imageFile: event.imageFile)
           .timeout(const Duration(seconds: 10));
       if (isSendAvatar) {
         UserInfo currentProfileUser = await _userRepo
-            .getUserInfoById(
-                accessToken: accessToken, userId: event.userId.toString())
+            .getUserInfoById(userId: event.userId.toString())
             .timeout(const Duration(seconds: 10));
         emit(UserState.successful(
             data:

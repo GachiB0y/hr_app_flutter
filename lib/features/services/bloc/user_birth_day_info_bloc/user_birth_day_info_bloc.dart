@@ -52,10 +52,7 @@ class UserBirthDayInfoBLoc
       String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       BirthDayInfoEntity birthDayInfoLoaded = await _userRepo
-          .getBirthDayInfo(
-              accessToken: accessToken as String,
-              startDate: event.startDate,
-              endDate: event.endDate)
+          .getBirthDayInfo(startDate: event.startDate, endDate: event.endDate)
           .timeout(const Duration(seconds: 10));
 
       emit(UserBirthDayInfoState.successful(data: birthDayInfoLoaded));

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
 import '../../../../core/components/rest_clients/api_client_exception.dart';
@@ -15,11 +14,9 @@ part 'approvement_news_state.dart';
 
 class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
   final IEventEntityRepository eventEntityRepository;
-  final IAuthRepository authRepository;
 
   ApprovementNewsBloc({
     required this.eventEntityRepository,
-    required this.authRepository,
   }) : super(const ApprovementNewsState.loading()) {
     on<ApprovementEvent>(
       (event, emit) => event.map<Future<void>>(
@@ -34,11 +31,8 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
   Future<void> _onApprovedNews(ApprovementEventApprovedNews event,
       Emitter<ApprovementNewsState> emit) async {
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
-
       await eventEntityRepository
           .approvementNews(
-            accessToken: accessToken as String,
             id: event.id,
           )
           .timeout(const Duration(seconds: 10));
@@ -53,11 +47,8 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
   Future<void> _onMoveInArchiveNews(ApprovementEventMoveInArchiveNews event,
       Emitter<ApprovementNewsState> emit) async {
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
-
       await eventEntityRepository
           .moveInArchiveNews(
-            accessToken: accessToken as String,
             id: event.id,
           )
           .timeout(const Duration(seconds: 10));
@@ -73,12 +64,9 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
       Emitter<ApprovementNewsState> emit) async {
     emit(const ApprovementNewsState.loading());
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
       List<EventEntity> listApprovmentEventEntityLoaded =
           await eventEntityRepository
-              .getApprovmentEvents(
-                accessToken: accessToken as String,
-              )
+              .getApprovmentEvents()
               .timeout(const Duration(seconds: 10));
 
       emit(ApprovementNewsState.loaded(

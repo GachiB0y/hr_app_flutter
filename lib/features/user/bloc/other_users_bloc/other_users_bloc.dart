@@ -3,10 +3,8 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
-
 import '../../model/user/user_info.dart';
 
 part 'other_users_bloc.freezed.dart';
@@ -18,10 +16,10 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
     implements EventSink<OtherUsersEvent> {
   OtherUsersBloc({
     required final IUserRepository userRepo,
-    required final IAuthRepository authRepository,
+    // required final IAuthRepository authRepository,
     final OtherUsersState? initialState,
   })  : _userRepo = userRepo,
-        _authRepository = authRepository,
+        // _authRepository = authRepository,
         super(
           initialState ??
               const OtherUsersState.idle(
@@ -45,7 +43,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
   }
 
   final IUserRepository _userRepo;
-  final IAuthRepository _authRepository;
+  // final IAuthRepository _authRepository;
 
   /// Get users by phone number
   Future<void> _onOtherUsersEventGetUsersByPhoneNumber(
@@ -54,11 +52,9 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
   ) async {
     try {
       emit(OtherUsersState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+      // String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       List<UserInfo> listUsersLoaded = await _userRepo
-          .getUserByPhoneNumber(
-              accessToken: accessToken as String,
-              phoneNumber: event.phoneNumber)
+          .getUserByPhoneNumber(phoneNumber: event.phoneNumber)
           .timeout(const Duration(seconds: 10));
 
       emit(OtherUsersState.successful(data: listUsersLoaded));
@@ -85,10 +81,9 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
       Emitter<OtherUsersState> emit, OtherUsersEventFindUsers event) async {
     try {
       emit(OtherUsersState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
+
       List<UserInfo> listUsersLoaded = await _userRepo
-          .findUser(
-              accessToken: accessToken as String, findText: event.findText)
+          .findUser(findText: event.findText)
           .timeout(const Duration(seconds: 10));
 
       emit(OtherUsersState.successful(data: listUsersLoaded));

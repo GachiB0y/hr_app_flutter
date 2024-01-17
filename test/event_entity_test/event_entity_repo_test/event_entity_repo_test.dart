@@ -20,21 +20,18 @@ import 'event_entity_repo_test.mocks.dart';
 )
 class FakeIEventsEntityProvider extends Fake implements IEventsEntityProvider {
   @override
-  Future<bool> approvementNews(
-      {required String accessToken, required String id}) async {
+  Future<bool> approvementNews({required String id}) async {
     return true;
   }
 
   @override
-  Future<bool> moveInArchiveNews(
-      {required String accessToken, required String id}) async {
+  Future<bool> moveInArchiveNews({required String id}) async {
     return true;
   }
 
   @override
   Future<bool> createNewEventEntity(
-      {required String accessToken,
-      required String title,
+      {required String title,
       required String description,
       required String startDate,
       required String? endDate,
@@ -67,18 +64,17 @@ void main() {
   group('getEvents', () {
     test('calls getEvents with correct', () async {
       try {
-        await eventRepository.getEvents(accessToken: accessToken);
+        await eventRepository.getEvents();
       } catch (_) {}
-      verify(eventApiClient.getEvents(accessToken: accessToken)).called(1);
+      verify(eventApiClient.getEvents()).called(1);
     });
     test('throws when getEvents fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.getEvents(accessToken: accessToken))
-          .thenThrow(exception);
+      when(eventApiClient.getEvents()).thenThrow(exception);
 
       expect(
-        () async => eventRepository.getEvents(accessToken: accessToken),
+        () async => eventRepository.getEvents(),
         throwsA(exception),
       );
     });
@@ -89,10 +85,9 @@ void main() {
 //Создаем list Event
       final List<EventEntity> listEvents = [eventMock];
 
-      when(eventApiClient.getEvents(accessToken: accessToken))
-          .thenAnswer((_) async => listEvents);
+      when(eventApiClient.getEvents()).thenAnswer((_) async => listEvents);
 
-      final actual = await eventRepository.getEvents(accessToken: accessToken);
+      final actual = await eventRepository.getEvents();
       expect(actual, listEvents);
     });
   });
@@ -101,18 +96,17 @@ void main() {
   group('getCategory', () {
     test('calls getCategory with correct', () async {
       try {
-        await eventRepository.getCategory(accessToken: accessToken);
+        await eventRepository.getCategory();
       } catch (_) {}
-      verify(eventApiClient.getCategory(accessToken: accessToken)).called(1);
+      verify(eventApiClient.getCategory()).called(1);
     });
     test('throws when getCategory fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.getCategory(accessToken: accessToken))
-          .thenThrow(exception);
+      when(eventApiClient.getCategory()).thenThrow(exception);
 
       expect(
-        () async => eventRepository.getCategory(accessToken: accessToken),
+        () async => eventRepository.getCategory(),
         throwsA(exception),
       );
     });
@@ -123,11 +117,9 @@ void main() {
 //Создаем list Category
       final List<Category> listEvents = [eventMock];
 
-      when(eventApiClient.getCategory(accessToken: accessToken))
-          .thenAnswer((_) async => listEvents);
+      when(eventApiClient.getCategory()).thenAnswer((_) async => listEvents);
 
-      final actual =
-          await eventRepository.getCategory(accessToken: accessToken);
+      final actual = await eventRepository.getCategory();
       expect(actual, listEvents);
     });
   });
@@ -139,7 +131,6 @@ void main() {
     test('calls createNewEventEntity with correct', () async {
       try {
         await eventRepository.createNewEventEntity(
-            accessToken: accessToken,
             title: '',
             description: '',
             startDate: '',
@@ -148,7 +139,6 @@ void main() {
             categories: []);
       } catch (_) {}
       verifyNever(eventApiClient.createNewEventEntity(
-          accessToken: accessToken,
           title: '',
           description: '',
           startDate: '',
@@ -165,7 +155,7 @@ void main() {
 //         eventEntityProvider: eventApiClient,
 //       );
 //       // when(eventApiClient.createNewEventEntity(
-//       //     accessToken: accessToken,
+//       //
 //       //     title: '',
 //       //     description: '',
 //       //     startDate: '',
@@ -175,7 +165,7 @@ void main() {
 
 //       expectLater(
 //         eventRepository.createNewEventEntity(
-//             accessToken: accessToken,
+//
 //             title: '',
 //             description: '',
 //             startDate: '',
@@ -188,7 +178,6 @@ void main() {
 
     test('succesfull when createNewEventEntity get', () async {
       when(eventApiClient.createNewEventEntity(
-          accessToken: accessToken,
           title: '',
           description: '',
           startDate: '',
@@ -197,7 +186,6 @@ void main() {
           categories: [])).thenAnswer((_) async => false);
 
       final actual = await eventRepository.createNewEventEntity(
-          accessToken: accessToken,
           title: '',
           description: '',
           startDate: '',
@@ -212,20 +200,17 @@ void main() {
   group('getApprovmentEvents', () {
     test('calls getApprovmentEvents with correct', () async {
       try {
-        await eventRepository.getApprovmentEvents(accessToken: accessToken);
+        await eventRepository.getApprovmentEvents();
       } catch (_) {}
-      verify(eventApiClient.getApprovmentEvents(accessToken: accessToken))
-          .called(1);
+      verify(eventApiClient.getApprovmentEvents()).called(1);
     });
     test('throws when getApprovmentEvents fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.getApprovmentEvents(accessToken: accessToken))
-          .thenThrow(exception);
+      when(eventApiClient.getApprovmentEvents()).thenThrow(exception);
 
       expect(
-        () async =>
-            eventRepository.getApprovmentEvents(accessToken: accessToken),
+        () async => eventRepository.getApprovmentEvents(),
         throwsA(exception),
       );
     });
@@ -236,11 +221,10 @@ void main() {
 //Создаем list Event
       final List<EventEntity> listEvents = [eventMock];
 
-      when(eventApiClient.getApprovmentEvents(accessToken: accessToken))
+      when(eventApiClient.getApprovmentEvents())
           .thenAnswer((_) async => listEvents);
 
-      final actual =
-          await eventRepository.getApprovmentEvents(accessToken: accessToken);
+      final actual = await eventRepository.getApprovmentEvents();
       expect(actual, listEvents);
     });
   });
@@ -249,20 +233,17 @@ void main() {
   group('getNewsById', () {
     test('calls getNewsById with correct', () async {
       try {
-        await eventRepository.getNewsById(accessToken: accessToken, id: '');
+        await eventRepository.getNewsById(id: '');
       } catch (_) {}
-      verify(eventApiClient.getNewsById(accessToken: accessToken, id: ''))
-          .called(1);
+      verify(eventApiClient.getNewsById(id: '')).called(1);
     });
     test('throws when getNewsById fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.getNewsById(accessToken: accessToken, id: ''))
-          .thenThrow(exception);
+      when(eventApiClient.getNewsById(id: '')).thenThrow(exception);
 
       expect(
-        () async =>
-            eventRepository.getNewsById(accessToken: accessToken, id: ''),
+        () async => eventRepository.getNewsById(id: ''),
         throwsA(exception),
       );
     });
@@ -271,11 +252,10 @@ void main() {
 //Создаем Event
       final EventEntity eventMock = MockEventEntity();
 
-      when(eventApiClient.getNewsById(accessToken: accessToken, id: ''))
+      when(eventApiClient.getNewsById(id: ''))
           .thenAnswer((_) async => eventMock);
 
-      final actual =
-          await eventRepository.getNewsById(accessToken: accessToken, id: '');
+      final actual = await eventRepository.getNewsById(id: '');
       expect(actual, eventMock);
     });
   });
@@ -283,30 +263,26 @@ void main() {
   group('approvementNews', () {
     test('calls approvementNews with correct', () async {
       try {
-        await eventRepository.approvementNews(accessToken: accessToken, id: '');
+        await eventRepository.approvementNews(id: '');
       } catch (_) {}
-      verify(eventApiClient.approvementNews(accessToken: accessToken, id: ''))
-          .called(1);
+      verify(eventApiClient.approvementNews(id: '')).called(1);
     });
     test('throws when approvementNews fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.approvementNews(accessToken: accessToken, id: ''))
-          .thenThrow(exception);
+      when(eventApiClient.approvementNews(id: '')).thenThrow(exception);
 
       expect(
-        () async =>
-            eventRepository.approvementNews(accessToken: accessToken, id: ''),
+        () async => eventRepository.approvementNews(id: ''),
         throwsA(exception),
       );
     });
 
     test('succesfull when approvementNews get', () async {
-      when(eventApiClient.approvementNews(accessToken: accessToken, id: ''))
+      when(eventApiClient.approvementNews(id: ''))
           .thenAnswer((_) async => false);
 
-      final actual = await eventRepository.approvementNews(
-          accessToken: accessToken, id: '');
+      final actual = await eventRepository.approvementNews(id: '');
       expect(actual, false);
     });
   });
@@ -315,31 +291,26 @@ void main() {
   group('moveInArchiveNews', () {
     test('calls moveInArchiveNews with correct', () async {
       try {
-        await eventRepository.moveInArchiveNews(
-            accessToken: accessToken, id: '');
+        await eventRepository.moveInArchiveNews(id: '');
       } catch (_) {}
-      verify(eventApiClient.moveInArchiveNews(accessToken: accessToken, id: ''))
-          .called(1);
+      verify(eventApiClient.moveInArchiveNews(id: '')).called(1);
     });
     test('throws when moveInArchiveNews fails', () async {
       final exception = Exception('oops');
 
-      when(eventApiClient.moveInArchiveNews(accessToken: accessToken, id: ''))
-          .thenThrow(exception);
+      when(eventApiClient.moveInArchiveNews(id: '')).thenThrow(exception);
 
       expect(
-        () async =>
-            eventRepository.moveInArchiveNews(accessToken: accessToken, id: ''),
+        () async => eventRepository.moveInArchiveNews(id: ''),
         throwsA(exception),
       );
     });
 
     test('succesfull when moveInArchiveNews get', () async {
-      when(eventApiClient.moveInArchiveNews(accessToken: accessToken, id: ''))
+      when(eventApiClient.moveInArchiveNews(id: ''))
           .thenAnswer((_) async => false);
 
-      final actual = await eventRepository.moveInArchiveNews(
-          accessToken: accessToken, id: '');
+      final actual = await eventRepository.moveInArchiveNews(id: '');
       expect(actual, false);
     });
   });

@@ -106,9 +106,10 @@ mixin InitializationSteps {
 
       progress.dependencies.authRepository = authRepository;
       progress.dependencies.htttpService = htttpService;
+      progress.dependencies.restClient = restClient;
     },
     'UserRepository': (progress) async {
-      final userProvider = UserProviderImpl(progress.dependencies.htttpService);
+      final userProvider = UserProviderImpl(progress.dependencies.restClient);
 
       final userRepository = UserRepositoryImpl(userProvider: userProvider);
 
@@ -116,7 +117,7 @@ mixin InitializationSteps {
     },
     'EventEntityRepository': (progress) async {
       final eventEntityProvider =
-          EventsEntityProviderImpl(progress.dependencies.htttpService);
+          EventsEntityProviderImpl(progress.dependencies.restClient);
 
       final eventEntityRepository =
           EventEntityRepositoryImpl(eventEntityProvider: eventEntityProvider);
@@ -172,10 +173,8 @@ mixin InitializationSteps {
       progress.dependencies.mainAppScreenViewCubit = mainCubit;
     },
     'UserBloc': (progress) async {
-      final authRepository = progress.dependencies.authRepository;
       final userRepository = progress.dependencies.userRepository;
-      final userBloc =
-          UserBloc(authRepository: authRepository, userRepo: userRepository);
+      final userBloc = UserBloc(userRepo: userRepository);
 
       progress.dependencies.userBloc = userBloc;
     },

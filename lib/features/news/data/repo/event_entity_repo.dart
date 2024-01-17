@@ -5,11 +5,10 @@ import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_
 import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventEntityRepository {
-  Future<List<EventEntity>> getEvents({required String accessToken});
-  Future<List<EventEntity>> getApprovmentEvents({required String accessToken});
-  Future<List<Category>> getCategory({required String accessToken});
+  Future<List<EventEntity>> getEvents();
+  Future<List<EventEntity>> getApprovmentEvents();
+  Future<List<Category>> getCategory();
   Future<bool> createNewEventEntity({
-    required String accessToken,
     required String title,
     required String description,
     required String startDate,
@@ -18,15 +17,12 @@ abstract interface class IEventEntityRepository {
     required List<String> categories,
   });
   Future<bool> approvementNews({
-    required String accessToken,
     required String id,
   });
   Future<EventEntity> getNewsById({
-    required String accessToken,
     required String id,
   });
   Future<bool> moveInArchiveNews({
-    required String accessToken,
     required String id,
   });
 }
@@ -39,19 +35,18 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   final IEventsEntityProvider _eventEntityProvider;
 
   @override
-  Future<List<EventEntity>> getEvents({required String accessToken}) async {
-    return await _eventEntityProvider.getEvents(accessToken: accessToken);
+  Future<List<EventEntity>> getEvents() async {
+    return await _eventEntityProvider.getEvents();
   }
 
   @override
-  Future<List<Category>> getCategory({required String accessToken}) async {
-    return await _eventEntityProvider.getCategory(accessToken: accessToken);
+  Future<List<Category>> getCategory() async {
+    return await _eventEntityProvider.getCategory();
   }
 
   @override
   Future<bool> createNewEventEntity(
-      {required String accessToken,
-      required String title,
+      {required String title,
       required String description,
       required String startDate,
       required String? endDate,
@@ -61,7 +56,6 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
       final List<String> pathsNew = [];
       pathsNew.add(imageFile.path);
       final bool result = await _eventEntityProvider.createNewEventEntity(
-          accessToken: accessToken,
           title: title,
           description: description,
           paths: pathsNew,
@@ -75,44 +69,36 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   }
 
   @override
-  Future<List<EventEntity>> getApprovmentEvents(
-      {required String accessToken}) async {
+  Future<List<EventEntity>> getApprovmentEvents() async {
     try {
-      return await _eventEntityProvider.getApprovmentEvents(
-          accessToken: accessToken);
+      return await _eventEntityProvider.getApprovmentEvents();
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<bool> approvementNews(
-      {required String accessToken, required String id}) async {
+  Future<bool> approvementNews({required String id}) async {
     try {
-      return await _eventEntityProvider.approvementNews(
-          accessToken: accessToken, id: id);
+      return await _eventEntityProvider.approvementNews(id: id);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<EventEntity> getNewsById(
-      {required String accessToken, required String id}) async {
+  Future<EventEntity> getNewsById({required String id}) async {
     try {
-      return await _eventEntityProvider.getNewsById(
-          accessToken: accessToken, id: id);
+      return await _eventEntityProvider.getNewsById(id: id);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<bool> moveInArchiveNews(
-      {required String accessToken, required String id}) async {
+  Future<bool> moveInArchiveNews({required String id}) async {
     try {
-      return await _eventEntityProvider.moveInArchiveNews(
-          accessToken: accessToken, id: id);
+      return await _eventEntityProvider.moveInArchiveNews(id: id);
     } catch (e) {
       rethrow;
     }

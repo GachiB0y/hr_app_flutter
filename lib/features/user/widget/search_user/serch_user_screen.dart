@@ -22,10 +22,15 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
   late final OtherUsersBloc blocOtherUsers;
   @override
   void initState() {
-    blocOtherUsers = OtherUsersBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository);
+    blocOtherUsers =
+        OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    blocOtherUsers.close();
+    super.dispose();
   }
 
   @override

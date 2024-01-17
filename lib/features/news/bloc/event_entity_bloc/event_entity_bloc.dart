@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
@@ -17,10 +16,8 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     implements EventSink<EventEntityEvent> {
   EventEntityBloc({
     required final IEventEntityRepository eventEntityRepository,
-    required final IAuthRepository authRepository,
     final EventEntityState? initialState,
   })  : _eventEntityRepository = eventEntityRepository,
-        _authRepository = authRepository,
         super(
           initialState ??
               const EventEntityState.idle(
@@ -43,7 +40,6 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
 
   // final IEventEntityRepository _repository;
   final IEventEntityRepository _eventEntityRepository;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(
@@ -51,11 +47,8 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     try {
       emit(EventEntityState.processing(data: state.data));
 
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
       List<EventEntity> listEventEntityLoaded = await _eventEntityRepository
-          .getEvents(
-            accessToken: accessToken as String,
-          )
+          .getEvents()
           .timeout(const Duration(seconds: 10));
       List<EventEntity> filteredEventEntity = filterListCategory(
         listEventEntityLoaded: listEventEntityLoaded,
@@ -81,10 +74,7 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     try {
       emit(EventEntityState.processing(data: state.data));
 
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-
       final bool isCreate = await _eventEntityRepository.createNewEventEntity(
-          accessToken: accessToken as String,
           title: event.title,
           description: event.description,
           imageFile: event.imageFile,

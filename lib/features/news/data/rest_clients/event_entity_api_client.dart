@@ -1,21 +1,14 @@
-import 'dart:convert';
-
-import 'package:hr_app_flutter/core/constant/constants.dart';
-
-import '../../../../core/components/rest_clients/api_client.dart';
-import '../../../../core/components/rest_clients/api_client_exception.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventsEntityProvider {
-  Future<List<EventEntity>> getEvents({required String accessToken});
+  Future<List<EventEntity>> getEvents();
   Future<EventEntity> getNewsById({
-    required String accessToken,
     required String id,
   });
-  Future<List<EventEntity>> getApprovmentEvents({required String accessToken});
-  Future<List<Category>> getCategory({required String accessToken});
+  Future<List<EventEntity>> getApprovmentEvents();
+  Future<List<Category>> getCategory();
   Future<bool> createNewEventEntity({
-    required String accessToken,
     required String title,
     required String description,
     required String startDate,
@@ -24,143 +17,152 @@ abstract interface class IEventsEntityProvider {
     required List<String> categories,
   });
   Future<bool> approvementNews({
-    required String accessToken,
     required String id,
   });
   Future<bool> moveInArchiveNews({
-    required String accessToken,
     required String id,
   });
 }
 
 class EventsEntityProviderImpl implements IEventsEntityProvider {
-  final IHTTPService _httpService;
+  final RestClient _httpService;
   const EventsEntityProviderImpl(this._httpService);
 
   @override
-  Future<List<EventEntity>> getEvents({required String accessToken}) async {
-    String uri = '$urlAdress/news/';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<EventEntity>> getEvents() async {
+    final response = await _httpService.get(
+      '/news/',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<EventEntity> result = (jsonData['result'] as List<dynamic>)
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      final List<EventEntity> result = (data['result'] as List<dynamic>)
           .map((item) => EventEntity.fromJson(item))
           .toList();
       return result;
-    } else {
-      throw Exception('Error fetching EventsEntity');
     }
+    throw Exception('Error fetching EventsEntity');
   }
 
   @override
-  Future<List<Category>> getCategory({required String accessToken}) async {
-    String uri = '$urlAdress/news/categories';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<Category>> getCategory() async {
+    final response = await _httpService.get(
+      '/news/categories',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<Category> result = (jsonData['result'] as List<dynamic>)
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      final List<Category> result = (data['result'] as List<dynamic>)
           .map((item) => Category.fromJson(item))
           .toList();
       return result;
-    } else {
-      throw Exception('Error fetching Category');
     }
+    throw Exception('Error fetching Category');
   }
 
   @override
   Future<bool> createNewEventEntity(
-      {required String accessToken,
-      required String title,
+      {required String title,
       required String description,
       required String startDate,
       required String? endDate,
       required List<String> paths,
       required List<String> categories}) async {
-    String uri = '$urlAdress/news/add_feed';
-
     final fields = {
       'some_other_data':
           '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
     };
-    final response = await _httpService.postWithFile(
-      uri: uri,
-      userToken: accessToken,
-      paths: paths,
-      fieldsNew: fields,
+    final response = await _httpService.post(
+      '/news/add_feed',
+      pathsToFiles: paths,
+      body: fields,
     );
-    if (response.statusCode == 201) {
+
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
       return true;
-    } else {
-      throw Exception('Error create New EventEntity!!!');
     }
+    throw Exception('Error create New EventEntity!!!');
   }
 
   @override
-  Future<List<EventEntity>> getApprovmentEvents(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/news/approvement_list';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<EventEntity>> getApprovmentEvents() async {
+    final response = await _httpService.get(
+      '/news/approvement_list',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<EventEntity> result = (jsonData['result'] as List<dynamic>)
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      final List<EventEntity> result = (data['result'] as List<dynamic>)
           .map((item) => EventEntity.fromJson(item))
           .toList();
       return result;
-    } else if (response.statusCode == 404) {
-      throw ApiClientException(ApiClientExceptionType.notFound);
-    } else {
-      throw Exception('Error fetching  Approvment Events');
     }
+    throw Exception('Error fetching  Approvment Events');
+
+    // } else if (response.statusCode == 404) {
+    //   throw ApiClientException(ApiClientExceptionType.notFound);
+    // } else {
+    //   throw Exception('Error fetching  Approvment Events');
+    // }
   }
 
   @override
-  Future<bool> approvementNews(
-      {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/news/approve_feed?feed_id=$id';
+  Future<bool> approvementNews({required String id}) async {
+    final response = await _httpService.post(
+      '/news/approve_feed',
+      queryParams: {
+        'feed_id': id,
+      },
+      body: {},
+    );
 
-    final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: null);
-    if (response.statusCode == 201) {
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
       return true;
-    } else {
-      throw Exception('Error approvement News!!!');
     }
+    throw Exception('Error approvement News!!!');
   }
 
   @override
-  Future<EventEntity> getNewsById(
-      {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/news/find/$id';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<EventEntity> getNewsById({required String id}) async {
+    final response = await _httpService.get(
+      '/news/find/$id',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final EventEntity result = EventEntity.fromJson(jsonData['result']);
-
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      final EventEntity result = EventEntity.fromJson(data);
       return result;
-    } else {
-      throw Exception('Error fetching News By Id');
     }
+    throw Exception('Error fetching News By Id');
   }
 
   @override
-  Future<bool> moveInArchiveNews(
-      {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/news/move_in_archive?feed_id=$id';
+  Future<bool> moveInArchiveNews({required String id}) async {
+    final response = await _httpService.post(
+      '/news/move_in_archive?feed_id=$id',
+      body: {},
+    );
 
-    final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: null);
-    if (response.statusCode == 201) {
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
       return true;
-    } else {
-      throw Exception('Error move In Archive News!!!');
     }
+    throw Exception('Error move In Archive News!!!');
   }
 }

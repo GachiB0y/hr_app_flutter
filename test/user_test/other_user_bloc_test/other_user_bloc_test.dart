@@ -43,8 +43,7 @@ void main() {
       mockAuthRepository = MockIAuthRepository();
       mockUserRepository = MockIUserRepository();
 
-      otherUserBloc = OtherUsersBloc(
-          authRepository: mockAuthRepository, userRepo: mockUserRepository);
+      otherUserBloc = OtherUsersBloc(userRepo: mockUserRepository);
     });
 
     tearDown(() {
@@ -65,11 +64,10 @@ void main() {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
           when(mockUserRepository.getUserByPhoneNumber(
-                  accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                  phoneNumber: 'fakePhoneNumber'))
               .thenThrow(Exception('oops'));
         },
-        build: () => OtherUsersBloc(
-            authRepository: mockAuthRepository, userRepo: mockUserRepository),
+        build: () => OtherUsersBloc(userRepo: mockUserRepository),
         act: (bloc) => bloc.add(const OtherUsersEvent.gethUsersByPhoneNumber(
             phoneNumber: 'fakePhoneNumber')),
         errors: () => [isA<Exception>()]);
@@ -80,7 +78,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,
@@ -103,7 +101,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,
@@ -126,7 +124,7 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       seed: () => OtherUsersState$Idle(data: [user]),
@@ -146,8 +144,7 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.findUser(
-                accessToken: accessToken, findText: 'fakeName'))
+        when(mockUserRepository.findUser(findText: 'fakeName'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,

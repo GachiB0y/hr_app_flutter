@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/core/utils/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import 'package:octopus/octopus.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
@@ -59,42 +60,44 @@ class _UserMainScreenState extends State<UserMainScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 1.0),
-            child: RefreshIndicator(
-              color: Theme.of(context).colorScheme.primary,
-              backgroundColor: Colors.white,
-              onRefresh: _refreshEventsList,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const AppBarUserWdiget(),
-                    SizedBox(
-                        height: (MediaQuery.of(context).size.height / 4.25) *
-                            textScaleFactor,
-                        child: const ScrollBarWidget()),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        'События компании',
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.w600),
+        child: Shimmer(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 1.0),
+              child: RefreshIndicator(
+                color: Theme.of(context).colorScheme.primary,
+                backgroundColor: Colors.white,
+                onRefresh: _refreshEventsList,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AppBarUserWdiget(),
+                      SizedBox(
+                          height: (MediaQuery.of(context).size.height / 4.25) *
+                              textScaleFactor,
+                          child: const ScrollBarWidget()),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          'События компании',
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height / 2.3,
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: const TableScrollWidget())),
-                    const InfoBirthdayAndNewPeopleWidget(),
-                    const LeanProductionButton(),
-                    const SerachPeopleButtonWidget(),
-                  ],
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height / 2.3,
+                          child: Container(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: const TableScrollWidget())),
+                      const InfoBirthdayAndNewPeopleWidget(),
+                      const LeanProductionButton(),
+                      const SerachPeopleButtonWidget(),
+                    ],
+                  ),
                 ),
               ),
             ),

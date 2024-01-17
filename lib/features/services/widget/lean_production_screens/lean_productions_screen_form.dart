@@ -365,9 +365,8 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
   @override
   void initState() {
     super.initState();
-    otherUsersBloc = OtherUsersBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository);
+    otherUsersBloc =
+        OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
     otherUsersBloc.add(const OtherUsersEvent.clearList());
   }
 

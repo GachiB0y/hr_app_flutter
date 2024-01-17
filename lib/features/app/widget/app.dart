@@ -47,7 +47,6 @@ class App extends StatelessWidget {
                 create: (BuildContext context) => EventEntityBloc(
                   eventEntityRepository:
                       DependenciesScope.of(context).eventEntityRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<WalletBLoC>(
@@ -59,7 +58,7 @@ class App extends StatelessWidget {
               BlocProvider<UserBloc>(
                 create: (BuildContext context) => UserBloc(
                   userRepo: DependenciesScope.of(context).userRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
+                  // authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<UserBirthDayInfoBLoc>(
@@ -82,7 +81,6 @@ class App extends StatelessWidget {
               ),
               BlocProvider<CategoryBloc>(
                 create: (BuildContext context) => CategoryBloc(
-                  authRepository: DependenciesScope.of(context).authRepository,
                   eventEntityRepository:
                       DependenciesScope.of(context).eventEntityRepository,
                 ),
