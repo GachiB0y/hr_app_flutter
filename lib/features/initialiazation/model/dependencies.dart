@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
@@ -37,7 +38,6 @@ base class Dependencies {
   late final IHTTPService htttpService;
 
   /// serviceProvider
-
   late final IServiceProvider serviceProvider;
 
   /// SessionDataProvdier
@@ -72,6 +72,9 @@ base class Dependencies {
 
   /// User bloc
   late final UserBloc userBloc;
+
+  ///REST Client
+  late final RestClient restClient;
 
   // /// Theme repository
   // late final SettingsRepository settingsRepository;

@@ -82,7 +82,7 @@ mixin InitializationSteps {
         ),
       );
       final restClient = RestClientDio(
-        baseUrl: 'https://auther.lazebny.io/',
+        baseUrl: 'https://grass-app-api.grass.su/',
         dio: interceptedDio,
       );
       final authDataSource = AuthDataSourceImpl(

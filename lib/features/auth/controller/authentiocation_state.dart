@@ -1,5 +1,5 @@
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
-import 'package:hr_app_flutter/features/auth/model/user.dart';
+
 import 'package:meta/meta.dart';
 
 /// {@template authentication_state}
