@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:meta/meta.dart';
 
@@ -20,6 +21,7 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    List<String>? pathsToFiles,
   }) async {
     try {
       final uri = buildUri(path: path, queryParams: queryParams);
@@ -30,12 +32,31 @@ final class RestClientDio extends RestClientBase {
         responseType: ResponseType.json,
       );
 
+      FormData? formData;
+
+      if (pathsToFiles != null) {
+        formData = FormData();
+        body!.forEach((key, value) {
+          formData!.fields.add(MapEntry(key, value.toString()));
+        });
+        for (var path in pathsToFiles) {
+          formData.files.add(
+            MapEntry(
+              'files',
+              await MultipartFile.fromFile(
+                path,
+                filename: path.split('/').last,
+              ),
+            ),
+          );
+        }
+      }
+
       final response = await _dio.request<T>(
         uri.toString(),
-        data: body,
+        data: formData ?? body,
         options: options,
       );
-
       return decodeResponse(response.data, statusCode: response.statusCode);
     } on ClientException {
       rethrow;
@@ -118,6 +139,7 @@ final class RestClientDio extends RestClientBase {
     required Map<String, Object?> body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    List<String>? pathsToFiles,
   }) =>
       sendRequest(
         path: path,
@@ -125,6 +147,7 @@ final class RestClientDio extends RestClientBase {
         body: body,
         headers: headers,
         queryParams: queryParams,
+        pathsToFiles: pathsToFiles,
       );
 
   @override

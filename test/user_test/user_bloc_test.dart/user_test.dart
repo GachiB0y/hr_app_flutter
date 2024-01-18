@@ -63,8 +63,7 @@ void main() {
       userProfileViewModel =
           UserProfileViewModel(authUser: user, currentProfileUser: null);
 
-      userBloc = UserBloc(
-          authRepository: mockAuthRepository, userRepo: mockUserRepository);
+      userBloc = UserBloc(userRepo: mockUserRepository);
       final List<TagUser> newListTag = [...tags];
       newListTag.add(newTag);
       newUser = user.copyWith(tags: newListTag);
@@ -87,11 +86,9 @@ void main() {
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
-          when(mockUserRepository.getUserInfo(accessToken: accessToken))
-              .thenThrow(Exception('oops'));
+          when(mockUserRepository.getUserInfo()).thenThrow(Exception('oops'));
         },
-        build: () => UserBloc(
-            authRepository: mockAuthRepository, userRepo: mockUserRepository),
+        build: () => UserBloc(userRepo: mockUserRepository),
         act: (bloc) => bloc.add(const UserEventFetch()),
         errors: () => [isA<Exception>()]);
 
@@ -100,8 +97,7 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfo(accessToken: accessToken))
-            .thenAnswer((_) async => user);
+        when(mockUserRepository.getUserInfo()).thenAnswer((_) async => user);
       },
       build: () => userBloc,
       act: (bloc) => bloc.add(const UserEventFetch()),
@@ -121,8 +117,7 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -144,8 +139,7 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -167,8 +161,7 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -189,12 +182,9 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.saveTagsToSend(
-            accessToken: accessToken,
-            userId: 4761,
-            tags: [newTag])).thenAnswer((_) async => true);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.saveTagsToSend(userId: 4761, tags: [newTag]))
+            .thenAnswer((_) async => true);
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => newUser);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -218,11 +208,9 @@ void main() {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
         when(mockUserRepository.sendAvatarWithProfile(
-          accessToken: accessToken,
           imageFile: file,
         )).thenAnswer((_) async => true);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),

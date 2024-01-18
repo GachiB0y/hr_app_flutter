@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
 
 import '../../model/coins_screen/coins_info/coins_info.dart';
@@ -15,10 +14,8 @@ part 'coins_screen_view_model_state.dart';
 class CoinsScreenViewModelBloc
     extends Bloc<CoinsScreenViewModelEvent, CoinsScreenViewModelState> {
   final IWalletRepository walletRepo;
-  final IAuthRepository authRepository;
   CoinsScreenViewModelBloc({
     required this.walletRepo,
-    required this.authRepository,
   }) : super(const CoinsScreenViewModelState.loading()) {
     on<CoinsScreenViewModelEvent>(
       (event, emit) => event.map<Future<void>>(
@@ -34,10 +31,8 @@ class CoinsScreenViewModelBloc
   Future<void> _onCoinsScreenViewModelEventGetCoinsReward(
       Emitter<CoinsScreenViewModelState> emit) async {
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
-
       final List<CoinsReward> listCoinsReward = await walletRepo
-          .getInfoCoinsReward(accessToken: accessToken as String)
+          .getInfoCoinsReward()
           .timeout(const Duration(seconds: 10));
 
       if (state is CoinsScreenViewModelStateLoaded) {
@@ -66,10 +61,8 @@ class CoinsScreenViewModelBloc
       Emitter<CoinsScreenViewModelState> emit) async {
     emit(const CoinsScreenViewModelState.loading());
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
-      final List<CoinsInfo> listCoinsInfo = await walletRepo
-          .getCoinsInfo(accessToken: accessToken as String)
-          .timeout(const Duration(seconds: 10));
+      final List<CoinsInfo> listCoinsInfo =
+          await walletRepo.getCoinsInfo().timeout(const Duration(seconds: 10));
 
       if (state is CoinsScreenViewModelStateLoaded) {
         final oldState = (state as CoinsScreenViewModelStateLoaded).copyWith();
@@ -97,13 +90,10 @@ class CoinsScreenViewModelBloc
       Emitter<CoinsScreenViewModelState> emit) async {
     emit(const CoinsScreenViewModelState.loading());
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
-
-      final List<CoinsInfo> listCoinsInfo = await walletRepo
-          .getCoinsInfo(accessToken: accessToken as String)
-          .timeout(const Duration(seconds: 10));
+      final List<CoinsInfo> listCoinsInfo =
+          await walletRepo.getCoinsInfo().timeout(const Duration(seconds: 10));
       final List<CoinsReward> listCoinsReward = await walletRepo
-          .getInfoCoinsReward(accessToken: accessToken)
+          .getInfoCoinsReward()
           .timeout(const Duration(seconds: 10));
       final newState = CoinsScreenViewModelState.loaded(
           listCoinsInfoLoaded: listCoinsInfo,

@@ -56,9 +56,7 @@ void main() {
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
-          when(userRepository.getRookiesInfo(
-            accessToken: accessToken,
-          )).thenThrow(Exception('oops'));
+          when(userRepository.getRookiesInfo()).thenThrow(Exception('oops'));
         },
         build: () => RookiesBLoC(
               authRepository: mockAuthRepository,
@@ -72,9 +70,8 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(userRepository.getRookiesInfo(
-          accessToken: accessToken,
-        )).thenAnswer((_) async => rookiesEntity);
+        when(userRepository.getRookiesInfo())
+            .thenAnswer((_) async => rookiesEntity);
       },
       build: () => rookiesBloc,
       act: (bloc) => bloc.add(const RookiesEventFetch()),

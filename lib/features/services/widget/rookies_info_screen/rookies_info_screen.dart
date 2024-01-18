@@ -60,7 +60,6 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
   void initState() {
     super.initState();
     rookiesBLoC = RookiesBLoC(
-      authRepository: DependenciesScope.of(context).authRepository,
       userRepo: DependenciesScope.of(context).userRepository,
     );
 

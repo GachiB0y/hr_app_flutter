@@ -4,14 +4,14 @@ import '../../model/lean_productions_entity/lean_production_form_entity/lean_pro
 import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
 
 abstract interface class ILeanProductionRepository {
-  Future<bool> submitForm(
-      {required LeanProductionFormEntity formEntity,
-      required String accessToken});
-  Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String accessToken});
+  Future<bool> submitForm({
+    required LeanProductionFormEntity formEntity,
+  });
+  Future<List<MyLeanProductionsEntity>> getMyLeanProductions();
 
-  Future<void> downloadFileWithLeanProduction(
-      {required String url, required String accessToken});
+  Future<void> downloadFileWithLeanProduction({
+    required String url,
+  });
 }
 
 class LeanProductionRepositoryImpl implements ILeanProductionRepository {
@@ -22,35 +22,32 @@ class LeanProductionRepositoryImpl implements ILeanProductionRepository {
   final IServiceProvider _serviceProvider;
 
   @override
-  Future<bool> submitForm(
-      {required LeanProductionFormEntity formEntity,
-      required String accessToken}) async {
+  Future<bool> submitForm({
+    required LeanProductionFormEntity formEntity,
+  }) async {
     try {
       return await _serviceProvider.sendFormLeanProduction(
-          accessToken: accessToken, formEntity: formEntity);
+          formEntity: formEntity);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String accessToken}) async {
+  Future<List<MyLeanProductionsEntity>> getMyLeanProductions() async {
     try {
-      return await _serviceProvider.getMyLeanProductions(
-        accessToken: accessToken,
-      );
+      return await _serviceProvider.getMyLeanProductions();
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<void> downloadFileWithLeanProduction(
-      {required String url, required String accessToken}) async {
+  Future<void> downloadFileWithLeanProduction({
+    required String url,
+  }) async {
     try {
       return await _serviceProvider.downloadFileWithLeanProduction(
-        accessToken: accessToken,
         url: url,
       );
     } catch (e) {

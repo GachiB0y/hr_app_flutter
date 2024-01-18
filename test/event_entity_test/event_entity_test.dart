@@ -55,8 +55,8 @@ void main() {
       mockAuthRepository = MockAuthRepo();
       mockEventEntityRepository = MockEventEntityRepo();
       eventEntityBloc = EventEntityBloc(
-          eventEntityRepository: mockEventEntityRepository,
-          authRepository: mockAuthRepository);
+        eventEntityRepository: mockEventEntityRepository,
+      );
     });
     tearDown(() {
       eventEntityBloc.close();
@@ -75,12 +75,11 @@ void main() {
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
-          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+          when(mockEventEntityRepository.getEvents())
               .thenThrow(Exception('oops'));
         },
-        build: () => EventEntityBloc(
-            authRepository: mockAuthRepository,
-            eventEntityRepository: mockEventEntityRepository),
+        build: () =>
+            EventEntityBloc(eventEntityRepository: mockEventEntityRepository),
         act: (bloc) => bloc.add(const EventEntityEventFetch()),
         errors: () => [isA<Exception>()]);
     blocTest<EventEntityBloc, EventEntityState>(
@@ -88,12 +87,11 @@ void main() {
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
-          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+          when(mockEventEntityRepository.getEvents())
               .thenThrow(TimeoutException('oops'));
         },
-        build: () => EventEntityBloc(
-            authRepository: mockAuthRepository,
-            eventEntityRepository: mockEventEntityRepository),
+        build: () =>
+            EventEntityBloc(eventEntityRepository: mockEventEntityRepository),
         act: (bloc) => bloc.add(const EventEntityEventFetch()),
         errors: () => [isA<TimeoutException>()]);
 
@@ -109,7 +107,7 @@ void main() {
 
       when(mockAuthRepository.cheskIsLiveAccessToken())
           .thenAnswer((_) => Future.value(accessToken));
-      when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+      when(mockEventEntityRepository.getEvents())
           .thenAnswer((_) => Future.value(listEventEntityLoaded));
 
       // Act
@@ -143,7 +141,6 @@ void main() {
       when(mockAuthRepository.cheskIsLiveAccessToken())
           .thenAnswer((_) => Future.value(accessToken));
       when(mockEventEntityRepository.createNewEventEntity(
-        accessToken: accessToken,
         title: title,
         description: description,
         imageFile: imageFile,
@@ -193,7 +190,6 @@ void main() {
 
       eventEntityBloc = EventEntityBloc(
         eventEntityRepository: mockEventEntityRepository,
-        authRepository: mockAuthRepository,
         initialState: initialState,
       );
 

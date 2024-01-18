@@ -199,41 +199,34 @@ class MockIEventEntityRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<List<_i2.EventEntity>> getEvents({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue:
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents(
-          {required String? accessToken}) =>
+  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
       (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue:
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
       ) as _i4.Future<List<_i2.Category>>);
   @override
   _i4.Future<bool> createNewEventEntity({
-    required String? accessToken,
     required String? title,
     required String? description,
     required String? startDate,
@@ -246,7 +239,6 @@ class MockIEventEntityRepository extends _i1.Mock
           #createNewEventEntity,
           [],
           {
-            #accessToken: accessToken,
             #title: title,
             #description: description,
             #startDate: startDate,
@@ -258,60 +250,39 @@ class MockIEventEntityRepository extends _i1.Mock
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<bool> approvementNews({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #approvementNews,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<_i2.EventEntity> getNewsById({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<_i2.EventEntity> getNewsById({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getNewsById,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<_i2.EventEntity>.value(_FakeEventEntity_0(
           this,
           Invocation.method(
             #getNewsById,
             [],
-            {
-              #accessToken: accessToken,
-              #id: id,
-            },
+            {#id: id},
           ),
         )),
       ) as _i4.Future<_i2.EventEntity>);
   @override
-  _i4.Future<bool> moveInArchiveNews({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<bool> moveInArchiveNews({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #moveInArchiveNews,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
@@ -574,12 +545,10 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
 class MockEventEntityRepo extends _i1.Mock
     implements _i6.IEventEntityRepository {
   @override
-  _i4.Future<List<_i2.EventEntity>> getEvents({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue:
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
@@ -587,13 +556,11 @@ class MockEventEntityRepo extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents(
-          {required String? accessToken}) =>
+  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
       (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue:
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
@@ -601,12 +568,10 @@ class MockEventEntityRepo extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
         returnValueForMissingStub:
@@ -614,7 +579,6 @@ class MockEventEntityRepo extends _i1.Mock
       ) as _i4.Future<List<_i2.Category>>);
   @override
   _i4.Future<bool> createNewEventEntity({
-    required String? accessToken,
     required String? title,
     required String? description,
     required String? startDate,
@@ -627,7 +591,6 @@ class MockEventEntityRepo extends _i1.Mock
           #createNewEventEntity,
           [],
           {
-            #accessToken: accessToken,
             #title: title,
             #description: description,
             #startDate: startDate,
@@ -640,45 +603,30 @@ class MockEventEntityRepo extends _i1.Mock
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<bool> approvementNews({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #approvementNews,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<_i2.EventEntity> getNewsById({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<_i2.EventEntity> getNewsById({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getNewsById,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<_i2.EventEntity>.value(_FakeEventEntity_0(
           this,
           Invocation.method(
             #getNewsById,
             [],
-            {
-              #accessToken: accessToken,
-              #id: id,
-            },
+            {#id: id},
           ),
         )),
         returnValueForMissingStub:
@@ -687,26 +635,17 @@ class MockEventEntityRepo extends _i1.Mock
           Invocation.method(
             #getNewsById,
             [],
-            {
-              #accessToken: accessToken,
-              #id: id,
-            },
+            {#id: id},
           ),
         )),
       ) as _i4.Future<_i2.EventEntity>);
   @override
-  _i4.Future<bool> moveInArchiveNews({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<bool> moveInArchiveNews({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #moveInArchiveNews,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),

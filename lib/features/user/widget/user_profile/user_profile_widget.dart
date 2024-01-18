@@ -27,7 +27,9 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   void initState() {
     super.initState();
     final blocUsers = context.read<UserBloc>();
-    blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId!));
+    if (widget.userId != null || widget.userId != '') {
+      blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId!));
+    }
   }
 
   @override
@@ -153,29 +155,23 @@ class LogoutButtonWidget extends StatelessWidget {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        return state.data!.currentProfileUser == null
-            ? const SizedBox.shrink()
-            : state.data!.currentProfileUser!.self
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      right: 20.0,
-                    ),
-                    child: IconButton(
-                      onPressed: () async {
-                        AuthScope.of(context, listen: false).signOut();
-
-                        // context.router.replaceAll([const LoaderRoute()]);
-                      },
-                      padding: const EdgeInsets.all(2),
-                      color: Colors.transparent,
-                      icon: Icon(
-                        Icons.logout,
-                        size: 35,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.only(
+            right: 20.0,
+          ),
+          child: IconButton(
+            onPressed: () async {
+              AuthScope.of(context, listen: false).signOut();
+            },
+            padding: const EdgeInsets.all(2),
+            color: Colors.transparent,
+            icon: Icon(
+              Icons.logout,
+              size: 35,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+        );
       });
     }
   }

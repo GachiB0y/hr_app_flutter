@@ -44,18 +44,17 @@ void main() {
     group('getUserInfo', () {
       test('calls getUserInfo with correct', () async {
         try {
-          await userRepository.getUserInfo(accessToken: accessToken);
+          await userRepository.getUserInfo();
         } catch (_) {}
-        verify(userApiClient.getUserInfo(accessToken: accessToken)).called(1);
+        verify(userApiClient.getUserInfo()).called(1);
       });
       test('throws when getUserInfo fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.getUserInfo(accessToken: accessToken))
-            .thenThrow(exception);
+        when(userApiClient.getUserInfo()).thenThrow(exception);
 
         expect(
-          () async => userRepository.getUserInfo(accessToken: accessToken),
+          () async => userRepository.getUserInfo(),
           throwsA(exception),
         );
       });
@@ -64,11 +63,9 @@ void main() {
 //Создаем User
         final UserInfo userMock = MockUserInfo();
 
-        when(userApiClient.getUserInfo(accessToken: accessToken))
-            .thenAnswer((_) async => userMock);
+        when(userApiClient.getUserInfo()).thenAnswer((_) async => userMock);
 
-        final actual =
-            await userRepository.getUserInfo(accessToken: accessToken);
+        final actual = await userRepository.getUserInfo();
         expect(actual, userMock);
       });
     });
@@ -77,23 +74,18 @@ void main() {
     group('getUserByPhoneNumber', () {
       test('calls getUserByPhoneNumber with correct', () async {
         try {
-          await userRepository.getUserByPhoneNumber(
-              accessToken: accessToken, phoneNumber: '');
+          await userRepository.getUserByPhoneNumber(phoneNumber: '');
         } catch (_) {}
-        verify(userApiClient.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: ''))
-            .called(1);
+        verify(userApiClient.getUserByPhoneNumber(phoneNumber: '')).called(1);
       });
       test('throws when getUserByPhoneNumber fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: ''))
+        when(userApiClient.getUserByPhoneNumber(phoneNumber: ''))
             .thenThrow(exception);
 
         expect(
-          () async => userRepository.getUserByPhoneNumber(
-              accessToken: accessToken, phoneNumber: ''),
+          () async => userRepository.getUserByPhoneNumber(phoneNumber: ''),
           throwsA(exception),
         );
       });
@@ -103,12 +95,11 @@ void main() {
         final UserInfo userMock = MockUserInfo();
 // Созадем list Users
         final List<UserInfo> listUser = [userMock];
-        when(userApiClient.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: ''))
+        when(userApiClient.getUserByPhoneNumber(phoneNumber: ''))
             .thenAnswer((_) async => listUser);
 
-        final actual = await userRepository.getUserByPhoneNumber(
-            accessToken: accessToken, phoneNumber: '');
+        final actual =
+            await userRepository.getUserByPhoneNumber(phoneNumber: '');
         expect(actual, listUser);
       });
     });
@@ -116,25 +107,17 @@ void main() {
     group('getBirthDayInfo', () {
       test('calls getBirthDayInfo with correct', () async {
         try {
-          await userRepository.getBirthDayInfo(
-            accessToken: accessToken,
-          );
+          await userRepository.getBirthDayInfo();
         } catch (_) {}
-        verify(userApiClient.getBirthDayInfo(
-          accessToken: accessToken,
-        )).called(1);
+        verify(userApiClient.getBirthDayInfo()).called(1);
       });
       test('throws when getBirthDayInfo fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.getBirthDayInfo(
-          accessToken: accessToken,
-        )).thenThrow(exception);
+        when(userApiClient.getBirthDayInfo()).thenThrow(exception);
 
         expect(
-          () async => userRepository.getBirthDayInfo(
-            accessToken: accessToken,
-          ),
+          () async => userRepository.getBirthDayInfo(),
           throwsA(exception),
         );
       });
@@ -143,13 +126,10 @@ void main() {
 //Создаем BirthDayInfoEntity
         final BirthDayInfoEntity birthDayInfoEntity = MockBirthDayInfoEntity();
 
-        when(userApiClient.getBirthDayInfo(
-          accessToken: accessToken,
-        )).thenAnswer((_) async => birthDayInfoEntity);
+        when(userApiClient.getBirthDayInfo())
+            .thenAnswer((_) async => birthDayInfoEntity);
 
-        final actual = await userRepository.getBirthDayInfo(
-          accessToken: accessToken,
-        );
+        final actual = await userRepository.getBirthDayInfo();
         expect(actual, birthDayInfoEntity);
       });
     });
@@ -157,25 +137,17 @@ void main() {
     group('getRookiesInfo', () {
       test('calls getRookiesInfo with correct', () async {
         try {
-          await userRepository.getRookiesInfo(
-            accessToken: accessToken,
-          );
+          await userRepository.getRookiesInfo();
         } catch (_) {}
-        verify(userApiClient.getRookiesInfo(
-          accessToken: accessToken,
-        )).called(1);
+        verify(userApiClient.getRookiesInfo()).called(1);
       });
       test('throws when getRookiesInfo fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.getRookiesInfo(
-          accessToken: accessToken,
-        )).thenThrow(exception);
+        when(userApiClient.getRookiesInfo()).thenThrow(exception);
 
         expect(
-          () async => userRepository.getRookiesInfo(
-            accessToken: accessToken,
-          ),
+          () async => userRepository.getRookiesInfo(),
           throwsA(exception),
         );
       });
@@ -184,13 +156,9 @@ void main() {
 //Создаем Rookies
         final Rookies rookies = MockRookies();
 
-        when(userApiClient.getRookiesInfo(
-          accessToken: accessToken,
-        )).thenAnswer((_) async => rookies);
+        when(userApiClient.getRookiesInfo()).thenAnswer((_) async => rookies);
 
-        final actual = await userRepository.getRookiesInfo(
-          accessToken: accessToken,
-        );
+        final actual = await userRepository.getRookiesInfo();
         expect(actual, rookies);
       });
     });
@@ -200,24 +168,18 @@ void main() {
       test('calls getUserInfoById with correct', () async {
         try {
           await userRepository.getUserInfoById(
-            accessToken: accessToken,
             userId: '',
           );
         } catch (_) {}
-        verify(userApiClient.getUserInfoById(
-                accessToken: accessToken, userId: ''))
-            .called(1);
+        verify(userApiClient.getUserInfoById(userId: '')).called(1);
       });
       test('throws when getUserInfoById fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.getUserInfoById(
-                accessToken: accessToken, userId: ''))
-            .thenThrow(exception);
+        when(userApiClient.getUserInfoById(userId: '')).thenThrow(exception);
 
         expect(
-          () async => userRepository.getUserInfoById(
-              accessToken: accessToken, userId: ''),
+          () async => userRepository.getUserInfoById(userId: ''),
           throwsA(exception),
         );
       });
@@ -226,12 +188,10 @@ void main() {
 //Создаем User
         final UserInfo userMock = MockUserInfo();
 
-        when(userApiClient.getUserInfoById(
-                accessToken: accessToken, userId: ''))
+        when(userApiClient.getUserInfoById(userId: ''))
             .thenAnswer((_) async => userMock);
 
-        final actual = await userRepository.getUserInfoById(
-            accessToken: accessToken, userId: '');
+        final actual = await userRepository.getUserInfoById(userId: '');
         expect(actual, userMock);
       });
     });
@@ -240,22 +200,18 @@ void main() {
       test('calls findUser with correct', () async {
         try {
           await userRepository.findUser(
-            accessToken: accessToken,
             findText: '',
           );
         } catch (_) {}
-        verify(userApiClient.findUser(accessToken: accessToken, findText: ''))
-            .called(1);
+        verify(userApiClient.findUser(findText: '')).called(1);
       });
       test('throws when findUser fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.findUser(accessToken: accessToken, findText: ''))
-            .thenThrow(exception);
+        when(userApiClient.findUser(findText: '')).thenThrow(exception);
 
         expect(
-          () async =>
-              userRepository.findUser(accessToken: accessToken, findText: ''),
+          () async => userRepository.findUser(findText: ''),
           throwsA(exception),
         );
       });
@@ -265,11 +221,10 @@ void main() {
         final UserInfo userMock = MockUserInfo();
 // Созадем list Users
         final List<UserInfo> listUser = [userMock];
-        when(userApiClient.findUser(accessToken: accessToken, findText: ''))
+        when(userApiClient.findUser(findText: ''))
             .thenAnswer((_) async => listUser);
 
-        final actual = await userRepository.findUser(
-            accessToken: accessToken, findText: '');
+        final actual = await userRepository.findUser(findText: '');
         expect(actual, listUser);
       });
     });
@@ -279,37 +234,31 @@ void main() {
       test('calls saveTagsToSend with correct', () async {
         try {
           await userRepository.saveTagsToSend(
-            accessToken: accessToken,
             userId: userId,
             tags: [],
           );
         } catch (_) {}
-        verify(userApiClient.saveTagsToSend(
-            accessToken: accessToken, userId: userId, tags: [])).called(1);
+        verify(userApiClient.saveTagsToSend(userId: userId, tags: []))
+            .called(1);
       });
       test('throws when saveTagsToSend fails', () async {
         final exception = Exception('oops');
 
-        when(userApiClient.saveTagsToSend(
-            accessToken: accessToken,
-            userId: userId,
-            tags: [])).thenThrow(exception);
+        when(userApiClient.saveTagsToSend(userId: userId, tags: []))
+            .thenThrow(exception);
 
         expect(
-          () async => userRepository.saveTagsToSend(
-              accessToken: accessToken, userId: userId, tags: []),
+          () async => userRepository.saveTagsToSend(userId: userId, tags: []),
           throwsA(exception),
         );
       });
 
       test('succesfull when saveTagsToSend get', () async {
-        when(userApiClient.saveTagsToSend(
-            accessToken: accessToken,
-            userId: userId,
-            tags: [])).thenAnswer((_) async => true);
+        when(userApiClient.saveTagsToSend(userId: userId, tags: []))
+            .thenAnswer((_) async => true);
 
-        final actual = await userRepository
-            .saveTagsToSend(accessToken: accessToken, userId: userId, tags: []);
+        final actual =
+            await userRepository.saveTagsToSend(userId: userId, tags: []);
         expect(actual, true);
       });
     });
@@ -319,12 +268,10 @@ void main() {
       test('calls sendAvatarWithProfile with correct', () async {
         try {
           await userRepository.sendAvatarWithProfile(
-            accessToken: accessToken,
             imageFile: file,
           );
         } catch (_) {}
         verifyNever(userApiClient.sendAvatarWithProfile(
-          accessToken: accessToken,
           paths: ['path'],
         )).called(0);
       });
@@ -332,22 +279,20 @@ void main() {
       //   final exception = Exception('oops');
 
       //   when(userApiClient.sendAvatarWithProfile(
-      //       accessToken: accessToken, paths: [])).thenThrow(Exception('oops'));
+      //        paths: [])).thenThrow(Exception('oops'));
 
       //   expect(
       //     () async => userRepository.sendAvatarWithProfile(
-      //         accessToken: accessToken, imageFile: file),
+      //          imageFile: file),
       //     throwsA(exception),
       //   );
       // });
       test('succesfull when sendAvatarWithProfile get', () async {
         when(userApiClient.sendAvatarWithProfile(
-          accessToken: accessToken,
           paths: ['path'],
         )).thenAnswer((_) async => false);
 
         final actual = await userRepository.sendAvatarWithProfile(
-          accessToken: accessToken,
           imageFile: file,
         );
         expect(actual, false);

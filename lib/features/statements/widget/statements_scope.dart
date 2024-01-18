@@ -49,7 +49,6 @@ class _StatementsScopeState extends State<StatementsScope>
   @override
   void initState() {
     _statementsBloc = StatementsBLoC(
-      authRepository: DependenciesScope.of(context).authRepository,
       repositoryStatements: DependenciesScope.of(context).statementsRepository,
     );
     super.initState();
@@ -71,7 +70,7 @@ class _StatementsScopeState extends State<StatementsScope>
 
   @override
   void dispose() {
-    // Permanent removal of a tree stent
+    _statementsBloc.close();
     super.dispose();
   }
 

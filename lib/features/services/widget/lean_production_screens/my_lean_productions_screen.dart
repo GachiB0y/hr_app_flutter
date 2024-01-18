@@ -25,7 +25,6 @@ class _MyLeanProductionsScreenState extends State<MyLeanProductionsScreen> {
     super.initState();
 
     blocLeanProduction = LeanProductionFormBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
         repository: DependenciesScope.of(context).leanProductionRepository);
     blocLeanProduction
         .add(const LeanProductionFormEvent.getMyLeanProductions());

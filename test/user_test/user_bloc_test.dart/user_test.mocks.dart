@@ -150,7 +150,6 @@ class _FakeFileSystemEntity_10 extends _i1.SmartFake
 class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
   @override
   _i7.Future<_i2.Rookies> getRookiesInfo({
-    required String? accessToken,
     DateTime? startDate,
     DateTime? endDate,
   }) =>
@@ -159,7 +158,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           #getRookiesInfo,
           [],
           {
-            #accessToken: accessToken,
             #startDate: startDate,
             #endDate: endDate,
           },
@@ -170,7 +168,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #getRookiesInfo,
             [],
             {
-              #accessToken: accessToken,
               #startDate: startDate,
               #endDate: endDate,
             },
@@ -182,7 +179,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #getRookiesInfo,
             [],
             {
-              #accessToken: accessToken,
               #startDate: startDate,
               #endDate: endDate,
             },
@@ -191,7 +187,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
       ) as _i7.Future<_i2.Rookies>);
   @override
   _i7.Future<bool> saveTagsToSend({
-    required String? accessToken,
     required List<_i3.TagUser>? tags,
     required int? userId,
   }) =>
@@ -200,7 +195,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           #saveTagsToSend,
           [],
           {
-            #accessToken: accessToken,
             #tags: tags,
             #userId: userId,
           },
@@ -209,28 +203,19 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
         returnValueForMissingStub: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
   @override
-  _i7.Future<_i3.UserInfo> getUserInfoById({
-    required String? accessToken,
-    required String? userId,
-  }) =>
+  _i7.Future<_i3.UserInfo> getUserInfoById({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserInfoById,
           [],
-          {
-            #accessToken: accessToken,
-            #userId: userId,
-          },
+          {#userId: userId},
         ),
         returnValue: _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfoById,
             [],
-            {
-              #accessToken: accessToken,
-              #userId: userId,
-            },
+            {#userId: userId},
           ),
         )),
         returnValueForMissingStub:
@@ -239,16 +224,12 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           Invocation.method(
             #getUserInfoById,
             [],
-            {
-              #accessToken: accessToken,
-              #userId: userId,
-            },
+            {#userId: userId},
           ),
         )),
       ) as _i7.Future<_i3.UserInfo>);
   @override
   _i7.Future<_i4.BirthDayInfoEntity> getBirthDayInfo({
-    required String? accessToken,
     DateTime? startDate,
     DateTime? endDate,
   }) =>
@@ -257,7 +238,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           #getBirthDayInfo,
           [],
           {
-            #accessToken: accessToken,
             #startDate: startDate,
             #endDate: endDate,
           },
@@ -269,7 +249,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #getBirthDayInfo,
             [],
             {
-              #accessToken: accessToken,
               #startDate: startDate,
               #endDate: endDate,
             },
@@ -282,7 +261,6 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
             #getBirthDayInfo,
             [],
             {
-              #accessToken: accessToken,
               #startDate: startDate,
               #endDate: endDate,
             },
@@ -290,37 +268,28 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
         )),
       ) as _i7.Future<_i4.BirthDayInfoEntity>);
   @override
-  _i7.Future<List<_i3.UserInfo>> findUser({
-    required String? accessToken,
-    required String? findText,
-  }) =>
+  _i7.Future<List<_i3.UserInfo>> findUser({required String? findText}) =>
       (super.noSuchMethod(
         Invocation.method(
           #findUser,
           [],
-          {
-            #accessToken: accessToken,
-            #findText: findText,
-          },
+          {#findText: findText},
         ),
         returnValue: _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
         returnValueForMissingStub:
             _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
       ) as _i7.Future<List<_i3.UserInfo>>);
   @override
-  _i7.Future<_i3.UserInfo> getUserInfo({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i7.Future<_i3.UserInfo> getUserInfo() => (super.noSuchMethod(
         Invocation.method(
           #getUserInfo,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i7.Future<_i3.UserInfo>.value(_FakeUserInfo_1(
           this,
           Invocation.method(
             #getUserInfo,
             [],
-            {#accessToken: accessToken},
           ),
         )),
         returnValueForMissingStub:
@@ -329,41 +298,29 @@ class MockIUserRepository extends _i1.Mock implements _i6.IUserRepository {
           Invocation.method(
             #getUserInfo,
             [],
-            {#accessToken: accessToken},
           ),
         )),
       ) as _i7.Future<_i3.UserInfo>);
   @override
-  _i7.Future<List<_i3.UserInfo>> getUserByPhoneNumber({
-    required String? accessToken,
-    required String? phoneNumber,
-  }) =>
+  _i7.Future<List<_i3.UserInfo>> getUserByPhoneNumber(
+          {required String? phoneNumber}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserByPhoneNumber,
           [],
-          {
-            #accessToken: accessToken,
-            #phoneNumber: phoneNumber,
-          },
+          {#phoneNumber: phoneNumber},
         ),
         returnValue: _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
         returnValueForMissingStub:
             _i7.Future<List<_i3.UserInfo>>.value(<_i3.UserInfo>[]),
       ) as _i7.Future<List<_i3.UserInfo>>);
   @override
-  _i7.Future<bool> sendAvatarWithProfile({
-    required String? accessToken,
-    required _i5.File? imageFile,
-  }) =>
+  _i7.Future<bool> sendAvatarWithProfile({required _i5.File? imageFile}) =>
       (super.noSuchMethod(
         Invocation.method(
           #sendAvatarWithProfile,
           [],
-          {
-            #accessToken: accessToken,
-            #imageFile: imageFile,
-          },
+          {#imageFile: imageFile},
         ),
         returnValue: _i7.Future<bool>.value(false),
         returnValueForMissingStub: _i7.Future<bool>.value(false),

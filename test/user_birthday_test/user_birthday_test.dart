@@ -57,9 +57,7 @@ void main() {
         setUp: () {
           when(mockAuthRepository.cheskIsLiveAccessToken())
               .thenAnswer((_) async => accessToken);
-          when(userRepository.getBirthDayInfo(
-            accessToken: accessToken,
-          )).thenThrow(Exception('oops'));
+          when(userRepository.getBirthDayInfo()).thenThrow(Exception('oops'));
         },
         build: () => UserBirthDayInfoBLoc(
               authRepository: mockAuthRepository,
@@ -73,9 +71,8 @@ void main() {
       setUp: () {
         when(mockAuthRepository.cheskIsLiveAccessToken())
             .thenAnswer((_) async => accessToken);
-        when(userRepository.getBirthDayInfo(
-          accessToken: accessToken,
-        )).thenAnswer((_) async => birthDayInfoEntity);
+        when(userRepository.getBirthDayInfo())
+            .thenAnswer((_) async => birthDayInfoEntity);
       },
       build: () => userBirthdayBloc,
       act: (bloc) => bloc.add(const UserBirthDayInfoEventFetch()),

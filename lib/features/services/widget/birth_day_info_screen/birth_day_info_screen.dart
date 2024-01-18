@@ -62,7 +62,6 @@ class _ListInfoBirthDayState extends State<ListInfoBirthDay> {
     super.initState();
 
     userBirthDayInfoBLoc = UserBirthDayInfoBLoc(
-      authRepository: DependenciesScope.of(context).authRepository,
       userRepo: DependenciesScope.of(context).userRepository,
     );
 

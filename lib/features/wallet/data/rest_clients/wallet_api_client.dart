@@ -1,144 +1,106 @@
-import 'dart:convert';
-import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
-import 'package:hr_app_flutter/core/constant/constants.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 
 import '../../model/coins_screen/coins_info/coins_info.dart';
 import '../../model/coins_screen/coins_reward/coins_reward.dart';
 import '../../model/wallet/wallet.dart';
 
 abstract interface class IWalletProvider {
-  Future<({int balance, int avarageCoins})> getBalance(
-      {required String accessToken});
-  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken});
-  Future<List<CoinsReward>> getInfoCoinsReward({required String accessToken});
-  Future<List<Transaction>?> getTransactions({required String accessToken});
+  Future<({int balance, int avarageCoins})> getBalance();
+  Future<List<CoinsInfo>> getCoinsInfo();
+  Future<List<CoinsReward>> getInfoCoinsReward();
+  Future<List<Transaction>?> getTransactions();
   Future<int> sendCoinsToOtherUser(
-      {required String accessToken,
-      required int amount,
-      required int userId,
-      required String message});
+      {required int amount, required int userId, required String message});
   Future<int> sendCoinsToBracer({
-    required String accessToken,
     required int amount,
   });
 }
 
 class WalletProviderImpl implements IWalletProvider {
-  final IHTTPService _httpService;
+  final RestClient _httpService;
   WalletProviderImpl(this._httpService);
 
   @override
-  Future<({int balance, int avarageCoins})> getBalance(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/coins/balance';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<({int balance, int avarageCoins})> getBalance() async {
+    final response = await _httpService.get('/coins/balance');
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final int balance = jsonData['result']['coins'];
-      final int avarageCoins = jsonData['result']['avarage_coins'];
+    if (response case {'result': final Map<String, Object?> data}) {
+      final int balance = data['coins'] as int;
+      final int avarageCoins = data['avarage_coins'] as int;
       return (balance: balance, avarageCoins: avarageCoins);
-    } else {
-      throw Exception('Error fetching Balance');
     }
+    throw Exception('Error fetching Balance');
   }
 
   @override
-  Future<List<Transaction>?> getTransactions(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/coins/transactions';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<Transaction>?> getTransactions() async {
+    final response = await _httpService.get('/coins/transactions');
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<Transaction> result = (jsonData['result'] as List<dynamic>)
+    if (response case {'result': final data}) {
+      final List<Transaction> result = (data as List<dynamic>)
           .map((item) => Transaction.fromJson(item))
           .toList();
 
       return result;
-    } else if (response.statusCode == 404) {
-      return null;
-    } else {
-      throw Exception('Error fetching Transactions');
     }
+    throw Exception('Error fetching Transactions');
   }
 
   @override
   Future<int> sendCoinsToOtherUser(
-      {required String accessToken,
-      required int amount,
+      {required int amount,
       required int userId,
       required String message}) async {
-    String uri = '$urlAdress/coins/transfer-to-friend';
-    final String body = json
-        .encode({"recipient": userId, "amount": amount, "message": message});
+    final body = {"recipient": userId, "amount": amount, "message": message};
     final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: body);
-    if (response.statusCode == 201) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final int result = jsonData['result']['coins'];
+        await _httpService.post('/coins/transfer-to-friend', body: body);
+    if (response case {'result': final Map<String, Object?> data}) {
+      final int result = data['coins'] as int;
       return result;
-    } else {
-      throw Exception('Error send Coins!!!');
     }
+    throw Exception('Error send Coins!!!');
   }
 
   @override
   Future<int> sendCoinsToBracer({
-    required String accessToken,
     required int amount,
   }) async {
-    String uri = '$urlAdress/coins/transfer-to-bracer';
-    final String body = json.encode({"amount": amount});
+    final body = {"amount": amount};
     final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: body);
+        await _httpService.post('/coins/transfer-to-bracer', body: body);
 
-    if (response.statusCode == 201) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final int result = jsonData['result']['coins'];
+    if (response case {'result': final Map<String, Object?> data}) {
+      final int result = data['coins'] as int;
       return result;
-    } else {
-      throw Exception('Error send to Bracer Coins!!!');
     }
+    throw Exception('Error send to Bracer Coins!!!');
   }
 
   @override
-  Future<List<CoinsReward>> getInfoCoinsReward(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/coins/coins_reward';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<CoinsReward>> getInfoCoinsReward() async {
+    final response = await _httpService.get('/coins/coins_reward');
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<CoinsReward> result = (jsonData['result'] as List<dynamic>)
+    if (response case {'result': final data}) {
+      final List<CoinsReward> result = (data as List<dynamic>)
           .map((item) => CoinsReward.fromJson(item))
           .toList();
 
       return result;
-    } else {
-      throw Exception('Error fetching get Info Coins Reward');
     }
+    throw Exception('Error fetching get Info Coins Reward');
   }
 
   @override
-  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken}) async {
-    String uri = '$urlAdress/coins/info';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<CoinsInfo> result = (jsonData['result'] as List<dynamic>)
+  Future<List<CoinsInfo>> getCoinsInfo() async {
+    final response = await _httpService.get('/coins/info');
+
+    if (response case {'result': final data}) {
+      final List<CoinsInfo> result = (data as List<dynamic>)
           .map((item) => CoinsInfo.fromJson(item))
           .toList();
 
       return result;
-    } else {
-      throw Exception('Error fetching get Coins Info');
     }
+    throw Exception('Error fetching get Coins Info');
   }
 }

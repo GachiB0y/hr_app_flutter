@@ -54,7 +54,6 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
   @override
   void initState() {
     blocBagReport = BagReportBLoC(
-      authRepository: DependenciesScope.of(context).authRepository,
       repositoryService: DependenciesScope.of(context).serviceRepository,
     );
     super.initState();
