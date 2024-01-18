@@ -57,7 +57,6 @@ final class RestClientDio extends RestClientBase {
         data: formData ?? body,
         options: options,
       );
-      debugPrint('!!!!!!!!!!!!############ $response.statusMessage');
       return decodeResponse(response.data, statusCode: response.statusCode);
     } on ClientException {
       rethrow;

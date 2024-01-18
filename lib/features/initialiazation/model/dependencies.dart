@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
-import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
@@ -35,7 +34,7 @@ base class Dependencies {
   late final SettingsRepository settingsRepository;
 
   /// HTTPService
-  late final IHTTPService htttpService;
+  // late final IHTTPService htttpService;
 
   /// serviceProvider
   late final IServiceProvider serviceProvider;

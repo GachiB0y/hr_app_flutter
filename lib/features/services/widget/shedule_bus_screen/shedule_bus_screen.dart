@@ -22,7 +22,6 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
   void initState() {
     super.initState();
     blocScheduleBus = ScheduleBusBloc(
-      authRepository: DependenciesScope.of(context).authRepository,
       serviceRepository: DependenciesScope.of(context).serviceRepository,
     );
     blocScheduleBus.add(const ScheduleBusEvent.fetch());

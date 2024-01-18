@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
@@ -16,11 +15,9 @@ part 'service_state.dart';
 
 class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   final IServiceRepository serviceRepository;
-  final IAuthRepository authRepository;
 
   ServiceBloc({
     required this.serviceRepository,
-    required this.authRepository,
   }) : super(const ServiceState.loading()) {
     on<ServiceEvent>((event, emit) async {
       if (event is ServiceEventFetch) {
@@ -33,11 +30,8 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       Emitter<ServiceState> emit, ServiceEventFetch event) async {
     emit(const ServiceState.loading());
     try {
-      String? accessToken = await authRepository.cheskIsLiveAccessToken();
       List<Service> servicesLoaded = await serviceRepository
-          .getServices(
-            accessToken: accessToken as String,
-          )
+          .getServices()
           .timeout(const Duration(seconds: 10));
 
       List<Widget> groupWidgets = [];

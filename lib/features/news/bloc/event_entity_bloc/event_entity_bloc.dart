@@ -49,7 +49,7 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
 
       List<EventEntity> listEventEntityLoaded = await _eventEntityRepository
           .getEvents()
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 100));
       List<EventEntity> filteredEventEntity = filterListCategory(
         listEventEntityLoaded: listEventEntityLoaded,
         idTab: 1,

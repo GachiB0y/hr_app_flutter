@@ -1,6 +1,4 @@
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
-import 'package:hr_app_flutter/core/constant/constants.dart';
-
 import '../../../services/model/birth_day_info/birth_day_info.dart';
 import '../../../services/model/rookies_entity/rookies.dart';
 import '../../model/user/user_info.dart';
@@ -72,10 +70,9 @@ class UserProviderImpl implements IUserProvider {
   }) async {
     late final String uri;
     if (startDate == null && endDate == null) {
-      uri = '$urlAdress/auth/birthday-list';
+      uri = '/auth/birthday-list';
     } else {
-      uri =
-          '$urlAdress/auth/birthday-list?start_date=$startDate&end_date=$endDate';
+      uri = '/auth/birthday-list?start_date=$startDate&end_date=$endDate';
     }
 
     final response = await _httpService.get(
@@ -100,9 +97,9 @@ class UserProviderImpl implements IUserProvider {
   }) async {
     late final String uri;
     if (startDate == null && endDate == null) {
-      uri = '$urlAdress/auth/rookies';
+      uri = '/auth/rookies';
     } else {
-      uri = '$urlAdress/auth/rookies?start_date=$startDate&end_date=$endDate';
+      uri = '/auth/rookies?start_date=$startDate&end_date=$endDate';
     }
     final response = await _httpService.get(
       uri,

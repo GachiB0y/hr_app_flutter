@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
@@ -17,10 +16,8 @@ class RookiesBLoC extends Bloc<RookiesEvent, RookiesState>
     implements EventSink<RookiesEvent> {
   RookiesBLoC({
     required final IUserRepository userRepo,
-    required final IAuthRepository authRepository,
     final RookiesState? initialState,
   })  : _userRepo = userRepo,
-        _authRepository = authRepository,
         super(
           initialState ??
               const RookiesState.idle(
@@ -39,17 +36,13 @@ class RookiesBLoC extends Bloc<RookiesEvent, RookiesState>
     );
   }
 
-  // final IRookiesRepository _repository;
   final IUserRepository _userRepo;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(
       RookiesEventFetch event, Emitter<RookiesState> emit) async {
     try {
       emit(RookiesState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-
       Rookies rookiesLoaded = await _userRepo
           .getRookiesInfo(startDate: event.startDate, endDate: event.endDate)
           .timeout(const Duration(seconds: 10));

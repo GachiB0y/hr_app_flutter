@@ -18,16 +18,12 @@ class MaterialContext extends StatefulWidget {
 
 class _MaterialContextState extends State<MaterialContext>
     with RouterStateMixin {
-  // late final auth = AuthScope.of(context);
-  // late final loggedIn = auth.authenticated;
-  // late final AppRouter router = AppRouter(loggedIn: loggedIn);
-
   @override
   Widget build(BuildContext context) {
     final theme = SettingsScope.themeOf(context).theme;
 
     final locale = SettingsScope.localeOf(context).locale;
-    // final auth = AuthScope.of(context);
+
     return MaterialApp.router(
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,

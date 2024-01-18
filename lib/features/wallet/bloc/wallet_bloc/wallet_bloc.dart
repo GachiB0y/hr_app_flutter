@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
@@ -20,10 +19,8 @@ class WalletBLoC extends Bloc<WalletEvent, WalletState>
     implements EventSink<WalletEvent> {
   WalletBLoC({
     required final IWalletRepository walletRepo,
-    required final IAuthRepository authRepository,
     final WalletState? initialState,
   })  : _walletRepo = walletRepo,
-        _authRepository = authRepository,
         super(
           initialState ??
               const WalletState.idle(
@@ -47,16 +44,13 @@ class WalletBLoC extends Bloc<WalletEvent, WalletState>
   }
 
   final IWalletRepository _walletRepo;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(FetchWalletEvent event, Emitter<WalletState> emit) async {
     try {
       emit(WalletState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      final Wallet walletLoaded = await _walletRepo
-          .getWallet(accessToken: accessToken as String)
-          .timeout(const Duration(seconds: 10));
+      final Wallet walletLoaded =
+          await _walletRepo.getWallet().timeout(const Duration(seconds: 10));
       emit(WalletState.successful(data: walletLoaded));
     } on TimeoutException {
       emit(WalletState.error(data: state.data));
@@ -74,11 +68,9 @@ class WalletBLoC extends Bloc<WalletEvent, WalletState>
       WalletEventSendCoinsToOtherUser event, Emitter<WalletState> emit) async {
     try {
       emit(WalletState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final int newBalance = await _walletRepo
           .sendCoinsToOtherUser(
-              accessToken: accessToken as String,
               amount: event.amount,
               userId: event.userId,
               message: event.message)
@@ -102,11 +94,9 @@ class WalletBLoC extends Bloc<WalletEvent, WalletState>
       WalletEventSendCoinsToBracer event, Emitter<WalletState> emit) async {
     try {
       emit(WalletState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final int newBalance = await _walletRepo
           .sendCoinsToBracer(
-            accessToken: accessToken as String,
             amount: event.amount,
           )
           .timeout(const Duration(seconds: 10));

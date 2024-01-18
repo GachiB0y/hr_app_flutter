@@ -69,7 +69,6 @@ class _LeanProductionFormWidgetState extends State<LeanProductionFormWidget> {
   @override
   void initState() {
     blocLeanProductionForm = LeanProductionFormBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
         repository: DependenciesScope.of(context).leanProductionRepository);
 
     super.initState();

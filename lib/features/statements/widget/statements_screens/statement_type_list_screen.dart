@@ -62,7 +62,6 @@ class _DropdownWidgetState extends State<DropdownWidget> {
     super.initState();
 
     statementTypeListBLoC = StatementTypeListBLoC(
-      authRepository: DependenciesScope.of(context).authRepository,
       repositoryStatements: DependenciesScope.of(context).statementsRepository,
     );
     statementsBLoC = StatementsScope.of(context, listen: false).statementsBLoC;
@@ -71,6 +70,12 @@ class _DropdownWidgetState extends State<DropdownWidget> {
     filteredStatementFields = statementTypeListBLoC.state.hasData
         ? statementTypeListBLoC.state.data!
         : [];
+  }
+
+  @override
+  void dispose() {
+    statementTypeListBLoC.close();
+    super.dispose();
   }
 
   void filterStatementFields(
@@ -502,10 +507,15 @@ class _ParticipantInputWidgetState extends State<ParticipantInputWidget> {
   @override
   void initState() {
     participantsBLoC = ParticipantsBLoC(
-      authRepository: DependenciesScope.of(context).authRepository,
       repositoryStatements: DependenciesScope.of(context).statementsRepository,
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    participantsBLoC.close();
+    super.dispose();
   }
 
   @override

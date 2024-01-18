@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/core/components/database/flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_api_client.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/refresh_client.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
@@ -69,8 +67,6 @@ mixin InitializationSteps {
       );
     },
     'AuthRepository': (progress) async {
-      const IHTTPService htttpService = HTTPServiceImpl();
-      const authProvider = AuthProviderImpl(htttpService);
       final interceptedDio = Dio();
       final justDio = Dio(
         BaseOptions(
@@ -99,13 +95,11 @@ mixin InitializationSteps {
       interceptedDio.interceptors.add(oauthInterceptor);
 
       final authRepository = AuthRepositoryImpl(
-          authProvider: authProvider,
           sessionDataProvdier: progress.dependencies.sessionDataProvdier,
           authStatusDataSource: oauthInterceptor,
           authDataSource: authDataSource);
 
       progress.dependencies.authRepository = authRepository;
-      progress.dependencies.htttpService = htttpService;
       progress.dependencies.restClient = restClient;
     },
     'UserRepository': (progress) async {
@@ -126,7 +120,7 @@ mixin InitializationSteps {
     },
     'ServiceRepository': (progress) async {
       final serviceProvider =
-          ServiceProviderImpl(progress.dependencies.htttpService);
+          ServiceProviderImpl(progress.dependencies.restClient);
 
       final serviceRepository =
           ServiceRepositoryImpl(serviceProvider: serviceProvider);
@@ -136,7 +130,7 @@ mixin InitializationSteps {
     },
     'WalletRepository': (progress) async {
       final walletProvider =
-          WalletProviderImpl(progress.dependencies.htttpService);
+          WalletProviderImpl(progress.dependencies.restClient);
 
       final walletRepository =
           WalletRepositoryImpl(walletProvider: walletProvider);
@@ -145,7 +139,7 @@ mixin InitializationSteps {
     },
     'StatementsRepository': (progress) async {
       final statementProvider =
-          StatementProviderImpl(progress.dependencies.htttpService);
+          StatementProviderImpl(progress.dependencies.restClient);
 
       final statementsRepository =
           StatementsRepositoryImpl(statementsProvider: statementProvider);

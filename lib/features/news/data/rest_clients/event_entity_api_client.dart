@@ -31,7 +31,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
   @override
   Future<List<EventEntity>> getEvents() async {
     final response = await _httpService.get(
-      '/news/',
+      '/news',
     );
 
     if (response
@@ -54,9 +54,9 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final data,
         }) {
-      final List<Category> result = (data['result'] as List<dynamic>)
+      final List<Category> result = (data as List<dynamic>)
           .map((item) => Category.fromJson(item))
           .toList();
       return result;

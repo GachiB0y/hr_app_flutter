@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
-import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_api_client.dart';
 import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 
@@ -9,10 +8,10 @@ abstract interface class IAuthRepository {
   Future<bool> isAuth();
 
   Future<bool> isExistToken({required bool isRefrshToken});
-  Future<String?> cheskIsLiveAccessToken();
+  // Future<String?> cheskIsLiveAccessToken();
 
   Future<void> getCode({required String numberPhone});
-  Future<String?> _makeJwtTokens({required String refreshToken});
+  // Future<String?> _makeJwtTokens({required String refreshToken});
   Future<String?> getRefeshTokenInStorage();
   Future<String?> getAccessTokenInStorage();
 
@@ -28,16 +27,17 @@ abstract interface class IAuthRepository {
 class AuthRepositoryImpl implements IAuthRepository {
   AuthRepositoryImpl({
     required AuthStatusDataSource authStatusDataSource,
-    required IAuthProvider authProvider,
+    // required IAuthProvider authProvider,
     required SessionDataProvdier sessionDataProvdier,
     required AuthDataSource authDataSource,
-  })  : _authProvider = authProvider,
+  })  :
+        //  _authProvider = authProvider,
         _sessionDataProvdier = sessionDataProvdier,
         _authStatusDataSource = authStatusDataSource,
         _authDataSource = authDataSource;
 
   final AuthStatusDataSource _authStatusDataSource;
-  final IAuthProvider _authProvider;
+  // final IAuthProvider _authProvider;
   final SessionDataProvdier _sessionDataProvdier;
   final AuthDataSource _authDataSource;
 
@@ -95,22 +95,22 @@ class AuthRepositoryImpl implements IAuthRepository {
   @override
   Future<void> logout() => _authDataSource.signOut();
 
-  @override
-  Future<String?> _makeJwtTokens({required String refreshToken}) async {
-    var record =
-        await _authProvider.makeNewJwtTokens(refreshToken: refreshToken);
-    if (record.accessToken.isNotEmpty && record.refresToken.isNotEmpty) {
-      await _sessionDataProvdier.deleteSessionId();
-      await _sessionDataProvdier.deleteAccessToken();
-      await _sessionDataProvdier.setSessionId(record.refresToken);
+  // @override
+  // Future<String?> _makeJwtTokens({required String refreshToken}) async {
+  //   var record =
+  //       await _authProvider.makeNewJwtTokens(refreshToken: refreshToken);
+  //   if (record.accessToken.isNotEmpty && record.refresToken.isNotEmpty) {
+  //     await _sessionDataProvdier.deleteSessionId();
+  //     await _sessionDataProvdier.deleteAccessToken();
+  //     await _sessionDataProvdier.setSessionId(record.refresToken);
 
-      await _sessionDataProvdier.setAccessToken(record.accessToken);
-      final accessToken = record.accessToken;
-      return accessToken;
-    } else {
-      return null;
-    }
-  }
+  //     await _sessionDataProvdier.setAccessToken(record.accessToken);
+  //     final accessToken = record.accessToken;
+  //     return accessToken;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   @override
   bool isLiveToken({required String jwtToken}) {
@@ -138,18 +138,18 @@ class AuthRepositoryImpl implements IAuthRepository {
     }
   }
 
-  @override
-  Future<String?> cheskIsLiveAccessToken() async {
-    String? accessToken = await getAccessTokenInStorage();
-    final bool isLive = isLiveToken(jwtToken: accessToken as String);
-    if (!isLive) {
-      final String? refreshToken = await getRefeshTokenInStorage();
-      final newAccecssToken =
-          await _makeJwtTokens(refreshToken: refreshToken as String);
-      accessToken = newAccecssToken;
-    }
-    return accessToken;
-  }
+  // @override
+  // Future<String?> cheskIsLiveAccessToken() async {
+  //   String? accessToken = await getAccessTokenInStorage();
+  //   final bool isLive = isLiveToken(jwtToken: accessToken as String);
+  //   if (!isLive) {
+  //     final String? refreshToken = await getRefeshTokenInStorage();
+  //     final newAccecssToken =
+  //         await _makeJwtTokens(refreshToken: refreshToken as String);
+  //     accessToken = newAccecssToken;
+  //   }
+  //   return accessToken;
+  // }
 
   @override
   Stream<AuthenticationStatus> getAuthStateChanges() =>

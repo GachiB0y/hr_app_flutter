@@ -28,14 +28,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
-    context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
-    context.read<WalletBLoC>().add(const WalletEvent.fetch());
-    context
-        .read<UserBirthDayInfoBLoc>()
-        .add(const UserBirthDayInfoEvent.fetch());
-    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
-    context.read<CategoryBloc>().add(const CategoryEvent.fetch());
+    // context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
+    // context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
+    // context.read<WalletBLoC>().add(const WalletEvent.fetch());
+    // context
+    //     .read<UserBirthDayInfoBLoc>()
+    //     .add(const UserBirthDayInfoEvent.fetch());
+    // context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
+    // context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
@@ -634,6 +634,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
   void initState() {
     super.initState();
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
+    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
   }
 
   @override

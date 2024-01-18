@@ -19,7 +19,7 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
         ValueNotifier<List<({Object error, StackTrace stackTrace})>>(
       <({Object error, StackTrace stackTrace})>[],
     );
-    // final stateAuth = dependencies.authBloc.state;
+
     // Create router.
     router = Octopus(
       routes: Routes.values,
