@@ -90,6 +90,9 @@ abstract base class RestClientBase implements RestClient {
       if (result case {'result': final data}) {
         return result;
       }
+      if (statusCode == 201) {
+        return result;
+      }
 
       return null;
     } on ClientException {

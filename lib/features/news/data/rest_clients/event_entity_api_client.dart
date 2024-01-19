@@ -80,10 +80,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
       body: fields,
     );
 
-    if (response
-        case {
-          'result': final Map<String, Object?> data,
-        }) {
+    if (response case final Map<String, Object?> data) {
       return true;
     }
     throw Exception('Error create New EventEntity!!!');
@@ -149,10 +146,8 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
   @override
   Future<bool> moveInArchiveNews({required String id}) async {
-    final response = await _httpService.post(
-      '/news/move_in_archive?feed_id=$id',
-      body: {},
-    );
+    final response = await _httpService
+        .post('/news/move_in_archive', body: {}, queryParams: {'feed_id': id});
 
     if (response
         case {
