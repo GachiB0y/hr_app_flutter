@@ -22,8 +22,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     super.initState();
     blocServiceBloc = context.read<ServiceBloc>();
     blocServiceBloc.add(const ServiceEvent.fetch(isRow: false));
-
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: false));
   }
 
   // Создание списка групп
@@ -31,7 +29,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final blocServiceBloc = context.read<ServiceBloc>();
     const double raiudsBorder = 30;
 
     return Scaffold(

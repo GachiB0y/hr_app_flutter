@@ -22,8 +22,8 @@ class StatementProviderImpl implements IStatementsProvider {
   Future<List<StatementFieldTypeEntity>> fetchListTypeStatements() async {
     final response = await _httpService.get('/documents/document_template');
 
-    if (response case {'result': final data}) {
-      final List<StatementFieldTypeEntity> result = (data as List<dynamic>)
+    if (response case {'result': final List<dynamic> data}) {
+      final List<StatementFieldTypeEntity> result = (data)
           .map((item) => StatementFieldTypeEntity.fromJson(item))
           .toList();
       return result;
