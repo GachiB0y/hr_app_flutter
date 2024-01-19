@@ -31,16 +31,15 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
   @override
   Future<List<EventEntity>> getEvents() async {
     final response = await _httpService.get(
-      '/news',
+      '/news/all',
     );
 
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result = (data['result'] as List<dynamic>)
-          .map((item) => EventEntity.fromJson(item))
-          .toList();
+      final List<EventEntity> result =
+          (data).map((item) => EventEntity.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching EventsEntity');
@@ -54,11 +53,10 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
     if (response
         case {
-          'result': final data,
+          'result': final List<dynamic> data,
         }) {
-      final List<Category> result = (data as List<dynamic>)
-          .map((item) => Category.fromJson(item))
-          .toList();
+      final List<Category> result =
+          (data).map((item) => Category.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching Category');
@@ -99,11 +97,10 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result = (data['result'] as List<dynamic>)
-          .map((item) => EventEntity.fromJson(item))
-          .toList();
+      final List<EventEntity> result =
+          (data).map((item) => EventEntity.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching  Approvment Events');

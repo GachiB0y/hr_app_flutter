@@ -29,11 +29,11 @@ class _UserMainScreenState extends State<UserMainScreen> {
   void initState() {
     super.initState();
     // context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
-    // context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
+    context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
     // context.read<WalletBLoC>().add(const WalletEvent.fetch());
-    // context
-    //     .read<UserBirthDayInfoBLoc>()
-    //     .add(const UserBirthDayInfoEvent.fetch());
+    context
+        .read<UserBirthDayInfoBLoc>()
+        .add(const UserBirthDayInfoEvent.fetch());
     // context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     // context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }

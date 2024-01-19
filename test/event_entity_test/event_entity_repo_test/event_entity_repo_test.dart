@@ -44,7 +44,6 @@ class FakeIEventsEntityProvider extends Fake implements IEventsEntityProvider {
 void main() {
   late IEventsEntityProvider eventApiClient;
   late IEventEntityRepository eventRepository;
-  const String accessToken = 'test_access_token';
 
   setUp(() {
 // Создаем экземпляры мок-объектов

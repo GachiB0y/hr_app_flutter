@@ -68,15 +68,13 @@ class UserProviderImpl implements IUserProvider {
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
-    late final String uri;
-    if (startDate == null && endDate == null) {
-      uri = '/auth/birthday-list';
-    } else {
-      uri = '/auth/birthday-list?start_date=$startDate&end_date=$endDate';
-    }
+    final queryParams = (startDate == null && endDate == null)
+        ? null
+        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
 
     final response = await _httpService.get(
-      uri,
+      '/auth/birthday-list',
+      queryParams: queryParams,
     );
 
     if (response
@@ -95,15 +93,12 @@ class UserProviderImpl implements IUserProvider {
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
-    late final String uri;
-    if (startDate == null && endDate == null) {
-      uri = '/auth/rookies';
-    } else {
-      uri = '/auth/rookies?start_date=$startDate&end_date=$endDate';
-    }
-    final response = await _httpService.get(
-      uri,
-    );
+    final queryParams = (startDate == null && endDate == null)
+        ? null
+        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
+
+    final response =
+        await _httpService.get('/auth/rookies', queryParams: queryParams);
     if (response
         case {
           'result': final Map<String, Object?> data,

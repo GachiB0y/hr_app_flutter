@@ -59,9 +59,9 @@ class ServiceProviderImpl implements IServiceProvider {
 
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final ScheduleBus result = ScheduleBus.fromJson(data);
+      final ScheduleBus result = ScheduleBus.fromJson(response);
       return result;
     }
     throw Exception('Error get Schedule Bus');

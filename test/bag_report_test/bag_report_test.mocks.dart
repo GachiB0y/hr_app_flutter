@@ -56,31 +56,26 @@ class _Fake$BagReportEntityCopyWith_1<$Res> extends _i1.SmartFake
 class MockIServiceRepository extends _i1.Mock
     implements _i4.IServiceRepository {
   @override
-  _i5.Future<List<_i6.Service>> getServices({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i5.Future<List<_i6.Service>> getServices() => (super.noSuchMethod(
         Invocation.method(
           #getServices,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i5.Future<List<_i6.Service>>.value(<_i6.Service>[]),
         returnValueForMissingStub:
             _i5.Future<List<_i6.Service>>.value(<_i6.Service>[]),
       ) as _i5.Future<List<_i6.Service>>);
   @override
-  _i5.Future<_i2.ScheduleBus> getScheduleBus({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i5.Future<_i2.ScheduleBus> getScheduleBus() => (super.noSuchMethod(
         Invocation.method(
           #getScheduleBus,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i5.Future<_i2.ScheduleBus>.value(_FakeScheduleBus_0(
           this,
           Invocation.method(
             #getScheduleBus,
             [],
-            {#accessToken: accessToken},
           ),
         )),
         returnValueForMissingStub:
@@ -89,23 +84,17 @@ class MockIServiceRepository extends _i1.Mock
           Invocation.method(
             #getScheduleBus,
             [],
-            {#accessToken: accessToken},
           ),
         )),
       ) as _i5.Future<_i2.ScheduleBus>);
   @override
-  _i5.Future<bool> submitBagReportForm({
-    required String? accessToken,
-    required _i3.BagReportEntity? bagReportEntity,
-  }) =>
+  _i5.Future<bool> submitBagReportForm(
+          {required _i3.BagReportEntity? bagReportEntity}) =>
       (super.noSuchMethod(
         Invocation.method(
           #submitBagReportForm,
           [],
-          {
-            #accessToken: accessToken,
-            #bagReportEntity: bagReportEntity,
-          },
+          {#bagReportEntity: bagReportEntity},
         ),
         returnValue: _i5.Future<bool>.value(false),
         returnValueForMissingStub: _i5.Future<bool>.value(false),

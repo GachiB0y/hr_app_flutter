@@ -33,22 +33,20 @@ class FakeAuthRepoImpl extends Fake implements IAuthRepository {}
 
 class FakeWalletRepoImpl extends Fake implements IWalletRepository {
   @override
-  Future<Wallet> getWallet({required String? accessToken}) async {
+  Future<Wallet> getWallet() async {
     return walletPrevios;
   }
 
   @override
   Future<int> sendCoinsToOtherUser(
-      {required String accessToken,
-      required int amount,
+      {required int amount,
       required int userId,
       required String message}) async {
     return walletNew.balance;
   }
 
   @override
-  Future<int> sendCoinsToBracer(
-      {required String accessToken, required int amount}) async {
+  Future<int> sendCoinsToBracer({required int amount}) async {
     return walletNew.balance;
   }
 }
@@ -56,22 +54,19 @@ class FakeWalletRepoImpl extends Fake implements IWalletRepository {
 void main() {
   group('Wallet Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
+
     late IWalletRepository mockWalletRepository;
     late IWalletRepository mockWalletRepositoryRelaxed;
 
     // Создайте экземпляр вашего BLoC
     late WalletBLoC walletBloc;
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
+
       mockWalletRepository = FakeWalletRepoImpl();
       mockWalletRepositoryRelaxed = MockIWalletRepository();
-      walletBloc = WalletBLoC(
-          authRepository: mockAuthRepository, walletRepo: mockWalletRepository);
+      walletBloc = WalletBLoC(walletRepo: mockWalletRepository);
     });
 
     tearDown(() {
@@ -89,9 +84,8 @@ void main() {
     test('emits WalletState.successful when fetch event is added', () async {
       // Arrange
       const wallet = Wallet(balance: 100, avarageCoins: 10, transactions: []);
-      when(mockAuthRepository.cheskIsLiveAccessToken())
-          .thenAnswer((_) async => accessToken);
-      mockWalletRepository.getWallet(accessToken: accessToken);
+
+      mockWalletRepository.getWallet();
 
       // Act
       walletBloc.add(const FetchWalletEvent());
@@ -113,27 +107,19 @@ void main() {
     blocTest<WalletBLoC, WalletState>(
         'emits [processing, error, idle] when getWallet  Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockWalletRepositoryRelaxed.getWallet(accessToken: accessToken))
+          when(mockWalletRepositoryRelaxed.getWallet())
               .thenThrow(Exception('oops'));
         },
-        build: () => WalletBLoC(
-            authRepository: mockAuthRepository,
-            walletRepo: mockWalletRepositoryRelaxed),
+        build: () => WalletBLoC(walletRepo: mockWalletRepositoryRelaxed),
         act: (bloc) => bloc.add(const FetchWalletEvent()),
         errors: () => [isA<Exception>()]);
     blocTest<WalletBLoC, WalletState>(
         'emits [processing, error, idle] when getWallet  Timeout Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockWalletRepositoryRelaxed.getWallet(accessToken: accessToken))
+          when(mockWalletRepositoryRelaxed.getWallet())
               .thenThrow(TimeoutException('oops'));
         },
-        build: () => WalletBLoC(
-            authRepository: mockAuthRepository,
-            walletRepo: mockWalletRepositoryRelaxed),
+        build: () => WalletBLoC(walletRepo: mockWalletRepositoryRelaxed),
         act: (bloc) => bloc.add(const FetchWalletEvent()),
         errors: () => [isA<TimeoutException>()]);
 
@@ -141,13 +127,8 @@ void main() {
       'emits WalletState.successful when sendCoinsToOtherUser event is added',
       build: () => walletBloc,
       seed: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         mockWalletRepository.sendCoinsToOtherUser(
-            accessToken: accessToken,
-            amount: 10,
-            userId: 8900,
-            message: 'test messange');
+            amount: 10, userId: 8900, message: 'test messange');
         return const WalletState.idle(data: walletPrevios);
       },
       act: (bloc) => walletBloc.add(const WalletEventSendCoinsToOtherUser(
@@ -167,13 +148,8 @@ void main() {
       'emits WalletState.successful when sendCoinsToBracer event is added',
       build: () => walletBloc,
       seed: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         mockWalletRepository.sendCoinsToOtherUser(
-            accessToken: accessToken,
-            amount: 10,
-            userId: 8900,
-            message: 'test messange');
+            amount: 10, userId: 8900, message: 'test messange');
         return const WalletState.idle(data: walletPrevios);
       },
       act: (bloc) => walletBloc.add(const WalletEventSendCoinsToBracer(

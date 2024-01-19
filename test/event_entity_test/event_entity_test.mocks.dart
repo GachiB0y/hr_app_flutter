@@ -109,14 +109,6 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<String?> cheskIsLiveAccessToken() => (super.noSuchMethod(
-        Invocation.method(
-          #cheskIsLiveAccessToken,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
-  @override
   _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -453,15 +445,6 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
-  @override
-  _i4.Future<String?> cheskIsLiveAccessToken() => (super.noSuchMethod(
-        Invocation.method(
-          #cheskIsLiveAccessToken,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
   @override
   _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(

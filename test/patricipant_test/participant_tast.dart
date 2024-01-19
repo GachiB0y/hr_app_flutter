@@ -1,4 +1,3 @@
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/statements/bloc/participants_bloc/participants_bloc.dart';
 import 'package:hr_app_flutter/features/statements/data/repo/statements_repository.dart';
 import 'package:hr_app_flutter/features/statements/model/participant/participant.dart';
@@ -11,7 +10,6 @@ import '../statements_test/statements_test.mocks.dart';
 void main() {
   group('participantsBLoC Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
     late IStatementsRepository statementRepository;
 
     // Создайте экземпляр вашего BLoC
@@ -24,15 +22,11 @@ void main() {
         id: '8900',
         position: 'Software Enginer');
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
       statementRepository = MockIStatementsRepository();
 
       participantBloc = ParticipantsBLoC(
-        authRepository: mockAuthRepository,
         repositoryStatements: statementRepository,
       );
     });
@@ -52,15 +46,11 @@ void main() {
     blocTest<ParticipantsBLoC, ParticipantsState>(
         'emits [processing, error, idle] when fetch participants Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(statementRepository.findParticipant(
-                  accessToken: accessToken, name: 'Test Name'))
+          when(statementRepository.findParticipant(name: 'Test Name'))
               .thenThrow(Exception('oops'));
         },
-        build: () => ParticipantsBLoC(
-            authRepository: mockAuthRepository,
-            repositoryStatements: statementRepository),
+        build: () =>
+            ParticipantsBLoC(repositoryStatements: statementRepository),
         act: (bloc) =>
             bloc.add(const FetchParticipantsEvent(inputValue: 'Test Name')),
         errors: () => [isA<Exception>()]);
@@ -68,10 +58,7 @@ void main() {
     blocTest<ParticipantsBLoC, ParticipantsState>(
       'emits ParticipantsState.successful when Fetch participants event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(statementRepository.findParticipant(
-                accessToken: accessToken, name: 'Volkov'))
+        when(statementRepository.findParticipant(name: 'Volkov'))
             .thenAnswer((_) async => [participantsFirst]);
       },
       build: () => participantBloc,
