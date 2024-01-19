@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
+import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 // import 'package:hr_app_flutter/router/router.dart';
@@ -181,15 +182,17 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           return Scaffold(
             // appBar: null,
-            body: IndexedStack(
-              index: _tab.index,
-              children: const <Widget>[
-                UserMainScreen(),
-                GrassCoinScreen(),
-                CompanyScreen(),
-                EducationScreen(),
-                ServicesScreen(),
-              ],
+            body: Shimmer(
+              child: IndexedStack(
+                index: _tab.index,
+                children: const <Widget>[
+                  UserMainScreen(),
+                  GrassCoinScreen(),
+                  CompanyScreen(),
+                  EducationScreen(),
+                  ServicesScreen(),
+                ],
+              ),
             ),
             bottomNavigationBar: state.modalOpened
                 ? null

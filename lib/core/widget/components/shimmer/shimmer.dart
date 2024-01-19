@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 
-const _shimmerGradient = LinearGradient(
-  colors: [
-    Color(0xFFEBEBF4),
-    Color(0xFFF4F4F4),
-    Color(0xFFEBEBF4),
-  ],
-  stops: [
-    0.1,
-    0.3,
-    0.4,
-  ],
-  begin: Alignment(-1.0, -0.3),
-  end: Alignment(1.0, 0.3),
-  tileMode: TileMode.clamp,
-);
-
 class Shimmer extends StatefulWidget {
   static ShimmerState? of(BuildContext context) {
     return context.findAncestorStateOfType<ShimmerState>();
@@ -74,7 +58,13 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
             _SlidingGradientTransform(slidePercent: _shimmerController.value),
       );
 
-  bool get isSized => (context.findRenderObject() as RenderBox).hasSize;
+  bool get isSized {
+    final renderObject = context.findRenderObject();
+    if (renderObject == null) {
+      return false;
+    }
+    return (renderObject as RenderBox).hasSize;
+  }
 
   Size get size => (context.findRenderObject() as RenderBox).size;
 

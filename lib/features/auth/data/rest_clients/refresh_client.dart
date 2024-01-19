@@ -19,8 +19,8 @@ final class RefreshClientImpl implements RefreshClient {
 
     if (response.data
         case {
-          'accessToken': final String accessToken,
-          'refreshToken': final String refreshToken
+          'access_token': final String accessToken,
+          'refresh_token': final String refreshToken
         }) {
       return (
         accessToken: accessToken,

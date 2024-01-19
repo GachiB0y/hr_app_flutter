@@ -129,7 +129,7 @@ class UserProviderImpl implements IUserProvider {
   @override
   Future<List<UserInfo>> findUser({required String findText}) async {
     final response = await _httpService.get(
-      '/auth/find_by_id',
+      '/auth/find_user',
       queryParams: {'name': findText},
     );
     if (response
@@ -141,7 +141,7 @@ class UserProviderImpl implements IUserProvider {
           .toList();
       return result;
     }
-    throw const FormatException('Error fetching User Info By Id User');
+    throw const FormatException('Error fetching findUser User');
   }
 
   @override

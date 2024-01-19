@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/utils/shimmer/shimmer.dart';
+import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
 
