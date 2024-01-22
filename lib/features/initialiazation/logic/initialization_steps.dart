@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:hr_app_flutter/core/components/database/data_provider/session_data_provider.dart';
-import 'package:hr_app_flutter/core/components/database/flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
@@ -41,13 +39,6 @@ mixin InitializationSteps {
   /// The initialization steps,
   /// which are executed in the order they are defined.
   final initializationSteps = <String, StepAction>{
-    'Session Data Provdier': (progress) async {
-      const SecureStorage secureStorageDefault = SecureStorageDefault();
-      const sessionDataProvdier =
-          SessionDataProvdierDefault(secureStorage: secureStorageDefault);
-
-      progress.dependencies.sessionDataProvdier = sessionDataProvdier;
-    },
     'Shared Preferences': (progress) async {
       final sharedPreferences = await SharedPreferences.getInstance();
       progress.dependencies.sharedPreferences = sharedPreferences;
@@ -95,7 +86,6 @@ mixin InitializationSteps {
       interceptedDio.interceptors.add(oauthInterceptor);
 
       final authRepository = AuthRepositoryImpl(
-          sessionDataProvdier: progress.dependencies.sessionDataProvdier,
           authStatusDataSource: oauthInterceptor,
           authDataSource: authDataSource);
 

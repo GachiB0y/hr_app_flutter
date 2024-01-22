@@ -87,6 +87,7 @@ abstract base class RestClientBase implements RestClient {
         );
       }
 
+      // ignore: unused_local_variable
       if (result case {'result': final data}) {
         return result;
       }

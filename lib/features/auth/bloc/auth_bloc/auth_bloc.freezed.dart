@@ -20,7 +20,6 @@ mixin _$AuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) getCode,
     required TResult Function(String phoneNumber, String code) authByCode,
-    required TResult Function() checkAuth,
     required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +27,6 @@ mixin _$AuthEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? getCode,
     TResult? Function(String phoneNumber, String code)? authByCode,
-    TResult? Function()? checkAuth,
     TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +34,6 @@ mixin _$AuthEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? getCode,
     TResult Function(String phoneNumber, String code)? authByCode,
-    TResult Function()? checkAuth,
     TResult Function()? logout,
     required TResult orElse(),
   }) =>
@@ -45,7 +42,6 @@ mixin _$AuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(GetCodeAuthEvent value) getCode,
     required TResult Function(AuthByCodeAuthEvent value) authByCode,
-    required TResult Function(CheckAuthAuthEvent value) checkAuth,
     required TResult Function(LogoutAuthEvent value) logout,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,7 +49,6 @@ mixin _$AuthEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCodeAuthEvent value)? getCode,
     TResult? Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult? Function(CheckAuthAuthEvent value)? checkAuth,
     TResult? Function(LogoutAuthEvent value)? logout,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +56,6 @@ mixin _$AuthEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCodeAuthEvent value)? getCode,
     TResult Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult Function(CheckAuthAuthEvent value)? checkAuth,
     TResult Function(LogoutAuthEvent value)? logout,
     required TResult orElse(),
   }) =>
@@ -152,7 +146,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) getCode,
     required TResult Function(String phoneNumber, String code) authByCode,
-    required TResult Function() checkAuth,
     required TResult Function() logout,
   }) {
     return getCode(phoneNumber);
@@ -163,7 +156,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? getCode,
     TResult? Function(String phoneNumber, String code)? authByCode,
-    TResult? Function()? checkAuth,
     TResult? Function()? logout,
   }) {
     return getCode?.call(phoneNumber);
@@ -174,7 +166,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? getCode,
     TResult Function(String phoneNumber, String code)? authByCode,
-    TResult Function()? checkAuth,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
@@ -189,7 +180,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(GetCodeAuthEvent value) getCode,
     required TResult Function(AuthByCodeAuthEvent value) authByCode,
-    required TResult Function(CheckAuthAuthEvent value) checkAuth,
     required TResult Function(LogoutAuthEvent value) logout,
   }) {
     return getCode(this);
@@ -200,7 +190,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCodeAuthEvent value)? getCode,
     TResult? Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult? Function(CheckAuthAuthEvent value)? checkAuth,
     TResult? Function(LogoutAuthEvent value)? logout,
   }) {
     return getCode?.call(this);
@@ -211,7 +200,6 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCodeAuthEvent value)? getCode,
     TResult Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult Function(CheckAuthAuthEvent value)? checkAuth,
     TResult Function(LogoutAuthEvent value)? logout,
     required TResult orElse(),
   }) {
@@ -310,7 +298,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) getCode,
     required TResult Function(String phoneNumber, String code) authByCode,
-    required TResult Function() checkAuth,
     required TResult Function() logout,
   }) {
     return authByCode(phoneNumber, code);
@@ -321,7 +308,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? getCode,
     TResult? Function(String phoneNumber, String code)? authByCode,
-    TResult? Function()? checkAuth,
     TResult? Function()? logout,
   }) {
     return authByCode?.call(phoneNumber, code);
@@ -332,7 +318,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? getCode,
     TResult Function(String phoneNumber, String code)? authByCode,
-    TResult Function()? checkAuth,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
@@ -347,7 +332,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(GetCodeAuthEvent value) getCode,
     required TResult Function(AuthByCodeAuthEvent value) authByCode,
-    required TResult Function(CheckAuthAuthEvent value) checkAuth,
     required TResult Function(LogoutAuthEvent value) logout,
   }) {
     return authByCode(this);
@@ -358,7 +342,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCodeAuthEvent value)? getCode,
     TResult? Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult? Function(CheckAuthAuthEvent value)? checkAuth,
     TResult? Function(LogoutAuthEvent value)? logout,
   }) {
     return authByCode?.call(this);
@@ -369,7 +352,6 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCodeAuthEvent value)? getCode,
     TResult Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult Function(CheckAuthAuthEvent value)? checkAuth,
     TResult Function(LogoutAuthEvent value)? logout,
     required TResult orElse(),
   }) {
@@ -391,121 +373,6 @@ abstract class AuthByCodeAuthEvent extends AuthEvent {
   @JsonKey(ignore: true)
   _$$AuthByCodeAuthEventCopyWith<_$AuthByCodeAuthEvent> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$CheckAuthAuthEventCopyWith<$Res> {
-  factory _$$CheckAuthAuthEventCopyWith(_$CheckAuthAuthEvent value,
-          $Res Function(_$CheckAuthAuthEvent) then) =
-      __$$CheckAuthAuthEventCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CheckAuthAuthEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$CheckAuthAuthEvent>
-    implements _$$CheckAuthAuthEventCopyWith<$Res> {
-  __$$CheckAuthAuthEventCopyWithImpl(
-      _$CheckAuthAuthEvent _value, $Res Function(_$CheckAuthAuthEvent) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$CheckAuthAuthEvent extends CheckAuthAuthEvent {
-  const _$CheckAuthAuthEvent() : super._();
-
-  @override
-  String toString() {
-    return 'AuthEvent.checkAuth()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CheckAuthAuthEvent);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String phoneNumber) getCode,
-    required TResult Function(String phoneNumber, String code) authByCode,
-    required TResult Function() checkAuth,
-    required TResult Function() logout,
-  }) {
-    return checkAuth();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phoneNumber)? getCode,
-    TResult? Function(String phoneNumber, String code)? authByCode,
-    TResult? Function()? checkAuth,
-    TResult? Function()? logout,
-  }) {
-    return checkAuth?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phoneNumber)? getCode,
-    TResult Function(String phoneNumber, String code)? authByCode,
-    TResult Function()? checkAuth,
-    TResult Function()? logout,
-    required TResult orElse(),
-  }) {
-    if (checkAuth != null) {
-      return checkAuth();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(GetCodeAuthEvent value) getCode,
-    required TResult Function(AuthByCodeAuthEvent value) authByCode,
-    required TResult Function(CheckAuthAuthEvent value) checkAuth,
-    required TResult Function(LogoutAuthEvent value) logout,
-  }) {
-    return checkAuth(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetCodeAuthEvent value)? getCode,
-    TResult? Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult? Function(CheckAuthAuthEvent value)? checkAuth,
-    TResult? Function(LogoutAuthEvent value)? logout,
-  }) {
-    return checkAuth?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetCodeAuthEvent value)? getCode,
-    TResult Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult Function(CheckAuthAuthEvent value)? checkAuth,
-    TResult Function(LogoutAuthEvent value)? logout,
-    required TResult orElse(),
-  }) {
-    if (checkAuth != null) {
-      return checkAuth(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class CheckAuthAuthEvent extends AuthEvent {
-  const factory CheckAuthAuthEvent() = _$CheckAuthAuthEvent;
-  const CheckAuthAuthEvent._() : super._();
 }
 
 /// @nodoc
@@ -548,7 +415,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) getCode,
     required TResult Function(String phoneNumber, String code) authByCode,
-    required TResult Function() checkAuth,
     required TResult Function() logout,
   }) {
     return logout();
@@ -559,7 +425,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? getCode,
     TResult? Function(String phoneNumber, String code)? authByCode,
-    TResult? Function()? checkAuth,
     TResult? Function()? logout,
   }) {
     return logout?.call();
@@ -570,7 +435,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? getCode,
     TResult Function(String phoneNumber, String code)? authByCode,
-    TResult Function()? checkAuth,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
@@ -585,7 +449,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(GetCodeAuthEvent value) getCode,
     required TResult Function(AuthByCodeAuthEvent value) authByCode,
-    required TResult Function(CheckAuthAuthEvent value) checkAuth,
     required TResult Function(LogoutAuthEvent value) logout,
   }) {
     return logout(this);
@@ -596,7 +459,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetCodeAuthEvent value)? getCode,
     TResult? Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult? Function(CheckAuthAuthEvent value)? checkAuth,
     TResult? Function(LogoutAuthEvent value)? logout,
   }) {
     return logout?.call(this);
@@ -607,7 +469,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetCodeAuthEvent value)? getCode,
     TResult Function(AuthByCodeAuthEvent value)? authByCode,
-    TResult Function(CheckAuthAuthEvent value)? checkAuth,
     TResult Function(LogoutAuthEvent value)? logout,
     required TResult orElse(),
   }) {

@@ -91,24 +91,6 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
   }
 
   @override
-  _i4.Future<bool> isAuth() => (super.noSuchMethod(
-        Invocation.method(
-          #isAuth,
-          [],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<bool> isExistToken({required bool? isRefrshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #isExistToken,
-          [],
-          {#isRefrshToken: isRefrshToken},
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
   _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -119,22 +101,6 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
-  @override
-  _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
-        Invocation.method(
-          #getRefeshTokenInStorage,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
-  @override
-  _i4.Future<String?> getAccessTokenInStorage() => (super.noSuchMethod(
-        Invocation.method(
-          #getAccessTokenInStorage,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
   @override
   _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
@@ -161,15 +127,6 @@ class MockIAuthRepository extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
-  @override
-  bool isLiveToken({required String? jwtToken}) => (super.noSuchMethod(
-        Invocation.method(
-          #isLiveToken,
-          [],
-          {#jwtToken: jwtToken},
-        ),
-        returnValue: false,
-      ) as bool);
   @override
   _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
       (super.noSuchMethod(
@@ -426,26 +383,6 @@ class MockCategory extends _i1.Mock implements _i2.Category {
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
   @override
-  _i4.Future<bool> isAuth() => (super.noSuchMethod(
-        Invocation.method(
-          #isAuth,
-          [],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
-  _i4.Future<bool> isExistToken({required bool? isRefrshToken}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #isExistToken,
-          [],
-          {#isRefrshToken: isRefrshToken},
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-  @override
   _i4.Future<void> getCode({required String? numberPhone}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -456,24 +393,6 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
-  @override
-  _i4.Future<String?> getRefeshTokenInStorage() => (super.noSuchMethod(
-        Invocation.method(
-          #getRefeshTokenInStorage,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
-  @override
-  _i4.Future<String?> getAccessTokenInStorage() => (super.noSuchMethod(
-        Invocation.method(
-          #getAccessTokenInStorage,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
   @override
   _i4.Future<void> signInWithPhoneAndCode({
     required String? numberPhone,
@@ -500,16 +419,6 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
-  @override
-  bool isLiveToken({required String? jwtToken}) => (super.noSuchMethod(
-        Invocation.method(
-          #isLiveToken,
-          [],
-          {#jwtToken: jwtToken},
-        ),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
   @override
   _i4.Stream<_i5.AuthenticationStatus> getAuthStateChanges() =>
       (super.noSuchMethod(
