@@ -47,49 +47,41 @@ class App extends StatelessWidget {
                 create: (BuildContext context) => EventEntityBloc(
                   eventEntityRepository:
                       DependenciesScope.of(context).eventEntityRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<WalletBLoC>(
                 create: (BuildContext context) => WalletBLoC(
                   walletRepo: DependenciesScope.of(context).walletRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<UserBloc>(
                 create: (BuildContext context) => UserBloc(
                   userRepo: DependenciesScope.of(context).userRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<UserBirthDayInfoBLoc>(
                 create: (BuildContext context) => UserBirthDayInfoBLoc(
                   userRepo: DependenciesScope.of(context).userRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<RookiesBLoC>(
                 create: (BuildContext context) => RookiesBLoC(
                   userRepo: DependenciesScope.of(context).userRepository,
-                  authRepository: DependenciesScope.of(context).authRepository,
                 ),
               ),
               BlocProvider<CoinsScreenViewModelBloc>(
                 create: (BuildContext context) => CoinsScreenViewModelBloc(
-                  authRepository: DependenciesScope.of(context).authRepository,
                   walletRepo: DependenciesScope.of(context).walletRepository,
                 ),
               ),
               BlocProvider<CategoryBloc>(
                 create: (BuildContext context) => CategoryBloc(
-                  authRepository: DependenciesScope.of(context).authRepository,
                   eventEntityRepository:
                       DependenciesScope.of(context).eventEntityRepository,
                 ),
               ),
               BlocProvider<ServiceBloc>(
                 create: (BuildContext context) => ServiceBloc(
-                  authRepository: DependenciesScope.of(context).authRepository,
                   serviceRepository:
                       DependenciesScope.of(context).serviceRepository,
                 ),

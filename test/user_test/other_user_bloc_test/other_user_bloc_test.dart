@@ -1,4 +1,3 @@
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
@@ -6,13 +5,11 @@ import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../statements_test/statements_test.mocks.dart';
 import '../user_bloc_test.dart/user_test.mocks.dart';
 
 void main() {
   group('StatementsBLoC Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
     late IUserRepository mockUserRepository;
 
     // Создайте экземпляр вашего BLoC
@@ -36,15 +33,11 @@ void main() {
       self: true,
     );
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
       mockUserRepository = MockIUserRepository();
 
-      otherUserBloc = OtherUsersBloc(
-          authRepository: mockAuthRepository, userRepo: mockUserRepository);
+      otherUserBloc = OtherUsersBloc(userRepo: mockUserRepository);
     });
 
     tearDown(() {
@@ -62,14 +55,11 @@ void main() {
     blocTest<OtherUsersBloc, OtherUsersState>(
         'emits [processing, error, idle] when fetch user Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
           when(mockUserRepository.getUserByPhoneNumber(
-                  accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                  phoneNumber: 'fakePhoneNumber'))
               .thenThrow(Exception('oops'));
         },
-        build: () => OtherUsersBloc(
-            authRepository: mockAuthRepository, userRepo: mockUserRepository),
+        build: () => OtherUsersBloc(userRepo: mockUserRepository),
         act: (bloc) => bloc.add(const OtherUsersEvent.gethUsersByPhoneNumber(
             phoneNumber: 'fakePhoneNumber')),
         errors: () => [isA<Exception>()]);
@@ -77,10 +67,8 @@ void main() {
     blocTest<OtherUsersBloc, OtherUsersState>(
       'emits otherUserState.successful when Get user by phone number event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,
@@ -100,10 +88,8 @@ void main() {
     blocTest<OtherUsersBloc, OtherUsersState>(
       'emits otherUserState.successful when Get user by phone number event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,
@@ -123,10 +109,8 @@ void main() {
     blocTest<OtherUsersBloc, OtherUsersState>(
       'emits otherUserState.successful when Clear list event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockUserRepository.getUserByPhoneNumber(
-                accessToken: accessToken, phoneNumber: 'fakePhoneNumber'))
+                phoneNumber: 'fakePhoneNumber'))
             .thenAnswer((_) async => [user]);
       },
       seed: () => OtherUsersState$Idle(data: [user]),
@@ -144,10 +128,7 @@ void main() {
     blocTest<OtherUsersBloc, OtherUsersState>(
       'emits otherUserState.successful when Find user event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.findUser(
-                accessToken: accessToken, findText: 'fakeName'))
+        when(mockUserRepository.findUser(findText: 'fakeName'))
             .thenAnswer((_) async => [user]);
       },
       build: () => otherUserBloc,

@@ -1,121 +1,93 @@
-import 'dart:convert';
-import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 
-import '../../../../core/constant/constants.dart';
 import '../../bloc/statements_bloc/statements_form_bloc/statements_bloc.dart';
 import '../../model/participant/participant.dart';
 import '../../model/statements/statements.dart';
 
 abstract interface class IStatementsProvider {
-  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
-      {required final String accessToken});
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements();
   Future<StatementTempalteEntity> fetchStatementForm(
-      {required final String accessToken, required final String id});
+      {required final String id});
   Future<TypeOfAppplicationSigning> submitStatementForm(
-      {required final String accessToken,
-      required final StatementFormInfoToSubmit formInfo});
-  Future<void> signDocumentBySmsCode(
-      {required final String accessToken, required final String code});
-  Future<List<ParticipantEntity>> findParticipant(
-      {required final String accessToken, required final String name});
+      {required final StatementFormInfoToSubmit formInfo});
+  Future<void> signDocumentBySmsCode({required final String code});
+  Future<List<ParticipantEntity>> findParticipant({required final String name});
 }
 
 class StatementProviderImpl implements IStatementsProvider {
-  final IHTTPService _httpService;
+  final RestClient _httpService;
   StatementProviderImpl(this._httpService);
 
   @override
-  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/documents/document_template';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<StatementFieldTypeEntity>> fetchListTypeStatements() async {
+    final response = await _httpService.get('/documents/document_template');
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<StatementFieldTypeEntity> result = (jsonData as List<dynamic>)
+    if (response case {'result': final List<dynamic> data}) {
+      final List<StatementFieldTypeEntity> result = (data)
           .map((item) => StatementFieldTypeEntity.fromJson(item))
           .toList();
       return result;
-    } else {
-      throw Exception('Error fetching List Type Statements');
     }
+    throw Exception('Error fetching List Type Statements');
   }
 
   @override
   Future<StatementTempalteEntity> fetchStatementForm(
-      {required String accessToken, required String id}) async {
-    String uri = '$urlAdress/documents/document_template?document_type=$id';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+      {required String id}) async {
+    final response = await _httpService
+        .get('/documents/document_template?document_type=$id');
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
+    if (response case {'result': final Map<String, Object?> data}) {
       final StatementTempalteEntity result =
-          StatementTempalteEntity.fromJson(jsonData);
+          StatementTempalteEntity.fromJson(data);
 
       return result;
-    } else {
-      throw Exception('Error fetching Statement Form');
     }
+    throw Exception('Error fetching Statement Form');
   }
 
   @override
   Future<TypeOfAppplicationSigning> submitStatementForm(
-      {required String accessToken,
-      required StatementFormInfoToSubmit formInfo}) async {
-    String uri = '$urlAdress/documents/create_document';
-    final String body = json.encode(formInfo.toJson());
-    print(body);
+      {required StatementFormInfoToSubmit formInfo}) async {
+    final body = formInfo.toJson();
+
     final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: body);
-    if (response.statusCode == 201) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final bool isSms = jsonData['form_sms'];
+        await _httpService.post('/documents/create_document', body: body);
+    if (response case {'result': final Map<String, Object?> data}) {
+      final bool isSms = data['form_sms'] as bool;
       if (isSms) {
         return TypeOfAppplicationSigning.smsCode;
       }
       return TypeOfAppplicationSigning.daefult;
-    } else {
-      throw Exception('Error send submit Statement Form!!!');
     }
+    throw Exception('Error send submit Statement Form!!!');
   }
 
   @override
   Future<List<ParticipantEntity>> findParticipant(
-      {required String accessToken, required String name}) async {
-    String uri =
-        '$urlAdress/documents/getEmployees?search=$name&offset=0&limit=5';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+      {required String name}) async {
+    final response = await _httpService.get(
+      '/documents/getEmployees?search=$name&offset=0&limit=5',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
+    if (response case {'result': final Map<String, Object?> data}) {
       final List<ParticipantEntity> result =
-          (jsonData['colleagues'] as List<dynamic>)
+          (data['colleagues'] as List<dynamic>)
               .map((item) => ParticipantEntity.fromJson(item))
               .toList();
 
       return result;
-    } else {
-      throw Exception('Error fetching Statement Form');
     }
+    throw Exception('Error fetching Statement Form');
   }
 
   @override
-  Future<void> signDocumentBySmsCode(
-      {required String accessToken, required String code}) async {
-    String uri = '$urlAdress/documents/sign_document?code=$code';
-
-    final response = await _httpService.put(
-      uri: uri,
-      userToken: accessToken,
-    );
-    if (response.statusCode == 200) {
+  Future<void> signDocumentBySmsCode({required String code}) async {
+    final response =
+        await _httpService.put('/documents/sign_document?code=$code', body: {});
+    if (response case {'result': final data}) {
       return;
-    } else {
-      throw Exception('Error send submit Statement Form!!!');
     }
+    throw Exception('Error send submit Statement Form!!!');
   }
 }

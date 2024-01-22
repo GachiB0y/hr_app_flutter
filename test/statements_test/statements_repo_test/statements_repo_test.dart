@@ -20,7 +20,6 @@ void main() {
   group('StatementsRepository', () {
     late IStatementsProvider statementsApiClient;
     late IStatementsRepository statementsRepository;
-    const String accessToken = 'test_access_token';
 // Создаем два типа заявления
     const StatementFieldTypeEntity typeStatementOne =
         StatementFieldTypeEntity(documentType: 'vacation', name: 'Отпуск');
@@ -78,33 +77,26 @@ void main() {
     group('fetchListTypeStatements', () {
       test('calls fetchListTypeStatements with correct', () async {
         try {
-          await statementsRepository.fetchListTypeStatements(
-              accessToken: accessToken);
+          await statementsRepository.fetchListTypeStatements();
         } catch (_) {}
-        verify(statementsApiClient.fetchListTypeStatements(
-                accessToken: accessToken))
-            .called(1);
+        verify(statementsApiClient.fetchListTypeStatements()).called(1);
       });
       test('throws when fetchListTypeStatements fails', () async {
         final exception = Exception('oops');
 
-        when(statementsApiClient.fetchListTypeStatements(
-                accessToken: accessToken))
+        when(statementsApiClient.fetchListTypeStatements())
             .thenThrow(exception);
 
         expect(
-          () async => statementsRepository.fetchListTypeStatements(
-              accessToken: accessToken),
+          () async => statementsRepository.fetchListTypeStatements(),
           throwsA(exception),
         );
       });
 
       test('succesfull when fetchListTypeStatements get', () async {
-        when(statementsApiClient.fetchListTypeStatements(
-                accessToken: accessToken))
+        when(statementsApiClient.fetchListTypeStatements())
             .thenAnswer((_) async => listTypeStatements);
-        final actual = await statementsRepository.fetchListTypeStatements(
-            accessToken: accessToken);
+        final actual = await statementsRepository.fetchListTypeStatements();
         expect(actual, listTypeStatements);
       });
     });
@@ -112,33 +104,26 @@ void main() {
     group('fetchStatementForm', () {
       test('calls fetchStatementForm with correct', () async {
         try {
-          await statementsRepository.fetchStatementForm(
-              accessToken: accessToken, id: '');
+          await statementsRepository.fetchStatementForm(id: '');
         } catch (_) {}
-        verify(statementsApiClient.fetchStatementForm(
-                accessToken: accessToken, id: ''))
-            .called(1);
+        verify(statementsApiClient.fetchStatementForm(id: '')).called(1);
       });
       test('throws when fetchStatementForm fails', () async {
         final exception = Exception('oops');
 
-        when(statementsApiClient.fetchStatementForm(
-                accessToken: accessToken, id: ''))
+        when(statementsApiClient.fetchStatementForm(id: ''))
             .thenThrow(exception);
 
         expect(
-          () async => statementsRepository.fetchStatementForm(
-              accessToken: accessToken, id: ''),
+          () async => statementsRepository.fetchStatementForm(id: ''),
           throwsA(exception),
         );
       });
 
       test('succesfull when fetchStatementForm get', () async {
-        when(statementsApiClient.fetchStatementForm(
-                accessToken: accessToken, id: ''))
+        when(statementsApiClient.fetchStatementForm(id: ''))
             .thenAnswer((_) async => statementsTemplate);
-        final actual = await statementsRepository.fetchStatementForm(
-            accessToken: accessToken, id: '');
+        final actual = await statementsRepository.fetchStatementForm(id: '');
         expect(actual, statementsTemplate);
       });
     });
@@ -148,12 +133,10 @@ void main() {
       test('calls submitStatementForm with correct', () async {
         try {
           await statementsRepository.submitStatementForm(
-            accessToken: accessToken,
             formInfo: formInfoMock,
           );
         } catch (_) {}
         verify(statementsApiClient.submitStatementForm(
-          accessToken: accessToken,
           formInfo: formInfoMock,
         )).called(1);
       });
@@ -161,13 +144,11 @@ void main() {
         final exception = Exception('oops');
 
         when(statementsApiClient.submitStatementForm(
-          accessToken: accessToken,
           formInfo: formInfoMock,
         )).thenThrow(exception);
 
         expect(
           () async => statementsRepository.submitStatementForm(
-            accessToken: accessToken,
             formInfo: formInfoMock,
           ),
           throwsA(exception),
@@ -176,11 +157,9 @@ void main() {
 
       test('succesfull when submitStatementForm get', () async {
         when(statementsApiClient.submitStatementForm(
-          accessToken: accessToken,
           formInfo: formInfoMock,
         )).thenAnswer((_) async => TypeOfAppplicationSigning.daefult);
         final actual = await statementsRepository.submitStatementForm(
-          accessToken: accessToken,
           formInfo: formInfoMock,
         );
         expect(actual, TypeOfAppplicationSigning.daefult);
@@ -191,34 +170,27 @@ void main() {
       test('calls findParticipant with correct', () async {
         try {
           await statementsRepository.findParticipant(
-            accessToken: accessToken,
             name: '',
           );
         } catch (_) {}
-        verify(statementsApiClient.findParticipant(
-                accessToken: accessToken, name: ''))
-            .called(1);
+        verify(statementsApiClient.findParticipant(name: '')).called(1);
       });
       test('throws when findParticipant fails', () async {
         final exception = Exception('oops');
 
-        when(statementsApiClient.findParticipant(
-                accessToken: accessToken, name: ''))
+        when(statementsApiClient.findParticipant(name: ''))
             .thenThrow(exception);
 
         expect(
-          () async => statementsRepository.findParticipant(
-              accessToken: accessToken, name: ''),
+          () async => statementsRepository.findParticipant(name: ''),
           throwsA(exception),
         );
       });
 
       test('succesfull when findParticipant get', () async {
-        when(statementsApiClient.findParticipant(
-                accessToken: accessToken, name: ''))
+        when(statementsApiClient.findParticipant(name: ''))
             .thenAnswer((_) async => participants);
-        final actual = await statementsRepository.findParticipant(
-            accessToken: accessToken, name: '');
+        final actual = await statementsRepository.findParticipant(name: '');
         expect(actual, participants);
       });
     });
@@ -227,12 +199,10 @@ void main() {
       test('calls signDocumentBySmsCode with correct', () async {
         try {
           await statementsRepository.signDocumentBySmsCode(
-            accessToken: accessToken,
             code: '',
           );
         } catch (_) {}
         verify(statementsApiClient.signDocumentBySmsCode(
-          accessToken: accessToken,
           code: '',
         )).called(1);
       });
@@ -240,13 +210,11 @@ void main() {
         final exception = Exception('oops');
 
         when(statementsApiClient.signDocumentBySmsCode(
-          accessToken: accessToken,
           code: '',
         )).thenThrow(exception);
 
         expect(
           () async => statementsRepository.signDocumentBySmsCode(
-            accessToken: accessToken,
             code: '',
           ),
           throwsA(exception),
@@ -255,13 +223,11 @@ void main() {
 
       test('succesfull when signDocumentBySmsCode get', () async {
         when(statementsApiClient.signDocumentBySmsCode(
-          accessToken: accessToken,
           code: '',
         ));
 
         expect(
           () async => await statementsRepository.signDocumentBySmsCode(
-            accessToken: accessToken,
             code: '',
           ),
           isA<void>(),

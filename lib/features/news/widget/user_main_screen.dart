@@ -27,14 +27,10 @@ class _UserMainScreenState extends State<UserMainScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
     context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
-    context.read<WalletBLoC>().add(const WalletEvent.fetch());
     context
         .read<UserBirthDayInfoBLoc>()
         .add(const UserBirthDayInfoEvent.fetch());
-    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
-    context.read<CategoryBloc>().add(const CategoryEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
@@ -427,46 +423,54 @@ class ScrollBarWidget extends StatefulWidget {
 
 class _ScrollBarWidgetState extends State<ScrollBarWidget> {
   List<Widget> groupWidgets = [];
+  late final ServiceBloc blocService;
+  @override
+  void initState() {
+    blocService = context.read<ServiceBloc>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final blocService = context.watch<ServiceBloc>();
+    return BlocBuilder<ServiceBloc, ServiceState>(
+        bloc: blocService,
+        builder: (context, state) {
+          return state.when(
+            loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            loaded: (loadedServices, loeadedServiceWidgets) {
+              groupWidgets.clear();
+              groupWidgets.add(const SizedBox.shrink());
 
-    return blocService.state.when(
-      loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-      loaded: (loadedServices, loeadedServiceWidgets) {
-        groupWidgets.clear();
-        groupWidgets.add(const SizedBox.shrink());
-
-        for (var widget in loeadedServiceWidgets) {
-          groupWidgets.add(widget);
-        }
-        double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-        if (textScaleFactor < 1) textScaleFactor = 1;
-        return ListView.builder(
-          // shrinkWrap: true,
-          itemExtent:
-              (MediaQuery.of(context).size.height / 4.25) * textScaleFactor,
-          scrollDirection: Axis.horizontal,
-          itemCount: groupWidgets.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: ElementForScrollBarWidget(
-                listService: loadedServices,
-                index: index,
-                groupWidgets: groupWidgets,
-              ),
-            );
-          },
-        );
-      },
-      error: () => const SafeArea(
-          child: Center(child: Text('Ошибка загрузки сервисов.'))),
-    );
+              for (var widget in loeadedServiceWidgets) {
+                groupWidgets.add(widget);
+              }
+              double textScaleFactor = MediaQuery.of(context).textScaleFactor;
+              if (textScaleFactor < 1) textScaleFactor = 1;
+              return ListView.builder(
+                itemExtent: (MediaQuery.of(context).size.height / 4.25) *
+                    textScaleFactor,
+                scrollDirection: Axis.horizontal,
+                itemCount: groupWidgets.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: ElementForScrollBarWidget(
+                      listService: loadedServices,
+                      index: index,
+                      groupWidgets: groupWidgets,
+                    ),
+                  );
+                },
+              );
+            },
+            error: () => const SafeArea(
+                child: Center(child: Text('Ошибка загрузки сервисов.'))),
+          );
+        });
   }
 }
 
@@ -626,18 +630,17 @@ class TableScrollWidget extends StatefulWidget {
 class _TableScrollWidgetState extends State<TableScrollWidget> {
   int selectedTab = 0;
   String selectTabTags = '';
-
+  late final CategoryBloc blocCategory;
   @override
   void initState() {
     super.initState();
+    blocCategory = context.read<CategoryBloc>();
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
+    context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
   }
 
   @override
   Widget build(BuildContext context) {
-    // final blocEventEntity = context.watch<EventEntityBloc>();
-    final blocCategory = context.watch<CategoryBloc>();
-
     const double radius = 30.0;
 
     return BlocBuilder<EventEntityBloc, EventEntityState>(
@@ -655,76 +658,84 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              blocCategory.state.when(
-                  loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
-                  },
-                  loaded: (listCategoryLoaded) {
-                    return SizedBox(
-                      height: 50,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: listCategoryLoaded.length,
-                        itemBuilder: (context, index) {
-                          String tab = listCategoryLoaded[index].name;
+              BlocBuilder<CategoryBloc, CategoryState>(
+                  bloc: blocCategory,
+                  builder: (context, stateCategory) {
+                    return stateCategory.when(
+                        loading: () {
+                          return const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          );
+                        },
+                        loaded: (listCategoryLoaded) {
+                          return SizedBox(
+                            height: 50,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: listCategoryLoaded.length,
+                              itemBuilder: (context, index) {
+                                String tab = listCategoryLoaded[index].name;
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  context.read<EventEntityBloc>().add(
-                                      EventEntityEvent.update(
-                                          idTab: listCategoryLoaded[index].id,
-                                          listEventEntityLoaded: state
-                                              .data!.listEventEntityLoaded));
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        context.read<EventEntityBloc>().add(
+                                            EventEntityEvent.update(
+                                                idTab: listCategoryLoaded[index]
+                                                    .id,
+                                                listEventEntityLoaded: state
+                                                    .data!
+                                                    .listEventEntityLoaded));
 
-                                  selectedTab = index;
-                                });
-                              },
-                              child: Container(
-                                decoration: index == selectedTab
-                                    ? BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary, // Цвет подчеркивания
-                                              width:
-                                                  1.5 // Толщина подчеркивания
+                                        selectedTab = index;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: index == selectedTab
+                                          ? BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary, // Цвет подчеркивания
+                                                    width:
+                                                        1.5 // Толщина подчеркивания
+                                                    ),
                                               ),
+                                            )
+                                          : null,
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 6.0),
+                                          child: Text(
+                                            tab,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: index == selectedTab
+                                                    ? Theme.of(context)
+                                                        .colorScheme
+                                                        .primary
+                                                    : Theme.of(context)
+                                                        .colorScheme
+                                                        .outline),
+                                          ),
                                         ),
-                                      )
-                                    : null,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 6.0),
-                                    child: Text(
-                                      tab,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: index == selectedTab
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .outline),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                           );
                         },
-                      ),
-                    );
-                  },
-                  error: () =>
-                      const Center(child: Text('Ошибка загрузки сервисов!'))),
+                        error: () => const Center(
+                            child: Text('Ошибка загрузки сервисов!')));
+                  }),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2.7,
                 child: ListView.builder(

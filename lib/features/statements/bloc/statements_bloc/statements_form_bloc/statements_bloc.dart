@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'dart:async';
 
 import '../../../data/repo/statements_repository.dart';
@@ -21,10 +20,8 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
     implements EventSink<StatementsEvent> {
   StatementsBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final IAuthRepository authRepository,
     final StatementsState? initialState,
   })  : _repositoryStatements = repositoryStatements,
-        _authRepository = authRepository,
         super(
           initialState ??
               const StatementsState.idle(
@@ -43,18 +40,15 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
   }
 
   final IStatementsRepository _repositoryStatements;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetchStatementForm(
       StatementsEventFetch event, Emitter<StatementsState> emit) async {
     try {
       emit(StatementsState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final StatementTempalteEntity newTempalteEntity =
-          await _repositoryStatements.fetchStatementForm(
-              accessToken: accessToken as String, id: event.id);
+          await _repositoryStatements.fetchStatementForm(id: event.id);
 
       final newData = StatementViewModel(
           isSmsApprove: false, tempalteEntity: newTempalteEntity);
@@ -77,11 +71,9 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       StatementsEventCreate event, Emitter<StatementsState> emit) async {
     try {
       emit(StatementsState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final TypeOfAppplicationSigning typeSigning =
           await _repositoryStatements.submitStatementForm(
-        accessToken: accessToken as String,
         formInfo: event.itemsForm,
       );
       switch (typeSigning) {
@@ -112,10 +104,8 @@ class StatementsBLoC extends Bloc<StatementsEvent, StatementsState>
       StatementsEventSignDocument event, Emitter<StatementsState> emit) async {
     try {
       emit(StatementsState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       await _repositoryStatements.signDocumentBySmsCode(
-        accessToken: accessToken as String,
         code: event.code,
       );
       final newData = state.data?.copyWith(isSigningStatment: true);

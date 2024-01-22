@@ -87,8 +87,12 @@ abstract base class RestClientBase implements RestClient {
         );
       }
 
-      if (result case {'data': final Map<String, Object?> data}) {
-        return data;
+      // ignore: unused_local_variable
+      if (result case {'result': final data}) {
+        return result;
+      }
+      if (statusCode == 201) {
+        return result;
       }
 
       return null;

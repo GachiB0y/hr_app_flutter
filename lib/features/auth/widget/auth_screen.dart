@@ -24,17 +24,6 @@ class AuthenticationFormScreenState extends State<AuthenticationFormScreen> {
   void Function(bool)? get onLoginResult => widget.onLoginResult;
 
   @override
-  void didChangeDependencies() {
-    // final auth = AuthScope.of(context);
-
-    // if (auth.authenticated) {
-    //   AutoRouter.of(context).replace(const MainAppRoute());
-    // }
-
-    // super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     _phoneNumberController.dispose();
     _smsCodeController.dispose();

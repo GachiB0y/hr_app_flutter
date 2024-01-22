@@ -6,16 +6,15 @@ import '../../model/service/service.dart';
 
 abstract interface class IServiceRepository {
   ///Метод для получения списка сервисов
-  Future<List<Service>> getServices({required String accessToken});
+  Future<List<Service>> getServices();
 
   ///Метод для получения расписания
 
-  Future<ScheduleBus> getScheduleBus({required String accessToken});
+  Future<ScheduleBus> getScheduleBus();
 
   ///Метод для отправки формы Баг-репорт
 
-  Future<bool> submitBagReportForm(
-      {required String accessToken, required BagReportEntity bagReportEntity});
+  Future<bool> submitBagReportForm({required BagReportEntity bagReportEntity});
 }
 
 class ServiceRepositoryImpl implements IServiceRepository {
@@ -26,18 +25,18 @@ class ServiceRepositoryImpl implements IServiceRepository {
   final IServiceProvider _serviceProvider;
 
   @override
-  Future<List<Service>> getServices({required String accessToken}) async {
+  Future<List<Service>> getServices() async {
     try {
-      return await _serviceProvider.getServices(accessToken: accessToken);
+      return await _serviceProvider.getServices();
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<ScheduleBus> getScheduleBus({required String accessToken}) async {
+  Future<ScheduleBus> getScheduleBus() async {
     try {
-      return await _serviceProvider.getScheduleBus(accessToken: accessToken);
+      return await _serviceProvider.getScheduleBus();
     } catch (e) {
       rethrow;
     }
@@ -45,11 +44,10 @@ class ServiceRepositoryImpl implements IServiceRepository {
 
   @override
   Future<bool> submitBagReportForm(
-      {required String accessToken,
-      required BagReportEntity bagReportEntity}) async {
+      {required BagReportEntity bagReportEntity}) async {
     try {
       return await _serviceProvider.submitBagReportForm(
-          accessToken: accessToken, bagReportEntity: bagReportEntity);
+          bagReportEntity: bagReportEntity);
     } catch (e) {
       rethrow;
     }

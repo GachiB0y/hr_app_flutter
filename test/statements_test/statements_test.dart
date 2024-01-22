@@ -49,22 +49,17 @@ const TemplateFormStatementsEntity formInfotempalte =
 void main() {
   group('StatementsBLoC Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
     late IStatementsRepository mockStatementsRepository;
 
     // Создайте экземпляр вашего BLoC
     late StatementsBLoC statementsBloc;
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
       mockStatementsRepository = MockIStatementsRepository();
 
-      statementsBloc = StatementsBLoC(
-          authRepository: mockAuthRepository,
-          repositoryStatements: mockStatementsRepository);
+      statementsBloc =
+          StatementsBLoC(repositoryStatements: mockStatementsRepository);
     });
 
     tearDown(() {
@@ -82,15 +77,12 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
         'emits [processing, error, idle] when fetch Statement Form  Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
           when(mockStatementsRepository.fetchStatementForm(
-                  accessToken: accessToken, id: statements.documentType))
+                  id: statements.documentType))
               .thenThrow(Exception('oops'));
         },
-        build: () => StatementsBLoC(
-            authRepository: mockAuthRepository,
-            repositoryStatements: mockStatementsRepository),
+        build: () =>
+            StatementsBLoC(repositoryStatements: mockStatementsRepository),
         act: (bloc) =>
             bloc.add(StatementsEventFetch(id: statements.documentType)),
         errors: () => [isA<Exception>()]);
@@ -98,15 +90,11 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
         'emits [processing, error, idle] when Create  Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockStatementsRepository.submitStatementForm(
-                  accessToken: accessToken, formInfo: formInof))
+          when(mockStatementsRepository.submitStatementForm(formInfo: formInof))
               .thenThrow(Exception('oops'));
         },
-        build: () => StatementsBLoC(
-            authRepository: mockAuthRepository,
-            repositoryStatements: mockStatementsRepository),
+        build: () =>
+            StatementsBLoC(repositoryStatements: mockStatementsRepository),
         act: (bloc) =>
             bloc.add(const StatementsEventCreate(itemsForm: formInof)),
         errors: () => [isA<Exception>()]);
@@ -114,15 +102,11 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
         'emits [processing, error, idle] when Signing Document  Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockStatementsRepository.signDocumentBySmsCode(
-                  accessToken: accessToken, code: '2007'))
+          when(mockStatementsRepository.signDocumentBySmsCode(code: '2007'))
               .thenThrow(Exception('oops'));
         },
-        build: () => StatementsBLoC(
-            authRepository: mockAuthRepository,
-            repositoryStatements: mockStatementsRepository),
+        build: () =>
+            StatementsBLoC(repositoryStatements: mockStatementsRepository),
         act: (bloc) =>
             bloc.add(const StatementsEventSignDocument(code: '2007')),
         errors: () => [isA<Exception>()]);
@@ -130,10 +114,8 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
       'emits StatementsState.successful when Fetch event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockStatementsRepository.fetchStatementForm(
-                accessToken: accessToken, id: statements.documentType))
+                id: statements.documentType))
             .thenAnswer((_) async => statements);
       },
       build: () => statementsBloc,
@@ -153,10 +135,7 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
       'emits StatementsState.successful when Create event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockStatementsRepository.submitStatementForm(
-                accessToken: accessToken, formInfo: formInof))
+        when(mockStatementsRepository.submitStatementForm(formInfo: formInof))
             .thenAnswer((_) async => TypeOfAppplicationSigning.daefult);
       },
       build: () => statementsBloc,
@@ -175,10 +154,8 @@ void main() {
     blocTest<StatementsBLoC, StatementsState>(
       'emits StatementsState.successful when Signing Document event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockStatementsRepository.fetchStatementForm(
-                accessToken: accessToken, id: statements.documentType))
+                id: statements.documentType))
             .thenAnswer((_) async => statements);
       },
       seed: () => const StatementsState$Idle(
@@ -199,22 +176,17 @@ void main() {
 
   group('StatementTypeListBLoC Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
     late IStatementsRepository mockStatementsRepository;
 
     // Создайте экземпляр вашего BLoC
     late StatementTypeListBLoC statementsBloc;
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
       mockStatementsRepository = MockIStatementsRepository();
 
-      statementsBloc = StatementTypeListBLoC(
-          authRepository: mockAuthRepository,
-          repositoryStatements: mockStatementsRepository);
+      statementsBloc =
+          StatementTypeListBLoC(repositoryStatements: mockStatementsRepository);
     });
 
     tearDown(() {
@@ -232,10 +204,7 @@ void main() {
     blocTest<StatementTypeListBLoC, StatementTypeListState>(
       'emits StatementTypeListState.successful when fetch event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockStatementsRepository.fetchListTypeStatements(
-                accessToken: accessToken))
+        when(mockStatementsRepository.fetchListTypeStatements())
             .thenAnswer((_) async => [typeFieldFirst, typeFieldSecond]);
       },
       build: () => statementsBloc,

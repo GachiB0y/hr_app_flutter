@@ -69,7 +69,6 @@ class _LeanProductionFormWidgetState extends State<LeanProductionFormWidget> {
   @override
   void initState() {
     blocLeanProductionForm = LeanProductionFormBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
         repository: DependenciesScope.of(context).leanProductionRepository);
 
     super.initState();
@@ -365,9 +364,8 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
   @override
   void initState() {
     super.initState();
-    otherUsersBloc = OtherUsersBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository);
+    otherUsersBloc =
+        OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
     otherUsersBloc.add(const OtherUsersEvent.clearList());
   }
 

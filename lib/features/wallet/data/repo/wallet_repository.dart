@@ -5,16 +5,12 @@ import '../../model/coins_screen/coins_reward/coins_reward.dart';
 import '../../model/wallet/wallet.dart';
 
 abstract interface class IWalletRepository {
-  Future<Wallet> getWallet({required String accessToken});
-  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken});
-  Future<List<CoinsReward>> getInfoCoinsReward({required String accessToken});
+  Future<Wallet> getWallet();
+  Future<List<CoinsInfo>> getCoinsInfo();
+  Future<List<CoinsReward>> getInfoCoinsReward();
   Future<int> sendCoinsToOtherUser(
-      {required String accessToken,
-      required int amount,
-      required int userId,
-      required String message});
+      {required int amount, required int userId, required String message});
   Future<int> sendCoinsToBracer({
-    required String accessToken,
     required int amount,
   });
 }
@@ -27,15 +23,15 @@ class WalletRepositoryImpl implements IWalletRepository {
   final IWalletProvider _walletProvider;
 
   @override
-  Future<Wallet> getWallet({required String accessToken}) async {
+  Future<Wallet> getWallet() async {
     try {
       final ({int balance, int avarageCoins}) result =
-          await _walletProvider.getBalance(accessToken: accessToken);
+          await _walletProvider.getBalance();
 
       final int balance = result.balance;
       final int avarageCoins = result.avarageCoins;
       final List<Transaction>? transactions =
-          await _walletProvider.getTransactions(accessToken: accessToken);
+          await _walletProvider.getTransactions();
       final Wallet wallet = Wallet(
           balance: balance,
           transactions: transactions,
@@ -48,13 +44,11 @@ class WalletRepositoryImpl implements IWalletRepository {
 
   @override
   Future<int> sendCoinsToOtherUser(
-      {required String accessToken,
-      required int amount,
+      {required int amount,
       required int userId,
       required String message}) async {
     try {
       final int newBalance = await _walletProvider.sendCoinsToOtherUser(
-        accessToken: accessToken,
         amount: amount,
         userId: userId,
         message: message,
@@ -67,12 +61,10 @@ class WalletRepositoryImpl implements IWalletRepository {
 
   @override
   Future<int> sendCoinsToBracer({
-    required String accessToken,
     required int amount,
   }) async {
     try {
       final int newBalance = await _walletProvider.sendCoinsToBracer(
-        accessToken: accessToken,
         amount: amount,
       );
       return newBalance;
@@ -82,11 +74,10 @@ class WalletRepositoryImpl implements IWalletRepository {
   }
 
   @override
-  Future<List<CoinsInfo>> getCoinsInfo({required String accessToken}) async {
+  Future<List<CoinsInfo>> getCoinsInfo() async {
     try {
-      final List<CoinsInfo> listCoinsinfo = await _walletProvider.getCoinsInfo(
-        accessToken: accessToken,
-      );
+      final List<CoinsInfo> listCoinsinfo =
+          await _walletProvider.getCoinsInfo();
       return listCoinsinfo;
     } catch (e) {
       rethrow;
@@ -94,13 +85,10 @@ class WalletRepositoryImpl implements IWalletRepository {
   }
 
   @override
-  Future<List<CoinsReward>> getInfoCoinsReward(
-      {required String accessToken}) async {
+  Future<List<CoinsReward>> getInfoCoinsReward() async {
     try {
       final List<CoinsReward> listCoinsReward =
-          await _walletProvider.getInfoCoinsReward(
-        accessToken: accessToken,
-      );
+          await _walletProvider.getInfoCoinsReward();
       return listCoinsReward;
     } catch (e) {
       rethrow;

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
-import '../../../auth/data/repo/auth_repository.dart';
 import '../../data/repo/statements_repository.dart';
 import '../../model/participant/participant.dart';
 
@@ -17,10 +16,8 @@ class ParticipantsBLoC extends Bloc<ParticipantsEvent, ParticipantsState>
     implements EventSink<ParticipantsEvent> {
   ParticipantsBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final IAuthRepository authRepository,
     final ParticipantsState? initialState,
   })  : _repositoryStatements = repositoryStatements,
-        _authRepository = authRepository,
         super(
           initialState ??
               const ParticipantsState.idle(
@@ -40,18 +37,15 @@ class ParticipantsBLoC extends Bloc<ParticipantsEvent, ParticipantsState>
   }
 
   final IStatementsRepository _repositoryStatements;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _findParticipant(
       FetchParticipantsEvent event, Emitter<ParticipantsState> emit) async {
     try {
       emit(ParticipantsState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final List<ParticipantEntity> participants =
           await _repositoryStatements.findParticipant(
-        accessToken: accessToken as String,
         name: event.inputValue,
       );
 

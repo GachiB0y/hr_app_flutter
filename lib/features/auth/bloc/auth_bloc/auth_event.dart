@@ -15,9 +15,6 @@ class AuthEvent with _$AuthEvent {
       {required String phoneNumber,
       required String code}) = AuthByCodeAuthEvent;
 
-  /// Check is Auth user
-  const factory AuthEvent.checkAuth() = CheckAuthAuthEvent;
-
   /// Logout
   const factory AuthEvent.logout() = LogoutAuthEvent;
 }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
@@ -10,7 +9,6 @@ import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../statements_test/statements_test.mocks.dart';
 import 'user_test.mocks.dart';
 
 @GenerateNiceMocks(
@@ -22,7 +20,7 @@ import 'user_test.mocks.dart';
 void main() {
   group('userBLoC Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
+
     late IUserRepository mockUserRepository;
 
     // Создайте экземпляр вашего BLoC
@@ -54,17 +52,14 @@ void main() {
     //Создаем модель пользователя
     late UserProfileViewModel userProfileViewModel;
 
-    const String accessToken = 'test_access_token';
-
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockIAuthRepository();
+
       mockUserRepository = MockIUserRepository();
       userProfileViewModel =
           UserProfileViewModel(authUser: user, currentProfileUser: null);
 
-      userBloc = UserBloc(
-          authRepository: mockAuthRepository, userRepo: mockUserRepository);
+      userBloc = UserBloc(userRepo: mockUserRepository);
       final List<TagUser> newListTag = [...tags];
       newListTag.add(newTag);
       newUser = user.copyWith(tags: newListTag);
@@ -85,23 +80,16 @@ void main() {
     blocTest<UserBloc, UserState>(
         'emits [processing, error, idle] when fetch user Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockUserRepository.getUserInfo(accessToken: accessToken))
-              .thenThrow(Exception('oops'));
+          when(mockUserRepository.getUserInfo()).thenThrow(Exception('oops'));
         },
-        build: () => UserBloc(
-            authRepository: mockAuthRepository, userRepo: mockUserRepository),
+        build: () => UserBloc(userRepo: mockUserRepository),
         act: (bloc) => bloc.add(const UserEventFetch()),
         errors: () => [isA<Exception>()]);
 
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Fetch User event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfo(accessToken: accessToken))
-            .thenAnswer((_) async => user);
+        when(mockUserRepository.getUserInfo()).thenAnswer((_) async => user);
       },
       build: () => userBloc,
       act: (bloc) => bloc.add(const UserEventFetch()),
@@ -119,10 +107,7 @@ void main() {
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Get user by id event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -142,10 +127,7 @@ void main() {
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Add Tag event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -165,10 +147,7 @@ void main() {
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Delete Tag event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(
@@ -187,14 +166,9 @@ void main() {
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Save Tags event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
-        when(mockUserRepository.saveTagsToSend(
-            accessToken: accessToken,
-            userId: 4761,
-            tags: [newTag])).thenAnswer((_) async => true);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.saveTagsToSend(userId: 4761, tags: [newTag]))
+            .thenAnswer((_) async => true);
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => newUser);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),
@@ -215,14 +189,10 @@ void main() {
     blocTest<UserBloc, UserState>(
       'emits UserState.successful when Save Avatar event is added',
       setUp: () {
-        when(mockAuthRepository.cheskIsLiveAccessToken())
-            .thenAnswer((_) async => accessToken);
         when(mockUserRepository.sendAvatarWithProfile(
-          accessToken: accessToken,
           imageFile: file,
         )).thenAnswer((_) async => true);
-        when(mockUserRepository.getUserInfoById(
-                accessToken: accessToken, userId: '4761'))
+        when(mockUserRepository.getUserInfoById(userId: '4761'))
             .thenAnswer((_) async => user);
       },
       seed: () => UserState$Idle(data: userProfileViewModel),

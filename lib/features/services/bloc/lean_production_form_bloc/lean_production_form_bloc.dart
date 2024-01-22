@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/model/lean_productions_entity/view_model_my_lean_productions/view_model_my_lean_productions.dart';
 import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
@@ -21,13 +20,9 @@ class LeanProductionFormBloc
     extends Bloc<LeanProductionFormEvent, LeanProductionFormState>
     implements EventSink<LeanProductionFormEvent> {
   LeanProductionFormBloc({
-    // required final IUserRepository userRepo,
-    required final IAuthRepository authRepository,
     required final ILeanProductionRepository repository,
     final LeanProductionFormState? initialState,
   })  : _repositoryLeanProduction = repository,
-        // _userRepo = userRepo,
-        _authRepository = authRepository,
         super(
           initialState ??
               const LeanProductionFormState.idle(
@@ -51,8 +46,6 @@ class LeanProductionFormBloc
     );
   }
 
-  // final IUserRepository _userRepo;
-  final IAuthRepository _authRepository;
   final ILeanProductionRepository _repositoryLeanProduction;
 
   /// Get Leam Production form event handler
@@ -61,13 +54,10 @@ class LeanProductionFormBloc
       Emitter<LeanProductionFormState> emit) async {
     try {
       emit(LeanProductionFormState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       final List<MyLeanProductionsEntity> myProposals =
           await _repositoryLeanProduction
-              .getMyLeanProductions(
-                accessToken: accessToken as String,
-              )
+              .getMyLeanProductions()
               .timeout(const Duration(seconds: 10));
       final newData = ViewModelMyLeanProductions(myProposals: myProposals);
 
@@ -92,11 +82,8 @@ class LeanProductionFormBloc
     try {
       emit(LeanProductionFormState.processing(data: state.data));
 
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-
       await _repositoryLeanProduction
-          .submitForm(
-              accessToken: accessToken as String, formEntity: event.formEntity)
+          .submitForm(formEntity: event.formEntity)
           .timeout(const Duration(seconds: 10));
       final newData = state.data?.copyWith(isSubmitting: true);
       emit(LeanProductionFormState.successful(data: newData));
@@ -123,11 +110,9 @@ class LeanProductionFormBloc
     try {
       emit(LeanProductionFormState.processing(
           data: state.data?.copyWith(isLoadingFile: true)));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
 
       await _repositoryLeanProduction
           .downloadFileWithLeanProduction(
-            accessToken: accessToken as String,
             url: event.url,
           )
           .timeout(const Duration(seconds: 100));

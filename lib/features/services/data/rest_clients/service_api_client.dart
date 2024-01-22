@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:hr_app_flutter/core/components/rest_clients/api_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,103 +16,118 @@ import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceProvider {
-  Future<List<Service>> getServices({
-    required String accessToken,
+  Future<List<Service>> getServices();
+  Future<ScheduleBus> getScheduleBus();
+  Future<List<MyLeanProductionsEntity>> getMyLeanProductions();
+  Future<bool> sendFormLeanProduction({
+    required LeanProductionFormEntity formEntity,
   });
-  Future<ScheduleBus> getScheduleBus({required String accessToken});
-  Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String accessToken});
-  Future<bool> sendFormLeanProduction(
-      {required LeanProductionFormEntity formEntity,
-      required String accessToken});
 
-  Future<void> downloadFileWithLeanProduction(
-      {required String url, required String accessToken});
-  Future<bool> submitBagReportForm(
-      {required String accessToken, required BagReportEntity bagReportEntity});
+  Future<void> downloadFileWithLeanProduction({
+    required String url,
+  });
+  Future<bool> submitBagReportForm({required BagReportEntity bagReportEntity});
 }
 
 class ServiceProviderImpl implements IServiceProvider {
-  final IHTTPService _httpService;
+  final RestClient _httpService;
   ServiceProviderImpl(this._httpService);
 
   @override
-  Future<List<Service>> getServices({
-    required String accessToken,
-  }) async {
-    String uri = '$urlAdress/admin/avalible_services_list';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<Service>> getServices() async {
+    final response = await _httpService.get(
+      '/admin/avalible_services_list',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
-      final List<Service> result = (jsonData['result'] as List<dynamic>)
+    if (response
+        case {
+          'result': final data,
+        }) {
+      final List<Service> result = (data as List<dynamic>)
           .map((item) => Service.fromJson(item))
           .toList();
       return result;
-    } else {
-      throw Exception('Error fetching User Info');
     }
+    throw Exception('Error fetching Services ');
   }
 
   @override
-  Future<ScheduleBus> getScheduleBus({required String accessToken}) async {
-    String uri = '$urlAdress/bus/get_destination';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
+  Future<ScheduleBus> getScheduleBus() async {
+    final response = await _httpService.get(
+      '/bus/get_destination',
+    );
 
-      final ScheduleBus result = ScheduleBus.fromJson(jsonData);
+    if (response
+        case {
+          'result': final List<dynamic> data,
+        }) {
+      final ScheduleBus result = ScheduleBus.fromJson(response);
       return result;
-    } else {
-      throw Exception('Error get Schedule Bus');
     }
+    throw Exception('Error get Schedule Bus');
   }
 
   @override
-  Future<bool> sendFormLeanProduction(
-      {required LeanProductionFormEntity formEntity,
-      required String accessToken}) async {
-    String uri = '$urlAdress/lean_fabrication/create_proposal?';
-
+  Future<bool> sendFormLeanProduction({
+    required LeanProductionFormEntity formEntity,
+  }) async {
     final Map<String, String> newFields = {
       'issue':
           '{     "realized": ${formEntity.realized},     "first_implementer": ${formEntity.firstImplementer},     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }'
     };
 
-    final response = await _httpService.postWithFile(
-      uri: uri,
-      userToken: accessToken,
-      paths: formEntity.paths,
-      fieldsNew: newFields,
+    final response = await _httpService.post(
+      '/lean_fabrication/create_proposal',
+      pathsToFiles: formEntity.paths,
+      body: newFields,
     );
-    if (response.statusCode == 201) {
-      return true;
-    } else if (response.statusCode == 400) {
-      throw ApiClientException(ApiClientExceptionType.addTags);
-    } else {
-      throw Exception('Error send Form Lean Production');
+
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      if (data['status'] == "ok") {
+        return true;
+      }
     }
+    throw Exception('Error send Form Lean Production');
+
+    // } else if (response.statusCode == 400) {
+    //   throw ApiClientException(ApiClientExceptionType.addTags);
+    // } else {
+    //   throw Exception('Error send Form Lean Production');
+    // }
   }
 
   @override
-  Future<List<MyLeanProductionsEntity>> getMyLeanProductions(
-      {required String accessToken}) async {
-    String uri = '$urlAdress/lean_fabrication/my_proposals';
-    final response = await _httpService.get(uri: uri, userToken: accessToken);
+  Future<List<MyLeanProductionsEntity>> getMyLeanProductions() async {
+    final response = await _httpService.get(
+      '/lean_fabrication/my_proposals',
+    );
 
-    if (response.statusCode == 200) {
-      final jsonResponse = await response.stream.bytesToString();
-      final jsonData = jsonDecode(jsonResponse);
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
       final List<MyLeanProductionsEntity> result =
-          (jsonData['result']['offers'] as List<dynamic>)
+          (data['offers'] as List<dynamic>)
               .map((item) => MyLeanProductionsEntity.fromJson(item))
               .toList();
       return result;
-    } else {
-      throw Exception('Error fetching My Proposals');
     }
+    throw Exception('Error fetching My Proposals');
+
+    // if (response.statusCode == 200) {
+    //   final jsonResponse = await response.stream.bytesToString();
+    //   final jsonData = jsonDecode(jsonResponse);
+    //   final List<MyLeanProductionsEntity> result =
+    //       (jsonData['result']['offers'] as List<dynamic>)
+    //           .map((item) => MyLeanProductionsEntity.fromJson(item))
+    //           .toList();
+    //   return result;
+    // } else {
+    //   throw Exception('Error fetching My Proposals');
+    // }
   }
 
   Future<void> openFile(
@@ -180,15 +195,18 @@ class ServiceProviderImpl implements IServiceProvider {
   }
 
   @override
-  Future<void> downloadFileWithLeanProduction(
-      {required String url, required String accessToken}) async {
+  Future<void> downloadFileWithLeanProduction({
+    required String url,
+  }) async {
     String uri = '$urlAdress/lean_fabrication/download_file?url=$url';
-    final response =
-        await _httpService.post(uri: uri, userToken: accessToken, body: null);
+    final response = await _httpService.post(uri, body: {});
 
     final fileName = url.split('/').last;
 
-    if (response.statusCode == 200) {
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
       try {
         ///  Выбираем директорию для сохранения в зависимочти от платформы
         Directory? directory;
@@ -198,7 +216,9 @@ class ServiceProviderImpl implements IServiceProvider {
           directory = await getApplicationDocumentsDirectory();
         }
 
-        final jsonResponse = await response.stream.toBytes();
+        /// TODO на время сделал так иначе не скачивается файл нужно с response паолучать не map, а stream
+        List<int> dataList = data.values.cast<int>().toList();
+        // final jsonResponse = await response.stream.toBytes();
 
         /// Создаем путь сохраненного файла
         String filePath = '${directory!.path}/$fileName';
@@ -210,7 +230,7 @@ class ServiceProviderImpl implements IServiceProvider {
         if (isExists) {
           await file.delete();
         }
-        newFile = await file.writeAsBytes(jsonResponse);
+        newFile = await file.writeAsBytes(dataList);
 
         PermissionStatus statusStorage =
             await Permission.manageExternalStorage.status;
@@ -248,8 +268,7 @@ class ServiceProviderImpl implements IServiceProvider {
 
   @override
   Future<bool> submitBagReportForm(
-      {required String accessToken,
-      required BagReportEntity bagReportEntity}) async {
+      {required BagReportEntity bagReportEntity}) async {
     String uri = '$urlAdress/report/create';
 
     final Map<String, String> newFields = {
@@ -257,18 +276,25 @@ class ServiceProviderImpl implements IServiceProvider {
           '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
     };
 
-    final response = await _httpService.postWithFile(
-      uri: uri,
-      userToken: accessToken,
-      paths: bagReportEntity.pathsToFiles,
-      fieldsNew: newFields,
+    final response = await _httpService.post(
+      '/report/create',
+      pathsToFiles: bagReportEntity.pathsToFiles,
+      body: newFields,
     );
-    if (response.statusCode == 201) {
-      return true;
-    } else if (response.statusCode == 400) {
-      throw ApiClientException(ApiClientExceptionType.addTags);
-    } else {
-      throw Exception('Error submit Bag Report Form');
+
+    if (response
+        case {
+          'result': final Map<String, Object?> data,
+        }) {
+      if (data['status'] == "ok") {
+        return true;
+      }
     }
+    throw Exception('Error submit Bag Report Form');
+    // } else if (response.statusCode == 400) {
+    //   throw ApiClientException(ApiClientExceptionType.addTags);
+    // } else {
+    //   throw Exception('Error submit Bag Report Form');
+    // }
   }
 }

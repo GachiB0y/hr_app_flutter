@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'dart:async';
 
 import '../../../data/repo/statements_repository.dart';
@@ -17,10 +16,8 @@ class StatementTypeListBLoC
     implements EventSink<StatementTypeListEvent> {
   StatementTypeListBLoC({
     required final IStatementsRepository repositoryStatements,
-    required final IAuthRepository authRepository,
     final StatementTypeListState? initialState,
   })  : _repositoryStatements = repositoryStatements,
-        _authRepository = authRepository,
         super(
           initialState ??
               const StatementTypeListState.idle(
@@ -40,16 +37,14 @@ class StatementTypeListBLoC
   }
 
   final IStatementsRepository _repositoryStatements;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(FetchStatementTypeListEvent event,
       Emitter<StatementTypeListState> emit) async {
     try {
       emit(StatementTypeListState.processing(data: state.data));
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-      final List<StatementFieldTypeEntity> newData = await _repositoryStatements
-          .fetchListTypeStatements(accessToken: accessToken as String);
+      final List<StatementFieldTypeEntity> newData =
+          await _repositoryStatements.fetchListTypeStatements();
       emit(StatementTypeListState.successful(data: newData));
     } on TimeoutException {
       emit(StatementTypeListState.error(

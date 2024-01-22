@@ -44,7 +44,7 @@ const String accessToken = 'test_access_token';
 void main() {
   group('EventEntity Test BLoC', () {
     // Создайте экземпляры мок-объектов
-    late IAuthRepository mockAuthRepository;
+
     late IEventEntityRepository mockEventEntityRepository;
 
     // Создайте экземпляр вашего BLoC
@@ -52,11 +52,11 @@ void main() {
 
     setUp(() {
       // Инициализируйте мок-объекты и ваш BLoC перед каждым тестом
-      mockAuthRepository = MockAuthRepo();
+
       mockEventEntityRepository = MockEventEntityRepo();
       eventEntityBloc = EventEntityBloc(
-          eventEntityRepository: mockEventEntityRepository,
-          authRepository: mockAuthRepository);
+        eventEntityRepository: mockEventEntityRepository,
+      );
     });
     tearDown(() {
       eventEntityBloc.close();
@@ -73,27 +73,21 @@ void main() {
     blocTest<EventEntityBloc, EventEntityState>(
         'emits [processing, error, idle] when getEvents  Exception throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+          when(mockEventEntityRepository.getEvents())
               .thenThrow(Exception('oops'));
         },
-        build: () => EventEntityBloc(
-            authRepository: mockAuthRepository,
-            eventEntityRepository: mockEventEntityRepository),
+        build: () =>
+            EventEntityBloc(eventEntityRepository: mockEventEntityRepository),
         act: (bloc) => bloc.add(const EventEntityEventFetch()),
         errors: () => [isA<Exception>()]);
     blocTest<EventEntityBloc, EventEntityState>(
         'emits [processing, error, idle] when getEvents  TimeOutException throws',
         setUp: () {
-          when(mockAuthRepository.cheskIsLiveAccessToken())
-              .thenAnswer((_) async => accessToken);
-          when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+          when(mockEventEntityRepository.getEvents())
               .thenThrow(TimeoutException('oops'));
         },
-        build: () => EventEntityBloc(
-            authRepository: mockAuthRepository,
-            eventEntityRepository: mockEventEntityRepository),
+        build: () =>
+            EventEntityBloc(eventEntityRepository: mockEventEntityRepository),
         act: (bloc) => bloc.add(const EventEntityEventFetch()),
         errors: () => [isA<TimeoutException>()]);
 
@@ -107,9 +101,7 @@ void main() {
         filteredListEventEntity: filteredEventEntity,
       );
 
-      when(mockAuthRepository.cheskIsLiveAccessToken())
-          .thenAnswer((_) => Future.value(accessToken));
-      when(mockEventEntityRepository.getEvents(accessToken: accessToken))
+      when(mockEventEntityRepository.getEvents())
           .thenAnswer((_) => Future.value(listEventEntityLoaded));
 
       // Act
@@ -132,7 +124,6 @@ void main() {
 
     test('Create event should emit successful state', () async {
       // Arrange
-      const accessToken = 'test_access_token';
       const title = 'Test Title';
       const description = 'Test Description';
       final imageFile = File('test_image.jpg');
@@ -140,10 +131,7 @@ void main() {
       final String startDate = DateTime.now().toString();
       final String endDate = DateTime.now().toString();
 
-      when(mockAuthRepository.cheskIsLiveAccessToken())
-          .thenAnswer((_) => Future.value(accessToken));
       when(mockEventEntityRepository.createNewEventEntity(
-        accessToken: accessToken,
         title: title,
         description: description,
         imageFile: imageFile,
@@ -193,7 +181,6 @@ void main() {
 
       eventEntityBloc = EventEntityBloc(
         eventEntityRepository: mockEventEntityRepository,
-        authRepository: mockAuthRepository,
         initialState: initialState,
       );
 

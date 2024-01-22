@@ -22,11 +22,16 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
   void initState() {
     super.initState();
     approvementNewsBloc = ApprovementNewsBloc(
-      authRepository: DependenciesScope.of(context).authRepository,
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
     );
     approvementNewsBloc.add(const ApprovementEvent.fetch());
+  }
+
+  @override
+  void dispose() {
+    approvementNewsBloc.close();
+    super.dispose();
   }
 
   @override
@@ -111,14 +116,12 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            context
-                                                .read<ApprovementNewsBloc>()
-                                                .add(ApprovementEvent
-                                                    .approvedNews(
-                                                        id: loadedApprovementNews[
-                                                                index]
-                                                            .id
-                                                            .toString()));
+                                            approvementNewsBloc.add(
+                                                ApprovementEvent.approvedNews(
+                                                    id: loadedApprovementNews[
+                                                            index]
+                                                        .id
+                                                        .toString()));
                                           },
                                           child: Text(
                                             'Подтвердить',
@@ -134,9 +137,8 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                                   MaterialStateProperty.all(
                                                       Colors.redAccent)),
                                           onPressed: () {
-                                            context
-                                                .read<ApprovementNewsBloc>()
-                                                .add(ApprovementEvent
+                                            approvementNewsBloc.add(
+                                                ApprovementEvent
                                                     .moveInArchiveNews(
                                                         id: loadedApprovementNews[
                                                                 index]

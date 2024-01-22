@@ -22,7 +22,6 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
   void initState() {
     super.initState();
     blocScheduleBus = ScheduleBusBloc(
-      authRepository: DependenciesScope.of(context).authRepository,
       serviceRepository: DependenciesScope.of(context).serviceRepository,
     );
     blocScheduleBus.add(const ScheduleBusEvent.fetch());
@@ -172,24 +171,26 @@ class _DestinationListWidgetState extends State<DestinationListWidget> {
         itemCount: widget.city.destinations.length,
         itemBuilder: (context, index) {
           final destination = widget.city.destinations[index];
-          return Container(
-            margin: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: ListTile(
-              title: Text(destination.namePath),
-              onTap: () async {
-                await _launchUrl(destination.link);
-              },
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ListTile(
+                title: Text(destination.namePath),
+                onTap: () async {
+                  await _launchUrl(destination.link);
+                },
+              ),
             ),
           );
         },

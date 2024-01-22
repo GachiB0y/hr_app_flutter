@@ -18,9 +18,6 @@ abstract interface class AuthController {
     required String code,
   });
 
-  /// Check is auth user
-  void checkAuth();
-
   /// Signs out the current user.
   void signOut();
 
@@ -125,11 +122,6 @@ class _AuthScopeState extends State<AuthScope> implements AuthController {
     _authBloc.add(AuthEvent.getCode(
       phoneNumber: phoneNumber,
     ));
-  }
-
-  @override
-  void checkAuth() {
-    _authBloc.add(const AuthEvent.checkAuth());
   }
 }
 

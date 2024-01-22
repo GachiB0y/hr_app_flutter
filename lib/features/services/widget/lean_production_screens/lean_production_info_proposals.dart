@@ -55,7 +55,6 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
   void initState() {
     super.initState();
     blocLeanProduction = LeanProductionFormBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
         repository: DependenciesScope.of(context).leanProductionRepository);
     blocLeanProduction
         .add(const LeanProductionFormEvent.getMyLeanProductions());

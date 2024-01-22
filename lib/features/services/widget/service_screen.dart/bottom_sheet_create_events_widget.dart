@@ -39,7 +39,6 @@ class _BottomSheetCreateEventsWidgetState
     DateTime startDate = viewModelBottomSheet?.startDate as DateTime;
     DateTime? endDate = viewModelBottomSheet?.endDate;
 
-    final blocEventEntity = context.read<EventEntityBloc>();
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
@@ -91,7 +90,7 @@ class _BottomSheetCreateEventsWidgetState
                     });
                   },
                   child: Text(
-                    'Весь день',
+                    'Один день',
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.outline),
                   )),
@@ -154,17 +153,18 @@ class _BottomSheetCreateEventsWidgetState
                         return;
                       }
 
-                      blocEventEntity.add(EventEntityEvent.create(
-                          title: dataTitleController.text,
-                          description: dataDescriptionController.text,
-                          imageFile: ChangeNotifierProvaider.read<
-                                  ChangeNotifierProvaider<
-                                      BottomSheetCreateEventsModel>,
-                                  BottomSheetCreateEventsModel>(context)
-                              ?.file! as File,
-                          categories: selectedCategories,
-                          startDate: startDate.toString(),
-                          endDate: endDate?.toString()));
+                      context.read<EventEntityBloc>().add(
+                          EventEntityEvent.create(
+                              title: dataTitleController.text,
+                              description: dataDescriptionController.text,
+                              imageFile: ChangeNotifierProvaider.read<
+                                      ChangeNotifierProvaider<
+                                          BottomSheetCreateEventsModel>,
+                                      BottomSheetCreateEventsModel>(context)
+                                  ?.file! as File,
+                              categories: selectedCategories,
+                              startDate: startDate.toString(),
+                              endDate: endDate?.toString()));
                     },
                   ),
                 ),

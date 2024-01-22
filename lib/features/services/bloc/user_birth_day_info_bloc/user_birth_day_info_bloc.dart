@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:hr_app_flutter/features/user/data/repo/user_repository.dart';
 
@@ -18,10 +17,8 @@ class UserBirthDayInfoBLoc
     implements EventSink<UserBirthDayInfoEvent> {
   UserBirthDayInfoBLoc({
     required final IUserRepository userRepo,
-    required final IAuthRepository authRepository,
     final UserBirthDayInfoState? initialState,
   })  : _userRepo = userRepo,
-        _authRepository = authRepository,
         super(
           initialState ??
               const UserBirthDayInfoState.idle(
@@ -41,7 +38,6 @@ class UserBirthDayInfoBLoc
   }
 
   final IUserRepository _userRepo;
-  final IAuthRepository _authRepository;
 
   /// Fetch event handler
   Future<void> _fetch(UserBirthDayInfoEventFetch event,
@@ -49,13 +45,8 @@ class UserBirthDayInfoBLoc
     try {
       emit(UserBirthDayInfoState.processing(data: state.data));
 
-      String? accessToken = await _authRepository.cheskIsLiveAccessToken();
-
       BirthDayInfoEntity birthDayInfoLoaded = await _userRepo
-          .getBirthDayInfo(
-              accessToken: accessToken as String,
-              startDate: event.startDate,
-              endDate: event.endDate)
+          .getBirthDayInfo(startDate: event.startDate, endDate: event.endDate)
           .timeout(const Duration(seconds: 10));
 
       emit(UserBirthDayInfoState.successful(data: birthDayInfoLoaded));

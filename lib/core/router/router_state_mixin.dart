@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/router/authentication_guard.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
-import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart';
 import 'package:octopus/octopus.dart';
 
@@ -21,7 +19,7 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
         ValueNotifier<List<({Object error, StackTrace stackTrace})>>(
       <({Object error, StackTrace stackTrace})>[],
     );
-    // final stateAuth = dependencies.authBloc.state;
+
     // Create router.
     router = Octopus(
       routes: Routes.values,

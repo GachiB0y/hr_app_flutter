@@ -21,7 +21,6 @@ void main() {
   group('WalletRepository', () {
     late IWalletProvider walletApiClient;
     late IWalletRepository walletRepository;
-    const String accessToken = 'test_access_token';
 
     setUp(() {
 // Создаем экземпляры мок-объектов
@@ -42,37 +41,34 @@ void main() {
     group('getWallet', () {
       test('calls getBalance with correct', () async {
         try {
-          await walletRepository.getWallet(accessToken: accessToken);
+          await walletRepository.getWallet();
         } catch (_) {}
-        verify(walletApiClient.getBalance(accessToken: accessToken)).called(1);
+        verify(walletApiClient.getBalance()).called(1);
       });
       test('throws when getBalance fails', () async {
         final exception = Exception('oops');
 
-        when(walletApiClient.getBalance(accessToken: accessToken))
-            .thenThrow(exception);
+        when(walletApiClient.getBalance()).thenThrow(exception);
 
         expect(
-          () async => walletRepository.getWallet(accessToken: accessToken),
+          () async => walletRepository.getWallet(),
           throwsA(exception),
         );
       });
 
       test('calls getTransactions with correct', () async {
         try {
-          await walletRepository.getWallet(accessToken: accessToken);
+          await walletRepository.getWallet();
         } catch (_) {}
-        verify(walletApiClient.getTransactions(accessToken: accessToken))
-            .called(1);
+        verify(walletApiClient.getTransactions()).called(1);
       });
       test('throws when getTransactions fails', () async {
         final exception = Exception('oops');
 
-        when(walletApiClient.getTransactions(accessToken: accessToken))
-            .thenThrow(exception);
+        when(walletApiClient.getTransactions()).thenThrow(exception);
 
         expect(
-          () async => walletRepository.getWallet(accessToken: accessToken),
+          () async => walletRepository.getWallet(),
           throwsA(exception),
         );
       });
@@ -83,12 +79,10 @@ void main() {
             (avarageCoins: 5, balance: 100);
 // Создаем транзакции
         List<Transaction> listTransaction = MockWallet().transactions ?? [];
-        when(walletApiClient.getBalance(accessToken: accessToken))
-            .thenAnswer((_) async => allBalance);
-        when(walletApiClient.getTransactions(accessToken: accessToken))
+        when(walletApiClient.getBalance()).thenAnswer((_) async => allBalance);
+        when(walletApiClient.getTransactions())
             .thenAnswer((_) async => listTransaction);
-        final actual =
-            await walletRepository.getWallet(accessToken: accessToken);
+        final actual = await walletRepository.getWallet();
         expect(
             actual,
             Wallet(
@@ -101,19 +95,17 @@ void main() {
     group('getCoinsInfo', () {
       test('calls getCoinsInfo with correct', () async {
         try {
-          await walletRepository.getCoinsInfo(accessToken: accessToken);
+          await walletRepository.getCoinsInfo();
         } catch (_) {}
-        verify(walletApiClient.getCoinsInfo(accessToken: accessToken))
-            .called(1);
+        verify(walletApiClient.getCoinsInfo()).called(1);
       });
       test('throws when getCoinsInfo fails', () async {
         final exception = Exception('oops');
 
-        when(walletApiClient.getCoinsInfo(accessToken: accessToken))
-            .thenThrow(exception);
+        when(walletApiClient.getCoinsInfo()).thenThrow(exception);
 
         expect(
-          () async => walletRepository.getCoinsInfo(accessToken: accessToken),
+          () async => walletRepository.getCoinsInfo(),
           throwsA(exception),
         );
       });
@@ -124,11 +116,9 @@ void main() {
 //Создаем list CoinsInfo
         final List<CoinsInfo> listInfo = [coinsInfoFirst];
 
-        when(walletApiClient.getCoinsInfo(accessToken: accessToken))
-            .thenAnswer((_) async => listInfo);
+        when(walletApiClient.getCoinsInfo()).thenAnswer((_) async => listInfo);
 
-        final actual =
-            await walletRepository.getCoinsInfo(accessToken: accessToken);
+        final actual = await walletRepository.getCoinsInfo();
         expect(actual, listInfo);
       });
     });
@@ -137,20 +127,17 @@ void main() {
     group('getInfoCoinsReward', () {
       test('calls getInfoCoinsReward with correct', () async {
         try {
-          await walletRepository.getInfoCoinsReward(accessToken: accessToken);
+          await walletRepository.getInfoCoinsReward();
         } catch (_) {}
-        verify(walletApiClient.getInfoCoinsReward(accessToken: accessToken))
-            .called(1);
+        verify(walletApiClient.getInfoCoinsReward()).called(1);
       });
       test('throws when getInfoCoinsReward fails', () async {
         final exception = Exception('oops');
 
-        when(walletApiClient.getInfoCoinsReward(accessToken: accessToken))
-            .thenThrow(exception);
+        when(walletApiClient.getInfoCoinsReward()).thenThrow(exception);
 
         expect(
-          () async =>
-              walletRepository.getInfoCoinsReward(accessToken: accessToken),
+          () async => walletRepository.getInfoCoinsReward(),
           throwsA(exception),
         );
       });
@@ -161,11 +148,10 @@ void main() {
 //Создаем list CoinsReward
         final List<CoinsReward> listInfo = [coinsRewardFirst];
 
-        when(walletApiClient.getInfoCoinsReward(accessToken: accessToken))
+        when(walletApiClient.getInfoCoinsReward())
             .thenAnswer((_) async => listInfo);
 
-        final actual =
-            await walletRepository.getInfoCoinsReward(accessToken: accessToken);
+        final actual = await walletRepository.getInfoCoinsReward();
         expect(actual, listInfo);
       });
     });
@@ -176,34 +162,22 @@ void main() {
       test('calls sendCoinsToOtherUser with correct', () async {
         try {
           await walletRepository.sendCoinsToOtherUser(
-              accessToken: accessToken,
-              amount: amount,
-              userId: userId,
-              message: '');
+              amount: amount, userId: userId, message: '');
         } catch (_) {}
         verify(walletApiClient.sendCoinsToOtherUser(
-                accessToken: accessToken,
-                amount: amount,
-                userId: userId,
-                message: ''))
+                amount: amount, userId: userId, message: ''))
             .called(1);
       });
       test('throws when sendCoinsToOtherUser fails', () async {
         final exception = Exception('oops');
 
         when(walletApiClient.sendCoinsToOtherUser(
-                accessToken: accessToken,
-                amount: amount,
-                userId: userId,
-                message: ''))
+                amount: amount, userId: userId, message: ''))
             .thenThrow(exception);
 
         expect(
           () async => walletRepository.sendCoinsToOtherUser(
-              accessToken: accessToken,
-              amount: amount,
-              userId: userId,
-              message: ''),
+              amount: amount, userId: userId, message: ''),
           throwsA(exception),
         );
       });
@@ -213,17 +187,11 @@ void main() {
         const int newBalance = 9;
 
         when(walletApiClient.sendCoinsToOtherUser(
-                accessToken: accessToken,
-                amount: amount,
-                userId: userId,
-                message: ''))
+                amount: amount, userId: userId, message: ''))
             .thenAnswer((_) async => newBalance);
 
         final actual = await walletRepository.sendCoinsToOtherUser(
-            accessToken: accessToken,
-            amount: amount,
-            userId: userId,
-            message: '');
+            amount: amount, userId: userId, message: '');
         expect(actual, newBalance);
       });
     });
@@ -235,12 +203,10 @@ void main() {
       test('calls sendCoinsToBracer with correct', () async {
         try {
           await walletRepository.sendCoinsToBracer(
-            accessToken: accessToken,
             amount: amount,
           );
         } catch (_) {}
         verify(walletApiClient.sendCoinsToBracer(
-          accessToken: accessToken,
           amount: amount,
         )).called(1);
       });
@@ -248,13 +214,11 @@ void main() {
         final exception = Exception('oops');
 
         when(walletApiClient.sendCoinsToBracer(
-          accessToken: accessToken,
           amount: amount,
         )).thenThrow(exception);
 
         expect(
           () async => walletRepository.sendCoinsToBracer(
-            accessToken: accessToken,
             amount: amount,
           ),
           throwsA(exception),
@@ -266,12 +230,10 @@ void main() {
         const int newBalance = 9;
 
         when(walletApiClient.sendCoinsToBracer(
-          accessToken: accessToken,
           amount: amount,
         )).thenAnswer((_) async => newBalance);
 
         final actual = await walletRepository.sendCoinsToBracer(
-          accessToken: accessToken,
           amount: amount,
         );
         expect(actual, newBalance);

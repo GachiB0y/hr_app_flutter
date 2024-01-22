@@ -25,9 +25,8 @@ class _SearchFriendAndSendCoinsScreenState
   @override
   void initState() {
     super.initState();
-    _otherUsersBloc = OtherUsersBloc(
-        authRepository: DependenciesScope.of(context).authRepository,
-        userRepo: DependenciesScope.of(context).userRepository);
+    _otherUsersBloc =
+        OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
   }
 
   void showPopupWindow(int autoCard) {
