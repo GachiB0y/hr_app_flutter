@@ -49,7 +49,7 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
           await Firebase.initializeApp(
               options: const FirebaseOptions(
                   apiKey: "AIzaSyD9dkbYMqYKI5fkIeFkQBzV3gXSkQhpw28",
-                  appId: "1:399963694781:ios:e041ec4c5885ee609139d4",
+                  appId: "1:399963694781:android:207b472798a961589139d4",
                   messagingSenderId: "399963694781",
                   projectId: "hrapp-8bcdb"));
         }

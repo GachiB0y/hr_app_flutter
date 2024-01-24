@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:399963694781:android:bdb1d022ebaf279d9139d4",
+        "mobilesdk_app_id": "1:399963694781:android:207b472798a961589139d4",
         "android_client_info": {
-          "package_name": "com.example.hr_app_flutter"
+          "package_name": "com.grass.hr_app_flutter"
         }
       },
       "oauth_client": [],
