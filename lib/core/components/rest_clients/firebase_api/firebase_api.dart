@@ -35,6 +35,6 @@ class FirebaseApi {
     await _firebasseMessaging.requestPermission();
     final fCMToken = await _firebasseMessaging.getToken();
     print('Token:$fCMToken');
-    FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+    initPushNotifications();
   }
 }

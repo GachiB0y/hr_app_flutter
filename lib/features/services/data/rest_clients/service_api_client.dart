@@ -269,8 +269,6 @@ class ServiceProviderImpl implements IServiceProvider {
   @override
   Future<bool> submitBagReportForm(
       {required BagReportEntity bagReportEntity}) async {
-    String uri = '$urlAdress/report/create';
-
     final Map<String, String> newFields = {
       'forminfo':
           '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
@@ -286,9 +284,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
-        return true;
-      }
+      return true;
     }
     throw Exception('Error submit Bag Report Form');
     // } else if (response.statusCode == 400) {

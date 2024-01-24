@@ -752,8 +752,7 @@ class _TableScrollWidgetState extends State<TableScrollWidget> {
                     return GestureDetector(
                       onTap: () {
                         context.octopus.setState((stateRoute) => stateRoute
-                          ..findByName('user-main')
-                              ?.add(Routes.profileUser.node(
+                          ..add(Routes.aboutNews.node(
                             arguments: <String, String>{
                               'id': item.id.toString()
                             },
