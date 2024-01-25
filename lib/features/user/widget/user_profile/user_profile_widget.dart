@@ -58,14 +58,24 @@ class ToggleThemeWidget extends StatelessWidget {
   const ToggleThemeWidget({super.key});
 
   @override
-  Widget build(BuildContext context) => IconButton(
-        onPressed: () {
-          SettingsScope.of(context, listen: false).toggleThemeMode();
-        },
-        icon: Icon(SettingsScope.of(context).theme.mode == ThemeMode.light
-            ? Icons.dark_mode
-            : Icons.light_mode),
-      );
+  Widget build(BuildContext context) =>
+      BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        if (state.data!.currentProfileUser == null) {
+          return const SizedBox.shrink();
+        } else {
+          return state.data!.currentProfileUser!.self
+              ? IconButton(
+                  onPressed: () {
+                    SettingsScope.of(context, listen: false).toggleThemeMode();
+                  },
+                  icon: Icon(
+                      SettingsScope.of(context).theme.mode == ThemeMode.light
+                          ? Icons.dark_mode
+                          : Icons.light_mode),
+                )
+              : const SizedBox.shrink();
+        }
+      });
 }
 
 class UserInfoForm extends StatelessWidget {
@@ -155,23 +165,29 @@ class LogoutButtonWidget extends StatelessWidget {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.only(
-            right: 20.0,
-          ),
-          child: IconButton(
-            onPressed: () async {
-              AuthScope.of(context, listen: false).signOut();
-            },
-            padding: const EdgeInsets.all(2),
-            color: Colors.transparent,
-            icon: Icon(
-              Icons.logout,
-              size: 35,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        );
+        if (state.data!.currentProfileUser == null) {
+          return const SizedBox.shrink();
+        } else {
+          return state.data!.currentProfileUser!.self
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    right: 20.0,
+                  ),
+                  child: IconButton(
+                    onPressed: () async {
+                      AuthScope.of(context, listen: false).signOut();
+                    },
+                    padding: const EdgeInsets.all(2),
+                    color: Colors.transparent,
+                    icon: Icon(
+                      Icons.logout,
+                      size: 35,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink();
+        }
       });
     }
   }
@@ -194,24 +210,26 @@ class AvatarProfileWidget extends StatelessWidget {
                 ? const SizedBox.shrink()
                 : Stack(
                     children: [
-                      CachedNetworkImage(
-                          imageUrl: state.data!.currentProfileUser!.avatar,
-                          imageBuilder: (context, imageProvider) {
-                            return CircleAvatar(
-                              radius: radius,
-                              backgroundImage: viewModel
-                                          .state.myImage.imageFile !=
-                                      null
-                                  ? FileImage(
-                                      viewModel.state.myImage.imageFile as File)
-                                  : imageProvider,
-                            );
-                          }),
+                      SizedBox(
+                        width: radius * 2,
+                        child: CachedNetworkImage(
+                            imageUrl: state.data!.currentProfileUser!.avatar,
+                            imageBuilder: (context, imageProvider) {
+                              return CircleAvatar(
+                                radius: radius,
+                                backgroundImage:
+                                    viewModel.state.myImage.imageFile != null
+                                        ? FileImage(viewModel
+                                            .state.myImage.imageFile as File)
+                                        : imageProvider,
+                              );
+                            }),
+                      ),
                       state.data!.currentProfileUser!.self
                           ? Positioned(
                               top: 0,
                               right: 0,
-                              child: Container(
+                              child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).colorScheme.outline,
                                   shape: BoxShape.circle,

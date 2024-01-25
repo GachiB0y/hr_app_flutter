@@ -87,10 +87,12 @@ class UserBloc extends Bloc<UserEvent, UserState>
           data: state.data?.copyWith(currentProfileUser: currentProfileUser)));
     } on TimeoutException {
       emit(UserState.error(
-          data: state.data, message: 'Время ожидания истекло!'));
+          data: state.data?.copyWith(currentProfileUser: null),
+          message: 'Время ожидания истекло!'));
     } on Object catch (err, stackTrace) {
       //l.e('An error occurred in the UsersBLoC: $err', stackTrace);
-      emit(UserState.error(data: state.data));
+      emit(UserState.error(
+          data: state.data?.copyWith(currentProfileUser: null)));
       rethrow;
     } finally {
       emit(UserState.idle(data: state.data));
