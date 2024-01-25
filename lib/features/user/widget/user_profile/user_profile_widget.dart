@@ -349,19 +349,24 @@ class _TagsWidgetState extends State<TagsWidget> {
                         children: state.data!.currentProfileUser!.tags
                             .map((tag) => Chip(
                                   label: Text(tag.name),
-                                  onDeleted: () {
-                                    UserScope.of(context, listen: false)
-                                        .state
-                                        .changeIsSave(
-                                            newValue: true, isTags: true);
-                                    context
-                                        .read<UserBloc>()
-                                        .add(UserEvent.deleteTag(tag: tag));
-                                  },
-                                  deleteIcon: const Icon(
-                                    Icons.close,
-                                    size: 20,
-                                  ),
+                                  onDeleted: state
+                                          .data!.currentProfileUser!.editTags
+                                      ? () {
+                                          UserScope.of(context, listen: false)
+                                              .state
+                                              .changeIsSave(
+                                                  newValue: true, isTags: true);
+                                          context.read<UserBloc>().add(
+                                              UserEvent.deleteTag(tag: tag));
+                                        }
+                                      : null,
+                                  deleteIcon:
+                                      state.data!.currentProfileUser!.editTags
+                                          ? const Icon(
+                                              Icons.close,
+                                              size: 20,
+                                            )
+                                          : null,
                                   deleteButtonTooltipMessage: 'Удалить',
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
