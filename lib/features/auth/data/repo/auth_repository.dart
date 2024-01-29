@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 
@@ -18,12 +19,16 @@ class AuthRepositoryImpl implements IAuthRepository {
   AuthRepositoryImpl({
     required AuthStatusDataSource authStatusDataSource,
     required AuthDataSource authDataSource,
+    required IFirebaseApi firebaseApi,
   })  : _authStatusDataSource = authStatusDataSource,
-        _authDataSource = authDataSource;
+        _authDataSource = authDataSource,
+        _firebaseApi = firebaseApi;
 
   final AuthStatusDataSource _authStatusDataSource;
 
   final AuthDataSource _authDataSource;
+
+  final IFirebaseApi _firebaseApi;
 
   @override
   Future<void> getCode({required String numberPhone}) async {
@@ -37,8 +42,10 @@ class AuthRepositoryImpl implements IAuthRepository {
   @override
   Future<void> signInWithPhoneAndCode(
       {required String numberPhone, required String code}) async {
-    await _authDataSource.signInWithPhoneAndCode(
-        numberPhone: numberPhone, code: code);
+    final String? deviceToken = await _firebaseApi.getFCMToken();
+
+    return _authDataSource.signInWithPhoneAndCode(
+        numberPhone: numberPhone, code: code, deviceToken: deviceToken);
   }
 
   @override

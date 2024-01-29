@@ -28,13 +28,26 @@ Future<void> initPushNotifications() async {
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
 }
 
-class FirebaseApi {
+/// IFirebaseApi
+abstract interface class IFirebaseApi {
+  /// Initialize push notifications.
+  Future<void> initNotifications();
+
+  /// Get fCMToken for send push.
+  Future<String?> getFCMToken();
+}
+
+class FirebaseApi implements IFirebaseApi {
   final _firebasseMessaging = FirebaseMessaging.instance;
 
-  Future<void> initNotifications() async {
+  @override
+  Future<void> initNotifications() => initPushNotifications();
+
+  @override
+  Future<String?> getFCMToken() async {
     await _firebasseMessaging.requestPermission();
-    final fCMToken = await _firebasseMessaging.getToken();
-    print('Token:$fCMToken');
-    initPushNotifications();
+    final String? fCMToken = await _firebasseMessaging.getToken();
+
+    return fCMToken;
   }
 }

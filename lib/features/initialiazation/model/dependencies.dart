@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart' show BuildContext;
+import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
@@ -31,6 +32,9 @@ base class Dependencies {
 
   /// Theme repository
   late final SettingsRepository settingsRepository;
+
+  /// Firebase API
+  late final IFirebaseApi firebaseApi;
 
   /// HTTPService
   // late final IHTTPService htttpService;

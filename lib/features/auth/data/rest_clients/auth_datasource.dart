@@ -13,7 +13,7 @@ abstract interface class AuthDataSource {
 
   /// Sign In with phone and code.
   Future<void> signInWithPhoneAndCode(
-      {required String numberPhone, required String code});
+      {required String numberPhone, required String code, String? deviceToken});
 
   /// Sign out the current user.
   Future<void> signOut();
@@ -60,10 +60,16 @@ final class AuthDataSourceImpl
 
   @override
   Future<void> signInWithPhoneAndCode(
-      {required String numberPhone, required String code}) async {
+      {required String numberPhone,
+      required String code,
+      String? deviceToken}) async {
     final response = await client.post<Map<String, Object?>>(
       '/auth/verify_sms',
-      queryParameters: {'phone': numberPhone, 'code': code},
+      queryParameters: {
+        'phone': numberPhone,
+        'code': code,
+        'device_token': deviceToken
+      },
     );
     await _handleAuthResponse(response.data);
   }

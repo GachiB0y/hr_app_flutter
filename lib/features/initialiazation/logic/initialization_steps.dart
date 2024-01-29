@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
@@ -57,6 +58,11 @@ mixin InitializationSteps {
         localeDataSource: localeDataSource,
       );
     },
+    'Firebase API': (progress) {
+      final firebaseApi = FirebaseApi();
+      firebaseApi.initNotifications();
+      progress.dependencies.firebaseApi = firebaseApi;
+    },
     'AuthRepository': (progress) async {
       final interceptedDio = Dio();
       final justDio = Dio(
@@ -87,7 +93,8 @@ mixin InitializationSteps {
 
       final authRepository = AuthRepositoryImpl(
           authStatusDataSource: oauthInterceptor,
-          authDataSource: authDataSource);
+          authDataSource: authDataSource,
+          firebaseApi: progress.dependencies.firebaseApi);
 
       progress.dependencies.authRepository = authRepository;
       progress.dependencies.restClient = restClient;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
+import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
 
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
 
@@ -12,10 +13,10 @@ class TitleAppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-      builder: (BuildContext context, UserState state) {
-        return (state.data == null ||
-                state is UserState$Processing ||
-                state is UserState$Error)
+      builder: (BuildContext context, UserState stateUserBloc) {
+        return (stateUserBloc.data == null ||
+                stateUserBloc is UserState$Processing ||
+                stateUserBloc is UserState$Error)
             ? ShimmerLoading(
                 isLoading: true,
                 child: Container(
@@ -33,14 +34,13 @@ class TitleAppBarWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.5,
                         child: Text(
-                          '${'${state.data?.authUser.name} ${state.data?.authUser.nameI}'} ',
+                          'Привет, ${stateUserBloc.data?.authUser.nameI}!',
                           softWrap: true,
                           maxLines: 2,
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurfaceVariant),
@@ -49,17 +49,47 @@ class TitleAppBarWidget extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Text(
-                          softWrap: true,
-                          maxLines: 2,
-                          state.data!.authUser.staffPosition,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.outline),
-                        ),
+                      Row(
+                        children: [
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [Color(0xFF00C8E0), Color(0xFF00D000)],
+                              ),
+                              borderRadius: BorderRadius.circular(63),
+                            ),
+                            child: BlocBuilder<WalletBLoC, WalletState>(
+                                builder: (context, state) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 4.0, left: 8, right: 8, bottom: 4),
+                                child: Text(
+                                  '${state.data == null ? '0' : state.data!.balance} coin',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white),
+                                ),
+                              );
+                            }),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          SizedBox(
+                            child: Text(
+                              softWrap: true,
+                              maxLines: 2,
+                              stateUserBloc.data!.authUser.staffPosition,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.outline),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

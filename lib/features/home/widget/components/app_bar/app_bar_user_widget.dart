@@ -27,10 +27,8 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
   Widget build(BuildContext context) {
     return AppBar(
       scrolledUnderElevation: 0.0,
-      // shadowColor: Colors.transparent,
       toolbarHeight: 90,
       leadingWidth: 90,
-
       leading: const Avatar(),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,

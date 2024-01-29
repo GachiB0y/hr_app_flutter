@@ -53,7 +53,6 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
                   messagingSenderId: "399963694781",
                   projectId: "hrapp-8bcdb"));
         }
-        await FirebaseApi().initNotifications();
 
         final result = await processInitialization(
           steps: initializationSteps,
