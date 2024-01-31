@@ -35,7 +35,7 @@ final class AppTheme with Diagnosticable {
   /// The default [AppTheme].
   static final defaultTheme = AppTheme(
     mode: ThemeMode.system,
-    seed: const Color(0xFF56BE64),
+    seed: const Color(0xFF33A936),
   );
 
   /// The [ThemeData] for this [AppTheme].
@@ -76,7 +76,7 @@ final class AppTheme with Diagnosticable {
 
 final lightColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
-  primary: const Color(0xFF56BE64),
+  primary: const Color(0xFF33A936),
   onPrimary: const Color(0xFFFFFFFF),
   primaryContainer: const Color(0xFF90FA98),
   onPrimaryContainer: const Color(0xFF002106),
@@ -106,12 +106,12 @@ final lightColorScheme = ColorScheme.fromSeed(
   surfaceTint: const Color(0xFF74DD7E),
   outlineVariant: const Color(0xFFC2C9BD),
   scrim: const Color(0xFF000000),
-  seedColor: const Color(0xFF56BE64),
+  seedColor: const Color(0xFF33A936),
 );
 
 final darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  primary: const Color(0xFF56BE64),
+  primary: const Color(0xFF33A936),
   onPrimary: const Color(0xFFFFFFFF),
   primaryContainer: const Color(0xFF00531B),
   onPrimaryContainer: const Color(0xFF90FA98),
@@ -141,5 +141,5 @@ final darkColorScheme = ColorScheme.fromSeed(
   surfaceTint: const Color(0xFF74DD7E),
   outlineVariant: const Color(0xFF424940),
   scrim: const Color(0xFF000000),
-  seedColor: const Color(0xFF56BE64),
+  seedColor: const Color(0xFF33A936),
 );

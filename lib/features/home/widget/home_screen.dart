@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
+import 'package:hr_app_flutter/core/utils/bottom_nav_bar_custom/custom_nav_bar.dart';
+import 'package:hr_app_flutter/core/utils/custom_curved_nav_bar/custom_curved_nav_bar.dart';
 import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
@@ -174,6 +176,45 @@ class _HomeScreenState extends State<HomeScreen> {
     _switchTab(newTab);
   }
 
+  var iconData = <IconData>[
+    Icons.home,
+    Icons.people,
+    Icons.account_circle,
+    Icons.chat,
+    Icons.settings,
+  ];
+
+  var iconText = <Widget>[
+    const Text('Home', style: TextStyle(color: Colors.grey, fontSize: 12)),
+    const Text('Friends', style: TextStyle(color: Colors.grey, fontSize: 12)),
+    const Text('Account', style: TextStyle(color: Colors.grey, fontSize: 12)),
+    const Text('Chat', style: TextStyle(color: Colors.grey, fontSize: 12)),
+    const Text('Settings', style: TextStyle(color: Colors.grey, fontSize: 12)),
+  ];
+
+  var indicatorColors = <Color>[
+    Colors.blue,
+    Colors.blue,
+    Colors.blue,
+    Colors.blue,
+    Colors.blue,
+  ];
+
+  Widget _buildItem(IconData icon, String text) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppScreenViewCubit, MainAppScreenViewState>(
@@ -181,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
             DependenciesScope.of(context).mainAppScreenViewCubit,
         builder: (context, state) {
           return Scaffold(
-            // appBar: null,
             body: Shimmer(
               child: IndexedStack(
                 index: _tab.index,
@@ -196,33 +236,52 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             bottomNavigationBar: state.modalOpened
                 ? null
-                : BottomNavigationBar(
+                : CurvedNavigationBar(
+                    color: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Theme.of(context).colorScheme.onTertiary,
                     selectedItemColor: Theme.of(context).colorScheme.primary,
-                    unselectedItemColor:
-                        Theme.of(context).colorScheme.onSurfaceVariant,
-                    currentIndex: _tab.index,
+                    index: _tab.index,
                     onTap: _onItemTapped,
                     items: [
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconHome, size: 28),
-                          label: Localization.of(context).tabBarText_main),
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconRub, size: 30),
-                          label: Localization.of(context).tabBarText_grassCoin),
-                      BottomNavigationBarItem(
-                          icon:
-                              const Icon(MyCustomIcon.iconLogoGrass, size: 36),
-                          label: Localization.of(context).tabBarText_company),
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconBook, size: 30),
-                          label: Localization.of(context).tabBarText_education),
-                      BottomNavigationBarItem(
-                          icon: const Icon(
-                            MyCustomIcon.iconService,
-                          ),
-                          label: Localization.of(context).tabBarText_service),
+                      _buildItem(Icons.home, 'Компания'),
+                      _buildItem(Icons.settings, 'Коины'),
+                      _buildItem(Icons.notifications, 'Главная'),
+                      _buildItem(Icons.person, 'Обучение'),
+                      _buildItem(Icons.mail, 'Сервисы'),
                     ],
                   ),
+            // : BottomNavigationBar(
+            //     // useLegacyColorScheme: false,
+            //     backgroundColor: Colors.green,
+            //     selectedIconTheme: IconThemeData(
+            //         color: Theme.of(context).colorScheme.error),
+            //     selectedItemColor: Colors.black,
+            //     // unselectedItemColor:
+            //     //     Theme.of(context).colorScheme.onSurfaceVariant,
+            //     currentIndex: _tab.index,
+            //     onTap: _onItemTapped,
+            //     items: [
+            //       BottomNavigationBarItem(
+            //           icon: const Icon(MyCustomIcon.iconHome, size: 28),
+            //           label: Localization.of(context).tabBarText_main,
+            //           backgroundColor: Colors.green),
+            //       BottomNavigationBarItem(
+            //           icon: const Icon(MyCustomIcon.iconRub, size: 30),
+            //           label: Localization.of(context).tabBarText_grassCoin),
+            //       BottomNavigationBarItem(
+            //           icon:
+            //               const Icon(MyCustomIcon.iconLogoGrass, size: 36),
+            //           label: Localization.of(context).tabBarText_company),
+            //       BottomNavigationBarItem(
+            //           icon: const Icon(MyCustomIcon.iconBook, size: 30),
+            //           label: Localization.of(context).tabBarText_education),
+            //       BottomNavigationBarItem(
+            //           icon: const Icon(
+            //             MyCustomIcon.iconService,
+            //           ),
+            //           label: Localization.of(context).tabBarText_service),
+            //     ],
+            //   ),
           );
         });
   }
