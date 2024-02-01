@@ -176,30 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _switchTab(newTab);
   }
 
-  var iconData = <IconData>[
-    Icons.home,
-    Icons.people,
-    Icons.account_circle,
-    Icons.chat,
-    Icons.settings,
-  ];
-
-  var iconText = <Widget>[
-    const Text('Home', style: TextStyle(color: Colors.grey, fontSize: 12)),
-    const Text('Friends', style: TextStyle(color: Colors.grey, fontSize: 12)),
-    const Text('Account', style: TextStyle(color: Colors.grey, fontSize: 12)),
-    const Text('Chat', style: TextStyle(color: Colors.grey, fontSize: 12)),
-    const Text('Settings', style: TextStyle(color: Colors.grey, fontSize: 12)),
-  ];
-
-  var indicatorColors = <Color>[
-    Colors.blue,
-    Colors.blue,
-    Colors.blue,
-    Colors.blue,
-    Colors.blue,
-  ];
-
   Widget _buildItem(IconData icon, String text) {
     return Column(
       children: [
@@ -226,9 +202,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: IndexedStack(
                 index: _tab.index,
                 children: const <Widget>[
-                  UserMainScreen(),
-                  GrassCoinScreen(),
                   CompanyScreen(),
+                  GrassCoinScreen(),
+                  UserMainScreen(),
                   EducationScreen(),
                   ServicesScreen(),
                 ],
@@ -243,11 +219,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     index: _tab.index,
                     onTap: _onItemTapped,
                     items: [
-                      _buildItem(Icons.home, 'Компания'),
-                      _buildItem(Icons.settings, 'Коины'),
-                      _buildItem(Icons.notifications, 'Главная'),
-                      _buildItem(Icons.person, 'Обучение'),
-                      _buildItem(Icons.mail, 'Сервисы'),
+                      _buildItem(
+                          HRAppCustomIcon.iconExclamationMark, 'Компания'),
+                      _buildItem(HRAppCustomIcon.iconCoin, 'Коины'),
+                      _buildItem(HRAppCustomIcon.iconHome, 'Главная'),
+                      _buildItem(HRAppCustomIcon.iconEducation, 'Обучение'),
+                      _buildItem(HRAppCustomIcon.iconService, 'Сервисы'),
                     ],
                   ),
             // : BottomNavigationBar(

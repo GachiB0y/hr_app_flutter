@@ -16,3 +16,16 @@ class MyCustomIcon {
   static const IconData iconService =
       IconData(0xe804, fontFamily: 'myCustomIcons');
 }
+
+class HRAppCustomIcon {
+  static const IconData iconService =
+      IconData(0xe800, fontFamily: 'hrAppFonts');
+  static const IconData iconCoin = IconData(0xe803, fontFamily: 'hrAppFonts');
+  static const IconData iconHome = IconData(0xe801, fontFamily: 'hrAppFonts');
+  static const IconData iconArrowBack =
+      IconData(0xe802, fontFamily: 'hrAppFonts');
+  static const IconData iconExclamationMark =
+      IconData(0xe804, fontFamily: 'hrAppFonts');
+  static const IconData iconEducation =
+      IconData(0xe805, fontFamily: 'hrAppFonts');
+}

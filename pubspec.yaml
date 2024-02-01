@@ -116,6 +116,9 @@ flutter:
     - family: myCustomIcons
       fonts:
         - asset: assets/icons/fontello.ttf
+    - family: hrAppFonts
+      fonts:
+        - asset: assets/icons/custom_hr_app.ttf
 
   #   - family: Trajan Pro
   #     fonts:
