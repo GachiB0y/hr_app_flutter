@@ -1,93 +1,59 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
-import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 
 part 'service_bloc.freezed.dart';
-part 'service_bloc.g.dart';
 part 'service_event.dart';
 part 'service_state.dart';
 
-class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
-  final IServiceRepository serviceRepository;
-
+/// Business Logic Component ServiceBLoC
+class ServiceBloc extends Bloc<ServiceEvent, ServiceState>
+    implements EventSink<ServiceEvent> {
   ServiceBloc({
-    required this.serviceRepository,
-  }) : super(const ServiceState.loading()) {
-    on<ServiceEvent>((event, emit) async {
-      if (event is ServiceEventFetch) {
-        await onServiceEventFetch(emit, event);
-      }
-    });
+    required final IServiceRepository serviceRepository,
+    final ServiceState? initialState,
+  })  : _repository = serviceRepository,
+        super(
+          initialState ??
+              const ServiceState.idle(
+                data: null,
+                message: 'Initial idle state',
+              ),
+        ) {
+    on<ServiceEvent>(
+      (event, emit) => event.map<Future<void>>(
+        fetch: (event) => _fetch(event, emit),
+      ),
+      transformer: bloc_concurrency.sequential(),
+      //transformer: bloc_concurrency.restartable(),
+      //transformer: bloc_concurrency.droppable(),
+      //transformer: bloc_concurrency.concurrent(),
+    );
   }
 
-  Future<void> onServiceEventFetch(
-      Emitter<ServiceState> emit, ServiceEventFetch event) async {
-    emit(const ServiceState.loading());
+  final IServiceRepository _repository;
+
+  /// Fetch event handler
+  Future<void> _fetch(
+      FetchServiceEvent event, Emitter<ServiceState> emit) async {
     try {
-      List<Service> servicesLoaded = await serviceRepository
-          .getServices()
-          .timeout(const Duration(seconds: 10));
-
-      List<Widget> groupWidgets = [];
-      for (var service in servicesLoaded) {
-        if (service.id == 22) {
-          if (service.permissions.createService) {
-            groupWidgets.add(
-              ServiceElementWidget(
-                imagePath: 'assets/images/thumbs_up.png',
-                idHandler: 1,
-                title: 'Создать новость',
-                isRow: event.isRow,
-                service: service,
-              ),
-            );
-          }
-          if (service.permissions.approveService) {
-            groupWidgets.add(
-              ServiceElementWidget(
-                imagePath: 'assets/images/tree_structure.png',
-                idHandler: 2,
-                title: 'Модерация новостей',
-                isRow: event.isRow,
-                service: service,
-              ),
-            );
-          }
-        } else if (service.id == 24) {
-          groupWidgets.add(
-            ServiceElementWidget(
-              imagePath: 'assets/images/note.png',
-              title: service.name,
-              isRow: event.isRow,
-              service: service,
-            ),
-          );
-        } else if (service.id == 25) {
-          groupWidgets.add(
-            ServiceElementWidget(
-              imagePath: 'assets/images/bus.png',
-              title: service.name,
-              isRow: event.isRow,
-              service: service,
-            ),
-          );
-        }
-      }
-
-      emit(ServiceState.loaded(
-        servicesLoaded: servicesLoaded,
-        loeadedServiceWidgets: groupWidgets,
-      ));
+      emit(ServiceState.processing(data: state.data));
+      final newData =
+          await _repository.getServices().timeout(const Duration(seconds: 10));
+      emit(ServiceState.successful(data: newData));
     } on TimeoutException {
-      emit(const ServiceState.error());
-    } catch (e) {
-      emit(const ServiceState.error());
+      emit(ServiceState.error(data: state.data));
+    } on Object catch (err, stackTrace) {
+      //l.e('An error occurred in the ServiceBLoC: $err', stackTrace);
+      emit(ServiceState.error(data: state.data));
+      rethrow;
+    } finally {
+      emit(ServiceState.idle(data: state.data));
     }
   }
 }

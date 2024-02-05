@@ -1,14 +1,10 @@
-// import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
-import 'package:hr_app_flutter/core/localization/localization.dart';
-import 'package:hr_app_flutter/core/utils/bottom_nav_bar_custom/custom_nav_bar.dart';
 import 'package:hr_app_flutter/core/utils/custom_curved_nav_bar/custom_curved_nav_bar.dart';
 import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-// import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
@@ -20,14 +16,14 @@ import 'package:octopus/octopus.dart';
 /// HomeTabsEnum enumeration
 /// {@endtemplate}
 enum HomeTabsEnum implements Comparable<HomeTabsEnum> {
-  /// UserMain
-  userMain('user_main'),
+  /// Company
+  company('company'),
 
   /// Coins
   coin('coin'),
 
-  /// Company
-  company('company'),
+  /// UserMain
+  userMain('user_main'),
 
   /// Education
   education('education'),

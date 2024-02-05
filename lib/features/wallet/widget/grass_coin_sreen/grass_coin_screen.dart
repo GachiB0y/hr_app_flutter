@@ -110,8 +110,6 @@ class _BodyContentWidgetCoinScreenState
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-        if (textScaleFactor < 1) textScaleFactor = 1;
         return FractionallySizedBox(
           heightFactor: 0.7, // Указывает высоту окна в относительных единицах
           child: Container(

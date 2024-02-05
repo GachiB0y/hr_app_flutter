@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/localization/localization.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
 import 'package:octopus/octopus.dart';
 import '../../services/bloc/rookies_bloc/rookies_bloc.dart';
 import '../../services/bloc/service_bloc/service_bloc.dart';
@@ -34,7 +35,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 
   Future<void> _refreshEventsList() async {
-    context.read<ServiceBloc>().add(const ServiceEvent.fetch(isRow: true));
+    context.read<ServiceBloc>().add(const ServiceEvent.fetch());
     context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
 
     context
@@ -50,49 +51,89 @@ class _UserMainScreenState extends State<UserMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
-
     return Scaffold(
+      appBar: const AppBarUserWdiget(),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 1.0),
-            child: RefreshIndicator(
-              color: Theme.of(context).colorScheme.primary,
-              backgroundColor: Colors.white,
-              onRefresh: _refreshEventsList,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const AppBarUserWdiget(),
-                    SizedBox(
-                        height: (MediaQuery.of(context).size.height / 4.25) *
-                            textScaleFactor,
-                        child: const ScrollBarWidget()),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 1.0),
+          child: RefreshIndicator(
+            color: Theme.of(context).colorScheme.primary,
+            backgroundColor: Colors.white,
+            onRefresh: _refreshEventsList,
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Сервисы',
+                        style: TextStyle(
+                            fontSize: 19, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        'Смотреть все',
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 7.0,
+                  child: const CustomScrollView(
+                    // physics: AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    slivers: <Widget>[
+                      ScrollBarServiceWidget(),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(left: 16.0),
+                      //   child: Text(
+                      //     'События компании',
+                      //     style: TextStyle(
+                      //         fontSize: 28, fontWeight: FontWeight.w600),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //     height: MediaQuery.of(context).size.height / 2.3,
+                      //     child: Container(
+                      //         padding: const EdgeInsets.only(left: 8),
+                      //         child: const TableScrollWidget())),
+                      // const InfoBirthdayAndNewPeopleWidget(),
+                      // const LeanProductionButton(),
+                      // const SerachPeopleButtonWidget(),
+                    ],
+
+                    //  Column(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+
+                    //   ],
+                    // ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         'События компании',
                         style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.w600),
+                            fontSize: 19, fontWeight: FontWeight.w700),
                       ),
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height / 2.3,
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: const TableScrollWidget())),
-                    const InfoBirthdayAndNewPeopleWidget(),
-                    const LeanProductionButton(),
-                    const SerachPeopleButtonWidget(),
-                  ],
+                      Text(
+                        'Смотреть все',
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -108,12 +149,10 @@ class LeanProductionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
     const double raiudsBorder = 30.0;
 
     return Container(
-      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8),
       margin:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -221,10 +260,9 @@ class SerachPeopleButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double raiudsBorder = 30.0;
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
+
     return Container(
-      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8),
       margin:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -281,12 +319,10 @@ class InfoBirthdayAndNewPeopleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
     const double raiudsBorder = 30.0;
 
     return Container(
-      height: (MediaQuery.of(context).size.height / 8) * textScaleFactor,
+      height: (MediaQuery.of(context).size.height / 8),
       margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(raiudsBorder),
@@ -414,16 +450,17 @@ class BirthDayInfoElementWidget extends StatelessWidget {
   }
 }
 
-class ScrollBarWidget extends StatefulWidget {
-  const ScrollBarWidget({super.key});
+class ScrollBarServiceWidget extends StatefulWidget {
+  const ScrollBarServiceWidget({super.key});
 
   @override
-  State<ScrollBarWidget> createState() => _ScrollBarWidgetState();
+  State<ScrollBarServiceWidget> createState() => _ScrollBarServiceWidgetState();
 }
 
-class _ScrollBarWidgetState extends State<ScrollBarWidget> {
+class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
   List<Widget> groupWidgets = [];
   late final ServiceBloc blocService;
+  final bool isRow = true;
   @override
   void initState() {
     blocService = context.read<ServiceBloc>();
@@ -435,47 +472,134 @@ class _ScrollBarWidgetState extends State<ScrollBarWidget> {
     return BlocBuilder<ServiceBloc, ServiceState>(
         bloc: blocService,
         builder: (context, state) {
-          return state.when(
-            loading: () {
-              return const Center(
+          if (state is ServiceState$Processing) {
+            return const SliverToBoxAdapter(
+              child: Center(
                 child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is ServiceState$Error) {
+            return const SliverToBoxAdapter(
+                child: Center(child: Text('Ошибка загрузки сервисов.')));
+          } else {
+            if (state.data == null) {
+              return const SliverToBoxAdapter(
+                child: Center(
+                    child: Text('Ошибка загрузки сервисов. Сервисы пустые.')),
               );
-            },
-            loaded: (loadedServices, loeadedServiceWidgets) {
+            } else {
               groupWidgets.clear();
-              groupWidgets.add(const SizedBox.shrink());
 
-              for (var widget in loeadedServiceWidgets) {
-                groupWidgets.add(widget);
-              }
-              double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-              if (textScaleFactor < 1) textScaleFactor = 1;
-              return ListView.builder(
-                itemExtent: (MediaQuery.of(context).size.height / 4.25) *
-                    textScaleFactor,
-                scrollDirection: Axis.horizontal,
-                itemCount: groupWidgets.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: ElementForScrollBarWidget(
-                      listService: loadedServices,
-                      index: index,
-                      groupWidgets: groupWidgets,
+              for (var service in state.data!) {
+                if (service.id == 22) {
+                  if (service.permissions.createService) {
+                    groupWidgets.add(
+                      ServiceElementWidget(
+                        imagePath: 'assets/images/thumbs_up.png',
+                        idHandler: 1,
+                        title: 'Создать новость',
+                        isRow: isRow,
+                        service: service,
+                      ),
+                    );
+                  }
+                  if (service.permissions.approveService) {
+                    groupWidgets.add(
+                      ServiceElementWidget(
+                        imagePath: 'assets/images/tree_structure.png',
+                        idHandler: 2,
+                        title: 'Модерация новостей',
+                        isRow: isRow,
+                        service: service,
+                      ),
+                    );
+                  }
+                } else if (service.id == 24) {
+                  groupWidgets.add(
+                    ServiceElementWidget(
+                      imagePath: 'assets/images/note.png',
+                      title: service.name,
+                      isRow: isRow,
+                      service: service,
                     ),
                   );
-                },
+                } else if (service.id == 25) {
+                  groupWidgets.add(
+                    ServiceElementWidget(
+                      imagePath: 'assets/images/bus.png',
+                      title: service.name,
+                      isRow: isRow,
+                      service: service,
+                    ),
+                  );
+                }
+              }
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return ElementServiceForScrollBarWidget(
+                      listService: state.data!,
+                      index: index,
+                      groupWidgets: groupWidgets,
+                    );
+                  },
+                  childCount: state.data!.length + 1,
+                ),
               );
-            },
-            error: () => const SafeArea(
-                child: Center(child: Text('Ошибка загрузки сервисов.'))),
-          );
+              // return ListView.builder(
+              //   itemExtent: (MediaQuery.of(context).size.height / 4.25),
+              //   scrollDirection: Axis.horizontal,
+              //   itemCount: groupWidgets.length,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return ElementServiceForScrollBarWidget(
+              //       listService: state.data!,
+              //       index: index,
+              //       groupWidgets: groupWidgets,
+              //     );
+              //   },
+              // );
+            }
+          }
+
+          // return state.when(
+          //   loading: () {
+          //     return const Center(
+          //       child: CircularProgressIndicator(),
+          //     );
+          //   },
+          //   loaded: (loadedServices, loeadedServiceWidgets) {
+          //     groupWidgets.clear();
+          //     groupWidgets.add(const SizedBox.shrink());
+
+          //     for (var widget in loeadedServiceWidgets) {
+          //       groupWidgets.add(widget);
+          //     }
+
+          //     return ListView.builder(
+          //       itemExtent: (MediaQuery.of(context).size.height / 4.25),
+          //       scrollDirection: Axis.horizontal,
+          //       itemCount: groupWidgets.length,
+          //       itemBuilder: (BuildContext context, int index) {
+          //         return Container(
+          //           padding: const EdgeInsets.only(bottom: 15),
+          //           child: ElementForScrollBarWidget(
+          //             listService: loadedServices,
+          //             index: index,
+          //             groupWidgets: groupWidgets,
+          //           ),
+          //         );
+          //       },
+          //     );
+          //   },
+          //   error: () => const SafeArea(
+          //       child: Center(child: Text('Ошибка загрузки сервисов.'))),
+          // );
         });
   }
 }
 
-class ElementForScrollBarWidget extends StatelessWidget {
-  const ElementForScrollBarWidget({
+class ElementServiceForScrollBarWidget extends StatelessWidget {
+  const ElementServiceForScrollBarWidget({
     super.key,
     required this.listService,
     required this.index,
@@ -489,100 +613,14 @@ class ElementForScrollBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeScreen = MediaQuery.of(context).size;
-    // final blocWallet = context.watch<WalletBLoC>();
     final double leftPadding = index == 0 ? 16.0 : 8.0;
     final double rightPadding = index == listService.length ? 16.0 : 8.0;
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
 
-    if (index == 0) {
-      return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.only(
-            left: leftPadding,
-            right: rightPadding,
-          ),
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.4),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: const Offset(0, 6),
-              ),
-            ], borderRadius: BorderRadius.circular(50), color: Colors.white),
-            width: (sizeScreen.width / 2.2) * textScaleFactor,
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'assets/images/icon_crown.png',
-                            width: 50,
-                            height: 50,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                '1208',
-                                style: TextStyle(
-                                    fontSize: 28,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onInverseSurface),
-                              ),
-                              Text(
-                                Localization.of(context)
-                                    .userMainScrenText_index,
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ],
-                          ),
-                        ]),
-                    const Divider(),
-                    switch (state) {
-                      WalletState$Idle(:final data) => RowBalanceCountWidget(
-                          data: data,
-                        ),
-                      WalletState$Processing() => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      WalletState$Successful(:final data) =>
-                        RowBalanceCountWidget(
-                          data: data,
-                        ),
-                      WalletState$Error() =>
-                        const Text('Ничего не найденно...'),
-                      _ => const Text('Default'),
-                    }
-                  ],
-                ),
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(30),
-                  onTap: () {},
-                ),
-              )
-            ]),
-          ),
-        );
-      });
-    } else {
-      return Padding(
-        padding: EdgeInsets.only(left: leftPadding, right: rightPadding),
-        child: groupWidgets[index],
-      );
-    }
+    return Padding(
+      padding: EdgeInsets.only(
+          left: leftPadding, right: rightPadding, top: 10, bottom: 10),
+      child: groupWidgets[index],
+    );
   }
 }
 
