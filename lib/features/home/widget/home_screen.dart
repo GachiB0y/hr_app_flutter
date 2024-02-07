@@ -9,7 +9,7 @@ import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/services_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:octopus/octopus.dart';
 
 /// {@template shop_tabs_enum}
@@ -223,38 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildItem(HRAppCustomIcon.iconService, 'Сервисы'),
                     ],
                   ),
-            // : BottomNavigationBar(
-            //     // useLegacyColorScheme: false,
-            //     backgroundColor: Colors.green,
-            //     selectedIconTheme: IconThemeData(
-            //         color: Theme.of(context).colorScheme.error),
-            //     selectedItemColor: Colors.black,
-            //     // unselectedItemColor:
-            //     //     Theme.of(context).colorScheme.onSurfaceVariant,
-            //     currentIndex: _tab.index,
-            //     onTap: _onItemTapped,
-            //     items: [
-            //       BottomNavigationBarItem(
-            //           icon: const Icon(MyCustomIcon.iconHome, size: 28),
-            //           label: Localization.of(context).tabBarText_main,
-            //           backgroundColor: Colors.green),
-            //       BottomNavigationBarItem(
-            //           icon: const Icon(MyCustomIcon.iconRub, size: 30),
-            //           label: Localization.of(context).tabBarText_grassCoin),
-            //       BottomNavigationBarItem(
-            //           icon:
-            //               const Icon(MyCustomIcon.iconLogoGrass, size: 36),
-            //           label: Localization.of(context).tabBarText_company),
-            //       BottomNavigationBarItem(
-            //           icon: const Icon(MyCustomIcon.iconBook, size: 30),
-            //           label: Localization.of(context).tabBarText_education),
-            //       BottomNavigationBarItem(
-            //           icon: const Icon(
-            //             MyCustomIcon.iconService,
-            //           ),
-            //           label: Localization.of(context).tabBarText_service),
-            //     ],
-            //   ),
           );
         });
   }

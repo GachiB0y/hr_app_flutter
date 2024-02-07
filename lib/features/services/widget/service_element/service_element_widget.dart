@@ -215,16 +215,17 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             ),
           ),
         ),
-        Container(
+        SizedBox(
           width: widget.isRow ? sizeWidhtIsRow : null,
-          padding: const EdgeInsets.only(
-            top: 30.0,
-          ),
-          child: Align(
-              alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 16.0),
+            child: Align(
+              alignment: Alignment.topLeft,
               child: Image.asset(
                 imagePath ?? 'assets/images/note.png',
-              )),
+              ),
+            ),
+          ),
         ),
         SizedBox(
           width: widget.isRow ? sizeWidhtIsRow : null,

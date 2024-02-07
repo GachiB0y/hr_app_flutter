@@ -73,17 +73,14 @@ class Avatar extends StatelessWidget {
                     child: const ClipOval(),
                   ),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: CachedNetworkImage(
-                      imageUrl: state.data!.authUser.avatar,
-                      imageBuilder: (context, imageProvider) {
-                        return CircleAvatar(
-                          radius: radius,
-                          backgroundImage: imageProvider,
-                        );
-                      }),
-                ),
+              : CachedNetworkImage(
+                  imageUrl: state.data!.authUser.avatar,
+                  imageBuilder: (context, imageProvider) {
+                    return CircleAvatar(
+                      radius: radius,
+                      backgroundImage: imageProvider,
+                    );
+                  }),
         );
       },
     );

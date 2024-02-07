@@ -18,6 +18,10 @@ final class AppTheme with Diagnosticable {
           colorScheme: lightColorScheme,
           brightness: Brightness.light,
           useMaterial3: true,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                    color: Colors.black), // Замените на нужный цвет
+              ),
         );
 
   /// The type of theme to use.
@@ -92,13 +96,13 @@ final lightColorScheme = ColorScheme.fromSeed(
   errorContainer: const Color(0xFFFFDAD6),
   onError: const Color(0xFFFFFFFF),
   onErrorContainer: const Color(0xFF410002),
-  background: const Color.fromRGBO(238, 238, 238, 1),
+  background: const Color.fromARGB(255, 255, 255, 255),
   onBackground: const Color(0xFF002107),
   surface: const Color(0xFF74DD7E),
   onSurface: const Color(0xFF002107),
   surfaceVariant: const Color(0xFFDEE5D9),
   onSurfaceVariant: const Color.fromARGB(255, 0, 0, 0),
-  outline: const Color(0xFF72796F),
+  outline: const Color.fromARGB(255, 147, 151, 146),
   onInverseSurface: const Color.fromARGB(255, 0, 0, 0),
   inverseSurface: const Color.fromARGB(255, 71, 76, 72),
   inversePrimary: const Color(0xFF74DD7E),
