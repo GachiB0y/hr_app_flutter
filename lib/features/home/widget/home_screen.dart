@@ -172,21 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _switchTab(newTab);
   }
 
-  Widget _buildItem(IconData icon, String text) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
-        Text(
-          text,
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppScreenViewCubit, MainAppScreenViewState>(
@@ -214,16 +199,56 @@ class _HomeScreenState extends State<HomeScreen> {
                     selectedItemColor: Theme.of(context).colorScheme.primary,
                     index: _tab.index,
                     onTap: _onItemTapped,
-                    items: [
-                      _buildItem(
-                          HRAppCustomIcon.iconExclamationMark, 'Компания'),
-                      _buildItem(HRAppCustomIcon.iconCoin, 'Коины'),
-                      _buildItem(HRAppCustomIcon.iconHome, 'Главная'),
-                      _buildItem(HRAppCustomIcon.iconEducation, 'Обучение'),
-                      _buildItem(HRAppCustomIcon.iconService, 'Сервисы'),
+                    items: const [
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconExclamationMark,
+                        text: 'Компания',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconCoin,
+                        text: 'Коины',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconHome,
+                        text: 'Главная',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconEducation,
+                        text: 'Обучение',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconService,
+                        text: 'Сервисы',
+                      ),
                     ],
                   ),
           );
         });
+  }
+}
+
+class CustomNavBarElementWidget extends StatelessWidget {
+  const CustomNavBarElementWidget({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
+      ],
+    );
   }
 }
