@@ -54,7 +54,6 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
       (event, emit) => event.map<Future<void>>(
         getCode: (event) => _getCode(event, emit),
         authByCode: (event) => _authByCode(event, emit),
-        checkAuth: (event) => _checkAuth(event, emit),
         logout: (event) => _logout(event, emit),
       ),
       transformer: bloc_concurrency.sequential(),
@@ -81,16 +80,6 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
       emit(AuthState.error(
           data: state.data, message: 'Неудалось получить код!'));
     }
-  }
-
-  // Check is Auth user
-  Future<void> _checkAuth(
-      CheckAuthAuthEvent event, Emitter<AuthState> emit) async {
-    final isAuth = await _authRepository.isAuth();
-    isAuth
-        ? emit(const AuthState.idle(data: AuthenticationStatus.authenticated))
-        : emit(
-            const AuthState.idle(data: AuthenticationStatus.unauthenticated));
   }
 
   /// Check is valid phone number

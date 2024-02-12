@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/theme/colors_from_theme.dart';
 
 Icon getIconByText(String text) {
   if (text == 'На обработке') {
@@ -10,7 +9,7 @@ Icon getIconByText(String text) {
   } else if (text == 'Принята') {
     return const Icon(
       Icons.check,
-      color: ColorsForWidget.colorGreen,
+      color: Color(0xFF33A936),
     );
   } else if (text == 'Отклонена') {
     return const Icon(

@@ -68,15 +68,13 @@ class UserProviderImpl implements IUserProvider {
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
-    late final String uri;
-    if (startDate == null && endDate == null) {
-      uri = '/auth/birthday-list';
-    } else {
-      uri = '/auth/birthday-list?start_date=$startDate&end_date=$endDate';
-    }
+    final queryParams = (startDate == null && endDate == null)
+        ? null
+        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
 
     final response = await _httpService.get(
-      uri,
+      '/auth/birthday-list',
+      queryParams: queryParams,
     );
 
     if (response
@@ -95,15 +93,12 @@ class UserProviderImpl implements IUserProvider {
     final DateTime? startDate,
     final DateTime? endDate,
   }) async {
-    late final String uri;
-    if (startDate == null && endDate == null) {
-      uri = '/auth/rookies';
-    } else {
-      uri = '/auth/rookies?start_date=$startDate&end_date=$endDate';
-    }
-    final response = await _httpService.get(
-      uri,
-    );
+    final queryParams = (startDate == null && endDate == null)
+        ? null
+        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
+
+    final response =
+        await _httpService.get('/auth/rookies', queryParams: queryParams);
     if (response
         case {
           'result': final Map<String, Object?> data,
@@ -134,19 +129,18 @@ class UserProviderImpl implements IUserProvider {
   @override
   Future<List<UserInfo>> findUser({required String findText}) async {
     final response = await _httpService.get(
-      '/auth/find_by_id',
+      '/auth/find_user',
       queryParams: {'name': findText},
     );
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final List<UserInfo> result = (data as List<dynamic>)
-          .map((item) => UserInfo.fromJson(item))
-          .toList();
+      final List<UserInfo> result =
+          data.map((item) => UserInfo.fromJson(item)).toList();
       return result;
     }
-    throw const FormatException('Error fetching User Info By Id User');
+    throw const FormatException('Error fetching findUser User');
   }
 
   @override

@@ -24,7 +24,6 @@ void main() {
   group('UserRepository', () {
     late IUserProvider userApiClient;
     late IUserRepository userRepository;
-    const String accessToken = 'test_access_token';
 
     setUp(() {
 // Создаем экземпляры мок-объектов

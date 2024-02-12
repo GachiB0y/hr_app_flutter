@@ -19,7 +19,6 @@ void main() {
   group('LeanProduction Repository', () {
     late IServiceProvider serviceApiClient;
     late ILeanProductionRepository leanProductionRepository;
-    const String accessToken = 'test_access_token';
     setUp(() {
 // Создаем экземпляры мок-объектов
       serviceApiClient = MockIServiceProvider();
@@ -34,35 +33,30 @@ void main() {
       test('calls submitForm with correct', () async {
         try {
           await leanProductionRepository.submitForm(
-            accessToken: accessToken,
             formEntity: form,
           );
         } catch (_) {}
-        verify(serviceApiClient.sendFormLeanProduction(
-                accessToken: accessToken, formEntity: form))
+        verify(serviceApiClient.sendFormLeanProduction(formEntity: form))
             .called(1);
       });
       test('throws when submitForm fails', () async {
         final exception = Exception('oops');
 
-        when(serviceApiClient.sendFormLeanProduction(
-                accessToken: accessToken, formEntity: form))
+        when(serviceApiClient.sendFormLeanProduction(formEntity: form))
             .thenThrow(exception);
 
         expect(
-          () async => leanProductionRepository.submitForm(
-              accessToken: accessToken, formEntity: form),
+          () async => leanProductionRepository.submitForm(formEntity: form),
           throwsA(exception),
         );
       });
 
       test('succesfull when submitForm get', () async {
-        when(serviceApiClient.sendFormLeanProduction(
-                accessToken: accessToken, formEntity: form))
+        when(serviceApiClient.sendFormLeanProduction(formEntity: form))
             .thenAnswer((_) async => false);
 
-        final actual = await leanProductionRepository.submitForm(
-            accessToken: accessToken, formEntity: form);
+        final actual =
+            await leanProductionRepository.submitForm(formEntity: form);
         expect(actual, false);
       });
     });
@@ -71,25 +65,17 @@ void main() {
     group('getMyLeanProductions', () {
       test('calls getMyLeanProductions with correct', () async {
         try {
-          await leanProductionRepository.getMyLeanProductions(
-            accessToken: accessToken,
-          );
+          await leanProductionRepository.getMyLeanProductions();
         } catch (_) {}
-        verify(serviceApiClient.getMyLeanProductions(
-          accessToken: accessToken,
-        )).called(1);
+        verify(serviceApiClient.getMyLeanProductions()).called(1);
       });
       test('throws when getMyLeanProductions fails', () async {
         final exception = Exception('oops');
 
-        when(serviceApiClient.getMyLeanProductions(
-          accessToken: accessToken,
-        )).thenThrow(exception);
+        when(serviceApiClient.getMyLeanProductions()).thenThrow(exception);
 
         expect(
-          () async => leanProductionRepository.getMyLeanProductions(
-            accessToken: accessToken,
-          ),
+          () async => leanProductionRepository.getMyLeanProductions(),
           throwsA(exception),
         );
       });
@@ -100,13 +86,10 @@ void main() {
             MockMyLeanProductionsEntity();
 //Создаем  List MyLeanProductionsEntity
         final List<MyLeanProductionsEntity> data = [myLeanProductionsEntity];
-        when(serviceApiClient.getMyLeanProductions(
-          accessToken: accessToken,
-        )).thenAnswer((anser) async => data);
+        when(serviceApiClient.getMyLeanProductions())
+            .thenAnswer((anser) async => data);
 
-        final actual = await leanProductionRepository.getMyLeanProductions(
-          accessToken: accessToken,
-        );
+        final actual = await leanProductionRepository.getMyLeanProductions();
         expect(actual, data);
       });
     });
@@ -116,12 +99,10 @@ void main() {
       test('calls downloadFileWithLeanProduction with correct', () async {
         try {
           await leanProductionRepository.downloadFileWithLeanProduction(
-            accessToken: accessToken,
             url: '',
           );
         } catch (_) {}
         verify(serviceApiClient.downloadFileWithLeanProduction(
-          accessToken: accessToken,
           url: '',
         )).called(1);
       });
@@ -129,13 +110,11 @@ void main() {
         final exception = Exception('oops');
 
         when(serviceApiClient.downloadFileWithLeanProduction(
-          accessToken: accessToken,
           url: '',
         )).thenThrow(exception);
 
         expect(
           () async => leanProductionRepository.downloadFileWithLeanProduction(
-            accessToken: accessToken,
             url: '',
           ),
           throwsA(exception),
@@ -144,13 +123,11 @@ void main() {
 
       test('succesfull when downloadFileWithLeanProduction get', () async {
         when(serviceApiClient.downloadFileWithLeanProduction(
-          accessToken: accessToken,
           url: '',
         ));
 
         final actual =
             await leanProductionRepository.downloadFileWithLeanProduction(
-          accessToken: accessToken,
           url: '',
         );
         expect(

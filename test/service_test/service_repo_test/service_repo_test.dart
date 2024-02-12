@@ -21,7 +21,6 @@ void main() {
   group('Service Repository', () {
     late IServiceProvider serviceApiClient;
     late IServiceRepository serviceRepository;
-    const String accessToken = 'test_access_token';
     setUp(() {
 // Создаем экземпляры мок-объектов
       serviceApiClient = MockIServiceProvider();
@@ -35,19 +34,17 @@ void main() {
     group('getServices', () {
       test('calls getServices with correct', () async {
         try {
-          await serviceRepository.getServices(accessToken: accessToken);
+          await serviceRepository.getServices();
         } catch (_) {}
-        verify(serviceApiClient.getServices(accessToken: accessToken))
-            .called(1);
+        verify(serviceApiClient.getServices()).called(1);
       });
       test('throws when getServices fails', () async {
         final exception = Exception('oops');
 
-        when(serviceApiClient.getServices(accessToken: accessToken))
-            .thenThrow(exception);
+        when(serviceApiClient.getServices()).thenThrow(exception);
 
         expect(
-          () async => serviceRepository.getServices(accessToken: accessToken),
+          () async => serviceRepository.getServices(),
           throwsA(exception),
         );
       });
@@ -58,11 +55,10 @@ void main() {
 //Создаем  list Service
         final List<Service> listServices = [serviceMock];
 
-        when(serviceApiClient.getServices(accessToken: accessToken))
+        when(serviceApiClient.getServices())
             .thenAnswer((_) async => listServices);
 
-        final actual =
-            await serviceRepository.getServices(accessToken: accessToken);
+        final actual = await serviceRepository.getServices();
         expect(actual, listServices);
       });
     });
@@ -71,20 +67,17 @@ void main() {
     group('getScheduleBus', () {
       test('calls getScheduleBus with correct', () async {
         try {
-          await serviceRepository.getScheduleBus(accessToken: accessToken);
+          await serviceRepository.getScheduleBus();
         } catch (_) {}
-        verify(serviceApiClient.getScheduleBus(accessToken: accessToken))
-            .called(1);
+        verify(serviceApiClient.getScheduleBus()).called(1);
       });
       test('throws when getScheduleBus fails', () async {
         final exception = Exception('oops');
 
-        when(serviceApiClient.getScheduleBus(accessToken: accessToken))
-            .thenThrow(exception);
+        when(serviceApiClient.getScheduleBus()).thenThrow(exception);
 
         expect(
-          () async =>
-              serviceRepository.getScheduleBus(accessToken: accessToken),
+          () async => serviceRepository.getScheduleBus(),
           throwsA(exception),
         );
       });
@@ -93,11 +86,10 @@ void main() {
 //Создаем ScheduleBus
         final ScheduleBus scheduleBusMock = MockScheduleBus();
 
-        when(serviceApiClient.getScheduleBus(accessToken: accessToken))
+        when(serviceApiClient.getScheduleBus())
             .thenAnswer((_) async => scheduleBusMock);
 
-        final actual =
-            await serviceRepository.getScheduleBus(accessToken: accessToken);
+        final actual = await serviceRepository.getScheduleBus();
         expect(actual, scheduleBusMock);
       });
     });
@@ -106,34 +98,30 @@ void main() {
       final form = MockBagReportEntity();
       test('calls submitBagReportForm with correct', () async {
         try {
-          await serviceRepository.submitBagReportForm(
-              accessToken: accessToken, bagReportEntity: form);
+          await serviceRepository.submitBagReportForm(bagReportEntity: form);
         } catch (_) {}
-        verify(serviceApiClient.submitBagReportForm(
-                accessToken: accessToken, bagReportEntity: form))
+        verify(serviceApiClient.submitBagReportForm(bagReportEntity: form))
             .called(1);
       });
       test('throws when submitBagReportForm fails', () async {
         final exception = Exception('oops');
 
-        when(serviceApiClient.submitBagReportForm(
-                accessToken: accessToken, bagReportEntity: form))
+        when(serviceApiClient.submitBagReportForm(bagReportEntity: form))
             .thenThrow(exception);
 
         expect(
-          () async => serviceRepository.submitBagReportForm(
-              accessToken: accessToken, bagReportEntity: form),
+          () async =>
+              serviceRepository.submitBagReportForm(bagReportEntity: form),
           throwsA(exception),
         );
       });
 
       test('succesfull when submitBagReportForm get', () async {
-        when(serviceApiClient.submitBagReportForm(
-                accessToken: accessToken, bagReportEntity: form))
+        when(serviceApiClient.submitBagReportForm(bagReportEntity: form))
             .thenAnswer((_) async => false);
 
-        final actual = await serviceRepository.submitBagReportForm(
-            accessToken: accessToken, bagReportEntity: form);
+        final actual =
+            await serviceRepository.submitBagReportForm(bagReportEntity: form);
         expect(actual, false);
       });
     });

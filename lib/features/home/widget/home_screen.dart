@@ -1,30 +1,29 @@
-// import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
-import 'package:hr_app_flutter/core/localization/localization.dart';
+import 'package:hr_app_flutter/core/utils/custom_curved_nav_bar/custom_curved_nav_bar.dart';
+import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-// import 'package:hr_app_flutter/router/router.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/service_screen.dart/services_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:octopus/octopus.dart';
 
 /// {@template shop_tabs_enum}
 /// HomeTabsEnum enumeration
 /// {@endtemplate}
 enum HomeTabsEnum implements Comparable<HomeTabsEnum> {
-  /// UserMain
-  userMain('user_main'),
+  /// Company
+  company('company'),
 
   /// Coins
   coin('coin'),
 
-  /// Company
-  company('company'),
+  /// UserMain
+  userMain('user_main'),
 
   /// Education
   education('education'),
@@ -180,47 +179,76 @@ class _HomeScreenState extends State<HomeScreen> {
             DependenciesScope.of(context).mainAppScreenViewCubit,
         builder: (context, state) {
           return Scaffold(
-            // appBar: null,
-            body: IndexedStack(
-              index: _tab.index,
-              children: const <Widget>[
-                UserMainScreen(),
-                GrassCoinScreen(),
-                CompanyScreen(),
-                EducationScreen(),
-                ServicesScreen(),
-              ],
+            body: Shimmer(
+              child: IndexedStack(
+                index: _tab.index,
+                children: const <Widget>[
+                  CompanyScreen(),
+                  GrassCoinScreen(),
+                  UserMainScreen(),
+                  EducationScreen(),
+                  ServicesScreen(),
+                ],
+              ),
             ),
             bottomNavigationBar: state.modalOpened
                 ? null
-                : BottomNavigationBar(
+                : CurvedNavigationBar(
+                    color: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Theme.of(context).colorScheme.onTertiary,
                     selectedItemColor: Theme.of(context).colorScheme.primary,
-                    unselectedItemColor:
-                        Theme.of(context).colorScheme.onSurfaceVariant,
-                    currentIndex: _tab.index,
+                    index: _tab.index,
                     onTap: _onItemTapped,
-                    items: [
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconHome, size: 28),
-                          label: Localization.of(context).tabBarText_main),
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconRub, size: 30),
-                          label: Localization.of(context).tabBarText_grassCoin),
-                      BottomNavigationBarItem(
-                          icon:
-                              const Icon(MyCustomIcon.iconLogoGrass, size: 36),
-                          label: Localization.of(context).tabBarText_company),
-                      BottomNavigationBarItem(
-                          icon: const Icon(MyCustomIcon.iconBook, size: 30),
-                          label: Localization.of(context).tabBarText_education),
-                      BottomNavigationBarItem(
-                          icon: const Icon(
-                            MyCustomIcon.iconService,
-                          ),
-                          label: Localization.of(context).tabBarText_service),
+                    items: const [
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconExclamationMark,
+                        text: 'Компания',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconCoin,
+                        text: 'Коины',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconHome,
+                        text: 'Главная',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconEducation,
+                        text: 'Обучение',
+                      ),
+                      CustomNavBarElementWidget(
+                        icon: HRAppCustomIcon.iconService,
+                        text: 'Сервисы',
+                      ),
                     ],
                   ),
           );
         });
+  }
+}
+
+class CustomNavBarElementWidget extends StatelessWidget {
+  const CustomNavBarElementWidget({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
+      ],
+    );
   }
 }

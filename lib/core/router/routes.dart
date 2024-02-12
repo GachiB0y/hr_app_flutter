@@ -5,7 +5,7 @@ import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
@@ -17,6 +17,7 @@ import 'package:hr_app_flutter/features/services/widget/shedule_bus_screen/shedu
 import 'package:hr_app_flutter/features/statements/widget/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
+import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass/exchange_coin_for_pass.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
 import 'package:octopus/octopus.dart';
@@ -42,7 +43,9 @@ enum Routes with OctopusRoute {
   statementsForm('statements-form', title: 'Statements Form'),
   bagReport('bag-report', title: 'Bag Report'),
   infoBirthDay('info-birth-day', title: 'Info Birth Day'),
-  rookieInfo('rookie-info', title: 'Rookie Info');
+  rookieInfo('rookie-info', title: 'Rookie Info'),
+  exchangeCoinForPass('exchange-coin-for-pass',
+      title: 'Exchange Coin For Pass');
 
   const Routes(this.name, {this.title});
 
@@ -79,5 +82,6 @@ enum Routes with OctopusRoute {
         Routes.bagReport => const BagReportScreen(),
         Routes.infoBirthDay => BirthDayInfoScreen(),
         Routes.rookieInfo => RookiesInfoScreen(),
+        Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
       };
 }

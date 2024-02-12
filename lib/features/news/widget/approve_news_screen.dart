@@ -116,14 +116,12 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            context
-                                                .read<ApprovementNewsBloc>()
-                                                .add(ApprovementEvent
-                                                    .approvedNews(
-                                                        id: loadedApprovementNews[
-                                                                index]
-                                                            .id
-                                                            .toString()));
+                                            approvementNewsBloc.add(
+                                                ApprovementEvent.approvedNews(
+                                                    id: loadedApprovementNews[
+                                                            index]
+                                                        .id
+                                                        .toString()));
                                           },
                                           child: Text(
                                             'Подтвердить',
@@ -139,9 +137,8 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                                   MaterialStateProperty.all(
                                                       Colors.redAccent)),
                                           onPressed: () {
-                                            context
-                                                .read<ApprovementNewsBloc>()
-                                                .add(ApprovementEvent
+                                            approvementNewsBloc.add(
+                                                ApprovementEvent
                                                     .moveInArchiveNews(
                                                         id: loadedApprovementNews[
                                                                 index]

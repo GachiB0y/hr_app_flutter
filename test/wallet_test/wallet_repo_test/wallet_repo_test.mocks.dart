@@ -55,13 +55,11 @@ class _Fake$CoinsRewardCopyWith_1<$Res> extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
   @override
-  _i5.Future<({int avarageCoins, int balance})> getBalance(
-          {required String? accessToken}) =>
+  _i5.Future<({int avarageCoins, int balance})> getBalance() =>
       (super.noSuchMethod(
         Invocation.method(
           #getBalance,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i5.Future<({int avarageCoins, int balance})>.value(
             (avarageCoins: 0, balance: 0)),
@@ -70,26 +68,20 @@ class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
                 (avarageCoins: 0, balance: 0)),
       ) as _i5.Future<({int avarageCoins, int balance})>);
   @override
-  _i5.Future<List<_i2.CoinsInfo>> getCoinsInfo(
-          {required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i5.Future<List<_i2.CoinsInfo>> getCoinsInfo() => (super.noSuchMethod(
         Invocation.method(
           #getCoinsInfo,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i5.Future<List<_i2.CoinsInfo>>.value(<_i2.CoinsInfo>[]),
         returnValueForMissingStub:
             _i5.Future<List<_i2.CoinsInfo>>.value(<_i2.CoinsInfo>[]),
       ) as _i5.Future<List<_i2.CoinsInfo>>);
   @override
-  _i5.Future<List<_i3.CoinsReward>> getInfoCoinsReward(
-          {required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i5.Future<List<_i3.CoinsReward>> getInfoCoinsReward() => (super.noSuchMethod(
         Invocation.method(
           #getInfoCoinsReward,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue:
             _i5.Future<List<_i3.CoinsReward>>.value(<_i3.CoinsReward>[]),
@@ -97,20 +89,16 @@ class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
             _i5.Future<List<_i3.CoinsReward>>.value(<_i3.CoinsReward>[]),
       ) as _i5.Future<List<_i3.CoinsReward>>);
   @override
-  _i5.Future<List<_i6.Transaction>?> getTransactions(
-          {required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i5.Future<List<_i6.Transaction>?> getTransactions() => (super.noSuchMethod(
         Invocation.method(
           #getTransactions,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i5.Future<List<_i6.Transaction>?>.value(),
         returnValueForMissingStub: _i5.Future<List<_i6.Transaction>?>.value(),
       ) as _i5.Future<List<_i6.Transaction>?>);
   @override
   _i5.Future<int> sendCoinsToOtherUser({
-    required String? accessToken,
     required int? amount,
     required int? userId,
     required String? message,
@@ -120,7 +108,6 @@ class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
           #sendCoinsToOtherUser,
           [],
           {
-            #accessToken: accessToken,
             #amount: amount,
             #userId: userId,
             #message: message,
@@ -130,18 +117,12 @@ class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
         returnValueForMissingStub: _i5.Future<int>.value(0),
       ) as _i5.Future<int>);
   @override
-  _i5.Future<int> sendCoinsToBracer({
-    required String? accessToken,
-    required int? amount,
-  }) =>
+  _i5.Future<int> sendCoinsToBracer({required int? amount}) =>
       (super.noSuchMethod(
         Invocation.method(
           #sendCoinsToBracer,
           [],
-          {
-            #accessToken: accessToken,
-            #amount: amount,
-          },
+          {#amount: amount},
         ),
         returnValue: _i5.Future<int>.value(0),
         returnValueForMissingStub: _i5.Future<int>.value(0),

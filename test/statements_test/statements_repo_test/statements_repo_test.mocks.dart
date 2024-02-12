@@ -68,13 +68,11 @@ class _Fake$StatementFormInfoToSubmitCopyWith_2<$Res> extends _i1.SmartFake
 class MockStatementProviderImpl extends _i1.Mock
     implements _i3.StatementProviderImpl {
   @override
-  _i4.Future<List<_i2.StatementFieldTypeEntity>> fetchListTypeStatements(
-          {required String? accessToken}) =>
+  _i4.Future<List<_i2.StatementFieldTypeEntity>> fetchListTypeStatements() =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchListTypeStatements,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i4.Future<List<_i2.StatementFieldTypeEntity>>.value(
             <_i2.StatementFieldTypeEntity>[]),
@@ -83,18 +81,13 @@ class MockStatementProviderImpl extends _i1.Mock
                 <_i2.StatementFieldTypeEntity>[]),
       ) as _i4.Future<List<_i2.StatementFieldTypeEntity>>);
   @override
-  _i4.Future<_i2.StatementTempalteEntity> fetchStatementForm({
-    required String? accessToken,
-    required String? id,
-  }) =>
+  _i4.Future<_i2.StatementTempalteEntity> fetchStatementForm(
+          {required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchStatementForm,
           [],
-          {
-            #accessToken: accessToken,
-            #id: id,
-          },
+          {#id: id},
         ),
         returnValue: _i4.Future<_i2.StatementTempalteEntity>.value(
             _FakeStatementTempalteEntity_0(
@@ -102,10 +95,7 @@ class MockStatementProviderImpl extends _i1.Mock
           Invocation.method(
             #fetchStatementForm,
             [],
-            {
-              #accessToken: accessToken,
-              #id: id,
-            },
+            {#id: id},
           ),
         )),
         returnValueForMissingStub:
@@ -115,26 +105,18 @@ class MockStatementProviderImpl extends _i1.Mock
           Invocation.method(
             #fetchStatementForm,
             [],
-            {
-              #accessToken: accessToken,
-              #id: id,
-            },
+            {#id: id},
           ),
         )),
       ) as _i4.Future<_i2.StatementTempalteEntity>);
   @override
-  _i4.Future<_i5.TypeOfAppplicationSigning> submitStatementForm({
-    required String? accessToken,
-    required _i2.StatementFormInfoToSubmit? formInfo,
-  }) =>
+  _i4.Future<_i5.TypeOfAppplicationSigning> submitStatementForm(
+          {required _i2.StatementFormInfoToSubmit? formInfo}) =>
       (super.noSuchMethod(
         Invocation.method(
           #submitStatementForm,
           [],
-          {
-            #accessToken: accessToken,
-            #formInfo: formInfo,
-          },
+          {#formInfo: formInfo},
         ),
         returnValue: _i4.Future<_i5.TypeOfAppplicationSigning>.value(
             _i5.TypeOfAppplicationSigning.daefult),
@@ -143,18 +125,13 @@ class MockStatementProviderImpl extends _i1.Mock
                 _i5.TypeOfAppplicationSigning.daefult),
       ) as _i4.Future<_i5.TypeOfAppplicationSigning>);
   @override
-  _i4.Future<List<_i6.ParticipantEntity>> findParticipant({
-    required String? accessToken,
-    required String? name,
-  }) =>
+  _i4.Future<List<_i6.ParticipantEntity>> findParticipant(
+          {required String? name}) =>
       (super.noSuchMethod(
         Invocation.method(
           #findParticipant,
           [],
-          {
-            #accessToken: accessToken,
-            #name: name,
-          },
+          {#name: name},
         ),
         returnValue: _i4.Future<List<_i6.ParticipantEntity>>.value(
             <_i6.ParticipantEntity>[]),
@@ -163,18 +140,12 @@ class MockStatementProviderImpl extends _i1.Mock
                 <_i6.ParticipantEntity>[]),
       ) as _i4.Future<List<_i6.ParticipantEntity>>);
   @override
-  _i4.Future<void> signDocumentBySmsCode({
-    required String? accessToken,
-    required String? code,
-  }) =>
+  _i4.Future<void> signDocumentBySmsCode({required String? code}) =>
       (super.noSuchMethod(
         Invocation.method(
           #signDocumentBySmsCode,
           [],
-          {
-            #accessToken: accessToken,
-            #code: code,
-          },
+          {#code: code},
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

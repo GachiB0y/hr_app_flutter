@@ -91,31 +91,26 @@ class _Fake$BagReportEntityCopyWith_4<$Res> extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockIServiceProvider extends _i1.Mock implements _i5.IServiceProvider {
   @override
-  _i6.Future<List<_i3.Service>> getServices({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i6.Future<List<_i3.Service>> getServices() => (super.noSuchMethod(
         Invocation.method(
           #getServices,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i6.Future<List<_i3.Service>>.value(<_i3.Service>[]),
         returnValueForMissingStub:
             _i6.Future<List<_i3.Service>>.value(<_i3.Service>[]),
       ) as _i6.Future<List<_i3.Service>>);
   @override
-  _i6.Future<_i2.ScheduleBus> getScheduleBus({required String? accessToken}) =>
-      (super.noSuchMethod(
+  _i6.Future<_i2.ScheduleBus> getScheduleBus() => (super.noSuchMethod(
         Invocation.method(
           #getScheduleBus,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i6.Future<_i2.ScheduleBus>.value(_FakeScheduleBus_0(
           this,
           Invocation.method(
             #getScheduleBus,
             [],
-            {#accessToken: accessToken},
           ),
         )),
         returnValueForMissingStub:
@@ -124,18 +119,15 @@ class MockIServiceProvider extends _i1.Mock implements _i5.IServiceProvider {
           Invocation.method(
             #getScheduleBus,
             [],
-            {#accessToken: accessToken},
           ),
         )),
       ) as _i6.Future<_i2.ScheduleBus>);
   @override
-  _i6.Future<List<_i7.MyLeanProductionsEntity>> getMyLeanProductions(
-          {required String? accessToken}) =>
+  _i6.Future<List<_i7.MyLeanProductionsEntity>> getMyLeanProductions() =>
       (super.noSuchMethod(
         Invocation.method(
           #getMyLeanProductions,
           [],
-          {#accessToken: accessToken},
         ),
         returnValue: _i6.Future<List<_i7.MyLeanProductionsEntity>>.value(
             <_i7.MyLeanProductionsEntity>[]),
@@ -144,52 +136,36 @@ class MockIServiceProvider extends _i1.Mock implements _i5.IServiceProvider {
                 <_i7.MyLeanProductionsEntity>[]),
       ) as _i6.Future<List<_i7.MyLeanProductionsEntity>>);
   @override
-  _i6.Future<bool> sendFormLeanProduction({
-    required _i8.LeanProductionFormEntity? formEntity,
-    required String? accessToken,
-  }) =>
+  _i6.Future<bool> sendFormLeanProduction(
+          {required _i8.LeanProductionFormEntity? formEntity}) =>
       (super.noSuchMethod(
         Invocation.method(
           #sendFormLeanProduction,
           [],
-          {
-            #formEntity: formEntity,
-            #accessToken: accessToken,
-          },
+          {#formEntity: formEntity},
         ),
         returnValue: _i6.Future<bool>.value(false),
         returnValueForMissingStub: _i6.Future<bool>.value(false),
       ) as _i6.Future<bool>);
   @override
-  _i6.Future<void> downloadFileWithLeanProduction({
-    required String? url,
-    required String? accessToken,
-  }) =>
+  _i6.Future<void> downloadFileWithLeanProduction({required String? url}) =>
       (super.noSuchMethod(
         Invocation.method(
           #downloadFileWithLeanProduction,
           [],
-          {
-            #url: url,
-            #accessToken: accessToken,
-          },
+          {#url: url},
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
   @override
-  _i6.Future<bool> submitBagReportForm({
-    required String? accessToken,
-    required _i4.BagReportEntity? bagReportEntity,
-  }) =>
+  _i6.Future<bool> submitBagReportForm(
+          {required _i4.BagReportEntity? bagReportEntity}) =>
       (super.noSuchMethod(
         Invocation.method(
           #submitBagReportForm,
           [],
-          {
-            #accessToken: accessToken,
-            #bagReportEntity: bagReportEntity,
-          },
+          {#bagReportEntity: bagReportEntity},
         ),
         returnValue: _i6.Future<bool>.value(false),
         returnValueForMissingStub: _i6.Future<bool>.value(false),

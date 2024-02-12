@@ -174,12 +174,11 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
 
   @override
   Widget build(BuildContext context) {
-    const double radius = 50.0;
+    const double radius = 18.0;
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
     final sizeScreen = MediaQuery.of(context).size;
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
-    final sizeWidhtIsRow = (sizeScreen.width / 2.2) * textScaleFactor;
+
+    final sizeWidhtIsRow = (sizeScreen.width / 3.6);
 
     return Stack(
       children: [
@@ -187,39 +186,46 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.4),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: const Offset(0, 6),
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 6,
+                offset: const Offset(0, 0),
               ),
             ],
             borderRadius: BorderRadius.circular(radius),
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           width: widget.isRow ? sizeWidhtIsRow : null,
+          height: (MediaQuery.of(context).size.height / 8.0),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              bottom: 16.0,
+            ),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 widget.title ?? widget.service.name,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                  fontSize: 12,
+                ),
               ),
             ),
           ),
         ),
-        Container(
+        SizedBox(
           width: widget.isRow ? sizeWidhtIsRow : null,
-          padding: const EdgeInsets.only(
-            top: 30.0,
-          ),
-          child: Align(
-              alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 16.0),
+            child: Align(
+              alignment: Alignment.topLeft,
               child: Image.asset(
                 imagePath ?? 'assets/images/note.png',
-                scale: widget.isRow ? textScaleFactor : (1 / textScaleFactor),
-              )),
+              ),
+            ),
+          ),
         ),
         SizedBox(
           width: widget.isRow ? sizeWidhtIsRow : null,

@@ -59,9 +59,9 @@ class ServiceProviderImpl implements IServiceProvider {
 
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final ScheduleBus result = ScheduleBus.fromJson(data);
+      final ScheduleBus result = ScheduleBus.fromJson(response);
       return result;
     }
     throw Exception('Error get Schedule Bus');
@@ -269,8 +269,6 @@ class ServiceProviderImpl implements IServiceProvider {
   @override
   Future<bool> submitBagReportForm(
       {required BagReportEntity bagReportEntity}) async {
-    String uri = '$urlAdress/report/create';
-
     final Map<String, String> newFields = {
       'forminfo':
           '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
@@ -286,9 +284,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
-        return true;
-      }
+      return true;
     }
     throw Exception('Error submit Bag Report Form');
     // } else if (response.statusCode == 400) {

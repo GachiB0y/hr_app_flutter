@@ -113,6 +113,7 @@ class _SearchFriendAndSendCoinsScreenState
             ),
             _ResultSearchWidget(
               callbackShowPopupWindow: showPopupWindow,
+              otherUsersBloc: _otherUsersBloc,
             )
           ],
         ),
@@ -122,39 +123,44 @@ class _SearchFriendAndSendCoinsScreenState
 }
 
 class _ResultSearchWidget extends StatelessWidget {
-  const _ResultSearchWidget({super.key, required this.callbackShowPopupWindow});
+  const _ResultSearchWidget(
+      {super.key,
+      required this.callbackShowPopupWindow,
+      required this.otherUsersBloc});
   final Function(int) callbackShowPopupWindow;
+  final OtherUsersBloc otherUsersBloc;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OtherUsersBloc, OtherUsersState>(
+        bloc: otherUsersBloc,
         builder: (context, state) {
-      if (state is OtherUsersState$Processing) {
-        return const SizedBox.shrink();
-      } else if (state is OtherUsersState$Error) {
-        return const Center(child: Text('Пользователь не найден.'));
-      } else {
-        if (state.data != null) {
-          return Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(
-                      '${state.data![index].nameI} ${state.data![index].name}'),
-                  subtitle: Text(state.data![index].staffPosition),
-                  onTap: () {
-                    callbackShowPopupWindow(state.data![index].autoCard);
+          if (state is OtherUsersState$Processing) {
+            return const SizedBox.shrink();
+          } else if (state is OtherUsersState$Error) {
+            return const Center(child: Text('Пользователь не найден.'));
+          } else {
+            if (state.data != null) {
+              return Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(
+                          '${state.data![index].nameI} ${state.data![index].name}'),
+                      subtitle: Text(state.data![index].staffPosition),
+                      onTap: () {
+                        callbackShowPopupWindow(state.data![index].autoCard);
+                      },
+                    );
                   },
-                );
-              },
-            ),
-          );
-        } else {
-          return const Center(child: Text('Пользователь не найден.'));
-        }
-      }
-    });
+                ),
+              );
+            } else {
+              return const Center(child: Text('Пользователь не найден.'));
+            }
+          }
+        });
   }
 }

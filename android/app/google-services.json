@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "399963694781",
+    "project_id": "hrapp-8bcdb",
+    "storage_bucket": "hrapp-8bcdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399963694781:android:207b472798a961589139d4",
+        "android_client_info": {
+          "package_name": "com.grass.hr_app_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9dkbYMqYKI5fkIeFkQBzV3gXSkQhpw28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
