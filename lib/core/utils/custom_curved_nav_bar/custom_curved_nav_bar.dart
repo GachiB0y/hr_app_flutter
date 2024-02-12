@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'nav_button.dart';
 import 'nav_custom_painter.dart';
 
@@ -101,6 +102,27 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: 200,
+              child: ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[Colors.transparent, Colors.white],
+                  ).createShader(bounds);
+                },
+                blendMode: BlendMode.dstIn,
+                child: Container(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
           Positioned(
             bottom: -40 - (100.0 - widget.height),
             left: Directionality.of(context) == TextDirection.rtl

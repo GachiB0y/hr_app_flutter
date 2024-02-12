@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 import '../../bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
@@ -292,9 +291,10 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
                 } else if (index == 1) {
 //TODO маршрут на как получить больше?
                 } else if (index == 2) {
-//TODO маршрут на обменять на пропуск
+                  /// Маршрут на обменять на пропуск
+                  Octopus.of(context).push(Routes.exchangeCoinForPass);
                 } else if (index == 3) {
-                  ///Маршрут на подарить другу
+                  /// Маршрут на подарить другу
                   Octopus.of(context).push(Routes.searchFriendAndSendCoins);
                 }
               },

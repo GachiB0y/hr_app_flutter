@@ -20,7 +20,7 @@ class NavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final desiredPosition = 1.0 / length * index;
     final difference = (position - desiredPosition).abs();
-    final verticalAlignment = 1 - length * difference;
+    // final verticalAlignment = 1 - length * difference;
     final opacity = length * difference;
     return Expanded(
       child: GestureDetector(
