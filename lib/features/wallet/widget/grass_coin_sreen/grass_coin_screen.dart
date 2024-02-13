@@ -41,6 +41,11 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
           },
           child: CustomScrollView(
             slivers: [
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 23,
+                ),
+              ),
               SliverToBoxAdapter(
                 child: Center(
                   child: DecoratedBox(
@@ -131,25 +136,6 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                   child: HistoryOperationWidget(),
                 ),
               )
-
-              // SliverAppBar(
-              //   pinned: true,
-              //   snap: true,
-              //   floating: true,
-              //   backgroundColor: Theme.of(context).colorScheme.background,
-              //   surfaceTintColor: Colors.transparent,
-              //   leadingWidth: 90,
-              //   leading: const Avatar(),
-              //   toolbarHeight: 90,
-              //   title: const TitleAppBarWidget(),
-              //   bottom: PreferredSize(
-              //     preferredSize: const Size.fromHeight(360),
-              //     child: Container(
-              //         padding: const EdgeInsets.only(left: 20, right: 20),
-              //         child: const BodyContentWidgetCoinScreen()),
-              //   ),
-              // ),
-              // const HistoryOperationCoinWidget(),
             ],
           ),
         ),
@@ -189,7 +175,7 @@ class _OperationsWithCoinScrollBarWidgetState
     const ElementOperationsWithCoinsWidget(
       imagePath: 'assets/images/party-popper_big.png',
       index: 3,
-      title: 'Подарить другу',
+      title: 'Подарить\n другу',
     ),
   ];
 
@@ -255,7 +241,7 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
               bottom: 16.0,
             ),
             child: Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.bottomLeft,
               child: Text(
                 textAlign: TextAlign.left,
                 title,
@@ -387,345 +373,6 @@ class ElementHistoryOperationWidget extends StatelessWidget {
     );
   }
 }
-
-// class _CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
-//   @override
-//   Widget build(
-//       BuildContext context, double shrinkOffset, bool overlapsContent) {
-//     return const BodyContentWidgetCoinScreen();
-//   }
-
-//   @override
-//   double get maxExtent => 360; // Максимальная высота шапки
-
-//   @override
-//   double get minExtent => 360; // Минимальная высота шапки
-
-//   @override
-//   bool shouldRebuild(_CustomHeaderDelegate oldDelegate) {
-//     return false;
-//   }
-// }
-
-// class BodyContentWidgetCoinScreen extends StatefulWidget {
-//   const BodyContentWidgetCoinScreen({
-//     super.key,
-//   });
-
-//   @override
-//   State<BodyContentWidgetCoinScreen> createState() =>
-//       _BodyContentWidgetCoinScreenState();
-// }
-
-// class _BodyContentWidgetCoinScreenState
-//     extends State<BodyContentWidgetCoinScreen> {
-//   String amountCoins = '';
-//   void _showBottomSheet(BuildContext context, {required bool isCoinsInfo}) {
-//     showModalBottomSheet(
-//       showDragHandle: true,
-//       backgroundColor: Theme.of(context).colorScheme.outline,
-//       context: context,
-//       isScrollControlled: true,
-//       builder: (BuildContext context) {
-//         return FractionallySizedBox(
-//           heightFactor: 0.7, // Указывает высоту окна в относительных единицах
-//           child: Container(
-//             margin: const EdgeInsets.only(left: 16, right: 16),
-//             child: CardListCoinsInfoBottomSheet(
-//               isCoinsInfo: isCoinsInfo,
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-
-//   void showPopupWindow() {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: const Text('Введите сумму'),
-//           content: TextField(
-//             decoration: const InputDecoration(
-//               labelText: 'Количество',
-//             ),
-//             onChanged: (value) {
-//               setState(() {
-//                 amountCoins = value;
-//               });
-//             },
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 final blocWallet = context.read<WalletBLoC>();
-//                 blocWallet.add(
-//                   WalletEvent.sendCoinsToBracer(
-//                     amount: int.parse(amountCoins),
-//                   ),
-//                 );
-//                 Navigator.of(context).pop(); // Закрыть Алерт
-//               },
-//               child: const Text('Подтвердить'),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-//     if (textScaleFactor < 1) textScaleFactor = 1;
-
-//     return SizedBox(
-//       height: (360 * textScaleFactor),
-//       child: Column(
-//         mainAxisSize: MainAxisSize.max,
-//         children: [
-//           const Text(
-//             'Баланс Грасс-коинов на счёте',
-//             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           const Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 RowBalanceCountWidget(),
-//                 RowAvarageCoinCountWidget(),
-//               ]),
-//           const SizedBox(
-//             height: 20,
-//           ),
-//           Center(
-//             child: ConstrainedBox(
-//               constraints: const BoxConstraints.tightFor(
-//                 width: double.infinity,
-//               ),
-//               child: ElevatedButton.icon(
-//                 style: ButtonStyle(
-//                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
-//                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(30))),
-//                   padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-//                 ),
-//                 onPressed: () => _showBottomSheet(context, isCoinsInfo: true),
-//                 icon: Container(
-//                   decoration: BoxDecoration(
-//                       color: Theme.of(context).colorScheme.primary,
-//                       borderRadius: BorderRadius.circular(30)),
-//                   child: const Icon(Icons.question_mark_rounded,
-//                       size: 18, color: Colors.white),
-//                 ),
-//                 label: const Text(
-//                   'Что такое коин и что с ним делать?',
-//                   style: TextStyle(fontSize: 16, color: Colors.black),
-//                 ),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           Center(
-//             child: ConstrainedBox(
-//               constraints: const BoxConstraints.tightFor(
-//                 width: double.infinity,
-//               ),
-//               child: ElevatedButton.icon(
-//                 style: ButtonStyle(
-//                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
-//                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(30))),
-//                   padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-//                 ),
-//                 onPressed: () => _showBottomSheet(context, isCoinsInfo: false),
-//                 icon: Icon(
-//                   MyCustomIcon.iconRub,
-//                   size: 18,
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//                 label: const Text(
-//                   'Как заработать коины?',
-//                   style: TextStyle(fontSize: 16, color: Colors.black),
-//                 ),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               ElevatedButton.icon(
-//                   style: ButtonStyle(
-//                     backgroundColor:
-//                         const MaterialStatePropertyAll(Colors.white),
-//                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(30))),
-//                     padding:
-//                         MaterialStateProperty.all(const EdgeInsets.all(16)),
-//                   ),
-//                   onPressed: () {
-//                     showPopupWindow(); // Вызов окна для перевода коина на браслет
-//                   },
-//                   icon: const Icon(
-//                     Icons.sync,
-//                     size: 26,
-//                     color: Colors.black,
-//                   ),
-//                   label: const Text('На браслет',
-//                       style: TextStyle(
-//                           fontSize: 16,
-//                           fontWeight: FontWeight.w300,
-//                           color: Colors.black))),
-//               ElevatedButton.icon(
-//                   style: ButtonStyle(
-//                     backgroundColor:
-//                         const MaterialStatePropertyAll(Colors.white),
-//                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(30))),
-//                     padding:
-//                         MaterialStateProperty.all(const EdgeInsets.all(16)),
-//                   ),
-//                   onPressed: () {
-//                     Octopus.of(context).push(Routes.searchFriendAndSendCoins);
-//                   },
-//                   icon: const Icon(Icons.card_giftcard,
-//                       size: 26, color: Colors.black),
-//                   label: const Text('Подарить',
-//                       style: TextStyle(
-//                           fontSize: 16,
-//                           fontWeight: FontWeight.w300,
-//                           color: Colors.black))),
-//             ],
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           const Text(
-//             'История операций',
-//             style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class RowAvarageCoinCountWidget extends StatelessWidget {
-//   const RowAvarageCoinCountWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
-//       return Padding(
-//         padding: const EdgeInsets.only(right: 20),
-//         child: Row(
-//           children: [
-//             const Icon(
-//               Icons.add_circle_outline,
-//               size: 45,
-//             ),
-//             const SizedBox(
-//               width: 10,
-//             ),
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 switch (state) {
-//                   WalletState$Idle(:final data) => Text(
-//                       data != null
-//                           ? data.avarageCoins.toString()
-//                           : 'Ничего не найденно...',
-//                       style: const TextStyle(fontSize: 20),
-//                     ),
-//                   WalletState$Processing _ => const Center(
-//                       child: CircularProgressIndicator(),
-//                     ),
-//                   WalletState$Successful(:final data) => Text(
-//                       data != null
-//                           ? data.avarageCoins.toString()
-//                           : 'Ничего не найденно...',
-//                       style: const TextStyle(fontSize: 20),
-//                     ),
-//                   WalletState$Error _ => const Text('Ничего не найденно...'),
-//                   _ => const Text('Default'),
-//                 },
-//                 Text(
-//                   'за неделю',
-//                   style:
-//                       TextStyle(color: Theme.of(context).colorScheme.outline),
-//                 )
-//               ],
-//             ),
-//           ],
-//         ),
-//       );
-//     });
-//   }
-// }
-
-// class RowBalanceCountWidget extends StatelessWidget {
-//   const RowBalanceCountWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<WalletBLoC, WalletState>(builder: (context, state) {
-//       return Row(
-//         children: [
-//           ColorFiltered(
-//             colorFilter: ColorFilter.mode(
-//                 Theme.of(context).colorScheme.primary, BlendMode.srcATop),
-//             child: Image.asset(
-//               'assets/images/grass_icon_main.png',
-//               width: 40,
-//               height: 40,
-//             ),
-//           ),
-//           const SizedBox(
-//             width: 10,
-//           ),
-//           switch (state) {
-//             WalletState$Idle(:final data) => Text(
-//                 data != null
-//                     ? data.balance.toString()
-//                     : 'Ничего не найденно...',
-//                 style: data != null
-//                     ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
-//                     : null,
-//               ),
-//             WalletState$Processing() => const Center(
-//                 child: CircularProgressIndicator(),
-//               ),
-//             WalletState$Successful(:final data) => Text(
-//                 data != null
-//                     ? data.balance.toString()
-//                     : 'Ничего не найденно...',
-//                 style: data != null
-//                     ? const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)
-//                     : null,
-//               ),
-//             WalletState$Error() => const Text('Ничего не найденно...'),
-//             _ => const Text('Default'),
-//           }
-//         ],
-//       );
-//     });
-//   }
-// }
 
 class TralingHistoryWidget extends StatefulWidget {
   const TralingHistoryWidget({

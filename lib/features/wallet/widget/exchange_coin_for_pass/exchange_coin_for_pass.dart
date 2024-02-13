@@ -17,38 +17,49 @@ class ExchangeCoinForPass extends StatelessWidget {
         ),
       ),
       body: ExchangeCoinForPassScope(
-        child: SafeArea(
-          child: Column(
-            children: [
-              const Text(
-                'Количество твоих коинов',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Количество твоих коинов',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    const BalanceInfoWidget(),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Image.asset(
+                      'assets/images/bracer_grass.png',
+                    ),
+                    const SizedBox(
+                      height: 13.0,
+                    ),
+                    const Text(
+                      'Сколько меняем?',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    const CounterWidget(),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 4.0,
-              ),
-              const BalanceInfoWidget(),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Image.asset(
-                'assets/images/bracer_grass.png',
-              ),
-              const SizedBox(
-                height: 13.0,
-              ),
-              const Text(
-                'Сколько меняем?',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              const CounterWidget(),
-              const Spacer(),
-              const SendCoinToBracerButtonWidget(),
-            ],
-          ),
+            ),
+            const SendCoinToBracerButtonWidget(),
+            const SizedBox(
+              height: 16.0,
+            ),
+          ],
         ),
       ),
     );
@@ -122,44 +133,6 @@ class BalanceInfoWidget extends StatelessWidget {
 class CounterWidget extends StatelessWidget {
   const CounterWidget({super.key});
 
-  // final TextEditingController _controller = TextEditingController(text: '0');
-  // int amountRub = 0;
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   _controller.addListener(() {
-  //     final int? amount = int.tryParse(_controller.text);
-  //     if (amount != null) {
-  //       setState(() {
-  //         amountRub = amount * 200;
-  //       });
-  //     }
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-
-  // void _incrementCounter() {
-  //   int currentValue = int.tryParse(_controller.text) ?? 0;
-  //   _controller.text = (currentValue + 1).toString();
-  //   setState(() {
-  //     amountRub = (currentValue + 1) * 200;
-  //   });
-  // }
-
-  // void _decrementCounter() {
-  //   int currentValue = int.tryParse(_controller.text) ?? 0;
-  //   if (currentValue == 0) return;
-  //   _controller.text = (currentValue - 1).toString();
-  //   setState(() {
-  //     amountRub = (currentValue - 1) * 200;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     const double radius = 18.0;
@@ -199,7 +172,7 @@ class CounterWidget extends StatelessWidget {
                       ],
                     ),
                     child: TextField(
-                      cursorHeight: 38,
+                      // cursorHeight: 38,
                       controller:
                           ExchangeCoinForPassScope.of(context).state.controller,
                       keyboardType: TextInputType.number,
@@ -211,9 +184,9 @@ class CounterWidget extends StatelessWidget {
                                 BorderRadius.all(Radius.circular(radius))),
                         fillColor: Colors.white,
                         filled: true,
-                        contentPadding: EdgeInsets.only(
-                          left: 24.0,
-                          right: 24.0,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 24.0,
+                          vertical: 6.0,
                         ),
                       ),
                       style: const TextStyle(
