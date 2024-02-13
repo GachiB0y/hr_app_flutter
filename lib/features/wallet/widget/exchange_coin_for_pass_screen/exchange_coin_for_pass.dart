@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
-import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass/exchange_coin_for_pass_scope.dart';
+import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass_scope.dart';
 
 class ExchangeCoinForPass extends StatelessWidget {
   const ExchangeCoinForPass({super.key});

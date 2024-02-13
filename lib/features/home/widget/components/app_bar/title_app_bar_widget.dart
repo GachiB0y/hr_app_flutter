@@ -61,32 +61,35 @@ class TitleAppBarWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(63),
                             ),
                             child: BlocBuilder<WalletBLoC, WalletState>(
-                                builder: (context, state) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 4.0, left: 8, right: 8, bottom: 4),
-                                child: Text(
-                                  '${state.data == null ? '0' : state.data!.balance} coin',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white),
-                                ),
-                              );
-                            }),
+                              builder: (context, state) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 4.0, left: 8, right: 8, bottom: 4),
+                                  child: Text(
+                                    '${state.data == null ? '0' : state.data!.balance} coin',
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(
                             width: 8,
                           ),
                           SizedBox(
+                            width: 150,
                             child: Text(
                               softWrap: true,
-                              maxLines: 2,
+                              maxLines: 3,
                               stateUserBloc.data!.authUser.staffPosition,
                               style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.outline),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
                             ),
                           ),
                         ],

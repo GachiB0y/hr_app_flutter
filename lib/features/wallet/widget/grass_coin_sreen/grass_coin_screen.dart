@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/constant/constants.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
@@ -24,9 +23,6 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
 
   void getInfoForInit() {
     context.read<WalletBLoC>().add(const WalletEvent.fetch());
-    context
-        .read<CoinsScreenViewModelBloc>()
-        .add(const CoinsScreenViewModelEvent.fetchInfo());
   }
 
   @override
@@ -273,7 +269,8 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
               onTap: () async {
                 if (index == 0) {
-//TODO маршрут на что потратить коины?
+                  /// Маршрут на что потратить коины?
+                  Octopus.of(context).push(Routes.whatToSpendScreen);
                 } else if (index == 1) {
 //TODO маршрут на как получить больше?
                 } else if (index == 2) {
@@ -546,78 +543,5 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
             child: Center(child: Text('Ничего не найдено')));
       }
     });
-  }
-}
-
-class CardListCoinsInfoBottomSheet extends StatelessWidget {
-  final bool isCoinsInfo;
-
-  const CardListCoinsInfoBottomSheet({super.key, required this.isCoinsInfo});
-
-  @override
-  Widget build(BuildContext context) {
-    final blocCoinsScreenViewModel = context.watch<CoinsScreenViewModelBloc>();
-
-    return blocCoinsScreenViewModel.state.when(
-      loaded: (listCoinsInfoLoaded, listCoinsRewardLoaded) {
-        return isCoinsInfo
-            ? ListView.builder(
-                itemCount: listCoinsInfoLoaded.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(
-                        listCoinsInfoLoaded[index].title,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      subtitle: Row(
-                        children: [
-                          Text(
-                            'Награда: ${listCoinsInfoLoaded[index].price.toString()}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Icon(
-                            MyCustomIcon.iconLogoGrass,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              )
-            : ListView.builder(
-                itemCount: listCoinsRewardLoaded.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(
-                        listCoinsRewardLoaded[index].title,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      subtitle: Row(
-                        children: [
-                          Text(
-                            'Цена: ${listCoinsRewardLoaded[index].price.toString()}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Icon(
-                            MyCustomIcon.iconLogoGrass,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-      },
-      loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-      error: () => const SliverToBoxAdapter(child: Text('Nothing found...')),
-    );
   }
 }
