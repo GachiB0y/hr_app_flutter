@@ -600,15 +600,13 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
               }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return ElementServiceForScrollBarWidget(
-                      listService: state.data!,
-                      index: index,
-                      groupWidgets: groupWidgets,
-                    );
-                  },
-                  childCount: state.data!.length + 1,
-                ),
+                    (BuildContext context, int index) {
+                  return ElementServiceForScrollBarWidget(
+                    listService: state.data!,
+                    index: index,
+                    groupWidgets: groupWidgets,
+                  );
+                }, childCount: groupWidgets.length),
               );
             }
           }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
-import '../../bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import '../../bloc/wallet_bloc/wallet_bloc.dart';
 import '../../model/wallet/wallet.dart';
 

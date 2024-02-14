@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass_scope.dart';
+import 'package:octopus/octopus.dart';
 
 class ExchangeCoinForPass extends StatelessWidget {
   const ExchangeCoinForPass({super.key});
@@ -76,8 +77,29 @@ class SendCoinToBracerButtonWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          final value =
+              ExchangeCoinForPassScope.of(context).state.controller.text;
+          if (value.isEmpty) {
+            return;
+          }
+          final amount = int.parse(value);
+          if (amount == 0) {
+            return;
+          }
+          final blocWallet = context.read<WalletBLoC>();
+          final int balance = blocWallet.state.data!.balance;
+          if (balance >= amount) {
+            blocWallet.add(WalletEvent.sendCoinsToBracer(amount: amount));
+            Octopus.of(context).pop();
+          }
+        },
         style: ButtonStyle(
+          overlayColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return const Color.fromARGB(46, 94, 222, 102);
+            },
+          ),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
@@ -88,9 +110,16 @@ class SendCoinToBracerButtonWidget extends StatelessWidget {
           backgroundColor: MaterialStateProperty.resolveWith(
               (states) => Theme.of(context).colorScheme.primary),
         ),
-        child: const Text(
-          'Перевести',
-          style: TextStyle(color: Colors.white, fontSize: 26),
+        child: Ink(
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+          ),
+          child: const InkWell(
+            child: Text(
+              'Перевести',
+              style: TextStyle(color: Colors.white, fontSize: 26),
+            ),
+          ),
         ),
       ),
     );
@@ -172,7 +201,6 @@ class CounterWidget extends StatelessWidget {
                       ],
                     ),
                     child: TextField(
-                      // cursorHeight: 38,
                       controller:
                           ExchangeCoinForPassScope.of(context).state.controller,
                       keyboardType: TextInputType.number,
