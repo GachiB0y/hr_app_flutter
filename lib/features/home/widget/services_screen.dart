@@ -136,6 +136,19 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       routes: [Routes.scheduleBus],
                     ),
                   ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 25.0,
+                    ),
+                    child: CustomServiceBlockWidget(
+                      titleBlockService: 'Поддержка',
+                      titleService: ['Сообщаить об ошибке'],
+                      routes: [Routes.bagReport],
+                    ),
+                  ),
                 ],
               );
             }),

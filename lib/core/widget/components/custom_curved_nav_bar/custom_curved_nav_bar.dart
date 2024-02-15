@@ -29,7 +29,7 @@ class CurvedNavigationBar extends StatefulWidget {
     this.onTap,
     _LetIndexPage? letIndexChange,
     this.animationCurve = Curves.easeOut,
-    this.animationDuration = const Duration(milliseconds: 600),
+    this.animationDuration = const Duration(milliseconds: 300),
     this.height = 100.0,
     required this.selectedItemColor,
   })  : letIndexChange = letIndexChange ?? ((_) => true),

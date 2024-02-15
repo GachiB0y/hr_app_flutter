@@ -175,55 +175,56 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppScreenViewCubit, MainAppScreenViewState>(
-        listener: (context, state) =>
-            DependenciesScope.of(context).mainAppScreenViewCubit,
-        builder: (context, state) {
-          return Scaffold(
-            body: Shimmer(
-              child: IndexedStack(
-                index: _tab.index,
-                children: const <Widget>[
-                  CompanyScreen(),
-                  GrassCoinScreen(),
-                  UserMainScreen(),
-                  EducationScreen(),
-                  ServicesScreen(),
-                ],
-              ),
+      listener: (context, state) =>
+          DependenciesScope.of(context).mainAppScreenViewCubit,
+      builder: (context, state) {
+        return Scaffold(
+          body: Shimmer(
+            child: IndexedStack(
+              index: _tab.index,
+              children: const <Widget>[
+                CompanyScreen(),
+                GrassCoinScreen(),
+                UserMainScreen(),
+                EducationScreen(),
+                ServicesScreen(),
+              ],
             ),
-            bottomNavigationBar: state.modalOpened
-                ? null
-                : CurvedNavigationBar(
-                    color: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Theme.of(context).colorScheme.onTertiary,
-                    selectedItemColor: Theme.of(context).colorScheme.primary,
-                    index: _tab.index,
-                    onTap: _onItemTapped,
-                    items: const [
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconExclamationMark,
-                        text: 'Компания',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconCoin,
-                        text: 'Коины',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconHome,
-                        text: 'Главная',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconEducation,
-                        text: 'Обучение',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconService,
-                        text: 'Сервисы',
-                      ),
-                    ],
-                  ),
-          );
-        });
+          ),
+          bottomNavigationBar: state.modalOpened
+              ? null
+              : CurvedNavigationBar(
+                  color: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.onTertiary,
+                  selectedItemColor: Theme.of(context).colorScheme.primary,
+                  index: _tab.index,
+                  onTap: _onItemTapped,
+                  items: const [
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconExclamationMark,
+                      text: 'Компания',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconCoin,
+                      text: 'Коины',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconHome,
+                      text: 'Главная',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconEducation,
+                      text: 'Обучение',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconService,
+                      text: 'Сервисы',
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }
 
