@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/home/widget/components/service_element_to_route/service_element_to_route.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
-import 'package:octopus/octopus.dart';
-
-import '../../services/bloc/service_bloc/service_bloc.dart';
+import 'package:hr_app_flutter/features/services/bloc/service_bloc/service_bloc.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({
@@ -183,33 +182,9 @@ class CustomServiceBlockWidget extends StatelessWidget {
           shrinkWrap: true,
           itemCount: titleService.length,
           itemBuilder: (context, index) {
-            return TextButton(
-              onPressed: () {
-                if (routes.isEmpty) {
-                  return;
-                }
-                Octopus.of(context).push(routes[index]);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                elevation: MaterialStateProperty.all(0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    titleService[index],
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).textTheme.titleLarge!.color),
-                  ),
-                  Icon(
-                    Icons.chevron_right,
-                    size: 32,
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                ],
-              ),
+            return ElementServiceToRouteWidget(
+              route: routes[index],
+              titleService: titleService[index],
             );
           },
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/service_element_to_route/service_element_to_route.dart';
 import 'package:hr_app_flutter/features/news/widget/scroll_news_wdiget.dart';
 import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
 import 'package:octopus/octopus.dart';
@@ -160,20 +161,29 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: LeanProductionButtonWidget(),
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.leanProductionForm,
+                            titleService: 'Предложить идею',
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: SearchPersonalButtonWidget(),
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.searchUser,
+                            titleService: 'Найти сотрудника',
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: ScheduleBusButtonWidget(),
-                        )
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.scheduleBus,
+                            titleService: 'Узнать маршруты автобуса',
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -414,102 +424,6 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class LeanProductionButtonWidget extends StatelessWidget {
-  const LeanProductionButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.leanProductionForm);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Предложить идею',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(
-            Icons.chevron_right,
-            size: 32,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SearchPersonalButtonWidget extends StatelessWidget {
-  const SearchPersonalButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.searchUser);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Найти сотрудника',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(
-            Icons.chevron_right,
-            size: 32,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ScheduleBusButtonWidget extends StatelessWidget {
-  const ScheduleBusButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.scheduleBus);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Узнать маршруты автобуса',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(Icons.chevron_right,
-              size: 32, color: Theme.of(context).colorScheme.outline),
-        ],
-      ),
     );
   }
 }

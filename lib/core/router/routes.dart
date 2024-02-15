@@ -18,8 +18,8 @@ import 'package:hr_app_flutter/features/statements/widget/statements_screens/sta
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass.dart';
-import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
-import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/search_friend_and_send_coins_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
 

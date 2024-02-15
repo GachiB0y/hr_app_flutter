@@ -7,7 +7,7 @@ import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/mai
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
-import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:octopus/octopus.dart';
