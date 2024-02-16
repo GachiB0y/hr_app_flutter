@@ -74,22 +74,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Сервисы',
-                                style: TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.w700),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
                                   'Смотреть все',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .color),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             ],
@@ -110,22 +103,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'События компании',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w700),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
                                   'Смотреть все',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .color),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             ],
@@ -146,11 +132,13 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         const Padding(
                           padding: EdgeInsets.only(left: 25.0, right: 25),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              BirthDayInfoRectangleWidget(),
-                              RookiesInfoRectangleWidget(),
-                              BalanceInfoRectangleWidget(),
+                              Expanded(child: BirthDayInfoRectangleWidget()),
+                              SizedBox(width: 7),
+                              Expanded(child: RookiesInfoRectangleWidget()),
+                              SizedBox(width: 7),
+                              Expanded(child: BalanceInfoRectangleWidget()),
                             ],
                           ),
                         ),
@@ -214,13 +202,14 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -237,31 +226,38 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                   Octopus.of(context).push(Routes.infoBirthDay);
                 },
                 child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Дни рожения'),
+                    Text(
+                      'Дни рожения',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/party_popper.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.count.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/party_popper.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.count.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -291,13 +287,14 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -315,30 +312,35 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Новенькие'),
+                    Text(
+                      'Новенькие',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/rookies.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.count.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/rookies.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.count.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -368,13 +370,14 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -392,30 +395,35 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Баланс coin'),
+                    Text(
+                      'Баланс coin',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/grass_coin_3d.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.balance.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/grass_coin_3d.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.balance.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),

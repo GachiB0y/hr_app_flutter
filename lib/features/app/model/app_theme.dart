@@ -10,17 +10,29 @@ final class AppTheme with Diagnosticable {
   /// {@macro app_theme}
   AppTheme({required this.mode, required this.seed})
       : darkTheme = ThemeData(
+          fontFamily: 'MontserratFont',
           colorScheme: darkColorScheme,
           brightness: Brightness.dark,
           useMaterial3: true,
         ),
         lightTheme = ThemeData(
+          fontFamily: 'MontserratFont',
           colorScheme: lightColorScheme,
           brightness: Brightness.light,
           useMaterial3: true,
           textTheme: ThemeData.light().textTheme.copyWith(
                 titleLarge: const TextStyle(
-                    color: Colors.black), // Замените на нужный цвет
+                    color: Colors.black,
+                    fontSize: 27,
+                    fontWeight: FontWeight.w700),
+                titleMedium: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                titleSmall: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400), // Замените на нужный цвет
               ),
         );
 

@@ -22,17 +22,20 @@ class CominSoonScreen extends StatelessWidget {
                   'assets/images/coming_soon.png',
                 ),
               ),
-              const Center(
+              Center(
                 child: Text(
                   'Сорян,\n этот раздел ещё\n в разработке',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 29),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 29),
                   textAlign: TextAlign.center,
                 ),
               ),
               const Spacer(),
-              const Text(
+              Text(
                 'Можешь вернуться на главную или перейти на сервисы ниже',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(
                 height: 14,

@@ -108,9 +108,9 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                                             ),
                                             child: Text(
                                               dateInfo,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
                                             ),
                                           ),
                                         ),
@@ -132,8 +132,7 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 item.title,
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.black),
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
                           ),

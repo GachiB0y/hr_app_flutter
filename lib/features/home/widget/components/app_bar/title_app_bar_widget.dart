@@ -38,12 +38,7 @@ class TitleAppBarWidget extends StatelessWidget {
                           'Привет, ${stateUserBloc.data?.authUser.nameI}!',
                           softWrap: true,
                           maxLines: 2,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       const SizedBox(
@@ -63,14 +58,16 @@ class TitleAppBarWidget extends StatelessWidget {
                             child: BlocBuilder<WalletBLoC, WalletState>(
                               builder: (context, state) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 4.0, left: 8, right: 8, bottom: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0,
+                                  ),
                                   child: Text(
                                     '${state.data == null ? '0' : state.data!.balance} coin',
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontSize: 18, color: Colors.white),
                                   ),
                                 );
                               },
@@ -85,8 +82,9 @@ class TitleAppBarWidget extends StatelessWidget {
                               softWrap: true,
                               maxLines: 3,
                               stateUserBloc.data!.authUser.staffPosition,
+                              // "maloletka@mail.ru",
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 color: Theme.of(context).colorScheme.outline,
                               ),

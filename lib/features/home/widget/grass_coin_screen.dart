@@ -104,7 +104,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 7.0,
+                  height: MediaQuery.of(context).size.height / 6.7,
                   child: const CustomScrollView(
                     scrollDirection: Axis.horizontal,
                     slivers: <Widget>[OperationsWithCoinScrollBarWidget()],
@@ -113,7 +113,7 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 35,
+                  height: 25,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -212,16 +212,16 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
     const double radius = 18.0;
     final sizeScreen = MediaQuery.of(context).size;
 
-    final sizeWidhtIsRow = (sizeScreen.width / 3.6);
+    final sizeWidhtIsRow = (sizeScreen.width / 3.8);
     return Stack(
       children: [
         Container(
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.2),
                 spreadRadius: 0,
-                blurRadius: 6,
+                blurRadius: 8,
                 offset: const Offset(0, 0),
               ),
             ],
@@ -229,11 +229,10 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.onPrimary,
           ),
           width: sizeWidhtIsRow,
-          height: (MediaQuery.of(context).size.height / 8.0),
           child: Padding(
             padding: const EdgeInsets.only(
               left: 16.0,
-              bottom: 16.0,
+              bottom: 12.0,
             ),
             child: Align(
               alignment: Alignment.bottomLeft,
@@ -251,7 +250,10 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
         SizedBox(
           width: sizeWidhtIsRow,
           child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 16.0),
+            padding: const EdgeInsets.only(
+              top: 10.0,
+              left: 16.0,
+            ),
             child: Align(
               alignment: Alignment.topLeft,
               child: Image.asset(
@@ -355,7 +357,9 @@ class ElementHistoryOperationWidget extends StatelessWidget {
               ? Text(
                   '-${item.amount.toString()}',
                   style: const TextStyle(
-                      fontSize: 29, fontWeight: FontWeight.w700),
+                      color: Colors.grey,
+                      fontSize: 29,
+                      fontWeight: FontWeight.w700),
                 )
               : Text(
                   '+${item.amount.toString()}',
