@@ -71,7 +71,10 @@ enum Routes with OctopusRoute {
           const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
-        Routes.profileUser => ProfileWidgetScreen(userId: node.arguments['id']),
+        Routes.profileUser => UserProfileWidgetScreen(
+            userId: node.arguments['id'],
+            isSelfUser: node.arguments['isSelfUser'],
+          ),
         Routes.searchUser => const SearchUserScreen(),
         Routes.scheduleBus => const ScheduleBusScreen(),
         Routes.leanProductionForm => LeanProductionFormScreen(),

@@ -80,9 +80,8 @@ class TitleAppBarWidget extends StatelessWidget {
                             width: 150,
                             child: Text(
                               softWrap: true,
-                              maxLines: 3,
-                              stateUserBloc.data!.authUser.staffPosition,
-                              // "maloletka@mail.ru",
+                              maxLines: 1,
+                              stateUserBloc.data!.authUser.email ?? '',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,

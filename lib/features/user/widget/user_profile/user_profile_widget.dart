@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
@@ -9,18 +10,21 @@ import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
 
 import '../../model/user/user_info.dart';
 
-class ProfileWidgetScreen extends StatefulWidget {
+class UserProfileWidgetScreen extends StatefulWidget {
   final String? userId;
-  const ProfileWidgetScreen({
+  final String? isSelfUser;
+  const UserProfileWidgetScreen({
     Key? key,
     required this.userId,
+    this.isSelfUser = 'false',
   }) : super(key: key);
 
   @override
-  State<ProfileWidgetScreen> createState() => _ProfileWidgetScreenState();
+  State<UserProfileWidgetScreen> createState() =>
+      _UserProfileWidgetScreenState();
 }
 
-class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
+class _UserProfileWidgetScreenState extends State<UserProfileWidgetScreen> {
   late final UserEntity user;
 
   @override
@@ -35,16 +39,26 @@ class _ProfileWidgetScreenState extends State<ProfileWidgetScreen> {
   @override
   Widget build(BuildContext context) {
     return UserScope(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          actions: const [
-            SaveButtonWidget(),
-            ToggleThemeWidget(),
-            LogoutButtonWidget(),
-          ],
+      child: Shimmer(
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Профиль',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            // actions: const [
+            //   // SaveButtonWidget(),
+            //   // ToggleThemeWidget(),
+            //   // LogoutButtonWidget(),
+            // ],
+          ),
+          body: SafeArea(
+              child: UserInfoForm(
+            isSelfUser: widget.isSelfUser,
+          )),
         ),
-        body: const SafeArea(child: UserInfoForm()),
       ),
     );
   }
@@ -79,73 +93,106 @@ class ToggleThemeWidget extends StatelessWidget {
 }
 
 class UserInfoForm extends StatelessWidget {
-  const UserInfoForm({super.key});
+  const UserInfoForm({super.key, required this.isSelfUser});
+  final String? isSelfUser;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserState$Processing) {
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
-        );
+        return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
       } else if (state is UserState$Idle || state is UserState$Successful) {
         if (state.data!.currentProfileUser == null) {
-          return const Text('СКЕЛЕТОН СКЕЛЕТОН СКЕЛЕТОН');
+          return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
         } else {
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Column(
-                    children: [
-                      const AvatarProfileWidget(),
-                      const SizedBox(height: 16),
-                      Text(
-                        '${state.data!.currentProfileUser!.name} ${state.data!.currentProfileUser!.nameI}',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+          String? phoneNumber = state.data!.currentProfileUser!.phoneOne;
+
+          RegExp regExp = RegExp(r'^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$');
+          String? formattedNumber = phoneNumber?.replaceAllMapped(regExp,
+              (Match m) => '+ ${m[1]}(${m[2]}) ${m[3]}-${m[4]}-${m[5]}');
+
+          return Column(
+            children: [
+              Expanded(
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const AvatarProfileWidget(),
+                              const SizedBox(height: 16),
+                              Text(
+                                state.data!.currentProfileUser!.staffPosition,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                softWrap: true,
+                                maxLines: 3,
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                '${state.data!.currentProfileUser!.nameI} ${state.data!.currentProfileUser!.name}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(fontSize: 30),
+                                softWrap: true,
+                                maxLines: 3,
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${state.data!.currentProfileUser!.email}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 14,
+                                            color: const Color(0xFF7B7D84)),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    formattedNumber ?? '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 14,
+                                            color: const Color(0xFF7B7D84)),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+                              const TagsWidget(),
+                              const SizedBox(height: 25),
+                            ],
+                          ),
                         ),
-                        softWrap: true,
-                        maxLines: 3,
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.phone),
-                          Text(
-                            ' + ${state.data!.currentProfileUser!.phoneOne}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Flexible(
-                            child: Text(
-                              'Должность: ',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              state.data!.currentProfileUser!.staffPosition,
-                              style: const TextStyle(fontSize: 16),
-                              softWrap: true,
-                              maxLines: 6,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const TagsWidget(),
                     ],
                   ),
                 ),
               ),
+              const SaveButtonWidget(),
+              const SizedBox(height: 25),
+              LogoutButtonWidget(
+                isSelfuser: isSelfUser,
+              ),
+              const SizedBox(height: 25),
             ],
           );
         }
@@ -156,8 +203,106 @@ class UserInfoForm extends StatelessWidget {
   }
 }
 
+class ShimmerUserProfileWidget extends StatelessWidget {
+  const ShimmerUserProfileWidget({
+    super.key,
+    required this.isSelfUser,
+  });
+
+  final String? isSelfUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Expanded(
+          child: ShimmerBodyContentWidget(),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        LogoutButtonWidget(
+          isSelfuser: isSelfUser,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+}
+
+class ShimmerBodyContentWidget extends StatelessWidget {
+  const ShimmerBodyContentWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerLoading(
+      isLoading: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 205,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                shape: BoxShape.circle,
+              ),
+              child: const ClipOval(),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.infinity,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.infinity,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.infinity,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class LogoutButtonWidget extends StatelessWidget {
-  const LogoutButtonWidget({super.key});
+  const LogoutButtonWidget({super.key, required this.isSelfuser});
+  final String? isSelfuser;
 
   @override
   Widget build(BuildContext context) {
@@ -165,29 +310,39 @@ class LogoutButtonWidget extends StatelessWidget {
       return const SizedBox.shrink();
     } else {
       return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-        if (state.data!.currentProfileUser == null) {
-          return const SizedBox.shrink();
-        } else {
-          return state.data!.currentProfileUser!.self
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 20.0,
-                  ),
-                  child: IconButton(
-                    onPressed: () async {
-                      AuthScope.of(context, listen: false).signOut();
-                    },
-                    padding: const EdgeInsets.all(2),
-                    color: Colors.transparent,
-                    icon: Icon(
-                      Icons.logout,
-                      size: 35,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+        return isSelfuser == 'true'
+            ? Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // AuthScope.of(context, listen: false).signOut();
+                    //TODO
+                  },
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(3.0),
+                    overlayColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        return const Color.fromARGB(255, 255, 255, 255);
+                      },
                     ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    minimumSize: MaterialStateProperty.all(
+                        const Size(double.infinity, 57)),
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) => Colors.white),
                   ),
-                )
-              : const SizedBox.shrink();
-        }
+                  child: Text('Выйти из аккаунта',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontSize: 24, fontWeight: FontWeight.w500)),
+                ),
+              )
+            : const SizedBox.shrink();
       });
     }
   }
@@ -198,7 +353,7 @@ class AvatarProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = MediaQuery.of(context).size.width / 4;
+    double radius = 102.5; //MediaQuery.of(context).size.width / 4;
 
     final viewModel = UserScope.of(context);
 
@@ -208,62 +363,76 @@ class AvatarProfileWidget extends StatelessWidget {
             ? const SizedBox.shrink()
             : state.data!.currentProfileUser == null
                 ? const SizedBox.shrink()
-                : Stack(
-                    children: [
-                      SizedBox(
-                        width: radius * 2,
-                        child: CachedNetworkImage(
-                            imageUrl: state.data!.currentProfileUser!.avatar,
-                            imageBuilder: (context, imageProvider) {
-                              return CircleAvatar(
-                                radius: radius,
-                                backgroundImage:
-                                    viewModel.state.myImage.imageFile != null
-                                        ? FileImage(viewModel
-                                            .state.myImage.imageFile as File)
-                                        : imageProvider,
-                              );
-                            }),
-                      ),
-                      state.data!.currentProfileUser!.self
-                          ? Positioned(
-                              top: 0,
-                              right: 0,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.outline,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () async {
-                                    /// Действия при нажатии на иконку редактирования
-                                    await UserScope.of(context, listen: false)
-                                        .state
-                                        .selectImage();
-                                    final imageFile =
-                                        UserScope.of(context, listen: false)
-                                            .state
-                                            .myImage
-                                            .imageFile;
-                                    if (imageFile != null) {
-                                      final File file = File(imageFile.path);
-                                      if (context.mounted) {
-                                        UserScope.of(context, listen: false)
-                                            .state
-                                            .file = file;
-                                        UserScope.of(context, listen: false)
-                                            .state
-                                            .changeIsSave(
-                                                newValue: true, isTags: false);
+                : Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Stack(
+                      children: [
+                        ///Нужен для того,чтобы иконка не улетала при загрузке автара
+                        SizedBox(
+                          width: radius * 2,
+                          child: CachedNetworkImage(
+                              imageUrl: state.data!.currentProfileUser!.avatar,
+                              imageBuilder: (context, imageProvider) {
+                                return CircleAvatar(
+                                  radius: radius,
+                                  backgroundImage:
+                                      viewModel.state.myImage.imageFile != null
+                                          ? FileImage(viewModel
+                                              .state.myImage.imageFile as File)
+                                          : imageProvider,
+                                );
+                              }),
+                        ),
+                        state.data!.currentProfileUser!.self
+                            ? Positioned(
+                                top: 0,
+                                right: 0,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 8.0,
+                                        color: Colors.black.withOpacity(0.2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    icon:
+                                        const Icon(Icons.add_a_photo_outlined),
+                                    onPressed: () async {
+                                      /// Действия при нажатии на иконку редактирования
+                                      await UserScope.of(context, listen: false)
+                                          .state
+                                          .selectImage();
+                                      final imageFile =
+                                          UserScope.of(context, listen: false)
+                                              .state
+                                              .myImage
+                                              .imageFile;
+                                      if (imageFile != null) {
+                                        final File file = File(imageFile.path);
+                                        if (context.mounted) {
+                                          UserScope.of(context, listen: false)
+                                              .state
+                                              .file = file;
+                                          UserScope.of(context, listen: false)
+                                              .state
+                                              .changeIsSave(
+                                                  newValue: true,
+                                                  isTags: false);
+                                        }
                                       }
-                                    }
-                                  },
+                                    },
+                                  ),
                                 ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ],
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
                   );
       } else {
         return const SizedBox.shrink();
@@ -280,31 +449,55 @@ class SaveButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (UserScope.of(context).state.isSave) {
-      return TextButton(
-        child: const Text('Сохранить'),
-        onPressed: () {
-          final blocUsers = context.read<UserBloc>();
-          final currentProfileUser = blocUsers.state.data?.currentProfileUser;
-          final isChangeTags =
-              UserScope.of(context, listen: false).state.isChangeTags;
+      return Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: ElevatedButton(
+          onPressed: () {
+            final blocUsers = context.read<UserBloc>();
+            final currentProfileUser = blocUsers.state.data?.currentProfileUser;
+            final isChangeTags =
+                UserScope.of(context, listen: false).state.isChangeTags;
 
-          if (currentProfileUser == null) return;
-          if (isChangeTags == true) {
-            blocUsers.add(UserEvent.saveTagsToSend(
-                tags: currentProfileUser.tags,
-                userId: currentProfileUser.autoCard));
-          }
-          if (UserScope.of(context, listen: false).state.file != null) {
-            blocUsers.add(UserEvent.sendAvatarWithProfile(
-                userId: currentProfileUser.autoCard,
-                imageFile:
-                    UserScope.of(context, listen: false).state.file as File));
-          }
+            if (currentProfileUser == null) return;
+            if (isChangeTags == true) {
+              blocUsers.add(UserEvent.saveTagsToSend(
+                  tags: currentProfileUser.tags,
+                  userId: currentProfileUser.autoCard));
+            }
+            if (UserScope.of(context, listen: false).state.file != null) {
+              blocUsers.add(UserEvent.sendAvatarWithProfile(
+                  userId: currentProfileUser.autoCard,
+                  imageFile:
+                      UserScope.of(context, listen: false).state.file as File));
+            }
 
-          UserScope.of(context, listen: false)
-              .state
-              .changeIsSave(newValue: false, isTags: false);
-        },
+            UserScope.of(context, listen: false)
+                .state
+                .changeIsSave(newValue: false, isTags: false);
+          },
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(3.0),
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                return const Color.fromARGB(46, 94, 222, 102);
+              },
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            minimumSize:
+                MaterialStateProperty.all(const Size(double.infinity, 57)),
+            backgroundColor: MaterialStateProperty.resolveWith(
+                (states) => Theme.of(context).colorScheme.primary),
+          ),
+          child: Text('Сохранить',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 24, fontWeight: FontWeight.w500)),
+        ),
       );
     } else {
       return const SizedBox.shrink();
@@ -348,7 +541,20 @@ class _TagsWidgetState extends State<TagsWidget> {
                         spacing: 8,
                         children: state.data!.currentProfileUser!.tags
                             .map((tag) => Chip(
-                                  label: Text(tag.name),
+                                  side: BorderSide.none,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  label: Text(
+                                    '#${tag.name}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w600),
+                                  ),
                                   onDeleted: state
                                           .data!.currentProfileUser!.editTags
                                       ? () {
@@ -368,9 +574,6 @@ class _TagsWidgetState extends State<TagsWidget> {
                                             )
                                           : null,
                                   deleteButtonTooltipMessage: 'Удалить',
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
                                   backgroundColor:
                                       Theme.of(context).colorScheme.primary,
                                 ))

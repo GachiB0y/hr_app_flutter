@@ -55,6 +55,7 @@ class Avatar extends StatelessWidget {
               ..add(Routes.profileUser.node(
                 arguments: <String, String>{
                   'id': id,
+                  'isSelfUser': 'true',
                 },
               )));
           },
