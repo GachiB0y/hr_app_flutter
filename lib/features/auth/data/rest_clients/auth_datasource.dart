@@ -71,6 +71,11 @@ final class AuthDataSourceImpl
         'device_token': deviceToken
       },
     );
+    if (response.statusCode == 401) {
+      throw const UnauthorizedException(
+        message: 'Incorrect SMS code.',
+      );
+    }
     await _handleAuthResponse(response.data);
   }
 

@@ -82,28 +82,37 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
     }
   }
 
-  /// Check is valid phone number
-  bool _isValid({required String phoneNumber}) => phoneNumber.length == 11;
-
   /// Auth user by SMS code
-  Future<bool> _authByCode(
+  Future<void> _authByCode(
       AuthByCodeAuthEvent event, Emitter<AuthState> emit) async {
-    emit(AuthState.processing(data: state.data));
+    try {
+      emit(AuthState.processing(data: state.data));
 
-    if (!_isValid(phoneNumber: event.phoneNumber)) {
-      emit(AuthState.error(
-          data: state.data, message: 'Заполните номер телефона!'));
-      return false;
+      await _authRepository.signInWithPhoneAndCode(
+          numberPhone: event.phoneNumber, code: event.code);
+      emit(
+          const AuthState.successful(data: AuthenticationStatus.authenticated));
+    } on TimeoutException {
+      emit(const AuthState.error(
+          data: AuthenticationStatus.unauthenticated,
+          message: 'Ошибка ожидания ответа от сервера!'));
+      rethrow;
+      // ignore: unused_catch_stack
+    } on Object catch (error, stackTrace) {
+      emit(const AuthState.error(
+          data: AuthenticationStatus.unauthenticated,
+          message: 'Not found error'));
+      rethrow;
+    } finally {
+      emit(AuthState.idle(data: state.data));
     }
 
     final errorMessage =
         await _login(phoneNumber: event.phoneNumber, code: event.code);
     if (errorMessage == null) {
       emit(const AuthState.idle(data: AuthenticationStatus.authenticated));
-      return true;
     } else {
       emit(AuthState.error(data: state.data, message: errorMessage));
-      return false;
     }
   }
 
@@ -114,7 +123,7 @@ class AuthBLoC extends Bloc<AuthEvent, AuthState>
       await _authRepository.signInWithPhoneAndCode(
           numberPhone: phoneNumber, code: code);
     } catch (e) {
-      return 'Неудалось авторизироваться!';
+      rethrow;
     }
     return null;
   }

@@ -315,8 +315,7 @@ class LogoutButtonWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // AuthScope.of(context, listen: false).signOut();
-                    //TODO
+                    AuthScope.of(context, listen: false).signOut();
                   },
                   style: ButtonStyle(
                     elevation: MaterialStateProperty.all(3.0),

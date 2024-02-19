@@ -35,7 +35,6 @@ dependencies:
   http: ^1.1.0
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
-  # flutter_secure_storage: ^9.0.0
   file_picker: ^6.0.0
   path_provider: ^2.1.1
   bloc_concurrency: ^0.2.2
@@ -46,12 +45,14 @@ dependencies:
   bloc_test: ^9.1.5
   cached_network_image: ^3.3.0
   url_launcher: ^6.1.14
-  # jwt_decoder: ^2.0.1
 
   # Networking
   dio: ^5.3.3
 
+  # Navigator
   octopus: ^0.0.8
+
+  pin_code_fields: ^8.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
