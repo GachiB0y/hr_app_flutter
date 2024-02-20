@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 
 import 'package:hr_app_flutter/core/utils/international_phone_formatter.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class AuthenticationFormScreen extends StatelessWidget {
@@ -35,6 +38,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
   String formattedPhoneNumber = '';
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _phoneNumberController.dispose();
     _smsCodeController.dispose();
@@ -57,101 +65,14 @@ class _MyCustomFormState extends State<MyCustomForm> {
                   height: 70,
                 ),
                 !_isCodeSent
-                    ? Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "Номер телефона",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(fontSize: 24),
-                            ),
-                            Center(
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 1.5,
-                                child: TextFormField(
-                                  textAlign: TextAlign.center,
-                                  autofocus: true,
-                                  controller: _phoneNumberController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    CustomTextInputFormatter(),
-                                  ],
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    prefixText: '+7',
-                                    prefixStyle:
-                                        Theme.of(context).textTheme.titleLarge,
-                                    hintText: '900 000-00-00',
-                                  ),
-                                  validator: (value) {
-                                    if (value?.isEmpty ?? true) {
-                                      return 'Пожалуйста, введите номер телефона';
-                                    } else if (value?.length != 13) {
-                                      return 'Неверный формат номера телефона';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                    ? WriteNumberPhoneFormWidget(
+                        formKey: _formKey,
+                        phoneNumberController: _phoneNumberController,
                       )
-                    : Column(
-                        children: [
-                          Text(
-                            "Введите код из SMS",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(fontSize: 24),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            textAlign: TextAlign.center,
-                            "Код придет в течение минуты\n на номер +7 ${_phoneNumberController.text}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(fontSize: 18),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: PinCodeTextField(
-                              onCompleted: (value) {
-                                AuthScope.of(context, listen: false).auth(
-                                    phoneNumber: formattedPhoneNumber,
-                                    code: _smsCodeController.text);
-                              },
-                              obscureText: true,
-                              keyboardType: TextInputType.number,
-                              controller: _smsCodeController,
-                              appContext: context,
-                              length: 4,
-                              pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.box,
-                                borderRadius: BorderRadius.circular(10),
-                                fieldHeight: 50,
-                                fieldWidth: 40,
-                                activeFillColor: Colors.white,
-                                activeColor: Colors.white,
-                                selectedColor:
-                                    const Color.fromARGB(179, 0, 0, 0),
-                                inactiveColor:
-                                    const Color.fromARGB(60, 0, 0, 0),
-                              ),
-                            ),
-                          ),
-                        ],
+                    : WriteSMSCodeFormWidget(
+                        phoneNumberController: _phoneNumberController,
+                        formattedPhoneNumber: formattedPhoneNumber,
+                        smsCodeController: _smsCodeController,
                       ),
               ],
             ),
@@ -189,7 +110,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       ),
                     ),
                     minimumSize: MaterialStateProperty.all(
-                        const Size(double.infinity, 57)),
+                      const Size(double.infinity, 57),
+                    ),
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => Theme.of(context).colorScheme.primary),
                   ),
@@ -203,6 +125,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
             : _isTimerExpired
                 ? TextButton(
                     onPressed: () {
+                      AuthScope.of(context, listen: false)
+                          .getCode(formattedPhoneNumber);
                       setState(() {
                         _isTimerExpired = false;
                         _startTimer();
@@ -214,7 +138,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
                           decoration: TextDecoration.underline,
                           fontSize: 17,
                           color: const Color(0xFF838383)),
-                    ))
+                    ),
+                  )
                 : Text(
                     'Отправить код повторно ($_counter)',
                     style: Theme.of(context)
@@ -228,7 +153,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
   }
 
   void _startTimer() {
-    _counter = 5;
+    _counter = 120;
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_counter > 0) {
@@ -239,6 +164,169 @@ class _MyCustomFormState extends State<MyCustomForm> {
         }
       });
     });
+  }
+}
+
+class WriteSMSCodeFormWidget extends StatefulWidget {
+  const WriteSMSCodeFormWidget({
+    super.key,
+    required TextEditingController phoneNumberController,
+    required this.formattedPhoneNumber,
+    required TextEditingController smsCodeController,
+  })  : _phoneNumberController = phoneNumberController,
+        _smsCodeController = smsCodeController;
+
+  final TextEditingController _phoneNumberController;
+  final String formattedPhoneNumber;
+  final TextEditingController _smsCodeController;
+
+  @override
+  State<WriteSMSCodeFormWidget> createState() => _WriteSMSCodeFormWidgetState();
+}
+
+class _WriteSMSCodeFormWidgetState extends State<WriteSMSCodeFormWidget> {
+  bool isShowError = false;
+  bool isShowProgress = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AuthBLoC, AuthState>(
+        listener: (BuildContext context, state) {
+          if (state is AuthState$Error) {
+            setState(() {
+              isShowError = true;
+              isShowProgress = false;
+            });
+          } else if (state is AuthState$Processing) {
+            setState(() {
+              isShowError = false;
+              isShowProgress = true;
+            });
+          }
+        },
+        bloc: DependenciesScope.of(context).authBloc,
+        builder: (context, state) {
+          return Column(
+            children: [
+              Text(
+                "Введите код из SMS",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 24),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                "Код придет в течение минуты\n на номер +7 ${widget._phoneNumberController.text}",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(fontSize: 18),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: PinCodeTextField(
+                  readOnly: state is AuthState$Processing ? true : false,
+                  onCompleted: (value) {
+                    AuthScope.of(context, listen: false).auth(
+                        phoneNumber: widget.formattedPhoneNumber,
+                        code: widget._smsCodeController.text);
+                  },
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  controller: widget._smsCodeController,
+                  appContext: context,
+                  length: 4,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(10),
+                    fieldHeight: 50,
+                    fieldWidth: 40,
+                    activeFillColor: Colors.white,
+                    activeColor: Colors.white,
+                    selectedColor: const Color.fromARGB(179, 0, 0, 0),
+                    inactiveColor: const Color.fromARGB(60, 0, 0, 0),
+                  ),
+                ),
+              ),
+              isShowError
+                  ? Text(
+                      'Неверный код',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(color: Colors.red),
+                    )
+                  : const SizedBox.shrink(),
+              isShowProgress
+                  ? const CircularProgressIndicator()
+                  : const SizedBox.shrink(),
+            ],
+          );
+        });
+  }
+}
+
+class WriteNumberPhoneFormWidget extends StatelessWidget {
+  const WriteNumberPhoneFormWidget({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required TextEditingController phoneNumberController,
+  })  : _formKey = formKey,
+        _phoneNumberController = phoneNumberController;
+
+  final GlobalKey<FormState> _formKey;
+  final TextEditingController _phoneNumberController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Номер телефона",
+            style:
+                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 24),
+          ),
+          Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                autofocus: true,
+                controller: _phoneNumberController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  CustomTextInputFormatter(),
+                ],
+                style: Theme.of(context).textTheme.titleLarge,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixText: '+7',
+                  prefixStyle: Theme.of(context).textTheme.titleLarge,
+                  hintText: '900 000-00-00',
+                ),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Пожалуйста, введите номер телефона';
+                  } else if (value?.length != 13) {
+                    return 'Неверный формат номера телефона';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
