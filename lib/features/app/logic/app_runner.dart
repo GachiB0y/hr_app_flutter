@@ -6,7 +6,6 @@ import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/utils/bloc_observable.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/app/widget/app.dart';

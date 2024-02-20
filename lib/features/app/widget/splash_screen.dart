@@ -91,10 +91,8 @@ class _ChangingTextState extends State<ChangingText> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      timer =
-          Timer.periodic(const Duration(seconds: 1), (Timer t) => changeText());
-    });
+    timer =
+        Timer.periodic(const Duration(seconds: 1), (Timer t) => changeText());
   }
 
   @override
