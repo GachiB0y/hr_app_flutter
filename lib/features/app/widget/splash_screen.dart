@@ -19,7 +19,6 @@ class InitializationSplashScreen extends StatelessWidget {
     //     textDirection: TextDirection.ltr,
     //     child: Center(
     //       child: Text('LOading...'),
-
     //     ),
     //   ),
     // );
@@ -87,13 +86,21 @@ class _ChangingTextState extends State<ChangingText> {
     'Поговорим на чистоту'
   ];
   int currentIndex = 0;
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      Timer.periodic(const Duration(seconds: 1), (Timer t) => changeText());
+      timer =
+          Timer.periodic(const Duration(seconds: 1), (Timer t) => changeText());
     });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   void changeText() {
