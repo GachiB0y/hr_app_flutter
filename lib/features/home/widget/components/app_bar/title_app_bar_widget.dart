@@ -38,12 +38,7 @@ class TitleAppBarWidget extends StatelessWidget {
                           'Привет, ${stateUserBloc.data?.authUser.nameI}!',
                           softWrap: true,
                           maxLines: 2,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       const SizedBox(
@@ -61,32 +56,37 @@ class TitleAppBarWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(63),
                             ),
                             child: BlocBuilder<WalletBLoC, WalletState>(
-                                builder: (context, state) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 4.0, left: 8, right: 8, bottom: 4),
-                                child: Text(
-                                  '${state.data == null ? '0' : state.data!.balance} coin',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white),
-                                ),
-                              );
-                            }),
+                              builder: (context, state) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0,
+                                  ),
+                                  child: Text(
+                                    '${state.data == null ? '0' : state.data!.balance} coin',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontSize: 18, color: Colors.white),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(
                             width: 8,
                           ),
                           SizedBox(
+                            width: 150,
                             child: Text(
                               softWrap: true,
-                              maxLines: 2,
-                              stateUserBloc.data!.authUser.staffPosition,
+                              maxLines: 1,
+                              stateUserBloc.data!.authUser.email ?? '',
                               style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.outline),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
                             ),
                           ),
                         ],

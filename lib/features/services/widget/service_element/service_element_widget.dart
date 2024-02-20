@@ -186,9 +186,9 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.2),
                 spreadRadius: 0,
-                blurRadius: 6,
+                blurRadius: 8,
                 offset: const Offset(0, 0),
               ),
             ],
@@ -207,10 +207,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
               child: Text(
                 textAlign: TextAlign.left,
                 widget.title ?? widget.service.name,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSecondaryContainer,
-                  fontSize: 12,
-                ),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
+import 'package:hr_app_flutter/features/home/widget/components/service_element_to_route/service_element_to_route.dart';
 import 'package:hr_app_flutter/features/news/widget/scroll_news_wdiget.dart';
 import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
 import 'package:octopus/octopus.dart';
@@ -73,22 +74,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Сервисы',
-                                style: TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.w700),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
                                   'Смотреть все',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .color),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             ],
@@ -109,22 +103,15 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'События компании',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w700),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
                                   'Смотреть все',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .color),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
                             ],
@@ -145,11 +132,13 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         const Padding(
                           padding: EdgeInsets.only(left: 25.0, right: 25),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              BirthDayInfoRectangleWidget(),
-                              RookiesInfoRectangleWidget(),
-                              BalanceInfoRectangleWidget(),
+                              Expanded(child: BirthDayInfoRectangleWidget()),
+                              SizedBox(width: 7),
+                              Expanded(child: RookiesInfoRectangleWidget()),
+                              SizedBox(width: 7),
+                              Expanded(child: BalanceInfoRectangleWidget()),
                             ],
                           ),
                         ),
@@ -160,20 +149,29 @@ class _UserMainScreenState extends State<UserMainScreen> {
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: LeanProductionButtonWidget(),
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.leanProductionForm,
+                            titleService: 'Предложить идею',
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: SearchPersonalButtonWidget(),
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.searchUser,
+                            titleService: 'Найти сотрудника',
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
                             left: 25.0,
                           ),
-                          child: ScheduleBusButtonWidget(),
-                        )
+                          child: ElementServiceToRouteWidget(
+                            route: Routes.scheduleBus,
+                            titleService: 'Узнать маршруты автобуса',
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -204,13 +202,14 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -227,31 +226,38 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                   Octopus.of(context).push(Routes.infoBirthDay);
                 },
                 child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Дни рожения'),
+                    Text(
+                      'Дни рожения',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/party_popper.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.count.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/party_popper.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.count.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -281,13 +287,14 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -305,30 +312,35 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Новенькие'),
+                    Text(
+                      'Новенькие',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/rookies.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.count.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/rookies.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.count.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -358,13 +370,14 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
         } else if (state is UserBirthDayInfoState$Error) {
           return const Text('Ошибка загрузки.');
         } else {
-          return DecoratedBox(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.2),
                   spreadRadius: 0,
-                  blurRadius: 6,
+                  blurRadius: 8,
                   offset: const Offset(0, 0),
                 ),
               ],
@@ -382,30 +395,35 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: 8.0, left: 16.0, right: 16.0, bottom: 4.0),
-                      child: Text('Баланс coin'),
+                    Text(
+                      'Баланс coin',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 11),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/grass_coin_3d.png',
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            state.data == null
-                                ? '0'
-                                : state.data!.balance.toString(),
-                            style: const TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/grass_coin_3d.png',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          state.data == null
+                              ? '0'
+                              : state.data!.balance.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 23),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -414,102 +432,6 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class LeanProductionButtonWidget extends StatelessWidget {
-  const LeanProductionButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.leanProductionForm);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Предложить идею',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(
-            Icons.chevron_right,
-            size: 32,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SearchPersonalButtonWidget extends StatelessWidget {
-  const SearchPersonalButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.searchUser);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Найти сотрудника',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(
-            Icons.chevron_right,
-            size: 32,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ScheduleBusButtonWidget extends StatelessWidget {
-  const ScheduleBusButtonWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Octopus.of(context).push(Routes.scheduleBus);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Узнать маршруты автобуса',
-            style: TextStyle(
-                fontSize: 17,
-                color: Theme.of(context).textTheme.titleLarge!.color),
-          ),
-          Icon(Icons.chevron_right,
-              size: 32, color: Theme.of(context).colorScheme.outline),
-        ],
-      ),
     );
   }
 }
@@ -600,15 +522,13 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
               }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return ElementServiceForScrollBarWidget(
-                      listService: state.data!,
-                      index: index,
-                      groupWidgets: groupWidgets,
-                    );
-                  },
-                  childCount: state.data!.length + 1,
-                ),
+                    (BuildContext context, int index) {
+                  return ElementServiceForScrollBarWidget(
+                    listService: state.data!,
+                    index: index,
+                    groupWidgets: groupWidgets,
+                  );
+                }, childCount: groupWidgets.length),
               );
             }
           }

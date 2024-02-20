@@ -10,7 +10,6 @@ import 'package:hr_app_flutter/features/services/bloc/service_bloc/service_bloc.
 import 'package:hr_app_flutter/features/services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
-import 'package:hr_app_flutter/features/wallet/bloc/coins_screen_view_model_bloc/coins_screen_view_model_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
 
 import '../../initialiazation/widget/dependencies_scope.dart';
@@ -67,11 +66,6 @@ class App extends StatelessWidget {
               BlocProvider<RookiesBLoC>(
                 create: (BuildContext context) => RookiesBLoC(
                   userRepo: DependenciesScope.of(context).userRepository,
-                ),
-              ),
-              BlocProvider<CoinsScreenViewModelBloc>(
-                create: (BuildContext context) => CoinsScreenViewModelBloc(
-                  walletRepo: DependenciesScope.of(context).walletRepository,
                 ),
               ),
               BlocProvider<CategoryBloc>(

@@ -60,10 +60,8 @@ class _AuthScopeState extends State<AuthScope> implements AuthController {
     super.initState();
     // Initial state initialization
     _authBloc = DependenciesScope.of(context).authBloc;
-    // AuthBLoC(authRepository: DependenciesScope.of(context).authRepository);
 
     _authState = _authBloc.state;
-    // _authBloc.add(const AuthEvent.checkAuth());
   }
 
   @override

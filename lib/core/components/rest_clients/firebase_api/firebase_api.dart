@@ -1,19 +1,20 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 // @pragma('vm:entry-point')
 void _handleMessage(RemoteMessage? message) {
   if (message != null) {
-    print('Title foreground: ${message.notification?.title}');
-    print('Body: ${message.notification?.body}');
-    print('Payload: ${message.data}');
+    debugPrint('Title foreground: ${message.notification?.title}');
+    debugPrint('Body: ${message.notification?.body}');
+    debugPrint('Payload: ${message.data}');
   }
 }
 
 @pragma('vm:entry-point')
 Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-  print('Title background: ${message.notification?.title}');
-  print('Body: ${message.notification?.body}');
-  print('Payload: ${message.data}');
+  debugPrint('Title background: ${message.notification?.title}');
+  debugPrint('Body: ${message.notification?.body}');
+  debugPrint('Payload: ${message.data}');
 }
 
 Future<void> initPushNotifications() async {

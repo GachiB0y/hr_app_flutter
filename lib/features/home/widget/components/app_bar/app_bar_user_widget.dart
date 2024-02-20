@@ -28,7 +28,7 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
     return AppBar(
       scrolledUnderElevation: 0.0,
       toolbarHeight: 90,
-      leadingWidth: 90,
+      leadingWidth: 70,
       leading: const Avatar(),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,
@@ -55,6 +55,7 @@ class Avatar extends StatelessWidget {
               ..add(Routes.profileUser.node(
                 arguments: <String, String>{
                   'id': id,
+                  'isSelfUser': 'true',
                 },
               )));
           },

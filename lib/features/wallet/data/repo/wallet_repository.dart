@@ -74,24 +74,9 @@ class WalletRepositoryImpl implements IWalletRepository {
   }
 
   @override
-  Future<List<CoinsInfo>> getCoinsInfo() async {
-    try {
-      final List<CoinsInfo> listCoinsinfo =
-          await _walletProvider.getCoinsInfo();
-      return listCoinsinfo;
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<CoinsInfo>> getCoinsInfo() => _walletProvider.getCoinsInfo();
 
   @override
-  Future<List<CoinsReward>> getInfoCoinsReward() async {
-    try {
-      final List<CoinsReward> listCoinsReward =
-          await _walletProvider.getInfoCoinsReward();
-      return listCoinsReward;
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<CoinsReward>> getInfoCoinsReward() =>
+      _walletProvider.getInfoCoinsReward();
 }

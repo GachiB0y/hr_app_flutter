@@ -10,17 +10,29 @@ final class AppTheme with Diagnosticable {
   /// {@macro app_theme}
   AppTheme({required this.mode, required this.seed})
       : darkTheme = ThemeData(
+          fontFamily: 'MontserratFont',
           colorScheme: darkColorScheme,
           brightness: Brightness.dark,
           useMaterial3: true,
         ),
         lightTheme = ThemeData(
+          fontFamily: 'MontserratFont',
           colorScheme: lightColorScheme,
           brightness: Brightness.light,
           useMaterial3: true,
           textTheme: ThemeData.light().textTheme.copyWith(
                 titleLarge: const TextStyle(
-                    color: Colors.black), // Замените на нужный цвет
+                    color: Colors.black,
+                    fontSize: 27,
+                    fontWeight: FontWeight.w700),
+                titleMedium: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                titleSmall: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400), // Замените на нужный цвет
               ),
         );
 
@@ -100,15 +112,15 @@ final lightColorScheme = ColorScheme.fromSeed(
   onBackground: const Color(0xFF002107),
   surface: const Color(0xFF74DD7E),
   onSurface: const Color(0xFF002107),
-  surfaceVariant: const Color(0xFFDEE5D9),
+  surfaceVariant: const Color.fromARGB(255, 255, 255, 255),
   onSurfaceVariant: const Color.fromARGB(255, 0, 0, 0),
   outline: const Color.fromARGB(255, 147, 151, 146),
   onInverseSurface: const Color.fromARGB(255, 0, 0, 0),
   inverseSurface: const Color.fromARGB(255, 71, 76, 72),
   inversePrimary: const Color(0xFF74DD7E),
   shadow: const Color(0xFF000000),
-  surfaceTint: const Color(0xFF74DD7E),
-  outlineVariant: const Color(0xFFC2C9BD),
+  surfaceTint: const Color.fromARGB(255, 255, 255, 255),
+  outlineVariant: const Color.fromARGB(255, 252, 252, 251),
   scrim: const Color(0xFF000000),
   seedColor: const Color(0xFF33A936),
 );

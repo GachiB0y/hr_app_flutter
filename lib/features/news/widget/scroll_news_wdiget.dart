@@ -66,70 +66,78 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                   child: Padding(
                     padding:
                         EdgeInsets.only(right: 9.0, left: index == 0 ? 25 : 0),
-                    child: Column(
-                      // mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            CachedNetworkImage(
-                              fadeInDuration: const Duration(milliseconds: 100),
-                              imageUrl: item.image,
-                              imageBuilder: (context, imageProvider) {
-                                return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.6,
-                                  height:
-                                      MediaQuery.of(context).size.height / 6.9,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover),
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(radius),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Spacer(),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 12.0, bottom: 8.0),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(4.0),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(radius),
-                                          ),
-                                          child: Text(
-                                            dateInfo,
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black),
+                    child: SizedBox(
+                      child: Column(
+                        // mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              CachedNetworkImage(
+                                fadeInDuration:
+                                    const Duration(milliseconds: 100),
+                                imageUrl: item.image,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.6,
+                                    height: MediaQuery.of(context).size.height /
+                                        6.9,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                      color: Colors.grey,
+                                      borderRadius:
+                                          BorderRadius.circular(radius),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 12.0, bottom: 8.0),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(radius),
+                                            ),
+                                            child: Text(
+                                              dateInfo,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            item.title,
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 2.6,
+                              child: Text(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                item.title,
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

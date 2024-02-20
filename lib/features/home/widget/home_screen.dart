@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
-import 'package:hr_app_flutter/core/utils/custom_curved_nav_bar/custom_curved_nav_bar.dart';
+import 'package:hr_app_flutter/core/widget/components/custom_curved_nav_bar/custom_curved_nav_bar.dart';
 import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
-import 'package:hr_app_flutter/features/wallet/widget/grass_coin_sreen/grass_coin_screen.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/services_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:octopus/octopus.dart';
 
@@ -175,55 +175,56 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainAppScreenViewCubit, MainAppScreenViewState>(
-        listener: (context, state) =>
-            DependenciesScope.of(context).mainAppScreenViewCubit,
-        builder: (context, state) {
-          return Scaffold(
-            body: Shimmer(
-              child: IndexedStack(
-                index: _tab.index,
-                children: const <Widget>[
-                  CompanyScreen(),
-                  GrassCoinScreen(),
-                  UserMainScreen(),
-                  EducationScreen(),
-                  ServicesScreen(),
-                ],
-              ),
+      listener: (context, state) =>
+          DependenciesScope.of(context).mainAppScreenViewCubit,
+      builder: (context, state) {
+        return Scaffold(
+          body: Shimmer(
+            child: IndexedStack(
+              index: _tab.index,
+              children: const <Widget>[
+                CompanyScreen(),
+                GrassCoinScreen(),
+                UserMainScreen(),
+                EducationScreen(),
+                ServicesScreen(),
+              ],
             ),
-            bottomNavigationBar: state.modalOpened
-                ? null
-                : CurvedNavigationBar(
-                    color: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Theme.of(context).colorScheme.onTertiary,
-                    selectedItemColor: Theme.of(context).colorScheme.primary,
-                    index: _tab.index,
-                    onTap: _onItemTapped,
-                    items: const [
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconExclamationMark,
-                        text: 'Компания',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconCoin,
-                        text: 'Коины',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconHome,
-                        text: 'Главная',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconEducation,
-                        text: 'Обучение',
-                      ),
-                      CustomNavBarElementWidget(
-                        icon: HRAppCustomIcon.iconService,
-                        text: 'Сервисы',
-                      ),
-                    ],
-                  ),
-          );
-        });
+          ),
+          bottomNavigationBar: state.modalOpened
+              ? null
+              : CurvedNavigationBar(
+                  color: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.onTertiary,
+                  selectedItemColor: Theme.of(context).colorScheme.primary,
+                  index: _tab.index,
+                  onTap: _onItemTapped,
+                  items: const [
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconExclamationMark,
+                      text: 'Компания',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconCoin,
+                      text: 'Коины',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconHome,
+                      text: 'Главная',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconEducation,
+                      text: 'Обучение',
+                    ),
+                    CustomNavBarElementWidget(
+                      icon: HRAppCustomIcon.iconService,
+                      text: 'Сервисы',
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }
 

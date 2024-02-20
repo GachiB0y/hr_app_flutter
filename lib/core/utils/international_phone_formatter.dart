@@ -53,3 +53,40 @@ class InternationalPhoneFormatter extends TextInputFormatter {
             offset: internationalPhoneFormat(text).length));
   }
 }
+
+class CustomTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.length == 14) {
+      return oldValue;
+    }
+    if (oldValue.text.length >= newValue.text.length) {
+      return newValue;
+    }
+
+    String newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (newText.length >= 3) {
+      newText =
+          newText.replaceRange(3, newText.length, ' ${newText.substring(3)}');
+    }
+
+    if (newText.length >= 7) {
+      newText =
+          newText.replaceRange(7, newText.length, '-${newText.substring(7)}');
+    }
+
+    if (newText.length >= 10) {
+      newText =
+          newText.replaceRange(10, newText.length, '-${newText.substring(10)}');
+    }
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
