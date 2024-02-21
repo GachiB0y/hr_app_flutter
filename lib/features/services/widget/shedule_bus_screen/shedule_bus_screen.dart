@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,72 +37,113 @@ class _ScheduleBusScreenState extends State<ScheduleBusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        title: const Text(
-          'Список городов',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      appBar: const AppBarForShceduleBusScreenWidget(),
       body: SafeArea(
-        child: BlocBuilder<ScheduleBusBloc, ScheduleBusState>(
-            bloc: blocScheduleBus,
-            builder: (context, state) {
-              return state.when(
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                },
-                loaded: (scheduleBus) {
-                  return ListView.builder(
-                    itemCount: scheduleBus.result.length,
-                    itemBuilder: (context, index) {
-                      final city = scheduleBus.result[index];
-                      return Container(
-                        margin: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            city.country,
-                            softWrap: true,
-                            maxLines: 3,
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/bus_shcedule.png',
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              'В каком городе вы живёте?',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Expanded(
+              child: BlocBuilder<ScheduleBusBloc, ScheduleBusState>(
+                  bloc: blocScheduleBus,
+                  builder: (context, state) {
+                    return state.when(
+                      loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      },
+                      loaded: (scheduleBus) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                          child: ListView.builder(
+                            itemCount: scheduleBus.result.length,
+                            itemBuilder: (context, index) {
+                              final city = scheduleBus.result[index];
+                              return Container(
+                                margin: const EdgeInsets.only(top: 13.0),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                  borderRadius: BorderRadius.circular(18),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 0),
+                                    ),
+                                  ],
+                                ),
+                                child: ListTile(
+                                  title: Text(
+                                    textAlign: TextAlign.center,
+                                    city.country,
+                                    softWrap: true,
+                                    maxLines: 3,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DestinationListWidget(city: city),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DestinationListWidget(city: city),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
-                error: (e) => e == null
-                    ? const Center(child: Text('Ошибка загрузки.'))
-                    : Center(child: Text(e)),
-              );
-            }),
+                        );
+                      },
+                      error: (e) => e == null
+                          ? const Center(child: Text('Ошибка загрузки.'))
+                          : Center(child: Text(e)),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+class AppBarForShceduleBusScreenWidget extends StatelessWidget
+    implements PreferredSizeWidget {
+  const AppBarForShceduleBusScreenWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      backgroundColor: Theme.of(context).canvasColor,
+      title: const Text(
+        'Расписание\nавтобусов',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class DestinationListWidget extends StatefulWidget {
