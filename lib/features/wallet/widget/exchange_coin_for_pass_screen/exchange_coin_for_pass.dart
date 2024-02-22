@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass_scope.dart';
@@ -207,9 +208,11 @@ class CounterWidget extends StatelessWidget {
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(radius))),
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(radius),
+                          ),
+                        ),
                         fillColor: Colors.white,
                         filled: true,
                         contentPadding: EdgeInsets.symmetric(
@@ -219,6 +222,12 @@ class CounterWidget extends StatelessWidget {
                       ),
                       style: const TextStyle(
                           fontSize: 40, fontWeight: FontWeight.w700),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[0-9]'),
+                        ), // Разрешить только цифры
+                        LengthLimitingTextInputFormatter(6),
+                      ],
                     ),
                   ),
                 ),

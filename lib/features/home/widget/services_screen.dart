@@ -21,8 +21,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   void initState() {
     super.initState();
-    blocServiceBloc = context.read<ServiceBloc>();
-    blocServiceBloc.add(const ServiceEvent.fetch());
+    blocServiceBloc = context.read<ServiceBloc>()
+      ..add(const ServiceEvent.fetch());
   }
 
   @override
