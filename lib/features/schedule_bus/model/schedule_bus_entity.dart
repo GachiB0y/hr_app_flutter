@@ -6,7 +6,10 @@ part 'schedule_bus_entity.g.dart';
 
 @freezed
 class ScheduleBus with _$ScheduleBus {
-  const factory ScheduleBus({required List<City> result}) = _ScheduleBus;
+  const factory ScheduleBus({
+    required List<City> cities,
+    required List<Destination> destinations,
+  }) = _ScheduleBus;
 
   factory ScheduleBus.fromJson(Map<String, dynamic> json) =>
       _$ScheduleBusFromJson(json);
@@ -15,8 +18,8 @@ class ScheduleBus with _$ScheduleBus {
 @freezed
 class City with _$City {
   const factory City({
-    required String country,
-    required List<Destination> destinations,
+    required int id,
+    required String name,
   }) = _City;
 
   factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);

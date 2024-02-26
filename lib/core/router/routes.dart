@@ -13,7 +13,7 @@ import 'package:hr_app_flutter/features/services/widget/lean_production_screens/
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/rookies_info_screen/rookies_info_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
-import 'package:hr_app_flutter/features/services/widget/schedule_bus_screen/schedule_bus_screen.dart';
+import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/statements/widget/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';

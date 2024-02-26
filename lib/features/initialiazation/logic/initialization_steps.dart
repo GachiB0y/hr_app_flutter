@@ -13,6 +13,8 @@ import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/mai
 import 'package:hr_app_flutter/features/initialiazation/model/initialization_progress.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart';
+import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_api_client.dart';
+import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
@@ -148,6 +150,15 @@ mixin InitializationSteps {
           serviceProvider: progress.dependencies.serviceProvider);
 
       progress.dependencies.leanProductionRepository = leanProductionRepository;
+    },
+    'ScheduleBusRepository': (progress) async {
+      final scheduleBusProvider =
+          ScheduleBusProviderImpl(progress.dependencies.restClient);
+
+      final scheduleBusRepository =
+          ScheduleBusRepositoryImpl(scheduleBusProvider: scheduleBusProvider);
+
+      progress.dependencies.scheduleBusRepository = scheduleBusRepository;
     },
     'AuthBloc': (progress) async {
       final authRepository = progress.dependencies.authRepository;
