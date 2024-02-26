@@ -12,9 +12,14 @@ class ScheduleBusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const ScheduleBusScope(
-        child: SafeArea(
-      child: NestedScreenWidget(),
-    ));
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: NestedScreenWidget(),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -382,12 +387,20 @@ class DestinationListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarForScheduleBusScreenWidget(),
+      appBar: const AppBarForScheduleBusScreenWidget(
+        isSecondAndOtherScreen: true,
+      ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 30,
+          ),
           Text(
             'Маршруты по вашему запросу',
             style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(
+            height: 30,
           ),
           BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
             bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
