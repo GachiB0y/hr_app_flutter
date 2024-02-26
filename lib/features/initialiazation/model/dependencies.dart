@@ -6,6 +6,7 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
@@ -53,6 +54,9 @@ base class Dependencies {
 
   /// IServiceRepository repository
   late final IServiceRepository serviceRepository;
+
+  /// IScheduleBusRepository repository
+  late final IScheduleBusRepository scheduleBusRepository;
 
   /// IWalletRepository repository
   late final IWalletRepository walletRepository;

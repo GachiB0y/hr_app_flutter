@@ -24,8 +24,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
     approvementNewsBloc = ApprovementNewsBloc(
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
-    );
-    approvementNewsBloc.add(const ApprovementEvent.fetch());
+    )..add(const ApprovementEvent.fetch());
   }
 
   @override

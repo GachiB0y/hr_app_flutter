@@ -25,8 +25,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
     blocNews = OneNewsBloc(
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
-    );
-    blocNews.add(OneNewsEvent.fetch(id: widget.id!));
+    )..add(OneNewsEvent.fetch(id: widget.id!));
   }
 
   @override

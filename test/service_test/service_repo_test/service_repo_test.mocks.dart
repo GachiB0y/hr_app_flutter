@@ -5,6 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
+import 'package:hr_app_flutter/features/schedule_bus/model/schedule_bus_entity.dart'
+    as _i2;
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart'
     as _i5;
 import 'package:hr_app_flutter/features/services/model/bag_report_entity/bag_report_entity.dart'
@@ -13,8 +15,6 @@ import 'package:hr_app_flutter/features/services/model/lean_productions_entity/l
     as _i8;
 import 'package:hr_app_flutter/features/services/model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart'
     as _i7;
-import 'package:hr_app_flutter/features/services/model/schedule_bus_entity/schedule_bus_entity.dart'
-    as _i2;
 import 'package:hr_app_flutter/features/services/model/service/service.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -234,11 +234,17 @@ class MockService extends _i1.Mock implements _i3.Service {
 /// See the documentation for Mockito's code generation for more information.
 class MockScheduleBus extends _i1.Mock implements _i2.ScheduleBus {
   @override
-  List<_i2.City> get result => (super.noSuchMethod(
-        Invocation.getter(#result),
+  List<_i2.City> get cities => (super.noSuchMethod(
+        Invocation.getter(#cities),
         returnValue: <_i2.City>[],
         returnValueForMissingStub: <_i2.City>[],
       ) as List<_i2.City>);
+  @override
+  List<_i2.Destination> get destinations => (super.noSuchMethod(
+        Invocation.getter(#destinations),
+        returnValue: <_i2.Destination>[],
+        returnValueForMissingStub: <_i2.Destination>[],
+      ) as List<_i2.Destination>);
   @override
   _i2.$ScheduleBusCopyWith<_i2.ScheduleBus> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
