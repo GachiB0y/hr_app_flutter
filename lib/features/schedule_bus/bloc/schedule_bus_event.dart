@@ -14,7 +14,8 @@ class ScheduleBusEvent with _$ScheduleBusEvent {
 
   /// Fetch Destinations
   const factory ScheduleBusEvent.fetchDestinations(
-      {required int cityId,
-      required String timeOfDay,
-      required String routeForJob}) = FetchDestinationsScheduleBusEvent;
+      {required int? cityId,
+      required String? timeOfDay,
+      required String? routeForJob,
+      @Default(false) bool isAll}) = FetchDestinationsScheduleBusEvent;
 }

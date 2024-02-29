@@ -71,7 +71,8 @@ class ScheduleBusBLoC extends Bloc<ScheduleBusEvent, ScheduleBusState>
           .getDestionations(
               cityId: event.cityId,
               timeOfDay: event.timeOfDay,
-              routeForJob: event.routeForJob)
+              routeForJob: event.routeForJob,
+              all: event.isAll)
           .timeout(const Duration(seconds: 10));
       final newData = state.data!.copyWith(destinations: destinations);
       emit(ScheduleBusState.successful(data: newData));

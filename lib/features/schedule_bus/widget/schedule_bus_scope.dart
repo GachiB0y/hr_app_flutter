@@ -16,10 +16,10 @@ abstract interface class ScheduleBusController {
       required String routeForJob});
 
   /// Increment index.
-  void incrementIndex();
+  void incrementIndex(int? index);
 
   /// Decrement index.
-  void decrementIndex();
+  void decrementIndex(int? index);
 
   // /// Set time of day.
   // void setTimeOfDay(String timesOfDay);
@@ -142,23 +142,30 @@ class _ScheduleBusScopeState extends State<ScheduleBusScope>
   }
 
   @override
-  void decrementIndex() {
+  void decrementIndex(int? index) {
     setState(() {
-      if (index == 0) {
+      if (_index == 0) {
         return;
       }
-
-      _index -= 1;
+      if (index != null) {
+        _index = index;
+      } else {
+        _index -= 1;
+      }
     });
   }
 
   @override
-  void incrementIndex() {
+  void incrementIndex(int? index) {
     setState(() {
-      if (index == 4) {
+      if (_index == 5) {
         return;
       }
-      _index += 1;
+      if (index != null) {
+        _index = index;
+      } else {
+        _index += 1;
+      }
     });
   }
 }

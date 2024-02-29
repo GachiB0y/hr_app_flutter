@@ -27,8 +27,10 @@ class ElementServiceToRouteWidget extends StatelessWidget {
         children: [
           Text(
             titleService,
-            style:
-                Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 16),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           Icon(
             Icons.chevron_right,

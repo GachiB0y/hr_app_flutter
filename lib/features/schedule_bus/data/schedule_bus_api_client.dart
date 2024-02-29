@@ -9,9 +9,10 @@ abstract interface class IScheduleBusProvider {
   ///Метод для получения направлений
 
   Future<List<Destination>> getDestionations(
-      {required int cityId,
-      required String timeOfDay,
-      required String routeForJob});
+      {required int? cityId,
+      required String? timeOfDay,
+      required String? routeForJob,
+      required bool all});
 }
 
 class ScheduleBusProviderImpl implements IScheduleBusProvider {
@@ -33,16 +34,19 @@ class ScheduleBusProviderImpl implements IScheduleBusProvider {
 
   @override
   Future<List<Destination>> getDestionations(
-      {required int cityId,
-      required String timeOfDay,
-      required String routeForJob}) async {
+      {required int? cityId,
+      required String? timeOfDay,
+      required String? routeForJob,
+      required bool all}) async {
     final response = await _httpService.get(
       '/bus/get_destination',
-      queryParams: {
-        'city_id': '$cityId',
-        'times_of_day': timeOfDay,
-        'route': routeForJob
-      },
+      queryParams: all
+          ? {'all': 'true'}
+          : {
+              'city_id': '$cityId',
+              'times_of_day': timeOfDay,
+              'route': routeForJob
+            },
     );
 
     if (response case {'result': final data}) {
