@@ -12,9 +12,14 @@ class ScheduleBusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const ScheduleBusScope(
-        child: SafeArea(
-      child: NestedScreenWidget(),
-    ));
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: NestedScreenWidget(),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -46,6 +51,7 @@ class _NestedScreenWidgetState extends State<NestedScreenWidget> {
         _SecondScheduleBusScreen(),
         _ThirdScheduleBusScreen(),
         DestinationListWidget(),
+        DestinationListScreenWidget(),
       ],
     );
   }
@@ -68,10 +74,61 @@ class CititesSelectScreen extends StatelessWidget {
                 text: 'В каком городе вы живёте?',
               ),
               CitiesWidget(),
+              ButtonSeeAllDestinationsWidget(),
             ],
           ),
         ),
       );
+}
+
+class ButtonSeeAllDestinationsWidget extends StatelessWidget {
+  const ButtonSeeAllDestinationsWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 28.0),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 13.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 0),
+            ),
+          ],
+        ),
+        child: ListTile(
+          title: Text(
+            textAlign: TextAlign.center,
+            'Посмотреть все мрашруты',
+            softWrap: true,
+            maxLines: 3,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.w500),
+          ),
+          onTap: () {
+            final stateInScope = ScheduleBusScope.of(context).state;
+
+            stateInScope.scheduleBusBloc.add(
+                const ScheduleBusEvent.fetchDestinations(
+                    cityId: null,
+                    timeOfDay: null,
+                    routeForJob: null,
+                    isAll: true));
+            stateInScope.incrementIndex(4);
+          },
+        ),
+      ),
+    );
+  }
 }
 
 class CitiesWidget extends StatelessWidget {
@@ -133,7 +190,9 @@ class CitiesWidget extends StatelessWidget {
                           ScheduleBusScope.of(context).state.setCityId =
                               city.id;
 
-                          ScheduleBusScope.of(context).state.incrementIndex();
+                          ScheduleBusScope.of(context)
+                              .state
+                              .incrementIndex(null);
                         },
                       ),
                     );
@@ -199,7 +258,7 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 // Обработка нажатия кнопки "назад" здесь
-                ScheduleBusScope.of(context).state.decrementIndex();
+                ScheduleBusScope.of(context).state.decrementIndex(null);
               },
             )
           : null,
@@ -276,7 +335,7 @@ class _ButtonForSecondScreen extends StatelessWidget {
           ),
           onTap: () {
             ScheduleBusScope.of(context).state.setRouteForJob = text;
-            ScheduleBusScope.of(context).state.incrementIndex();
+            ScheduleBusScope.of(context).state.incrementIndex(null);
           },
         ),
       ),
@@ -362,7 +421,7 @@ class _ButtonForThirdScreen extends StatelessWidget {
                       cityId: cityId,
                       timeOfDay: timeOfDay,
                       routeForJob: routeForJob));
-              ScheduleBusScope.of(context).state.incrementIndex();
+              ScheduleBusScope.of(context).state.incrementIndex(null);
             }),
       ),
     );
@@ -382,12 +441,20 @@ class DestinationListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarForScheduleBusScreenWidget(),
+      appBar: const AppBarForScheduleBusScreenWidget(
+        isSecondAndOtherScreen: true,
+      ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 30,
+          ),
           Text(
             'Маршруты по вашему запросу',
             style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(
+            height: 30,
           ),
           BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
             bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
@@ -413,34 +480,51 @@ class DestinationListWidget extends StatelessWidget {
                         itemCount: state.data!.destinations.length,
                         itemBuilder: (context, index) {
                           final destination = state.data!.destinations[index];
-                          return Container(
-                            margin: const EdgeInsets.only(top: 13.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.background,
-                              borderRadius: BorderRadius.circular(18),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 0),
+
+                          return Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 13.0),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                  borderRadius: BorderRadius.circular(18),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 0),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                textAlign: TextAlign.center,
-                                destination.namePath,
-                                softWrap: true,
-                                maxLines: 3,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(fontWeight: FontWeight.w500),
+                                child: ListTile(
+                                  title: Text(
+                                    textAlign: TextAlign.center,
+                                    destination.namePath,
+                                    softWrap: true,
+                                    maxLines: 3,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  onTap: () async {
+                                    await _launchUrl(destination.link);
+                                  },
+                                ),
                               ),
-                              onTap: () async {
-                                await _launchUrl(destination.link);
-                              },
-                            ),
+                              index + 1 == state.data!.destinations.length
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 25.0),
+                                      child: Text(
+                                        'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
                           );
                         },
                       ),
@@ -452,6 +536,126 @@ class DestinationListWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DestinationListScreenWidget extends StatelessWidget {
+  const DestinationListScreenWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      appBar: AppBarForScheduleBusScreenWidget(),
+      body: BodyContentScheduleBusWidget(),
+    );
+  }
+}
+
+class BodyContentScheduleBusWidget extends StatelessWidget {
+  const BodyContentScheduleBusWidget({
+    super.key,
+  });
+
+  Future<void> _launchUrl(String url) async {
+    final Uri url0 = Uri.parse(url);
+    if (!await launchUrl(url0)) {
+      throw Exception('Could not launch $url0');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        Text(
+          'Все маршруты',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        // const SizedBox(
+        //   height: 30,
+        // ),
+        BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
+          bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
+          builder: (context, state) {
+            if (state is ScheduleBusState$Processing) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            } else if (state is ScheduleBusState$Error) {
+              return Center(
+                child: Text(state.message),
+              );
+            } else {
+              if (state.data!.destinations.isEmpty) {
+                return const Center(
+                  child: Text('Маршруты не найдены'),
+                );
+              } else {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.data!.destinations.length,
+                    itemBuilder: (context, index) {
+                      final destination = state.data!.destinations[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 13.0),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.background,
+                                borderRadius: BorderRadius.circular(18),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 0),
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  textAlign: TextAlign.center,
+                                  destination.namePath,
+                                  softWrap: true,
+                                  maxLines: 3,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                onTap: () async {
+                                  await _launchUrl(destination.link);
+                                },
+                              ),
+                            ),
+                            index + 1 == state.data!.destinations.length
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Text(
+                                      'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+            }
+          },
+        ),
+      ],
     );
   }
 }

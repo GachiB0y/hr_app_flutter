@@ -178,7 +178,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
     final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
     final sizeScreen = MediaQuery.of(context).size;
 
-    final sizeWidhtIsRow = (sizeScreen.width / 3.6);
+    final sizeWidhtIsRow = (sizeScreen.width / 3.9);
 
     return Stack(
       children: [

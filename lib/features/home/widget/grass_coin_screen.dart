@@ -59,10 +59,10 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                               top: 8.0, left: 22.0, right: 22.0, bottom: 8.0),
                           child: Text(
                             '${state.data == null ? '0' : state.data!.balance} coin',
-                            style: const TextStyle(
-                                fontSize: 37,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(fontSize: 37, color: Colors.white),
                           ),
                         );
                       },
@@ -77,13 +77,12 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                       colors: [Color(0xFF00C8E0), Color(0xFF00D000)],
                       tileMode: TileMode.mirror,
                     ).createShader(bounds),
-                    child: const Text(
+                    child: Text(
                       'количество твоих коинов',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
                     ),
                   ),
                 ),
@@ -93,12 +92,15 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                   height: 23,
                 ),
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 25.0),
+                  padding: const EdgeInsets.only(left: 25.0),
                   child: Text(
                     "Операция с коинами",
-                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 21),
                   ),
                 ),
               ),
@@ -116,12 +118,15 @@ class _GrassCoinScreenState extends State<GrassCoinScreen> {
                   height: 25,
                 ),
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 25.0),
+                  padding: const EdgeInsets.only(left: 25.0),
                   child: Text(
                     "История операций",
-                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 21),
                   ),
                 ),
               ),
@@ -239,10 +244,9 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
               child: Text(
                 textAlign: TextAlign.left,
                 title,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSecondaryContainer,
-                  fontSize: 12,
-                ),
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
               ),
             ),
           ),
@@ -334,10 +338,10 @@ class ElementHistoryOperationWidget extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 18.0),
       child: Row(
         children: [
-          Text(
-            dateString,
-            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
-          ),
+          Text(dateString,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontSize: 21,
+                  )),
           const SizedBox(
             width: 14.0,
           ),
@@ -346,8 +350,10 @@ class ElementHistoryOperationWidget extends StatelessWidget {
             children: [
               Text(
                 item.typeTtransaction == 0 ? 'Зачисление' : 'Перевод',
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 17, fontWeight: FontWeight.w500),
               ),
               Text(item.typeTtransaction == 0 ? item.sender : item.recipient),
             ],
@@ -356,17 +362,17 @@ class ElementHistoryOperationWidget extends StatelessWidget {
           item.typeTtransaction == 1
               ? Text(
                   '-${item.amount.toString()}',
-                  style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 29,
-                      fontWeight: FontWeight.w700),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 29, color: Colors.grey),
                 )
               : Text(
                   '+${item.amount.toString()}',
-                  style: const TextStyle(
-                      color: Colors.green,
-                      fontSize: 29,
-                      fontWeight: FontWeight.w700),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 29, color: Colors.green),
                 ),
         ],
       ),
@@ -394,11 +400,17 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
         widget.item.typeTtransaction == 1
             ? Text(
                 '-${widget.item.amount.toString()}',
-                style: const TextStyle(fontSize: 16),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(fontSize: 16),
               )
             : Text(
                 '+${widget.item.amount.toString()}',
-                style: const TextStyle(color: Colors.green, fontSize: 16),
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 16,
+                      color: Colors.green,
+                    ),
               ),
         const SizedBox(
           width: 5,
@@ -483,8 +495,10 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
                   child: ListTile(
                     title: Text(
                       dateString,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ),
                 ),
@@ -501,7 +515,13 @@ class GroupedListViewHistoryOperation extends StatelessWidget {
                             item.typeTtransaction == 0
                                 ? 'Зачисление'
                                 : 'Перевод',
-                            style: const TextStyle(color: Colors.grey),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                ),
                           ),
                           trailing: SizedBox(
                             width: 80,

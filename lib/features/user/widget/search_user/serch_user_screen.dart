@@ -35,8 +35,6 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    if (textScaleFactor < 1) textScaleFactor = 1;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,

@@ -9,9 +9,10 @@ abstract interface class IScheduleBusRepository {
   ///Метод для получения направлений
 
   Future<List<Destination>> getDestionations(
-      {required int cityId,
-      required String timeOfDay,
-      required String routeForJob});
+      {required int? cityId,
+      required String? timeOfDay,
+      required String? routeForJob,
+      required bool all});
 }
 
 class ScheduleBusRepositoryImpl implements IScheduleBusRepository {
@@ -26,9 +27,13 @@ class ScheduleBusRepositoryImpl implements IScheduleBusRepository {
 
   @override
   Future<List<Destination>> getDestionations(
-          {required int cityId,
-          required String timeOfDay,
-          required String routeForJob}) async =>
+          {required int? cityId,
+          required String? timeOfDay,
+          required String? routeForJob,
+          required bool all}) async =>
       _scheduleBusProvider.getDestionations(
-          cityId: cityId, timeOfDay: timeOfDay, routeForJob: routeForJob);
+          cityId: cityId,
+          timeOfDay: timeOfDay,
+          routeForJob: routeForJob,
+          all: all);
 }
