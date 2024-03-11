@@ -30,8 +30,9 @@ class _UserProfileWidgetScreenState extends State<UserProfileWidgetScreen> {
   @override
   void initState() {
     super.initState();
-    final blocUsers = context.read<UserBloc>();
     if (widget.userId != null || widget.userId != '') {
+      final blocUsers = context.read<UserBloc>();
+
       blocUsers.add(UserEvent.gethUserByUserId(userId: widget.userId!));
     }
   }
