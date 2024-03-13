@@ -103,7 +103,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           Positioned(
-            bottom: 0,
+            bottom: widget.height - 35,
             left: 0,
             right: 0,
             child: SizedBox(
@@ -113,7 +113,11 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                   return const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: <Color>[Colors.transparent, Colors.white],
+                    colors: <Color>[
+                      Colors.transparent,
+                      Colors.white,
+                    ],
+                    stops: [0.5, 0.75],
                   ).createShader(bounds);
                 },
                 blendMode: BlendMode.dstIn,

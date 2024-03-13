@@ -234,10 +234,12 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
                     widget.idHandler == 1) {
-                  openBottomSheet(
-                    context: context,
-                    cubitMainAppScreen: cubitMainAppScreen,
-                  );
+                  Octopus.of(context).push(Routes.createNewsType);
+
+                  // openBottomSheet(
+                  //   context: context,
+                  //   cubitMainAppScreen: cubitMainAppScreen,
+                  // );
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {

@@ -249,44 +249,45 @@ class _ScrollWidgetState extends State<ScrollWidget> {
   @override
   Widget build(BuildContext context) {
     final blocCategory = context.watch<CategoryBloc>();
-    return blocCategory.state.when(
-        loading: () {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        },
-        loaded: (listCategory) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: listCategory.map((item) {
-                bool isSelected =
-                    widget.selectedCategories.contains(item.id.toString());
+    return const Text('LOL');
+    // return blocCategory.state.when(
+    //     loading: () {
+    //       return const Center(
+    //         child: CircularProgressIndicator.adaptive(),
+    //       );
+    //     },
+    //     loaded: (listCategory) {
+    //       return SingleChildScrollView(
+    //         scrollDirection: Axis.horizontal,
+    //         child: Row(
+    //           children: listCategory.map((item) {
+    //             bool isSelected =
+    //                 widget.selectedCategories.contains(item.id.toString());
 
-                return GestureDetector(
-                  onTap: () {
-                    selectItem(item.id.toString());
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: isSelected ? Colors.black : Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      item.name,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        },
-        error: () => const Text('Nothing found...'));
+    //             return GestureDetector(
+    //               onTap: () {
+    //                 selectItem(item.id.toString());
+    //               },
+    //               child: Container(
+    //                 padding: const EdgeInsets.all(10),
+    //                 margin: const EdgeInsets.all(8),
+    //                 decoration: BoxDecoration(
+    //                   color: isSelected ? Colors.black : Colors.white,
+    //                   borderRadius: BorderRadius.circular(10),
+    //                 ),
+    //                 child: Text(
+    //                   item.name,
+    //                   style: TextStyle(
+    //                     color: isSelected ? Colors.white : Colors.black,
+    //                   ),
+    //                 ),
+    //               ),
+    //             );
+    //           }).toList(),
+    //         ),
+    //       );
+    //     },
+    //     error: () => const Text('Nothing found...'));
   }
 }
 
