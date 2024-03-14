@@ -20,6 +20,7 @@ class _MyPickerImageState extends State<MyPickerImage> {
 
   @override
   Widget build(BuildContext context) {
+    const double radius = 10.0;
     return Stack(
       children: [
         _myImage.imageFile != null
@@ -27,33 +28,49 @@ class _MyPickerImageState extends State<MyPickerImage> {
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 0,
+                      blurRadius: 8,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(radius),
                   image: DecorationImage(
                     image: FileImage(_myImage.imageFile as File),
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+                // child: Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     IconButton(
+                //       splashColor: Colors.transparent,
+                //       highlightColor: Colors.transparent,
+                //       onPressed: () {},
+                //       icon: const Icon(
+                //         Icons.add,
+                //         size: 30,
+                //         color: Colors.black,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               )
             : Container(
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 0,
+                        blurRadius: 8,
+                        offset: const Offset(0, 0),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(radius),
                     color: Colors.white),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -63,11 +80,16 @@ class _MyPickerImageState extends State<MyPickerImage> {
                       highlightColor: Colors.transparent,
                       onPressed: () {},
                       icon: const Icon(
-                        Icons.add,
-                        size: 30,
+                        Icons.add_a_photo_outlined,
+                        size: 70,
                         color: Colors.black,
                       ),
                     ),
+                    Text(
+                      'Добавь фото\nЖеательно горизонтальное фото',
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.center,
+                    )
                   ],
                 ),
               ),

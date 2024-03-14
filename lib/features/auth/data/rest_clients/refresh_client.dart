@@ -16,6 +16,9 @@ final class RefreshClientImpl implements RefreshClient {
       '/auth/switch_token',
       queryParameters: {'token': refreshToken},
     );
+    if (response.statusCode == 401) {
+      throw const RevokeTokenException();
+    }
 
     if (response.data
         case {

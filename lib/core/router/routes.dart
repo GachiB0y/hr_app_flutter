@@ -8,6 +8,7 @@ import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
+import 'package:hr_app_flutter/features/services/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_productions_screen_form.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
@@ -47,7 +48,16 @@ enum Routes with OctopusRoute {
   rookieInfo('rookie-info', title: 'Rookie Info'),
   exchangeCoinForPass('exchange-coin-for-pass',
       title: 'Exchange Coin For Pass'),
-  whatToSpendScreen('what-to-spend', title: 'What To Spend');
+  whatToSpendScreen('what-to-spend', title: 'What To Spend'),
+  createNews('create-news', title: 'Create News'),
+
+  createNewsType('create-news-type', title: 'Create News Type'),
+  createNewsDate('create-news-date', title: 'Create News Date'),
+  createNewsTime('create-news-time', title: 'Create News Time'),
+  createNewsTitle('create-news-title', title: 'Create News Title'),
+  createNewsDescrition('create-news-descrition',
+      title: 'Create News Descrition'),
+  createNewsPhoto('create-news-photo', title: 'Create News Photo');
 
   const Routes(this.name, {this.title});
 
@@ -89,5 +99,12 @@ enum Routes with OctopusRoute {
         Routes.rookieInfo => RookiesInfoScreen(),
         Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
         Routes.whatToSpendScreen => const WhatToSpendScreen(),
+        Routes.createNewsType => const SelectedTypeNewsScreen(),
+        Routes.createNews => const CreateNewsScreen(),
+        Routes.createNewsDate => const SelectedNewsDateScreen(),
+        Routes.createNewsTime => const SelectedNewsTimeScreen(),
+        Routes.createNewsTitle => WriteTitleNewsScreen(),
+        Routes.createNewsDescrition => WriteDescriptionNewsScreen(),
+        Routes.createNewsPhoto => const AddPhotoNewsScreen(),
       };
 }

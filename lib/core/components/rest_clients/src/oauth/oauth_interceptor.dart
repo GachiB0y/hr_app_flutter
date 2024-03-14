@@ -217,7 +217,8 @@ class OAuthInterceptor extends QueuedInterceptor
   /// Update the authentication status based on the token pair
   void _updateAuthenticationStatus(TokenPair? token) {
     final oldStatus = _authenticationStatus;
-    if (token == null) {
+    if (token == null ||
+        (token.accessToken.isEmpty && token.refreshToken.isEmpty)) {
       _authenticationStatus = AuthenticationStatus.unauthenticated;
     } else {
       _authenticationStatus = AuthenticationStatus.authenticated;

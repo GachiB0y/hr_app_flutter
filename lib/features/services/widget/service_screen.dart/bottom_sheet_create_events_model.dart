@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,46 @@ class BottomSheetCreateEventsModel extends Listenable {
   // Создание списка слушателей
   final List<VoidCallback> _listeners = [];
 
-  List<String>? selectedItems = [];
-  DateTime? startDate = DateTime.now();
+  List<String>? _selectedItems = [];
+  List<String>? get selectedItems => _selectedItems;
+  set selectedItems(List<String>? value) {
+    _selectedItems = value;
+    notifyListeners();
+  }
+
+  String? _title;
+  String? get title => _title;
+  set title(String? value) {
+    _title = value;
+    notifyListeners();
+  }
+
+  String? _description;
+  String? get description => _description;
+  set description(String? value) {
+    _description = value;
+    notifyListeners();
+  }
+
+  DateTime _startDate = DateTime.now();
+  DateTime get startDate => _startDate;
+  set startDate(DateTime value) {
+    _startDate = value;
+    notifyListeners();
+  }
+
+  File? _file;
+  File? get file => _file;
+  set file(File? value) {
+    _file = value;
+    notifyListeners();
+  }
+
   DateTime? endDate;
+
   String? base64Image;
   Uint8List? bytesSend;
   String errorMessage = '';
-  File? file;
 
   // Метод для добавления слушателей
   @override
@@ -43,14 +77,13 @@ class BottomSheetCreateEventsModel extends Listenable {
       context: context,
       firstDate: DateTime(DateTime.now().year - 1),
       lastDate: DateTime(DateTime.now().year + 1),
-      initialDateRange: startDate != null && endDate != null
-          ? DateTimeRange(
-              start: startDate as DateTime, end: endDate as DateTime)
+      initialDateRange: endDate != null
+          ? DateTimeRange(start: startDate, end: endDate as DateTime)
           : null,
     );
 
     if (pickedDates != null) {
-      startDate = pickedDates.start;
+      _startDate = pickedDates.start;
       endDate = pickedDates.end;
       updateDateRangeText(dateRangeController);
     }
@@ -133,9 +166,8 @@ class BottomSheetCreateEventsModel extends Listenable {
 
   void updateDateRangeText(dateRangeController) {
     final formatter = DateFormat('d MMM');
-    String start = startDate != null
-        ? formatter.format(startDate as DateTime)
-        : 'Start Date';
+    String start =
+        startDate != null ? formatter.format(startDate) : 'Start Date';
     String end =
         endDate != null ? formatter.format(endDate as DateTime) : 'End Date';
     String dateRangeText = '$start - $end';
