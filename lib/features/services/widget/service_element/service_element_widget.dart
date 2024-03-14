@@ -151,14 +151,15 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     ),
                     Expanded(
                       child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                          ),
-                          child: ChangeNotifierProvaider<
-                              BottomSheetCreateEventsModel>(
-                            model: _model,
-                            child: const BottomSheetCreateEventsWidget(),
-                          )),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                        ),
+                        child: ChangeNotifierProvaider<
+                            BottomSheetCreateEventsModel>(
+                          model: _model,
+                          child: const BottomSheetCreateEventsWidget(),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -234,7 +235,19 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
                     widget.idHandler == 1) {
-                  Octopus.of(context).push(Routes.createNewsType);
+                  context.octopus.setState((state) {
+                    final node = state.findByName('create-news');
+                    if (node == null) {
+                      return state
+                        ..add(OctopusNode.mutable('create-news', children: [
+                          Routes.createNewsType.node(),
+                        ]));
+                    }
+                    // node.add(Routes.createNews
+                    //     .node(children: [Routes.createNewsType.node()]));
+                    return state;
+                  });
+                  // Octopus.of(context).push(Routes.createNews);
 
                   // openBottomSheet(
                   //   context: context,

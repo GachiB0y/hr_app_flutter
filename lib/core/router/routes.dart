@@ -49,7 +49,15 @@ enum Routes with OctopusRoute {
   exchangeCoinForPass('exchange-coin-for-pass',
       title: 'Exchange Coin For Pass'),
   whatToSpendScreen('what-to-spend', title: 'What To Spend'),
-  createNewsType('create-news-type', title: 'Create News Type');
+  createNews('create-news', title: 'Create News'),
+
+  createNewsType('create-news-type', title: 'Create News Type'),
+  createNewsDate('create-news-date', title: 'Create News Date'),
+  createNewsTime('create-news-time', title: 'Create News Time'),
+  createNewsTitle('create-news-title', title: 'Create News Title'),
+  createNewsDescrition('create-news-descrition',
+      title: 'Create News Descrition'),
+  createNewsPhoto('create-news-photo', title: 'Create News Photo');
 
   const Routes(this.name, {this.title});
 
@@ -91,6 +99,12 @@ enum Routes with OctopusRoute {
         Routes.rookieInfo => RookiesInfoScreen(),
         Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
         Routes.whatToSpendScreen => const WhatToSpendScreen(),
-        Routes.createNewsType => const CreateNewsScreen(),
+        Routes.createNewsType => const SelectedTypeNewsScreen(),
+        Routes.createNews => const CreateNewsScreen(),
+        Routes.createNewsDate => const SelectedNewsDateScreen(),
+        Routes.createNewsTime => const SelectedNewsTimeScreen(),
+        Routes.createNewsTitle => WriteTitleNewsScreen(),
+        Routes.createNewsDescrition => WriteDescriptionNewsScreen(),
+        Routes.createNewsPhoto => const AddPhotoNewsScreen(),
       };
 }
