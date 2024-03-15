@@ -4,11 +4,12 @@ import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
-import 'package:hr_app_flutter/features/services/widget/create_news_screen/create_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_productions_screen_form.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
@@ -57,7 +58,9 @@ enum Routes with OctopusRoute {
   createNewsTitle('create-news-title', title: 'Create News Title'),
   createNewsDescrition('create-news-descrition',
       title: 'Create News Descrition'),
-  createNewsPhoto('create-news-photo', title: 'Create News Photo');
+  createNewsPhoto('create-news-photo', title: 'Create News Photo'),
+  exampleNews('example-news', title: 'Example News'),
+  allNews('all-news', title: 'All News');
 
   const Routes(this.name, {this.title});
 
@@ -103,8 +106,10 @@ enum Routes with OctopusRoute {
         Routes.createNews => const CreateNewsScreen(),
         Routes.createNewsDate => const SelectedNewsDateScreen(),
         Routes.createNewsTime => const SelectedNewsTimeScreen(),
-        Routes.createNewsTitle => WriteTitleNewsScreen(),
-        Routes.createNewsDescrition => WriteDescriptionNewsScreen(),
+        Routes.createNewsTitle => const WriteTitleNewsScreen(),
+        Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
         Routes.createNewsPhoto => const AddPhotoNewsScreen(),
+        Routes.exampleNews => const ExmapleNewsScreen(),
+        Routes.allNews => const AllNewsScreen(),
       };
 }

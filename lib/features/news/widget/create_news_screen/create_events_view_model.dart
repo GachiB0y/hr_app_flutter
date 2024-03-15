@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
+// import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class BottomSheetCreateEventsModel extends Listenable {
+class CreateEventsViewModel extends Listenable {
   // Создание списка слушателей
   final List<VoidCallback> _listeners = [];
 
@@ -166,8 +166,7 @@ class BottomSheetCreateEventsModel extends Listenable {
 
   void updateDateRangeText(dateRangeController) {
     final formatter = DateFormat('d MMM');
-    String start =
-        startDate != null ? formatter.format(startDate) : 'Start Date';
+    String start = formatter.format(startDate);
     String end =
         endDate != null ? formatter.format(endDate as DateTime) : 'End Date';
     String dateRangeText = '$start - $end';

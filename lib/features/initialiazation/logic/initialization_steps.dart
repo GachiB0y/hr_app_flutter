@@ -169,11 +169,6 @@ mixin InitializationSteps {
       logger.verbose('Resolved auth state: $resolvedState');
       progress.dependencies.authBloc = authBloc;
     },
-    'MainAppScreenViewCubit': (progress) async {
-      MainAppScreenViewCubit mainCubit = MainAppScreenViewCubit();
-
-      progress.dependencies.mainAppScreenViewCubit = mainCubit;
-    },
     'UserBloc': (progress) async {
       final userRepository = progress.dependencies.userRepository;
       final userBloc = UserBloc(userRepo: userRepository);

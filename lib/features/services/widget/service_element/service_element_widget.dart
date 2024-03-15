@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
-import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/painteres_widget.dart';
+
 import 'package:octopus/octopus.dart';
 
-import '../../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import '../../model/service/service.dart';
-import '../service_screen.dart/bottom_sheet_create_events_widget.dart';
 
 class ServiceElementWidget extends StatefulWidget {
   const ServiceElementWidget({
@@ -32,151 +27,12 @@ class ServiceElementWidget extends StatefulWidget {
 }
 
 class _ServiceElementWidgetState extends State<ServiceElementWidget> {
-  final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
-
   get imagePath => widget.imagePath;
-  void openBottomSheet({
-    required BuildContext context,
-    required MainAppScreenViewCubit cubitMainAppScreen,
-  }) {
-    cubitMainAppScreen.changeVisibleBottomBar(true);
-    showModalBottomSheet(
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return BlocListener<EventEntityBloc, EventEntityState>(
-          listener: (BuildContext context, EventEntityState state) {
-            if (state is EventEntityState$Error) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  const SnackBar(
-                    content: Center(
-                        child: Text('Ошибка отправки.\nПопробуйте снова.')),
-                    duration: Duration(seconds: 6),
-                  ),
-                );
-            } else if (state is EventEntityState$Successful) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  const SnackBar(
-                    content: Center(
-                        child: Text(
-                      'Данные успешно отправленны!',
-                      style: TextStyle(fontSize: 20),
-                    )),
-                    duration: Duration(seconds: 2),
-                  ),
-                ).closed.then((value) => Navigator.pop(context));
-            }
-          },
-          child: DraggableScrollableSheet(
-            initialChildSize:
-                0.8, // Измените это значение, чтобы задать начальный размер листа
-            minChildSize:
-                0.8, // Измените это значение, чтобы задать минимальный размер листа
-            maxChildSize:
-                1.0, // Измените это значение, чтобы задать максимальный размер листа
-            expand: true,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                            ),
-                            height: 26,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 26,
-                          width: 52,
-                          child: CustomPaint(
-                            // size: Size(50, 50),
-                            painter: PainterLeft(),
-                          ),
-                        ),
-                        Container(
-                          width: 25.0,
-                          height: 5.0,
-                          margin: const EdgeInsets.symmetric(vertical: 10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                        Container(
-                          // Контейнер "летающей" ручки
-                          width: 50.0,
-                          height: 5.0,
-
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                        Container(
-                          width: 25.0,
-                          height: 5.0,
-                          margin: const EdgeInsets.symmetric(vertical: 10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 26,
-                          width: 52,
-                          child: CustomPaint(
-                            // size: Size(50, 50),
-                            painter: PainterRight(),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 26,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                        ),
-                        child: ChangeNotifierProvaider<
-                            BottomSheetCreateEventsModel>(
-                          model: _model,
-                          child: const BottomSheetCreateEventsWidget(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-    ).whenComplete(() {
-      cubitMainAppScreen.changeVisibleBottomBar(false);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     const double radius = 18.0;
-    final cubitMainAppScreen = context.watch<MainAppScreenViewCubit>();
+
     final sizeScreen = MediaQuery.of(context).size;
 
     final sizeWidhtIsRow = (sizeScreen.width / 3.9);
@@ -243,16 +99,9 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                           Routes.createNewsType.node(),
                         ]));
                     }
-                    // node.add(Routes.createNews
-                    //     .node(children: [Routes.createNewsType.node()]));
+
                     return state;
                   });
-                  // Octopus.of(context).push(Routes.createNews);
-
-                  // openBottomSheet(
-                  //   context: context,
-                  //   cubitMainAppScreen: cubitMainAppScreen,
-                  // );
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
