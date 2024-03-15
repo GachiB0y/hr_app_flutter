@@ -4,8 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/bloc/caregory_bloc.dart/category_bloc.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/my_picker_image.dart';
+import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_events_view_model.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/my_picker_image.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 
@@ -17,21 +18,210 @@ class CreateNewsScreen extends StatefulWidget {
 }
 
 class _CreateNewsScreenState extends State<CreateNewsScreen> {
-  final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
+  final CreateEventsViewModel _model = CreateEventsViewModel();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvaider<BottomSheetCreateEventsModel>(
+    return ChangeNotifierProvaider<CreateEventsViewModel>(
       model: _model,
       child: const BucketNavigator(bucket: 'create-news'),
     );
+  }
+}
 
-    // return Scaffold(
-    //   appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
-    //   body: const SafeArea(
-    //     child: AddPhotoNewsWidget(),
-    //   ),
-    // );
+/// Exmaple News Screen
+class ExmapleNewsScreen extends StatelessWidget {
+  const ExmapleNewsScreen({super.key});
+  void showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final newsModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
+    final date = DateFormat('dd MMMM').format(newsModel!.startDate);
+    final time = DateFormat('HH:mm').format(newsModel.startDate);
+
+    return Scaffold(
+      appBar: const _AppBarForCreateNews(),
+      body: BlocListener<EventEntityBloc, EventEntityState>(
+        listener: (context, state) {
+          if (state is EventEntityState$Error) {
+            showSnackBar(context, 'Ошибка создания новости!');
+          }
+        },
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    const SliverToBoxAdapter(
+                      child: VerificationNewsTitleWidget(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                          height: 274,
+                          child: Image.file(newsModel.file!, fit: BoxFit.fill)),
+                    ),
+                    const SliverPadding(padding: EdgeInsets.only(bottom: 43)),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(left: 36),
+                      sliver: SliverToBoxAdapter(
+                        child: DisplayDateAndTimeWidget(date: date, time: time),
+                      ),
+                    ),
+                    const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(left: 36),
+                      sliver: SliverToBoxAdapter(
+                        child: Text(newsModel.title!,
+                            style: Theme.of(context).textTheme.titleLarge),
+                      ),
+                    ),
+                    const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(left: 36),
+                      sliver: SliverToBoxAdapter(
+                        child: Text(
+                          newsModel.description!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  fontSize: 17, fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              BlocBuilder<EventEntityBloc, EventEntityState>(
+                  builder: (context, state) {
+                if (state is EventEntityState$Processing) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return ResumeButtonWidget(
+                    title: 'Создать',
+                    onPressed: () {
+                      context.read<EventEntityBloc>().add(
+                          EventEntityEvent.create(
+                              title: newsModel.title!,
+                              description: newsModel.description!,
+                              imageFile: newsModel.file!,
+                              categories: newsModel.selectedItems!,
+                              startDate: newsModel.startDate.toString(),
+                              endDate: null));
+
+                      context.octopus.setState(
+                          (state) => state..removeByName('create-news'));
+                    },
+                  );
+                }
+              }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DisplayDateAndTimeWidget extends StatelessWidget {
+  const DisplayDateAndTimeWidget({
+    super.key,
+    required this.date,
+    required this.time,
+  });
+
+  final String date;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        DateOrTimeWidget(
+          text: date,
+        ),
+        const SizedBox(
+          width: 7,
+        ),
+        DateOrTimeWidget(
+          text: time,
+        ),
+      ],
+    );
+  }
+}
+
+class DateOrTimeWidget extends StatelessWidget {
+  const DateOrTimeWidget({
+    super.key,
+    required this.text,
+  });
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(145),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 15,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class VerificationNewsTitleWidget extends StatelessWidget {
+  const VerificationNewsTitleWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Color(0xffD3F2D4),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              'Новость на проверке',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontSize: 22),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -42,10 +232,10 @@ class AddPhotoNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Column(
           children: [
@@ -64,13 +254,15 @@ class AddPhotoNewsScreen extends StatelessWidget {
             ),
             const Spacer(),
             ResumeButtonWidget(
-              title: 'Создать',
+              title: 'Продолжить',
               onPressed: () {
                 print('${newsModel?.selectedItems}');
                 print('${newsModel?.startDate}');
                 print('${newsModel?.title}');
                 print('${newsModel?.description}');
                 print('${newsModel?.file}');
+                context.octopus.setState((state) => state
+                  ..findByName('create-news')?.add(Routes.exampleNews.node()));
               },
             ),
           ],
@@ -94,13 +286,25 @@ class _WriteDescriptionNewsScreenState
     extends State<WriteDescriptionNewsScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    final newsModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
+    if (newsModel != null && newsModel.description != null) {
+      _descriptionController.text = newsModel.description!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -177,12 +381,23 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    final newsModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
+    if (newsModel != null && newsModel.title != null) {
+      _titleController.text = newsModel.title!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -278,10 +493,10 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
   @override
   Widget build(BuildContext context) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Column(
           children: [
@@ -354,10 +569,10 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
   @override
   Widget build(BuildContext context) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -421,7 +636,7 @@ class SelectedTypeNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.background),
+      appBar: const _AppBarForCreateNews(),
       body: SafeArea(
         child: Column(
           children: [
@@ -440,8 +655,8 @@ class SelectedTypeNewsScreen extends StatelessWidget {
               title: 'Продолжить',
               onPressed: () {
                 final newsModel = ChangeNotifierProvaider.read<
-                    ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-                    BottomSheetCreateEventsModel>(context);
+                    ChangeNotifierProvaider<CreateEventsViewModel>,
+                    CreateEventsViewModel>(context);
                 if (newsModel?.selectedItems == null ||
                     newsModel?.selectedItems?.isEmpty == true) {
                   return;
@@ -456,6 +671,31 @@ class SelectedTypeNewsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class _AppBarForCreateNews extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _AppBarForCreateNews({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: [
+        TextButton(
+            onPressed: () {
+              context.octopus
+                  .setState((state) => state..removeByName('create-news'));
+            },
+            child: const Text('Сбросить'))
+      ],
+      backgroundColor: Theme.of(context).colorScheme.background,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class ResumeButtonWidget extends StatelessWidget {
@@ -524,8 +764,8 @@ class _TypeListWidgetState extends State<TypeListWidget> {
 
   void selectItem(String item) {
     final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-        BottomSheetCreateEventsModel>(context);
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
     setState(() {
       if (selectedCategories.contains(item)) {
         selectedCategories.remove(item);
@@ -539,59 +779,60 @@ class _TypeListWidgetState extends State<TypeListWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(
-        bloc: _categoryBloc,
-        builder: (context, state) {
-          if (state is CategoryState$Error) {
-            return const Center(child: Text('Error'));
-          } else if (state is CategoryState$Processing) {
-            return const Center(child: CircularProgressIndicator.adaptive());
+      bloc: _categoryBloc,
+      builder: (context, state) {
+        if (state is CategoryState$Error) {
+          return const Center(child: Text('Error'));
+        } else if (state is CategoryState$Processing) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        } else {
+          if (state.data!.isEmpty) {
+            return const Center(child: Text('Список пуст.'));
           } else {
-            if (state.data!.isEmpty) {
-              return const Center(child: Text('Список пуст.'));
-            } else {
-              return Padding(
-                padding:
-                    const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
-                child: Wrap(
-                  spacing: 14.0, // Расстояние между Chips
-                  runSpacing: 14.0, // Расстояние между строками Chips
-                  children: List.generate(
-                    state.data!.length, // Количество Chips
-                    (index) {
-                      bool isSelected = selectedCategories
-                          .contains(state.data![index].id.toString());
+            return Padding(
+              padding:
+                  const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
+              child: Wrap(
+                spacing: 14.0, // Расстояние между Chips
+                runSpacing: 14.0, // Расстояние между строками Chips
+                children: List.generate(
+                  state.data!.length, // Количество Chips
+                  (index) {
+                    bool isSelected = selectedCategories
+                        .contains(state.data![index].id.toString());
 
-                      return GestureDetector(
-                        onTap: () {
-                          selectItem(state.data![index].id.toString());
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 0,
-                                blurRadius: 8,
-                                offset: const Offset(0, 0),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            color: isSelected
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(context).colorScheme.background,
-                          ),
-                          child: Text(
-                            state.data![index].name,
-                          ),
+                    return GestureDetector(
+                      onTap: () {
+                        selectItem(state.data![index].id.toString());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 8,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.background,
                         ),
-                      );
-                    },
-                  ),
+                        child: Text(
+                          state.data![index].name,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            }
+              ),
+            );
           }
-        });
+        }
+      },
+    );
   }
 }

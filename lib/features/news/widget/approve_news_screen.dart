@@ -163,7 +163,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                   );
                 },
                 error: (e) => e == null
-                    ? const Text('Nothing found...')
+                    ? const Center(child: Text('Тут пусто:))'))
                     : Center(child: Text(e)),
               );
             }),

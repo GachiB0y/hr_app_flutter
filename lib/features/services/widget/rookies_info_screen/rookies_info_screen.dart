@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_events_view_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../bloc/rookies_bloc/rookies_bloc.dart';
 import '../../bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
-import '../service_screen.dart/bottom_sheet_create_events_model.dart';
 
 class RookiesInfoScreen extends StatelessWidget {
   RookiesInfoScreen({
     super.key,
   });
 
-  final BottomSheetCreateEventsModel _model = BottomSheetCreateEventsModel();
+  final CreateEventsViewModel _model = CreateEventsViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class RookiesInfoScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-          child: ChangeNotifierProvaider<BottomSheetCreateEventsModel>(
+          child: ChangeNotifierProvaider<CreateEventsViewModel>(
               model: _model, child: const ListInfoBirthDay()),
         ),
       ),
@@ -185,11 +185,11 @@ class DatePickerRangeWidget extends StatelessWidget {
           GestureDetector(
               onTap: () async {
                 final model = ChangeNotifierProvaider.watch<
-                    ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-                    BottomSheetCreateEventsModel>(context);
+                    ChangeNotifierProvaider<CreateEventsViewModel>,
+                    CreateEventsViewModel>(context);
                 await ChangeNotifierProvaider.watch<
-                        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-                        BottomSheetCreateEventsModel>(context)
+                        ChangeNotifierProvaider<CreateEventsViewModel>,
+                        CreateEventsViewModel>(context)
                     ?.selectDateRange(
                         context: context,
                         dateRangeController: dateRangeController);

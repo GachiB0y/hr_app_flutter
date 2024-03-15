@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-import 'package:hr_app_flutter/core/utils/date_formatter.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:octopus/octopus.dart';
 import '../bloc/one_news_bloc/one_news_bloc.dart';
 
 class AboutNewsScreen extends StatefulWidget {
@@ -45,90 +47,94 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                       child: CircularProgressIndicator.adaptive(),
                     ),
                 loaded: (news) {
-                  final String dateInfo = formatDateTimeRange(
-                      start: news.startDate, end: news.endDate);
+                  final date = DateFormat('dd MMMM').format(news.startDate);
+                  final time = DateFormat('HH:mm').format(news.startDate);
+                  final createdAt =
+                      DateFormat('dd.MM.yy').format(news.createdAt);
                   return SafeArea(
                     child: CustomScrollView(
                       slivers: [
                         SliverAppBar(
-                          expandedHeight:
-                              MediaQuery.of(context).size.height / 2.5,
-                          flexibleSpace: FlexibleSpaceBar(
-                            background: Stack(fit: StackFit.expand, children: [
-                              Image.network(
-                                news.image,
-                                fit: BoxFit.cover,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, right: 16.0, bottom: 16.0),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        dateInfo,
-                                        style: const TextStyle(
-                                            fontSize: 20, color: Colors.white),
-                                      ),
-                                      Text(
-                                        news.title,
-                                        style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ],
+                          leading: Padding(
+                            padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+                            child: DecoratedBox(
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color.fromARGB(136, 255, 255, 255)),
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios_new,
                                   ),
-                                ),
-                              ),
-                            ]),
+                                  onPressed: () {
+                                    Octopus.of(context).pop();
+                                  },
+                                )),
+                          ),
+                          expandedHeight: 274,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Image.network(
+                              news.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           floating: true,
                           pinned: true,
                           snap: true,
                         ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return ListTile(
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Автор:',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text(
-                                        '${news.writer.firstName} ${news.writer.middleName}'),
-                                  ],
-                                ),
-                                subtitle: Container(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Описание:',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600),
+                        const SliverPadding(
+                            padding: EdgeInsets.only(bottom: 43)),
+                        SliverPadding(
+                          padding: const EdgeInsets.only(left: 36),
+                          sliver: SliverToBoxAdapter(
+                            child: DisplayDateAndTimeWidget(
+                                date: date, time: time),
+                          ),
+                        ),
+                        const SliverPadding(
+                            padding: EdgeInsets.only(bottom: 18)),
+                        SliverPadding(
+                          padding: const EdgeInsets.only(left: 36),
+                          sliver: SliverToBoxAdapter(
+                            child: Text(news.title,
+                                style: Theme.of(context).textTheme.titleLarge),
+                          ),
+                        ),
+                        const SliverPadding(
+                            padding: EdgeInsets.only(bottom: 18)),
+                        SliverPadding(
+                          padding: const EdgeInsets.only(left: 36),
+                          sliver: SliverToBoxAdapter(
+                            child: Text(
+                              news.description,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: const EdgeInsets.only(left: 36, top: 40),
+                          sliver: SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${news.writer.firstName} ${news.writer.middleName}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontSize: 17,
                                       ),
-                                      Wrap(children: [
-                                        Text(news.description),
-                                      ]),
-                                    ],
-                                  ),
                                 ),
-                              );
-                            },
-                            childCount: 1,
+                                Text('создано $createdAt',
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall),
+                              ],
+                            ),
                           ),
                         ),
                       ],

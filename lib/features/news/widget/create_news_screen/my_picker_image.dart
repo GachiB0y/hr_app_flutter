@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/model/image.dart';
-import 'package:hr_app_flutter/features/services/widget/service_screen.dart/bottom_sheet_create_events_model.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_events_view_model.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class MyPickerImage extends StatefulWidget {
@@ -17,6 +18,17 @@ class MyPickerImage extends StatefulWidget {
 
 class _MyPickerImageState extends State<MyPickerImage> {
   final MyImage _myImage = MyImage();
+
+  @override
+  void initState() {
+    super.initState();
+    final newsModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateEventsViewModel>,
+        CreateEventsViewModel>(context);
+    if (newsModel != null && newsModel.file != null) {
+      _myImage.imageFile = newsModel.file;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +115,8 @@ class _MyPickerImageState extends State<MyPickerImage> {
               if (imageFile != null) {
                 final File file = File(imageFile.path);
                 ChangeNotifierProvaider.read<
-                        ChangeNotifierProvaider<BottomSheetCreateEventsModel>,
-                        BottomSheetCreateEventsModel>(context)
+                        ChangeNotifierProvaider<CreateEventsViewModel>,
+                        CreateEventsViewModel>(context)
                     ?.file = file;
 
                 setState(() {});
