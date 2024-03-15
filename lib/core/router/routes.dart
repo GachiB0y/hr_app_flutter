@@ -4,6 +4,7 @@ import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -58,7 +59,8 @@ enum Routes with OctopusRoute {
   createNewsDescrition('create-news-descrition',
       title: 'Create News Descrition'),
   createNewsPhoto('create-news-photo', title: 'Create News Photo'),
-  exampleNews('example-news', title: 'Example News');
+  exampleNews('example-news', title: 'Example News'),
+  allNews('all-news', title: 'All News');
 
   const Routes(this.name, {this.title});
 
@@ -108,5 +110,6 @@ enum Routes with OctopusRoute {
         Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
         Routes.createNewsPhoto => const AddPhotoNewsScreen(),
         Routes.exampleNews => const ExmapleNewsScreen(),
+        Routes.allNews => const AllNewsScreen(),
       };
 }

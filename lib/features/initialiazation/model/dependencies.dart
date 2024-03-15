@@ -70,9 +70,6 @@ base class Dependencies {
   /// Authentication bloc
   late final AuthBLoC authBloc;
 
-  ///MainAppScreenViewCubit
-  late final MainAppScreenViewCubit mainAppScreenViewCubit;
-
   /// User bloc
   late final UserBloc userBloc;
 

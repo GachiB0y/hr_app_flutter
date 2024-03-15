@@ -108,7 +108,9 @@ class _UserMainScreenState extends State<UserMainScreen> {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Octopus.of(context).push(Routes.allNews);
+                                },
                                 child: Text(
                                   'Смотреть все',
                                   style: Theme.of(context).textTheme.titleSmall,
