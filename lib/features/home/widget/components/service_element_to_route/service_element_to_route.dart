@@ -16,7 +16,41 @@ class ElementServiceToRouteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Octopus.of(context).push(route);
+        switch (route) {
+          case Routes.createLeanProductionScreen:
+            {
+              context.octopus.setState((state) {
+                final node = state.findByName('create-lean-production');
+                if (node == null) {
+                  return state
+                    ..add(OctopusNode.mutable('create-lean-production',
+                        children: [
+                          Routes.writeProblemLeanProductionScreen.node(),
+                        ]));
+                }
+
+                return state;
+              });
+            }
+          case Routes.createNews:
+            {
+              context.octopus.setState((state) {
+                final node = state.findByName('create-news');
+                if (node == null) {
+                  return state
+                    ..add(OctopusNode.mutable('create-news', children: [
+                      Routes.createNewsType.node(),
+                    ]));
+                }
+
+                return state;
+              });
+            }
+          default:
+            {
+              Octopus.of(context).push(route);
+            }
+        }
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.transparent),

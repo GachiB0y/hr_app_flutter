@@ -185,9 +185,8 @@ void main() {
       );
 
       // Act
-      eventEntityBloc.add(EventEntityEventUpdate(
+      eventEntityBloc.add(const EventEntityEventUpdate(
         idTab: idTab,
-        listEventEntityLoaded: listEventEntityLoaded,
       ));
 
       // Assert

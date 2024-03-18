@@ -152,7 +152,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             left: 25.0,
                           ),
                           child: ElementServiceToRouteWidget(
-                            route: Routes.leanProductionForm,
+                            route: Routes.createLeanProductionScreen,
                             titleService: 'Предложить идею',
                           ),
                         ),
