@@ -149,6 +149,7 @@ class UserInfoForm extends StatelessWidget {
                                     .copyWith(fontSize: 30),
                                 softWrap: true,
                                 maxLines: 3,
+                                textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 8),
                               Row(

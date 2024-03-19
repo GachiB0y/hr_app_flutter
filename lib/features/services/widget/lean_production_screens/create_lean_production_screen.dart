@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
+import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
+import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
@@ -37,10 +41,80 @@ class _SelectExecutorLeanProductionScreenState
   ];
   @override
   Widget build(BuildContext context) {
+    final List<Widget> groupWidget = [];
+    for (var i = 0; i < _executorsControllers.length; i++) {
+      final widget = Padding(
+        padding: EdgeInsets.only(top: i * 75.0),
+        child: ImplementersInputWidget(
+          nameController: _executorsControllers[i],
+          idController: _executorsIdControllers[i],
+        ),
+      );
+
+      final addWidget = Padding(
+        padding: EdgeInsets.only(top: (i + 1) * 75.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _executorsControllers.length < 3
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Center(
+                      child: IconButton(
+                        style: const ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Color(0xffb3f2b2))),
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          if (_executorsControllers.length < 3) {
+                            setState(() {
+                              _executorsControllers
+                                  .add(TextEditingController());
+                              _executorsIdControllers
+                                  .add(TextEditingController());
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            _executorsControllers.length > 1
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Center(
+                      child: IconButton(
+                        style: const ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Color(0xfff3b2b2))),
+                        onPressed: () {
+                          if (_executorsControllers.length > 1) {
+                            setState(() {
+                              _executorsControllers.removeLast();
+                              _executorsIdControllers.removeLast();
+                            });
+                          }
+                        },
+                        icon: const Icon(Icons.remove),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ],
+        ),
+      );
+
+      if (groupWidget.length > 1) {
+        groupWidget.removeLast();
+      }
+      groupWidget.add(widget);
+      groupWidget.add(addWidget);
+    }
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
       body: SafeArea(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Center(
               child: Text(
@@ -53,71 +127,28 @@ class _SelectExecutorLeanProductionScreenState
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _executorsControllers.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ImplementersInputWidget(
-                      nameController: _executorsControllers[index],
-                      idController: _executorsIdControllers[index],
-                    ),
-                  );
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _executorsControllers.length < 3
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Center(
-                          child: IconButton(
-                            style: const ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Color(0xffb3f2b2))),
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              if (_executorsControllers.length < 3) {
-                                setState(() {
-                                  _executorsControllers
-                                      .add(TextEditingController());
-                                  _executorsIdControllers
-                                      .add(TextEditingController());
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                _executorsControllers.length > 1
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Center(
-                          child: IconButton(
-                            style: const ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Color(0xfff3b2b2))),
-                            onPressed: () {
-                              if (_executorsControllers.length > 1) {
-                                setState(() {
-                                  _executorsControllers.removeLast();
-                                  _executorsIdControllers.removeLast();
-                                });
-                              }
-                            },
-                            icon: const Icon(Icons.remove),
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
+                padding: const EdgeInsets.all(25.0),
+                child: Stack(
+                  children: [
+                    ...groupWidget.reversed,
+                  ],
+                )
+
+                //  ListView.builder(
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   itemCount: _executorsControllers.length,
+                //   itemBuilder: (context, index) {
+                //     return Padding(
+                //       padding: const EdgeInsets.only(bottom: 8.0),
+                //       child: ImplementersInputWidget(
+                //         nameController: _executorsControllers[index],
+                //         idController: _executorsIdControllers[index],
+                //       ),
+                //     );
+                //   },
+                // ),
+                ),
           ],
         ),
       ),
@@ -176,9 +207,9 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                     boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.15),
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                          offset: const Offset(0, 3),
+                          spreadRadius: 6,
+                          blurRadius: 10,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     borderRadius: BorderRadius.circular(30.0),
@@ -233,56 +264,53 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                     state.data!.isEmpty
                         ? const SizedBox.shrink()
                         : isFocus
-                            ? Stack(children: [
-                                Container(
-                                  constraints: const BoxConstraints(
-                                      minHeight: 70, maxHeight: 240),
-                                  padding: const EdgeInsets.all(16.0),
-                                  width: double.infinity,
-                                  child: Scrollbar(
-                                    child: ListView.builder(
-                                      controller: _scrollController,
-                                      itemExtent: 70,
-                                      itemCount: state.data!.length,
-                                      itemBuilder: (context, index) {
-                                        return ListTile(
-                                          title: Text(
-                                            '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                          ),
-                                          subtitle: Text(
-                                            state.data![index].staffPosition,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(
-                                                    fontSize: 15,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .outline),
-                                          ),
-                                          onTap: () {
-                                            nameController.text =
-                                                '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}';
-                                            idController.text = state
-                                                .data![index].autoCard
-                                                .toString();
-                                            setState(() {
-                                              isFocus = false;
-                                            });
-                                          },
-                                        );
-                                      },
-                                    ),
+                            ? Container(
+                                constraints: const BoxConstraints(
+                                    minHeight: 70, maxHeight: 240),
+                                padding: const EdgeInsets.all(16.0),
+                                width: double.infinity,
+                                child: Scrollbar(
+                                  child: ListView.builder(
+                                    controller: _scrollController,
+                                    itemExtent: 70,
+                                    itemCount: state.data!.length,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Text(
+                                          '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        subtitle: Text(
+                                          state.data![index].staffPosition,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                  fontSize: 15,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .outline),
+                                        ),
+                                        onTap: () {
+                                          nameController.text =
+                                              '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}';
+                                          idController.text = state
+                                              .data![index].autoCard
+                                              .toString();
+                                          setState(() {
+                                            isFocus = false;
+                                          });
+                                        },
+                                      );
+                                    },
                                   ),
                                 ),
-                              ])
+                              )
                             : const SizedBox.shrink(),
                   ] else ...[
                     const SizedBox.shrink()
@@ -292,6 +320,53 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
             ),
           );
         });
+  }
+}
+
+/// Pick File Lean Production Screen
+class PickFileLeanProduction extends StatefulWidget {
+  const PickFileLeanProduction({super.key});
+
+  @override
+  State<PickFileLeanProduction> createState() => _PickFileLeanProductionState();
+}
+
+class _PickFileLeanProductionState extends State<PickFileLeanProduction> {
+  final _model = FilePickerCustomModel();
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvaider<FilePickerCustomModel>(
+      model: _model,
+      child: Scaffold(
+        appBar: const _AppBarForCreateLeanProduction(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Прикрепите фаил',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 22),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const FilePickerWidget(),
+              const Spacer(),
+              ResumeButtonWidget(
+                title: 'Продолжить',
+                onPressed: () {
+                  context.octopus.setState((state) => state
+                    ..findByName('create-lean-production')?.add(
+                        Routes.selectorExecutorLeanProductionScreen.node()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -365,8 +440,8 @@ class _WriteBenefitLeanProductionScreenState
                   if (_formKey.currentState!.validate()) {
                     // newsModel?.description = _descriptionController.text;
                     context.octopus.setState((state) => state
-                      ..findByName('create-lean-production')?.add(
-                          Routes.selectorExecutorLeanProductionScreen.node()));
+                      ..findByName('create-lean-production')
+                          ?.add(Routes.pickFileLeanProduction.node()));
                   }
                 },
               ),

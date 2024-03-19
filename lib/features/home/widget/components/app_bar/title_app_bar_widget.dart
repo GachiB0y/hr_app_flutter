@@ -28,68 +28,61 @@ class TitleAppBarWidget extends StatelessWidget {
                   ),
                 ),
               )
-            : Row(
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Text(
+                    'Привет, ${stateUserBloc.data?.authUser.nameI}!',
+                    softWrap: true,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
                     children: [
-                      SizedBox(
-                        child: Text(
-                          'Привет, ${stateUserBloc.data?.authUser.nameI}!',
-                          softWrap: true,
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.titleMedium,
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [Color(0xFF00C8E0), Color(0xFF00D000)],
+                          ),
+                          borderRadius: BorderRadius.circular(63),
+                        ),
+                        child: BlocBuilder<WalletBLoC, WalletState>(
+                          builder: (context, state) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                              ),
+                              child: Text(
+                                '${state.data == null ? '0' : state.data!.balance} coin',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        fontSize: 18, color: Colors.white),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(
-                        height: 5,
+                        width: 8,
                       ),
-                      Row(
-                        children: [
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [Color(0xFF00C8E0), Color(0xFF00D000)],
-                              ),
-                              borderRadius: BorderRadius.circular(63),
-                            ),
-                            child: BlocBuilder<WalletBLoC, WalletState>(
-                              builder: (context, state) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0,
-                                  ),
-                                  child: Text(
-                                    '${state.data == null ? '0' : state.data!.balance} coin',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(
-                                            fontSize: 18, color: Colors.white),
-                                  ),
-                                );
-                              },
-                            ),
+                      Flexible(
+                        child: Text(
+                          maxLines: 2,
+                          stateUserBloc.data!.authUser.email ?? '',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          SizedBox(
-                            width: 150,
-                            child: Text(
-                              softWrap: true,
-                              maxLines: 1,
-                              stateUserBloc.data!.authUser.email ?? '',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

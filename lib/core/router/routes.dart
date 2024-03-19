@@ -81,7 +81,9 @@ enum Routes with OctopusRoute {
       title: 'Write Benefit Lean Production'),
 
   selectorExecutorLeanProductionScreen('selector-executor-lean-production',
-      title: 'Write Executor Lean Production');
+      title: 'Write Executor Lean Production'),
+  pickFileLeanProduction('pick-file-lean-production',
+      title: 'Pick File Lean Production');
 
   ///  End Create Lean Production Screens
 
@@ -144,5 +146,6 @@ enum Routes with OctopusRoute {
           const WriteBenefitLeanProductionScreen(),
         Routes.selectorExecutorLeanProductionScreen =>
           const SelectExecutorLeanProductionScreen(),
+        Routes.pickFileLeanProduction => const PickFileLeanProduction(),
       };
 }
