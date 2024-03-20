@@ -86,9 +86,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
-        return true;
-      }
+      return true;
     }
     throw Exception('Error send Form Lean Production');
 

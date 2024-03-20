@@ -307,8 +307,9 @@ class HistoryOperationWidget extends StatelessWidget {
       } else {
         if (state.data == null) {
           return const Center(child: Text('Ошибка. Данных нет.'));
-        } else if (state.data!.transactions == null) {
-          return const Center(child: Text('Ошибка. Транзакций нет.'));
+        } else if (state.data!.transactions == null ||
+            state.data!.transactions!.isEmpty) {
+          return const Center(child: Text('Ничего не найдено.'));
         } else {
           return ListView.builder(
               physics: const NeverScrollableScrollPhysics(),

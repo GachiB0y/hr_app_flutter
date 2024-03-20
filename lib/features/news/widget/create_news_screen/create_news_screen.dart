@@ -231,9 +231,6 @@ class AddPhotoNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -256,11 +253,6 @@ class AddPhotoNewsScreen extends StatelessWidget {
             ResumeButtonWidget(
               title: 'Продолжить',
               onPressed: () {
-                print('${newsModel?.selectedItems}');
-                print('${newsModel?.startDate}');
-                print('${newsModel?.title}');
-                print('${newsModel?.description}');
-                print('${newsModel?.file}');
                 context.octopus.setState((state) => state
                   ..findByName('create-news')?.add(Routes.exampleNews.node()));
               },

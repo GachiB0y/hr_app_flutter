@@ -41,7 +41,7 @@ class CominSoonScreen extends StatelessWidget {
                 height: 14,
               ),
               const ElementServiceToRouteWidget(
-                route: Routes.leanProductionForm,
+                route: Routes.createLeanProductionScreen,
                 titleService: 'Предложить идею',
               ),
               const ElementServiceToRouteWidget(

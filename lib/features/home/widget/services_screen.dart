@@ -47,14 +47,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 builder: (context, state) {
               //  Формируем списки действий с сервисом Новости
               final List<String> titleService = ['Просмотр новостей'];
-              final List<Routes> routes = [Routes.approveNews];
+              final List<Routes> routes = [Routes.allNews];
 
               if (state.data != null &&
                   state.data!.first.id == 22 &&
                   state.data!.first.permissions.createService == true) {
                 // Если можно создаввать новость, то даем такую возможность
                 titleService.add('Предложить новость');
-                routes.add(Routes.approveNews);
+                routes.add(Routes.createNews);
               }
               if (state.data != null &&
                   state.data!.first.id == 22 &&
@@ -119,7 +119,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     child: CustomServiceBlockWidget(
                       titleBlockService: 'Бережливое',
                       titleService: ['Предложить идею'],
-                      routes: [Routes.leanProductionForm],
+                      routes: [Routes.createLeanProductionScreen],
                     ),
                   ),
                   const SizedBox(

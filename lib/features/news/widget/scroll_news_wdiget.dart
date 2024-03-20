@@ -43,16 +43,9 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
         } else {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
-              // itemExtent: MediaQuery.of(context).size.width / 1.5,
-              // scrollDirection: Axis.horizontal,
-              // padding: const EdgeInsets.all(16),
-              // itemCount: state.data!.listEventEntityLoaded
-              // .length, // начинаем с выбранной вкладки
-
               (BuildContext context, int index) {
                 EventEntity item =
-                    state.data!.listEventEntityLoaded.reversed.toList()[index];
-                // получаем элемент для текущей вкладки
+                    state.data!.listEventEntityLoaded.toList()[index];
 
                 final String dateInfo = formatDateTimeRange(
                     start: item.startDate, end: item.endDate);
@@ -68,7 +61,6 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                         EdgeInsets.only(right: 9.0, left: index == 0 ? 25 : 0),
                     child: SizedBox(
                       child: Column(
-                        // mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Stack(

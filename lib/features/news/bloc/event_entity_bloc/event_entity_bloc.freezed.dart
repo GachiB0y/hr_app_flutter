@@ -27,9 +27,7 @@ mixin _$EventEntityEvent {
             List<String> categories)
         create,
     required TResult Function() fetch,
-    required TResult Function(
-            int idTab, List<EventEntity> listEventEntityLoaded)
-        update,
+    required TResult Function(int idTab) update,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,8 +36,7 @@ mixin _$EventEntityEvent {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult? Function()? fetch,
-    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult? Function(int idTab)? update,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,8 +45,7 @@ mixin _$EventEntityEvent {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult Function()? fetch,
-    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult Function(int idTab)? update,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -233,9 +229,7 @@ class _$EventEntityEventCreate extends EventEntityEventCreate {
             List<String> categories)
         create,
     required TResult Function() fetch,
-    required TResult Function(
-            int idTab, List<EventEntity> listEventEntityLoaded)
-        update,
+    required TResult Function(int idTab) update,
   }) {
     return create(
         title, description, startDate, endDate, imageFile, categories);
@@ -248,8 +242,7 @@ class _$EventEntityEventCreate extends EventEntityEventCreate {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult? Function()? fetch,
-    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult? Function(int idTab)? update,
   }) {
     return create?.call(
         title, description, startDate, endDate, imageFile, categories);
@@ -262,8 +255,7 @@ class _$EventEntityEventCreate extends EventEntityEventCreate {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult Function()? fetch,
-    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult Function(int idTab)? update,
     required TResult orElse(),
   }) {
     if (create != null) {
@@ -376,9 +368,7 @@ class _$EventEntityEventFetch extends EventEntityEventFetch {
             List<String> categories)
         create,
     required TResult Function() fetch,
-    required TResult Function(
-            int idTab, List<EventEntity> listEventEntityLoaded)
-        update,
+    required TResult Function(int idTab) update,
   }) {
     return fetch();
   }
@@ -390,8 +380,7 @@ class _$EventEntityEventFetch extends EventEntityEventFetch {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult? Function()? fetch,
-    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult? Function(int idTab)? update,
   }) {
     return fetch?.call();
   }
@@ -403,8 +392,7 @@ class _$EventEntityEventFetch extends EventEntityEventFetch {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult Function()? fetch,
-    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult Function(int idTab)? update,
     required TResult orElse(),
   }) {
     if (fetch != null) {
@@ -459,7 +447,7 @@ abstract class _$$EventEntityEventUpdateCopyWith<$Res> {
           $Res Function(_$EventEntityEventUpdate) then) =
       __$$EventEntityEventUpdateCopyWithImpl<$Res>;
   @useResult
-  $Res call({int idTab, List<EventEntity> listEventEntityLoaded});
+  $Res call({int idTab});
 }
 
 /// @nodoc
@@ -474,17 +462,12 @@ class __$$EventEntityEventUpdateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? idTab = null,
-    Object? listEventEntityLoaded = null,
   }) {
     return _then(_$EventEntityEventUpdate(
       idTab: null == idTab
           ? _value.idTab
           : idTab // ignore: cast_nullable_to_non_nullable
               as int,
-      listEventEntityLoaded: null == listEventEntityLoaded
-          ? _value._listEventEntityLoaded
-          : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
-              as List<EventEntity>,
     ));
   }
 }
@@ -492,26 +475,14 @@ class __$$EventEntityEventUpdateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EventEntityEventUpdate extends EventEntityEventUpdate {
-  const _$EventEntityEventUpdate(
-      {required this.idTab,
-      required final List<EventEntity> listEventEntityLoaded})
-      : _listEventEntityLoaded = listEventEntityLoaded,
-        super._();
+  const _$EventEntityEventUpdate({required this.idTab}) : super._();
 
   @override
   final int idTab;
-  final List<EventEntity> _listEventEntityLoaded;
-  @override
-  List<EventEntity> get listEventEntityLoaded {
-    if (_listEventEntityLoaded is EqualUnmodifiableListView)
-      return _listEventEntityLoaded;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listEventEntityLoaded);
-  }
 
   @override
   String toString() {
-    return 'EventEntityEvent.update(idTab: $idTab, listEventEntityLoaded: $listEventEntityLoaded)';
+    return 'EventEntityEvent.update(idTab: $idTab)';
   }
 
   @override
@@ -519,14 +490,11 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EventEntityEventUpdate &&
-            (identical(other.idTab, idTab) || other.idTab == idTab) &&
-            const DeepCollectionEquality()
-                .equals(other._listEventEntityLoaded, _listEventEntityLoaded));
+            (identical(other.idTab, idTab) || other.idTab == idTab));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, idTab,
-      const DeepCollectionEquality().hash(_listEventEntityLoaded));
+  int get hashCode => Object.hash(runtimeType, idTab);
 
   @JsonKey(ignore: true)
   @override
@@ -547,11 +515,9 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
             List<String> categories)
         create,
     required TResult Function() fetch,
-    required TResult Function(
-            int idTab, List<EventEntity> listEventEntityLoaded)
-        update,
+    required TResult Function(int idTab) update,
   }) {
-    return update(idTab, listEventEntityLoaded);
+    return update(idTab);
   }
 
   @override
@@ -561,10 +527,9 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult? Function()? fetch,
-    TResult? Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult? Function(int idTab)? update,
   }) {
-    return update?.call(idTab, listEventEntityLoaded);
+    return update?.call(idTab);
   }
 
   @override
@@ -574,12 +539,11 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
             String? endDate, File imageFile, List<String> categories)?
         create,
     TResult Function()? fetch,
-    TResult Function(int idTab, List<EventEntity> listEventEntityLoaded)?
-        update,
+    TResult Function(int idTab)? update,
     required TResult orElse(),
   }) {
     if (update != null) {
-      return update(idTab, listEventEntityLoaded);
+      return update(idTab);
     }
     return orElse();
   }
@@ -620,14 +584,11 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
 }
 
 abstract class EventEntityEventUpdate extends EventEntityEvent {
-  const factory EventEntityEventUpdate(
-          {required final int idTab,
-          required final List<EventEntity> listEventEntityLoaded}) =
+  const factory EventEntityEventUpdate({required final int idTab}) =
       _$EventEntityEventUpdate;
   const EventEntityEventUpdate._() : super._();
 
   int get idTab;
-  List<EventEntity> get listEventEntityLoaded;
   @JsonKey(ignore: true)
   _$$EventEntityEventUpdateCopyWith<_$EventEntityEventUpdate> get copyWith =>
       throw _privateConstructorUsedError;

@@ -38,6 +38,6 @@ class EventEntityEvent with _$EventEntityEvent {
   /// Update
   const factory EventEntityEvent.update({
     required int idTab,
-    required List<EventEntity> listEventEntityLoaded,
+    // required List<EventEntity> listEventEntityLoaded,
   }) = EventEntityEventUpdate;
 }

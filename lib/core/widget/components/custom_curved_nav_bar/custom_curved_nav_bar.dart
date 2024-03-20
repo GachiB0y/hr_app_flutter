@@ -102,31 +102,31 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          Positioned(
-            bottom: widget.height - 35,
-            left: 0,
-            right: 0,
-            child: SizedBox(
-              height: 200,
-              child: ShaderMask(
-                shaderCallback: (Rect bounds) {
-                  return const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: <Color>[
-                      Colors.transparent,
-                      Colors.white,
-                    ],
-                    stops: [0.5, 0.75],
-                  ).createShader(bounds);
-                },
-                blendMode: BlendMode.dstIn,
-                child: Container(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   bottom: widget.height - 35,
+          //   left: 0,
+          //   right: 0,
+          //   child: SizedBox(
+          //     height: 200,
+          //     child: ShaderMask(
+          //       shaderCallback: (Rect bounds) {
+          //         return const LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: <Color>[
+          //             Colors.transparent,
+          //             Colors.white,
+          //           ],
+          //           stops: [0.5, 0.75],
+          //         ).createShader(bounds);
+          //       },
+          //       blendMode: BlendMode.dstIn,
+          //       child: Container(
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Positioned(
             bottom: -40 - (100.0 - widget.height),
             left: Directionality.of(context) == TextDirection.rtl
