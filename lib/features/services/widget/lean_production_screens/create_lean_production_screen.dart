@@ -4,20 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
 import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
+import 'package:hr_app_flutter/features/services/bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
+import 'package:hr_app_flutter/features/services/model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
+import 'package:hr_app_flutter/features/services/widget/lean_production_screens/create_lean_production_view_model.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
 import 'package:octopus/octopus.dart';
 
-class CreateLeanProductionScreen extends StatelessWidget {
+class CreateLeanProductionScreen extends StatefulWidget {
   const CreateLeanProductionScreen({super.key});
 
   @override
+  State<CreateLeanProductionScreen> createState() =>
+      _CreateLeanProductionScreenState();
+}
+
+class _CreateLeanProductionScreenState
+    extends State<CreateLeanProductionScreen> {
+  final CreateLeanProductionViewModel _modelView =
+      CreateLeanProductionViewModel();
+  final _modelFilePicker = FilePickerCustomModel();
+
+  @override
   Widget build(BuildContext context) {
-    return const BucketNavigator(bucket: 'create-lean-production');
+    return ChangeNotifierProvaider<FilePickerCustomModel>(
+      model: _modelFilePicker,
+      child: ChangeNotifierProvaider<CreateLeanProductionViewModel>(
+          model: _modelView,
+          child: const BucketNavigator(bucket: 'create-lean-production')),
+    );
   }
 }
 
@@ -39,6 +57,18 @@ class _SelectExecutorLeanProductionScreenState
   final List<TextEditingController> _executorsIdControllers = [
     TextEditingController()
   ];
+
+  late final LeanProductionFormBloc blocLeanProductionForm;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    blocLeanProductionForm = LeanProductionFormBloc(
+        repository: DependenciesScope.of(context).leanProductionRepository);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> groupWidget = [];
@@ -53,51 +83,18 @@ class _SelectExecutorLeanProductionScreenState
 
       final addWidget = Padding(
         padding: EdgeInsets.only(top: (i + 1) * 75.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
           children: [
             _executorsControllers.length < 3
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Center(
-                      child: IconButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Color(0xffb3f2b2))),
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          if (_executorsControllers.length < 3) {
-                            setState(() {
-                              _executorsControllers
-                                  .add(TextEditingController());
-                              _executorsIdControllers
-                                  .add(TextEditingController());
-                            });
-                          }
-                        },
-                      ),
-                    ),
+                ? _ButtonChangeExecutorWidget(
+                    text: '+ добавить еще исполнителя',
+                    onPressed: addExecutor,
                   )
                 : const SizedBox.shrink(),
             _executorsControllers.length > 1
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Center(
-                      child: IconButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Color(0xfff3b2b2))),
-                        onPressed: () {
-                          if (_executorsControllers.length > 1) {
-                            setState(() {
-                              _executorsControllers.removeLast();
-                              _executorsIdControllers.removeLast();
-                            });
-                          }
-                        },
-                        icon: const Icon(Icons.remove),
-                      ),
-                    ),
+                ? _ButtonChangeExecutorWidget(
+                    text: '- удалить исполнителя',
+                    onPressed: removeExecutor,
                   )
                 : const SizedBox.shrink(),
           ],
@@ -127,29 +124,131 @@ class _SelectExecutorLeanProductionScreenState
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(25.0),
+              child: Form(
+                key: _formKey,
                 child: Stack(
                   children: [
                     ...groupWidget.reversed,
                   ],
-                )
-
-                //  ListView.builder(
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   shrinkWrap: true,
-                //   itemCount: _executorsControllers.length,
-                //   itemBuilder: (context, index) {
-                //     return Padding(
-                //       padding: const EdgeInsets.only(bottom: 8.0),
-                //       child: ImplementersInputWidget(
-                //         nameController: _executorsControllers[index],
-                //         idController: _executorsIdControllers[index],
-                //       ),
-                //     );
-                //   },
-                // ),
                 ),
+              ),
+            ),
+            const Spacer(),
+            BlocBuilder<LeanProductionFormBloc, LeanProductionFormState>(
+                bloc: blocLeanProductionForm,
+                builder: (context, state) {
+                  if (state is LeanProductionFormState$Processing) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return ResumeButtonWidget(
+                      title: 'Подать предложение',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final modelFielPikcer = ChangeNotifierProvaider.watch<
+                              ChangeNotifierProvaider<FilePickerCustomModel>,
+                              FilePickerCustomModel>(context);
+                          final modelView = ChangeNotifierProvaider.watch<
+                              ChangeNotifierProvaider<
+                                  CreateLeanProductionViewModel>,
+                              CreateLeanProductionViewModel>(context);
+
+                          int firstImplementer = 0;
+                          int secondImplementer = 0;
+                          int thirdImplementer = 0;
+
+                          _executorsIdControllers
+                              .asMap()
+                              .forEach((index, controller) {
+                            switch (index) {
+                              case 0:
+                                if (controller.text != '') {
+                                  firstImplementer = int.parse(controller.text);
+                                }
+                              case 1:
+                                secondImplementer = int.parse(controller.text);
+                              case 2:
+                                thirdImplementer = int.parse(controller.text);
+                            }
+                          });
+                          final formEntity = LeanProductionFormEntity(
+                            firstImplementer: firstImplementer,
+                            secondImplementer: secondImplementer,
+                            thirdImplementer: thirdImplementer,
+                            realized: modelView!.isImplemented!,
+                            issue: modelView.problem!,
+                            solution: modelView.solution!,
+                            expenses: modelView.expenses!,
+                            benefit: modelView.benefit!,
+                            paths: modelFielPikcer!.paths
+                                .whereType<String>()
+                                .toList(),
+                          );
+
+                          blocLeanProductionForm.add(
+                              LeanProductionFormEvent.submitForm(
+                                  formEntity: formEntity));
+
+                          context.octopus.setState((state) =>
+                              state..removeByName('create-lean-production'));
+                        }
+                      },
+                    );
+                  }
+                })
           ],
+        ),
+      ),
+    );
+  }
+
+  void removeExecutor() {
+    if (_executorsControllers.length > 1) {
+      setState(() {
+        _executorsControllers.removeLast();
+        _executorsIdControllers.removeLast();
+      });
+    }
+  }
+
+  void addExecutor() {
+    if (_executorsControllers.length < 3) {
+      setState(() {
+        _executorsControllers.add(TextEditingController());
+        _executorsIdControllers.add(TextEditingController());
+      });
+    }
+  }
+}
+
+class _ButtonChangeExecutorWidget extends StatelessWidget {
+  const _ButtonChangeExecutorWidget(
+      {super.key, required this.text, required this.onPressed});
+
+  final String text;
+  final void Function() onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 18),
+      width: double.infinity,
+      height: 58,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            const Color(0xfff5f5f5),
+          ),
+        ),
+        onPressed: () => onPressed(),
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              fontSize: 15, color: Theme.of(context).colorScheme.outline),
         ),
       ),
     );
@@ -180,6 +279,7 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
 
   TextEditingController get nameController => widget._nameController;
   TextEditingController get idController => widget._idController;
+
   late final OtherUsersBloc otherUsersBloc;
 
   @override
@@ -332,38 +432,40 @@ class PickFileLeanProduction extends StatefulWidget {
 }
 
 class _PickFileLeanProductionState extends State<PickFileLeanProduction> {
-  final _model = FilePickerCustomModel();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvaider<FilePickerCustomModel>(
-      model: _model,
-      child: Scaffold(
-        appBar: const _AppBarForCreateLeanProduction(),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Center(
-                child: Text(
-                  'Прикрепите фаил',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
-                  textAlign: TextAlign.center,
-                ),
+    return Scaffold(
+      appBar: const _AppBarForCreateLeanProduction(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                'Прикрепите фаил',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 22),
+                textAlign: TextAlign.center,
               ),
-              const FilePickerWidget(),
-              const Spacer(),
-              ResumeButtonWidget(
-                title: 'Продолжить',
-                onPressed: () {
-                  context.octopus.setState((state) => state
-                    ..findByName('create-lean-production')?.add(
-                        Routes.selectorExecutorLeanProductionScreen.node()));
-                },
-              ),
-            ],
-          ),
+            ),
+            const FilePickerWidget(),
+            const Spacer(),
+            ResumeButtonWidget(
+              title: 'Продолжить',
+              onPressed: () {
+                final modelFile = ChangeNotifierProvaider.read<
+                    ChangeNotifierProvaider<FilePickerCustomModel>,
+                    FilePickerCustomModel>(context);
+                if (modelFile == null || modelFile.paths.isEmpty) {
+                  return;
+                }
+                context.octopus.setState((state) => state
+                  ..findByName('create-lean-production')?.add(
+                      Routes.selectorExecutorLeanProductionScreen.node()));
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -387,7 +489,21 @@ class _WriteBenefitLeanProductionScreenState
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
   @override
+  void initState() {
+    super.initState();
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
+    if (viewModel != null && viewModel.benefit != null) {
+      _benefitController.text = viewModel.benefit!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
       body: SafeArea(
@@ -438,7 +554,7 @@ class _WriteBenefitLeanProductionScreenState
                 title: 'Продолжить',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // newsModel?.description = _descriptionController.text;
+                    viewModel?.benefit = _benefitController.text;
                     context.octopus.setState((state) => state
                       ..findByName('create-lean-production')
                           ?.add(Routes.pickFileLeanProduction.node()));
@@ -469,8 +585,23 @@ class _WriteExpensesLeanProductionScreenState
 
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
+    if (viewModel != null && viewModel.expenses != null) {
+      _expensesController.text = viewModel.expenses!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
       body: SafeArea(
@@ -520,7 +651,7 @@ class _WriteExpensesLeanProductionScreenState
                 title: 'Продолжить',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // newsModel?.description = _descriptionController.text;
+                    viewModel?.expenses = _expensesController.text;
                     context.octopus.setState((state) => state
                       ..findByName('create-lean-production')?.add(
                           Routes.writeBenefitLeanProductionScreen.node()));
@@ -549,10 +680,27 @@ class _WriteSolutionLeamProductionScreenState
     extends State<WriteSolutionLeamProductionScreen> {
   final TextEditingController _solutionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool isChecked = false;
+  bool isImplemented = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
+    if (viewModel != null && viewModel.solution != null) {
+      _solutionController.text = viewModel.solution!;
+    }
+    if (viewModel != null && viewModel.isImplemented != null) {
+      isImplemented = viewModel.isImplemented!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
       body: SafeArea(
@@ -608,10 +756,10 @@ class _WriteSolutionLeamProductionScreenState
                       .titleMedium!
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
-                value: isChecked,
+                value: isImplemented,
                 onChanged: (value) {
                   setState(() {
-                    isChecked = !isChecked;
+                    isImplemented = !isImplemented;
                   });
                 },
               ),
@@ -620,7 +768,8 @@ class _WriteSolutionLeamProductionScreenState
                 title: 'Продолжить',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // newsModel?.description = _descriptionController.text;
+                    viewModel?.solution = _solutionController.text;
+                    viewModel?.isImplemented = isImplemented;
                     context.octopus.setState((state) => state
                       ..findByName('create-lean-production')?.add(
                           Routes.writeExpensesLeanProductionScreen.node()));
@@ -653,19 +802,19 @@ class _WriteProblemLeanProductionScreenState
   @override
   void initState() {
     super.initState();
-    // final newsModel = ChangeNotifierProvaider.read<
-    //     ChangeNotifierProvaider<CreateEventsViewModel>,
-    //     CreateEventsViewModel>(context);
-    // if (newsModel != null && newsModel.description != null) {
-    //   _problemController.text = newsModel.description!;
-    // }
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
+    if (viewModel != null && viewModel.problem != null) {
+      _problemController.text = viewModel.problem!;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // final newsModel = ChangeNotifierProvaider.read<
-    //     ChangeNotifierProvaider<CreateEventsViewModel>,
-    //     CreateEventsViewModel>(context);
+    final viewModel = ChangeNotifierProvaider.read<
+        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+        CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
       body: SafeArea(
@@ -714,7 +863,7 @@ class _WriteProblemLeanProductionScreenState
                 title: 'Продолжить',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // newsModel?.description = _problemController.text;
+                    viewModel?.problem = _problemController.text;
                     context.octopus.setState((state) => state
                       ..findByName('create-lean-production')?.add(
                           Routes.writeSolutionLeanProductionScreen.node()));
