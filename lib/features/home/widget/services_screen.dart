@@ -144,7 +144,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ),
                     child: CustomServiceBlockWidget(
                       titleBlockService: 'Поддержка',
-                      titleService: ['Сообщаить об ошибке'],
+                      titleService: ['Сообщить об ошибке'],
                       routes: [Routes.bagReport],
                     ),
                   ),
