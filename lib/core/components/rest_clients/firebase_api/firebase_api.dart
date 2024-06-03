@@ -48,7 +48,6 @@ class FirebaseApi implements IFirebaseApi {
   Future<String?> getFCMToken() async {
     await _firebasseMessaging.requestPermission();
     final String? fCMToken = await _firebasseMessaging.getToken();
-
     return fCMToken;
   }
 }

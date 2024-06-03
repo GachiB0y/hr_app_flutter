@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.hrAppFlutter</string>
+	<string>com.grass.hrapp</string>
 	<key>PROJECT_ID</key>
 	<string>hrapp-8bcdb</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:399963694781:ios:e041ec4c5885ee609139d4</string>
+	<string>1:399963694781:ios:e13e3346178a55729139d4</string>
 </dict>
 </plist>
