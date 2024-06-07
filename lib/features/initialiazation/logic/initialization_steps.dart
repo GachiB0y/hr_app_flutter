@@ -9,7 +9,6 @@ import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/refresh_client.dart';
-import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/initialization_progress.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
@@ -99,7 +100,7 @@ enum Routes with OctopusRoute {
   Widget builder(BuildContext context, OctopusState state, OctopusNode node) =>
       switch (this) {
         Routes.signin => const AuthenticationFormScreen(),
-        Routes.home => const HomeScreen(),
+        Routes.home => const HomeScope(child: HomeScreen()),
         Routes.userMain => const UserMainScreen(),
         Routes.coin => const GrassCoinScreen(),
         Routes.services => const ServicesScreen(),

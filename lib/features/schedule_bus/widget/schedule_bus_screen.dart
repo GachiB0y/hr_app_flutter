@@ -106,7 +106,7 @@ class ButtonSeeAllDestinationsWidget extends StatelessWidget {
         child: ListTile(
           title: Text(
             textAlign: TextAlign.center,
-            'Посмотреть все мрашруты',
+            'Посмотреть все маршруты',
             softWrap: true,
             maxLines: 3,
             style: Theme.of(context)
@@ -238,8 +238,10 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
   const AppBarForScheduleBusScreenWidget({
     super.key,
     this.isSecondAndOtherScreen = false,
+    this.index,
   });
   final bool isSecondAndOtherScreen;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +260,7 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 // Обработка нажатия кнопки "назад" здесь
-                ScheduleBusScope.of(context).state.decrementIndex(null);
+                ScheduleBusScope.of(context).state.decrementIndex(index);
               },
             )
           : null,
@@ -546,7 +548,10 @@ class DestinationListScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: AppBarForScheduleBusScreenWidget(),
+      appBar: AppBarForScheduleBusScreenWidget(
+        isSecondAndOtherScreen: true,
+        index: 0,
+      ),
       body: BodyContentScheduleBusWidget(),
     );
   }
@@ -575,9 +580,6 @@ class BodyContentScheduleBusWidget extends StatelessWidget {
           'Все маршруты',
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        // const SizedBox(
-        //   height: 30,
-        // ),
         BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
           bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
           builder: (context, state) {

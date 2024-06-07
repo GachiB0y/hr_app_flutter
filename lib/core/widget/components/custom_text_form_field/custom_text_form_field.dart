@@ -6,6 +6,7 @@ class CustomTextFormField extends StatelessWidget {
     required TextEditingController? nameController,
     required Icon? iconData,
     required String inputText,
+    this.focusNode,
     this.readOnly = false,
     this.initialValue,
   })  : _nameController = nameController,
@@ -17,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
   final String _inputText;
   final bool readOnly;
   final String? initialValue;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class CustomTextFormField extends StatelessWidget {
               style: TextStyle(
                   color: Theme.of(context).colorScheme.onInverseSurface)),
           TextFormField(
+            focusNode: focusNode,
             initialValue: initialValue,
             readOnly: readOnly,
             maxLines: 10,

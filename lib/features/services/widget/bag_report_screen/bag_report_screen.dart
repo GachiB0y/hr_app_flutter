@@ -51,16 +51,29 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
       TextEditingController();
   final TextEditingController inputControllerTitle = TextEditingController();
   late final BagReportBLoC blocBagReport;
+
+  List<FocusNode> focusNodes = List.generate(3, (index) => FocusNode());
   @override
   void initState() {
+    super.initState();
+
     blocBagReport = BagReportBLoC(
       repositoryService: DependenciesScope.of(context).serviceRepository,
     );
-    super.initState();
+    for (var focusNode in focusNodes) {
+      focusNode.addListener(() {
+        if (!focusNode.hasFocus) {
+          FocusScope.of(context).unfocus();
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
+    for (var focusNode in focusNodes) {
+      focusNode.dispose();
+    }
     blocBagReport.close();
     super.dispose();
   }
@@ -98,73 +111,82 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
             ).closed.then((value) => Navigator.pop(context));
         }
       },
-      child: Container(
-        margin: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKeyBagReport,
-          child: Column(
-            children: [
-              CustomTextFormField(
-                nameController: inputControllerTitle,
-                iconData: const Icon(Icons.priority_high),
-                inputText: 'Заголовок',
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              CustomTextFormField(
-                nameController: inputControllerDescription,
-                iconData: const Icon(Icons.mode_edit),
-                inputText: 'Описание ошибки',
-              ),
-              model?.fileNames.isEmpty == false
-                  ? const Padding(
-                      padding: EdgeInsets.only(
-                        top: 16.0,
-                      ),
-                      child: FilePickerWidget(),
-                    )
-                  : const SizedBox.shrink(),
-              isShowErrorText
-                  ? const Text(
-                      'Нужно прикрепить хотя бы 1 файл ',
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : const SizedBox.shrink(),
-              const SizedBox(
-                height: 8.0,
-              ),
-              ElevatedButton(
-                child: Text(
-                  'Отправить',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          margin: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKeyBagReport,
+            child: Column(
+              children: [
+                CustomTextFormField(
+                  focusNode: focusNodes[0],
+                  nameController: inputControllerTitle,
+                  iconData: const Icon(Icons.priority_high),
+                  inputText: 'Заголовок',
                 ),
-                onPressed: () {
-                  if (_formKeyBagReport.currentState != null) {
-                    if (_formKeyBagReport.currentState!.validate() &&
-                        model?.paths != null &&
-                        model!.paths.isNotEmpty) {
-                      setState(() {
-                        isShowErrorText = false;
-                      });
-                      final BagReportEntity formInfo = BagReportEntity(
-                        description: inputControllerDescription.text,
-                        title: inputControllerTitle.text,
-                        pathsToFiles: model.paths.whereType<String>().toList(),
-                      );
+                const SizedBox(
+                  height: 16.0,
+                ),
+                CustomTextFormField(
+                  focusNode: focusNodes[1],
+                  nameController: inputControllerDescription,
+                  iconData: const Icon(Icons.mode_edit),
+                  inputText: 'Описание ошибки',
+                ),
+                model?.fileNames.isEmpty == false
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                          top: 16.0,
+                        ),
+                        child: FilePickerWidget(),
+                      )
+                    : const SizedBox.shrink(),
+                isShowErrorText
+                    ? const Text(
+                        'Нужно прикрепить хотя бы 1 файл ',
+                        style: TextStyle(color: Colors.red),
+                      )
+                    : const SizedBox.shrink(),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ElevatedButton(
+                  child: Text(
+                    'Отправить',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  onPressed: () {
+                    if (_formKeyBagReport.currentState != null) {
+                      if (_formKeyBagReport.currentState!.validate() &&
+                          model?.paths != null &&
+                          model!.paths.isNotEmpty) {
+                        setState(() {
+                          isShowErrorText = false;
+                        });
+                        final BagReportEntity formInfo = BagReportEntity(
+                          description: inputControllerDescription.text,
+                          title: inputControllerTitle.text,
+                          pathsToFiles:
+                              model.paths.whereType<String>().toList(),
+                        );
 
-                      blocBagReport
-                          .add(BagReportEvent.create(formInfo: formInfo));
-                    } else {
-                      setState(() {
-                        isShowErrorText = true;
-                      });
+                        blocBagReport
+                            .add(BagReportEvent.create(formInfo: formInfo));
+                      } else {
+                        setState(() {
+                          isShowErrorText = true;
+                        });
+                      }
                     }
-                  }
-                },
-              )
-            ],
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
