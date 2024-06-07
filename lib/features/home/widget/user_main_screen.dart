@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/app_bar_user_widget.dart';
 import 'package:hr_app_flutter/features/home/widget/components/service_element_to_route/service_element_to_route.dart';
+import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/scroll_news_wdiget.dart';
 import 'package:hr_app_flutter/features/services/widget/service_element/service_element_widget.dart';
 import 'package:octopus/octopus.dart';
@@ -79,7 +80,9 @@ class _UserMainScreenState extends State<UserMainScreen> {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  HomeScope.of(context).state.onItemTapped(4);
+                                },
                                 child: Text(
                                   'Смотреть все',
                                   style: Theme.of(context).textTheme.titleSmall,
@@ -393,7 +396,7 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                   Radius.circular(radius),
                 ),
                 onTap: () {
-// TODO: переход на экран баланса
+                  HomeScope.of(context).state.onItemTapped(1);
                 },
                 child: Column(
                   children: [

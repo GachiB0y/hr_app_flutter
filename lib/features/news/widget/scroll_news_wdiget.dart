@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/utils/date_formatter.dart';
 import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
+import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 
 class ScrollNewsWidget extends StatefulWidget {
@@ -47,8 +46,6 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                 EventEntity item =
                     state.data!.listEventEntityLoaded.toList()[index];
 
-                final String dateInfo = formatDateTimeRange(
-                    start: item.startDate, end: item.endDate);
                 return GestureDetector(
                   onTap: () {
                     context.octopus.setState((stateRoute) => stateRoute
@@ -99,10 +96,15 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                                                   BorderRadius.circular(radius),
                                             ),
                                             child: Text(
-                                              dateInfo,
+                                              DateFormat('dd MMMM', 'ru')
+                                                  .format(item.startDate),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .titleSmall,
+                                                  .titleSmall!
+                                                  .copyWith(
+                                                      fontSize: 9.0,
+                                                      fontWeight:
+                                                          FontWeight.w700),
                                             ),
                                           ),
                                         ),
