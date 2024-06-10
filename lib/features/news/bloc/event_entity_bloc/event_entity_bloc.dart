@@ -109,7 +109,8 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
   Future<void> _eventFilterNews(
       EventEntityEventUpdate event, Emitter<EventEntityState> emit) async {
     List<EventEntity> filteredEventEntity = filterListCategory(
-        idTab: event.idTab, listEventEntityLoaded: event.listEventEntityLoaded);
+        idTab: event.idTab,
+        listEventEntityLoaded: state.data!.listEventEntityLoaded);
 
     final newState =
         state.data?.copyWith(filteredListEventEntity: filteredEventEntity);

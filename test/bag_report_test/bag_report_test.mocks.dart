@@ -5,12 +5,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
 
+import 'package:hr_app_flutter/features/schedule_bus/model/schedule_bus_entity.dart'
+    as _i2;
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart'
     as _i4;
 import 'package:hr_app_flutter/features/services/model/bag_report_entity/bag_report_entity.dart'
     as _i3;
-import 'package:hr_app_flutter/features/services/model/schedule_bus_entity/schedule_bus_entity.dart'
-    as _i2;
 import 'package:hr_app_flutter/features/services/model/service/service.dart'
     as _i6;
 import 'package:mockito/mockito.dart' as _i1;

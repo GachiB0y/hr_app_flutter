@@ -1,7 +1,7 @@
+import 'package:hr_app_flutter/features/schedule_bus/model/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
 
 import '../../model/bag_report_entity/bag_report_entity.dart';
-import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceRepository {

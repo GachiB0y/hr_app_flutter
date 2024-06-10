@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import '../../model/event_entity/new_event_entity.dart';
 

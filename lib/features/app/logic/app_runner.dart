@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/utils/bloc_observable.dart';
@@ -31,7 +33,25 @@ final class AppRunner with InitializationSteps, InitializationProcessor {
         // Setup bloc observer and transformer
         Bloc.observer = const AppBlocObserver();
         Bloc.transformer = bloc_concurrency.sequential();
-        // await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 2));
+
+        //Setup Firebase
+        if (Platform.isIOS) {
+          await Firebase.initializeApp(
+            options: const FirebaseOptions(
+                apiKey: "AIzaSyAEnF7uI13l_Ejgz1P5E5D8oL3hFqhB0PY",
+                appId: "1:399963694781:ios:e041ec4c5885ee609139d4",
+                messagingSenderId: "399963694781",
+                projectId: "hrapp-8bcdb"),
+          );
+        } else {
+          await Firebase.initializeApp(
+              options: const FirebaseOptions(
+                  apiKey: "AIzaSyD9dkbYMqYKI5fkIeFkQBzV3gXSkQhpw28",
+                  appId: "1:399963694781:android:207b472798a961589139d4",
+                  messagingSenderId: "399963694781",
+                  projectId: "hrapp-8bcdb"));
+        }
 
         final result = await processInitialization(
           steps: initializationSteps,

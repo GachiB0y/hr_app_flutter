@@ -24,8 +24,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
     approvementNewsBloc = ApprovementNewsBloc(
       eventEntityRepository:
           DependenciesScope.of(context).eventEntityRepository,
-    );
-    approvementNewsBloc.add(const ApprovementEvent.fetch());
+    )..add(const ApprovementEvent.fetch());
   }
 
   @override
@@ -164,7 +163,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                   );
                 },
                 error: (e) => e == null
-                    ? const Text('Nothing found...')
+                    ? const Center(child: Text('Тут пусто:))'))
                     : Center(child: Text(e)),
               );
             }),

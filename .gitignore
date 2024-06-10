@@ -56,6 +56,9 @@ app.*.map.json
 # Instead, save it in a secure location and read it from there
 # i.e. Secrets
 *.jks
+**/android/app/google-services.json
+# IOS
+**/ios/Runner/GoogleService-Info.plist
 
 
 

@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/api_client_exception.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
+import 'package:hr_app_flutter/features/schedule_bus/model/schedule_bus_entity.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,7 +13,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../model/bag_report_entity/bag_report_entity.dart';
 import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
-import '../../model/schedule_bus_entity/schedule_bus_entity.dart';
 import '../../model/service/service.dart';
 
 abstract interface class IServiceProvider {
@@ -86,9 +86,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
-        return true;
-      }
+      return true;
     }
     throw Exception('Error send Form Lean Production');
 
@@ -269,8 +267,6 @@ class ServiceProviderImpl implements IServiceProvider {
   @override
   Future<bool> submitBagReportForm(
       {required BagReportEntity bagReportEntity}) async {
-    String uri = '$urlAdress/report/create';
-
     final Map<String, String> newFields = {
       'forminfo':
           '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
@@ -286,9 +282,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
-        return true;
-      }
+      return true;
     }
     throw Exception('Error submit Bag Report Form');
     // } else if (response.statusCode == 400) {

@@ -27,10 +27,8 @@ class _AppBarUserWdigetState extends State<AppBarUserWdiget> {
   Widget build(BuildContext context) {
     return AppBar(
       scrolledUnderElevation: 0.0,
-      // shadowColor: Colors.transparent,
       toolbarHeight: 90,
-      leadingWidth: 90,
-
+      leadingWidth: 70,
       leading: const Avatar(),
       title: const TitleAppBarWidget(),
       backgroundColor: Colors.transparent,
@@ -57,6 +55,7 @@ class Avatar extends StatelessWidget {
               ..add(Routes.profileUser.node(
                 arguments: <String, String>{
                   'id': id,
+                  'isSelfUser': 'true',
                 },
               )));
           },
@@ -75,17 +74,14 @@ class Avatar extends StatelessWidget {
                     child: const ClipOval(),
                   ),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: CachedNetworkImage(
-                      imageUrl: state.data!.authUser.avatar,
-                      imageBuilder: (context, imageProvider) {
-                        return CircleAvatar(
-                          radius: radius,
-                          backgroundImage: imageProvider,
-                        );
-                      }),
-                ),
+              : CachedNetworkImage(
+                  imageUrl: state.data!.authUser.avatar,
+                  imageBuilder: (context, imageProvider) {
+                    return CircleAvatar(
+                      radius: radius,
+                      backgroundImage: imageProvider,
+                    );
+                  }),
         );
       },
     );

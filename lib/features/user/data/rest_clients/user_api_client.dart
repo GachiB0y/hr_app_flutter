@@ -134,11 +134,10 @@ class UserProviderImpl implements IUserProvider {
     );
     if (response
         case {
-          'result': final Map<String, Object?> data,
+          'result': final List<dynamic> data,
         }) {
-      final List<UserInfo> result = (data as List<dynamic>)
-          .map((item) => UserInfo.fromJson(item))
-          .toList();
+      final List<UserInfo> result =
+          data.map((item) => UserInfo.fromJson(item)).toList();
       return result;
     }
     throw const FormatException('Error fetching findUser User');

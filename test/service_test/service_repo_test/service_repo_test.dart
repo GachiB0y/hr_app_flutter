@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hr_app_flutter/features/schedule_bus/model/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
 import 'package:hr_app_flutter/features/services/model/bag_report_entity/bag_report_entity.dart';
-import 'package:hr_app_flutter/features/services/model/schedule_bus_entity/schedule_bus_entity.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

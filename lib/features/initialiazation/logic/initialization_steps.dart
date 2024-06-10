@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
@@ -8,10 +9,11 @@ import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/refresh_client.dart';
-import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/initialization_progress.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart';
+import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_api_client.dart';
+import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
 import 'package:hr_app_flutter/features/services/data/rest_clients/service_api_client.dart';
@@ -57,6 +59,11 @@ mixin InitializationSteps {
         localeDataSource: localeDataSource,
       );
     },
+    'Firebase API': (progress) {
+      final firebaseApi = FirebaseApi();
+      firebaseApi.initNotifications();
+      progress.dependencies.firebaseApi = firebaseApi;
+    },
     'AuthRepository': (progress) async {
       final interceptedDio = Dio();
       final justDio = Dio(
@@ -87,7 +94,8 @@ mixin InitializationSteps {
 
       final authRepository = AuthRepositoryImpl(
           authStatusDataSource: oauthInterceptor,
-          authDataSource: authDataSource);
+          authDataSource: authDataSource,
+          firebaseApi: progress.dependencies.firebaseApi);
 
       progress.dependencies.authRepository = authRepository;
       progress.dependencies.restClient = restClient;
@@ -142,6 +150,15 @@ mixin InitializationSteps {
 
       progress.dependencies.leanProductionRepository = leanProductionRepository;
     },
+    'ScheduleBusRepository': (progress) async {
+      final scheduleBusProvider =
+          ScheduleBusProviderImpl(progress.dependencies.restClient);
+
+      final scheduleBusRepository =
+          ScheduleBusRepositoryImpl(scheduleBusProvider: scheduleBusProvider);
+
+      progress.dependencies.scheduleBusRepository = scheduleBusRepository;
+    },
     'AuthBloc': (progress) async {
       final authRepository = progress.dependencies.authRepository;
       final authBloc = AuthBLoC(authRepository: authRepository);
@@ -150,11 +167,6 @@ mixin InitializationSteps {
           .first;
       logger.verbose('Resolved auth state: $resolvedState');
       progress.dependencies.authBloc = authBloc;
-    },
-    'MainAppScreenViewCubit': (progress) async {
-      MainAppScreenViewCubit mainCubit = MainAppScreenViewCubit();
-
-      progress.dependencies.mainAppScreenViewCubit = mainCubit;
     },
     'UserBloc': (progress) async {
       final userRepository = progress.dependencies.userRepository;

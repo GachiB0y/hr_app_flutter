@@ -24,9 +24,15 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Выбранные фаилы:',
-            style: TextStyle(fontSize: 16),
+          TextButton(
+            onPressed: () => ChangeNotifierProvaider.read<
+                    ChangeNotifierProvaider<FilePickerCustomModel>,
+                    FilePickerCustomModel>(context)
+                ?.pickFile(),
+            child: const Text(
+              'Выбрать фаил',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
           SizedBox(
             height: 150,
@@ -62,10 +68,15 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
                             ),
                           ),
                         ]),
-                        Text(
-                          '${model?.fileNames[index]}',
-                          style: const TextStyle(
-                              fontSize: 16, overflow: TextOverflow.ellipsis),
+                        Flexible(
+                          child: Text(
+                            '${model?.fileNames[index]}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

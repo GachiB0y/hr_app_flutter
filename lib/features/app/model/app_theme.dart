@@ -10,14 +10,53 @@ final class AppTheme with Diagnosticable {
   /// {@macro app_theme}
   AppTheme({required this.mode, required this.seed})
       : darkTheme = ThemeData(
-          colorScheme: darkColorScheme,
-          brightness: Brightness.dark,
-          useMaterial3: true,
-        ),
-        lightTheme = ThemeData(
+          fontFamily: 'MontserratFont',
           colorScheme: lightColorScheme,
           brightness: Brightness.light,
           useMaterial3: true,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 27,
+                    fontWeight: FontWeight.w700),
+                titleMedium: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                titleSmall: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400), // Замените на нужный цвет
+              ),
+        ),
+
+        //TODO
+        // ТЕМНУЮ ТЕМУ УБРАЛИ НА ВРЕМЯ ПОКА НЕ НАРИСОУЮТ
+        // ThemeData(
+        //     fontFamily: 'MontserratFont',
+        //     colorScheme: darkColorScheme,
+        //     brightness: Brightness.dark,
+        //     useMaterial3: true,
+        //   ),
+        lightTheme = ThemeData(
+          fontFamily: 'MontserratFont',
+          colorScheme: lightColorScheme,
+          brightness: Brightness.light,
+          useMaterial3: true,
+          textTheme: ThemeData.light().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 27,
+                    fontWeight: FontWeight.w700),
+                titleMedium: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                titleSmall: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400), // Замените на нужный цвет
+              ),
         );
 
   /// The type of theme to use.
@@ -35,7 +74,7 @@ final class AppTheme with Diagnosticable {
   /// The default [AppTheme].
   static final defaultTheme = AppTheme(
     mode: ThemeMode.system,
-    seed: const Color(0xFF56BE64),
+    seed: const Color(0xFF33A936),
   );
 
   /// The [ThemeData] for this [AppTheme].
@@ -76,14 +115,14 @@ final class AppTheme with Diagnosticable {
 
 final lightColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
-  primary: const Color(0xFF56BE64),
+  primary: const Color(0xFF33A936),
   onPrimary: const Color(0xFFFFFFFF),
   primaryContainer: const Color(0xFF90FA98),
   onPrimaryContainer: const Color(0xFF002106),
   secondary: const Color(0xFF74DD7E),
   onSecondary: const Color(0xFFFFFFFF),
   secondaryContainer: const Color(0xFF90FA98),
-  onSecondaryContainer: const Color(0xFF002106),
+  onSecondaryContainer: const Color.fromARGB(255, 0, 0, 0),
   tertiary: const Color(0xFF74DD7E),
   onTertiary: const Color(0xFFFFFFFF),
   tertiaryContainer: const Color(0xFF90FA98),
@@ -92,33 +131,33 @@ final lightColorScheme = ColorScheme.fromSeed(
   errorContainer: const Color(0xFFFFDAD6),
   onError: const Color(0xFFFFFFFF),
   onErrorContainer: const Color(0xFF410002),
-  background: const Color.fromRGBO(238, 238, 238, 1),
+  background: const Color.fromARGB(255, 255, 255, 255),
   onBackground: const Color(0xFF002107),
   surface: const Color(0xFF74DD7E),
   onSurface: const Color(0xFF002107),
-  surfaceVariant: const Color(0xFFDEE5D9),
+  surfaceVariant: const Color.fromARGB(255, 255, 255, 255),
   onSurfaceVariant: const Color.fromARGB(255, 0, 0, 0),
-  outline: const Color(0xFF72796F),
+  outline: const Color.fromARGB(255, 147, 151, 146),
   onInverseSurface: const Color.fromARGB(255, 0, 0, 0),
   inverseSurface: const Color.fromARGB(255, 71, 76, 72),
   inversePrimary: const Color(0xFF74DD7E),
   shadow: const Color(0xFF000000),
-  surfaceTint: const Color(0xFF74DD7E),
-  outlineVariant: const Color(0xFFC2C9BD),
+  surfaceTint: const Color.fromARGB(255, 255, 255, 255),
+  outlineVariant: const Color.fromARGB(255, 252, 252, 251),
   scrim: const Color(0xFF000000),
-  seedColor: const Color(0xFF56BE64),
+  seedColor: const Color(0xFF33A936),
 );
 
 final darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  primary: const Color(0xFF56BE64),
+  primary: const Color(0xFF33A936),
   onPrimary: const Color(0xFFFFFFFF),
   primaryContainer: const Color(0xFF00531B),
   onPrimaryContainer: const Color(0xFF90FA98),
   secondary: const Color(0xFF74DD7E),
   onSecondary: const Color(0xFF003910),
   secondaryContainer: const Color(0xFF00531B),
-  onSecondaryContainer: const Color(0xFF90FA98),
+  onSecondaryContainer: const Color.fromARGB(255, 255, 255, 255),
   tertiary: const Color(0xFF74DD7E),
   onTertiary: const Color(0xFF003910),
   tertiaryContainer: const Color(0xFF00531B),
@@ -141,5 +180,5 @@ final darkColorScheme = ColorScheme.fromSeed(
   surfaceTint: const Color(0xFF74DD7E),
   outlineVariant: const Color(0xFF424940),
   scrim: const Color(0xFF000000),
-  seedColor: const Color(0xFF56BE64),
+  seedColor: const Color(0xFF33A936),
 );
