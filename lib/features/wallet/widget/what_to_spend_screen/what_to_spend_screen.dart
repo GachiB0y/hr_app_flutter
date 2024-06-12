@@ -111,7 +111,7 @@ class _ElementGrid extends StatelessWidget {
         Row(
           children: [
             Image.asset(
-              'assets/images/party-popper_big.png',
+              'assets/images/party_popper_big.webp',
               scale: 0.7,
             ),
             const SizedBox(

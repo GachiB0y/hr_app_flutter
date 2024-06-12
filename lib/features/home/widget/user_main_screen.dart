@@ -72,23 +72,10 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         Padding(
                           padding:
                               const EdgeInsets.only(left: 25.0, right: 25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Сервисы',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  HomeScope.of(context).state.onItemTapped(4);
-                                },
-                                child: Text(
-                                  'Смотреть все',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              ),
-                            ],
+                          child: RowElementTitleAndSeeAllBottonWidget(
+                            title: 'Сервисы',
+                            onTap: () =>
+                                HomeScope.of(context).state.onItemTapped(4),
                           ),
                         ),
                         SizedBox(
@@ -103,23 +90,10 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         Padding(
                           padding:
                               const EdgeInsets.only(left: 25.0, right: 25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'События компании',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Octopus.of(context).push(Routes.allNews);
-                                },
-                                child: Text(
-                                  'Смотреть все',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              ),
-                            ],
+                          child: RowElementTitleAndSeeAllBottonWidget(
+                            title: 'События компании',
+                            onTap: () =>
+                                Octopus.of(context).push(Routes.allNews),
                           ),
                         ),
                         SizedBox(
@@ -190,6 +164,51 @@ class _UserMainScreenState extends State<UserMainScreen> {
   }
 }
 
+class RowElementTitleAndSeeAllBottonWidget extends StatelessWidget {
+  const RowElementTitleAndSeeAllBottonWidget(
+      {super.key, required this.title, this.onTap});
+  final String title;
+  final void Function()? onTap;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(4.0),
+            onTap: onTap,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Смотреть все',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  size: 15,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class BirthDayInfoRectangleWidget extends StatelessWidget {
   const BirthDayInfoRectangleWidget({
     super.key,
@@ -231,8 +250,6 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                   Octopus.of(context).push(Routes.infoBirthDay);
                 },
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Дни рожения',
@@ -242,13 +259,13 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                           .copyWith(fontSize: 11),
                     ),
                     const SizedBox(
-                      height: 6.0,
+                      height: 3.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/party_popper.png',
+                          'assets/images/party_popper.webp',
                         ),
                         const SizedBox(
                           width: 8,
@@ -325,13 +342,13 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                           .copyWith(fontSize: 11),
                     ),
                     const SizedBox(
-                      height: 6.0,
+                      height: 3.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/rookies.png',
+                          'assets/images/rookies.webp',
                         ),
                         const SizedBox(
                           width: 8,
@@ -408,13 +425,13 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                           .copyWith(fontSize: 11),
                     ),
                     const SizedBox(
-                      height: 6.0,
+                      height: 3.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/grass_coin_3d.png',
+                          'assets/images/grass_coin_3d.webp',
                         ),
                         const SizedBox(
                           width: 8,
@@ -486,7 +503,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                   if (service.permissions.createService) {
                     groupWidgets.add(
                       ServiceElementWidget(
-                        imagePath: 'assets/images/create_news.png',
+                        imagePath: 'assets/images/create_news.webp',
                         idHandler: 1,
                         title: 'Создать новость',
                         isRow: isRow,
@@ -497,7 +514,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                   if (service.permissions.approveService) {
                     groupWidgets.add(
                       ServiceElementWidget(
-                        imagePath: 'assets/images/create_news.png',
+                        imagePath: 'assets/images/create_news.webp',
                         idHandler: 2,
                         title: 'Модерация новостей',
                         isRow: isRow,
@@ -508,7 +525,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                 } else if (service.id == 24) {
                   groupWidgets.add(
                     ServiceElementWidget(
-                      imagePath: 'assets/images/statements.png',
+                      imagePath: 'assets/images/statements.webp',
                       title: service.name,
                       isRow: isRow,
                       service: service,
@@ -517,7 +534,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                 } else if (service.id == 25) {
                   groupWidgets.add(
                     ServiceElementWidget(
-                      imagePath: 'assets/images/airplane.png',
+                      imagePath: 'assets/images/airplane.webp',
                       title: service.name,
                       isRow: isRow,
                       service: service,

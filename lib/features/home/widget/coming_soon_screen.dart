@@ -19,7 +19,7 @@ class CominSoonScreen extends StatelessWidget {
               ),
               Center(
                 child: Image.asset(
-                  'assets/images/coming_soon.png',
+                  'assets/images/coming_soon.webp',
                 ),
               ),
               Center(

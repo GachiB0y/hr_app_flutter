@@ -27,7 +27,7 @@ class ServiceElementWidget extends StatefulWidget {
 }
 
 class _ServiceElementWidgetState extends State<ServiceElementWidget> {
-  get imagePath => widget.imagePath;
+  String? get imagePath => widget.imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +75,8 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             padding: const EdgeInsets.only(top: 10.0, left: 16.0),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Image.asset(
-                imagePath ?? 'assets/images/note.png',
-              ),
+              child:
+                  Image.asset(imagePath ?? 'assets/images/grass_coin_3d.webp'),
             ),
           ),
         ),

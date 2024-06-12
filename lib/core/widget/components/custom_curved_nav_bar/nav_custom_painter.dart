@@ -16,9 +16,19 @@ class NavCustomPainter extends CustomPainter {
   double radius = 20;
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
+    // final paint = Paint()
+    //   ..color = color
+
+    //   ..style = PaintingStyle.fill;
+    Paint paint = Paint()..style = PaintingStyle.fill;
+
+    Shader shader = LinearGradient(
+      colors: [color, const Color(0xFF33A970)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    ).createShader(const Rect.fromLTWH(0, 0, 200, 200));
+
+    paint.shader = shader;
 
     final path = Path()
       ..moveTo(0, 0)

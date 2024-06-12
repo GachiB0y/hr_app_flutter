@@ -82,11 +82,16 @@ class CustomNavBarElementWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
+          size: 25,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
+        const SizedBox(height: 7),
         Text(
           text,
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 10,
+          ),
         ),
       ],
     );

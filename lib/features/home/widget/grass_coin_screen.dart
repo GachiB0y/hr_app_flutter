@@ -158,22 +158,22 @@ class _OperationsWithCoinScrollBarWidgetState
     extends State<OperationsWithCoinScrollBarWidget> {
   final List<Widget> groupWidgets = [
     const ElementOperationsWithCoinsWidget(
-      imagePath: 'assets/images/hot-beverage.png',
+      imagePath: 'assets/images/hot-beverage.webp',
       index: 0,
       title: 'На что потратить?',
     ),
     const ElementOperationsWithCoinsWidget(
-      imagePath: 'assets/images/person-shrugging.png',
+      imagePath: 'assets/images/person-shrugging.webp',
       index: 1,
       title: 'Как получить больше?',
     ),
     const ElementOperationsWithCoinsWidget(
-      imagePath: 'assets/images/recycling-symbol.png',
+      imagePath: 'assets/images/recycling-symbol.webp',
       index: 2,
       title: 'Обменять на пропуск',
     ),
     const ElementOperationsWithCoinsWidget(
-      imagePath: 'assets/images/party-popper_big.png',
+      imagePath: 'assets/images/party-popper_big.webp',
       index: 3,
       title: 'Подарить\n другу',
     ),
@@ -420,7 +420,7 @@ class _TralingHistoryWidgetState extends State<TralingHistoryWidget> {
           colorFilter: ColorFilter.mode(
               Theme.of(context).colorScheme.primary, BlendMode.srcATop),
           child: Image.asset(
-            'assets/images/grass_icon_main.png',
+            'assets/images/grass_icon_main.webp',
             width: 15,
             height: 15,
           ),
