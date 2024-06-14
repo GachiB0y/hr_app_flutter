@@ -51,13 +51,17 @@ class Avatar extends StatelessWidget {
             if (state.data != null) {
               id = state.data!.authUser.autoCard.toString();
             }
-            Octopus.of(context).setState((stateRoute) => stateRoute
-              ..add(Routes.profileUser.node(
-                arguments: <String, String>{
-                  'id': id,
-                  'isSelfUser': 'true',
-                },
-              )));
+            context.octopus.setState(
+              (state) => state
+                ..findByName('user-main-tab')?.add(
+                  Routes.profileUser.node(
+                    arguments: <String, String>{
+                      'id': id,
+                      'isSelfUser': 'true',
+                    },
+                  ),
+                ),
+            );
           },
           child: (state.data == null ||
                   state is UserState$Processing ||

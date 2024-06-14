@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:hr_app_flutter/core/router/authentication_guard.dart';
+import 'package:hr_app_flutter/core/router/home_gurad.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart';
@@ -42,7 +43,7 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
           refresh: LoggedListenable(dependencies.authBloc.stream),
         ),
         // Home route should be always on top.
-        // HomeGuard(),
+        HomeGuard(),
         // Check shop tabs with nested navigation.
         // ShopGuard(cache: shopTabCache),
       ],

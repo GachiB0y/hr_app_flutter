@@ -63,9 +63,9 @@ class ImageLogoWidget extends StatelessWidget {
           Positioned(
             left: 69.0,
             top: 109.0,
-            child: Image.asset('assets/images/leaf.png'),
+            child: Image.asset('assets/images/leaf.webp'),
           ),
-          Image.asset('assets/images/grass_with_love.png'),
+          Image.asset('assets/images/grass_with_love.webp'),
         ]),
       ),
     );

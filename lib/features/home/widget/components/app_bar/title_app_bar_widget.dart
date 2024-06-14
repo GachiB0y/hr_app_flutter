@@ -38,9 +38,6 @@ class TitleAppBarWidget extends StatelessWidget {
                     maxLines: 2,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
                   Row(
                     children: [
                       DecoratedBox(
@@ -79,7 +76,7 @@ class TitleAppBarWidget extends StatelessWidget {
                           stateUserBloc.data!.authUser.email ?? '',
                           style: TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             color: Theme.of(context).colorScheme.outline,
                           ),
                         ),

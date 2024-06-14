@@ -60,7 +60,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 const SizedBox(
                   height: 70,
                 ),
-                Image.asset('assets/images/logo_grass_up.png'),
+                Image.asset('assets/images/logo_grass_up.webp'),
                 const SizedBox(
                   height: 70,
                 ),
