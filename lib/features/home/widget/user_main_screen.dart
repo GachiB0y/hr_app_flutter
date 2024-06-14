@@ -16,6 +16,17 @@ import '../../wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import '../../news/bloc/caregory_bloc.dart/category_bloc.dart';
 import '../../news/bloc/event_entity_bloc/event_entity_bloc.dart';
 
+class UserMainBucket extends StatelessWidget {
+  const UserMainBucket({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BucketNavigator(
+      bucket: '${Routes.userMain.name}-tab',
+    );
+  }
+}
+
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({super.key});
 

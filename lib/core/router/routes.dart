@@ -100,7 +100,7 @@ enum Routes with OctopusRoute {
   Widget builder(BuildContext context, OctopusState state, OctopusNode node) =>
       switch (this) {
         Routes.signin => const AuthenticationFormScreen(),
-        Routes.home => const HomeScope(child: HomeScreen()),
+        Routes.home => const HomeScreen(),
         Routes.userMain => const UserMainScreen(),
         Routes.coin => const GrassCoinScreen(),
         Routes.services => const ServicesScreen(),
