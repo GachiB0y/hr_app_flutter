@@ -39,7 +39,7 @@ class ExchangeCoinForPass extends StatelessWidget {
                       height: 8.0,
                     ),
                     Image.asset(
-                      'assets/images/bracer_grass.png',
+                      'assets/images/bracer_grass.webp',
                     ),
                     const SizedBox(
                       height: 13.0,

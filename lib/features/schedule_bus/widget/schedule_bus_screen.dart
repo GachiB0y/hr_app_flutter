@@ -219,7 +219,7 @@ class _BodyContentWidget extends StatelessWidget {
           height: 16,
         ),
         Image.asset(
-          'assets/images/bus_shcedule.png',
+          'assets/images/bus_shcedule.webp',
         ),
         const SizedBox(
           height: 30,

@@ -66,8 +66,9 @@ class ExmapleNewsScreen extends StatelessWidget {
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
-                          height: 274,
-                          child: Image.file(newsModel.file!, fit: BoxFit.fill)),
+                          // height: 274,
+                          child:
+                              Image.file(newsModel.file!, fit: BoxFit.contain)),
                     ),
                     const SliverPadding(padding: EdgeInsets.only(bottom: 43)),
                     SliverPadding(
@@ -316,6 +317,7 @@ class _WriteDescriptionNewsScreenState
                 child: TextFormField(
                   maxLines: 12,
                   minLines: 5,
+                  maxLength: 1024,
                   controller: _descriptionController,
                   decoration: InputDecoration(
                     fillColor: const Color(0xfff5f5f5),

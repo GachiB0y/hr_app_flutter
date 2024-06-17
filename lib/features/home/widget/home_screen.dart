@@ -19,48 +19,72 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Shimmer(
-        child: IndexedStack(
-          index: HomeScope.of(context).state.tab.index,
-          children: const <Widget>[
-            CompanyScreen(),
-            GrassCoinScreen(),
-            UserMainScreen(),
-            EducationScreen(),
-            ServicesScreen(),
-          ],
-        ),
+    return const HomeScope(
+      child: Scaffold(
+        body: BodyHomeWidget(),
+        bottomNavigationBar: BottomBarHomeWidget(),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        color: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.onTertiary,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        index: HomeScope.of(
-          context,
-        ).state.tab.index,
-        onTap: HomeScope.of(context, listen: false).state.onItemTapped,
-        items: const [
-          CustomNavBarElementWidget(
-            icon: HRAppCustomIcon.iconExclamationMark,
-            text: 'Компания',
-          ),
-          CustomNavBarElementWidget(
-            icon: HRAppCustomIcon.iconCoin,
-            text: 'Коины',
-          ),
-          CustomNavBarElementWidget(
-            icon: HRAppCustomIcon.iconHome,
-            text: 'Главная',
-          ),
-          CustomNavBarElementWidget(
-            icon: HRAppCustomIcon.iconEducation,
-            text: 'Обучение',
-          ),
-          CustomNavBarElementWidget(
-            icon: HRAppCustomIcon.iconService,
-            text: 'Сервисы',
-          ),
+    );
+  }
+}
+
+class BottomBarHomeWidget extends StatelessWidget {
+  const BottomBarHomeWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CurvedNavigationBar(
+      color: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
+      selectedItemColor: Theme.of(context).colorScheme.primary,
+      index: HomeScope.of(
+        context,
+      ).state.tab.index,
+      onTap: HomeScope.of(context, listen: false).state.onItemTapped,
+      items: const [
+        CustomNavBarElementWidget(
+          icon: HRAppCustomIcon.iconExclamationMark,
+          text: 'Компания',
+        ),
+        CustomNavBarElementWidget(
+          icon: HRAppCustomIcon.iconCoin,
+          text: 'Коины',
+        ),
+        CustomNavBarElementWidget(
+          icon: HRAppCustomIcon.iconHome,
+          text: 'Главная',
+        ),
+        CustomNavBarElementWidget(
+          icon: HRAppCustomIcon.iconEducation,
+          text: 'Обучение',
+        ),
+        CustomNavBarElementWidget(
+          icon: HRAppCustomIcon.iconService,
+          text: 'Сервисы',
+        ),
+      ],
+    );
+  }
+}
+
+class BodyHomeWidget extends StatelessWidget {
+  const BodyHomeWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer(
+      child: IndexedStack(
+        index: HomeScope.of(context).state.tab.index,
+        children: const <Widget>[
+          CompanyScreen(),
+          GrassCoinScreen(),
+          UserMainBucket(),
+          EducationScreen(),
+          ServicesScreen(),
         ],
       ),
     );
@@ -82,11 +106,16 @@ class CustomNavBarElementWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
+          size: 25,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
+        const SizedBox(height: 7),
         Text(
           text,
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 10,
+          ),
         ),
       ],
     );
