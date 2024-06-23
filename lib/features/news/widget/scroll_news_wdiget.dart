@@ -48,11 +48,24 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
 
                 return GestureDetector(
                   onTap: () {
-                    context.octopus.setState((stateRoute) => stateRoute
-                      ..add(Routes.aboutNews.node(
-                        arguments: <String, String>{'id': item.id.toString()},
-                      )));
+                    context.octopus.setState(
+                      (state) => state
+                        ..findByName('user-main-tab')?.add(
+                          Routes.aboutNews.node(
+                            arguments: <String, String>{
+                              'id': item.id.toString()
+                            },
+                          ),
+                        ),
+                    );
                   },
+
+                  // {
+                  //   context.octopus.setState((stateRoute) => stateRoute
+                  //     ..add(Routes.aboutNews.node(
+                  //       arguments: <String, String>{'id': item.id.toString()},
+                  //     )));
+                  // },
                   child: Padding(
                     padding:
                         EdgeInsets.only(right: 9.0, left: index == 0 ? 25 : 0),

@@ -7,9 +7,11 @@ class ElementServiceToRouteWidget extends StatelessWidget {
     super.key,
     required this.route,
     required this.titleService,
+    required this.nameParent,
   });
 
   final Routes route;
+  final String nameParent;
   final String titleService;
 
   @override
@@ -17,38 +19,47 @@ class ElementServiceToRouteWidget extends StatelessWidget {
     return TextButton(
       onPressed: () {
         switch (route) {
-          case Routes.createLeanProductionScreen:
+          case Routes.writeProblemLeanProductionScreen:
             {
-              context.octopus.setState((state) {
-                final node = state.findByName('create-lean-production');
-                if (node == null) {
-                  return state
-                    ..add(OctopusNode.mutable('create-lean-production',
-                        children: [
-                          Routes.writeProblemLeanProductionScreen.node(),
-                        ]));
-                }
+              // context.octopus.setState((state) {
+              //   final node = state.findByName('create-lean-production');
+              //   if (node == null) {
+              //     return state
+              //       ..add(OctopusNode.mutable('create-lean-production',
+              //           children: [
+              //             Routes.writeProblemLeanProductionScreen.node(),
+              //           ]));
+              //   }
 
-                return state;
-              });
+              //   return state;
+              // });
+
+              context.octopus.setState(
+                (state) => state
+                  ..findByName(nameParent)?.add(
+                      OctopusNode.mutable('create-lean-production', children: [
+                    route.node(),
+                  ])),
+              );
             }
-          case Routes.createNews:
+          case Routes.createNewsType:
             {
-              context.octopus.setState((state) {
-                final node = state.findByName('create-news');
-                if (node == null) {
-                  return state
-                    ..add(OctopusNode.mutable('create-news', children: [
-                      Routes.createNewsType.node(),
-                    ]));
-                }
-
-                return state;
-              });
+              context.octopus.setState(
+                (state) => state
+                  ..findByName(nameParent)
+                      ?.add(OctopusNode.mutable('create-news', children: [
+                    route.node(),
+                  ])),
+              );
             }
           default:
             {
-              Octopus.of(context).push(route);
+              context.octopus.setState(
+                (state) => state
+                  ..findByName(nameParent)?.add(
+                    route.node(),
+                  ),
+              );
             }
         }
       },

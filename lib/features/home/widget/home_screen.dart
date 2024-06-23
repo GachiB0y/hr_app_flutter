@@ -80,11 +80,12 @@ class BodyHomeWidget extends StatelessWidget {
       child: IndexedStack(
         index: HomeScope.of(context).state.tab.index,
         children: const <Widget>[
-          CompanyScreen(),
-          GrassCoinScreen(),
+          // CompanyBucket(),
+          EducationBucket(),
+          GrassCoinBucket(),
           UserMainBucket(),
-          EducationScreen(),
-          ServicesScreen(),
+          EducationBucket(),
+          ServiceBucket(),
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:intl/intl.dart';
-import 'package:octopus/octopus.dart';
 import '../bloc/one_news_bloc/one_news_bloc.dart';
 
 class AboutNewsScreen extends StatefulWidget {
@@ -55,20 +54,14 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                     child: CustomScrollView(
                       slivers: [
                         SliverAppBar(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+                          leading: const Padding(
+                            padding: EdgeInsets.only(top: 8.0, left: 4.0),
                             child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color.fromARGB(136, 255, 255, 255)),
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios_new,
-                                  ),
-                                  onPressed: () {
-                                    Octopus.of(context).pop();
-                                  },
-                                )),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromARGB(136, 255, 255, 255)),
+                              child: BackButton(),
+                            ),
                           ),
                           expandedHeight: 274,
                           flexibleSpace: FlexibleSpaceBar(

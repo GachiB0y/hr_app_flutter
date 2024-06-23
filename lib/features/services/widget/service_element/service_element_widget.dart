@@ -14,6 +14,7 @@ class ServiceElementWidget extends StatefulWidget {
     required this.service,
     this.idHandler,
     this.imagePath,
+    required this.tabName,
   });
 
   final String? imagePath;
@@ -21,6 +22,7 @@ class ServiceElementWidget extends StatefulWidget {
   final int? idHandler;
   final Service service;
   final bool isRow;
+  final String tabName;
 
   @override
   State<ServiceElementWidget> createState() => _ServiceElementWidgetState();
@@ -87,29 +89,49 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             child: InkWell(
               borderRadius: BorderRadius.circular(radius),
               onTap: () async {
+                late final Routes route;
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
                     widget.idHandler == 1) {
-                  context.octopus.setState((state) {
-                    final node = state.findByName('create-news');
-                    if (node == null) {
-                      return state
-                        ..add(OctopusNode.mutable('create-news', children: [
-                          Routes.createNewsType.node(),
-                        ]));
-                    }
+                  // context.octopus.setState((state) {
+                  //   final node = state.findByName('create-news');
+                  //   if (node == null) {
+                  //     return state
+                  //       ..add(OctopusNode.mutable('create-news', children: [
+                  //         Routes.createNewsType.node(),
+                  //       ]));
+                  //   }
 
-                    return state;
-                  });
+                  //   return state;
+                  // });
+
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName(widget.tabName)
+                          ?.add(OctopusNode.mutable('create-news', children: [
+                        Routes.createNewsType.node(),
+                      ])),
+                  );
+                  return;
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
-                  Octopus.of(context).push(Routes.approveNews);
+                  route = Routes.approveNews;
+                  // Octopus.of(context).push(Routes.approveNews);
                 } else if (widget.service.id == 25) {
-                  Octopus.of(context).push(Routes.scheduleBus);
+                  // Octopus.of(context).push(Routes.scheduleBus);
+                  route = Routes.scheduleBus;
                 } else if (widget.service.id == 24) {
-                  Octopus.of(context).push(Routes.statementsForm);
+                  // Octopus.of(context).push(Routes.statementsForm);
+                  route = Routes.statementsForm;
                 }
+
+                context.octopus.setState(
+                  (state) => state
+                    ..findByName(widget.tabName)?.add(
+                      route.node(),
+                    ),
+                );
               },
             ),
           ),

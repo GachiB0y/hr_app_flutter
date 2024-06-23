@@ -40,15 +40,18 @@ class CominSoonScreen extends StatelessWidget {
               const SizedBox(
                 height: 14,
               ),
-              const ElementServiceToRouteWidget(
-                route: Routes.createLeanProductionScreen,
+              ElementServiceToRouteWidget(
+                nameParent: '${Routes.education.name}-tab',
+                route: Routes.writeProblemLeanProductionScreen,
                 titleService: 'Предложить идею',
               ),
-              const ElementServiceToRouteWidget(
+              ElementServiceToRouteWidget(
+                nameParent: '${Routes.education.name}-tab',
                 route: Routes.searchUser,
                 titleService: 'Найти сотрудника',
               ),
-              const ElementServiceToRouteWidget(
+              ElementServiceToRouteWidget(
+                nameParent: '${Routes.education.name}-tab',
                 route: Routes.scheduleBus,
                 titleService: 'Узнать маршруты автобуса',
               ),

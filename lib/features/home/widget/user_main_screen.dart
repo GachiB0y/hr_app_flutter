@@ -91,10 +91,12 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 7.0,
-                          child: const CustomScrollView(
+                          child: CustomScrollView(
                             scrollDirection: Axis.horizontal,
                             slivers: <Widget>[
-                              ScrollBarServiceWidget(),
+                              ScrollBarServiceWidget(
+                                tabName: '${Routes.userMain.name}-tab',
+                              ),
                             ],
                           ),
                         ),
@@ -103,8 +105,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
                               const EdgeInsets.only(left: 25.0, right: 25.0),
                           child: RowElementTitleAndSeeAllBottonWidget(
                             title: 'События компании',
-                            onTap: () =>
-                                Octopus.of(context).push(Routes.allNews),
+                            onTap: () {
+                              context.octopus.setState(
+                                (state) => state
+                                  ..findByName('user-main-tab')?.add(
+                                    Routes.allNews.node(),
+                                  ),
+                              );
+                            },
                           ),
                         ),
                         SizedBox(
@@ -135,29 +143,32 @@ class _UserMainScreenState extends State<UserMainScreen> {
                         const SizedBox(
                           height: 8,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                             left: 25.0,
                           ),
                           child: ElementServiceToRouteWidget(
-                            route: Routes.createLeanProductionScreen,
+                            nameParent: '${Routes.userMain.name}-tab',
+                            route: Routes.writeProblemLeanProductionScreen,
                             titleService: 'Предложить идею',
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                             left: 25.0,
                           ),
                           child: ElementServiceToRouteWidget(
+                            nameParent: '${Routes.userMain.name}-tab',
                             route: Routes.searchUser,
                             titleService: 'Найти сотрудника',
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                             left: 25.0,
                           ),
                           child: ElementServiceToRouteWidget(
+                            nameParent: '${Routes.userMain.name}-tab',
                             route: Routes.scheduleBus,
                             titleService: 'Узнать маршруты автобуса',
                           ),
@@ -258,7 +269,12 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                   Radius.circular(radius),
                 ),
                 onTap: () {
-                  Octopus.of(context).push(Routes.infoBirthDay);
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName('user-main-tab')?.add(
+                        Routes.infoBirthDay.node(),
+                      ),
+                  );
                 },
                 child: Column(
                   children: [
@@ -341,7 +357,12 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                   Radius.circular(radius),
                 ),
                 onTap: () {
-                  Octopus.of(context).push(Routes.rookieInfo);
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName('user-main-tab')?.add(
+                        Routes.rookieInfo.node(),
+                      ),
+                  );
                 },
                 child: Column(
                   children: [
@@ -470,7 +491,8 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
 }
 
 class ScrollBarServiceWidget extends StatefulWidget {
-  const ScrollBarServiceWidget({super.key});
+  const ScrollBarServiceWidget({super.key, required this.tabName});
+  final String tabName;
 
   @override
   State<ScrollBarServiceWidget> createState() => _ScrollBarServiceWidgetState();
@@ -514,6 +536,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                   if (service.permissions.createService) {
                     groupWidgets.add(
                       ServiceElementWidget(
+                        tabName: widget.tabName,
                         imagePath: 'assets/images/create_news.webp',
                         idHandler: 1,
                         title: 'Создать новость',
@@ -525,6 +548,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                   if (service.permissions.approveService) {
                     groupWidgets.add(
                       ServiceElementWidget(
+                        tabName: widget.tabName,
                         imagePath: 'assets/images/create_news.webp',
                         idHandler: 2,
                         title: 'Модерация новостей',
@@ -536,6 +560,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                 } else if (service.id == 24) {
                   groupWidgets.add(
                     ServiceElementWidget(
+                      tabName: widget.tabName,
                       imagePath: 'assets/images/statements.webp',
                       title: service.name,
                       isRow: isRow,
@@ -545,6 +570,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                 } else if (service.id == 25) {
                   groupWidgets.add(
                     ServiceElementWidget(
+                      tabName: widget.tabName,
                       imagePath: 'assets/images/airplane.webp',
                       title: service.name,
                       isRow: isRow,

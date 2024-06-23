@@ -8,7 +8,10 @@ class HomeGuard extends OctopusGuard {
   HomeGuard();
 
   static final String _userMainTab = '${Routes.userMain.name}-tab';
-  // static final String _basketTab = '${homeTabsEnum.basket.name}-tab';
+  static final String _coinTab = '${Routes.coin.name}-tab';
+  static final String _servicesTab = '${Routes.services.name}-tab';
+  static final String _educationTab = '${Routes.education.name}-tab';
+  static final String _companyTab = '${Routes.company.name}-tab';
 
   @override
   FutureOr<OctopusState> call(
@@ -21,21 +24,47 @@ class HomeGuard extends OctopusGuard {
 
     // Remove all nested routes except of `*-tab`.
     home.removeWhere(
-      (node) => node.name != _userMainTab,
-      // && node.name != _basketTab,
+      (node) =>
+          node.name != _userMainTab &&
+          node.name != _coinTab &&
+          node.name != _servicesTab &&
+          node.name != _educationTab &&
+          node.name != _companyTab,
       recursive: false,
     );
-    // Upsert catalog tab node if not exists.
+    // Upsert userMain tab node if not exists.
     final userMain =
         home.putIfAbsent(_userMainTab, () => OctopusNode.mutable(_userMainTab));
     if (!userMain.hasChildren) {
       userMain.add(OctopusNode.mutable(Routes.userMain.name));
     }
-    // // Upsert basket tab node if not exists.
-    // final basket =
-    //     home.putIfAbsent(_basketTab, () => OctopusNode.mutable(_basketTab));
-    // if (!basket.hasChildren)
-    //   basket.add(OctopusNode.mutable(Routes.basket.name));
+    // Upsert coin tab node if not exists.
+    final coin =
+        home.putIfAbsent(_coinTab, () => OctopusNode.mutable(_coinTab));
+    if (!coin.hasChildren) {
+      coin.add(OctopusNode.mutable(Routes.coin.name));
+    }
+
+    // Upsert services tab node if not exists.
+    final services =
+        home.putIfAbsent(_servicesTab, () => OctopusNode.mutable(_servicesTab));
+    if (!services.hasChildren) {
+      services.add(OctopusNode.mutable(Routes.services.name));
+    }
+
+    // Upsert education tab node if not exists.
+    final education = home.putIfAbsent(
+        _educationTab, () => OctopusNode.mutable(_educationTab));
+    if (!education.hasChildren) {
+      education.add(OctopusNode.mutable(Routes.education.name));
+    }
+
+    // Upsert company tab node if not exists.
+    final company =
+        home.putIfAbsent(_companyTab, () => OctopusNode.mutable(_companyTab));
+    if (!company.hasChildren) {
+      company.add(OctopusNode.mutable(Routes.company.name));
+    }
 
     return state;
   }
