@@ -571,7 +571,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
                   groupWidgets.add(
                     ServiceElementWidget(
                       tabName: widget.tabName,
-                      imagePath: 'assets/images/airplane.webp',
+                      imagePath: 'assets/images/bus.png',
                       title: service.name,
                       isRow: isRow,
                       service: service,
