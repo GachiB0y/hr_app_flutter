@@ -12,25 +12,24 @@ final class RefreshClientImpl implements RefreshClient {
 
   @override
   Future<TokenPair> refreshToken(String refreshToken) async {
-    final response = await client.post<Map<String, Object?>>(
-      '/auth/switch_token',
-      queryParameters: {'token': refreshToken},
-    );
-    if (response.statusCode == 401) {
+    try {
+      final response = await client.post<Map<String, Object?>>(
+        '/auth/switch_token',
+        queryParameters: {'token': refreshToken},
+      );
+      if (response.data
+          case {
+            'access_token': final String accessToken,
+            'refresh_token': final String refreshToken
+          }) {
+        return (
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        );
+      }
+      throw const RevokeTokenException();
+    } catch (e) {
       throw const RevokeTokenException();
     }
-
-    if (response.data
-        case {
-          'access_token': final String accessToken,
-          'refresh_token': final String refreshToken
-        }) {
-      return (
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      );
-    }
-
-    throw FormatException('Invalid response format. $response');
   }
 }

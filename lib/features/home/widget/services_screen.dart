@@ -4,6 +4,18 @@ import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/home/widget/components/service_element_to_route/service_element_to_route.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/service_bloc/service_bloc.dart';
+import 'package:octopus/octopus.dart';
+
+class ServiceBucket extends StatelessWidget {
+  const ServiceBucket({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BucketNavigator(
+      bucket: '${Routes.services.name}-tab',
+    );
+  }
+}
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({
@@ -54,7 +66,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   state.data!.first.permissions.createService == true) {
                 // Если можно создаввать новость, то даем такую возможность
                 titleService.add('Предложить новость');
-                routes.add(Routes.createNews);
+                routes.add(Routes.createNewsType);
               }
               if (state.data != null &&
                   state.data!.first.id == 22 &&
@@ -81,10 +93,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 7.0,
-                    child: const CustomScrollView(
+                    child: CustomScrollView(
                       scrollDirection: Axis.horizontal,
                       slivers: <Widget>[
-                        ScrollBarServiceWidget(),
+                        ScrollBarServiceWidget(
+                          tabName: '${Routes.services.name}-tab',
+                        ),
                       ],
                     ),
                   ),
@@ -119,7 +133,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     child: CustomServiceBlockWidget(
                       titleBlockService: 'Бережливое',
                       titleService: ['Предложить идею'],
-                      routes: [Routes.createLeanProductionScreen],
+                      routes: [Routes.writeProblemLeanProductionScreen],
                     ),
                   ),
                   const SizedBox(
@@ -183,6 +197,7 @@ class CustomServiceBlockWidget extends StatelessWidget {
           itemCount: titleService.length,
           itemBuilder: (context, index) {
             return ElementServiceToRouteWidget(
+              nameParent: '${Routes.services.name}-tab',
               route: routes[index],
               titleService: titleService[index],
             );

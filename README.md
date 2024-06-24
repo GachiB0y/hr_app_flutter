@@ -1,16 +1,40 @@
-# hr_app_flutter
+# HRApp (hr_app_flutter)
 
-A new Flutter project.
+## Обзор проекта
 
-## Getting Started
+- **State management:** [BLoC](https://bloclibrary.dev/) with [concurrency](https://pub.dev/documentation/bloc_concurrency/latest/index.html)
+- **Dependency Injection:** DI Container
+- **Navigation:** [Octopus](https://pub.dev/packages/octopus/)
+- **Networking:** [Dio](https://pub.dev/documentation/dio/latest/)
+- **Storage:** [SharedPreferences](https://docs.flutter.dev/cookbook/persistence/key-value)
+- **Logging:** [Logging](https://pub.dev/documentation/logging/latest/)
+- **Code-generation:** [Build-Runner](https://dart.dev/tools/build_runner) + [Freezed](https://pub.dev/packages/freezed)
 
-This project is a starting point for a Flutter application.
+## Структура проекта
 
-A few resources to get you started if this is your first Flutter project:
+### Структура приложения
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- `src` - общая директория
+  - `core` - директория в которой храняться общие зависимости
+  - `features` - директория в которой храняться фичи
+- `main.dart` входные точки в приложение
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Общая стуктура
+
+- `components` - обертки над БД, RestClient, Interceptor
+- `constant` - константы, в оснвном иконки через шрифт
+- `controller` - обертки над стейт-менеджмент, самописные хендлеры и т.д
+- `localization` - локализация проекта
+- `model` - общие модели
+- `router` - слой навигации & роутинга
+- `utils` - слой хранения инструментария & утилит
+- `widget` - общие виджеты
+
+### Структура фичи
+
+- `data` - слой данных
+  - `repo` - контракты/ипмплиментация репозиториев
+  - `rest_clients` - сущности для работы с API
+- `bloc` - стейт-менеджмент
+- `models` - стейт-менеджмент
+- `widget` - используемые в фичи виджеты/ экраны

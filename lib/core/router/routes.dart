@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';

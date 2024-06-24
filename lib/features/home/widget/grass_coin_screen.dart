@@ -6,6 +6,17 @@ import 'package:octopus/octopus.dart';
 import '../../wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import '../../wallet/model/wallet/wallet.dart';
 
+class GrassCoinBucket extends StatelessWidget {
+  const GrassCoinBucket({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BucketNavigator(
+      bucket: '${Routes.coin.name}-tab',
+    );
+  }
+}
+
 class GrassCoinScreen extends StatefulWidget {
   const GrassCoinScreen({super.key});
 
@@ -273,17 +284,29 @@ class ElementOperationsWithCoinsWidget extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(radius),
               onTap: () async {
+                late final Routes route;
                 if (index == 0) {
                   /// Маршрут на что потратить коины?
-                  Octopus.of(context).push(Routes.whatToSpendScreen);
+
+                  route = Routes.whatToSpendScreen;
                 } else if (index == 1) {
 //TODO маршрут на как получить больше?
                 } else if (index == 2) {
                   /// Маршрут на обменять на пропуск
-                  Octopus.of(context).push(Routes.exchangeCoinForPass);
+
+                  route = Routes.exchangeCoinForPass;
                 } else if (index == 3) {
                   /// Маршрут на подарить другу
-                  Octopus.of(context).push(Routes.searchFriendAndSendCoins);
+
+                  route = Routes.searchFriendAndSendCoins;
+                }
+                {
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName('coin-tab')?.add(
+                        route.node(),
+                      ),
+                  );
                 }
               },
             ),
