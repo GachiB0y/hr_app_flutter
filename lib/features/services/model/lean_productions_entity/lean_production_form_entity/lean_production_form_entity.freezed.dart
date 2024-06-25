@@ -32,7 +32,7 @@ mixin _$LeanProductionFormEntity {
   String get solution => throw _privateConstructorUsedError;
   String get expenses => throw _privateConstructorUsedError;
   String get benefit => throw _privateConstructorUsedError;
-  List<String> get paths => throw _privateConstructorUsedError;
+  List<String>? get paths => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +55,7 @@ abstract class $LeanProductionFormEntityCopyWith<$Res> {
       String solution,
       String expenses,
       String benefit,
-      List<String> paths});
+      List<String>? paths});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$LeanProductionFormEntityCopyWithImpl<$Res,
     Object? solution = null,
     Object? expenses = null,
     Object? benefit = null,
-    Object? paths = null,
+    Object? paths = freezed,
   }) {
     return _then(_value.copyWith(
       realized: null == realized
@@ -115,10 +115,10 @@ class _$LeanProductionFormEntityCopyWithImpl<$Res,
           ? _value.benefit
           : benefit // ignore: cast_nullable_to_non_nullable
               as String,
-      paths: null == paths
+      paths: freezed == paths
           ? _value.paths
           : paths // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -141,7 +141,7 @@ abstract class _$$_LeanProductionFormEntityCopyWith<$Res>
       String solution,
       String expenses,
       String benefit,
-      List<String> paths});
+      List<String>? paths});
 }
 
 /// @nodoc
@@ -164,7 +164,7 @@ class __$$_LeanProductionFormEntityCopyWithImpl<$Res>
     Object? solution = null,
     Object? expenses = null,
     Object? benefit = null,
-    Object? paths = null,
+    Object? paths = freezed,
   }) {
     return _then(_$_LeanProductionFormEntity(
       realized: null == realized
@@ -199,10 +199,10 @@ class __$$_LeanProductionFormEntityCopyWithImpl<$Res>
           ? _value.benefit
           : benefit // ignore: cast_nullable_to_non_nullable
               as String,
-      paths: null == paths
+      paths: freezed == paths
           ? _value._paths
           : paths // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -219,7 +219,7 @@ class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
       required this.solution,
       required this.expenses,
       required this.benefit,
-      required final List<String> paths})
+      required final List<String>? paths})
       : _paths = paths;
 
   factory _$_LeanProductionFormEntity.fromJson(Map<String, dynamic> json) =>
@@ -244,12 +244,14 @@ class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
   final String expenses;
   @override
   final String benefit;
-  final List<String> _paths;
+  final List<String>? _paths;
   @override
-  List<String> get paths {
+  List<String>? get paths {
+    final value = _paths;
+    if (value == null) return null;
     if (_paths is EqualUnmodifiableListView) return _paths;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_paths);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -318,7 +320,7 @@ abstract class _LeanProductionFormEntity implements LeanProductionFormEntity {
       required final String solution,
       required final String expenses,
       required final String benefit,
-      required final List<String> paths}) = _$_LeanProductionFormEntity;
+      required final List<String>? paths}) = _$_LeanProductionFormEntity;
 
   factory _LeanProductionFormEntity.fromJson(Map<String, dynamic> json) =
       _$_LeanProductionFormEntity.fromJson;
@@ -343,7 +345,7 @@ abstract class _LeanProductionFormEntity implements LeanProductionFormEntity {
   @override
   String get benefit;
   @override
-  List<String> get paths;
+  List<String>? get paths;
   @override
   @JsonKey(ignore: true)
   _$$_LeanProductionFormEntityCopyWith<_$_LeanProductionFormEntity>

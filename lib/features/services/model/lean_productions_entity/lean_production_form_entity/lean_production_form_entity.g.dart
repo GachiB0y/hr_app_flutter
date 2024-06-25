@@ -17,7 +17,8 @@ _$_LeanProductionFormEntity _$$_LeanProductionFormEntityFromJson(
       solution: json['solution'] as String,
       expenses: json['expenses'] as String,
       benefit: json['benefit'] as String,
-      paths: (json['paths'] as List<dynamic>).map((e) => e as String).toList(),
+      paths:
+          (json['paths'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_LeanProductionFormEntityToJson(
