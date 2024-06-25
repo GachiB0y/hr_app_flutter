@@ -34,16 +34,17 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<List<Transaction>?> getTransactions() async {
-    final response = await _httpService.get('/coins/transactions');
-
-    if (response case {'result': final data}) {
-      final List<Transaction> result = (data as List<dynamic>)
-          .map((item) => Transaction.fromJson(item))
-          .toList();
-
-      return result;
-    }
-    throw Exception('Error fetching Transactions');
+    // final response = await _httpService.get('/coins/transactions');
+    //
+    // if (response case {'result': final data}) {
+    //   final List<Transaction> result = (data as List<dynamic>)
+    //       .map((item) => Transaction.fromJson(item))
+    //       .toList();
+    //
+    //   return result;
+    // }
+    // throw Exception('Error fetching Transactions');
+    return [];
   }
 
   @override
