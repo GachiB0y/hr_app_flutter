@@ -6,11 +6,15 @@ import '../../model/wallet/wallet.dart';
 
 abstract interface class IWalletProvider {
   Future<({int balance, int avarageCoins})> getBalance();
+
   Future<List<CoinsInfo>> getCoinsInfo();
+
   Future<List<CoinsReward>> getInfoCoinsReward();
+
   Future<List<Transaction>?> getTransactions();
-  Future<int> sendCoinsToOtherUser(
-      {required int amount, required int userId, required String message});
+
+  Future<int> sendCoinsToOtherUser({required int amount, required int userId, required String message});
+
   Future<int> sendCoinsToBracer({
     required int amount,
   });
@@ -18,6 +22,7 @@ abstract interface class IWalletProvider {
 
 class WalletProviderImpl implements IWalletProvider {
   final RestClient _httpService;
+
   WalletProviderImpl(this._httpService);
 
   @override
@@ -34,27 +39,23 @@ class WalletProviderImpl implements IWalletProvider {
 
   @override
   Future<List<Transaction>?> getTransactions() async {
-    // final response = await _httpService.get('/coins/transactions');
-    //
-    // if (response case {'result': final data}) {
-    //   final List<Transaction> result = (data as List<dynamic>)
-    //       .map((item) => Transaction.fromJson(item))
-    //       .toList();
-    //
-    //   return result;
-    // }
-    // throw Exception('Error fetching Transactions');
-    return [];
+    final response = await _httpService.get('/coins/transactions');
+    /// TODO: Сделать нормальную обработку ответов с сервера.
+    if (response == null) return [];
+    if (response case {'result': final data}) {
+      final List<Transaction> result =
+          (data as List<dynamic>).map((item) => Transaction.fromJson(item)).toList();
+
+      return result;
+    }
+    throw Exception('Error fetching Transactions');
   }
 
   @override
   Future<int> sendCoinsToOtherUser(
-      {required int amount,
-      required int userId,
-      required String message}) async {
+      {required int amount, required int userId, required String message}) async {
     final body = {"recipient": userId, "amount": amount, "message": message};
-    final response =
-        await _httpService.post('/coins/transfer-to-friend', body: body);
+    final response = await _httpService.post('/coins/transfer-to-friend', body: body);
     if (response case {'result': final Map<String, Object?> data}) {
       final int result = data['coins'] as int;
       return result;
@@ -67,8 +68,7 @@ class WalletProviderImpl implements IWalletProvider {
     required int amount,
   }) async {
     final body = {"amount": amount};
-    final response =
-        await _httpService.post('/coins/transfer-to-bracer', body: body);
+    final response = await _httpService.post('/coins/transfer-to-bracer', body: body);
 
     if (response case {'result': final Map<String, Object?> data}) {
       final int result = data['coins'] as int;
@@ -82,9 +82,8 @@ class WalletProviderImpl implements IWalletProvider {
     final response = await _httpService.get('/coins/coins_reward');
 
     if (response case {'result': final data}) {
-      final List<CoinsReward> result = (data as List<dynamic>)
-          .map((item) => CoinsReward.fromJson(item))
-          .toList();
+      final List<CoinsReward> result =
+          (data as List<dynamic>).map((item) => CoinsReward.fromJson(item)).toList();
 
       return result;
     }
@@ -96,9 +95,7 @@ class WalletProviderImpl implements IWalletProvider {
     final response = await _httpService.get('/coins/info');
 
     if (response case {'result': final data}) {
-      final List<CoinsInfo> result = (data as List<dynamic>)
-          .map((item) => CoinsInfo.fromJson(item))
-          .toList();
+      final List<CoinsInfo> result = (data as List<dynamic>).map((item) => CoinsInfo.fromJson(item)).toList();
 
       return result;
     }
