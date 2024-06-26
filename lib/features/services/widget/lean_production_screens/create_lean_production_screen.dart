@@ -69,6 +69,15 @@ class _SelectExecutorLeanProductionScreenState
     super.initState();
   }
 
+  void showErrorSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> groupWidget = [];
@@ -135,11 +144,25 @@ class _SelectExecutorLeanProductionScreenState
               ),
             ),
             const Spacer(),
-            BlocBuilder<LeanProductionFormBloc, LeanProductionFormState>(
+            BlocConsumer<LeanProductionFormBloc, LeanProductionFormState>(
+                listener: (context, state) {
+                  state.mapOrNull(
+                    successful: (data) {
+                      context.octopus.setState((state) =>
+                          state..removeByName('create-lean-production'));
+                    },
+                    error: (data) {
+                      showErrorSnackbar(context, data.message);
+                    },
+                  );
+                },
                 bloc: blocLeanProductionForm,
                 builder: (context, state) {
                   if (state is LeanProductionFormState$Processing) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
                   } else {
                     return ResumeButtonWidget(
                       title: 'Подать предложение',
@@ -180,7 +203,7 @@ class _SelectExecutorLeanProductionScreenState
                             solution: modelView.solution!,
                             expenses: modelView.expenses!,
                             benefit: modelView.benefit!,
-                            paths: modelFielPikcer!.paths
+                            paths: modelFielPikcer?.paths
                                 .whereType<String>()
                                 .toList(),
                           );
@@ -188,9 +211,6 @@ class _SelectExecutorLeanProductionScreenState
                           blocLeanProductionForm.add(
                               LeanProductionFormEvent.submitForm(
                                   formEntity: formEntity));
-
-                          context.octopus.setState((state) =>
-                              state..removeByName('create-lean-production'));
                         }
                       },
                     );
@@ -454,12 +474,12 @@ class _PickFileLeanProductionState extends State<PickFileLeanProduction> {
             ResumeButtonWidget(
               title: 'Продолжить',
               onPressed: () {
-                final modelFile = ChangeNotifierProvaider.read<
-                    ChangeNotifierProvaider<FilePickerCustomModel>,
-                    FilePickerCustomModel>(context);
-                if (modelFile == null || modelFile.paths.isEmpty) {
-                  return;
-                }
+                // final modelFile = ChangeNotifierProvaider.read<
+                //     ChangeNotifierProvaider<FilePickerCustomModel>,
+                //     FilePickerCustomModel>(context);
+                // if (modelFile == null || modelFile.paths.isEmpty) {
+                //   return;
+                // }
                 context.octopus.setState((state) => state
                   ..findByName('create-lean-production')?.add(
                       Routes.selectorExecutorLeanProductionScreen.node()));

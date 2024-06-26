@@ -25,6 +25,7 @@ final class RestClientDio extends RestClientBase {
   }) async {
     try {
       final uri = buildUri(path: path, queryParams: queryParams);
+
       final options = Options(
         headers: headers,
         method: method,
@@ -51,7 +52,6 @@ final class RestClientDio extends RestClientBase {
           );
         }
       }
-
       final response = await _dio.request<T>(
         uri.toString(),
         data: formData ?? body,

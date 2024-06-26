@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
+import 'package:hr_app_flutter/core/environment/environment_configuration.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
@@ -59,6 +61,16 @@ mixin InitializationSteps {
         localeDataSource: localeDataSource,
       );
     },
+    'Environment Configuration': (progress) {
+      final environmentConfiguration =
+          EnvironmentConfiguration.fromEnvironmentVariables();
+      if (kDebugMode || kProfileMode) {
+        debugPrint(
+            'environment: ${EnvironmentConfiguration.environment.name}\nurl: ${EnvironmentConfiguration.baseUrl}');
+      }
+
+      progress.dependencies.environmentConfiguration = environmentConfiguration;
+    },
     'Firebase API': (progress) {
       final firebaseApi = FirebaseApi();
       firebaseApi.initNotifications();
@@ -66,9 +78,10 @@ mixin InitializationSteps {
     },
     'AuthRepository': (progress) async {
       final interceptedDio = Dio();
+      final baseUrl = EnvironmentConfiguration.baseUrl;
       final justDio = Dio(
         BaseOptions(
-          baseUrl: 'https://grass-app-api.grass.su/',
+          baseUrl: baseUrl,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -76,7 +89,7 @@ mixin InitializationSteps {
         ),
       );
       final restClient = RestClientDio(
-        baseUrl: 'https://grass-app-api.grass.su/',
+        baseUrl: baseUrl,
         dio: interceptedDio,
       );
       final authDataSource = AuthDataSourceImpl(

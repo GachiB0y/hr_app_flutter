@@ -2,17 +2,20 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/utils/extensions/string_extension.dart';
 import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/user/user_info.dart';
 
 class UserProfileWidgetScreen extends StatefulWidget {
   final String? userId;
   final String? isSelfUser;
+
   const UserProfileWidgetScreen({
     Key? key,
     required this.userId,
@@ -20,8 +23,7 @@ class UserProfileWidgetScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<UserProfileWidgetScreen> createState() =>
-      _UserProfileWidgetScreenState();
+  State<UserProfileWidgetScreen> createState() => _UserProfileWidgetScreenState();
 }
 
 class _UserProfileWidgetScreenState extends State<UserProfileWidgetScreen> {
@@ -73,8 +75,7 @@ class ToggleThemeWidget extends StatelessWidget {
   const ToggleThemeWidget({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+  Widget build(BuildContext context) => BlocBuilder<UserBloc, UserState>(builder: (context, state) {
         if (state.data!.currentProfileUser == null) {
           return const SizedBox.shrink();
         } else {
@@ -83,10 +84,9 @@ class ToggleThemeWidget extends StatelessWidget {
                   onPressed: () {
                     SettingsScope.of(context, listen: false).toggleThemeMode();
                   },
-                  icon: Icon(
-                      SettingsScope.of(context).theme.mode == ThemeMode.light
-                          ? Icons.dark_mode
-                          : Icons.light_mode),
+                  icon: Icon(SettingsScope.of(context).theme.mode == ThemeMode.light
+                      ? Icons.dark_mode
+                      : Icons.light_mode),
                 )
               : const SizedBox.shrink();
         }
@@ -95,6 +95,7 @@ class ToggleThemeWidget extends StatelessWidget {
 
 class UserInfoForm extends StatelessWidget {
   const UserInfoForm({super.key, required this.isSelfUser});
+
   final String? isSelfUser;
 
   @override
@@ -103,14 +104,23 @@ class UserInfoForm extends StatelessWidget {
       if (state is UserState$Processing) {
         return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
       } else if (state is UserState$Idle || state is UserState$Successful) {
-        if (state.data!.currentProfileUser == null) {
+        if (state.data?.currentProfileUser == null) {
           return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
         } else {
           String? phoneNumber = state.data!.currentProfileUser!.phoneOne;
 
           RegExp regExp = RegExp(r'^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$');
-          String? formattedNumber = phoneNumber?.replaceAllMapped(regExp,
-              (Match m) => '+ ${m[1]}(${m[2]}) ${m[3]}-${m[4]}-${m[5]}');
+          String? formattedNumber = phoneNumber?.replaceAllMapped(
+              regExp, (Match m) => '+ ${m[1]}(${m[2]}) ${m[3]}-${m[4]}-${m[5]}');
+
+          /// Преобразование даты рождения пользователя.
+          var day = state.data!.currentProfileUser?.dateBirth != null
+              ? DateFormat('yMMMMd')
+                  .format(
+                    state.data!.currentProfileUser!.dateBirth!.convertToDateTime(),
+                  )
+                  .replaceAll('г.', '')
+              : '';
 
           return Column(
             children: [
@@ -121,8 +131,7 @@ class UserInfoForm extends StatelessWidget {
                     slivers: [
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -133,9 +142,7 @@ class UserInfoForm extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
-                                    .copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                    .copyWith(fontWeight: FontWeight.w500, fontSize: 17),
                                 softWrap: true,
                                 maxLines: 3,
                                 textAlign: TextAlign.center,
@@ -143,10 +150,7 @@ class UserInfoForm extends StatelessWidget {
                               const SizedBox(height: 12),
                               Text(
                                 '${state.data!.currentProfileUser!.nameI} ${state.data!.currentProfileUser!.name}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(fontSize: 30),
+                                style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 30),
                                 softWrap: true,
                                 maxLines: 3,
                                 textAlign: TextAlign.center,
@@ -160,9 +164,7 @@ class UserInfoForm extends StatelessWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: const Color(0xFF7B7D84)),
+                                        .copyWith(fontSize: 14, color: const Color(0xFF7B7D84)),
                                   ),
                                   const SizedBox(
                                     width: 8,
@@ -172,11 +174,16 @@ class UserInfoForm extends StatelessWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: const Color(0xFF7B7D84)),
+                                        .copyWith(fontSize: 14, color: const Color(0xFF7B7D84)),
                                   ),
                                 ],
+                              ),
+                              Text(
+                                day,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14, color: const Color(0xFF7B7D84)),
                               ),
                               const SizedBox(height: 25),
                               const TagsWidget(),
@@ -304,6 +311,7 @@ class ShimmerBodyContentWidget extends StatelessWidget {
 
 class LogoutButtonWidget extends StatelessWidget {
   const LogoutButtonWidget({super.key, required this.isSelfuser});
+
   final String? isSelfuser;
 
   @override
@@ -331,10 +339,8 @@ class LogoutButtonWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    minimumSize: MaterialStateProperty.all(
-                        const Size(double.infinity, 57)),
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => Colors.white),
+                    minimumSize: MaterialStateProperty.all(const Size(double.infinity, 57)),
+                    backgroundColor: MaterialStateProperty.resolveWith((states) => Colors.white),
                   ),
                   child: Text('Выйти из аккаунта',
                       style: Theme.of(context)
@@ -376,11 +382,9 @@ class AvatarProfileWidget extends StatelessWidget {
                               imageBuilder: (context, imageProvider) {
                                 return CircleAvatar(
                                   radius: radius,
-                                  backgroundImage:
-                                      viewModel.state.myImage.imageFile != null
-                                          ? FileImage(viewModel
-                                              .state.myImage.imageFile as File)
-                                          : imageProvider,
+                                  backgroundImage: viewModel.state.myImage.imageFile != null
+                                      ? FileImage(viewModel.state.myImage.imageFile as File)
+                                      : imageProvider,
                                 );
                               }),
                         ),
@@ -390,9 +394,7 @@ class AvatarProfileWidget extends StatelessWidget {
                                 right: 0,
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
+                                    color: Theme.of(context).colorScheme.background,
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
@@ -402,29 +404,19 @@ class AvatarProfileWidget extends StatelessWidget {
                                     ],
                                   ),
                                   child: IconButton(
-                                    icon:
-                                        const Icon(Icons.add_a_photo_outlined),
+                                    icon: const Icon(Icons.add_a_photo_outlined),
                                     onPressed: () async {
                                       /// Действия при нажатии на иконку редактирования
-                                      await UserScope.of(context, listen: false)
-                                          .state
-                                          .selectImage();
+                                      await UserScope.of(context, listen: false).state.selectImage();
                                       final imageFile =
-                                          UserScope.of(context, listen: false)
-                                              .state
-                                              .myImage
-                                              .imageFile;
+                                          UserScope.of(context, listen: false).state.myImage.imageFile;
                                       if (imageFile != null) {
                                         final File file = File(imageFile.path);
                                         if (context.mounted) {
+                                          UserScope.of(context, listen: false).state.file = file;
                                           UserScope.of(context, listen: false)
                                               .state
-                                              .file = file;
-                                          UserScope.of(context, listen: false)
-                                              .state
-                                              .changeIsSave(
-                                                  newValue: true,
-                                                  isTags: false);
+                                              .changeIsSave(newValue: true, isTags: false);
                                         }
                                       }
                                     },
@@ -456,25 +448,20 @@ class SaveButtonWidget extends StatelessWidget {
           onPressed: () {
             final blocUsers = context.read<UserBloc>();
             final currentProfileUser = blocUsers.state.data?.currentProfileUser;
-            final isChangeTags =
-                UserScope.of(context, listen: false).state.isChangeTags;
+            final isChangeTags = UserScope.of(context, listen: false).state.isChangeTags;
 
             if (currentProfileUser == null) return;
             if (isChangeTags == true) {
               blocUsers.add(UserEvent.saveTagsToSend(
-                  tags: currentProfileUser.tags,
-                  userId: currentProfileUser.autoCard));
+                  tags: currentProfileUser.tags, userId: currentProfileUser.autoCard));
             }
             if (UserScope.of(context, listen: false).state.file != null) {
               blocUsers.add(UserEvent.sendAvatarWithProfile(
                   userId: currentProfileUser.autoCard,
-                  imageFile:
-                      UserScope.of(context, listen: false).state.file as File));
+                  imageFile: UserScope.of(context, listen: false).state.file as File));
             }
 
-            UserScope.of(context, listen: false)
-                .state
-                .changeIsSave(newValue: false, isTags: false);
+            UserScope.of(context, listen: false).state.changeIsSave(newValue: false, isTags: false);
           },
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(3.0),
@@ -488,10 +475,9 @@ class SaveButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            minimumSize:
-                MaterialStateProperty.all(const Size(double.infinity, 57)),
-            backgroundColor: MaterialStateProperty.resolveWith(
-                (states) => Theme.of(context).colorScheme.primary),
+            minimumSize: MaterialStateProperty.all(const Size(double.infinity, 57)),
+            backgroundColor:
+                MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.primary),
           ),
           child: Text('Сохранить',
               style: Theme.of(context)
@@ -548,35 +534,25 @@ class _TagsWidgetState extends State<TagsWidget> {
                                   ),
                                   label: Text(
                                     '#${tag.name}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(
-                                            color: Colors.white,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600),
+                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),
                                   ),
-                                  onDeleted: state
-                                          .data!.currentProfileUser!.editTags
+                                  onDeleted: state.data!.currentProfileUser!.editTags
                                       ? () {
                                           UserScope.of(context, listen: false)
                                               .state
-                                              .changeIsSave(
-                                                  newValue: true, isTags: true);
-                                          context.read<UserBloc>().add(
-                                              UserEvent.deleteTag(tag: tag));
+                                              .changeIsSave(newValue: true, isTags: true);
+                                          context.read<UserBloc>().add(UserEvent.deleteTag(tag: tag));
                                         }
                                       : null,
-                                  deleteIcon:
-                                      state.data!.currentProfileUser!.editTags
-                                          ? const Icon(
-                                              Icons.close,
-                                              size: 20,
-                                            )
-                                          : null,
+                                  deleteIcon: state.data!.currentProfileUser!.editTags
+                                      ? const Icon(
+                                          Icons.close,
+                                          size: 20,
+                                        )
+                                      : null,
                                   deleteButtonTooltipMessage: 'Удалить',
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.primary,
+                                  backgroundColor: Theme.of(context).colorScheme.primary,
                                 ))
                             .toList(),
                       ),
@@ -591,14 +567,10 @@ class _TagsWidgetState extends State<TagsWidget> {
                                     if (tagController.text.isNotEmpty) {
                                       UserScope.of(context, listen: false)
                                           .state
-                                          .changeIsSave(
-                                              newValue: true, isTags: true);
+                                          .changeIsSave(newValue: true, isTags: true);
 
                                       context.read<UserBloc>().add(
-                                          UserEvent.addTag(
-                                              tag: TagUser(
-                                                  id: null,
-                                                  name: tagController.text)));
+                                          UserEvent.addTag(tag: TagUser(id: null, name: tagController.text)));
                                       tagController.clear();
                                     }
                                   },

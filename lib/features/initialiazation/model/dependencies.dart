@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
+import 'package:hr_app_flutter/core/environment/environment_configuration.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
-import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
@@ -33,6 +33,9 @@ base class Dependencies {
 
   /// Theme repository
   late final SettingsRepository settingsRepository;
+
+  /// Environment Configuration
+  late final EnvironmentConfiguration environmentConfiguration;
 
   /// Firebase API
   late final IFirebaseApi firebaseApi;

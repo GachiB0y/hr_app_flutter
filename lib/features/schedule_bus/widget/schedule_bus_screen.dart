@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/schedule_bus/bloc/schedule_bus_bloc.dart';
 import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_scope.dart';
+import 'package:octopus/octopus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleBusScreen extends StatelessWidget {
@@ -208,7 +209,7 @@ class CitiesWidget extends StatelessWidget {
 }
 
 class _BodyContentWidget extends StatelessWidget {
-  const _BodyContentWidget({super.key, required this.text});
+  const _BodyContentWidget({required this.text});
   final String text;
 
   @override
@@ -248,12 +249,35 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
     return AppBar(
       centerTitle: true,
       backgroundColor: Theme.of(context).canvasColor,
-      title: const Text(
-        'Расписание\nавтобусов',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+      title: Row(
+        children: [
+          const Expanded(
+            child: Center(
+              child: Text(
+                'Расписание\nавтобусов',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          InkWell(
+            splashColor: const Color.fromRGBO(51, 169, 54, 0.3),
+            onTap: () {
+              context.octopus
+                  .setState((state) => state..removeByName('schedule-bus'));
+            },
+            child: const Text(
+              'Сбросить',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ),
+        ],
       ),
       leading: isSecondAndOtherScreen
           ? IconButton(
@@ -272,7 +296,7 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
 }
 
 class _SecondScheduleBusScreen extends StatelessWidget {
-  const _SecondScheduleBusScreen({super.key});
+  const _SecondScheduleBusScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -301,7 +325,6 @@ class _SecondScheduleBusScreen extends StatelessWidget {
 
 class _ButtonForSecondScreen extends StatelessWidget {
   const _ButtonForSecondScreen({
-    super.key,
     required this.text,
   });
 
@@ -346,9 +369,7 @@ class _ButtonForSecondScreen extends StatelessWidget {
 }
 
 class _ThirdScheduleBusScreen extends StatelessWidget {
-  const _ThirdScheduleBusScreen({
-    super.key,
-  });
+  const _ThirdScheduleBusScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +398,6 @@ class _ThirdScheduleBusScreen extends StatelessWidget {
 
 class _ButtonForThirdScreen extends StatelessWidget {
   const _ButtonForThirdScreen({
-    super.key,
     required this.text,
   });
 

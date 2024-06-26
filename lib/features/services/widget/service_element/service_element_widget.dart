@@ -72,7 +72,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
           ),
         ),
         SizedBox(
-          width: widget.isRow ? sizeWidhtIsRow : null,
+          width: 40,
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0, left: 16.0),
             child: Align(
