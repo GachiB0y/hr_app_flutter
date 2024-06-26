@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
@@ -24,8 +26,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
   void initState() {
     super.initState();
     blocNews = OneNewsBloc(
-      eventEntityRepository:
-          DependenciesScope.of(context).eventEntityRepository,
+      eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
     )..add(OneNewsEvent.fetch(id: widget.id!));
   }
 
@@ -48,52 +49,67 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                 loaded: (news) {
                   final date = DateFormat('dd MMMM').format(news.startDate);
                   final time = DateFormat('HH:mm').format(news.startDate);
-                  final createdAt =
-                      DateFormat('dd.MM.yy').format(news.createdAt);
+                  final createdAt = DateFormat('dd.MM.yy').format(news.createdAt);
                   return SafeArea(
                     child: CustomScrollView(
                       slivers: [
-                        SliverAppBar(
-                          leading: const Padding(
-                            padding: EdgeInsets.only(top: 8.0, left: 4.0),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(136, 255, 255, 255)),
-                              child: BackButton(),
+                        SliverPadding(
+                          padding: EdgeInsets.zero,
+                          sliver: SliverToBoxAdapter(
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 274,
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        news.image,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    // make sure we apply clip it properly
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        color: Colors.grey.withOpacity(0.1),
+                                        child: Image.network(
+                                          news.image,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8.0, left: 4.0),
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle, color: Color.fromARGB(136, 255, 255, 255)),
+                                    child: BackButton(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          expandedHeight: 274,
-                          flexibleSpace: FlexibleSpaceBar(
-                            background: Image.network(
-                              news.image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          floating: true,
-                          pinned: true,
-                          snap: true,
                         ),
-                        const SliverPadding(
-                            padding: EdgeInsets.only(bottom: 43)),
+                        const SliverPadding(padding: EdgeInsets.only(bottom: 43)),
                         SliverPadding(
                           padding: const EdgeInsets.only(left: 36),
                           sliver: SliverToBoxAdapter(
-                            child: DisplayDateAndTimeWidget(
-                                date: date, time: time),
+                            child: DisplayDateAndTimeWidget(date: date, time: time),
                           ),
                         ),
-                        const SliverPadding(
-                            padding: EdgeInsets.only(bottom: 18)),
+                        const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
                         SliverPadding(
                           padding: const EdgeInsets.only(left: 36),
                           sliver: SliverToBoxAdapter(
-                            child: Text(news.title,
-                                style: Theme.of(context).textTheme.titleLarge),
+                            child: Text(news.title, style: Theme.of(context).textTheme.titleLarge),
                           ),
                         ),
-                        const SliverPadding(
-                            padding: EdgeInsets.only(bottom: 18)),
+                        const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
                         SliverPadding(
                           padding: const EdgeInsets.only(left: 36),
                           sliver: SliverToBoxAdapter(
@@ -102,9 +118,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
-                                  .copyWith(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w400),
+                                  .copyWith(fontSize: 17, fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -116,16 +130,11 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                               children: [
                                 Text(
                                   '${news.writer.firstName} ${news.writer.middleName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         fontSize: 17,
                                       ),
                                 ),
-                                Text('создано $createdAt',
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
+                                Text('создано $createdAt', style: Theme.of(context).textTheme.titleSmall),
                               ],
                             ),
                           ),
