@@ -83,15 +83,6 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 274,
-                                  child: Center(
-                                    child: Image.network(
-                                      news.image,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
                                 const Padding(
                                   padding: EdgeInsets.only(top: 8.0, left: 4.0),
                                   child: DecoratedBox(
