@@ -104,7 +104,7 @@ class UserInfoForm extends StatelessWidget {
       if (state is UserState$Processing) {
         return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
       } else if (state is UserState$Idle || state is UserState$Successful) {
-        if (state.data!.currentProfileUser == null) {
+        if (state.data?.currentProfileUser == null) {
           return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
         } else {
           String? phoneNumber = state.data!.currentProfileUser!.phoneOne;
