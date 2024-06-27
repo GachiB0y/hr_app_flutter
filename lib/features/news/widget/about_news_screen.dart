@@ -70,7 +70,6 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                                     ),
                                   ),
                                   child: ClipRRect(
-                                    // make sure we apply clip it properly
                                     child: BackdropFilter(
                                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                                       child: Container(

@@ -7,6 +7,7 @@ import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
@@ -36,6 +37,7 @@ enum Routes with OctopusRoute {
   searchFriendAndSendCoins('search-friend-and-send-coins',
       title: 'Search Friend And Send Coins'),
   approveNews('approve-news', title: 'Approve News'),
+  moderationNews('moderation-news', title: 'Moderation News'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -108,6 +110,7 @@ enum Routes with OctopusRoute {
         Routes.searchFriendAndSendCoins =>
           const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
+        Routes.moderationNews => const ModerationNewsScreen(),
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
             userId: node.arguments['id'],

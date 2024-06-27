@@ -6,6 +6,7 @@ import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart'
 import 'package:hr_app_flutter/features/news/bloc/approvement_news_bloc/approvement_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/bloc/service_bloc/service_bloc.dart';
 import 'package:hr_app_flutter/features/services/bloc/user_birth_day_info_bloc/user_birth_day_info_bloc.dart';
@@ -54,6 +55,14 @@ class App extends StatelessWidget {
                   eventEntityRepository:
                       DependenciesScope.of(context).eventEntityRepository,
                 ),
+              ),
+              BlocProvider<ModerationNewsCubit>(
+                create: (BuildContext context) => ModerationNewsCubit(
+                    eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+                  // eventEntityRepository:
+                  // DependenciesScope.of(context).eventEntityRepository,
+                ),
+
               ),
               BlocProvider<WalletBLoC>(
                 create: (BuildContext context) => WalletBLoC(

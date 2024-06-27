@@ -4,7 +4,7 @@ import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/bloc/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
-import 'package:intl/intl.dart';
+import 'package:hr_app_flutter/ui/commons/news_card.dart';
 import 'package:octopus/octopus.dart';
 
 /// {@template all_news_screen}
@@ -221,7 +221,6 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
 
 class _OneNewsElementWidget extends StatelessWidget {
   const _OneNewsElementWidget({
-    super.key,
     required this.news,
   });
 
@@ -257,85 +256,9 @@ class _OneNewsElementWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: Theme.of(context).colorScheme.background,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: 11.0, bottom: 9.0, right: 11.0, left: 11.0),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  news.image,
-                  fit: BoxFit.fill,
-                  height: 90,
-                  width: 107,
-                ),
-              ),
-              const SizedBox(
-                width: 22,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _InfoDateWidget(
-                      text: DateFormat('dd MMMM').format(
-                        news.startDate,
-                      ),
-                    ),
-                    Text(
-                      news.title,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      news.description,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontSize: 12,
-                          color: Theme.of(context).colorScheme.outline),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        child: NewsCard(news: news),
       ),
     );
   }
 }
 
-class _InfoDateWidget extends StatelessWidget {
-  const _InfoDateWidget({
-    super.key,
-    required this.text,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(145),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontSize: 9,
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w700,
-              ),
-        ),
-      ),
-    );
-  }
-}

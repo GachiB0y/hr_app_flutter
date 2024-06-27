@@ -1,81 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/ui/commons/news_card.dart';
 
-import '../bloc/approvement_news_bloc/approvement_news_bloc.dart';
+import '../bloc/moderation_news_bloc/moderation_news_bloc.dart';
 
-class ApproveNewsScreen extends StatelessWidget {
-  const ApproveNewsScreen({super.key});
+class ModerationNewsScreen extends StatelessWidget {
+  /// Экран массива новостей на модерации.
+  const ModerationNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'События компании',
-          style: TextStyle(
-            fontSize: 27,
-            fontWeight: FontWeight.w700,
+    /// Bloc экрана.
+    final cubit = context.watch<ModerationNewsCubit>();
+
+    /// Массив модерируемых новостей из стейта.
+    final moderationNews = cubit.state.moderationNews;
+
+    return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(builder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'События компании',
+            style: TextStyle(
+              fontSize: 27,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.chevron_left,
+              size: 50,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left,
-            size: 50,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: BlocBuilder<ApprovementNewsBloc, ApprovementNewsState>(
-        builder: (context, state) {
-          return ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const Row(
-                      children: [
-                        Text(
-                          'Ждут действий',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '6',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.green),
-                        ),
-                      ],
-                    ),
-                    Column(
-
-                        //
-                        // children: .isNotEmpty
-                        //     ? foundFilms
-                        //         .map((item) => FilmCard(
-                        //               addFilm: () => model.saveFilm(item),
-                        //               name: item.name ?? '',
-                        //               year: item.year,
-                        //               rating: item.rating!.kp,
-                        //               genres: item.genres,
-                        //               description: item.description,
-                        //               poster: item.poster?.url ?? '',
-                        //               countries: item.countries ?? [],
-                        //             ))
-                        //         .toList()
-                        //     : []),
-
-                    ),
-                  ],
-                ),
+        body: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Row(
+                    children: [
+                      Text(
+                        'Ждут действий',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        '6',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.green),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: cubit.state.moderationNews.isNotEmpty
+                        ? moderationNews.map((item) => NewsCard(news: item)).toList()
+                        : [],
+                  ),
+                ],
               ),
-            ],
-          );
-        },
-      ),
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 

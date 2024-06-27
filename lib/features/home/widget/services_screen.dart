@@ -73,7 +73,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   state.data!.first.permissions.approveService == true) {
                 // Если можно модерировать новость, то даем такую возможность
                 titleService.add('Модерация новостей');
-                routes.add(Routes.approveNews);
+                routes.add(Routes.moderationNews);
               }
 
               return Column(
