@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/home/bloc/main_app_screen_view_cubit/main_app_screen_view_cubit.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart';
+import 'package:hr_app_flutter/features/news/bloc/approvement_news_bloc/approvement_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
@@ -41,6 +42,12 @@ class App extends StatelessWidget {
             providers: [
               BlocProvider<MainAppScreenViewCubit>(
                 create: (BuildContext context) => MainAppScreenViewCubit(),
+              ),
+              BlocProvider<ApprovementNewsBloc>(
+                create: (BuildContext context) => ApprovementNewsBloc(
+                  eventEntityRepository:
+                  DependenciesScope.of(context).eventEntityRepository,
+                ),
               ),
               BlocProvider<EventEntityBloc>(
                 create: (BuildContext context) => EventEntityBloc(

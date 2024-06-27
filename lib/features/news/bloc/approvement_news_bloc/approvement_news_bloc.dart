@@ -17,7 +17,7 @@ class ApprovementNewsBloc extends Bloc<ApprovementEvent, ApprovementNewsState> {
 
   ApprovementNewsBloc({
     required this.eventEntityRepository,
-  }) : super(const ApprovementNewsState.loading()) {
+  }) : super(const ApprovementNewsState.loading())  {
     on<ApprovementEvent>(
       (event, emit) => event.map<Future<void>>(
         fetch: (event) async => await _onApprovementEventFetch(emit),
