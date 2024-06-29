@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/ui/commons/blur_image_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 
@@ -15,33 +16,33 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var id = {'id': news.id.toString()};
     return Padding(
-      padding: const EdgeInsets.only(
-          top: 11.0, bottom: 9.0, right: 11.0, left: 11.0),
+      padding: const EdgeInsets.only(top: 11.0, bottom: 9.0, right: 11.0, left: 11.0),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           context.octopus.setState(
-                (state) => state
+            (state) => state
               ..findByName('user-main-tab')?.add(
-                Routes.approveNews.node(
-                ),
+                Routes.refactorModerationNewsScreen.node(arguments: id),
               ),
           );
         },
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                news.image,
-                fit: BoxFit.fill,
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+
+              ),
+              child: BlurImageWidget(
+                urlImage: news.image,
                 height: 90,
                 width: 107,
               ),
             ),
-            const SizedBox(
-              width: 22,
-            ),
+            const SizedBox(width: 22),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,17 +56,18 @@ class NewsCard extends StatelessWidget {
                   Text(
                     news.title,
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     news.description,
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.outline),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 12, color: Theme.of(context).colorScheme.outline),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -83,7 +85,9 @@ class _InfoDateWidget extends StatelessWidget {
   const _InfoDateWidget({
     required this.text,
   });
+
   final String text;
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -96,10 +100,10 @@ class _InfoDateWidget extends StatelessWidget {
         child: Text(
           text,
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
-            fontSize: 9,
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w700,
-          ),
+                fontSize: 9,
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.w700,
+              ),
         ),
       ),
     );

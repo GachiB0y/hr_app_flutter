@@ -39,65 +39,61 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DependenciesScope(
         dependencies: result.dependencies,
-        child: MultiBlocProvider(
-            providers: [
-              BlocProvider<MainAppScreenViewCubit>(
-                create: (BuildContext context) => MainAppScreenViewCubit(),
-              ),
-              BlocProvider<ApprovementNewsBloc>(
-                create: (BuildContext context) => ApprovementNewsBloc(
-                  eventEntityRepository:
-                  DependenciesScope.of(context).eventEntityRepository,
-                ),
-              ),
-              BlocProvider<EventEntityBloc>(
-                create: (BuildContext context) => EventEntityBloc(
-                  eventEntityRepository:
-                      DependenciesScope.of(context).eventEntityRepository,
-                ),
-              ),
-              BlocProvider<ModerationNewsCubit>(
-                create: (BuildContext context) => ModerationNewsCubit(
-                    eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-                  // eventEntityRepository:
-                  // DependenciesScope.of(context).eventEntityRepository,
-                ),
-
-              ),
-              BlocProvider<WalletBLoC>(
-                create: (BuildContext context) => WalletBLoC(
-                  walletRepo: DependenciesScope.of(context).walletRepository,
-                ),
-              ),
-              BlocProvider<UserBloc>(
-                create: (BuildContext context) => UserBloc(
-                  userRepo: DependenciesScope.of(context).userRepository,
-                ),
-              ),
-              BlocProvider<UserBirthDayInfoBLoc>(
-                create: (BuildContext context) => UserBirthDayInfoBLoc(
-                  userRepo: DependenciesScope.of(context).userRepository,
-                ),
-              ),
-              BlocProvider<RookiesBLoC>(
-                create: (BuildContext context) => RookiesBLoC(
-                  userRepo: DependenciesScope.of(context).userRepository,
-                ),
-              ),
-              BlocProvider<CategoryBloc>(
-                create: (BuildContext context) => CategoryBloc(
-                  eventEntityRepository:
-                      DependenciesScope.of(context).eventEntityRepository,
-                ),
-              ),
-              BlocProvider<ServiceBloc>(
-                create: (BuildContext context) => ServiceBloc(
-                  serviceRepository:
-                      DependenciesScope.of(context).serviceRepository,
-                ),
-              ),
-            ],
-            child: const SettingsScope(
-                child: AuthScope(child: MaterialContext()))),
+        child: MultiBlocProvider(providers: [
+          BlocProvider<MainAppScreenViewCubit>(
+            create: (BuildContext context) => MainAppScreenViewCubit(),
+          ),
+          BlocProvider<ApprovementNewsBloc>(
+            create: (BuildContext context) => ApprovementNewsBloc(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+          // BlocProvider<RefactorNewsCubit>(
+          //   child: const RefactorModerationNewsScreen(),
+          //   create: (BuildContext context) => RefactorNewsCubit(
+          //     eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+          //   ),
+          // ),
+          BlocProvider<EventEntityBloc>(
+            create: (BuildContext context) => EventEntityBloc(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+          BlocProvider<ModerationNewsCubit>(
+            create: (BuildContext context) => ModerationNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+          BlocProvider<WalletBLoC>(
+            create: (BuildContext context) => WalletBLoC(
+              walletRepo: DependenciesScope.of(context).walletRepository,
+            ),
+          ),
+          BlocProvider<UserBloc>(
+            create: (BuildContext context) => UserBloc(
+              userRepo: DependenciesScope.of(context).userRepository,
+            ),
+          ),
+          BlocProvider<UserBirthDayInfoBLoc>(
+            create: (BuildContext context) => UserBirthDayInfoBLoc(
+              userRepo: DependenciesScope.of(context).userRepository,
+            ),
+          ),
+          BlocProvider<RookiesBLoC>(
+            create: (BuildContext context) => RookiesBLoC(
+              userRepo: DependenciesScope.of(context).userRepository,
+            ),
+          ),
+          BlocProvider<CategoryBloc>(
+            create: (BuildContext context) => CategoryBloc(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+          BlocProvider<ServiceBloc>(
+            create: (BuildContext context) => ServiceBloc(
+              serviceRepository: DependenciesScope.of(context).serviceRepository,
+            ),
+          ),
+        ], child: const SettingsScope(child: AuthScope(child: MaterialContext()))),
       );
 }

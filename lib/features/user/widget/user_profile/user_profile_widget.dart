@@ -3,11 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/utils/extensions/string_extension.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/user/user_info.dart';

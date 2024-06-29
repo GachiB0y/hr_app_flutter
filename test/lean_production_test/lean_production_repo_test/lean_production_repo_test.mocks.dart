@@ -133,12 +133,6 @@ class MockLeanProductionFormEntity extends _i1.Mock
         ),
       ) as String);
   @override
-  List<String> get paths => (super.noSuchMethod(
-        Invocation.getter(#paths),
-        returnValue: <String>[],
-        returnValueForMissingStub: <String>[],
-      ) as List<String>);
-  @override
   _i2.$LeanProductionFormEntityCopyWith<_i2.LeanProductionFormEntity>
       get copyWith => (super.noSuchMethod(
             Invocation.getter(#copyWith),

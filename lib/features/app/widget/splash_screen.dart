@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/core/widget/components/custom_circular_progress_indicator/custom_circular_progress_indicator.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/custom_circular_progress_indicator/custom_circular_progress_indicator.dart';
 
 class InitializationSplashScreen extends StatelessWidget {
   const InitializationSplashScreen({super.key});

@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/widget/components/app_bar/title_app_bar_widget.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
 import 'package:octopus/octopus.dart';
 import '../../../../user/bloc/user_bloc/user_bloc.dart';
 
