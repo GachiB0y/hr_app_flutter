@@ -524,6 +524,25 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
                     ),
                   ),
             const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                final newData = newsModel?.startDate.copyWith();
+                DateTime resetTime = DateTime(
+                    newData!.year, newData.month, newData.day, 0, 0, 0);
+                newsModel?.startDate = resetTime;
+                context.octopus.setState((state) => state
+                  ..findByName('create-news')
+                      ?.add(Routes.createNewsTitle.node()));
+              },
+              child: Text(
+                'Пропустить',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 22, color: Colors.grey),
+              ),
+            ),
+            const SizedBox(height: 10),
             ResumeButtonWidget(
               title: 'Продолжить',
               onPressed: () {
@@ -537,7 +556,6 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
                 context.octopus.setState((state) => state
                   ..findByName('create-news')
                       ?.add(Routes.createNewsTitle.node()));
-                print('ModelStartDate:${newsModel?.startDate}');
               },
             ),
           ],
