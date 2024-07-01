@@ -9,72 +9,76 @@ import '../../model/event_entity/new_event_entity.dart';
 
 class ModerationNewsState {
   final List<EventEntity> moderationNews;
-  final String? counterWaitingAction;
+
+  /// Получение длинны списка новостей ожидающих публикации.
+  String get counterWaitingAction => moderationNews.length.toString();
   final String? counterPublished;
 
   ModerationNewsState({
     required this.moderationNews,
-    this.counterWaitingAction,
     this.counterPublished,
   });
 
   ModerationNewsState copyWith({
     List<EventEntity>? moderationNews,
-    String? counterWaitingAction,
     String? counterPublished,
   }) {
     return ModerationNewsState(
       moderationNews: moderationNews ?? this.moderationNews,
-      counterWaitingAction: counterWaitingAction ?? this.counterWaitingAction,
       counterPublished: counterPublished ?? this.counterPublished,
     );
   }
 }
 
 class ModerationNewsCubit extends Cubit<ModerationNewsState> {
-  final IEventEntityRepository eventEntityRepository;
+  late IEventEntityRepository _eventEntityRepository;
 
-  ModerationNewsCubit({required this.eventEntityRepository})
-      : super(
+  ModerationNewsCubit({
+    required IEventEntityRepository eventEntityRepository,
+  }) : super(
           ModerationNewsState(
             moderationNews: [],
-            counterWaitingAction: '',
             counterPublished: '',
           ),
         ) {
+    _eventEntityRepository = eventEntityRepository;
     _initialize();
+    eventEntityRepository.state.listen((event) {
+      _subscribeNews(event);
+    });
+  }
 
+  /// Прослушивание изменений [EventEntityRepository].
+  void _subscribeNews(EventEntityRepositoryState stateRepository) {
+    final newState = state.copyWith(
+      moderationNews: stateRepository.approvmentEvents,
+    );
+    emit(newState);
+    getPublishedLength();
   }
 
   /// Инициализация состояния.
   Future<void> _initialize() async {
     await _getApprovmentNews();
-    getApprovmentLength();
     getPublishedLength();
   }
 
   /// Получение списка новостей ожидающих публикации.
   Future<void> _getApprovmentNews() async {
-    final news = await eventEntityRepository.getApprovmentEvents();
-    final newState = state.copyWith(moderationNews: news);
-    getApprovmentLength();
+    await _eventEntityRepository.getApprovmentEvents();
+    final newState = state.copyWith(
+      moderationNews: _eventEntityRepository.approvmentEvents,
+    );
     getPublishedLength();
-    emit(newState);
-  }
-
-  /// Получение длинны списка новостей ожидающих публикации.
-  void getApprovmentLength() {
-    final length = state.moderationNews.length.toString();
-    final newState = state.copyWith(counterWaitingAction: length);
     emit(newState);
   }
 
   /// Получение длины списка опубликованных новостей.
   Future<void> getPublishedLength() async {
     List<EventEntity> list = [];
-    final news = await eventEntityRepository.getEvents();
-    for(var e in news){
-      if(e.isPublish){
+    final news = await _eventEntityRepository.getEvents();
+    for (var e in news) {
+      if (e.isPublish) {
         list.add(e);
       }
     }

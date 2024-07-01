@@ -117,7 +117,8 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                         sliver: SliverToBoxAdapter(
                           child: InkWell(
                             onTap: () {
-                              cubit.publishOrRejectNews(true);
+                              if(news == null) return;
+                              cubit.publishOrRejectNews(value: true, id: news.id.toString());
                             },
                             child: Container(
                               height: 57,

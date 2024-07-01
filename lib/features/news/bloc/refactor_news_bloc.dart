@@ -105,14 +105,35 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
       context: context,
       child: AppCupertinoActionSheet(
         id: id,
-        onTapCancel: () => publishOrRejectNews(false),
+        onTapCancel: () => publishOrRejectNews(
+          value: false,
+          id: id.toString(),
+        ),
       ),
     );
   }
 
   /// Опубликовать или отклонить новость.
-  void publishOrRejectNews(bool value) {
-    var newState = state.copyWith(valueState: value);
-    emit(newState);
+  Future<void> publishOrRejectNews({
+    required bool value,
+    required String id,
+  }) async {
+    if (value) {
+      await publishNews(id);
+    } else {
+      await moveInArchiveNews(id);
+    }
+    await eventEntityRepository.getApprovmentEvents();
+    emit(state.copyWith(valueState: value));
+  }
+
+  /// Отклонить новость (переместить в архив).
+  Future<void> moveInArchiveNews(String id) async {
+    await eventEntityRepository.moveInArchiveNews(id: id);
+  }
+
+  /// Опубликовать новость.
+  Future<void> publishNews(String id) async {
+    await eventEntityRepository.approvementNews(id: id);
   }
 }
