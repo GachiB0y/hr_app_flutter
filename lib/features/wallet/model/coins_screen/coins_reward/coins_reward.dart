@@ -10,6 +10,8 @@ class CoinsReward with _$CoinsReward {
     required int id,
     required int price,
     required String title,
+    String? image,
+    String? description,
   }) = _CoinsReward;
 
   factory CoinsReward.fromJson(Map<String, dynamic> json) =>
