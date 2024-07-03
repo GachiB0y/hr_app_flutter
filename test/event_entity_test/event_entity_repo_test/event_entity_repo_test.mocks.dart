@@ -195,12 +195,6 @@ class MockIEventsEntityProvider extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
   @override
-  int get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
-  @override
   String get title => (super.noSuchMethod(
         Invocation.getter(#title),
         returnValue: _i5.dummyValue<String>(

@@ -12,11 +12,15 @@ abstract interface class IEventEntityRepository {
   /// Геттер массива новостей ожидающих модерации.
   List<EventEntity> get approvmentEvents;
 
+  /// Геттер массива категорий новостей.
+  List<Category> get categoriesNews;
+
   Future<List<EventEntity>> getEvents();
 
   Future<void> getApprovmentEvents();
 
-  Future<List<Category>> getCategory();
+  /// Получить список категорий новостей.
+  Future<void> getCategory();
 
   Future<bool> createNewEventEntity({
     required String title,
@@ -31,10 +35,12 @@ abstract interface class IEventEntityRepository {
     required String id,
   });
 
+  /// Получение новости по id.
   Future<EventEntity> getNewsById({
     required String id,
   });
 
+  /// Отправка новости в архив.
   Future<bool> moveInArchiveNews({
     required String id,
   });
@@ -45,15 +51,21 @@ class EventEntityRepositoryState {
   /// Актуальный массив новостей ожидающих модерации.
   final List<EventEntity> approvmentEvents;
 
+  /// Актуальный массив категорий новостей.
+  final List<Category> categoriesNews;
+
   EventEntityRepositoryState({
     this.approvmentEvents = const [],
+    this.categoriesNews = const [],
   });
 
   EventEntityRepositoryState copyWith({
     List<EventEntity>? approvmentEvents,
+    List<Category>? categoriesNews,
   }) {
     return EventEntityRepositoryState(
       approvmentEvents: approvmentEvents ?? this.approvmentEvents,
+      categoriesNews: categoriesNews ?? this.categoriesNews,
     );
   }
 }
@@ -73,13 +85,22 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   List<EventEntity> get approvmentEvents => _state.approvmentEvents;
 
   @override
+  List<Category> get categoriesNews => _state.categoriesNews;
+
+  @override
   Future<List<EventEntity>> getEvents() async {
     return await _eventEntityProvider.getEvents();
   }
 
   @override
-  Future<List<Category>> getCategory() async {
-    return await _eventEntityProvider.getCategory();
+  Future<void> getCategory() async {
+    try {
+      final categories = await _eventEntityProvider.getCategory();
+      _state = _state.copyWith(categoriesNews: categories);
+      _update();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

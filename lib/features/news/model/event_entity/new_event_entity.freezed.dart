@@ -20,7 +20,7 @@ EventEntity _$EventEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EventEntity {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $EventEntityCopyWith<$Res> {
       _$EventEntityCopyWithImpl<$Res, EventEntity>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String description,
       String image,
@@ -81,7 +81,7 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = null,
     Object? image = null,
@@ -95,10 +95,10 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
     Object? writer = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ abstract class _$$_EventEntityCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String title,
       String description,
       String image,
@@ -192,7 +192,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? description = null,
     Object? image = null,
@@ -206,10 +206,10 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? writer = null,
   }) {
     return _then(_$_EventEntity(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -281,7 +281,7 @@ class _$_EventEntity implements _EventEntity {
       _$$_EventEntityFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   final String title;
   @override
@@ -381,7 +381,7 @@ class _$_EventEntity implements _EventEntity {
 
 abstract class _EventEntity implements EventEntity {
   const factory _EventEntity(
-      {required final int id,
+      {required final int? id,
       required final String title,
       required final String description,
       required final String image,
@@ -398,7 +398,7 @@ abstract class _EventEntity implements EventEntity {
       _$_EventEntity.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String get title;
   @override

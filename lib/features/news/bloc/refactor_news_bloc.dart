@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
@@ -10,6 +11,7 @@ import 'package:hr_app_flutter/ui/commons/app_cupertino_action_sheet.dart';
 import 'package:hr_app_flutter/ui/commons/show_actions.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:octopus/octopus.dart';
 
 ///____________________________________________________________________________________
 /// Состояние экрана [RefactorModerationNewsScreen].
@@ -109,6 +111,14 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
           value: false,
           id: id.toString(),
         ),
+        onTapRefactoring: (){
+          context.octopus.setState(
+                (state) => state
+              ..findByName('user-main-tab')?.add(
+                Routes.createTypeNewsScreen.node(arguments: {'id': id.toString()}),
+              ),
+          );
+        },
       ),
     );
   }

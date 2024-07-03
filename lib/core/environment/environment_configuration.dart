@@ -38,9 +38,9 @@ class EnvironmentConfiguration {
           defaultValue:
           // !kReleaseMode
           //     ? (kDebugMode
-          //         ? 'http://grass-test-api.grass.local/'
-          //         : 'http://grass-test-api.grass.local/')
-          //     :
+              //     ? 'https://grass-test-api.grass.su/'
+              //     : 'https://grass-test-api.grass.su/')
+              // :
           'https://grass-app-api.grass.su/',
         ),
       );

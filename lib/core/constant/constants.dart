@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 //
-// const String host =
-//     'https://grass-app-api.grass.su'; //'http://10.3.50.96'  'https://grass-app-api.grass.su'
+const String host =
+    'https://grass-app-api.grass.su'; //'http://10.3.50.96'  'https://grass-app-api.grass.su'
 /// Хост тестового сервера.
-const String testHost = 'http://grass-test-api.grass.local';
+const String testHost = 'https://grass-test-api.grass.su';
 // const String port = ''; //':9100'
 const String urlAdress = testHost;
 

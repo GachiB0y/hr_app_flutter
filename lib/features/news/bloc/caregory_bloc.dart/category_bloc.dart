@@ -89,7 +89,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState>
       final newData = await _eventEntityRepository
           .getCategory()
           .timeout(const Duration(seconds: 10));
-      emit(CategoryState.successful(data: newData));
+      /// TODO: Оформить подписку на репозиторий!!!!!
+      // emit(CategoryState.successful(data: newData));
     } on TimeoutException {
       emit(CategoryState.error(data: state.data));
     } on Object catch (err, stackTrace) {

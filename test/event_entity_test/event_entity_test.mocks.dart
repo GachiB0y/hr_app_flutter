@@ -148,6 +148,21 @@ class MockIEventEntityRepository extends _i1.Mock
   }
 
   @override
+  _i4.Stream<_i6.EventEntityRepositoryState> get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+      ) as _i4.Stream<_i6.EventEntityRepositoryState>);
+  @override
+  List<_i2.EventEntity> get approvmentEvents => (super.noSuchMethod(
+        Invocation.getter(#approvmentEvents),
+        returnValue: <_i2.EventEntity>[],
+      ) as List<_i2.EventEntity>);
+  @override
+  List<_i2.Category> get categoriesNews => (super.noSuchMethod(
+        Invocation.getter(#categoriesNews),
+        returnValue: <_i2.Category>[],
+      ) as List<_i2.Category>);
+  @override
   _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
@@ -157,23 +172,23 @@ class MockIEventEntityRepository extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
-      (super.noSuchMethod(
+  _i4.Future<void> getApprovmentEvents() => (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
         ),
-        returnValue:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-      ) as _i4.Future<List<_i2.EventEntity>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
+  _i4.Future<void> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-      ) as _i4.Future<List<_i2.Category>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> createNewEventEntity({
     required String? title,
@@ -245,11 +260,6 @@ class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
     _i1.throwOnMissingStub(this);
   }
 
-  @override
-  int get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: 0,
-      ) as int);
   @override
   String get title => (super.noSuchMethod(
         Invocation.getter(#title),
@@ -437,6 +447,25 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
 class MockEventEntityRepo extends _i1.Mock
     implements _i6.IEventEntityRepository {
   @override
+  _i4.Stream<_i6.EventEntityRepositoryState> get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+        returnValueForMissingStub:
+            _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+      ) as _i4.Stream<_i6.EventEntityRepositoryState>);
+  @override
+  List<_i2.EventEntity> get approvmentEvents => (super.noSuchMethod(
+        Invocation.getter(#approvmentEvents),
+        returnValue: <_i2.EventEntity>[],
+        returnValueForMissingStub: <_i2.EventEntity>[],
+      ) as List<_i2.EventEntity>);
+  @override
+  List<_i2.Category> get categoriesNews => (super.noSuchMethod(
+        Invocation.getter(#categoriesNews),
+        returnValue: <_i2.Category>[],
+        returnValueForMissingStub: <_i2.Category>[],
+      ) as List<_i2.Category>);
+  @override
   _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
@@ -448,27 +477,23 @@ class MockEventEntityRepo extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
-      (super.noSuchMethod(
+  _i4.Future<void> getApprovmentEvents() => (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
         ),
-        returnValue:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-        returnValueForMissingStub:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-      ) as _i4.Future<List<_i2.EventEntity>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
+  _i4.Future<void> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-        returnValueForMissingStub:
-            _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-      ) as _i4.Future<List<_i2.Category>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> createNewEventEntity({
     required String? title,
@@ -548,12 +573,6 @@ class MockEventEntityRepo extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNewsEntity extends _i1.Mock implements _i2.EventEntity {
-  @override
-  int get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
   @override
   String get title => (super.noSuchMethod(
         Invocation.getter(#title),

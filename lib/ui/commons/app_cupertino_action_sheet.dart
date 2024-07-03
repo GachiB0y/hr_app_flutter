@@ -4,10 +4,12 @@ import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 class AppCupertinoActionSheet extends StatelessWidget {
   final int id;
   final VoidCallback onTapCancel;
+  final VoidCallback onTapRefactoring;
   /// Модалка выбора действий с новостью (Редактировать, Отклонить, Отмена).
   const AppCupertinoActionSheet({
     required this.id,
     required this.onTapCancel,
+    required this.onTapRefactoring,
     super.key});
 
   @override
@@ -25,7 +27,10 @@ class AppCupertinoActionSheet extends StatelessWidget {
                 color: AppColors.black,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              onTapRefactoring();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
           ),
         ),
         const SizedBox(

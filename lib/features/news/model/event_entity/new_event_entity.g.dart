@@ -8,7 +8,7 @@ part of 'new_event_entity.dart';
 
 _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
     _$_EventEntity(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       title: json['title'] as String,
       description: json['description'] as String,
       image: json['image'] as String,
@@ -54,7 +54,7 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
     };
 
 _$_Writer _$$_WriterFromJson(Map<String, dynamic> json) => _$_Writer(
-      id: json['user_id'] as int,
+      id: json['id'] as int,
       firstName: json['name_i'] as String,
       middleName: json['name'] as String,
       lastName: json['name_o'] as String,

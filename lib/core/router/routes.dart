@@ -4,10 +4,12 @@ import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -39,11 +41,11 @@ enum Routes with OctopusRoute {
   services('services', title: 'Services'),
   education('education', title: 'Education'),
   company('company', title: 'Company'),
-  searchFriendAndSendCoins('search-friend-and-send-coins',
-      title: 'Search Friend And Send Coins'),
+  searchFriendAndSendCoins('search-friend-and-send-coins', title: 'Search Friend And Send Coins'),
   approveNews('approve-news', title: 'Approve News'),
   moderationNews('moderation-news', title: 'Moderation News'),
   refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
+  createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -54,8 +56,7 @@ enum Routes with OctopusRoute {
   bagReport('bag-report', title: 'Bag Report'),
   infoBirthDay('info-birth-day', title: 'Info Birth Day'),
   rookieInfo('rookie-info', title: 'Rookie Info'),
-  exchangeCoinForPass('exchange-coin-for-pass',
-      title: 'Exchange Coin For Pass'),
+  exchangeCoinForPass('exchange-coin-for-pass', title: 'Exchange Coin For Pass'),
   whatToSpendScreen('what-to-spend', title: 'What To Spend'),
 
   ///  Start Create News Screens
@@ -64,8 +65,7 @@ enum Routes with OctopusRoute {
   createNewsDate('create-news-date', title: 'Create News Date'),
   createNewsTime('create-news-time', title: 'Create News Time'),
   createNewsTitle('create-news-title', title: 'Create News Title'),
-  createNewsDescrition('create-news-descrition',
-      title: 'Create News Descrition'),
+  createNewsDescrition('create-news-descrition', title: 'Create News Descrition'),
   createNewsPhoto('create-news-photo', title: 'Create News Photo'),
   exampleNews('example-news', title: 'Example News'),
 
@@ -73,25 +73,16 @@ enum Routes with OctopusRoute {
   allNews('all-news', title: 'All News'),
 
   ///  Start Create Lean Production Screens
-
-  createLeanProductionScreen('create-lean-production',
-      title: 'Create Lean Production'),
-  writeProblemLeanProductionScreen('write-problem-lean-production',
-      title: 'Write Problem Lean Production'),
-
+  createLeanProductionScreen('create-lean-production', title: 'Create Lean Production'),
+  writeProblemLeanProductionScreen('write-problem-lean-production', title: 'Write Problem Lean Production'),
   writeSolutionLeanProductionScreen('write-solution-lean-production',
       title: 'Write Solution Lean Production'),
-
   writeExpensesLeanProductionScreen('write-expenses-lean-production',
       title: 'Write Expenses Lean Production'),
-
-  writeBenefitLeanProductionScreen('write-benefit-lean-production',
-      title: 'Write Benefit Lean Production'),
-
+  writeBenefitLeanProductionScreen('write-benefit-lean-production', title: 'Write Benefit Lean Production'),
   selectorExecutorLeanProductionScreen('selector-executor-lean-production',
       title: 'Write Executor Lean Production'),
-  pickFileLeanProduction('pick-file-lean-production',
-      title: 'Pick File Lean Production');
+  pickFileLeanProduction('pick-file-lean-production', title: 'Pick File Lean Production');
 
   ///  End Create Lean Production Screens
 
@@ -104,8 +95,7 @@ enum Routes with OctopusRoute {
   final String? title;
 
   @override
-  Widget builder(BuildContext context, OctopusState state, OctopusNode node) =>
-      switch (this) {
+  Widget builder(BuildContext context, OctopusState state, OctopusNode node) => switch (this) {
         Routes.signin => const AuthenticationFormScreen(),
         Routes.home => const HomeScreen(),
         Routes.userMain => const UserMainScreen(),
@@ -113,21 +103,23 @@ enum Routes with OctopusRoute {
         Routes.services => const ServicesScreen(),
         Routes.education => const EducationScreen(),
         Routes.company => const CompanyScreen(),
-        Routes.searchFriendAndSendCoins =>
-          const SearchFriendAndSendCoinsScreen(),
+        Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
         Routes.moderationNews => const ModerationNewsScreen(),
         Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-          child: const RefactorModerationNewsScreen(),
-          create: (BuildContext context) => RefactorNewsCubit(
+            child: const RefactorModerationNewsScreen(),
+            create: (BuildContext context) => RefactorNewsCubit(
+              id: node.arguments['id'],
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringNewsCubit>(
+          child: const CreateTypeNewsScreen(),
+          create: (BuildContext context) => CreateRefactoringNewsCubit(
             id: node.arguments['id'],
             eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
           ),
         ),
-
-
-
-            // RefactorModerationNewsScreen(id: node.arguments['id']),
 
 
 
@@ -163,16 +155,11 @@ enum Routes with OctopusRoute {
         Routes.exampleNews => const ExmapleNewsScreen(),
         Routes.allNews => const AllNewsScreen(),
         Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
-        Routes.writeProblemLeanProductionScreen =>
-          const WriteProblemLeanProductionScreen(),
-        Routes.writeSolutionLeanProductionScreen =>
-          const WriteSolutionLeamProductionScreen(),
-        Routes.writeExpensesLeanProductionScreen =>
-          const WriteExpensesLeanProductionScreen(),
-        Routes.writeBenefitLeanProductionScreen =>
-          const WriteBenefitLeanProductionScreen(),
-        Routes.selectorExecutorLeanProductionScreen =>
-          const SelectExecutorLeanProductionScreen(),
+        Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
+        Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
+        Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
+        Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
+        Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
         Routes.pickFileLeanProduction => const PickFileLeanProduction(),
       };
 }

@@ -39,7 +39,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                           splashColor: AppColors.green.withOpacity(0.3),
                           onTap: () {
                             if (news?.id == null) return;
-                            cubit.openActionSheet(context: context, id: news!.id);
+                            cubit.openActionSheet(context: context, id: news?.id ?? 0);
                           },
                           child: const Icon(
                             Icons.more_horiz_outlined,
