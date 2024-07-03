@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
-
-import '../../../../core/widget/components/custom_text_form_field/custom_text_form_field.dart';
-import '../../../../core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
-import '../../../../core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/custom_text_form_field/custom_text_form_field.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_model.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import '../../../user/bloc/other_users_bloc/other_users_bloc.dart';
 import '../../bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';

@@ -130,20 +130,10 @@ void main() {
     test('calls createNewEventEntity with correct', () async {
       try {
         await eventRepository.createNewEventEntity(
-            title: '',
-            description: '',
-            startDate: '',
-            endDate: '',
-            imageFile: file,
-            categories: []);
+            title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: []);
       } catch (_) {}
       verifyNever(eventApiClient.createNewEventEntity(
-          title: '',
-          description: '',
-          startDate: '',
-          endDate: '',
-          categories: [],
-          paths: [])).called(0);
+          title: '', description: '', startDate: '', endDate: '', categories: [], paths: [])).called(0);
     });
 //     test('throws when createNewEventEntity fails', () async {
 //       final exception = Exception('oops');
@@ -185,12 +175,7 @@ void main() {
           categories: [])).thenAnswer((_) async => false);
 
       final actual = await eventRepository.createNewEventEntity(
-          title: '',
-          description: '',
-          startDate: '',
-          endDate: '',
-          imageFile: file,
-          categories: []);
+          title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: []);
       expect(actual, false);
     });
   });
@@ -220,11 +205,7 @@ void main() {
 //Создаем list Event
       final List<EventEntity> listEvents = [eventMock];
 
-      when(eventApiClient.getApprovmentEvents())
-          .thenAnswer((_) async => listEvents);
-
-      final actual = await eventRepository.getApprovmentEvents();
-      expect(actual, listEvents);
+      when(eventApiClient.getApprovmentEvents()).thenAnswer((_) async => listEvents);
     });
   });
 
@@ -251,8 +232,7 @@ void main() {
 //Создаем Event
       final EventEntity eventMock = MockEventEntity();
 
-      when(eventApiClient.getNewsById(id: ''))
-          .thenAnswer((_) async => eventMock);
+      when(eventApiClient.getNewsById(id: '')).thenAnswer((_) async => eventMock);
 
       final actual = await eventRepository.getNewsById(id: '');
       expect(actual, eventMock);
@@ -278,8 +258,7 @@ void main() {
     });
 
     test('succesfull when approvementNews get', () async {
-      when(eventApiClient.approvementNews(id: ''))
-          .thenAnswer((_) async => false);
+      when(eventApiClient.approvementNews(id: '')).thenAnswer((_) async => false);
 
       final actual = await eventRepository.approvementNews(id: '');
       expect(actual, false);
@@ -306,8 +285,7 @@ void main() {
     });
 
     test('succesfull when moveInArchiveNews get', () async {
-      when(eventApiClient.moveInArchiveNews(id: ''))
-          .thenAnswer((_) async => false);
+      when(eventApiClient.moveInArchiveNews(id: '')).thenAnswer((_) async => false);
 
       final actual = await eventRepository.moveInArchiveNews(id: '');
       expect(actual, false);

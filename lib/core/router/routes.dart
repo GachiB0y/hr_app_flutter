@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
@@ -7,6 +8,8 @@ import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
@@ -25,6 +28,9 @@ import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coi
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
 
+import '../../features/initialiazation/widget/dependencies_scope.dart';
+import '../../features/news/bloc/refactor_news_bloc.dart';
+
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
   home('home', title: 'Home'),
@@ -36,6 +42,8 @@ enum Routes with OctopusRoute {
   searchFriendAndSendCoins('search-friend-and-send-coins',
       title: 'Search Friend And Send Coins'),
   approveNews('approve-news', title: 'Approve News'),
+  moderationNews('moderation-news', title: 'Moderation News'),
+  refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -108,6 +116,25 @@ enum Routes with OctopusRoute {
         Routes.searchFriendAndSendCoins =>
           const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
+        Routes.moderationNews => const ModerationNewsScreen(),
+        Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
+          child: const RefactorModerationNewsScreen(),
+          create: (BuildContext context) => RefactorNewsCubit(
+            id: node.arguments['id'],
+            eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+          ),
+        ),
+
+
+
+            // RefactorModerationNewsScreen(id: node.arguments['id']),
+
+
+
+
+
+
+
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
             userId: node.arguments['id'],

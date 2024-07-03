@@ -5,11 +5,16 @@ import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents();
+
   Future<EventEntity> getNewsById({
     required String id,
   });
+
+  /// Получение массива новостей для модерации.
   Future<List<EventEntity>> getApprovmentEvents();
+
   Future<List<Category>> getCategory();
+
   Future<bool> createNewEventEntity({
     required String title,
     required String description,
@@ -18,9 +23,11 @@ abstract interface class IEventsEntityProvider {
     required List<String> paths,
     required List<String> categories,
   });
+
   Future<bool> approvementNews({
     required String id,
   });
+
   Future<bool> moveInArchiveNews({
     required String id,
   });
@@ -28,6 +35,7 @@ abstract interface class IEventsEntityProvider {
 
 class EventsEntityProviderImpl implements IEventsEntityProvider {
   final RestClient _httpService;
+
   const EventsEntityProviderImpl(this._httpService);
 
   @override
@@ -40,8 +48,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result =
-          (data).map((item) => EventEntity.fromJson(item)).toList();
+      final List<EventEntity> result = (data).map((item) => EventEntity.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching EventsEntity');
@@ -57,8 +64,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<Category> result =
-          (data).map((item) => Category.fromJson(item)).toList();
+      final List<Category> result = (data).map((item) => Category.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching Category');
@@ -74,8 +80,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
       required List<String> categories}) async {
     final fields = {
       'some_other_data':
-          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
-    };
+          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'};
     final response = await _httpService.post(
       '/news/add_feed',
       pathsToFiles: paths,
@@ -98,8 +103,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result =
-          (data).map((item) => EventEntity.fromJson(item)).toList();
+      final List<EventEntity> result = (data).map((item) => EventEntity.fromJson(item)).toList();
       return result;
     }
     throw Exception('Error fetching  Approvment Events');
@@ -148,8 +152,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
   @override
   Future<bool> moveInArchiveNews({required String id}) async {
-    final response = await _httpService
-        .post('/news/move_in_archive', body: {}, queryParams: {'feed_id': id});
+    final response = await _httpService.post('/news/move_in_archive', body: {}, queryParams: {'feed_id': id});
 
     if (response
         case {

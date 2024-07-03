@@ -95,6 +95,7 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     } finally {
       emit(EventEntityState.idle(data: state.data));
     }
+    _eventEntityRepository.getApprovmentEvents();
   }
 
   List<EventEntity> filterListCategory(

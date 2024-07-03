@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/coins_reward_bloc/coins_reward_bloc.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
 
 class WhatToSpendScreen extends StatelessWidget {
   const WhatToSpendScreen({super.key});
@@ -40,10 +40,10 @@ class CustomGridWhatToSpend extends StatefulWidget {
 
 class _CustomGridWhatToSpendState extends State<CustomGridWhatToSpend> {
   late final CoinsRewardBLoC coinsRewardBloc;
+
   @override
   void initState() {
-    coinsRewardBloc = CoinsRewardBLoC(
-        walletRepository: DependenciesScope.of(context).walletRepository);
+    coinsRewardBloc = CoinsRewardBLoC(walletRepository: DependenciesScope.of(context).walletRepository);
     coinsRewardBloc.add(const CoinsRewardEvent.fetch());
     super.initState();
   }
@@ -94,11 +94,12 @@ class _CustomGridWhatToSpendState extends State<CustomGridWhatToSpend> {
 
 // ignore: unused_element
 class _ElementGrid extends StatelessWidget {
-  const _ElementGrid(
-      {super.key,
-      required this.title,
-      required this.price,
-      required this.description});
+  const _ElementGrid({
+    required this.title,
+    required this.price,
+    required this.description,
+  });
+
   final String title;
   final String price;
   final String description;
@@ -120,25 +121,17 @@ class _ElementGrid extends StatelessWidget {
             Container(
               width: 54,
               height: 54,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     price,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700),
+                    style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   const Text(
                     'coin',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
