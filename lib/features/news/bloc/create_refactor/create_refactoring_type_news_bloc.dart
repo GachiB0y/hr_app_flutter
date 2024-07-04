@@ -7,39 +7,40 @@ import '../../model/event_entity/new_event_entity.dart';
 
 ///____________________________________________________________________________________
 
-class CreateRefactoringNewsState {
+class CreateRefactoringTypeNewsState {
   /// Актуальное состояние редактируемой новости.
   final EventEntity currentNews;
 
   /// Массив категорий новостей.
   final List<Category> categoriesNews;
 
-  /// Состояние блока [CreateRefactoringNewsCubit].
-  CreateRefactoringNewsState({
+  /// Состояние блока [CreateRefactoringTypeNewsCubit].
+  CreateRefactoringTypeNewsState({
     required this.currentNews,
     required this.categoriesNews,
   });
 
-  CreateRefactoringNewsState copyWith({
+  CreateRefactoringTypeNewsState copyWith({
     EventEntity? currentNews,
     List<Category>? categoriesNews,
   }) {
-    return CreateRefactoringNewsState(
+    return CreateRefactoringTypeNewsState(
       currentNews: currentNews ?? this.currentNews,
       categoriesNews: categoriesNews ?? this.categoriesNews,
     );
   }
 }
 
-class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
+class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsState> {
   late IEventEntityRepository _eventEntityRepository;
   final String? id;
 
-  CreateRefactoringNewsCubit({
+  /// Блок экрана создания или изменения типа новости.
+  CreateRefactoringTypeNewsCubit({
     required IEventEntityRepository eventEntityRepository,
     this.id,
   }) : super(
-          CreateRefactoringNewsState(
+          CreateRefactoringTypeNewsState(
             currentNews: EventEntity(
               id: 0,
               title: 'title',
@@ -69,15 +70,13 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
   /// Инициализация состояния.
   Future<void> _initialize() async {
     getCategoriesNews();
-    if (id != null) {
-      getApprovementNews(id!);
-    }
+
+    getApprovementNews();
   }
 
   /// Получение редактируемой новости по id.
-  Future<void> getApprovementNews(String id) async {
-    var news = await _eventEntityRepository.getNewsById(id: id);
-    var newState = state.copyWith(currentNews: news);
+  Future<void> getApprovementNews() async {
+    var newState = state.copyWith(currentNews: _eventEntityRepository.currentNews);
     emit(newState);
   }
 
@@ -99,7 +98,6 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
   void selectCategory(int id) {
     List<Category> categoriesNews = state.categoriesNews;
     List<Category> newCategories = List.from(state.currentNews.categories);
-
     if (state.currentNews.categories.any(
       (element) => element.id == id,
     )) {
@@ -109,7 +107,7 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
         categoriesNews.firstWhere((element) => element.id == id),
       );
     }
-
     emit(state.copyWith(currentNews: state.currentNews.copyWith(categories: newCategories)));
+    _eventEntityRepository.changeCurrentNews(state.currentNews);
   }
 }

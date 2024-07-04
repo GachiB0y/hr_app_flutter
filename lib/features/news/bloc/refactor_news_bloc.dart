@@ -78,10 +78,11 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
   /// Получение новости по id.
   Future<void> getNewsById() async {
     if (id == null) return;
-    final news = await eventEntityRepository.getNewsById(id: id!);
-    await _refDateTime(news);
+    await eventEntityRepository.getNewsById(id: id!);
+    if(eventEntityRepository.currentNews == null) return;
+    await _refDateTime(eventEntityRepository.currentNews!);
     final newState = state.copyWith(
-      news: news,
+      news: eventEntityRepository.currentNews!,
       status: ScaffoldManagerStatus.loaded,
     );
     emit(newState);
@@ -115,7 +116,7 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
           context.octopus.setState(
                 (state) => state
               ..findByName('user-main-tab')?.add(
-                Routes.createTypeNewsScreen.node(arguments: {'id': id.toString()}),
+                Routes.createTypeNewsScreen.node(),
               ),
           );
         },

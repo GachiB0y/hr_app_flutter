@@ -4,7 +4,8 @@ import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
-import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
@@ -118,16 +119,15 @@ enum Routes with OctopusRoute {
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
-        Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringNewsCubit>(
+        Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
             child: const CreateTypeNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringNewsCubit(
-              id: node.arguments['id'],
+            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
-    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringNewsCubit>(
+    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
       child: const CreateDateNewsScreen(),
-      create: (BuildContext context) => CreateRefactoringNewsCubit(
+      create: (BuildContext context) => CreateRefactoringDateNewsCubit(
         eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
       ),
     ),

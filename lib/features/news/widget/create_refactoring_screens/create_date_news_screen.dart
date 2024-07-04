@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_news_bloc.dart';
-import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/AppBarCreateRefactoringScreens.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:octopus/octopus.dart';
 
 class CreateDateNewsScreen extends StatelessWidget {
@@ -12,11 +13,11 @@ class CreateDateNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateRefactoringNewsCubit>();
-    return BlocBuilder<CreateRefactoringNewsCubit, CreateRefactoringNewsState>(
+    final cubit = context.read<CreateRefactoringDateNewsCubit>();
+    return BlocBuilder<CreateRefactoringDateNewsCubit, CreateRefactoringDateNewsState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: const _AppBarForCreateNews(),
+          appBar: const AppBarCreateRefactoringNewsScreens(),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -24,10 +25,12 @@ class CreateDateNewsScreen extends StatelessWidget {
                 const HeaderTitle(title: 'Выберите дату мероприятия'),
                 const SizedBox(height: 30),
                 CalendarDatePicker(
-                    initialDate: cubit.state.currentNews.startDate,
+                    initialDate: cubit.state.currentNews?.startDate,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
-                    onDateChanged: (DateTime value) {}),
+                    onDateChanged: (DateTime value) {
+                      cubit.changeDate(value);
+                    }),
                 const Spacer(),
                 ContinueButton(
                   onTap: () {
@@ -49,23 +52,3 @@ class CreateDateNewsScreen extends StatelessWidget {
   }
 }
 
-class _AppBarForCreateNews extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBarForCreateNews();
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      actions: [
-        TextButton(
-            onPressed: () {
-              context.octopus.setState((state) => state..removeByName('create-news'));
-            },
-            child: const Text('Сбросить'))
-      ],
-      backgroundColor: Theme.of(context).colorScheme.background,
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
