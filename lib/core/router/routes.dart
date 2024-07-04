@@ -9,6 +9,7 @@ import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
@@ -43,9 +44,13 @@ enum Routes with OctopusRoute {
   company('company', title: 'Company'),
   searchFriendAndSendCoins('search-friend-and-send-coins', title: 'Search Friend And Send Coins'),
   approveNews('approve-news', title: 'Approve News'),
-  moderationNews('moderation-news', title: 'Moderation News'),
+
+  /// Блок экранов для создания и модерации новости.
   refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
+  moderationNews('moderation-news', title: 'Moderation News'),
   createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
+  createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
+  ///
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -114,19 +119,18 @@ enum Routes with OctopusRoute {
             ),
           ),
         Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringNewsCubit>(
-          child: const CreateTypeNewsScreen(),
-          create: (BuildContext context) => CreateRefactoringNewsCubit(
-            id: node.arguments['id'],
-            eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            child: const CreateTypeNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringNewsCubit(
+              id: node.arguments['id'],
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
           ),
-        ),
-
-
-
-
-
-
-
+    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringNewsCubit>(
+      child: const CreateDateNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
             userId: node.arguments['id'],
