@@ -14,8 +14,8 @@ class RefactorModerationNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<RefactorNewsCubit>();
-    final news = cubit.state.news;
+    final cubit = context.read<RefactorNewsCubit>();
+    final news = context.select((RefactorNewsCubit value) => value.state.news);
     return BlocBuilder<RefactorNewsCubit, RefactorNewsState>(
       builder: (context, state) {
         return ScaffoldManager(
@@ -36,15 +36,16 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                         width: 30,
                       ),
                       InkWell(
-                          splashColor: AppColors.green.withOpacity(0.3),
-                          onTap: () {
-                            if (news?.id == null) return;
-                            cubit.openActionSheet(context: context, id: news?.id ?? 0);
-                          },
-                          child: const Icon(
-                            Icons.more_horiz_outlined,
-                            size: 35,
-                          )),
+                        splashColor: AppColors.green.withOpacity(0.3),
+                        onTap: () {
+                          if (news?.id == null) return;
+                          cubit.openActionSheet(context: context, id: news?.id ?? 0);
+                        },
+                        child: const Icon(
+                          Icons.more_horiz_outlined,
+                          size: 35,
+                        ),
+                      ),
                     ],
                   )
                 : null,
@@ -117,7 +118,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                         sliver: SliverToBoxAdapter(
                           child: InkWell(
                             onTap: () {
-                              if(news == null) return;
+                              if (news == null) return;
                               cubit.publishOrRejectNews(value: true, id: news.id.toString());
                             },
                             child: Container(
@@ -144,7 +145,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : PublishNewsScreen(
+              : _PublishNewsScreen(
                   title: news?.title ?? '',
                   value: state.valueState ?? true,
                 ),
@@ -154,17 +155,16 @@ class RefactorModerationNewsScreen extends StatelessWidget {
   }
 }
 
-class PublishNewsScreen extends StatelessWidget {
+class _PublishNewsScreen extends StatelessWidget {
   /// Название новости.
   final String title;
 
   /// Значение опубликована новость или отклонена.
   final bool value;
 
-  const PublishNewsScreen({
+  const _PublishNewsScreen({
     required this.title,
     required this.value,
-    super.key,
   });
 
   @override
@@ -175,7 +175,7 @@ class PublishNewsScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 110),
-            Image.asset( value ? 'assets/images/ok.png' : 'assets/images/cancel.png' ),
+            Image.asset(value ? 'assets/images/ok.png' : 'assets/images/cancel.png'),
             const SizedBox(height: 30),
             Text(
               value ? 'Запись опубликована' : 'Запись отклонена',
@@ -190,7 +190,7 @@ class PublishNewsScreen extends StatelessWidget {
               child: SizedBox(
                 height: 200,
                 child: Text(
-                 title,
+                  title,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w400,

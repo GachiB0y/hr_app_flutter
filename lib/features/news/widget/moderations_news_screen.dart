@@ -12,10 +12,10 @@ class ModerationNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Bloc экрана.
-    final cubit = context.watch<ModerationNewsCubit>();
+    final cubit = context.read<ModerationNewsCubit>();
 
     /// Массив модерируемых новостей из стейта.
-    final moderationNews = cubit.state.moderationNews;
+    final moderationNews = context.select((ModerationNewsCubit value) => value.state.moderationNews);
 
     return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(
       builder: (context, state) {
@@ -53,7 +53,7 @@ class ModerationNewsScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              state.counterWaitingAction ?? '',
+                              state.counterWaitingAction,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -71,7 +71,7 @@ class ModerationNewsScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              state.counterPublished ?? '',
+                              state.counterPublished ?? '0',
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,

@@ -32,6 +32,7 @@ class _CreateNewsScreenState extends State<CreateNewsScreen> {
 /// Exmaple News Screen
 class ExmapleNewsScreen extends StatelessWidget {
   const ExmapleNewsScreen({super.key});
+
   void showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -41,9 +42,9 @@ class ExmapleNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     final date = DateFormat('dd MMMM').format(newsModel!.startDate);
     final time = DateFormat('HH:mm').format(newsModel.startDate);
 
@@ -67,8 +68,7 @@ class ExmapleNewsScreen extends StatelessWidget {
                     SliverToBoxAdapter(
                       child: SizedBox(
                           // height: 274,
-                          child:
-                              Image.file(newsModel.file!, fit: BoxFit.contain)),
+                          child: Image.file(newsModel.file!, fit: BoxFit.contain)),
                     ),
                     const SliverPadding(padding: EdgeInsets.only(bottom: 43)),
                     SliverPadding(
@@ -81,8 +81,7 @@ class ExmapleNewsScreen extends StatelessWidget {
                     SliverPadding(
                       padding: const EdgeInsets.only(left: 36),
                       sliver: SliverToBoxAdapter(
-                        child: Text(newsModel.title!,
-                            style: Theme.of(context).textTheme.titleLarge),
+                        child: Text(newsModel.title!, style: Theme.of(context).textTheme.titleLarge),
                       ),
                     ),
                     const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
@@ -94,34 +93,29 @@ class ExmapleNewsScreen extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
-                              .copyWith(
-                                  fontSize: 17, fontWeight: FontWeight.w400),
+                              .copyWith(fontSize: 17, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
                   ],
                 ),
-
               ),
-              BlocBuilder<EventEntityBloc, EventEntityState>(
-                  builder: (context, state) {
+              BlocBuilder<EventEntityBloc, EventEntityState>(builder: (context, state) {
                 if (state is EventEntityState$Processing) {
                   return const CircularProgressIndicator();
                 } else {
                   return ResumeButtonWidget(
                     title: 'Создать',
                     onPressed: () {
-                      context.read<EventEntityBloc>().add(
-                          EventEntityEvent.create(
-                              title: newsModel.title!,
-                              description: newsModel.description!,
-                              imageFile: newsModel.file!,
-                              categories: newsModel.selectedItems!,
-                              startDate: newsModel.startDate.toString(),
-                              endDate: null));
+                      context.read<EventEntityBloc>().add(EventEntityEvent.create(
+                          title: newsModel.title!,
+                          description: newsModel.description!,
+                          imageFile: newsModel.file!,
+                          categories: newsModel.selectedItems!,
+                          startDate: newsModel.startDate.toString(),
+                          endDate: null));
 
-                      context.octopus.setState(
-                          (state) => state..removeByName('create-news'));
+                      context.octopus.setState((state) => state..removeByName('create-news'));
                     },
                   );
                 }
@@ -167,6 +161,7 @@ class DateOrTimeWidget extends StatelessWidget {
     super.key,
     required this.text,
   });
+
   final String text;
 
   @override
@@ -215,10 +210,7 @@ class VerificationNewsTitleWidget extends StatelessWidget {
             ),
             Text(
               'Новость на проверке',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(fontSize: 22),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
             )
           ],
         ),
@@ -241,10 +233,7 @@ class AddPhotoNewsScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Добавь фото',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             const Padding(
@@ -255,8 +244,8 @@ class AddPhotoNewsScreen extends StatelessWidget {
             ResumeButtonWidget(
               title: 'Продолжить',
               onPressed: () {
-                context.octopus.setState((state) => state
-                  ..findByName('create-news')?.add(Routes.exampleNews.node()));
+                context.octopus
+                    .setState((state) => state..findByName('create-news')?.add(Routes.exampleNews.node()));
               },
             ),
           ],
@@ -272,21 +261,19 @@ class WriteDescriptionNewsScreen extends StatefulWidget {
   const WriteDescriptionNewsScreen({super.key});
 
   @override
-  State<WriteDescriptionNewsScreen> createState() =>
-      _WriteDescriptionNewsScreenState();
+  State<WriteDescriptionNewsScreen> createState() => _WriteDescriptionNewsScreenState();
 }
 
-class _WriteDescriptionNewsScreenState
-    extends State<WriteDescriptionNewsScreen> {
+class _WriteDescriptionNewsScreenState extends State<WriteDescriptionNewsScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     if (newsModel != null && newsModel.description != null) {
       _descriptionController.text = newsModel.description!;
     }
@@ -294,9 +281,9 @@ class _WriteDescriptionNewsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -307,10 +294,7 @@ class _WriteDescriptionNewsScreenState
               Center(
                 child: Text(
                   'Опиши мероприятие',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -323,12 +307,8 @@ class _WriteDescriptionNewsScreenState
                   decoration: InputDecoration(
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
-                    hintText:
-                        'Введи описание, не забудь указать место проведения',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintText: 'Введи описание, не забудь указать место проведения',
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -348,9 +328,8 @@ class _WriteDescriptionNewsScreenState
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     newsModel?.description = _descriptionController.text;
-                    context.octopus.setState((state) => state
-                      ..findByName('create-news')
-                          ?.add(Routes.createNewsPhoto.node()));
+                    context.octopus.setState(
+                        (state) => state..findByName('create-news')?.add(Routes.createNewsPhoto.node()));
                   }
                 },
               ),
@@ -378,9 +357,9 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
   @override
   void initState() {
     super.initState();
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     if (newsModel != null && newsModel.title != null) {
       _titleController.text = newsModel.title!;
     }
@@ -388,9 +367,9 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -401,10 +380,7 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
               Center(
                 child: Text(
                   'Напиши заголовок',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -418,10 +394,7 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Введите заголовок',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -441,9 +414,8 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     newsModel?.title = _titleController.text;
-                    context.octopus.setState((state) => state
-                      ..findByName('create-news')
-                          ?.add(Routes.createNewsDescrition.node()));
+                    context.octopus.setState(
+                        (state) => state..findByName('create-news')?.add(Routes.createNewsDescrition.node()));
                   }
                 },
               ),
@@ -487,9 +459,9 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -498,10 +470,7 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
             Center(
               child: Text(
                 'Выбери время проведения',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             CupertinoTimerPicker(
@@ -518,10 +487,7 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
                 : Center(
                     child: Text(
                       'Время: ${TimeLeft(time!.inSeconds)}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontSize: 22),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                     ),
                   ),
             const SizedBox(height: 10),
@@ -535,9 +501,8 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
                 final data = newData?.add(time!);
                 newsModel?.startDate = data!;
 
-                context.octopus.setState((state) => state
-                  ..findByName('create-news')
-                      ?.add(Routes.createNewsTitle.node()));
+                context.octopus.setState(
+                    (state) => state..findByName('create-news')?.add(Routes.createNewsTitle.node()));
                 print('ModelStartDate:${newsModel?.startDate}');
               },
             ),
@@ -563,9 +528,9 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -575,10 +540,7 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
             Center(
               child: Text(
                 'Выбери дату мероприятия',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             CalendarDatePicker(
@@ -596,10 +558,7 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
             Center(
               child: Text(
                 'Дата: ${formatter.format(selectedDate)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             const SizedBox(height: 10),
@@ -609,9 +568,8 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
                 if (newsModel?.startDate == null) {
                   return;
                 }
-                context.octopus.setState((state) => state
-                  ..findByName('create-news')
-                      ?.add(Routes.createNewsTime.node()));
+                context.octopus
+                    .setState((state) => state..findByName('create-news')?.add(Routes.createNewsTime.node()));
               },
             ),
           ],
@@ -638,10 +596,7 @@ class SelectedTypeNewsScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Выбери тип события',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             const TypeListWidget(),
@@ -649,16 +604,13 @@ class SelectedTypeNewsScreen extends StatelessWidget {
             ResumeButtonWidget(
               title: 'Продолжить',
               onPressed: () {
-                final newsModel = ChangeNotifierProvaider.read<
-                    ChangeNotifierProvaider<CreateEventsViewModel>,
+                final newsModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>,
                     CreateEventsViewModel>(context);
-                if (newsModel?.selectedItems == null ||
-                    newsModel?.selectedItems?.isEmpty == true) {
+                if (newsModel?.selectedItems == null || newsModel?.selectedItems?.isEmpty == true) {
                   return;
                 }
-                context.octopus.setState((state) => state
-                  ..findByName('create-news')
-                      ?.add(Routes.createNewsDate.node()));
+                context.octopus
+                    .setState((state) => state..findByName('create-news')?.add(Routes.createNewsDate.node()));
               },
             ),
           ],
@@ -668,8 +620,7 @@ class SelectedTypeNewsScreen extends StatelessWidget {
   }
 }
 
-class _AppBarForCreateNews extends StatelessWidget
-    implements PreferredSizeWidget {
+class _AppBarForCreateNews extends StatelessWidget implements PreferredSizeWidget {
   const _AppBarForCreateNews();
 
   @override
@@ -678,8 +629,7 @@ class _AppBarForCreateNews extends StatelessWidget
       actions: [
         TextButton(
             onPressed: () {
-              context.octopus
-                  .setState((state) => state..removeByName('create-news'));
+              context.octopus.setState((state) => state..removeByName('create-news'));
             },
             child: const Text('Сбросить'))
       ],
@@ -692,8 +642,12 @@ class _AppBarForCreateNews extends StatelessWidget
 }
 
 class ResumeButtonWidget extends StatelessWidget {
-  const ResumeButtonWidget(
-      {super.key, required this.onPressed, required this.title});
+  const ResumeButtonWidget({
+    super.key,
+    required this.onPressed,
+    required this.title,
+  });
+
   final void Function() onPressed;
   final String title;
 
@@ -714,10 +668,9 @@ class ResumeButtonWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
-          minimumSize:
-              MaterialStateProperty.all(const Size(double.infinity, 57)),
-          backgroundColor: MaterialStateProperty.resolveWith(
-              (states) => Theme.of(context).colorScheme.primary),
+          minimumSize: MaterialStateProperty.all(const Size(double.infinity, 57)),
+          backgroundColor:
+              MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.primary),
         ),
         child: Ink(
           decoration: const BoxDecoration(
@@ -756,9 +709,9 @@ class _TypeListWidgetState extends State<TypeListWidget> {
   }
 
   void selectItem(String item) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     setState(() {
       if (selectedCategories.contains(item)) {
         selectedCategories.remove(item);
@@ -783,16 +736,14 @@ class _TypeListWidgetState extends State<TypeListWidget> {
             return const Center(child: Text('Список пуст.'));
           } else {
             return Padding(
-              padding:
-                  const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
+              padding: const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
               child: Wrap(
                 spacing: 14.0, // Расстояние между Chips
                 runSpacing: 14.0, // Расстояние между строками Chips
                 children: List.generate(
                   state.data!.length, // Количество Chips
                   (index) {
-                    bool isSelected = selectedCategories
-                        .contains(state.data![index].id.toString());
+                    bool isSelected = selectedCategories.contains(state.data![index].id.toString());
 
                     return GestureDetector(
                       onTap: () {

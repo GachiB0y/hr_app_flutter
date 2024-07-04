@@ -38,7 +38,7 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   }) : super(
           ModerationNewsState(
             moderationNews: [],
-            counterPublished: '',
+            counterPublished: '0',
           ),
         ) {
     _eventEntityRepository = eventEntityRepository;

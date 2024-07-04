@@ -8,18 +8,25 @@ import '../../model/event_entity/new_event_entity.dart';
 ///____________________________________________________________________________________
 
 class CreateRefactoringNewsState {
+  /// Актуальное состояние редактируемой новости.
   final EventEntity currentNews;
+
+  /// Массив категорий новостей.
+  final List<Category> categoriesNews;
 
   /// Состояние блока [CreateRefactoringNewsCubit].
   CreateRefactoringNewsState({
     required this.currentNews,
+    required this.categoriesNews,
   });
 
   CreateRefactoringNewsState copyWith({
     EventEntity? currentNews,
+    List<Category>? categoriesNews,
   }) {
     return CreateRefactoringNewsState(
       currentNews: currentNews ?? this.currentNews,
+      categoriesNews: categoriesNews ?? this.categoriesNews,
     );
   }
 }
@@ -52,6 +59,7 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
                 lastName: '',
               ),
             ),
+            categoriesNews: [],
           ),
         ) {
     _eventEntityRepository = eventEntityRepository;
@@ -60,7 +68,8 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
 
   /// Инициализация состояния.
   Future<void> _initialize() async {
-    if(id != null) {
+    getCategoriesNews();
+    if (id != null) {
       getApprovementNews(id!);
     }
   }
@@ -70,6 +79,37 @@ class CreateRefactoringNewsCubit extends Cubit<CreateRefactoringNewsState> {
     var news = await _eventEntityRepository.getNewsById(id: id);
     var newState = state.copyWith(currentNews: news);
     emit(newState);
-    print(state.currentNews);
+  }
+
+  /// Получение массива категорий новостей.
+  Future<void> getCategoriesNews() async {
+    await _eventEntityRepository.getCategory();
+    var categories = _eventEntityRepository.categoriesNews;
+    emit(state.copyWith(categoriesNews: categories));
+  }
+
+  /// Проверка выбрана ли категория у изменяемой новости.
+  bool checkTypes(int id) {
+    return state.currentNews.categories.any(
+      (element) => element.id == id,
+    );
+  }
+
+  /// Изменение выбранных категорий.
+  void selectCategory(int id) {
+    List<Category> categoriesNews = state.categoriesNews;
+    List<Category> newCategories = List.from(state.currentNews.categories);
+
+    if (state.currentNews.categories.any(
+      (element) => element.id == id,
+    )) {
+      newCategories.remove(categoriesNews.firstWhere((element) => element.id == id));
+    } else {
+      newCategories.add(
+        categoriesNews.firstWhere((element) => element.id == id),
+      );
+    }
+
+    emit(state.copyWith(currentNews: state.currentNews.copyWith(categories: newCategories)));
   }
 }

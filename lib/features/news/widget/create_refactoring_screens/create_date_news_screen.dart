@@ -6,9 +6,9 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/type_news_card.dart';
 import 'package:octopus/octopus.dart';
 
-class CreateTypeNewsScreen extends StatelessWidget {
+class CreateDateNewsScreen extends StatelessWidget {
   /// Экран массива новостей на модерации.
-  const CreateTypeNewsScreen({super.key});
+  const CreateDateNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +24,19 @@ class CreateTypeNewsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const HeaderTitle(title: 'Выберите тип события'),
+                const HeaderTitle(title: 'Выберите дату мероприятия'),
                 const SizedBox(height: 30),
                 Wrap(
                   spacing: 14.0, // Расстояние между Chips
                   runSpacing: 14.0, // Расстояние между строками Chips
                   children: categoriesNews.isNotEmpty
                       ? categoriesNews
-                          .map((item) => TypeNewsCard(
-                                onTap: () => cubit.selectCategory(item.id),
-                                title: item.name,
-                                isSelected: cubit.checkTypes(item.id),
-                              ))
-                          .toList()
+                      .map((item) => TypeNewsCard(
+                    onTap: () => cubit.selectCategory(item.id),
+                    title: item.name,
+                    isSelected: cubit.checkTypes(item.id),
+                  ))
+                      .toList()
                       : [],
                 ),
                 const Spacer(),
@@ -44,7 +44,7 @@ class CreateTypeNewsScreen extends StatelessWidget {
                   context.octopus.setState(
                         (state) => state
                       ..findByName('user-main-tab')?.add(
-                        Routes.createDateNewsScreen.node(),
+                        Routes.createTypeNewsScreen.node(),
                       ),
                   );
                 },),
