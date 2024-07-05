@@ -1,20 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/AppBarCreateRefactoringScreens.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:octopus/octopus.dart';
 
-class CreateDateNewsScreen extends StatelessWidget {
-  /// Экран выбора даты при создании или модерации новости.
-  const CreateDateNewsScreen({super.key});
+class CreateTimeNewsScreen extends StatelessWidget {
+  /// Экран выбора времени на модерации.
+  const CreateTimeNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateRefactoringDateNewsCubit>();
-    return BlocBuilder<CreateRefactoringDateNewsCubit, CreateRefactoringDateNewsState>(
+    final cubit = context.read<CreateRefactoringTimeNewsCubit>();
+    return BlocBuilder<CreateRefactoringTimeNewsCubit, CreateRefactoringTimeNewsState>(
       builder: (context, state) {
         return Scaffold(
           appBar: const AppBarCreateRefactoringNewsScreens(),
@@ -22,22 +23,21 @@ class CreateDateNewsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const HeaderTitle(title: 'Выберите дату мероприятия'),
+                const HeaderTitle(title: 'Выберите время проведения'),
                 const SizedBox(height: 30),
-                CalendarDatePicker(
-                    initialDate: cubit.state.currentNews?.startDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    onDateChanged: (DateTime value) {
-                      cubit.changeDate(value);
-                    }),
+                CupertinoTimerPicker(
+                  mode: CupertinoTimerPickerMode.hm,
+                  onTimerDurationChanged: (Duration value) {
+                   cubit.changeTime(value);
+                  },
+                ),
                 const Spacer(),
                 ContinueButton(
                   onTap: () {
                     context.octopus.setState(
-                      (state) => state
+                          (state) => state
                         ..findByName('user-main-tab')?.add(
-                          Routes.createTimeNewsScreen.node(),
+                          Routes.createTitleNewsScreen.node(),
                         ),
                     );
                   },
@@ -51,4 +51,3 @@ class CreateDateNewsScreen extends StatelessWidget {
     );
   }
 }
-

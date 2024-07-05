@@ -7,31 +7,31 @@ import '../../model/event_entity/new_event_entity.dart';
 
 ///____________________________________________________________________________________
 
-class CreateRefactoringDateNewsState {
+class CreateRefactoringTimeNewsState {
   final EventEntity? currentNews;
 
-  /// Состояние блока [CreateRefactoringDateNewsCubit].
-  CreateRefactoringDateNewsState({
+  /// Состояние блока [CreateRefactoringTimeNewsCubit].
+  CreateRefactoringTimeNewsState({
     this.currentNews,
   });
 
-  CreateRefactoringDateNewsState copyWith({
+  CreateRefactoringTimeNewsState copyWith({
     EventEntity? currentNews,
   }) {
-    return CreateRefactoringDateNewsState(
+    return CreateRefactoringTimeNewsState(
       currentNews: currentNews ?? this.currentNews,
     );
   }
 }
 
-class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsState> {
+class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsState> {
   late IEventEntityRepository _eventEntityRepository;
 
-  /// Блок экрана создания или изменения даты новости.
-  CreateRefactoringDateNewsCubit({
+  /// Блок экрана создания или изменения времени новости.
+  CreateRefactoringTimeNewsCubit({
     required IEventEntityRepository eventEntityRepository,
   }) : super(
-          CreateRefactoringDateNewsState(),
+          CreateRefactoringTimeNewsState(),
         ) {
     _eventEntityRepository = eventEntityRepository;
     _initialize();
@@ -43,20 +43,26 @@ class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsStat
     emit(state.copyWith(currentNews: currentNews));
   }
 
-  /// Колбек на выбор даты.
-  void changeDate(DateTime date) {
+  /// Колбек на выбор времени.
+  void changeTime(Duration time) {
+    if (state.currentNews == null) return;
+    if (state.currentNews?.startDate == null) return;
     emit(
       state.copyWith(
         currentNews: state.currentNews?.copyWith(
-          startDate: date,
-        ),
+            startDate: DateTime(
+          state.currentNews!.startDate.year,
+          state.currentNews!.startDate.month,
+          state.currentNews!.startDate.day,
+          0,
+          time.inMinutes,
+        )),
       ),
     );
-    if (state.currentNews == null) return;
     changeCurrentNews(state.currentNews!);
   }
 
-  /// Изменение даты новости в репозитории.
+  /// Изменение времени новости в репозитории.
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
   }

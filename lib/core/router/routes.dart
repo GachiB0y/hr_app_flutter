@@ -5,13 +5,17 @@ import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/create_title_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -51,6 +55,9 @@ enum Routes with OctopusRoute {
   moderationNews('moderation-news', title: 'Moderation News'),
   createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
   createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
+  createTimeNewsScreen('create-time-news-screen', title: 'Create Time News Screen'),
+  createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
+
   ///
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
@@ -125,12 +132,24 @@ enum Routes with OctopusRoute {
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
-    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
-      child: const CreateDateNewsScreen(),
-      create: (BuildContext context) => CreateRefactoringDateNewsCubit(
-        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-      ),
-    ),
+        Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
+            child: const CreateDateNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringDateNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTimeNewsScreen => BlocProvider<CreateRefactoringTimeNewsCubit>(
+            child: const CreateTimeNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTimeNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
+            child: const CreateTitleNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
             userId: node.arguments['id'],
