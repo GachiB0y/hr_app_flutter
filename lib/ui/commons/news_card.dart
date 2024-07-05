@@ -37,7 +37,7 @@ class NewsCard extends StatelessWidget {
 
               ),
               child: BlurImageWidget(
-                urlImage: news.image,
+                urlImage: news.image ?? '',
                 height: 90,
                 width: 107,
               ),
@@ -48,13 +48,14 @@ class NewsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  (news.startDate != null) ?
                   _InfoDateWidget(
                     text: DateFormat('dd MMMM').format(
-                      news.startDate,
+                      news.startDate!
                     ),
-                  ),
+                  ) : const Text(''),
                   Text(
-                    news.title,
+                    news.title ?? '',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -63,7 +64,7 @@ class NewsCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    news.description,
+                    news.description ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall!

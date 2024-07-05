@@ -78,7 +78,7 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                               CachedNetworkImage(
                                 fadeInDuration:
                                     const Duration(milliseconds: 100),
-                                imageUrl: item.image,
+                                imageUrl: item.image ?? '',
                                 imageBuilder: (context, imageProvider) {
                                   return Container(
                                     width:
@@ -110,7 +110,7 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                                             ),
                                             child: Text(
                                               DateFormat('dd MMMM', 'ru')
-                                                  .format(item.startDate),
+                                                  .format(item.startDate!),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
@@ -138,7 +138,7 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                               child: Text(
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
-                                item.title,
+                                item.title ?? '',
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),

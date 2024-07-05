@@ -78,7 +78,8 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
     List<EventEntity> list = [];
     final news = await _eventEntityRepository.getEvents();
     for (var e in news) {
-      if (e.isPublish) {
+      if(e.isPublish == null) return;
+      if (e.isPublish!) {
         list.add(e);
       }
     }

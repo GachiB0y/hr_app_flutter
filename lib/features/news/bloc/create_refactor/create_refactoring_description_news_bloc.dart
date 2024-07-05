@@ -8,40 +8,40 @@ import '../../model/event_entity/new_event_entity.dart';
 
 ///____________________________________________________________________________________
 
-class CreateRefactoringTitleNewsState {
+class CreateRefactoringDescriptionNewsState {
   final EventEntity? currentNews;
 
-  /// Состояние блока [CreateRefactoringTitleNewsCubit].
-  CreateRefactoringTitleNewsState({
+  /// Состояние блока [CreateRefactoringDescriptionNewsCubit].
+  CreateRefactoringDescriptionNewsState({
     this.currentNews,
   });
 
-  CreateRefactoringTitleNewsState copyWith({
+  CreateRefactoringDescriptionNewsState copyWith({
     EventEntity? currentNews,
   }) {
-    return CreateRefactoringTitleNewsState(
+    return CreateRefactoringDescriptionNewsState(
       currentNews: currentNews ?? this.currentNews,
     );
   }
 }
 
-class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsState> {
+class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescriptionNewsState> {
   /// Репозиторий.
   late IEventEntityRepository _eventEntityRepository;
 
-  /// Контроллер поля ввода заголовка.
+  /// Контроллер поля ввода описания новости.
   late TextEditingController textController;
 
-  /// Блок экрана создания или изменения заголовка новости.
-  CreateRefactoringTitleNewsCubit({
+  /// Блок экрана создания или изменения описания новости.
+  CreateRefactoringDescriptionNewsCubit({
     required IEventEntityRepository eventEntityRepository,
   }) : super(
-          CreateRefactoringTitleNewsState(),
+          CreateRefactoringDescriptionNewsState(),
         ) {
     _eventEntityRepository = eventEntityRepository;
     textController = TextEditingController();
-    if (eventEntityRepository.currentNews != null && eventEntityRepository.currentNews!.title != null) {
-      textController.text = eventEntityRepository.currentNews!.title!;
+    if (eventEntityRepository.currentNews != null && eventEntityRepository.currentNews!.description != null) {
+      textController.text = eventEntityRepository.currentNews!.description!;
     }
     textController.addListener(_getSearch);
 
@@ -57,7 +57,7 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
   /// Таймер для
   Timer? _timer;
 
-  /// Коллбак на изменение поля заголовка новости.
+  /// Коллбак на изменение поля описания новости.
   void _getSearch() {
     if (textController.text == ' ') {
       textController.text = '';
@@ -69,11 +69,11 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
       emit(
         state.copyWith(
           currentNews: state.currentNews?.copyWith(
-            title: textController.text,
+            description: textController.text,
           ),
         ),
       );
-      if(state.currentNews != null) {
+      if (state.currentNews != null) {
         changeCurrentNews(state.currentNews!);
       }
     });

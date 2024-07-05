@@ -41,25 +41,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
     this.id,
   }) : super(
           CreateRefactoringTypeNewsState(
-            currentNews: EventEntity(
-              id: 0,
-              title: 'title',
-              description: 'description',
-              image: 'image',
-              startDate: DateTime.now(),
-              endDate: DateTime.now(),
-              createdAt: DateTime.now(),
-              updatedAt: DateTime.now(),
-              isPublish: false,
-              isArchived: false,
-              categories: [],
-              writer: const Writer(
-                id: 0,
-                firstName: '',
-                middleName: '',
-                lastName: '',
-              ),
-            ),
+            currentNews: const EventEntity(),
             categoriesNews: [],
           ),
         ) {
@@ -89,16 +71,18 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
 
   /// Проверка выбрана ли категория у изменяемой новости.
   bool checkTypes(int id) {
-    return state.currentNews.categories.any(
+    if (state.currentNews.categories == null) return false;
+    return state.currentNews.categories!.any(
       (element) => element.id == id,
     );
   }
 
   /// Изменение выбранных категорий.
   void selectCategory(int id) {
+    if (state.currentNews.categories == null) return;
     List<Category> categoriesNews = state.categoriesNews;
-    List<Category> newCategories = List.from(state.currentNews.categories);
-    if (state.currentNews.categories.any(
+    List<Category> newCategories = List.from(state.currentNews.categories!);
+    if (state.currentNews.categories!.any(
       (element) => element.id == id,
     )) {
       newCategories.remove(categoriesNews.firstWhere((element) => element.id == id));

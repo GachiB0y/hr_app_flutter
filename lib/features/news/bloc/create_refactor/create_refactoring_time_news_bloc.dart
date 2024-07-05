@@ -51,9 +51,9 @@ class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsStat
       state.copyWith(
         currentNews: state.currentNews?.copyWith(
             startDate: DateTime(
-          state.currentNews!.startDate.year,
-          state.currentNews!.startDate.month,
-          state.currentNews!.startDate.day,
+          state.currentNews!.startDate!.year,
+          state.currentNews!.startDate!.month,
+          state.currentNews!.startDate!.day,
           0,
           time.inMinutes,
         )),

@@ -5,6 +5,8 @@ import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_description_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_photo_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
@@ -13,9 +15,11 @@ import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/create_title_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -57,6 +61,8 @@ enum Routes with OctopusRoute {
   createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
   createTimeNewsScreen('create-time-news-screen', title: 'Create Time News Screen'),
   createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
+  createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
+  createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
 
   ///
   aboutNews('about-news', title: 'About News'),
@@ -147,6 +153,18 @@ enum Routes with OctopusRoute {
         Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
             child: const CreateTitleNewsScreen(),
             create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createDescriptionNewsScreen => BlocProvider<CreateRefactoringDescriptionNewsCubit>(
+            child: const CreateDescriptionNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringDescriptionNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createPhotoNewsScreen => BlocProvider<CreateRefactoringPhotoNewsCubit>(
+            child: const CreatePhotoNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringPhotoNewsCubit(
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),

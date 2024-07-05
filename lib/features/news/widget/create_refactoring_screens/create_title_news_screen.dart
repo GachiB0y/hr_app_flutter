@@ -7,6 +7,8 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:octopus/octopus.dart';
 
+import 'widgets/create_news_text_field.dart';
+
 class CreateTitleNewsScreen extends StatelessWidget {
   /// Экран написания заголовка новости при создании или модерации.
   const CreateTitleNewsScreen({super.key});
@@ -24,36 +26,17 @@ class CreateTitleNewsScreen extends StatelessWidget {
               children: [
                 const HeaderTitle(title: 'Напиши заголовок'),
                 const SizedBox(height: 30),
-                TextFormField(
-                  maxLength: 256,
-                  maxLines: 10,
-                  minLines: 5,
-                  controller: cubit.searchController,
-                  decoration: InputDecoration(
-                    fillColor: const Color(0xfff5f5f5),
-                    filled: true,
-                    hintText: 'Введите заголовок',
-                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'Поле обязательно для заполнения';
-                    }
-                    return null;
-                  },
+                CreateNewsTextField(
+                  controller: cubit.textController,
+                  hintText: 'Введи заголовок',
                 ),
-
                 const Spacer(),
                 ContinueButton(
                   onTap: () {
                     context.octopus.setState(
                       (state) => state
                         ..findByName('user-main-tab')?.add(
-                          Routes.createTypeNewsScreen.node(),
+                          Routes.createDescriptionNewsScreen.node(),
                         ),
                     );
                   },

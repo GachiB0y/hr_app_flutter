@@ -5,11 +5,14 @@ class ContinueButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color buttonColor;
   final Color splashColor;
+  final String text;
 
+  /// Кнопка продолжения создания или модерирования новости.
   const ContinueButton({
     required this.onTap,
     this.buttonColor = AppColors.black,
     this.splashColor = AppColors.black,
+    this.text = 'Продолжить',
     super.key,
   });
 
@@ -33,9 +36,10 @@ class ContinueButton extends StatelessWidget {
               color: AppColors.white,
               fontSize: 27,
             ))),
-        child: const Text(
-          'Продолжить',
-          style: TextStyle(color: AppColors.white),
+        child: Text(
+          text,
+          style: const TextStyle(color: AppColors.white),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

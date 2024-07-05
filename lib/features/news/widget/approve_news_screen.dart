@@ -18,12 +18,12 @@ class ApproveNewsScreen extends StatefulWidget {
 
 class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
   late final ApprovementNewsBloc approvementNewsBloc;
+
   @override
   void initState() {
     super.initState();
     approvementNewsBloc = ApprovementNewsBloc(
-      eventEntityRepository:
-      DependenciesScope.of(context).eventEntityRepository,
+      eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
     )..add(const ApprovementEvent.fetch());
   }
 
@@ -61,14 +61,12 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                         onTap: () {
                           context.octopus.setState((stateRoute) => stateRoute
                             ..add(Routes.aboutNews.node(
-                              arguments: <String, String>{
-                                'id': loadedApprovementNews[index].id.toString()
-                              },
+                              arguments: <String, String>{'id': loadedApprovementNews[index].id.toString()},
                             )));
                         },
                         child: CachedNetworkImage(
                             fadeInDuration: const Duration(milliseconds: 100),
-                            imageUrl: loadedApprovementNews[index].image,
+                            imageUrl: loadedApprovementNews[index].image!,
                             imageBuilder: (context, imageProvider) {
                               return Container(
                                 margin: const EdgeInsets.all(10),
@@ -84,7 +82,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      loadedApprovementNews[index].title,
+                                      loadedApprovementNews[index].title!,
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 24,
@@ -93,7 +91,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      loadedApprovementNews[index].description,
+                                      loadedApprovementNews[index].description!,
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
@@ -101,7 +99,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Posted by: ${loadedApprovementNews[index].writer.firstName} ${loadedApprovementNews[index].writer.lastName}',
+                                      'Posted by: ${loadedApprovementNews[index].writer?.firstName} ${loadedApprovementNews[index].writer?.lastName}',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
@@ -110,46 +108,28 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                     ),
                                     const SizedBox(height: 16),
                                     Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            approvementNewsBloc.add(
-                                                ApprovementEvent.approvedNews(
-                                                    id: loadedApprovementNews[
-                                                    index]
-                                                        .id
-                                                        .toString()));
+                                            approvementNewsBloc.add(ApprovementEvent.approvedNews(
+                                                id: loadedApprovementNews[index].id.toString()));
                                           },
                                           child: Text(
                                             'Подтвердить',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
+                                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                                           ),
                                         ),
                                         ElevatedButton(
                                           style: ButtonStyle(
-                                              backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.redAccent)),
+                                              backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
                                           onPressed: () {
-                                            approvementNewsBloc.add(
-                                                ApprovementEvent
-                                                    .moveInArchiveNews(
-                                                    id: loadedApprovementNews[
-                                                    index]
-                                                        .id
-                                                        .toString()));
+                                            approvementNewsBloc.add(ApprovementEvent.moveInArchiveNews(
+                                                id: loadedApprovementNews[index].id.toString()));
                                           },
                                           child: Text(
                                             'Отколнить',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurface),
+                                            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                                           ),
                                         ),
                                       ],
@@ -162,9 +142,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                     },
                   );
                 },
-                error: (e) => e == null
-                    ? const Center(child: Text('Тут пусто:))'))
-                    : Center(child: Text(e)),
+                error: (e) => e == null ? const Center(child: Text('Тут пусто:))')) : Center(child: Text(e)),
               );
             }),
       ),

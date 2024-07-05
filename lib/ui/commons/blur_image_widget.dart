@@ -6,14 +6,14 @@ import 'package:hr_app_flutter/ui/commons/app_progress_indicator.dart';
 import 'package:octo_image/octo_image.dart';
 
 class BlurImageWidget extends StatelessWidget {
-  final String urlImage;
+  final String? urlImage;
   final double? height;
   final double? width;
   final bool backButton;
 
   /// Виджет изображения с размытым фоном.
   const BlurImageWidget({
-    required this.urlImage,
+    this.urlImage,
     this.height,
     this.width,
     this.backButton = false,
@@ -23,14 +23,22 @@ class BlurImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: urlImage == null ? [
+        SizedBox(
+          height: height ?? 274,
+          width: width ?? double.maxFinite,
+          child: const Center(
+            child: Text('Нет фотографии'),
+          ),
+        ),
+      ] : [
         Container(
           height: height ?? 274,
           width: width ?? double.maxFinite,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                urlImage,
+                urlImage!,
               ),
               fit: BoxFit.cover,
             ),
@@ -43,7 +51,7 @@ class BlurImageWidget extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.1),
                 child: OctoImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider(urlImage),
+                  image: CachedNetworkImageProvider(urlImage!),
                   placeholderBuilder: (context) => const SizedBox(
                       height: 50,
                       width: 50,

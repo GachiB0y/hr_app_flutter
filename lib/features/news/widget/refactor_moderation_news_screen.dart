@@ -102,7 +102,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${news?.writer.firstName} ${news?.writer.middleName}',
+                                '${news?.writer?.firstName} ${news?.writer?.middleName}',
                                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                       fontSize: 17,
                                     ),

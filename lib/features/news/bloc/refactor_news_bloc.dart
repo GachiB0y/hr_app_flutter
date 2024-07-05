@@ -95,9 +95,10 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
 
   /// Преобразование данных даты и времени.
   Future<void> _refDateTime(EventEntity news) async {
-    final date = DateFormat('dd MMMM').format(news.startDate);
-    final time = DateFormat('HH:mm').format(news.startDate);
-    final createAt = DateFormat('dd.MM.yy').format(news.createdAt);
+    if(news.startDate == null || news.createdAt == null) return;
+    final date = DateFormat('dd MMMM').format(news.startDate!);
+    final time = DateFormat('HH:mm').format(news.startDate!);
+    final createAt = DateFormat('dd.MM.yy').format(news.createdAt!);
     final newState = state.copyWith(date: date, time: time, createAt: createAt);
     emit(newState);
   }

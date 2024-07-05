@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:octopus/octopus.dart';
 
 class AppBarCreateRefactoringNewsScreens extends StatelessWidget implements PreferredSizeWidget {
@@ -10,7 +11,10 @@ class AppBarCreateRefactoringNewsScreens extends StatelessWidget implements Pref
       actions: [
         TextButton(
             onPressed: () {
-              context.octopus.setState((state) => state..removeByName('create-news'));
+              context.octopus.setState((state) => state
+                ..findByName('create-photo-news-screen')?.add(
+                  Routes.userMain.node(),
+                ));
             },
             child: const Text('Сбросить'))
       ],
