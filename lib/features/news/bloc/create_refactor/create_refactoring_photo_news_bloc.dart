@@ -60,9 +60,11 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
   }
 
   /// Сохранить изменения.
-Future<void> saveChanges() async {
-    // await _eventEntityRepository.
+  Future<void> saveChanges() async {
+    if (state.currentNews == null) return;
+    await _eventEntityRepository.updateNews(
+      news: state.currentNews!,
+      file: state.file,
+    );
   }
-
-
 }

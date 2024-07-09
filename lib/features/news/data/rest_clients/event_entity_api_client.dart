@@ -1,6 +1,9 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:io';
+
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
+import 'package:intl/intl.dart';
 import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventsEntityProvider {
@@ -22,6 +25,12 @@ abstract interface class IEventsEntityProvider {
     required String? endDate,
     required List<String> paths,
     required List<String> categories,
+  });
+
+  /// Сохранение изменений модерируемой новости.
+  Future<void> updateNews({
+    required EventEntity news,
+    File? file,
   });
 
   Future<bool> approvementNews({
@@ -80,7 +89,8 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
       required List<String> categories}) async {
     final fields = {
       'some_other_data':
-          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'};
+          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
+    };
     final response = await _httpService.post(
       '/news/add_feed',
       pathsToFiles: paths,
@@ -92,6 +102,69 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
     }
     throw Exception('Error create New EventEntity!!!');
   }
+
+  @override
+  Future<void> updateNews({
+    required EventEntity news,
+    File? file,
+  }) async {
+    List<String> categories = [];
+    if (news.categories != null) {
+      for (var e in news.categories!) {
+        categories.add(e.id.toString());
+      }
+    }
+    String? start;
+    String? end;
+    if (news.startDate != null) {
+      start = DateFormat('yyyy-MM-ddTHH:mm:ss').format(news.startDate!);
+    }
+    if (news.endDate != null) {
+      end = DateFormat('yyyy-MM-ddTHH:mm:ss').format(news.endDate!);
+    }
+    final fields = {
+      'some_data': '{ "id": "${news.id}",'
+          ' "title": "${news.title}", '
+          ' "description": "${news.description}",'
+          ' "start_date": "$start",'
+          ' "end_date": "$end",'
+          ' "categories": $categories}'
+    };
+    final response = await _httpService.post(
+      '/news/update_feed',
+      isFormData: true,
+      pathsToFiles: file == null ? null : [file.path],
+      body: fields,
+      headers: {"Content-Type": "multipart/form-data"},
+    );
+  }
+
+  // @override
+  // Future<void> updateNews({
+  //   required EventEntity news,
+  //   File? file,
+  // }) async {
+  //   final List<String> categories = [];
+  //   if (news.categories != null) {
+  //     for (var e in news.categories!) {
+  //       categories.add(e.id.toString());
+  //     }
+  //   }
+  //
+  //   final fields = {
+  //     'some_other_data':
+  //         '{"title":"${news.title}","description":"${news.description}","start_date":"2023-10-19T11:52:18.628","end_date": "2023-10-19T11:52:18.628","categories":$categories}'
+  //   };
+  //
+  //   final response = await _httpService.post(
+  //     'news/update_feed',
+  //     body: fields,
+  //     pathsToFiles: null);
+  //   // if (response case final Map<String, Object?> data) {
+  //   //   return;
+  //   // }
+  //   // throw Exception('Error update EventEntity!!!');
+  // }
 
   @override
   Future<List<EventEntity>> getApprovmentEvents() async {

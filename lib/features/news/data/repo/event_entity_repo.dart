@@ -34,6 +34,12 @@ abstract interface class IEventEntityRepository {
     required List<String> categories,
   });
 
+  /// Сохранение изменений модерируемой новости.
+  Future<void> updateNews({
+    required EventEntity news,
+    File? file,
+  });
+
   Future<bool> approvementNews({
     required String id,
   });
@@ -49,7 +55,7 @@ abstract interface class IEventEntityRepository {
   });
 
   /// Изменение актуальной новости.
-  void changeCurrentNews (EventEntity news);
+  void changeCurrentNews(EventEntity news);
 }
 
 /// Состояние репозитория новостей [IEventEntityRepository].
@@ -143,6 +149,17 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   }
 
   @override
+  Future<void> updateNews({
+    required EventEntity news,
+    File? file,
+  }) async {
+    await _eventEntityProvider.updateNews(
+      news: news,
+      file: file,
+    );
+  }
+
+  @override
   Future<void> getApprovmentEvents() async {
     try {
       final news = await _eventEntityProvider.getApprovmentEvents();
@@ -182,9 +199,8 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
     }
   }
 
-
   @override
-  void changeCurrentNews (EventEntity news){
+  void changeCurrentNews(EventEntity news) {
     _state = _state.copyWith(currentNews: news);
   }
 

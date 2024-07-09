@@ -16,6 +16,7 @@ abstract class RestClient {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     List<String>? pathsToFiles,
+    bool isFormData = false,
   });
 
   /// Sends a PUT request to the given [path].
@@ -24,6 +25,7 @@ abstract class RestClient {
     required Map<String, Object?> body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    List<String>? pathsToFiles,
   });
 
   /// Sends a DELETE request to the given [path].

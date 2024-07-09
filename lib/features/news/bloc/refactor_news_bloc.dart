@@ -75,27 +75,37 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
     _initialize();
   }
 
-  /// Получение новости по id.
-  Future<void> getNewsById() async {
-    if (id == null) return;
-    await eventEntityRepository.getNewsById(id: id!);
-    if(eventEntityRepository.currentNews == null) return;
-    await _refDateTime(eventEntityRepository.currentNews!);
-    final newState = state.copyWith(
-      news: eventEntityRepository.currentNews!,
-      status: ScaffoldManagerStatus.loaded,
-    );
-    emit(newState);
-  }
-
   /// Инициализация состояния.
   Future<void> _initialize() async {
     await getNewsById();
   }
 
+  /// Получение новости по id.
+  Future<void> getNewsById() async {
+    if (id == null) {
+      if (eventEntityRepository.currentNews == null) return;
+      await _refDateTime(eventEntityRepository.currentNews!);
+      final newState = state.copyWith(
+        news: eventEntityRepository.currentNews!,
+        status: ScaffoldManagerStatus.loaded,
+      );
+
+      emit(newState);
+    } else {
+      await eventEntityRepository.getNewsById(id: id!);
+      if (eventEntityRepository.currentNews == null) return;
+      await _refDateTime(eventEntityRepository.currentNews!);
+      final newState = state.copyWith(
+        news: eventEntityRepository.currentNews!,
+        status: ScaffoldManagerStatus.loaded,
+      );
+      emit(newState);
+    }
+  }
+
   /// Преобразование данных даты и времени.
   Future<void> _refDateTime(EventEntity news) async {
-    if(news.startDate == null || news.createdAt == null) return;
+    if (news.startDate == null || news.createdAt == null) return;
     final date = DateFormat('dd MMMM').format(news.startDate!);
     final time = DateFormat('HH:mm').format(news.startDate!);
     final createAt = DateFormat('dd.MM.yy').format(news.createdAt!);
@@ -113,9 +123,9 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
           value: false,
           id: id.toString(),
         ),
-        onTapRefactoring: (){
+        onTapRefactoring: () {
           context.octopus.setState(
-                (state) => state
+            (state) => state
               ..findByName('user-main-tab')?.add(
                 Routes.createTypeNewsScreen.node(),
               ),
