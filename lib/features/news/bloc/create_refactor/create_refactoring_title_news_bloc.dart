@@ -79,7 +79,7 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
     });
   }
 
-  /// Изменение заголовки новости в репозитории.
+  /// Изменение заголовкa новости в репозитории.
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
   }

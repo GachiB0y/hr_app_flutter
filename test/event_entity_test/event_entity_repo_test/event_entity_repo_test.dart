@@ -130,7 +130,7 @@ void main() {
     test('calls createNewEventEntity with correct', () async {
       try {
         await eventRepository.createNewEventEntity(
-            title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: []);
+            title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: [], vote: []);
       } catch (_) {}
       verifyNever(eventApiClient.createNewEventEntity(
           title: '', description: '', startDate: '', endDate: '', categories: [], paths: [])).called(0);
@@ -175,7 +175,7 @@ void main() {
           categories: [])).thenAnswer((_) async => false);
 
       final actual = await eventRepository.createNewEventEntity(
-          title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: []);
+          title: '', description: '', startDate: '', endDate: '', imageFile: file, categories: [], vote: []);
       expect(actual, false);
     });
   });

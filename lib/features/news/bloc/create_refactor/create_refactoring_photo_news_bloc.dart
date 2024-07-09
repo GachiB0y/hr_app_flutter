@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/event_entity/new_event_entity.dart';
 
@@ -62,9 +63,26 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
   /// Сохранить изменения.
   Future<void> saveChanges() async {
     if (state.currentNews == null) return;
-    await _eventEntityRepository.updateNews(
-      news: state.currentNews!,
-      file: state.file,
-    );
+    if (state.currentNews?.id == null) {
+      if(state.file == null) return;
+      List<String> categories = [];
+      for(var e in state.currentNews!.categories!){
+        categories.add(e.id.toString());
+      }
+      await _eventEntityRepository.createNewEventEntity(
+        title: state.currentNews!.title!,
+        description: state.currentNews!.description!,
+        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss').format(state.currentNews!.startDate!),
+        endDate: null,
+        imageFile: state.file!,
+        categories: categories,
+        vote: [],
+      );
+    } else {
+      await _eventEntityRepository.updateNews(
+        news: state.currentNews!,
+        file: state.file,
+      );
+    }
   }
 }

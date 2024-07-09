@@ -16,7 +16,8 @@ class CreateTypeNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Bloc экрана.
     final cubit = context.read<CreateRefactoringTypeNewsCubit>();
-    final categoriesNews = context.select((CreateRefactoringTypeNewsCubit value) => value.state.categoriesNews);
+    final categoriesNews =
+        context.select((CreateRefactoringTypeNewsCubit value) => value.state.categoriesNews);
 
     return BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
       builder: (context, state) {
@@ -42,14 +43,18 @@ class CreateTypeNewsScreen extends StatelessWidget {
                       : [],
                 ),
                 const Spacer(),
-                ContinueButton(onTap: (){
-                  context.octopus.setState(
+                ContinueButton(
+                  onTap: () {
+                    if (state.currentNews.categories != null && state.currentNews.categories!.isNotEmpty) {
+                      context.octopus.setState(
                         (state) => state
-                      ..findByName('user-main-tab')?.add(
-                        Routes.createDateNewsScreen.node(),
-                      ),
-                  );
-                },),
+                          ..findByName('user-main-tab')?.add(
+                            Routes.createDateNewsScreen.node(),
+                          ),
+                      );
+                    }
+                  },
+                ),
                 const SizedBox(height: 10),
               ],
             ),
@@ -59,4 +64,3 @@ class CreateTypeNewsScreen extends StatelessWidget {
     );
   }
 }
-

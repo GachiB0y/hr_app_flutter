@@ -73,12 +73,14 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
       emit(EventEntityState.processing(data: state.data));
 
       final bool isCreate = await _eventEntityRepository.createNewEventEntity(
-          title: event.title,
-          description: event.description,
-          imageFile: event.imageFile,
-          categories: event.categories,
-          startDate: event.startDate,
-          endDate: event.endDate);
+        title: event.title,
+        description: event.description,
+        imageFile: event.imageFile,
+        categories: event.categories,
+        startDate: event.startDate,
+        endDate: event.endDate,
+        vote: [],
+      );
       if (isCreate) {
         emit(EventEntityState.successful(data: state.data));
       } else {

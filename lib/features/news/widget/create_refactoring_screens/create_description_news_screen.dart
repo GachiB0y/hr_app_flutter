@@ -33,12 +33,14 @@ class CreateDescriptionNewsScreen extends StatelessWidget {
                 const Spacer(),
                 ContinueButton(
                   onTap: () {
-                    context.octopus.setState(
+                    if(state.currentNews?.description != null && state.currentNews!.description!.isNotEmpty) {
+                      context.octopus.setState(
                       (state) => state
                         ..findByName('user-main-tab')?.add(
                           Routes.createPhotoNewsScreen.node(),
                         ),
                     );
+                    }
                   },
                 ),
                 const SizedBox(height: 10),

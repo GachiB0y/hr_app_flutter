@@ -51,15 +51,21 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
 
   /// Инициализация состояния.
   Future<void> _initialize() async {
-    getCategoriesNews();
-
-    getApprovementNews();
+    await getCategoriesNews();
+    getApprovementNews(id: id);
+    if(id == null) {
+      _assignCategory();
+    }
   }
 
   /// Получение редактируемой новости по id.
-  Future<void> getApprovementNews() async {
-    var newState = state.copyWith(currentNews: _eventEntityRepository.currentNews);
-    emit(newState);
+  Future<void> getApprovementNews({String? id}) async {
+    if (id == null) {
+      _eventEntityRepository.createEmptyNews();
+    } else {
+      var newState = state.copyWith(currentNews: _eventEntityRepository.currentNews);
+      emit(newState);
+    }
   }
 
   /// Получение массива категорий новостей.
@@ -67,6 +73,17 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
     await _eventEntityRepository.getCategory();
     var categories = _eventEntityRepository.categoriesNews;
     emit(state.copyWith(categoriesNews: categories));
+  }
+
+  /// Присвоение первой категории новости при создании новости.
+  void _assignCategory() {
+    if (state.currentNews.categories == null) {
+      List<Category> list = [];
+      list.add(state.categoriesNews.first);
+      var newState = state.copyWith(currentNews: state.currentNews.copyWith(categories: list));
+      emit(newState);
+      _eventEntityRepository.changeCurrentNews(state.currentNews);
+    }
   }
 
   /// Проверка выбрана ли категория у изменяемой новости.
@@ -79,7 +96,6 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
 
   /// Изменение выбранных категорий.
   void selectCategory(int id) {
-    if (state.currentNews.categories == null) return;
     List<Category> categoriesNews = state.categoriesNews;
     List<Category> newCategories = List.from(state.currentNews.categories!);
     if (state.currentNews.categories!.any(

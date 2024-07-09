@@ -167,6 +167,7 @@ class MockIEventEntityRepository extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
+    required List<dynamic>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -179,10 +180,28 @@ class MockIEventEntityRepository extends _i1.Mock
             #endDate: endDate,
             #imageFile: imageFile,
             #categories: categories,
+            #vote: vote,
           },
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  _i4.Future<void> updateNews({
+    required _i2.EventEntity? news,
+    _i7.File? file,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateNews,
+          [],
+          {
+            #news: news,
+            #file: file,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
@@ -218,6 +237,14 @@ class MockIEventEntityRepository extends _i1.Mock
         Invocation.method(
           #changeCurrentNews,
           [news],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void createEmptyNews() => super.noSuchMethod(
+        Invocation.method(
+          #createEmptyNews,
+          [],
         ),
         returnValueForMissingStub: null,
       );
@@ -402,6 +429,7 @@ class MockEventEntityRepo extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
+    required List<dynamic>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -414,11 +442,29 @@ class MockEventEntityRepo extends _i1.Mock
             #endDate: endDate,
             #imageFile: imageFile,
             #categories: categories,
+            #vote: vote,
           },
         ),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  _i4.Future<void> updateNews({
+    required _i2.EventEntity? news,
+    _i7.File? file,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateNews,
+          [],
+          {
+            #news: news,
+            #file: file,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
@@ -456,6 +502,14 @@ class MockEventEntityRepo extends _i1.Mock
         Invocation.method(
           #changeCurrentNews,
           [news],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void createEmptyNews() => super.noSuchMethod(
+        Invocation.method(
+          #createEmptyNews,
+          [],
         ),
         returnValueForMissingStub: null,
       );

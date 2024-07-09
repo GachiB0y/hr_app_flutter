@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/photo_widget.dart';
+import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
 class CreatePhotoNewsScreen extends StatelessWidget {
   /// Экран выбора фотографии при создании или модерации.
@@ -39,7 +40,8 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                     //     ),
                     // );
                   },
-                  text: 'Сохранить изменения',
+                  text: state.currentNews?.id != null ? 'Сохранить изменения' : 'Создать',
+                  buttonColor: state.currentNews?.id == null ? AppColors.green : AppColors.black,
                 ),
                 const SizedBox(height: 10),
               ],

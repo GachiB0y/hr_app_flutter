@@ -4,13 +4,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:io' as _i5;
 
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart'
     as _i3;
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -147,6 +148,23 @@ class MockIEventsEntityProvider extends _i1.Mock
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
+  _i4.Future<void> updateNews({
+    required _i2.EventEntity? news,
+    _i5.File? file,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateNews,
+          [],
+          {
+            #news: news,
+            #file: file,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+  @override
   _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -210,11 +228,11 @@ class MockCategory extends _i1.Mock implements _i2.Category {
   @override
   String get name => (super.noSuchMethod(
         Invocation.getter(#name),
-        returnValue: _i5.dummyValue<String>(
+        returnValue: _i6.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),
-        returnValueForMissingStub: _i5.dummyValue<String>(
+        returnValueForMissingStub: _i6.dummyValue<String>(
           this,
           Invocation.getter(#name),
         ),

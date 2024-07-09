@@ -127,7 +127,9 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
           context.octopus.setState(
             (state) => state
               ..findByName('user-main-tab')?.add(
-                Routes.createTypeNewsScreen.node(),
+                Routes.createTypeNewsScreen.node(
+                    // arguments: {"id": id.toString()}
+                ),
               ),
           );
         },

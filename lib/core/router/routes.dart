@@ -17,6 +17,7 @@ import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
@@ -56,6 +57,7 @@ enum Routes with OctopusRoute {
 
   /// Блок экранов для создания и модерации новости.
   refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
+  createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
   moderationNews('moderation-news', title: 'Moderation News'),
   createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
   createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
@@ -132,6 +134,19 @@ enum Routes with OctopusRoute {
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
+    Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+      child: const CreateRefactoringNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+
+
+
+
+
+
         Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
             child: const CreateTypeNewsScreen(),
             create: (BuildContext context) => CreateRefactoringTypeNewsCubit(

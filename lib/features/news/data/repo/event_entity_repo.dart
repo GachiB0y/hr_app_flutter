@@ -32,6 +32,7 @@ abstract interface class IEventEntityRepository {
     required String? endDate,
     required File imageFile,
     required List<String> categories,
+    required List<dynamic> vote,
   });
 
   /// Сохранение изменений модерируемой новости.
@@ -56,6 +57,9 @@ abstract interface class IEventEntityRepository {
 
   /// Изменение актуальной новости.
   void changeCurrentNews(EventEntity news);
+
+  /// Создать пустую новость.
+  void createEmptyNews();
 }
 
 /// Состояние репозитория новостей [IEventEntityRepository].
@@ -131,7 +135,10 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
       required String startDate,
       required String? endDate,
       required File imageFile,
-      required List<String> categories}) async {
+      required List<String> categories,
+      required List<dynamic> vote,
+
+      }) async {
     try {
       final List<String> pathsNew = [];
       pathsNew.add(imageFile.path);
@@ -157,6 +164,12 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
       news: news,
       file: file,
     );
+  }
+
+  @override
+  void createEmptyNews() {
+    _state = _state.copyWith(currentNews: EventEntity());
+    _update();
   }
 
   @override
@@ -202,6 +215,8 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   @override
   void changeCurrentNews(EventEntity news) {
     _state = _state.copyWith(currentNews: news);
+    _update();
+
   }
 
   final StreamController<EventEntityRepositoryState> _stateController =

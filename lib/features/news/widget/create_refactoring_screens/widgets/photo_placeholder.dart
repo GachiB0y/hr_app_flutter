@@ -10,7 +10,7 @@ class PhotoPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      width: double.infinity,
+      padding: const EdgeInsets.all(20),
       height: 200,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(

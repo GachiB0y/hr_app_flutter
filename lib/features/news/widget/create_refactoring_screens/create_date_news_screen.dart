@@ -25,7 +25,7 @@ class CreateDateNewsScreen extends StatelessWidget {
                 const HeaderTitle(title: 'Выберите дату мероприятия'),
                 const SizedBox(height: 30),
                 CalendarDatePicker(
-                    initialDate: cubit.state.currentNews?.startDate,
+                    initialDate: state.currentNews?.startDate,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2100),
                     onDateChanged: (DateTime value) {
@@ -34,12 +34,14 @@ class CreateDateNewsScreen extends StatelessWidget {
                 const Spacer(),
                 ContinueButton(
                   onTap: () {
-                    context.octopus.setState(
-                      (state) => state
-                        ..findByName('user-main-tab')?.add(
-                          Routes.createTimeNewsScreen.node(),
-                        ),
-                    );
+                    if (state.currentNews?.startDate != null) {
+                      context.octopus.setState(
+                        (state) => state
+                          ..findByName('user-main-tab')?.add(
+                            Routes.createTimeNewsScreen.node(),
+                          ),
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 10),
@@ -51,4 +53,3 @@ class CreateDateNewsScreen extends StatelessWidget {
     );
   }
 }
-
