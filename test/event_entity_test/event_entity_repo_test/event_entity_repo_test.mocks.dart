@@ -130,6 +130,7 @@ class MockIEventsEntityProvider extends _i1.Mock
     required String? endDate,
     required List<String>? paths,
     required List<String>? categories,
+    required List<Map<String, dynamic>>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -142,6 +143,7 @@ class MockIEventsEntityProvider extends _i1.Mock
             #endDate: endDate,
             #paths: paths,
             #categories: categories,
+            #vote: vote,
           },
         ),
         returnValue: _i4.Future<bool>.value(false),

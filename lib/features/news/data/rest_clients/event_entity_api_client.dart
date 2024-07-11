@@ -25,6 +25,7 @@ abstract interface class IEventsEntityProvider {
     required String? endDate,
     required List<String> paths,
     required List<String> categories,
+    required List<Map<String, dynamic>>? vote,
   });
 
   /// Сохранение изменений модерируемой новости.
@@ -80,16 +81,22 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
   }
 
   @override
-  Future<bool> createNewEventEntity(
-      {required String title,
-      required String description,
-      required String startDate,
-      required String? endDate,
-      required List<String> paths,
-      required List<String> categories}) async {
+  Future<bool> createNewEventEntity({
+    required String title,
+    required String description,
+    required String startDate,
+    required String? endDate,
+    required List<String> paths,
+    required List<String> categories,
+    required List<Map<String, dynamic>>? vote,
+  }) async {
     final fields = {
-      'some_other_data':
-          '{"title":"$title","description":"$description","start_date":"$startDate","end_date": ${endDate == null ? null : '"$endDate"'},"categories":$categories}'
+      'some_other_data': '{"title":"$title",'
+          ' "description":"$description",'
+          ' "start_date":"$startDate",'
+          ' "end_date": ${endDate == null ? null : '"$endDate"'},'
+          ' "categories":$categories, '
+          ' "vote":$vote}'
     };
     final response = await _httpService.post(
       '/news/add_feed',
@@ -128,7 +135,8 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
           ' "description": "${news.description}",'
           ' "start_date": "$start",'
           ' "end_date": ${end == null ? null : '"$end"'},'
-          ' "categories": $categories}'
+          ' "categories": $categories, '
+          ' "vote":${news.vote}}'
     };
     final response = await _httpService.post(
       '/news/update_feed',

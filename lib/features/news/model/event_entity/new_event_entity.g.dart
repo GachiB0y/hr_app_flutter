@@ -29,6 +29,9 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
+      vote: (json['vote'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
+          .toList(),
       writer: json['writer'] == null
           ? null
           : Writer.fromJson(json['writer'] as Map<String, dynamic>),
@@ -47,6 +50,7 @@ Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
       'is_publish': instance.isPublish,
       'is_archived': instance.isArchived,
       'categories': instance.categories?.map((e) => e.toJson()).toList(),
+      'vote': instance.vote,
       'writer': instance.writer?.toJson(),
     };
 

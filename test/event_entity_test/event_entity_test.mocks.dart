@@ -167,7 +167,7 @@ class MockIEventEntityRepository extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
-    required List<dynamic>? vote,
+    required List<Map<String, dynamic>>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -429,7 +429,7 @@ class MockEventEntityRepo extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
-    required List<dynamic>? vote,
+    required List<Map<String, dynamic>>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

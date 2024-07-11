@@ -32,7 +32,7 @@ abstract interface class IEventEntityRepository {
     required String? endDate,
     required File imageFile,
     required List<String> categories,
-    required List<dynamic> vote,
+    required List<Map<String, dynamic>> vote,
   });
 
   /// Сохранение изменений модерируемой новости.
@@ -136,7 +136,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
       required String? endDate,
       required File imageFile,
       required List<String> categories,
-      required List<dynamic> vote,
+      required List<Map<String, dynamic>>? vote,
 
       }) async {
     try {
@@ -148,7 +148,9 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
           paths: pathsNew,
           categories: categories,
           startDate: startDate,
-          endDate: endDate);
+          endDate: endDate,
+        vote: vote,);
+
       return result;
     } catch (e) {
       rethrow;

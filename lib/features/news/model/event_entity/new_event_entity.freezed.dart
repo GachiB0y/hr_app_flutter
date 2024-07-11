@@ -37,6 +37,7 @@ mixin _$EventEntity {
   @JsonKey(name: 'is_archived')
   bool? get isArchived => throw _privateConstructorUsedError;
   List<Category>? get categories => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>>? get vote => throw _privateConstructorUsedError;
   Writer? get writer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -63,6 +64,7 @@ abstract class $EventEntityCopyWith<$Res> {
       @JsonKey(name: 'is_publish') bool? isPublish,
       @JsonKey(name: 'is_archived') bool? isArchived,
       List<Category>? categories,
+      List<Map<String, dynamic>>? vote,
       Writer? writer});
 
   $WriterCopyWith<$Res>? get writer;
@@ -92,6 +94,7 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
     Object? isPublish = freezed,
     Object? isArchived = freezed,
     Object? categories = freezed,
+    Object? vote = freezed,
     Object? writer = freezed,
   }) {
     return _then(_value.copyWith(
@@ -139,6 +142,10 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>?,
+      vote: freezed == vote
+          ? _value.vote
+          : vote // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
       writer: freezed == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
@@ -179,6 +186,7 @@ abstract class _$$_EventEntityCopyWith<$Res>
       @JsonKey(name: 'is_publish') bool? isPublish,
       @JsonKey(name: 'is_archived') bool? isArchived,
       List<Category>? categories,
+      List<Map<String, dynamic>>? vote,
       Writer? writer});
 
   @override
@@ -207,6 +215,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? isPublish = freezed,
     Object? isArchived = freezed,
     Object? categories = freezed,
+    Object? vote = freezed,
     Object? writer = freezed,
   }) {
     return _then(_$_EventEntity(
@@ -254,6 +263,10 @@ class __$$_EventEntityCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<Category>?,
+      vote: freezed == vote
+          ? _value._vote
+          : vote // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
       writer: freezed == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
@@ -278,8 +291,10 @@ class _$_EventEntity implements _EventEntity {
       @JsonKey(name: 'is_publish') this.isPublish,
       @JsonKey(name: 'is_archived') this.isArchived,
       final List<Category>? categories,
+      final List<Map<String, dynamic>>? vote,
       this.writer})
-      : _categories = categories;
+      : _categories = categories,
+        _vote = vote;
 
   factory _$_EventEntity.fromJson(Map<String, dynamic> json) =>
       _$$_EventEntityFromJson(json);
@@ -320,12 +335,22 @@ class _$_EventEntity implements _EventEntity {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<Map<String, dynamic>>? _vote;
+  @override
+  List<Map<String, dynamic>>? get vote {
+    final value = _vote;
+    if (value == null) return null;
+    if (_vote is EqualUnmodifiableListView) return _vote;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final Writer? writer;
 
   @override
   String toString() {
-    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, writer: $writer)';
+    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, vote: $vote, writer: $writer)';
   }
 
   @override
@@ -351,6 +376,7 @@ class _$_EventEntity implements _EventEntity {
                 other.isArchived == isArchived) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._vote, _vote) &&
             (identical(other.writer, writer) || other.writer == writer));
   }
 
@@ -369,6 +395,7 @@ class _$_EventEntity implements _EventEntity {
       isPublish,
       isArchived,
       const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_vote),
       writer);
 
   @JsonKey(ignore: true)
@@ -398,6 +425,7 @@ abstract class _EventEntity implements EventEntity {
       @JsonKey(name: 'is_publish') final bool? isPublish,
       @JsonKey(name: 'is_archived') final bool? isArchived,
       final List<Category>? categories,
+      final List<Map<String, dynamic>>? vote,
       final Writer? writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
@@ -431,6 +459,8 @@ abstract class _EventEntity implements EventEntity {
   bool? get isArchived;
   @override
   List<Category>? get categories;
+  @override
+  List<Map<String, dynamic>>? get vote;
   @override
   Writer? get writer;
   @override

@@ -21,6 +21,8 @@ class EventEntity with _$EventEntity {
     @JsonKey(name: 'is_publish')  bool? isPublish,
     @JsonKey(name: 'is_archived')  bool? isArchived,
      List<Category>? categories,
+    List<Map<String, dynamic>>? vote,
+
      Writer? writer,
   }) = _EventEntity;
 
