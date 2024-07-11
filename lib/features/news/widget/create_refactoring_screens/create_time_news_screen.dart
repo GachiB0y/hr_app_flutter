@@ -33,14 +33,15 @@ class CreateTimeNewsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ContinueButton(
+                  isCreate: state.currentNews?.id == null,
                   onTap: () {
                     if(state.currentNews?.startDate != null) {
                       context.octopus.setState(
-                          (state) => state
-                        ..findByName('user-main-tab')?.add(
-                          Routes.createTitleNewsScreen.node(),
-                        ),
-                    );
+                            (state) => state
+                          ..findByName(Routes.createModerationScreens.name)?.add(
+                            Routes.createTitleNewsScreen.node(),
+                          ),
+                      );
                     }
                   },
                 ),

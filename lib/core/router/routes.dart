@@ -21,8 +21,8 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/c
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
@@ -42,7 +42,7 @@ import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_
 import 'package:octopus/octopus.dart';
 
 import '../../features/initialiazation/widget/dependencies_scope.dart';
-import '../../features/news/bloc/refactor_news_bloc.dart';
+import '../../features/news/bloc/moderation_news_bloc.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -56,9 +56,10 @@ enum Routes with OctopusRoute {
   approveNews('approve-news', title: 'Approve News'),
 
   /// Блок экранов для создания и модерации новости.
-  refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
+  createModerationScreens('create-moderation-screens', title:  'Create Moderation Screens'),
+  moderationNewsScreen('refactor-news', title: 'Refactor News'),
   createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
-  moderationNews('moderation-news', title: 'Moderation News'),
+  listModerationNews('list-moderation-news', title: 'Moderation News'),
   createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
   createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
   createTimeNewsScreen('create-time-news-screen', title: 'Create Time News Screen'),
@@ -126,30 +127,28 @@ enum Routes with OctopusRoute {
         Routes.company => const CompanyScreen(),
         Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
-        Routes.moderationNews => const ModerationNewsScreen(),
-        Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-            child: const RefactorModerationNewsScreen(),
-            create: (BuildContext context) => RefactorNewsCubit(
+        Routes.listModerationNews => const ListModerationNewsScreen(),
+        Routes.createModerationScreens => const CreateRefactoringNewsScreen(),
+        Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
+            child: const ModerationNewsScreen(),
+            create: (BuildContext context) => ModerationNewsCubit(
               id: node.arguments['id'],
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
-    Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
-      child: const CreateRefactoringNewsScreen(),
-      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
-        id: node.arguments['id'],
-        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-      ),
-    ),
-
-
-
-
-
-
+        Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+            child: const CreateRefactoringNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+              context: context,
+              id: node.arguments['id'],
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
         Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
             child: const CreateTypeNewsScreen(),
             create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+              id: node.arguments['id'],
+              context: context,
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),

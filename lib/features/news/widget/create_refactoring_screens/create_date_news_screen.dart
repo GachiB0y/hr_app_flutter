@@ -26,18 +26,19 @@ class CreateDateNewsScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 CalendarDatePicker(
                     initialDate: state.currentNews?.startDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2026),
                     onDateChanged: (DateTime value) {
                       cubit.changeDate(value);
                     }),
                 const Spacer(),
                 ContinueButton(
+                  isCreate: state.currentNews?.id == null,
                   onTap: () {
                     if (state.currentNews?.startDate != null) {
                       context.octopus.setState(
-                        (state) => state
-                          ..findByName('user-main-tab')?.add(
+                            (state) => state
+                          ..findByName(Routes.createModerationScreens.name)?.add(
                             Routes.createTimeNewsScreen.node(),
                           ),
                       );

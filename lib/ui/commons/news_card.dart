@@ -23,8 +23,8 @@ class NewsCard extends StatelessWidget {
         onTap: () {
           context.octopus.setState(
             (state) => state
-              ..findByName('user-main-tab')?.add(
-                Routes.refactorModerationNewsScreen.node(arguments: id),
+              ..findByName('${Routes.services.name}-tab')?.add(
+                Routes.moderationNewsScreen.node(arguments: id),
               ),
           );
         },

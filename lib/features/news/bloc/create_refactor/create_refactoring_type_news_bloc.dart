@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
@@ -38,6 +39,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
   /// Блок экрана создания или изменения типа новости.
   CreateRefactoringTypeNewsCubit({
     required IEventEntityRepository eventEntityRepository,
+    required BuildContext context,
     this.id,
   }) : super(
           CreateRefactoringTypeNewsState(

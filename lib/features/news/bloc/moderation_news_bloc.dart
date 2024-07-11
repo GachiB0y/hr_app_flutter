@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
-import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
 import 'package:hr_app_flutter/ui/commons/app_cupertino_action_sheet.dart';
 import 'package:hr_app_flutter/ui/commons/show_actions.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
@@ -14,8 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 
 ///____________________________________________________________________________________
-/// Состояние экрана [RefactorModerationNewsScreen].
-class RefactorNewsState {
+/// Состояние экрана [ModerationNewsScreen].
+class ModerationNewsState {
   /// Модерируемая новость.
   final EventEntity? news;
 
@@ -34,7 +34,7 @@ class RefactorNewsState {
   /// Состояние экрана.
   final bool? valueState;
 
-  RefactorNewsState({
+  ModerationNewsState({
     this.news,
     this.status = ScaffoldManagerStatus.loading,
     this.date,
@@ -43,7 +43,7 @@ class RefactorNewsState {
     this.valueState,
   });
 
-  RefactorNewsState copyWith({
+  ModerationNewsState copyWith({
     EventEntity? news,
     ScaffoldManagerStatus? status,
     String? date,
@@ -51,7 +51,7 @@ class RefactorNewsState {
     String? createAt,
     bool? valueState,
   }) {
-    return RefactorNewsState(
+    return ModerationNewsState(
       news: news ?? this.news,
       status: status ?? this.status,
       date: date ?? this.date,
@@ -62,17 +62,28 @@ class RefactorNewsState {
   }
 }
 
-class RefactorNewsCubit extends Cubit<RefactorNewsState> {
+class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   final IEventEntityRepository eventEntityRepository;
   final String? id;
 
-  RefactorNewsCubit({
+  ModerationNewsCubit({
     required this.eventEntityRepository,
     required this.id,
   }) : super(
-          RefactorNewsState(),
+          ModerationNewsState(),
         ) {
     _initialize();
+    eventEntityRepository.state.listen((event) {
+      _subscribeNews(event);
+    });
+  }
+
+  /// Прослушивание изменений [EventEntityRepository].
+  void _subscribeNews(EventEntityRepositoryState stateRepository) {
+    final newState = state.copyWith(
+      news: stateRepository.currentNews,
+    );
+    emit(newState);
   }
 
   /// Инициализация состояния.
@@ -126,9 +137,14 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
         onTapRefactoring: () {
           context.octopus.setState(
             (state) => state
-              ..findByName('user-main-tab')?.add(
-                Routes.createTypeNewsScreen.node(
-                    // arguments: {"id": id.toString()}
+              ..findByName(
+                '${Routes.services.name}-tab',
+              )?.add(
+                OctopusNode.mutable(
+                  'create-moderation-screens',
+                  children: [
+                    Routes.createTypeNewsScreen.node(arguments: {"id": id.toString()}),
+                  ],
                 ),
               ),
           );

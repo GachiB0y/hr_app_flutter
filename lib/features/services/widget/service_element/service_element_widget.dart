@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 
 import 'package:octopus/octopus.dart';
 
@@ -89,6 +90,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             child: InkWell(
               borderRadius: BorderRadius.circular(radius),
               onTap: () async {
+                HomeScope.of(context).state.onItemTapped(4);
                 late final Routes route;
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
@@ -108,15 +110,15 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                   context.octopus.setState(
                     (state) => state
                       ..findByName(widget.tabName)
-                          ?.add(OctopusNode.mutable('create-news', children: [
-                        Routes.createNewsType.node(),
+                          ?.add(OctopusNode.mutable('create-moderation-screens', children: [
+                        Routes.createTypeNewsScreen.node(),
                       ])),
                   );
                   return;
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
-                  route = Routes.moderationNews;
+                  route = Routes.listModerationNews;
                   // Octopus.of(context).push(Routes.approveNews);
                 } else if (widget.service.id == 25) {
                   // Octopus.of(context).push(Routes.scheduleBus);

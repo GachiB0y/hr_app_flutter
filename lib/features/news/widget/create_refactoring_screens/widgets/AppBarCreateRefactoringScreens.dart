@@ -11,8 +11,8 @@ class AppBarCreateRefactoringNewsScreens extends StatelessWidget implements Pref
       actions: [
         TextButton(
             onPressed: () {
-              context.octopus.push(Routes.refactorModerationNewsScreen
-                );
+              context.octopus
+                  .setState((state) => state..removeByName(Routes.createModerationScreens.name));
             },
             child: const Text('Сбросить'))
       ],

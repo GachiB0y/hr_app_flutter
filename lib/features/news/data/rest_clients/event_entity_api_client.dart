@@ -127,7 +127,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
           ' "title": "${news.title}", '
           ' "description": "${news.description}",'
           ' "start_date": "$start",'
-          ' "end_date": "$end",'
+          ' "end_date": ${end == null ? null : '"$end"'},'
           ' "categories": $categories}'
     };
     final response = await _httpService.post(

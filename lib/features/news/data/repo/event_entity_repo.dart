@@ -164,11 +164,12 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
       news: news,
       file: file,
     );
+    getNewsById(id: news.id.toString());
   }
 
   @override
   void createEmptyNews() {
-    _state = _state.copyWith(currentNews: EventEntity());
+    _state = _state.copyWith(currentNews: const EventEntity());
     _update();
   }
 

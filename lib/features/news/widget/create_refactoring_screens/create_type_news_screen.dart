@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/AppBarCreateRefactoringScreens.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
@@ -44,11 +45,13 @@ class CreateTypeNewsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ContinueButton(
+                  isCreate: state.currentNews.id == null,
                   onTap: () {
+                    HomeScope.of(context).state.onItemTapped(4);
                     if (state.currentNews.categories != null && state.currentNews.categories!.isNotEmpty) {
                       context.octopus.setState(
                         (state) => state
-                          ..findByName('user-main-tab')?.add(
+                          ..findByName(Routes.createModerationScreens.name)?.add(
                             Routes.createDateNewsScreen.node(),
                           ),
                       );

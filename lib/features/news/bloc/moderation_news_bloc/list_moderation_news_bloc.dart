@@ -7,36 +7,36 @@ import '../../model/event_entity/new_event_entity.dart';
 
 ///____________________________________________________________________________________
 
-class ModerationNewsState {
+class ListModerationNewsState {
   final List<EventEntity> moderationNews;
 
   /// Получение длинны списка новостей ожидающих публикации.
   String get counterWaitingAction => moderationNews.length.toString();
   final String? counterPublished;
 
-  ModerationNewsState({
+  ListModerationNewsState({
     required this.moderationNews,
     this.counterPublished,
   });
 
-  ModerationNewsState copyWith({
+  ListModerationNewsState copyWith({
     List<EventEntity>? moderationNews,
     String? counterPublished,
   }) {
-    return ModerationNewsState(
+    return ListModerationNewsState(
       moderationNews: moderationNews ?? this.moderationNews,
       counterPublished: counterPublished ?? this.counterPublished,
     );
   }
 }
 
-class ModerationNewsCubit extends Cubit<ModerationNewsState> {
+class ListModerationNewsCubit extends Cubit<ListModerationNewsState> {
   late IEventEntityRepository _eventEntityRepository;
 
-  ModerationNewsCubit({
+  ListModerationNewsCubit({
     required IEventEntityRepository eventEntityRepository,
   }) : super(
-          ModerationNewsState(
+          ListModerationNewsState(
             moderationNews: [],
             counterPublished: '0',
           ),

@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc/list_moderation_news_bloc.dart';
 import 'package:hr_app_flutter/ui/commons/news_card.dart';
 import 'package:hr_app_flutter/ui/theme/app_colors.dart';
+import 'package:octopus/octopus.dart';
 
-import '../bloc/moderation_news_bloc/moderation_news_bloc.dart';
 
-class ModerationNewsScreen extends StatelessWidget {
+
+class ListModerationNewsScreen extends StatelessWidget {
   /// Экран массива новостей на модерации.
-  const ModerationNewsScreen({super.key});
+  const ListModerationNewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     /// Bloc экрана.
-    final cubit = context.read<ModerationNewsCubit>();
+    final cubit = context.read<ListModerationNewsCubit>();
 
     /// Массив модерируемых новостей из стейта.
-    final moderationNews = context.select((ModerationNewsCubit value) => value.state.moderationNews);
+    final moderationNews = context.select((ListModerationNewsCubit value) => value.state.moderationNews);
 
-    return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(
+    return BlocBuilder<ListModerationNewsCubit, ListModerationNewsState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -32,7 +35,12 @@ class ModerationNewsScreen extends StatelessWidget {
             leading: IconButton(
               icon: Image.asset('assets/icons/chevrone_left.png'),
               onPressed: () {
-                Navigator.of(context).pop();
+                context.octopus.setState(
+                      (state) => state
+                    ..findByName('${Routes.services.name}-tab')?.add(
+                      Routes.services.node(),
+                    ),
+                );
               },
             ),
           ),

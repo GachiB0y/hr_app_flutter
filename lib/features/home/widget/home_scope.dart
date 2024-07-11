@@ -119,8 +119,7 @@ class HomeScope extends StatefulWidget {
 }
 
 /// State for widget HomeScope.
-class _HomeScopeState extends State<HomeScope>
-    implements HomeShellPageController {
+class _HomeScopeState extends State<HomeScope> implements HomeShellPageController {
   /* #region Lifecycle */
 
   // Octopus state observer
@@ -185,14 +184,16 @@ class _HomeScopeState extends State<HomeScope>
     }
   }
 
+  /// TODO: Разобраться с повторным вызовом метода и возвращении на вкладку UserMain.
   // Router state changed
   void _onOctopusStateChanged() {
     final newTab = HomeTabsEnum.fromValue(
       _octopusStateObserver.value.arguments['home'],
       fallback: HomeTabsEnum.userMain,
     );
-    _switchTab(newTab);
+    // _switchTab(newTab);
   }
+
   /* #endregion */
 
   @override
@@ -218,13 +219,10 @@ class _InheritedHomeScope extends InheritedWidget {
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
   /// For example: `HomeScope.maybeOf(context)`.
-  static _InheritedHomeScope? maybeOf(BuildContext context,
-          {bool listen = true}) =>
-      listen
-          ? context.dependOnInheritedWidgetOfExactType<_InheritedHomeScope>()
-          : context
-              .getElementForInheritedWidgetOfExactType<_InheritedHomeScope>()
-              ?.widget as _InheritedHomeScope?;
+  static _InheritedHomeScope? maybeOf(BuildContext context, {bool listen = true}) => listen
+      ? context.dependOnInheritedWidgetOfExactType<_InheritedHomeScope>()
+      : context.getElementForInheritedWidgetOfExactType<_InheritedHomeScope>()?.widget
+          as _InheritedHomeScope?;
 
   static Never _notFoundInheritedWidgetOfExactType() => throw ArgumentError(
         'Out of scope, not found inherited widget '

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/news/bloc/refactor_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/ui/commons/blur_image_widget.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
-class RefactorModerationNewsScreen extends StatelessWidget {
+class ModerationNewsScreen extends StatelessWidget {
   /// Экран выбраной новости для модерации.
-  const RefactorModerationNewsScreen({
+  const ModerationNewsScreen({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<RefactorNewsCubit>();
-    final news = context.select((RefactorNewsCubit value) => value.state.news);
-    return BlocBuilder<RefactorNewsCubit, RefactorNewsState>(
+    final cubit = context.read<ModerationNewsCubit>();
+    final news = context.select((ModerationNewsCubit value) => value.state.news);
+    return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(
       builder: (context, state) {
         return ScaffoldManager(
           appBar: AppBar(
