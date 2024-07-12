@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/photo_placeholder.dart';
+import 'package:hr_app_flutter/ui/commons/app_octo_image.dart';
 
 class PhotoWidget extends StatelessWidget {
   final File? file;
@@ -20,7 +21,10 @@ class PhotoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget body = const PhotoPlaceholder();
     if (imageUrl != null) {
-      body = Image.network(imageUrl!);
+      body = AppOctoImage(
+        urlImage: imageUrl!,
+        fontSize: 25,
+      );
     }
     if (file != null) {
       body = Image.file(file!);
@@ -42,9 +46,14 @@ class PhotoWidget extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: body,
+        child: SizedBox(
+          width: double.infinity,
+          height: 200,
+
+
+          child: FittedBox(
+              fit: BoxFit.values[0],
+              child: Center(child: body)),
         ),
       ),
     );

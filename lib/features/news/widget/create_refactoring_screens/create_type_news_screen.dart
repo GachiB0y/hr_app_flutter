@@ -44,21 +44,25 @@ class CreateTypeNewsScreen extends StatelessWidget {
               },
             ),
             const Spacer(),
-            ContinueButton(
-              isCreate: cubit.state.currentNews.id == null,
-              onTap: () {
-                HomeScope.of(context).state.onItemTapped(4);
-                if (cubit.state.currentNews.categories != null &&
-                    cubit.state.currentNews.categories!.isNotEmpty) {
-                  context.octopus.setState(
-                    (state) => state
-                      ..findByName(Routes.createModerationScreens.name)?.add(
-                        Routes.createDateNewsScreen.node(),
-                      ),
-                  );
-                }
-              },
-            ),
+            BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
+                builder: (context, state) {
+              return ContinueButton(
+                isCreate: cubit.state.currentNews.id == null,
+                onTap: () {
+                  HomeScope.of(context).state.onItemTapped(4);
+
+                  if (cubit.state.currentNews.categories != null &&
+                      cubit.state.currentNews.categories!.isNotEmpty) {
+                    context.octopus.setState(
+                      (state) => state
+                        ..findByName(Routes.createModerationScreens.name)?.add(
+                          Routes.createDateNewsScreen.node(),
+                        ),
+                    );
+                  }
+                },
+              );
+            }),
             const SizedBox(height: 10),
           ],
         ),

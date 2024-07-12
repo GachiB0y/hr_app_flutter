@@ -72,10 +72,10 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   }) : super(
           ModerationNewsState(),
         ) {
-    _initialize();
     eventEntityRepository.state.listen((event) {
       _subscribeNews(event);
     });
+    _initialize();
   }
 
   /// Прослушивание изменений [EventEntityRepository].

@@ -33,7 +33,7 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                       const SizedBox(height: 30),
                       PhotoWidget(
                         onTap: cubit.changePhoto,
-                        imageUrl: state.currentNews.image,
+                        imageUrl: 'state.currentNews.image',
                         file: state.file,
                       ),
                       const Spacer(),
