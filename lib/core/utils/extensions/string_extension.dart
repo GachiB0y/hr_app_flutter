@@ -14,4 +14,10 @@ extension StringExtensions on String {
 
     return DateTime(year, month, day);
   }
+
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+
+
 }

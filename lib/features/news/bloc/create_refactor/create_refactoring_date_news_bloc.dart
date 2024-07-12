@@ -27,6 +27,8 @@ class CreateRefactoringDateNewsState {
 class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsState> {
   late IEventEntityRepository _eventEntityRepository;
 
+bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
+
   /// Блок экрана создания или изменения даты новости.
   CreateRefactoringDateNewsCubit({
     required IEventEntityRepository eventEntityRepository,
@@ -44,16 +46,14 @@ class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsStat
   }
 
   /// Колбек на выбор даты.
-  void changeDate(DateTime date) {
-    emit(
-      state.copyWith(
-        currentNews: state.currentNews?.copyWith(
-          startDate: date,
-        ),
+  void changeDate(List<DateTime> dates) {
+    if (state.currentNews == null) return;
+    changeCurrentNews(
+      state.currentNews!.copyWith(
+        startDate: dates.first,
+        endDate: dates.last,
       ),
     );
-    if (state.currentNews == null) return;
-    changeCurrentNews(state.currentNews!);
   }
 
   /// Изменение даты новости в репозитории.

@@ -17,24 +17,22 @@ class CreateTypeNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Bloc экрана.
     final cubit = context.read<CreateRefactoringTypeNewsCubit>();
-    final categoriesNews =
-        context.select((CreateRefactoringTypeNewsCubit value) => value.state.categoriesNews);
 
-    return BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: const AppBarCreateRefactoringNewsScreens(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const HeaderTitle(title: 'Выберите тип события'),
-                const SizedBox(height: 30),
-                Wrap(
+    return Scaffold(
+      appBar: const AppBarCreateRefactoringNewsScreens(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const HeaderTitle(title: 'Выберите тип события'),
+            const SizedBox(height: 30),
+            BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
+              builder: (context, state) {
+                return Wrap(
                   spacing: 14.0, // Расстояние между Chips
                   runSpacing: 14.0, // Расстояние между строками Chips
-                  children: categoriesNews.isNotEmpty
-                      ? categoriesNews
+                  children: state.categoriesNews.isNotEmpty
+                      ? state.categoriesNews
                           .map((item) => TypeNewsCard(
                                 onTap: () => cubit.selectCategory(item.id),
                                 title: item.name,
@@ -42,28 +40,29 @@ class CreateTypeNewsScreen extends StatelessWidget {
                               ))
                           .toList()
                       : [],
-                ),
-                const Spacer(),
-                ContinueButton(
-                  isCreate: state.currentNews.id == null,
-                  onTap: () {
-                    HomeScope.of(context).state.onItemTapped(4);
-                    if (state.currentNews.categories != null && state.currentNews.categories!.isNotEmpty) {
-                      context.octopus.setState(
-                        (state) => state
-                          ..findByName(Routes.createModerationScreens.name)?.add(
-                            Routes.createDateNewsScreen.node(),
-                          ),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 10),
-              ],
+                );
+              },
             ),
-          ),
-        );
-      },
+            const Spacer(),
+            ContinueButton(
+              isCreate: cubit.state.currentNews.id == null,
+              onTap: () {
+                HomeScope.of(context).state.onItemTapped(4);
+                if (cubit.state.currentNews.categories != null &&
+                    cubit.state.currentNews.categories!.isNotEmpty) {
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName(Routes.createModerationScreens.name)?.add(
+                        Routes.createDateNewsScreen.node(),
+                      ),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
     );
   }
 }

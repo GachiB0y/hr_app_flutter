@@ -32,6 +32,10 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
   /// Контроллер поля ввода описания новости.
   late TextEditingController textController;
 
+  /// Флаг активности кнопки "Продолжить".
+  bool get isActive =>
+      _eventEntityRepository.currentNews?.description != null && _eventEntityRepository.currentNews?.description != '';
+
   /// Блок экрана создания или изменения описания новости.
   CreateRefactoringDescriptionNewsCubit({
     required IEventEntityRepository eventEntityRepository,
@@ -43,7 +47,7 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
     if (eventEntityRepository.currentNews != null && eventEntityRepository.currentNews!.description != null) {
       textController.text = eventEntityRepository.currentNews!.description!;
     }
-    textController.addListener(_getSearch);
+    textController.addListener(_getDescription);
 
     _initialize();
   }
@@ -57,26 +61,25 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
   /// Таймер для
   Timer? _timer;
 
-  /// Коллбак на изменение поля описания новости.
-  void _getSearch() {
+  /// Коллбак на изменение поля заголовка новости.
+  void _getDescription() {
+    if (textController.text == _eventEntityRepository.currentNews?.description) return;
     if (textController.text == ' ') {
       textController.text = '';
     }
     if (_timer != null) {
       _timer!.cancel();
     }
-    _timer = Timer(const Duration(milliseconds: 500), () async {
-      emit(
-        state.copyWith(
-          currentNews: state.currentNews?.copyWith(
+    _timer = Timer(
+      const Duration(milliseconds: 500),
+          () async {
+        changeCurrentNews(
+          state.currentNews!.copyWith(
             description: textController.text,
           ),
-        ),
-      );
-      if (state.currentNews != null) {
-        changeCurrentNews(state.currentNews!);
-      }
-    });
+        );
+      },
+    );
   }
 
   /// Изменение заголовки новости в репозитории.

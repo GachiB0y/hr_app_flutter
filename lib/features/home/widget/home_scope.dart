@@ -184,7 +184,6 @@ class _HomeScopeState extends State<HomeScope> implements HomeShellPageControlle
     }
   }
 
-  /// TODO: Разобраться с повторным вызовом метода и возвращении на вкладку UserMain.
   // Router state changed
   void _onOctopusStateChanged() {
     final newTab = HomeTabsEnum.fromValue(

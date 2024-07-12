@@ -29,6 +29,9 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
   /// Репозиторий.
   late IEventEntityRepository _eventEntityRepository;
 
+  bool get isActive =>
+      _eventEntityRepository.currentNews?.title != null && _eventEntityRepository.currentNews?.title != '';
+
   /// Контроллер поля ввода заголовка.
   late TextEditingController textController;
 
@@ -43,7 +46,7 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
     if (eventEntityRepository.currentNews != null && eventEntityRepository.currentNews!.title != null) {
       textController.text = eventEntityRepository.currentNews!.title!;
     }
-    textController.addListener(_getSearch);
+    textController.addListener(_getTitle);
 
     _initialize();
   }
@@ -58,25 +61,24 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
   Timer? _timer;
 
   /// Коллбак на изменение поля заголовка новости.
-  void _getSearch() {
+  void _getTitle() {
+    if (textController.text == _eventEntityRepository.currentNews?.title) return;
     if (textController.text == ' ') {
       textController.text = '';
     }
     if (_timer != null) {
       _timer!.cancel();
     }
-    _timer = Timer(const Duration(milliseconds: 500), () async {
-      emit(
-        state.copyWith(
-          currentNews: state.currentNews?.copyWith(
+    _timer = Timer(
+      const Duration(milliseconds: 500),
+      () async {
+        changeCurrentNews(
+          state.currentNews!.copyWith(
             title: textController.text,
           ),
-        ),
-      );
-      if(state.currentNews != null) {
-        changeCurrentNews(state.currentNews!);
-      }
-    });
+        );
+      },
+    );
   }
 
   /// Изменение заголовкa новости в репозитории.

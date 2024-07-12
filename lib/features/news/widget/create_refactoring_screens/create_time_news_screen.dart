@@ -15,8 +15,7 @@ class CreateTimeNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringTimeNewsCubit>();
-    return BlocBuilder<CreateRefactoringTimeNewsCubit, CreateRefactoringTimeNewsState>(
-      builder: (context, state) {
+
         return Scaffold(
           appBar: const AppBarCreateRefactoringNewsScreens(),
           body: Padding(
@@ -33,9 +32,9 @@ class CreateTimeNewsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ContinueButton(
-                  isCreate: state.currentNews?.id == null,
+                  isCreate: cubit.state.currentNews?.id == null,
                   onTap: () {
-                    if(state.currentNews?.startDate != null) {
+                    if(cubit.isActive) {
                       context.octopus.setState(
                             (state) => state
                           ..findByName(Routes.createModerationScreens.name)?.add(
@@ -50,7 +49,6 @@ class CreateTimeNewsScreen extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
+
   }
 }

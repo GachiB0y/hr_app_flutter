@@ -16,9 +16,7 @@ class CreateTitleNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringTitleNewsCubit>();
-    return BlocBuilder<CreateRefactoringTitleNewsCubit, CreateRefactoringTitleNewsState>(
-      builder: (context, state) {
-        return Scaffold(
+    return Scaffold(
           appBar: const AppBarCreateRefactoringNewsScreens(),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -32,9 +30,9 @@ class CreateTitleNewsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ContinueButton(
-                  isCreate: state.currentNews?.id == null,
+                  isCreate: cubit.state.currentNews?.id == null,
                   onTap: () {
-                    if (state.currentNews?.title != null && state.currentNews!.title!.isNotEmpty) {
+                    if (cubit.isActive) {
                       context.octopus.setState(
                         (state) => state
                           ..findByName(Routes.createModerationScreens.name)?.add(
@@ -49,7 +47,5 @@ class CreateTitleNewsScreen extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
   }
 }

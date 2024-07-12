@@ -27,6 +27,9 @@ class CreateRefactoringTimeNewsState {
 class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsState> {
   late IEventEntityRepository _eventEntityRepository;
 
+  /// Флаг активности кнопки "Продолжить".
+  bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
+
   /// Блок экрана создания или изменения времени новости.
   CreateRefactoringTimeNewsCubit({
     required IEventEntityRepository eventEntityRepository,
@@ -46,20 +49,17 @@ class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsStat
   /// Колбек на выбор времени.
   void changeTime(Duration time) {
     if (state.currentNews == null) return;
-    if (state.currentNews?.startDate == null) return;
-    emit(
-      state.copyWith(
-        currentNews: state.currentNews?.copyWith(
-            startDate: DateTime(
+    changeCurrentNews(
+      state.currentNews!.copyWith(
+        startDate: DateTime(
           state.currentNews!.startDate!.year,
           state.currentNews!.startDate!.month,
           state.currentNews!.startDate!.day,
           0,
           time.inMinutes,
-        )),
+        ),
       ),
     );
-    changeCurrentNews(state.currentNews!);
   }
 
   /// Изменение времени новости в репозитории.
