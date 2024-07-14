@@ -35,13 +35,11 @@ class EnvironmentConfiguration {
         ),
         baseUrl: const String.fromEnvironment(
           'url',
-          defaultValue:
-          // !kReleaseMode
-          //     ? (kDebugMode
-          //         ? 'http://grass-test-api.grass.local/'
-          //         : 'http://grass-test-api.grass.local/')
-          //     :
-          'https://grass-app-api.grass.su/',
+          defaultValue: !kReleaseMode
+              ? (kDebugMode
+                  ? 'http://grass-test-api.grass.su/'
+                  : 'http://grass-test-api.grass.su/')
+              : 'https://grass-app-api.grass.su/',
         ),
       );
 }

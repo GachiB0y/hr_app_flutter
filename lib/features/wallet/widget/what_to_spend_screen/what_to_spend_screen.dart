@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/coins_reward_bloc/coins_reward_bloc.dart';
-import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
+import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart';
 
 class WhatToSpendScreen extends StatelessWidget {
   const WhatToSpendScreen({super.key});
@@ -20,7 +20,10 @@ class WhatToSpendScreen extends StatelessWidget {
       body: const SafeArea(
         child: Shimmer(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            padding: EdgeInsets.only(
+              left: 25.0,
+              right: 25.0,
+            ),
             child: CustomGridWhatToSpend(),
           ),
         ),
@@ -52,36 +55,35 @@ class _CustomGridWhatToSpendState extends State<CustomGridWhatToSpend> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
+        const SliverPadding(padding: EdgeInsets.only(top: 35.0)),
         BlocBuilder<CoinsRewardBLoC, CoinsRewardState>(
             bloc: coinsRewardBloc,
             builder: (context, state) {
               return SliverGrid(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200.0,
-                  mainAxisSpacing: 36.0,
+                  maxCrossAxisExtent: 155.0,
+                  mainAxisSpacing: 24.0,
                   crossAxisSpacing: 30.0,
-                  childAspectRatio: 0.95,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    if (state is CoinsRewardState$Processing) {
-                      return ShimmerLoading(
+                    return state.map(
+                      idle: (state) => _ElementGrid(
+                        item: state.data![index],
+                      ),
+                      processing: (_) => ShimmerLoading(
                         isLoading: true,
                         child: Container(
                           alignment: Alignment.center,
                         ),
-                      );
-                    } else if (state is CoinsRewardState$Error) {
-                      return Center(
+                      ),
+                      successful: (state) => _ElementGrid(
+                        item: state.data![index],
+                      ),
+                      error: (state) => Center(
                         child: Text(state.message),
-                      );
-                    } else {
-                      return _ElementGrid(
-                        title: state.data![index].title,
-                        price: state.data![index].price.toString(),
-                        description: state.data![index].title,
-                      );
-                    }
+                      ),
+                    );
                   },
                   childCount: state.data!.length,
                 ),
@@ -92,17 +94,13 @@ class _CustomGridWhatToSpendState extends State<CustomGridWhatToSpend> {
   }
 }
 
-// ignore: unused_element
 class _ElementGrid extends StatelessWidget {
   const _ElementGrid({
-    required this.title,
-    required this.price,
-    required this.description,
+    super.key,
+    required this.item,
   });
 
-  final String title;
-  final String price;
-  final String description;
+  final CoinsReward item;
 
   @override
   Widget build(BuildContext context) {
@@ -111,27 +109,39 @@ class _ElementGrid extends StatelessWidget {
       children: [
         Row(
           children: [
-            Image.asset(
-              'assets/images/party_popper_big.webp',
-              scale: 0.7,
-            ),
+            item.image == null
+                ? Image.asset(
+                    'assets/images/party-popper_big.webp',
+                    width: 56,
+                    height: 56,
+                  )
+                : Image.network(
+                    item.image!,
+                    width: 56,
+                    height: 56,
+                  ),
             const SizedBox(
               width: 10,
             ),
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).colorScheme.primary),
+            SizedBox(
+              width: 56,
+              height: 56,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    price,
-                    style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    item.price.toString(),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
                   ),
-                  const Text(
+                  Text(
                     'coin',
-                    style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -139,13 +149,13 @@ class _ElementGrid extends StatelessWidget {
           ],
         ),
         Text(
-          title,
+          item.title,
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          description,
+          item.description ?? '',
           style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 11),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
