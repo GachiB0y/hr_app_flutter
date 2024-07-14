@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/coins_reward_bloc/coins_reward_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart';
@@ -44,10 +43,10 @@ class CustomGridWhatToSpend extends StatefulWidget {
 
 class _CustomGridWhatToSpendState extends State<CustomGridWhatToSpend> {
   late final CoinsRewardBLoC coinsRewardBloc;
+
   @override
   void initState() {
-    coinsRewardBloc = CoinsRewardBLoC(
-        walletRepository: DependenciesScope.of(context).walletRepository);
+    coinsRewardBloc = CoinsRewardBLoC(walletRepository: DependenciesScope.of(context).walletRepository);
     coinsRewardBloc.add(const CoinsRewardEvent.fetch());
     super.initState();
   }

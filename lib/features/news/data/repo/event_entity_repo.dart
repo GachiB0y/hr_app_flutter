@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart';
@@ -5,9 +6,18 @@ import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_
 import '../../model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventEntityRepository {
+  /// Поток событий при изменении данных новостей.
+  Stream<EventEntityRepositoryState> get state;
+
+  /// Геттер массива новостей ожидающих модерации.
+  List<EventEntity> get approvmentEvents;
+
   Future<List<EventEntity>> getEvents();
-  Future<List<EventEntity>> getApprovmentEvents();
+
+  Future<void> getApprovmentEvents();
+
   Future<List<Category>> getCategory();
+
   Future<bool> createNewEventEntity({
     required String title,
     required String description,
@@ -16,23 +26,51 @@ abstract interface class IEventEntityRepository {
     required File imageFile,
     required List<String> categories,
   });
+
   Future<bool> approvementNews({
     required String id,
   });
+
   Future<EventEntity> getNewsById({
     required String id,
   });
+
   Future<bool> moveInArchiveNews({
     required String id,
   });
 }
 
-class EventEntityRepositoryImpl implements IEventEntityRepository {
-  const EventEntityRepositoryImpl({
-    required IEventsEntityProvider eventEntityProvider,
-  }) : _eventEntityProvider = eventEntityProvider;
+/// Состояние репозитория новостей [IEventEntityRepository].
+class EventEntityRepositoryState {
+  /// Актуальный массив новостей ожидающих модерации.
+  final List<EventEntity> approvmentEvents;
 
-  final IEventsEntityProvider _eventEntityProvider;
+  EventEntityRepositoryState({
+    this.approvmentEvents = const [],
+  });
+
+  EventEntityRepositoryState copyWith({
+    List<EventEntity>? approvmentEvents,
+  }) {
+    return EventEntityRepositoryState(
+      approvmentEvents: approvmentEvents ?? this.approvmentEvents,
+    );
+  }
+}
+
+class EventEntityRepositoryImpl implements IEventEntityRepository {
+  late EventEntityRepositoryState _state;
+  late IEventsEntityProvider _eventEntityProvider;
+
+  EventEntityRepositoryImpl({
+    required IEventsEntityProvider eventEntityProvider,
+  }) {
+    _eventEntityProvider = eventEntityProvider;
+    _state = EventEntityRepositoryState();
+  }
+
+  @override
+  List<EventEntity> get approvmentEvents => _state.approvmentEvents;
 
   @override
   Future<List<EventEntity>> getEvents() async {
@@ -69,9 +107,11 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   }
 
   @override
-  Future<List<EventEntity>> getApprovmentEvents() async {
+  Future<void> getApprovmentEvents() async {
     try {
-      return await _eventEntityProvider.getApprovmentEvents();
+      final news = await _eventEntityProvider.getApprovmentEvents();
+      _state = _state.copyWith(approvmentEvents: news);
+      _update();
     } catch (e) {
       rethrow;
     }
@@ -102,5 +142,17 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  final StreamController<EventEntityRepositoryState> _stateController =
+      StreamController<EventEntityRepositoryState>.broadcast();
+
+  @override
+  Stream<EventEntityRepositoryState> get state => _stateController.stream.asBroadcastStream();
+
+  /// Добавление события в стрим.
+  void _update() {
+    if (_stateController.isClosed) return;
+    _stateController.add(_state);
   }
 }
