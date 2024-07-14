@@ -49,13 +49,14 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
   final GlobalKey<State> _progressDialogKey = GlobalKey<State>();
   late final LeanProductionFormBloc blocLeanProduction;
 
-  get id => int.parse(widget.id!);
+  int get id => int.parse(widget.id!);
 
   @override
   void initState() {
     super.initState();
     blocLeanProduction = LeanProductionFormBloc(
-        repository: DependenciesScope.of(context).leanProductionRepository);
+      repository: DependenciesScope.of(context).leanProductionRepository,
+    );
     blocLeanProduction
         .add(const LeanProductionFormEvent.getMyLeanProductions());
   }
@@ -66,7 +67,7 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
     super.dispose();
   }
 
-  showProgressDialog(BuildContext context, GlobalKey<State> key) {
+  void showProgressDialog(BuildContext context, GlobalKey<State> key) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -89,140 +90,147 @@ class _InfoProposalsFormState extends State<InfoProposalsForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LeanProductionFormBloc, LeanProductionFormState>(
-        bloc: blocLeanProduction,
-        listener: (context, state) {
-          if (state is LeanProductionFormState$Error) {
+      bloc: blocLeanProduction,
+      listener: (context, state) {
+        if (state is LeanProductionFormState$Error) {
+          if (_progressDialogKey.currentContext != null) {
+            Navigator.of(_progressDialogKey.currentContext!).pop();
+          }
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return MyBottomSheet(
+                exceptionType: state.data!.exception,
+              );
+            },
+          );
+          // context
+          //     .read<LeanProductionFormBloc>()
+          //     .add(const LeanProductionFormEvent.createInitState());
+        } else if (state is LeanProductionFormState$Processing) {
+          if (state.data!.isLoadingFile == true) {
+            showProgressDialog(context, _progressDialogKey);
+          } else if (state.data!.isLoadingFile == false) {
             if (_progressDialogKey.currentContext != null) {
               Navigator.of(_progressDialogKey.currentContext!).pop();
             }
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return MyBottomSheet(
-                  exceptionType: state.data!.exception,
-                );
-              },
-            );
-            // context
-            //     .read<LeanProductionFormBloc>()
-            //     .add(const LeanProductionFormEvent.createInitState());
-          } else if (state is LeanProductionFormState$Processing) {
-            if (state.data!.isLoadingFile == true) {
-              showProgressDialog(context, _progressDialogKey);
-            } else if (state.data!.isLoadingFile == false) {
-              if (_progressDialogKey.currentContext != null) {
-                Navigator.of(_progressDialogKey.currentContext!).pop();
-              }
-            }
           }
-        },
-        builder: (BuildContext context, LeanProductionFormState state) {
-          if (state is LeanProductionFormState$Processing) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is LeanProductionFormState$Idle ||
-              state is LeanProductionFormState$Successful) {
-            if (state.data!.myProposals != null &&
-                state.data!.myProposals!.isNotEmpty) {
-              final modelLeanProduction = state.data!.myProposals![id];
+        }
+      },
+      builder: (BuildContext context, LeanProductionFormState state) {
+        if (state is LeanProductionFormState$Processing) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is LeanProductionFormState$Idle ||
+            state is LeanProductionFormState$Successful) {
+          if (state.data!.myProposals != null &&
+              state.data!.myProposals!.isNotEmpty) {
+            final modelLeanProduction = state.data!.myProposals![id];
 
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTextFormField(
-                            initialValue: modelLeanProduction.status,
-                            readOnly: true,
-                            iconData: getIconByText(modelLeanProduction.status),
-                            inputText: 'Статус',
-                            nameController: null),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextFormField(
-                            initialValue: modelLeanProduction.issue,
-                            readOnly: true,
-                            iconData: const Icon(Icons.receipt),
-                            inputText: 'Суть проблемы',
-                            nameController: null),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextFormField(
-                            initialValue: modelLeanProduction.solution,
-                            readOnly: true,
-                            iconData: const Icon(Icons.question_mark_outlined),
-                            inputText: 'Как решить',
-                            nameController: null),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextFormField(
-                            initialValue: modelLeanProduction.expenses,
-                            readOnly: true,
-                            iconData: const Icon(Icons.paid),
-                            inputText: 'Ориентировочные затраты',
-                            nameController: null),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextFormField(
-                            initialValue: modelLeanProduction.benefit,
-                            readOnly: true,
-                            iconData: const Icon(Icons.star),
-                            inputText: 'Польза предложения',
-                            nameController: null),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        FileInfoWidget(
-                          modelLeanProduction: modelLeanProduction,
-                          newblocLeanProduction: blocLeanProduction,
-                        ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: modelLeanProduction.implementers.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: CustomTextFormField(
-                                  readOnly: true,
-                                  iconData: const Icon(Icons.person_4),
-                                  inputText: 'Исполнитель ${index + 1}',
-                                  nameController: null),
-                            );
-                          },
-                        ),
-                        CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: const Text('Подано реализованным'),
-                          value: false,
-                          onChanged: (value) {},
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextFormField(
+                        initialValue: modelLeanProduction.status,
+                        readOnly: true,
+                        iconData: getIconByText(modelLeanProduction.status),
+                        inputText: 'Статус',
+                        nameController: null,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextFormField(
+                        initialValue: modelLeanProduction.issue,
+                        readOnly: true,
+                        iconData: const Icon(Icons.receipt),
+                        inputText: 'Суть проблемы',
+                        nameController: null,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextFormField(
+                        initialValue: modelLeanProduction.solution,
+                        readOnly: true,
+                        iconData: const Icon(Icons.question_mark_outlined),
+                        inputText: 'Как решить',
+                        nameController: null,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextFormField(
+                        initialValue: modelLeanProduction.expenses,
+                        readOnly: true,
+                        iconData: const Icon(Icons.paid),
+                        inputText: 'Ориентировочные затраты',
+                        nameController: null,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomTextFormField(
+                        initialValue: modelLeanProduction.benefit,
+                        readOnly: true,
+                        iconData: const Icon(Icons.star),
+                        inputText: 'Польза предложения',
+                        nameController: null,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FileInfoWidget(
+                        modelLeanProduction: modelLeanProduction,
+                        newblocLeanProduction: blocLeanProduction,
+                      ),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: modelLeanProduction.implementers.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: CustomTextFormField(
+                              readOnly: true,
+                              iconData: const Icon(Icons.person_4),
+                              inputText: 'Исполнитель ${index + 1}',
+                              nameController: null,
+                            ),
+                          );
+                        },
+                      ),
+                      CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: const Text('Подано реализованным'),
+                        value: false,
+                        onChanged: (value) {},
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
                 ),
-              );
-            } else {
-              return const Center(
-                child: Text('Нет заявлении'),
-              );
-            }
-          } else {
-            return const SafeArea(
-              child: Center(
-                child: Text('Ошибка.Заявления не найденны.'),
               ),
             );
+          } else {
+            return const Center(
+              child: Text('Нет заявлении'),
+            );
           }
-        });
+        } else {
+          return const SafeArea(
+            child: Center(
+              child: Text('Ошибка.Заявления не найденны.'),
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -241,7 +249,9 @@ class FileInfoWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.white,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -253,15 +263,16 @@ class FileInfoWidget extends StatelessWidget {
               ? SizedBox(
                   height: 160,
                   child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemExtent: 120,
-                      itemCount: modelLeanProduction.files.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Stack(children: [
+                    scrollDirection: Axis.horizontal,
+                    itemExtent: 120,
+                    itemCount: modelLeanProduction.files.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
                                 Container(
                                   margin: const EdgeInsets.all(8.0),
                                   child: IconButton(
@@ -272,25 +283,29 @@ class FileInfoWidget extends StatelessWidget {
                                     onPressed: () {
                                       // Действия при нажатии на иконку документа
                                       newblocLeanProduction.add(
-                                          LeanProductionFormEvent
-                                              .downloadFileWithLeanProduction(
-                                        url: modelLeanProduction
-                                            .files[index].url!,
-                                      ));
+                                        LeanProductionFormEvent
+                                            .downloadFileWithLeanProduction(
+                                          url: modelLeanProduction
+                                              .files[index].url!,
+                                        ),
+                                      );
                                     },
                                   ),
                                 ),
-                              ]),
-                              Text(
-                                modelLeanProduction.files[index].fileName,
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    overflow: TextOverflow.ellipsis),
+                              ],
+                            ),
+                            Text(
+                              modelLeanProduction.files[index].fileName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ],
-                          ),
-                        );
-                      }),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 )
               : const Text(
                   'Отсутствуют.',

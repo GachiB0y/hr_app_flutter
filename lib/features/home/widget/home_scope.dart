@@ -201,9 +201,7 @@ class _HomeScopeState extends State<HomeScope>
         child: widget.child,
       );
 
-  HomeTabsEnum get tab {
-    return _tab;
-  }
+  HomeTabsEnum get tab => _tab;
 }
 
 /// Inherited widget for quick access in the element tree.
@@ -218,8 +216,10 @@ class _InheritedHomeScope extends InheritedWidget {
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
   /// For example: `HomeScope.maybeOf(context)`.
-  static _InheritedHomeScope? maybeOf(BuildContext context,
-          {bool listen = true}) =>
+  static _InheritedHomeScope? maybeOf(
+    BuildContext context, {
+    bool listen = true,
+  }) =>
       listen
           ? context.dependOnInheritedWidgetOfExactType<_InheritedHomeScope>()
           : context

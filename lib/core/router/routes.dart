@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
@@ -21,6 +24,7 @@ import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_scree
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass.dart';
 import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/wallet/widget/how_to_get_big/how_to_get_big_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
@@ -33,8 +37,10 @@ enum Routes with OctopusRoute {
   services('services', title: 'Services'),
   education('education', title: 'Education'),
   company('company', title: 'Company'),
-  searchFriendAndSendCoins('search-friend-and-send-coins',
-      title: 'Search Friend And Send Coins'),
+  searchFriendAndSendCoins(
+    'search-friend-and-send-coins',
+    title: 'Search Friend And Send Coins',
+  ),
   approveNews('approve-news', title: 'Approve News'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
@@ -46,9 +52,12 @@ enum Routes with OctopusRoute {
   bagReport('bag-report', title: 'Bag Report'),
   infoBirthDay('info-birth-day', title: 'Info Birth Day'),
   rookieInfo('rookie-info', title: 'Rookie Info'),
-  exchangeCoinForPass('exchange-coin-for-pass',
-      title: 'Exchange Coin For Pass'),
+  exchangeCoinForPass(
+    'exchange-coin-for-pass',
+    title: 'Exchange Coin For Pass',
+  ),
   whatToSpendScreen('what-to-spend', title: 'What To Spend'),
+  howToGetBigScreen('how-to-get-big', title: 'How To Get Big'),
 
   ///  Start Create News Screens
   createNews('create-news', title: 'Create News'),
@@ -56,8 +65,10 @@ enum Routes with OctopusRoute {
   createNewsDate('create-news-date', title: 'Create News Date'),
   createNewsTime('create-news-time', title: 'Create News Time'),
   createNewsTitle('create-news-title', title: 'Create News Title'),
-  createNewsDescrition('create-news-descrition',
-      title: 'Create News Descrition'),
+  createNewsDescrition(
+    'create-news-descrition',
+    title: 'Create News Descrition',
+  ),
   createNewsPhoto('create-news-photo', title: 'Create News Photo'),
   exampleNews('example-news', title: 'Example News'),
 
@@ -66,24 +77,38 @@ enum Routes with OctopusRoute {
 
   ///  Start Create Lean Production Screens
 
-  createLeanProductionScreen('create-lean-production',
-      title: 'Create Lean Production'),
-  writeProblemLeanProductionScreen('write-problem-lean-production',
-      title: 'Write Problem Lean Production'),
+  createLeanProductionScreen(
+    'create-lean-production',
+    title: 'Create Lean Production',
+  ),
+  writeProblemLeanProductionScreen(
+    'write-problem-lean-production',
+    title: 'Write Problem Lean Production',
+  ),
 
-  writeSolutionLeanProductionScreen('write-solution-lean-production',
-      title: 'Write Solution Lean Production'),
+  writeSolutionLeanProductionScreen(
+    'write-solution-lean-production',
+    title: 'Write Solution Lean Production',
+  ),
 
-  writeExpensesLeanProductionScreen('write-expenses-lean-production',
-      title: 'Write Expenses Lean Production'),
+  writeExpensesLeanProductionScreen(
+    'write-expenses-lean-production',
+    title: 'Write Expenses Lean Production',
+  ),
 
-  writeBenefitLeanProductionScreen('write-benefit-lean-production',
-      title: 'Write Benefit Lean Production'),
+  writeBenefitLeanProductionScreen(
+    'write-benefit-lean-production',
+    title: 'Write Benefit Lean Production',
+  ),
 
-  selectorExecutorLeanProductionScreen('selector-executor-lean-production',
-      title: 'Write Executor Lean Production'),
-  pickFileLeanProduction('pick-file-lean-production',
-      title: 'Pick File Lean Production');
+  selectorExecutorLeanProductionScreen(
+    'selector-executor-lean-production',
+    title: 'Write Executor Lean Production',
+  ),
+  pickFileLeanProduction(
+    'pick-file-lean-production',
+    title: 'Pick File Lean Production',
+  );
 
   ///  End Create Lean Production Screens
 
@@ -123,9 +148,15 @@ enum Routes with OctopusRoute {
         Routes.statementsForm => const StatementFormScreen(),
         Routes.bagReport => const BagReportScreen(),
         Routes.infoBirthDay => BirthDayInfoScreen(),
-        Routes.rookieInfo => RookiesInfoScreen(),
+        Routes.rookieInfo => BlocProvider.value(
+            value: RookiesBLoC(
+              userRepo: DependenciesScope.of(context).userRepository,
+            )..add(const RookiesEvent.fetch()),
+            child: RookiesInfoScreen(),
+          ),
         Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
         Routes.whatToSpendScreen => const WhatToSpendScreen(),
+        Routes.howToGetBigScreen => const HowToGetBigScreen(),
         Routes.createNewsType => const SelectedTypeNewsScreen(),
         Routes.createNews => const CreateNewsScreen(),
         Routes.createNewsDate => const SelectedNewsDateScreen(),
