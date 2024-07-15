@@ -93,25 +93,15 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
 
   /// Получение новости по id.
   Future<void> getNewsById() async {
-    if (id == null) {
-      if (eventEntityRepository.currentNews == null) return;
-      await _refDateTime(eventEntityRepository.currentNews!);
-      final newState = state.copyWith(
-        news: eventEntityRepository.currentNews!,
-        status: ScaffoldManagerStatus.loaded,
-      );
-
-      emit(newState);
-    } else {
       await eventEntityRepository.getNewsById(id: id!);
       if (eventEntityRepository.currentNews == null) return;
       await _refDateTime(eventEntityRepository.currentNews!);
       final newState = state.copyWith(
-        news: eventEntityRepository.currentNews!,
+        // news: eventEntityRepository.currentNews!,
         status: ScaffoldManagerStatus.loaded,
       );
       emit(newState);
-    }
+
   }
 
   /// Преобразование данных даты и времени.
@@ -175,5 +165,10 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   /// Опубликовать новость.
   Future<void> publishNews(String id) async {
     await eventEntityRepository.approvementNews(id: id);
+  }
+
+  @override
+  Future<void> close() async {
+    return;
   }
 }
