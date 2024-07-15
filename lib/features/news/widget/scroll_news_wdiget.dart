@@ -76,12 +76,9 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
                                   color: Colors.grey,
                                   borderRadius: BorderRadius.circular(radius),
                                 ),
-                                child: FittedBox(
-                                  fit: BoxFit.cover,
-                                  child: AppOctoImage(
-                                    urlImage: item.image ?? '',
-                                    isProgressIndicator: false,
-                                  ),
+                                child: AppOctoImage(
+                                  urlImage: item.image ?? '',
+                                  isProgressIndicator: false,
                                 ),
                               ),
                               SizedBox(

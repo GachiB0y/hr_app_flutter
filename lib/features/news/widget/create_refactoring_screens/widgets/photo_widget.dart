@@ -27,13 +27,15 @@ class PhotoWidget extends StatelessWidget {
       );
     }
     if (file != null) {
-      body = Image.file(file!);
+      body = Image.file(
+        file!,
+        fit: BoxFit.cover,
+      );
     }
     return InkWell(
       onTap: onTap,
       child: Container(
         clipBehavior: Clip.hardEdge,
-        width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
           boxShadow: [
@@ -49,11 +51,7 @@ class PhotoWidget extends StatelessWidget {
         child: SizedBox(
           width: double.infinity,
           height: 200,
-
-
-          child: FittedBox(
-              fit: BoxFit.values[0],
-              child: Center(child: body)),
+          child: body,
         ),
       ),
     );

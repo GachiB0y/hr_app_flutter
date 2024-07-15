@@ -38,10 +38,12 @@ class AppOctoImage extends StatelessWidget {
               child: isProgressIndicator ? const AppProgressIndicator() : null,
             ),
         errorBuilder: (context, object, stackTrace) {
-         return Text(
-            'Нет фото',
-            style: TextStyle(fontSize: fontSize),
-          );
+         return Center(
+           child: Text(
+              'Нет фото',
+              style: TextStyle(fontSize: fontSize),
+            ),
+         );
         });
   }
 }
