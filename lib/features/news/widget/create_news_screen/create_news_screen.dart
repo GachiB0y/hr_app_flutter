@@ -102,6 +102,7 @@ class ExmapleNewsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+
               ),
               BlocBuilder<EventEntityBloc, EventEntityState>(
                 builder: (context, state) {
@@ -703,9 +704,7 @@ class SelectedTypeNewsScreen extends StatelessWidget {
 
 class _AppBarForCreateNews extends StatelessWidget
     implements PreferredSizeWidget {
-  const _AppBarForCreateNews({
-    super.key,
-  });
+  const _AppBarForCreateNews();
 
   @override
   Widget build(BuildContext context) => AppBar(

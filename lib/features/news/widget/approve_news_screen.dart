@@ -23,7 +23,7 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
     super.initState();
     approvementNewsBloc = ApprovementNewsBloc(
       eventEntityRepository:
-          DependenciesScope.of(context).eventEntityRepository,
+      DependenciesScope.of(context).eventEntityRepository,
     )..add(const ApprovementEvent.fetch());
   }
 
@@ -111,14 +111,14 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                     const SizedBox(height: 16),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
                                             approvementNewsBloc.add(
                                                 ApprovementEvent.approvedNews(
                                                     id: loadedApprovementNews[
-                                                            index]
+                                                    index]
                                                         .id
                                                         .toString()));
                                           },
@@ -133,16 +133,16 @@ class _ApproveNewsScreenState extends State<ApproveNewsScreen> {
                                         ElevatedButton(
                                           style: ButtonStyle(
                                               backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.redAccent)),
+                                              MaterialStateProperty.all(
+                                                  Colors.redAccent)),
                                           onPressed: () {
                                             approvementNewsBloc.add(
                                                 ApprovementEvent
                                                     .moveInArchiveNews(
-                                                        id: loadedApprovementNews[
-                                                                index]
-                                                            .id
-                                                            .toString()));
+                                                    id: loadedApprovementNews[
+                                                    index]
+                                                        .id
+                                                        .toString()));
                                           },
                                           child: Text(
                                             'Отколнить',

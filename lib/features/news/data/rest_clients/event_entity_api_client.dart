@@ -5,11 +5,16 @@ import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity
 
 abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents();
+
   Future<EventEntity> getNewsById({
     required String id,
   });
+
+  /// Получение массива новостей для модерации.
   Future<List<EventEntity>> getApprovmentEvents();
+
   Future<List<Category>> getCategory();
+
   Future<bool> createNewEventEntity({
     required String title,
     required String description,
@@ -18,9 +23,11 @@ abstract interface class IEventsEntityProvider {
     required List<String> paths,
     required List<String> categories,
   });
+
   Future<bool> approvementNews({
     required String id,
   });
+
   Future<bool> moveInArchiveNews({
     required String id,
   });
@@ -28,6 +35,7 @@ abstract interface class IEventsEntityProvider {
 
 class EventsEntityProviderImpl implements IEventsEntityProvider {
   final RestClient _httpService;
+
   const EventsEntityProviderImpl(this._httpService);
 
   @override
@@ -152,8 +160,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
 
   @override
   Future<bool> moveInArchiveNews({required String id}) async {
-    final response = await _httpService
-        .post('/news/move_in_archive', body: {}, queryParams: {'feed_id': id});
+    final response = await _httpService.post('/news/move_in_archive', body: {}, queryParams: {'feed_id': id});
 
     if (response
         case {

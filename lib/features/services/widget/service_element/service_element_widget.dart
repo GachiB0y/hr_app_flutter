@@ -103,7 +103,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
-                  route = Routes.approveNews;
+                  route = Routes.moderationNews;
                   // Octopus.of(context).push(Routes.approveNews);
                 } else if (widget.service.id == 25) {
                   // Octopus.of(context).push(Routes.scheduleBus);

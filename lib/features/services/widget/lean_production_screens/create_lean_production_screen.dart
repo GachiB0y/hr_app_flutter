@@ -4,28 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/lean_production_form_bloc/lean_production_form_bloc.dart';
 import 'package:hr_app_flutter/features/services/model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/create_lean_production_view_model.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_model.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:octopus/octopus.dart';
 
 class CreateLeanProductionScreen extends StatefulWidget {
   const CreateLeanProductionScreen({super.key});
 
   @override
-  State<CreateLeanProductionScreen> createState() =>
-      _CreateLeanProductionScreenState();
+  State<CreateLeanProductionScreen> createState() => _CreateLeanProductionScreenState();
 }
 
-class _CreateLeanProductionScreenState
-    extends State<CreateLeanProductionScreen> {
-  final CreateLeanProductionViewModel _modelView =
-      CreateLeanProductionViewModel();
+class _CreateLeanProductionScreenState extends State<CreateLeanProductionScreen> {
+  final CreateLeanProductionViewModel _modelView = CreateLeanProductionViewModel();
   final _modelFilePicker = FilePickerCustomModel();
 
   @override
@@ -33,8 +30,7 @@ class _CreateLeanProductionScreenState
     return ChangeNotifierProvaider<FilePickerCustomModel>(
       model: _modelFilePicker,
       child: ChangeNotifierProvaider<CreateLeanProductionViewModel>(
-          model: _modelView,
-          child: const BucketNavigator(bucket: 'create-lean-production')),
+          model: _modelView, child: const BucketNavigator(bucket: 'create-lean-production')),
     );
   }
 }
@@ -45,26 +41,20 @@ class SelectExecutorLeanProductionScreen extends StatefulWidget {
   const SelectExecutorLeanProductionScreen({super.key});
 
   @override
-  State<SelectExecutorLeanProductionScreen> createState() =>
-      _SelectExecutorLeanProductionScreenState();
+  State<SelectExecutorLeanProductionScreen> createState() => _SelectExecutorLeanProductionScreenState();
 }
 
-class _SelectExecutorLeanProductionScreenState
-    extends State<SelectExecutorLeanProductionScreen> {
-  final List<TextEditingController> _executorsControllers = [
-    TextEditingController()
-  ];
-  final List<TextEditingController> _executorsIdControllers = [
-    TextEditingController()
-  ];
+class _SelectExecutorLeanProductionScreenState extends State<SelectExecutorLeanProductionScreen> {
+  final List<TextEditingController> _executorsControllers = [TextEditingController()];
+  final List<TextEditingController> _executorsIdControllers = [TextEditingController()];
 
   late final LeanProductionFormBloc blocLeanProductionForm;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    blocLeanProductionForm = LeanProductionFormBloc(
-        repository: DependenciesScope.of(context).leanProductionRepository);
+    blocLeanProductionForm =
+        LeanProductionFormBloc(repository: DependenciesScope.of(context).leanProductionRepository);
 
     super.initState();
   }
@@ -125,10 +115,7 @@ class _SelectExecutorLeanProductionScreenState
             Center(
               child: Text(
                 'Выберите исполнителя',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -148,8 +135,7 @@ class _SelectExecutorLeanProductionScreenState
                 listener: (context, state) {
                   state.mapOrNull(
                     successful: (data) {
-                      context.octopus.setState((state) =>
-                          state..removeByName('create-lean-production'));
+                      context.octopus.setState((state) => state..removeByName('create-lean-production'));
                     },
                     error: (data) {
                       showErrorSnackbar(context, data.message);
@@ -169,20 +155,16 @@ class _SelectExecutorLeanProductionScreenState
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           final modelFielPikcer = ChangeNotifierProvaider.watch<
-                              ChangeNotifierProvaider<FilePickerCustomModel>,
-                              FilePickerCustomModel>(context);
+                              ChangeNotifierProvaider<FilePickerCustomModel>, FilePickerCustomModel>(context);
                           final modelView = ChangeNotifierProvaider.watch<
-                              ChangeNotifierProvaider<
-                                  CreateLeanProductionViewModel>,
+                              ChangeNotifierProvaider<CreateLeanProductionViewModel>,
                               CreateLeanProductionViewModel>(context);
 
                           int firstImplementer = 0;
                           int secondImplementer = 0;
                           int thirdImplementer = 0;
 
-                          _executorsIdControllers
-                              .asMap()
-                              .forEach((index, controller) {
+                          _executorsIdControllers.asMap().forEach((index, controller) {
                             switch (index) {
                               case 0:
                                 if (controller.text != '') {
@@ -203,14 +185,11 @@ class _SelectExecutorLeanProductionScreenState
                             solution: modelView.solution!,
                             expenses: modelView.expenses!,
                             benefit: modelView.benefit!,
-                            paths: modelFielPikcer?.paths
-                                .whereType<String>()
-                                .toList(),
+                            paths: modelFielPikcer?.paths.whereType<String>().toList(),
                           );
 
-                          blocLeanProductionForm.add(
-                              LeanProductionFormEvent.submitForm(
-                                  formEntity: formEntity));
+                          blocLeanProductionForm
+                              .add(LeanProductionFormEvent.submitForm(formEntity: formEntity));
                         }
                       },
                     );
@@ -242,11 +221,11 @@ class _SelectExecutorLeanProductionScreenState
 }
 
 class _ButtonChangeExecutorWidget extends StatelessWidget {
-  const _ButtonChangeExecutorWidget(
-      {super.key, required this.text, required this.onPressed});
+  const _ButtonChangeExecutorWidget({required this.text, required this.onPressed});
 
   final String text;
   final void Function() onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -267,8 +246,10 @@ class _ButtonChangeExecutorWidget extends StatelessWidget {
         onPressed: () => onPressed(),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-              fontSize: 15, color: Theme.of(context).colorScheme.outline),
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(fontSize: 15, color: Theme.of(context).colorScheme.outline),
         ),
       ),
     );
@@ -287,8 +268,7 @@ class ImplementersInputWidget extends StatefulWidget {
   final TextEditingController _idController;
 
   @override
-  _ImplementersInputWidgetState createState() =>
-      _ImplementersInputWidgetState();
+  _ImplementersInputWidgetState createState() => _ImplementersInputWidgetState();
 }
 
 class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
@@ -298,6 +278,7 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
   final ScrollController _scrollController = ScrollController();
 
   TextEditingController get nameController => widget._nameController;
+
   TextEditingController get idController => widget._idController;
 
   late final OtherUsersBloc otherUsersBloc;
@@ -305,8 +286,7 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
   @override
   void initState() {
     super.initState();
-    otherUsersBloc =
-        OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
+    otherUsersBloc = OtherUsersBloc(userRepo: DependenciesScope.of(context).userRepository);
     otherUsersBloc.add(const OtherUsersEvent.clearList());
   }
 
@@ -323,17 +303,14 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
         builder: (context, state) {
           return Container(
             decoration: isFocus
-                ? BoxDecoration(
-                    boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          spreadRadius: 6,
-                          blurRadius: 10,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.white)
+                ? BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      spreadRadius: 6,
+                      blurRadius: 10,
+                      offset: const Offset(0, 6),
+                    ),
+                  ], borderRadius: BorderRadius.circular(30.0), color: Colors.white)
                 : null,
             child: Column(
               children: [
@@ -348,10 +325,7 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Введите фамилию',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -366,10 +340,8 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       searchDebounce?.cancel();
-                      searchDebounce =
-                          Timer(const Duration(milliseconds: 700), () {
-                        otherUsersBloc
-                            .add(OtherUsersEvent.findUsers(findText: value));
+                      searchDebounce = Timer(const Duration(milliseconds: 700), () {
+                        otherUsersBloc.add(OtherUsersEvent.findUsers(findText: value));
                       });
                     }
                   },
@@ -378,15 +350,13 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                   const SizedBox.shrink(),
                 ] else if (state is OtherUsersState$Error) ...[
                   const Center(child: Text('Пользователь не найден.')),
-                ] else if (state is OtherUsersState$Idle ||
-                    state is OtherUsersState$Successful) ...[
+                ] else if (state is OtherUsersState$Idle || state is OtherUsersState$Successful) ...[
                   if (state.data != null) ...[
                     state.data!.isEmpty
                         ? const SizedBox.shrink()
                         : isFocus
                             ? Container(
-                                constraints: const BoxConstraints(
-                                    minHeight: 70, maxHeight: 240),
+                                constraints: const BoxConstraints(minHeight: 70, maxHeight: 240),
                                 padding: const EdgeInsets.all(16.0),
                                 width: double.infinity,
                                 child: Scrollbar(
@@ -401,27 +371,17 @@ class _ImplementersInputWidgetState extends State<ImplementersInputWidget> {
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall!
-                                              .copyWith(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
+                                              .copyWith(fontSize: 15, fontWeight: FontWeight.w500),
                                         ),
                                         subtitle: Text(
                                           state.data![index].staffPosition,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                  fontSize: 15,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .outline),
+                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              fontSize: 15, color: Theme.of(context).colorScheme.outline),
                                         ),
                                         onTap: () {
                                           nameController.text =
                                               '${state.data![index].name} ${state.data![index].nameI} ${state.data![index].nameO}';
-                                          idController.text = state
-                                              .data![index].autoCard
-                                              .toString();
+                                          idController.text = state.data![index].autoCard.toString();
                                           setState(() {
                                             isFocus = false;
                                           });
@@ -462,10 +422,7 @@ class _PickFileLeanProductionState extends State<PickFileLeanProduction> {
             Center(
               child: Text(
                 'Прикрепите фаил',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -481,8 +438,8 @@ class _PickFileLeanProductionState extends State<PickFileLeanProduction> {
                 //   return;
                 // }
                 context.octopus.setState((state) => state
-                  ..findByName('create-lean-production')?.add(
-                      Routes.selectorExecutorLeanProductionScreen.node()));
+                  ..findByName('create-lean-production')
+                      ?.add(Routes.selectorExecutorLeanProductionScreen.node()));
               },
             ),
           ],
@@ -498,21 +455,19 @@ class WriteBenefitLeanProductionScreen extends StatefulWidget {
   const WriteBenefitLeanProductionScreen({super.key});
 
   @override
-  State<WriteBenefitLeanProductionScreen> createState() =>
-      _WriteBenefitLeanProductionScreenState();
+  State<WriteBenefitLeanProductionScreen> createState() => _WriteBenefitLeanProductionScreenState();
 }
 
-class _WriteBenefitLeanProductionScreenState
-    extends State<WriteBenefitLeanProductionScreen> {
+class _WriteBenefitLeanProductionScreenState extends State<WriteBenefitLeanProductionScreen> {
   final TextEditingController _benefitController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
+
   @override
   void initState() {
     super.initState();
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     if (viewModel != null && viewModel.benefit != null) {
       _benefitController.text = viewModel.benefit!;
@@ -521,8 +476,7 @@ class _WriteBenefitLeanProductionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
@@ -534,10 +488,7 @@ class _WriteBenefitLeanProductionScreenState
               Center(
                 child: Text(
                   'Польза\nпредложения',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -550,12 +501,8 @@ class _WriteBenefitLeanProductionScreenState
                   decoration: InputDecoration(
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
-                    hintText:
-                        'Напиши как ваше предложение положительно повлияет на изменения в компании',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintText: 'Напиши как ваше предложение положительно повлияет на изменения в компании',
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -576,8 +523,7 @@ class _WriteBenefitLeanProductionScreenState
                   if (_formKey.currentState!.validate()) {
                     viewModel?.benefit = _benefitController.text;
                     context.octopus.setState((state) => state
-                      ..findByName('create-lean-production')
-                          ?.add(Routes.pickFileLeanProduction.node()));
+                      ..findByName('create-lean-production')?.add(Routes.pickFileLeanProduction.node()));
                   }
                 },
               ),
@@ -595,12 +541,10 @@ class WriteExpensesLeanProductionScreen extends StatefulWidget {
   const WriteExpensesLeanProductionScreen({super.key});
 
   @override
-  State<WriteExpensesLeanProductionScreen> createState() =>
-      _WriteExpensesLeanProductionScreenState();
+  State<WriteExpensesLeanProductionScreen> createState() => _WriteExpensesLeanProductionScreenState();
 }
 
-class _WriteExpensesLeanProductionScreenState
-    extends State<WriteExpensesLeanProductionScreen> {
+class _WriteExpensesLeanProductionScreenState extends State<WriteExpensesLeanProductionScreen> {
   final TextEditingController _expensesController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -609,8 +553,7 @@ class _WriteExpensesLeanProductionScreenState
   @override
   void initState() {
     super.initState();
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     if (viewModel != null && viewModel.expenses != null) {
       _expensesController.text = viewModel.expenses!;
@@ -619,8 +562,7 @@ class _WriteExpensesLeanProductionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
@@ -632,10 +574,7 @@ class _WriteExpensesLeanProductionScreenState
               Center(
                 child: Text(
                   'Ориентировочные\nзатраты',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -649,10 +588,7 @@ class _WriteExpensesLeanProductionScreenState
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Напиши ориентировочную стоимость',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -673,8 +609,8 @@ class _WriteExpensesLeanProductionScreenState
                   if (_formKey.currentState!.validate()) {
                     viewModel?.expenses = _expensesController.text;
                     context.octopus.setState((state) => state
-                      ..findByName('create-lean-production')?.add(
-                          Routes.writeBenefitLeanProductionScreen.node()));
+                      ..findByName('create-lean-production')
+                          ?.add(Routes.writeBenefitLeanProductionScreen.node()));
                   }
                 },
               ),
@@ -692,12 +628,10 @@ class WriteSolutionLeamProductionScreen extends StatefulWidget {
   const WriteSolutionLeamProductionScreen({super.key});
 
   @override
-  State<WriteSolutionLeamProductionScreen> createState() =>
-      _WriteSolutionLeamProductionScreenState();
+  State<WriteSolutionLeamProductionScreen> createState() => _WriteSolutionLeamProductionScreenState();
 }
 
-class _WriteSolutionLeamProductionScreenState
-    extends State<WriteSolutionLeamProductionScreen> {
+class _WriteSolutionLeamProductionScreenState extends State<WriteSolutionLeamProductionScreen> {
   final TextEditingController _solutionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isImplemented = false;
@@ -705,8 +639,7 @@ class _WriteSolutionLeamProductionScreenState
   @override
   void initState() {
     super.initState();
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     if (viewModel != null && viewModel.solution != null) {
       _solutionController.text = viewModel.solution!;
@@ -718,8 +651,7 @@ class _WriteSolutionLeamProductionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
@@ -731,10 +663,7 @@ class _WriteSolutionLeamProductionScreenState
               Center(
                 child: Text(
                   'Как решить',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -747,10 +676,7 @@ class _WriteSolutionLeamProductionScreenState
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Опиши пути решения',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -771,10 +697,7 @@ class _WriteSolutionLeamProductionScreenState
                 controlAffinity: ListTileControlAffinity.leading,
                 title: Text(
                   'Предложение уже реализованно',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                 ),
                 value: isImplemented,
                 onChanged: (value) {
@@ -791,8 +714,8 @@ class _WriteSolutionLeamProductionScreenState
                     viewModel?.solution = _solutionController.text;
                     viewModel?.isImplemented = isImplemented;
                     context.octopus.setState((state) => state
-                      ..findByName('create-lean-production')?.add(
-                          Routes.writeExpensesLeanProductionScreen.node()));
+                      ..findByName('create-lean-production')
+                          ?.add(Routes.writeExpensesLeanProductionScreen.node()));
                   }
                 },
               ),
@@ -810,20 +733,17 @@ class WriteProblemLeanProductionScreen extends StatefulWidget {
   const WriteProblemLeanProductionScreen({super.key});
 
   @override
-  State<WriteProblemLeanProductionScreen> createState() =>
-      _WriteProblemLeanProductionScreenState();
+  State<WriteProblemLeanProductionScreen> createState() => _WriteProblemLeanProductionScreenState();
 }
 
-class _WriteProblemLeanProductionScreenState
-    extends State<WriteProblemLeanProductionScreen> {
+class _WriteProblemLeanProductionScreenState extends State<WriteProblemLeanProductionScreen> {
   final TextEditingController _problemController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     if (viewModel != null && viewModel.problem != null) {
       _problemController.text = viewModel.problem!;
@@ -832,8 +752,7 @@ class _WriteProblemLeanProductionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateLeanProductionViewModel>,
+    final viewModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateLeanProductionViewModel>,
         CreateLeanProductionViewModel>(context);
     return Scaffold(
       appBar: const _AppBarForCreateLeanProduction(),
@@ -845,10 +764,7 @@ class _WriteProblemLeanProductionScreenState
               Center(
                 child: Text(
                   'Cуть проблемы',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -861,10 +777,7 @@ class _WriteProblemLeanProductionScreenState
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Опиши суть проблемы',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -885,8 +798,8 @@ class _WriteProblemLeanProductionScreenState
                   if (_formKey.currentState!.validate()) {
                     viewModel?.problem = _problemController.text;
                     context.octopus.setState((state) => state
-                      ..findByName('create-lean-production')?.add(
-                          Routes.writeSolutionLeanProductionScreen.node()));
+                      ..findByName('create-lean-production')
+                          ?.add(Routes.writeSolutionLeanProductionScreen.node()));
                   }
                 },
               ),
@@ -898,11 +811,8 @@ class _WriteProblemLeanProductionScreenState
   }
 }
 
-class _AppBarForCreateLeanProduction extends StatelessWidget
-    implements PreferredSizeWidget {
-  const _AppBarForCreateLeanProduction({
-    super.key,
-  });
+class _AppBarForCreateLeanProduction extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBarForCreateLeanProduction();
 
   @override
   Widget build(BuildContext context) {
@@ -910,8 +820,7 @@ class _AppBarForCreateLeanProduction extends StatelessWidget
       actions: [
         TextButton(
             onPressed: () {
-              context.octopus.setState(
-                  (state) => state..removeByName('create-lean-production'));
+              context.octopus.setState((state) => state..removeByName('create-lean-production'));
             },
             child: const Text('Сбросить'))
       ],
