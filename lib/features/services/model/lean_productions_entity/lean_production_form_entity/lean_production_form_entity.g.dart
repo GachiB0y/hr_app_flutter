@@ -6,13 +6,13 @@ part of 'lean_production_form_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_LeanProductionFormEntity _$$_LeanProductionFormEntityFromJson(
+_$LeanProductionFormEntityImpl _$$LeanProductionFormEntityImplFromJson(
         Map<String, dynamic> json) =>
-    _$_LeanProductionFormEntity(
+    _$LeanProductionFormEntityImpl(
       realized: json['realized'] as bool,
-      firstImplementer: json['first_implementer'] as int? ?? 0,
-      secondImplementer: json['second_implementer'] as int? ?? 0,
-      thirdImplementer: json['third_implementer'] as int? ?? 0,
+      firstImplementer: (json['first_implementer'] as num?)?.toInt() ?? 0,
+      secondImplementer: (json['second_implementer'] as num?)?.toInt() ?? 0,
+      thirdImplementer: (json['third_implementer'] as num?)?.toInt() ?? 0,
       issue: json['issue'] as String,
       solution: json['solution'] as String,
       expenses: json['expenses'] as String,
@@ -21,8 +21,8 @@ _$_LeanProductionFormEntity _$$_LeanProductionFormEntityFromJson(
           (json['paths'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$_LeanProductionFormEntityToJson(
-        _$_LeanProductionFormEntity instance) =>
+Map<String, dynamic> _$$LeanProductionFormEntityImplToJson(
+        _$LeanProductionFormEntityImpl instance) =>
     <String, dynamic>{
       'realized': instance.realized,
       'first_implementer': instance.firstImplementer,

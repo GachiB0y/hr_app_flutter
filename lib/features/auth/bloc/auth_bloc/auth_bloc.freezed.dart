@@ -12,7 +12,7 @@ part of 'auth_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AuthEvent {
@@ -80,20 +80,20 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
 }
 
 /// @nodoc
-abstract class _$$GetCodeAuthEventCopyWith<$Res> {
-  factory _$$GetCodeAuthEventCopyWith(
-          _$GetCodeAuthEvent value, $Res Function(_$GetCodeAuthEvent) then) =
-      __$$GetCodeAuthEventCopyWithImpl<$Res>;
+abstract class _$$GetCodeAuthEventImplCopyWith<$Res> {
+  factory _$$GetCodeAuthEventImplCopyWith(_$GetCodeAuthEventImpl value,
+          $Res Function(_$GetCodeAuthEventImpl) then) =
+      __$$GetCodeAuthEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String phoneNumber});
 }
 
 /// @nodoc
-class __$$GetCodeAuthEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$GetCodeAuthEvent>
-    implements _$$GetCodeAuthEventCopyWith<$Res> {
-  __$$GetCodeAuthEventCopyWithImpl(
-      _$GetCodeAuthEvent _value, $Res Function(_$GetCodeAuthEvent) _then)
+class __$$GetCodeAuthEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$GetCodeAuthEventImpl>
+    implements _$$GetCodeAuthEventImplCopyWith<$Res> {
+  __$$GetCodeAuthEventImplCopyWithImpl(_$GetCodeAuthEventImpl _value,
+      $Res Function(_$GetCodeAuthEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +101,7 @@ class __$$GetCodeAuthEventCopyWithImpl<$Res>
   $Res call({
     Object? phoneNumber = null,
   }) {
-    return _then(_$GetCodeAuthEvent(
+    return _then(_$GetCodeAuthEventImpl(
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -112,8 +112,8 @@ class __$$GetCodeAuthEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GetCodeAuthEvent extends GetCodeAuthEvent {
-  const _$GetCodeAuthEvent({required this.phoneNumber}) : super._();
+class _$GetCodeAuthEventImpl extends GetCodeAuthEvent {
+  const _$GetCodeAuthEventImpl({required this.phoneNumber}) : super._();
 
   @override
   final String phoneNumber;
@@ -124,10 +124,10 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetCodeAuthEvent &&
+            other is _$GetCodeAuthEventImpl &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
@@ -138,8 +138,9 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$GetCodeAuthEventCopyWith<_$GetCodeAuthEvent> get copyWith =>
-      __$$GetCodeAuthEventCopyWithImpl<_$GetCodeAuthEvent>(this, _$identity);
+  _$$GetCodeAuthEventImplCopyWith<_$GetCodeAuthEventImpl> get copyWith =>
+      __$$GetCodeAuthEventImplCopyWithImpl<_$GetCodeAuthEventImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -212,30 +213,30 @@ class _$GetCodeAuthEvent extends GetCodeAuthEvent {
 
 abstract class GetCodeAuthEvent extends AuthEvent {
   const factory GetCodeAuthEvent({required final String phoneNumber}) =
-      _$GetCodeAuthEvent;
+      _$GetCodeAuthEventImpl;
   const GetCodeAuthEvent._() : super._();
 
   String get phoneNumber;
   @JsonKey(ignore: true)
-  _$$GetCodeAuthEventCopyWith<_$GetCodeAuthEvent> get copyWith =>
+  _$$GetCodeAuthEventImplCopyWith<_$GetCodeAuthEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AuthByCodeAuthEventCopyWith<$Res> {
-  factory _$$AuthByCodeAuthEventCopyWith(_$AuthByCodeAuthEvent value,
-          $Res Function(_$AuthByCodeAuthEvent) then) =
-      __$$AuthByCodeAuthEventCopyWithImpl<$Res>;
+abstract class _$$AuthByCodeAuthEventImplCopyWith<$Res> {
+  factory _$$AuthByCodeAuthEventImplCopyWith(_$AuthByCodeAuthEventImpl value,
+          $Res Function(_$AuthByCodeAuthEventImpl) then) =
+      __$$AuthByCodeAuthEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String phoneNumber, String code});
 }
 
 /// @nodoc
-class __$$AuthByCodeAuthEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$AuthByCodeAuthEvent>
-    implements _$$AuthByCodeAuthEventCopyWith<$Res> {
-  __$$AuthByCodeAuthEventCopyWithImpl(
-      _$AuthByCodeAuthEvent _value, $Res Function(_$AuthByCodeAuthEvent) _then)
+class __$$AuthByCodeAuthEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$AuthByCodeAuthEventImpl>
+    implements _$$AuthByCodeAuthEventImplCopyWith<$Res> {
+  __$$AuthByCodeAuthEventImplCopyWithImpl(_$AuthByCodeAuthEventImpl _value,
+      $Res Function(_$AuthByCodeAuthEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -244,7 +245,7 @@ class __$$AuthByCodeAuthEventCopyWithImpl<$Res>
     Object? phoneNumber = null,
     Object? code = null,
   }) {
-    return _then(_$AuthByCodeAuthEvent(
+    return _then(_$AuthByCodeAuthEventImpl(
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -259,8 +260,9 @@ class __$$AuthByCodeAuthEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
-  const _$AuthByCodeAuthEvent({required this.phoneNumber, required this.code})
+class _$AuthByCodeAuthEventImpl extends AuthByCodeAuthEvent {
+  const _$AuthByCodeAuthEventImpl(
+      {required this.phoneNumber, required this.code})
       : super._();
 
   @override
@@ -274,10 +276,10 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthByCodeAuthEvent &&
+            other is _$AuthByCodeAuthEventImpl &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.code, code) || other.code == code));
@@ -289,8 +291,8 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthByCodeAuthEventCopyWith<_$AuthByCodeAuthEvent> get copyWith =>
-      __$$AuthByCodeAuthEventCopyWithImpl<_$AuthByCodeAuthEvent>(
+  _$$AuthByCodeAuthEventImplCopyWith<_$AuthByCodeAuthEventImpl> get copyWith =>
+      __$$AuthByCodeAuthEventImplCopyWithImpl<_$AuthByCodeAuthEventImpl>(
           this, _$identity);
 
   @override
@@ -365,36 +367,36 @@ class _$AuthByCodeAuthEvent extends AuthByCodeAuthEvent {
 abstract class AuthByCodeAuthEvent extends AuthEvent {
   const factory AuthByCodeAuthEvent(
       {required final String phoneNumber,
-      required final String code}) = _$AuthByCodeAuthEvent;
+      required final String code}) = _$AuthByCodeAuthEventImpl;
   const AuthByCodeAuthEvent._() : super._();
 
   String get phoneNumber;
   String get code;
   @JsonKey(ignore: true)
-  _$$AuthByCodeAuthEventCopyWith<_$AuthByCodeAuthEvent> get copyWith =>
+  _$$AuthByCodeAuthEventImplCopyWith<_$AuthByCodeAuthEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LogoutAuthEventCopyWith<$Res> {
-  factory _$$LogoutAuthEventCopyWith(
-          _$LogoutAuthEvent value, $Res Function(_$LogoutAuthEvent) then) =
-      __$$LogoutAuthEventCopyWithImpl<$Res>;
+abstract class _$$LogoutAuthEventImplCopyWith<$Res> {
+  factory _$$LogoutAuthEventImplCopyWith(_$LogoutAuthEventImpl value,
+          $Res Function(_$LogoutAuthEventImpl) then) =
+      __$$LogoutAuthEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LogoutAuthEventCopyWithImpl<$Res>
-    extends _$AuthEventCopyWithImpl<$Res, _$LogoutAuthEvent>
-    implements _$$LogoutAuthEventCopyWith<$Res> {
-  __$$LogoutAuthEventCopyWithImpl(
-      _$LogoutAuthEvent _value, $Res Function(_$LogoutAuthEvent) _then)
+class __$$LogoutAuthEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$LogoutAuthEventImpl>
+    implements _$$LogoutAuthEventImplCopyWith<$Res> {
+  __$$LogoutAuthEventImplCopyWithImpl(
+      _$LogoutAuthEventImpl _value, $Res Function(_$LogoutAuthEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LogoutAuthEvent extends LogoutAuthEvent {
-  const _$LogoutAuthEvent() : super._();
+class _$LogoutAuthEventImpl extends LogoutAuthEvent {
+  const _$LogoutAuthEventImpl() : super._();
 
   @override
   String toString() {
@@ -402,9 +404,9 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LogoutAuthEvent);
+        (other.runtimeType == runtimeType && other is _$LogoutAuthEventImpl);
   }
 
   @override
@@ -480,6 +482,6 @@ class _$LogoutAuthEvent extends LogoutAuthEvent {
 }
 
 abstract class LogoutAuthEvent extends AuthEvent {
-  const factory LogoutAuthEvent() = _$LogoutAuthEvent;
+  const factory LogoutAuthEvent() = _$LogoutAuthEventImpl;
   const LogoutAuthEvent._() : super._();
 }

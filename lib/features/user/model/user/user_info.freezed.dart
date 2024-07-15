@@ -12,7 +12,7 @@ part of 'user_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   return _UserInfo.fromJson(json);
@@ -155,10 +155,11 @@ class _$UserInfoCopyWithImpl<$Res, $Val extends UserInfo>
 }
 
 /// @nodoc
-abstract class _$$_UserInfoCopyWith<$Res> implements $UserInfoCopyWith<$Res> {
-  factory _$$_UserInfoCopyWith(
-          _$_UserInfo value, $Res Function(_$_UserInfo) then) =
-      __$$_UserInfoCopyWithImpl<$Res>;
+abstract class _$$UserInfoImplCopyWith<$Res>
+    implements $UserInfoCopyWith<$Res> {
+  factory _$$UserInfoImplCopyWith(
+          _$UserInfoImpl value, $Res Function(_$UserInfoImpl) then) =
+      __$$UserInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -178,11 +179,11 @@ abstract class _$$_UserInfoCopyWith<$Res> implements $UserInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_UserInfoCopyWithImpl<$Res>
-    extends _$UserInfoCopyWithImpl<$Res, _$_UserInfo>
-    implements _$$_UserInfoCopyWith<$Res> {
-  __$$_UserInfoCopyWithImpl(
-      _$_UserInfo _value, $Res Function(_$_UserInfo) _then)
+class __$$UserInfoImplCopyWithImpl<$Res>
+    extends _$UserInfoCopyWithImpl<$Res, _$UserInfoImpl>
+    implements _$$UserInfoImplCopyWith<$Res> {
+  __$$UserInfoImplCopyWithImpl(
+      _$UserInfoImpl _value, $Res Function(_$UserInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -202,7 +203,7 @@ class __$$_UserInfoCopyWithImpl<$Res>
     Object? editTags = null,
     Object? self = null,
   }) {
-    return _then(_$_UserInfo(
+    return _then(_$UserInfoImpl(
       autoCard: null == autoCard
           ? _value.autoCard
           : autoCard // ignore: cast_nullable_to_non_nullable
@@ -261,8 +262,8 @@ class __$$_UserInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserInfo implements _UserInfo {
-  const _$_UserInfo(
+class _$UserInfoImpl implements _UserInfo {
+  const _$UserInfoImpl(
       {@JsonKey(name: 'auto_card') required this.autoCard,
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
@@ -278,8 +279,8 @@ class _$_UserInfo implements _UserInfo {
       required this.self})
       : _tags = tags;
 
-  factory _$_UserInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_UserInfoFromJson(json);
+  factory _$UserInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserInfoImplFromJson(json);
 
   @override
   @JsonKey(name: 'auto_card')
@@ -330,10 +331,10 @@ class _$_UserInfo implements _UserInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserInfo &&
+            other is _$UserInfoImpl &&
             (identical(other.autoCard, autoCard) ||
                 other.autoCard == autoCard) &&
             (identical(other.name, name) || other.name == name) &&
@@ -376,12 +377,12 @@ class _$_UserInfo implements _UserInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserInfoCopyWith<_$_UserInfo> get copyWith =>
-      __$$_UserInfoCopyWithImpl<_$_UserInfo>(this, _$identity);
+  _$$UserInfoImplCopyWith<_$UserInfoImpl> get copyWith =>
+      __$$UserInfoImplCopyWithImpl<_$UserInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserInfoToJson(
+    return _$$UserInfoImplToJson(
       this,
     );
   }
@@ -401,9 +402,10 @@ abstract class _UserInfo implements UserInfo {
       @JsonKey(name: 'avatar') required final String avatar,
       required final List<TagUser> tags,
       @JsonKey(name: 'edit_tags') final bool editTags,
-      required final bool self}) = _$_UserInfo;
+      required final bool self}) = _$UserInfoImpl;
 
-  factory _UserInfo.fromJson(Map<String, dynamic> json) = _$_UserInfo.fromJson;
+  factory _UserInfo.fromJson(Map<String, dynamic> json) =
+      _$UserInfoImpl.fromJson;
 
   @override
   @JsonKey(name: 'auto_card')
@@ -442,7 +444,7 @@ abstract class _UserInfo implements UserInfo {
   bool get self;
   @override
   @JsonKey(ignore: true)
-  _$$_UserInfoCopyWith<_$_UserInfo> get copyWith =>
+  _$$UserInfoImplCopyWith<_$UserInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -498,20 +500,21 @@ class _$TagUserCopyWithImpl<$Res, $Val extends TagUser>
 }
 
 /// @nodoc
-abstract class _$$_TagUserCopyWith<$Res> implements $TagUserCopyWith<$Res> {
-  factory _$$_TagUserCopyWith(
-          _$_TagUser value, $Res Function(_$_TagUser) then) =
-      __$$_TagUserCopyWithImpl<$Res>;
+abstract class _$$TagUserImplCopyWith<$Res> implements $TagUserCopyWith<$Res> {
+  factory _$$TagUserImplCopyWith(
+          _$TagUserImpl value, $Res Function(_$TagUserImpl) then) =
+      __$$TagUserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String name});
 }
 
 /// @nodoc
-class __$$_TagUserCopyWithImpl<$Res>
-    extends _$TagUserCopyWithImpl<$Res, _$_TagUser>
-    implements _$$_TagUserCopyWith<$Res> {
-  __$$_TagUserCopyWithImpl(_$_TagUser _value, $Res Function(_$_TagUser) _then)
+class __$$TagUserImplCopyWithImpl<$Res>
+    extends _$TagUserCopyWithImpl<$Res, _$TagUserImpl>
+    implements _$$TagUserImplCopyWith<$Res> {
+  __$$TagUserImplCopyWithImpl(
+      _$TagUserImpl _value, $Res Function(_$TagUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -520,7 +523,7 @@ class __$$_TagUserCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
   }) {
-    return _then(_$_TagUser(
+    return _then(_$TagUserImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -535,11 +538,11 @@ class __$$_TagUserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TagUser implements _TagUser {
-  const _$_TagUser({this.id = null, required this.name});
+class _$TagUserImpl implements _TagUser {
+  const _$TagUserImpl({this.id = null, required this.name});
 
-  factory _$_TagUser.fromJson(Map<String, dynamic> json) =>
-      _$$_TagUserFromJson(json);
+  factory _$TagUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TagUserImplFromJson(json);
 
   @override
   @JsonKey()
@@ -553,10 +556,10 @@ class _$_TagUser implements _TagUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TagUser &&
+            other is _$TagUserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -568,12 +571,12 @@ class _$_TagUser implements _TagUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TagUserCopyWith<_$_TagUser> get copyWith =>
-      __$$_TagUserCopyWithImpl<_$_TagUser>(this, _$identity);
+  _$$TagUserImplCopyWith<_$TagUserImpl> get copyWith =>
+      __$$TagUserImplCopyWithImpl<_$TagUserImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TagUserToJson(
+    return _$$TagUserImplToJson(
       this,
     );
   }
@@ -581,9 +584,9 @@ class _$_TagUser implements _TagUser {
 
 abstract class _TagUser implements TagUser {
   const factory _TagUser({final int? id, required final String name}) =
-      _$_TagUser;
+      _$TagUserImpl;
 
-  factory _TagUser.fromJson(Map<String, dynamic> json) = _$_TagUser.fromJson;
+  factory _TagUser.fromJson(Map<String, dynamic> json) = _$TagUserImpl.fromJson;
 
   @override
   int? get id;
@@ -591,6 +594,6 @@ abstract class _TagUser implements TagUser {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_TagUserCopyWith<_$_TagUser> get copyWith =>
+  _$$TagUserImplCopyWith<_$TagUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -12,7 +12,7 @@ part of 'coins_reward.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 CoinsReward _$CoinsRewardFromJson(Map<String, dynamic> json) {
   return _CoinsReward.fromJson(json);
@@ -87,11 +87,11 @@ class _$CoinsRewardCopyWithImpl<$Res, $Val extends CoinsReward>
 }
 
 /// @nodoc
-abstract class _$$_CoinsRewardCopyWith<$Res>
+abstract class _$$CoinsRewardImplCopyWith<$Res>
     implements $CoinsRewardCopyWith<$Res> {
-  factory _$$_CoinsRewardCopyWith(
-          _$_CoinsReward value, $Res Function(_$_CoinsReward) then) =
-      __$$_CoinsRewardCopyWithImpl<$Res>;
+  factory _$$CoinsRewardImplCopyWith(
+          _$CoinsRewardImpl value, $Res Function(_$CoinsRewardImpl) then) =
+      __$$CoinsRewardImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -99,11 +99,11 @@ abstract class _$$_CoinsRewardCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CoinsRewardCopyWithImpl<$Res>
-    extends _$CoinsRewardCopyWithImpl<$Res, _$_CoinsReward>
-    implements _$$_CoinsRewardCopyWith<$Res> {
-  __$$_CoinsRewardCopyWithImpl(
-      _$_CoinsReward _value, $Res Function(_$_CoinsReward) _then)
+class __$$CoinsRewardImplCopyWithImpl<$Res>
+    extends _$CoinsRewardCopyWithImpl<$Res, _$CoinsRewardImpl>
+    implements _$$CoinsRewardImplCopyWith<$Res> {
+  __$$CoinsRewardImplCopyWithImpl(
+      _$CoinsRewardImpl _value, $Res Function(_$CoinsRewardImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -115,7 +115,7 @@ class __$$_CoinsRewardCopyWithImpl<$Res>
     Object? image = freezed,
     Object? description = freezed,
   }) {
-    return _then(_$_CoinsReward(
+    return _then(_$CoinsRewardImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -142,16 +142,16 @@ class __$$_CoinsRewardCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CoinsReward implements _CoinsReward {
-  const _$_CoinsReward(
+class _$CoinsRewardImpl implements _CoinsReward {
+  const _$CoinsRewardImpl(
       {required this.id,
       required this.price,
       required this.title,
       this.image,
       this.description});
 
-  factory _$_CoinsReward.fromJson(Map<String, dynamic> json) =>
-      _$$_CoinsRewardFromJson(json);
+  factory _$CoinsRewardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinsRewardImplFromJson(json);
 
   @override
   final int id;
@@ -170,10 +170,10 @@ class _$_CoinsReward implements _CoinsReward {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CoinsReward &&
+            other is _$CoinsRewardImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.title, title) || other.title == title) &&
@@ -190,12 +190,12 @@ class _$_CoinsReward implements _CoinsReward {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CoinsRewardCopyWith<_$_CoinsReward> get copyWith =>
-      __$$_CoinsRewardCopyWithImpl<_$_CoinsReward>(this, _$identity);
+  _$$CoinsRewardImplCopyWith<_$CoinsRewardImpl> get copyWith =>
+      __$$CoinsRewardImplCopyWithImpl<_$CoinsRewardImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CoinsRewardToJson(
+    return _$$CoinsRewardImplToJson(
       this,
     );
   }
@@ -207,10 +207,10 @@ abstract class _CoinsReward implements CoinsReward {
       required final int price,
       required final String title,
       final String? image,
-      final String? description}) = _$_CoinsReward;
+      final String? description}) = _$CoinsRewardImpl;
 
   factory _CoinsReward.fromJson(Map<String, dynamic> json) =
-      _$_CoinsReward.fromJson;
+      _$CoinsRewardImpl.fromJson;
 
   @override
   int get id;
@@ -224,6 +224,6 @@ abstract class _CoinsReward implements CoinsReward {
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$_CoinsRewardCopyWith<_$_CoinsReward> get copyWith =>
+  _$$CoinsRewardImplCopyWith<_$CoinsRewardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

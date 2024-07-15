@@ -9,6 +9,8 @@ import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
@@ -29,8 +31,8 @@ import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coi
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
 
-import '../../features/initialiazation/widget/dependencies_scope.dart';
-import '../../features/news/bloc/refactor_news_bloc.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/bloc/refactor_news_bloc.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -140,22 +142,15 @@ enum Routes with OctopusRoute {
         Routes.approveNews => const ApproveNewsScreen(),
         Routes.moderationNews => const ModerationNewsScreen(),
         Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-          child: const RefactorModerationNewsScreen(),
-          create: (BuildContext context) => RefactorNewsCubit(
-            id: node.arguments['id'],
-            eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            child: const RefactorModerationNewsScreen(),
+            create: (BuildContext context) => RefactorNewsCubit(
+              id: node.arguments['id'],
+              eventEntityRepository:
+                  DependenciesScope.of(context).eventEntityRepository,
+            ),
           ),
-        ),
 
-
-
-            // RefactorModerationNewsScreen(id: node.arguments['id']),
-
-
-
-
-
-
+        // RefactorModerationNewsScreen(id: node.arguments['id']),
 
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(

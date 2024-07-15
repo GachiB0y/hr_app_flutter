@@ -12,7 +12,7 @@ part of 'lean_production_form_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 LeanProductionFormEntity _$LeanProductionFormEntityFromJson(
     Map<String, dynamic> json) {
@@ -124,12 +124,12 @@ class _$LeanProductionFormEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_LeanProductionFormEntityCopyWith<$Res>
+abstract class _$$LeanProductionFormEntityImplCopyWith<$Res>
     implements $LeanProductionFormEntityCopyWith<$Res> {
-  factory _$$_LeanProductionFormEntityCopyWith(
-          _$_LeanProductionFormEntity value,
-          $Res Function(_$_LeanProductionFormEntity) then) =
-      __$$_LeanProductionFormEntityCopyWithImpl<$Res>;
+  factory _$$LeanProductionFormEntityImplCopyWith(
+          _$LeanProductionFormEntityImpl value,
+          $Res Function(_$LeanProductionFormEntityImpl) then) =
+      __$$LeanProductionFormEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -145,12 +145,13 @@ abstract class _$$_LeanProductionFormEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LeanProductionFormEntityCopyWithImpl<$Res>
+class __$$LeanProductionFormEntityImplCopyWithImpl<$Res>
     extends _$LeanProductionFormEntityCopyWithImpl<$Res,
-        _$_LeanProductionFormEntity>
-    implements _$$_LeanProductionFormEntityCopyWith<$Res> {
-  __$$_LeanProductionFormEntityCopyWithImpl(_$_LeanProductionFormEntity _value,
-      $Res Function(_$_LeanProductionFormEntity) _then)
+        _$LeanProductionFormEntityImpl>
+    implements _$$LeanProductionFormEntityImplCopyWith<$Res> {
+  __$$LeanProductionFormEntityImplCopyWithImpl(
+      _$LeanProductionFormEntityImpl _value,
+      $Res Function(_$LeanProductionFormEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -166,7 +167,7 @@ class __$$_LeanProductionFormEntityCopyWithImpl<$Res>
     Object? benefit = null,
     Object? paths = freezed,
   }) {
-    return _then(_$_LeanProductionFormEntity(
+    return _then(_$LeanProductionFormEntityImpl(
       realized: null == realized
           ? _value.realized
           : realized // ignore: cast_nullable_to_non_nullable
@@ -209,8 +210,8 @@ class __$$_LeanProductionFormEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
-  const _$_LeanProductionFormEntity(
+class _$LeanProductionFormEntityImpl implements _LeanProductionFormEntity {
+  const _$LeanProductionFormEntityImpl(
       {required this.realized,
       @JsonKey(name: 'first_implementer') this.firstImplementer = 0,
       @JsonKey(name: 'second_implementer') this.secondImplementer = 0,
@@ -222,8 +223,8 @@ class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
       required final List<String>? paths})
       : _paths = paths;
 
-  factory _$_LeanProductionFormEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_LeanProductionFormEntityFromJson(json);
+  factory _$LeanProductionFormEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LeanProductionFormEntityImplFromJson(json);
 
   @override
   final bool realized;
@@ -260,10 +261,10 @@ class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LeanProductionFormEntity &&
+            other is _$LeanProductionFormEntityImpl &&
             (identical(other.realized, realized) ||
                 other.realized == realized) &&
             (identical(other.firstImplementer, firstImplementer) ||
@@ -298,13 +299,13 @@ class _$_LeanProductionFormEntity implements _LeanProductionFormEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LeanProductionFormEntityCopyWith<_$_LeanProductionFormEntity>
-      get copyWith => __$$_LeanProductionFormEntityCopyWithImpl<
-          _$_LeanProductionFormEntity>(this, _$identity);
+  _$$LeanProductionFormEntityImplCopyWith<_$LeanProductionFormEntityImpl>
+      get copyWith => __$$LeanProductionFormEntityImplCopyWithImpl<
+          _$LeanProductionFormEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeanProductionFormEntityToJson(
+    return _$$LeanProductionFormEntityImplToJson(
       this,
     );
   }
@@ -320,10 +321,10 @@ abstract class _LeanProductionFormEntity implements LeanProductionFormEntity {
       required final String solution,
       required final String expenses,
       required final String benefit,
-      required final List<String>? paths}) = _$_LeanProductionFormEntity;
+      required final List<String>? paths}) = _$LeanProductionFormEntityImpl;
 
   factory _LeanProductionFormEntity.fromJson(Map<String, dynamic> json) =
-      _$_LeanProductionFormEntity.fromJson;
+      _$LeanProductionFormEntityImpl.fromJson;
 
   @override
   bool get realized;
@@ -348,6 +349,6 @@ abstract class _LeanProductionFormEntity implements LeanProductionFormEntity {
   List<String>? get paths;
   @override
   @JsonKey(ignore: true)
-  _$$_LeanProductionFormEntityCopyWith<_$_LeanProductionFormEntity>
+  _$$LeanProductionFormEntityImplCopyWith<_$LeanProductionFormEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

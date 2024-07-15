@@ -3,7 +3,7 @@ part of '../scaffold_manager.dart';
 /// Реализация работы
 class _ScaffoldManagerHelper {
   /// Получение дочернего виджета
-  static _getChild(
+  static Widget _getChild(
     ScaffoldManagerStatus status,
     Widget child,
   ) {

@@ -12,7 +12,7 @@ part of 'other_users_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OtherUsersEvent {
@@ -84,23 +84,23 @@ class _$OtherUsersEventCopyWithImpl<$Res, $Val extends OtherUsersEvent>
 }
 
 /// @nodoc
-abstract class _$$OtherUsersEventGethUsersByPhoneNumberCopyWith<$Res> {
-  factory _$$OtherUsersEventGethUsersByPhoneNumberCopyWith(
-          _$OtherUsersEventGethUsersByPhoneNumber value,
-          $Res Function(_$OtherUsersEventGethUsersByPhoneNumber) then) =
-      __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl<$Res>;
+abstract class _$$OtherUsersEventGethUsersByPhoneNumberImplCopyWith<$Res> {
+  factory _$$OtherUsersEventGethUsersByPhoneNumberImplCopyWith(
+          _$OtherUsersEventGethUsersByPhoneNumberImpl value,
+          $Res Function(_$OtherUsersEventGethUsersByPhoneNumberImpl) then) =
+      __$$OtherUsersEventGethUsersByPhoneNumberImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String phoneNumber});
 }
 
 /// @nodoc
-class __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl<$Res>
+class __$$OtherUsersEventGethUsersByPhoneNumberImplCopyWithImpl<$Res>
     extends _$OtherUsersEventCopyWithImpl<$Res,
-        _$OtherUsersEventGethUsersByPhoneNumber>
-    implements _$$OtherUsersEventGethUsersByPhoneNumberCopyWith<$Res> {
-  __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl(
-      _$OtherUsersEventGethUsersByPhoneNumber _value,
-      $Res Function(_$OtherUsersEventGethUsersByPhoneNumber) _then)
+        _$OtherUsersEventGethUsersByPhoneNumberImpl>
+    implements _$$OtherUsersEventGethUsersByPhoneNumberImplCopyWith<$Res> {
+  __$$OtherUsersEventGethUsersByPhoneNumberImplCopyWithImpl(
+      _$OtherUsersEventGethUsersByPhoneNumberImpl _value,
+      $Res Function(_$OtherUsersEventGethUsersByPhoneNumberImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +108,7 @@ class __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl<$Res>
   $Res call({
     Object? phoneNumber = null,
   }) {
-    return _then(_$OtherUsersEventGethUsersByPhoneNumber(
+    return _then(_$OtherUsersEventGethUsersByPhoneNumberImpl(
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -119,9 +119,9 @@ class __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OtherUsersEventGethUsersByPhoneNumber
+class _$OtherUsersEventGethUsersByPhoneNumberImpl
     extends OtherUsersEventGethUsersByPhoneNumber {
-  const _$OtherUsersEventGethUsersByPhoneNumber({required this.phoneNumber})
+  const _$OtherUsersEventGethUsersByPhoneNumberImpl({required this.phoneNumber})
       : super._();
 
   @override
@@ -133,10 +133,10 @@ class _$OtherUsersEventGethUsersByPhoneNumber
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OtherUsersEventGethUsersByPhoneNumber &&
+            other is _$OtherUsersEventGethUsersByPhoneNumberImpl &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
@@ -147,10 +147,10 @@ class _$OtherUsersEventGethUsersByPhoneNumber
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OtherUsersEventGethUsersByPhoneNumberCopyWith<
-          _$OtherUsersEventGethUsersByPhoneNumber>
-      get copyWith => __$$OtherUsersEventGethUsersByPhoneNumberCopyWithImpl<
-          _$OtherUsersEventGethUsersByPhoneNumber>(this, _$identity);
+  _$$OtherUsersEventGethUsersByPhoneNumberImplCopyWith<
+          _$OtherUsersEventGethUsersByPhoneNumberImpl>
+      get copyWith => __$$OtherUsersEventGethUsersByPhoneNumberImplCopyWithImpl<
+          _$OtherUsersEventGethUsersByPhoneNumberImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -227,31 +227,33 @@ class _$OtherUsersEventGethUsersByPhoneNumber
 abstract class OtherUsersEventGethUsersByPhoneNumber extends OtherUsersEvent {
   const factory OtherUsersEventGethUsersByPhoneNumber(
           {required final String phoneNumber}) =
-      _$OtherUsersEventGethUsersByPhoneNumber;
+      _$OtherUsersEventGethUsersByPhoneNumberImpl;
   const OtherUsersEventGethUsersByPhoneNumber._() : super._();
 
   String get phoneNumber;
   @JsonKey(ignore: true)
-  _$$OtherUsersEventGethUsersByPhoneNumberCopyWith<
-          _$OtherUsersEventGethUsersByPhoneNumber>
+  _$$OtherUsersEventGethUsersByPhoneNumberImplCopyWith<
+          _$OtherUsersEventGethUsersByPhoneNumberImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OtherUsersEventFindUsersCopyWith<$Res> {
-  factory _$$OtherUsersEventFindUsersCopyWith(_$OtherUsersEventFindUsers value,
-          $Res Function(_$OtherUsersEventFindUsers) then) =
-      __$$OtherUsersEventFindUsersCopyWithImpl<$Res>;
+abstract class _$$OtherUsersEventFindUsersImplCopyWith<$Res> {
+  factory _$$OtherUsersEventFindUsersImplCopyWith(
+          _$OtherUsersEventFindUsersImpl value,
+          $Res Function(_$OtherUsersEventFindUsersImpl) then) =
+      __$$OtherUsersEventFindUsersImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String findText});
 }
 
 /// @nodoc
-class __$$OtherUsersEventFindUsersCopyWithImpl<$Res>
-    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventFindUsers>
-    implements _$$OtherUsersEventFindUsersCopyWith<$Res> {
-  __$$OtherUsersEventFindUsersCopyWithImpl(_$OtherUsersEventFindUsers _value,
-      $Res Function(_$OtherUsersEventFindUsers) _then)
+class __$$OtherUsersEventFindUsersImplCopyWithImpl<$Res>
+    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventFindUsersImpl>
+    implements _$$OtherUsersEventFindUsersImplCopyWith<$Res> {
+  __$$OtherUsersEventFindUsersImplCopyWithImpl(
+      _$OtherUsersEventFindUsersImpl _value,
+      $Res Function(_$OtherUsersEventFindUsersImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -259,7 +261,7 @@ class __$$OtherUsersEventFindUsersCopyWithImpl<$Res>
   $Res call({
     Object? findText = null,
   }) {
-    return _then(_$OtherUsersEventFindUsers(
+    return _then(_$OtherUsersEventFindUsersImpl(
       findText: null == findText
           ? _value.findText
           : findText // ignore: cast_nullable_to_non_nullable
@@ -270,8 +272,8 @@ class __$$OtherUsersEventFindUsersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OtherUsersEventFindUsers extends OtherUsersEventFindUsers {
-  const _$OtherUsersEventFindUsers({required this.findText}) : super._();
+class _$OtherUsersEventFindUsersImpl extends OtherUsersEventFindUsers {
+  const _$OtherUsersEventFindUsersImpl({required this.findText}) : super._();
 
   @override
   final String findText;
@@ -282,10 +284,10 @@ class _$OtherUsersEventFindUsers extends OtherUsersEventFindUsers {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OtherUsersEventFindUsers &&
+            other is _$OtherUsersEventFindUsersImpl &&
             (identical(other.findText, findText) ||
                 other.findText == findText));
   }
@@ -296,10 +298,9 @@ class _$OtherUsersEventFindUsers extends OtherUsersEventFindUsers {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OtherUsersEventFindUsersCopyWith<_$OtherUsersEventFindUsers>
-      get copyWith =>
-          __$$OtherUsersEventFindUsersCopyWithImpl<_$OtherUsersEventFindUsers>(
-              this, _$identity);
+  _$$OtherUsersEventFindUsersImplCopyWith<_$OtherUsersEventFindUsersImpl>
+      get copyWith => __$$OtherUsersEventFindUsersImplCopyWithImpl<
+          _$OtherUsersEventFindUsersImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -375,35 +376,37 @@ class _$OtherUsersEventFindUsers extends OtherUsersEventFindUsers {
 
 abstract class OtherUsersEventFindUsers extends OtherUsersEvent {
   const factory OtherUsersEventFindUsers({required final String findText}) =
-      _$OtherUsersEventFindUsers;
+      _$OtherUsersEventFindUsersImpl;
   const OtherUsersEventFindUsers._() : super._();
 
   String get findText;
   @JsonKey(ignore: true)
-  _$$OtherUsersEventFindUsersCopyWith<_$OtherUsersEventFindUsers>
+  _$$OtherUsersEventFindUsersImplCopyWith<_$OtherUsersEventFindUsersImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OtherUsersEventClearListCopyWith<$Res> {
-  factory _$$OtherUsersEventClearListCopyWith(_$OtherUsersEventClearList value,
-          $Res Function(_$OtherUsersEventClearList) then) =
-      __$$OtherUsersEventClearListCopyWithImpl<$Res>;
+abstract class _$$OtherUsersEventClearListImplCopyWith<$Res> {
+  factory _$$OtherUsersEventClearListImplCopyWith(
+          _$OtherUsersEventClearListImpl value,
+          $Res Function(_$OtherUsersEventClearListImpl) then) =
+      __$$OtherUsersEventClearListImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$OtherUsersEventClearListCopyWithImpl<$Res>
-    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventClearList>
-    implements _$$OtherUsersEventClearListCopyWith<$Res> {
-  __$$OtherUsersEventClearListCopyWithImpl(_$OtherUsersEventClearList _value,
-      $Res Function(_$OtherUsersEventClearList) _then)
+class __$$OtherUsersEventClearListImplCopyWithImpl<$Res>
+    extends _$OtherUsersEventCopyWithImpl<$Res, _$OtherUsersEventClearListImpl>
+    implements _$$OtherUsersEventClearListImplCopyWith<$Res> {
+  __$$OtherUsersEventClearListImplCopyWithImpl(
+      _$OtherUsersEventClearListImpl _value,
+      $Res Function(_$OtherUsersEventClearListImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$OtherUsersEventClearList extends OtherUsersEventClearList {
-  const _$OtherUsersEventClearList() : super._();
+class _$OtherUsersEventClearListImpl extends OtherUsersEventClearList {
+  const _$OtherUsersEventClearListImpl() : super._();
 
   @override
   String toString() {
@@ -411,10 +414,10 @@ class _$OtherUsersEventClearList extends OtherUsersEventClearList {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OtherUsersEventClearList);
+            other is _$OtherUsersEventClearListImpl);
   }
 
   @override
@@ -493,6 +496,6 @@ class _$OtherUsersEventClearList extends OtherUsersEventClearList {
 }
 
 abstract class OtherUsersEventClearList extends OtherUsersEvent {
-  const factory OtherUsersEventClearList() = _$OtherUsersEventClearList;
+  const factory OtherUsersEventClearList() = _$OtherUsersEventClearListImpl;
   const OtherUsersEventClearList._() : super._();
 }

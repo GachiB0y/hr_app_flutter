@@ -12,7 +12,7 @@ part of 'new_event_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 EventEntity _$EventEntityFromJson(Map<String, dynamic> json) {
   return _EventEntity.fromJson(json);
@@ -156,11 +156,11 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
 }
 
 /// @nodoc
-abstract class _$$_EventEntityCopyWith<$Res>
+abstract class _$$EventEntityImplCopyWith<$Res>
     implements $EventEntityCopyWith<$Res> {
-  factory _$$_EventEntityCopyWith(
-          _$_EventEntity value, $Res Function(_$_EventEntity) then) =
-      __$$_EventEntityCopyWithImpl<$Res>;
+  factory _$$EventEntityImplCopyWith(
+          _$EventEntityImpl value, $Res Function(_$EventEntityImpl) then) =
+      __$$EventEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -182,11 +182,11 @@ abstract class _$$_EventEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_EventEntityCopyWithImpl<$Res>
-    extends _$EventEntityCopyWithImpl<$Res, _$_EventEntity>
-    implements _$$_EventEntityCopyWith<$Res> {
-  __$$_EventEntityCopyWithImpl(
-      _$_EventEntity _value, $Res Function(_$_EventEntity) _then)
+class __$$EventEntityImplCopyWithImpl<$Res>
+    extends _$EventEntityCopyWithImpl<$Res, _$EventEntityImpl>
+    implements _$$EventEntityImplCopyWith<$Res> {
+  __$$EventEntityImplCopyWithImpl(
+      _$EventEntityImpl _value, $Res Function(_$EventEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -205,7 +205,7 @@ class __$$_EventEntityCopyWithImpl<$Res>
     Object? categories = null,
     Object? writer = null,
   }) {
-    return _then(_$_EventEntity(
+    return _then(_$EventEntityImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -261,8 +261,8 @@ class __$$_EventEntityCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_EventEntity implements _EventEntity {
-  const _$_EventEntity(
+class _$EventEntityImpl implements _EventEntity {
+  const _$EventEntityImpl(
       {required this.id,
       required this.title,
       required this.description,
@@ -277,8 +277,8 @@ class _$_EventEntity implements _EventEntity {
       required this.writer})
       : _categories = categories;
 
-  factory _$_EventEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_EventEntityFromJson(json);
+  factory _$EventEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EventEntityImplFromJson(json);
 
   @override
   final int id;
@@ -323,10 +323,10 @@ class _$_EventEntity implements _EventEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventEntity &&
+            other is _$EventEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -368,12 +368,12 @@ class _$_EventEntity implements _EventEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventEntityCopyWith<_$_EventEntity> get copyWith =>
-      __$$_EventEntityCopyWithImpl<_$_EventEntity>(this, _$identity);
+  _$$EventEntityImplCopyWith<_$EventEntityImpl> get copyWith =>
+      __$$EventEntityImplCopyWithImpl<_$EventEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EventEntityToJson(
+    return _$$EventEntityImplToJson(
       this,
     );
   }
@@ -392,10 +392,10 @@ abstract class _EventEntity implements EventEntity {
       @JsonKey(name: 'is_publish') required final bool isPublish,
       @JsonKey(name: 'is_archived') required final bool isArchived,
       required final List<Category> categories,
-      required final Writer writer}) = _$_EventEntity;
+      required final Writer writer}) = _$EventEntityImpl;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
-      _$_EventEntity.fromJson;
+      _$EventEntityImpl.fromJson;
 
   @override
   int get id;
@@ -429,7 +429,7 @@ abstract class _EventEntity implements EventEntity {
   Writer get writer;
   @override
   @JsonKey(ignore: true)
-  _$$_EventEntityCopyWith<_$_EventEntity> get copyWith =>
+  _$$EventEntityImplCopyWith<_$EventEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -486,21 +486,22 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
 }
 
 /// @nodoc
-abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
-  factory _$$_CategoryCopyWith(
-          _$_Category value, $Res Function(_$_Category) then) =
-      __$$_CategoryCopyWithImpl<$Res>;
+abstract class _$$CategoryImplCopyWith<$Res>
+    implements $CategoryCopyWith<$Res> {
+  factory _$$CategoryImplCopyWith(
+          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
+      __$$CategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$$_CategoryCopyWithImpl<$Res>
-    extends _$CategoryCopyWithImpl<$Res, _$_Category>
-    implements _$$_CategoryCopyWith<$Res> {
-  __$$_CategoryCopyWithImpl(
-      _$_Category _value, $Res Function(_$_Category) _then)
+class __$$CategoryImplCopyWithImpl<$Res>
+    extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
+    implements _$$CategoryImplCopyWith<$Res> {
+  __$$CategoryImplCopyWithImpl(
+      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -509,7 +510,7 @@ class __$$_CategoryCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
   }) {
-    return _then(_$_Category(
+    return _then(_$CategoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -524,11 +525,11 @@ class __$$_CategoryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Category implements _Category {
-  const _$_Category({required this.id, required this.name});
+class _$CategoryImpl implements _Category {
+  const _$CategoryImpl({required this.id, required this.name});
 
-  factory _$_Category.fromJson(Map<String, dynamic> json) =>
-      _$$_CategoryFromJson(json);
+  factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CategoryImplFromJson(json);
 
   @override
   final int id;
@@ -541,10 +542,10 @@ class _$_Category implements _Category {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Category &&
+            other is _$CategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -556,12 +557,12 @@ class _$_Category implements _Category {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
-      __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
+      __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryToJson(
+    return _$$CategoryImplToJson(
       this,
     );
   }
@@ -569,9 +570,10 @@ class _$_Category implements _Category {
 
 abstract class _Category implements Category {
   const factory _Category({required final int id, required final String name}) =
-      _$_Category;
+      _$CategoryImpl;
 
-  factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
+  factory _Category.fromJson(Map<String, dynamic> json) =
+      _$CategoryImpl.fromJson;
 
   @override
   int get id;
@@ -579,7 +581,7 @@ abstract class _Category implements Category {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -655,9 +657,10 @@ class _$WriterCopyWithImpl<$Res, $Val extends Writer>
 }
 
 /// @nodoc
-abstract class _$$_WriterCopyWith<$Res> implements $WriterCopyWith<$Res> {
-  factory _$$_WriterCopyWith(_$_Writer value, $Res Function(_$_Writer) then) =
-      __$$_WriterCopyWithImpl<$Res>;
+abstract class _$$WriterImplCopyWith<$Res> implements $WriterCopyWith<$Res> {
+  factory _$$WriterImplCopyWith(
+          _$WriterImpl value, $Res Function(_$WriterImpl) then) =
+      __$$WriterImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -668,10 +671,11 @@ abstract class _$$_WriterCopyWith<$Res> implements $WriterCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_WriterCopyWithImpl<$Res>
-    extends _$WriterCopyWithImpl<$Res, _$_Writer>
-    implements _$$_WriterCopyWith<$Res> {
-  __$$_WriterCopyWithImpl(_$_Writer _value, $Res Function(_$_Writer) _then)
+class __$$WriterImplCopyWithImpl<$Res>
+    extends _$WriterCopyWithImpl<$Res, _$WriterImpl>
+    implements _$$WriterImplCopyWith<$Res> {
+  __$$WriterImplCopyWithImpl(
+      _$WriterImpl _value, $Res Function(_$WriterImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -682,7 +686,7 @@ class __$$_WriterCopyWithImpl<$Res>
     Object? middleName = null,
     Object? lastName = null,
   }) {
-    return _then(_$_Writer(
+    return _then(_$WriterImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -705,15 +709,15 @@ class __$$_WriterCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Writer implements _Writer {
-  const _$_Writer(
+class _$WriterImpl implements _Writer {
+  const _$WriterImpl(
       {@JsonKey(name: 'user_id') required this.id,
       @JsonKey(name: 'name_i') required this.firstName,
       @JsonKey(name: 'name') required this.middleName,
       @JsonKey(name: 'name_o') required this.lastName});
 
-  factory _$_Writer.fromJson(Map<String, dynamic> json) =>
-      _$$_WriterFromJson(json);
+  factory _$WriterImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WriterImplFromJson(json);
 
   @override
   @JsonKey(name: 'user_id')
@@ -734,10 +738,10 @@ class _$_Writer implements _Writer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Writer &&
+            other is _$WriterImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
@@ -755,12 +759,12 @@ class _$_Writer implements _Writer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WriterCopyWith<_$_Writer> get copyWith =>
-      __$$_WriterCopyWithImpl<_$_Writer>(this, _$identity);
+  _$$WriterImplCopyWith<_$WriterImpl> get copyWith =>
+      __$$WriterImplCopyWithImpl<_$WriterImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WriterToJson(
+    return _$$WriterImplToJson(
       this,
     );
   }
@@ -771,9 +775,9 @@ abstract class _Writer implements Writer {
       {@JsonKey(name: 'user_id') required final int id,
       @JsonKey(name: 'name_i') required final String firstName,
       @JsonKey(name: 'name') required final String middleName,
-      @JsonKey(name: 'name_o') required final String lastName}) = _$_Writer;
+      @JsonKey(name: 'name_o') required final String lastName}) = _$WriterImpl;
 
-  factory _Writer.fromJson(Map<String, dynamic> json) = _$_Writer.fromJson;
+  factory _Writer.fromJson(Map<String, dynamic> json) = _$WriterImpl.fromJson;
 
   @override
   @JsonKey(name: 'user_id')
@@ -789,7 +793,7 @@ abstract class _Writer implements Writer {
   String get lastName;
   @override
   @JsonKey(ignore: true)
-  _$$_WriterCopyWith<_$_Writer> get copyWith =>
+  _$$WriterImplCopyWith<_$WriterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -852,11 +856,11 @@ class _$EventEntityViewModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_EventEntityViewModelCopyWith<$Res>
+abstract class _$$EventEntityViewModelImplCopyWith<$Res>
     implements $EventEntityViewModelCopyWith<$Res> {
-  factory _$$_EventEntityViewModelCopyWith(_$_EventEntityViewModel value,
-          $Res Function(_$_EventEntityViewModel) then) =
-      __$$_EventEntityViewModelCopyWithImpl<$Res>;
+  factory _$$EventEntityViewModelImplCopyWith(_$EventEntityViewModelImpl value,
+          $Res Function(_$EventEntityViewModelImpl) then) =
+      __$$EventEntityViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -865,11 +869,11 @@ abstract class _$$_EventEntityViewModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_EventEntityViewModelCopyWithImpl<$Res>
-    extends _$EventEntityViewModelCopyWithImpl<$Res, _$_EventEntityViewModel>
-    implements _$$_EventEntityViewModelCopyWith<$Res> {
-  __$$_EventEntityViewModelCopyWithImpl(_$_EventEntityViewModel _value,
-      $Res Function(_$_EventEntityViewModel) _then)
+class __$$EventEntityViewModelImplCopyWithImpl<$Res>
+    extends _$EventEntityViewModelCopyWithImpl<$Res, _$EventEntityViewModelImpl>
+    implements _$$EventEntityViewModelImplCopyWith<$Res> {
+  __$$EventEntityViewModelImplCopyWithImpl(_$EventEntityViewModelImpl _value,
+      $Res Function(_$EventEntityViewModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -878,7 +882,7 @@ class __$$_EventEntityViewModelCopyWithImpl<$Res>
     Object? listEventEntityLoaded = null,
     Object? filteredListEventEntity = null,
   }) {
-    return _then(_$_EventEntityViewModel(
+    return _then(_$EventEntityViewModelImpl(
       listEventEntityLoaded: null == listEventEntityLoaded
           ? _value._listEventEntityLoaded
           : listEventEntityLoaded // ignore: cast_nullable_to_non_nullable
@@ -893,15 +897,15 @@ class __$$_EventEntityViewModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EventEntityViewModel implements _EventEntityViewModel {
-  const _$_EventEntityViewModel(
+class _$EventEntityViewModelImpl implements _EventEntityViewModel {
+  const _$EventEntityViewModelImpl(
       {required final List<EventEntity> listEventEntityLoaded,
       required final List<EventEntity> filteredListEventEntity})
       : _listEventEntityLoaded = listEventEntityLoaded,
         _filteredListEventEntity = filteredListEventEntity;
 
-  factory _$_EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
-      _$$_EventEntityViewModelFromJson(json);
+  factory _$EventEntityViewModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EventEntityViewModelImplFromJson(json);
 
   final List<EventEntity> _listEventEntityLoaded;
   @override
@@ -927,10 +931,10 @@ class _$_EventEntityViewModel implements _EventEntityViewModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventEntityViewModel &&
+            other is _$EventEntityViewModelImpl &&
             const DeepCollectionEquality()
                 .equals(other._listEventEntityLoaded, _listEventEntityLoaded) &&
             const DeepCollectionEquality().equals(
@@ -947,13 +951,14 @@ class _$_EventEntityViewModel implements _EventEntityViewModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
-      __$$_EventEntityViewModelCopyWithImpl<_$_EventEntityViewModel>(
-          this, _$identity);
+  _$$EventEntityViewModelImplCopyWith<_$EventEntityViewModelImpl>
+      get copyWith =>
+          __$$EventEntityViewModelImplCopyWithImpl<_$EventEntityViewModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EventEntityViewModelToJson(
+    return _$$EventEntityViewModelImplToJson(
       this,
     );
   }
@@ -963,10 +968,10 @@ abstract class _EventEntityViewModel implements EventEntityViewModel {
   const factory _EventEntityViewModel(
           {required final List<EventEntity> listEventEntityLoaded,
           required final List<EventEntity> filteredListEventEntity}) =
-      _$_EventEntityViewModel;
+      _$EventEntityViewModelImpl;
 
   factory _EventEntityViewModel.fromJson(Map<String, dynamic> json) =
-      _$_EventEntityViewModel.fromJson;
+      _$EventEntityViewModelImpl.fromJson;
 
   @override
   List<EventEntity> get listEventEntityLoaded;
@@ -974,6 +979,6 @@ abstract class _EventEntityViewModel implements EventEntityViewModel {
   List<EventEntity> get filteredListEventEntity;
   @override
   @JsonKey(ignore: true)
-  _$$_EventEntityViewModelCopyWith<_$_EventEntityViewModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$EventEntityViewModelImplCopyWith<_$EventEntityViewModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
