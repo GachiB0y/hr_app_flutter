@@ -26,7 +26,8 @@ class CoinsRewardBLoC extends Bloc<CoinsRewardEvent, CoinsRewardState>
         ) {
     on<CoinsRewardEvent>(
       (event, emit) => event.map<Future<void>>(
-        fetch: (event) => _fetch(event, emit),
+        getCoinsReward: (event) => _fetchCoinsReward(event, emit),
+        getCoinsInfo: (event) => _fetchCoinsInfo(event, emit),
       ),
       transformer: bloc_concurrency.sequential(),
       //transformer: bloc_concurrency.restartable(),
@@ -37,14 +38,35 @@ class CoinsRewardBLoC extends Bloc<CoinsRewardEvent, CoinsRewardState>
 
   final IWalletRepository _walletRepo;
 
-  /// Fetch event handler
-  Future<void> _fetch(
-      FetchCoinsRewardEvent event, Emitter<CoinsRewardState> emit) async {
+  /// Fetch CoinsReward event handler
+  Future<void> _fetchCoinsReward(
+      GetCoinsRewardEvent event, Emitter<CoinsRewardState> emit) async {
     try {
       emit(CoinsRewardState.processing(data: state.data));
       final newData = await _walletRepo
           .getInfoCoinsReward()
           .timeout(const Duration(seconds: 10));
+      emit(CoinsRewardState.successful(data: newData));
+    } on TimeoutException {
+      emit(CoinsRewardState.error(
+          data: state.data, message: 'Ошибка ожидания  запроса!'));
+      // ignore: unused_catch_stack
+    } on Object catch (err, stackTrace) {
+      //l.e('An error occurred in the CoinsRewardBLoC: $err', stackTrace);
+      emit(CoinsRewardState.error(data: state.data, message: err.toString()));
+      rethrow;
+    } finally {
+      emit(CoinsRewardState.idle(data: state.data));
+    }
+  }
+
+  /// Fetch CoinsInfo event handler
+  Future<void> _fetchCoinsInfo(
+      GetCoinsInfoEvent event, Emitter<CoinsRewardState> emit) async {
+    try {
+      emit(CoinsRewardState.processing(data: state.data));
+      final newData =
+          await _walletRepo.getCoinsInfo().timeout(const Duration(seconds: 10));
       emit(CoinsRewardState.successful(data: newData));
     } on TimeoutException {
       emit(CoinsRewardState.error(

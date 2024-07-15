@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
+import 'package:hr_app_flutter/core/widget/components/custom_curved_nav_bar/custom_curved_nav_bar.dart';
+import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
@@ -17,14 +19,12 @@ class HomeScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return const HomeScope(
-      child: Scaffold(
-        body: BodyHomeWidget(),
-        bottomNavigationBar: BottomBarHomeWidget(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const HomeScope(
+        child: Scaffold(
+          body: BodyHomeWidget(),
+          bottomNavigationBar: BottomBarHomeWidget(),
+        ),
+      );
 }
 
 class BottomBarHomeWidget extends StatelessWidget {
@@ -33,39 +33,37 @@ class BottomBarHomeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return CurvedNavigationBar(
-      color: Theme.of(context).colorScheme.primary,
-      backgroundColor: Theme.of(context).colorScheme.onTertiary,
-      selectedItemColor: Theme.of(context).colorScheme.primary,
-      index: HomeScope.of(
-        context,
-      ).state.tab.index,
-      onTap: HomeScope.of(context, listen: false).state.onItemTapped,
-      items: const [
-        CustomNavBarElementWidget(
-          icon: HRAppCustomIcon.iconExclamationMark,
-          text: 'Компания',
-        ),
-        CustomNavBarElementWidget(
-          icon: HRAppCustomIcon.iconCoin,
-          text: 'Коины',
-        ),
-        CustomNavBarElementWidget(
-          icon: HRAppCustomIcon.iconHome,
-          text: 'Главная',
-        ),
-        CustomNavBarElementWidget(
-          icon: HRAppCustomIcon.iconEducation,
-          text: 'Обучение',
-        ),
-        CustomNavBarElementWidget(
-          icon: HRAppCustomIcon.iconService,
-          text: 'Сервисы',
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => CurvedNavigationBar(
+        color: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.onTertiary,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        index: HomeScope.of(
+          context,
+        ).state.tab.index,
+        onTap: HomeScope.of(context, listen: false).state.onItemTapped,
+        items: const [
+          CustomNavBarElementWidget(
+            icon: HRAppCustomIcon.iconExclamationMark,
+            text: 'Компания',
+          ),
+          CustomNavBarElementWidget(
+            icon: HRAppCustomIcon.iconCoin,
+            text: 'Коины',
+          ),
+          CustomNavBarElementWidget(
+            icon: HRAppCustomIcon.iconHome,
+            text: 'Главная',
+          ),
+          CustomNavBarElementWidget(
+            icon: HRAppCustomIcon.iconEducation,
+            text: 'Обучение',
+          ),
+          CustomNavBarElementWidget(
+            icon: HRAppCustomIcon.iconService,
+            text: 'Сервисы',
+          ),
+        ],
+      );
 }
 
 class BodyHomeWidget extends StatelessWidget {
@@ -74,50 +72,46 @@ class BodyHomeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Shimmer(
-      child: IndexedStack(
-        index: HomeScope.of(context).state.tab.index,
-        children: const <Widget>[
-          // CompanyBucket(),
-          EducationBucket(),
-          GrassCoinBucket(),
-          UserMainBucket(),
-          EducationBucket(),
-          ServiceBucket(),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Shimmer(
+        child: IndexedStack(
+          index: HomeScope.of(context).state.tab.index,
+          children: const <Widget>[
+            // CompanyBucket(),
+            EducationBucket(),
+            GrassCoinBucket(),
+            UserMainBucket(),
+            EducationBucket(),
+            ServiceBucket(),
+          ],
+        ),
+      );
 }
 
 class CustomNavBarElementWidget extends StatelessWidget {
   const CustomNavBarElementWidget({
-    super.key,
     required this.icon,
     required this.text,
+    super.key,
   });
   final IconData icon;
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          size: 25,
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
-        const SizedBox(height: 7),
-        Text(
-          text,
-          style: TextStyle(
+  Widget build(BuildContext context) => Column(
+        children: [
+          Icon(
+            icon,
+            size: 25,
             color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 10,
           ),
-        ),
-      ],
-    );
-  }
+          const SizedBox(height: 7),
+          Text(
+            text,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontSize: 10,
+            ),
+          ),
+        ],
+      );
 }

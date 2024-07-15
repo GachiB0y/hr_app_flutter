@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -10,10 +9,10 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../model/bag_report_entity/bag_report_entity.dart';
-import '../../model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
-import '../../model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
-import '../../model/service/service.dart';
+import 'package:hr_app_flutter/features/services/model/bag_report_entity/bag_report_entity.dart';
+import 'package:hr_app_flutter/features/services/model/lean_productions_entity/lean_production_form_entity/lean_production_form_entity.dart';
+import 'package:hr_app_flutter/features/services/model/lean_productions_entity/my_lean_productions_entity/my_lean_productions_entity.dart';
+import 'package:hr_app_flutter/features/services/model/service/service.dart';
 
 abstract interface class IServiceProvider {
   Future<List<Service>> getServices();
@@ -41,10 +40,10 @@ class ServiceProviderImpl implements IServiceProvider {
 
     if (response
         case {
-          'result': final data,
+          'result': final List<dynamic> data,
         }) {
-      final List<Service> result = (data as List<dynamic>)
-          .map((item) => Service.fromJson(item))
+      final result = data
+          .map((item) => Service.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
     }
@@ -61,7 +60,7 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final ScheduleBus result = ScheduleBus.fromJson(response);
+      final result = ScheduleBus.fromJson(response);
       return result;
     }
     throw Exception('Error get Schedule Bus');
@@ -71,9 +70,9 @@ class ServiceProviderImpl implements IServiceProvider {
   Future<bool> sendFormLeanProduction({
     required LeanProductionFormEntity formEntity,
   }) async {
-    final Map<String, String> newFields = {
+    final newFields = <String, String>{
       'issue':
-          '{     "realized": ${formEntity.realized},     "first_implementer": ${formEntity.firstImplementer},     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }'
+          '{     "realized": ${formEntity.realized},     "first_implementer": ${formEntity.firstImplementer},     "second_implementer": ${formEntity.secondImplementer},     "third_implementer": ${formEntity.thirdImplementer},     "issue": "${formEntity.issue}",     "solution": "${formEntity.solution}",     "expenses": "${formEntity.expenses}",     "benefit": "${formEntity.benefit}" }',
     };
 
     final response = await _httpService.post(
@@ -107,10 +106,9 @@ class ServiceProviderImpl implements IServiceProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final List<MyLeanProductionsEntity> result =
-          (data['offers'] as List<dynamic>)
-              .map((item) => MyLeanProductionsEntity.fromJson(item))
-              .toList();
+      final result = (data['offers']! as List<Map<String, dynamic>>)
+          .map(MyLeanProductionsEntity.fromJson)
+          .toList();
       return result;
     }
     throw Exception('Error fetching My Proposals');
@@ -128,12 +126,13 @@ class ServiceProviderImpl implements IServiceProvider {
     // }
   }
 
-  Future<void> openFile(
-      {required PermissionStatus statusStorage,
-      bool isStatusPhotos = false,
-      required File newFile}) async {
+  Future<void> openFile({
+    required PermissionStatus statusStorage,
+    required File newFile,
+    bool isStatusPhotos = false,
+  }) async {
     if (isStatusPhotos) {
-      PermissionStatus statusPhotos = await Permission.photos.status;
+      final statusPhotos = await Permission.photos.status;
 
       if (statusStorage.isGranted && statusPhotos.isGranted) {
         // Разрешение уже предоставлено, открываем файл
@@ -148,8 +147,9 @@ class ServiceProviderImpl implements IServiceProvider {
           } else {
             // Пользователь отказал в предоставлении разрешения На Документы
             // Обработайте это соответствующим образом
-            throw (ApiClientException(
-                ApiClientExceptionType.openFileDocuments));
+            throw ApiClientException(
+              ApiClientExceptionType.openFileDocuments,
+            );
           }
         } else if (statusPhotos.isDenied || statusPhotos.isPermanentlyDenied) {
           // Разрешение не предоставлено, запрашиваем его у пользователя
@@ -162,7 +162,7 @@ class ServiceProviderImpl implements IServiceProvider {
           } else {
             // Пользователь отказал в предоставлении разрешения На Фото
             // Обработайте это соответствующим образом
-            throw (ApiClientException(ApiClientExceptionType.openFileImage));
+            throw ApiClientException(ApiClientExceptionType.openFileImage);
           }
         }
       }
@@ -184,8 +184,9 @@ class ServiceProviderImpl implements IServiceProvider {
           } else {
             // Пользователь отказал в предоставлении разрешения На Документы
             // Обработайте это соответствующим образом
-            throw (ApiClientException(
-                ApiClientExceptionType.openFileDocuments));
+            throw ApiClientException(
+              ApiClientExceptionType.openFileDocuments,
+            );
           }
         }
       }
@@ -196,7 +197,7 @@ class ServiceProviderImpl implements IServiceProvider {
   Future<void> downloadFileWithLeanProduction({
     required String url,
   }) async {
-    String uri = '$urlAdress/lean_fabrication/download_file?url=$url';
+    final uri = '$urlAdress/lean_fabrication/download_file?url=$url';
     final response = await _httpService.post(uri, body: {});
 
     final fileName = url.split('/').last;
@@ -215,39 +216,39 @@ class ServiceProviderImpl implements IServiceProvider {
         }
 
         /// TODO на время сделал так иначе не скачивается файл нужно с response паолучать не map, а stream
-        List<int> dataList = data.values.cast<int>().toList();
+        final dataList = data.values.cast<int>().toList();
         // final jsonResponse = await response.stream.toBytes();
 
         /// Создаем путь сохраненного файла
-        String filePath = '${directory!.path}/$fileName';
+        final filePath = '${directory!.path}/$fileName';
 
-        File file = File(filePath);
+        final file = File(filePath);
         final isExists = await file.exists();
 
-        File newFile = file;
+        var newFile = file;
         if (isExists) {
           await file.delete();
         }
         newFile = await file.writeAsBytes(dataList);
 
-        PermissionStatus statusStorage =
-            await Permission.manageExternalStorage.status;
+        final statusStorage = await Permission.manageExternalStorage.status;
 
         if (Platform.isAndroid) {
-          var androidInfo = await DeviceInfoPlugin().androidInfo;
+          final androidInfo = await DeviceInfoPlugin().androidInfo;
           final version = androidInfo.version.release;
           final verInt = int.parse(version);
 
           if (verInt <= 12) {
             await openFile(
-                newFile: newFile,
-                statusStorage: statusStorage,
-                isStatusPhotos: false);
+              newFile: newFile,
+              statusStorage: statusStorage,
+            );
           } else {
             await openFile(
-                newFile: newFile,
-                statusStorage: statusStorage,
-                isStatusPhotos: true);
+              newFile: newFile,
+              statusStorage: statusStorage,
+              isStatusPhotos: true,
+            );
           }
         } else {
           /// Если это IOS
@@ -265,11 +266,12 @@ class ServiceProviderImpl implements IServiceProvider {
   }
 
   @override
-  Future<bool> submitBagReportForm(
-      {required BagReportEntity bagReportEntity}) async {
-    final Map<String, String> newFields = {
+  Future<bool> submitBagReportForm({
+    required BagReportEntity bagReportEntity,
+  }) async {
+    final newFields = <String, String>{
       'forminfo':
-          '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}'
+          '{"title": "${bagReportEntity.title}", "description": "${bagReportEntity.description}"}',
     };
 
     final response = await _httpService.post(

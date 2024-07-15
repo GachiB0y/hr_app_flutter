@@ -11,17 +11,15 @@ class ScheduleBusScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return const ScheduleBusScope(
-      child: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: NestedScreenWidget(),
+  Widget build(BuildContext context) => const ScheduleBusScope(
+        child: Scaffold(
+          body: SafeArea(
+            child: Center(
+              child: NestedScreenWidget(),
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class NestedScreenWidget extends StatefulWidget {
@@ -44,18 +42,16 @@ class _NestedScreenWidgetState extends State<NestedScreenWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return IndexedStack(
-      index: index,
-      children: const [
-        CititesSelectScreen(),
-        _SecondScheduleBusScreen(),
-        _ThirdScheduleBusScreen(),
-        DestinationListWidget(),
-        DestinationListScreenWidget(),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => IndexedStack(
+        index: index,
+        children: const [
+          CititesSelectScreen(),
+          _SecondScheduleBusScreen(),
+          _ThirdScheduleBusScreen(),
+          DestinationListWidget(),
+          DestinationListScreenWidget(),
+        ],
+      );
 }
 
 /// {@template schedule_bus_screen}
@@ -88,48 +84,47 @@ class ButtonSeeAllDestinationsWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 13.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 0),
-            ),
-          ],
-        ),
-        child: ListTile(
-          title: Text(
-            textAlign: TextAlign.center,
-            'Посмотреть все маршруты',
-            softWrap: true,
-            maxLines: 3,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(fontWeight: FontWeight.w500),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 13.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+              ),
+            ],
           ),
-          onTap: () {
-            final stateInScope = ScheduleBusScope.of(context).state;
+          child: ListTile(
+            title: Text(
+              textAlign: TextAlign.center,
+              'Посмотреть все маршруты',
+              softWrap: true,
+              maxLines: 3,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.w500),
+            ),
+            onTap: () {
+              final stateInScope = ScheduleBusScope.of(context).state;
 
-            stateInScope.scheduleBusBloc.add(
+              stateInScope.scheduleBusBloc.add(
                 const ScheduleBusEvent.fetchDestinations(
-                    cityId: null,
-                    timeOfDay: null,
-                    routeForJob: null,
-                    isAll: true));
-            stateInScope.incrementIndex(4);
-          },
+                  cityId: null,
+                  timeOfDay: null,
+                  routeForJob: null,
+                  isAll: true,
+                ),
+              );
+              stateInScope.incrementIndex(4);
+            },
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class CitiesWidget extends StatelessWidget {
@@ -138,74 +133,71 @@ class CitiesWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
-        bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
-        builder: (context, state) {
-          if (state is ScheduleBusState$Processing) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          } else if (state is ScheduleBusState$Error) {
-            return Center(
-              child: Text(state.message),
-            );
-          } else {
-            if (state.data!.cities.isEmpty) {
+  Widget build(BuildContext context) => Expanded(
+        child: BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
+          bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
+          builder: (context, state) {
+            if (state is ScheduleBusState$Processing) {
               return const Center(
-                child: Text('Города не найдены'),
+                child: CircularProgressIndicator.adaptive(),
+              );
+            } else if (state is ScheduleBusState$Error) {
+              return Center(
+                child: Text(state.message),
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                child: ListView.builder(
-                  itemCount: state.data!.cities.length,
-                  itemBuilder: (context, index) {
-                    final city = state.data!.cities[index];
-                    return Container(
-                      margin: const EdgeInsets.only(top: 13.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
-                        borderRadius: BorderRadius.circular(18),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 8,
-                            offset: const Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          textAlign: TextAlign.center,
-                          city.name,
-                          softWrap: true,
-                          maxLines: 3,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.w500),
+              if (state.data!.cities.isEmpty) {
+                return const Center(
+                  child: Text('Города не найдены'),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                  child: ListView.builder(
+                    itemCount: state.data!.cities.length,
+                    itemBuilder: (context, index) {
+                      final city = state.data!.cities[index];
+                      return Container(
+                        margin: const EdgeInsets.only(top: 13.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.background,
+                          borderRadius: BorderRadius.circular(18),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 8,
+                            ),
+                          ],
                         ),
-                        onTap: () {
-                          ScheduleBusScope.of(context).state.setCityId =
-                              city.id;
+                        child: ListTile(
+                          title: Text(
+                            textAlign: TextAlign.center,
+                            city.name,
+                            softWrap: true,
+                            maxLines: 3,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.w500),
+                          ),
+                          onTap: () {
+                            ScheduleBusScope.of(context).state.setCityId =
+                                city.id;
 
-                          ScheduleBusScope.of(context)
-                              .state
-                              .incrementIndex(null);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
+                            ScheduleBusScope.of(context)
+                                .state
+                                .incrementIndex(null);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
             }
-          }
-        },
-      ),
-    );
-  }
+          },
+        ),
+      );
 }
 
 class _BodyContentWidget extends StatelessWidget {
@@ -213,25 +205,23 @@ class _BodyContentWidget extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 16,
-        ),
-        Image.asset(
-          'assets/images/bus_shcedule.webp',
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Text(
-          text,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+        children: [
+          const SizedBox(
+            height: 16,
+          ),
+          Image.asset(
+            'assets/images/bus_shcedule.webp',
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
+      );
 }
 
 class AppBarForScheduleBusScreenWidget extends StatelessWidget
@@ -245,51 +235,49 @@ class AppBarForScheduleBusScreenWidget extends StatelessWidget
   final int? index;
 
   @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      backgroundColor: Theme.of(context).canvasColor,
-      title: Row(
-        children: [
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Расписание\nавтобусов',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+  Widget build(BuildContext context) => AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).canvasColor,
+        title: Row(
+          children: [
+            const Expanded(
+              child: Center(
+                child: Text(
+                  'Расписание\nавтобусов',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          InkWell(
-            splashColor: const Color.fromRGBO(51, 169, 54, 0.3),
-            onTap: () {
-              context.octopus
-                  .setState((state) => state..removeByName('schedule-bus'));
-            },
-            child: const Text(
-              'Сбросить',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
+            InkWell(
+              splashColor: const Color.fromRGBO(51, 169, 54, 0.3),
+              onTap: () {
+                context.octopus
+                    .setState((state) => state..removeByName('schedule-bus'));
+              },
+              child: const Text(
+                'Сбросить',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      leading: isSecondAndOtherScreen
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                // Обработка нажатия кнопки "назад" здесь
-                ScheduleBusScope.of(context).state.decrementIndex(index);
-              },
-            )
-          : null,
-    );
-  }
+          ],
+        ),
+        leading: isSecondAndOtherScreen
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  // Обработка нажатия кнопки "назад" здесь
+                  ScheduleBusScope.of(context).state.decrementIndex(index);
+                },
+              )
+            : null,
+      );
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -299,28 +287,26 @@ class _SecondScheduleBusScreen extends StatelessWidget {
   const _SecondScheduleBusScreen();
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarForScheduleBusScreenWidget(
-        isSecondAndOtherScreen: true,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _BodyContentWidget(
-              text: 'Маршрут на работу\nили с работы?',
-            ),
-            _ButtonForSecondScreen(
-              text: "На работу",
-            ),
-            _ButtonForSecondScreen(
-              text: 'С работы',
-            ),
-          ],
+  Widget build(BuildContext context) => const Scaffold(
+        appBar: AppBarForScheduleBusScreenWidget(
+          isSecondAndOtherScreen: true,
         ),
-      ),
-    );
-  }
+        body: SafeArea(
+          child: Column(
+            children: [
+              _BodyContentWidget(
+                text: 'Маршрут на работу\nили с работы?',
+              ),
+              _ButtonForSecondScreen(
+                text: 'На работу',
+              ),
+              _ButtonForSecondScreen(
+                text: 'С работы',
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 class _ButtonForSecondScreen extends StatelessWidget {
@@ -331,69 +317,64 @@ class _ButtonForSecondScreen extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-      child: Container(
-        margin: const EdgeInsets.only(top: 13.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 0),
-            ),
-          ],
-        ),
-        child: ListTile(
-          title: Text(
-            textAlign: TextAlign.center,
-            text,
-            softWrap: true,
-            maxLines: 3,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(fontWeight: FontWeight.w500),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+        child: Container(
+          margin: const EdgeInsets.only(top: 13.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+              ),
+            ],
           ),
-          onTap: () {
-            ScheduleBusScope.of(context).state.setRouteForJob = text;
-            ScheduleBusScope.of(context).state.incrementIndex(null);
-          },
+          child: ListTile(
+            title: Text(
+              textAlign: TextAlign.center,
+              text,
+              softWrap: true,
+              maxLines: 3,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.w500),
+            ),
+            onTap: () {
+              ScheduleBusScope.of(context).state.setRouteForJob = text;
+              ScheduleBusScope.of(context).state.incrementIndex(null);
+            },
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _ThirdScheduleBusScreen extends StatelessWidget {
   const _ThirdScheduleBusScreen();
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarForScheduleBusScreenWidget(
-        isSecondAndOtherScreen: true,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _BodyContentWidget(
-              text: 'В какое время?',
-            ),
-            _ButtonForThirdScreen(
-              text: 'Утро',
-            ),
-            _ButtonForThirdScreen(
-              text: 'Вечер',
-            ),
-          ],
+  Widget build(BuildContext context) => const Scaffold(
+        appBar: AppBarForScheduleBusScreenWidget(
+          isSecondAndOtherScreen: true,
         ),
-      ),
-    );
-  }
+        body: SafeArea(
+          child: Column(
+            children: [
+              _BodyContentWidget(
+                text: 'В какое время?',
+              ),
+              _ButtonForThirdScreen(
+                text: 'Утро',
+              ),
+              _ButtonForThirdScreen(
+                text: 'Вечер',
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 class _ButtonForThirdScreen extends StatelessWidget {
@@ -404,23 +385,21 @@ class _ButtonForThirdScreen extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-      child: Container(
-        margin: const EdgeInsets.only(top: 13.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 0),
-            ),
-          ],
-        ),
-        child: ListTile(
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+        child: Container(
+          margin: const EdgeInsets.only(top: 13.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+          child: ListTile(
             title: Text(
               textAlign: TextAlign.center,
               text,
@@ -434,49 +413,171 @@ class _ButtonForThirdScreen extends StatelessWidget {
             onTap: () {
               ScheduleBusScope.of(context).state.setTimeOfDay = text;
               final stateInScope = ScheduleBusScope.of(context).state;
-              final int cityId = stateInScope.cityId;
-              final String timeOfDay = stateInScope.timesOfDay;
-              final String routeForJob = stateInScope.routeForJob;
+              final cityId = stateInScope.cityId;
+              final timeOfDay = stateInScope.timesOfDay;
+              final routeForJob = stateInScope.routeForJob;
 
               stateInScope.scheduleBusBloc.add(
-                  ScheduleBusEvent.fetchDestinations(
-                      cityId: cityId,
-                      timeOfDay: timeOfDay,
-                      routeForJob: routeForJob));
+                ScheduleBusEvent.fetchDestinations(
+                  cityId: cityId,
+                  timeOfDay: timeOfDay,
+                  routeForJob: routeForJob,
+                ),
+              );
               ScheduleBusScope.of(context).state.incrementIndex(null);
-            }),
-      ),
-    );
-  }
+            },
+          ),
+        ),
+      );
 }
 
 class DestinationListWidget extends StatelessWidget {
   const DestinationListWidget({super.key});
 
   Future<void> _launchUrl(String url) async {
-    final Uri url0 = Uri.parse(url);
+    final url0 = Uri.parse(url);
     if (!await launchUrl(url0)) {
       throw Exception('Could not launch $url0');
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarForScheduleBusScreenWidget(
-        isSecondAndOtherScreen: true,
-      ),
-      body: Column(
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const AppBarForScheduleBusScreenWidget(
+          isSecondAndOtherScreen: true,
+        ),
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Маршруты по вашему запросу',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
+              bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
+              builder: (context, state) {
+                if (state is ScheduleBusState$Processing) {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                } else if (state is ScheduleBusState$Error) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                } else {
+                  if (state.data!.destinations.isEmpty) {
+                    return const Center(
+                      child: Text('Маршруты не найдены'),
+                    );
+                  } else {
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                        child: ListView.builder(
+                          itemCount: state.data!.destinations.length,
+                          itemBuilder: (context, index) {
+                            final destination = state.data!.destinations[index];
+
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 13.0),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    borderRadius: BorderRadius.circular(18),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 8,
+                                      ),
+                                    ],
+                                  ),
+                                  child: ListTile(
+                                    title: Text(
+                                      textAlign: TextAlign.center,
+                                      destination.namePath,
+                                      softWrap: true,
+                                      maxLines: 3,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
+                                    ),
+                                    onTap: () async {
+                                      await _launchUrl(destination.link);
+                                    },
+                                  ),
+                                ),
+                                if (index + 1 ==
+                                    state.data!.destinations.length)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 25.0),
+                                    child: Text(
+                                      'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  )
+                                else
+                                  const SizedBox.shrink(),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        ),
+      );
+}
+
+class DestinationListScreenWidget extends StatelessWidget {
+  const DestinationListScreenWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) => const Scaffold(
+        appBar: AppBarForScheduleBusScreenWidget(
+          isSecondAndOtherScreen: true,
+          index: 0,
+        ),
+        body: BodyContentScheduleBusWidget(),
+      );
+}
+
+class BodyContentScheduleBusWidget extends StatelessWidget {
+  const BodyContentScheduleBusWidget({
+    super.key,
+  });
+
+  Future<void> _launchUrl(String url) async {
+    final url0 = Uri.parse(url);
+    if (!await launchUrl(url0)) {
+      throw Exception('Could not launch $url0');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Column(
         children: [
           const SizedBox(
             height: 30,
           ),
           Text(
-            'Маршруты по вашему запросу',
+            'Все маршруты',
             style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(
-            height: 30,
           ),
           BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
             bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
@@ -496,14 +597,14 @@ class DestinationListWidget extends StatelessWidget {
                   );
                 } else {
                   return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                      child: ListView.builder(
-                        itemCount: state.data!.destinations.length,
-                        itemBuilder: (context, index) {
-                          final destination = state.data!.destinations[index];
+                    child: ListView.builder(
+                      itemCount: state.data!.destinations.length,
+                      itemBuilder: (context, index) {
+                        final destination = state.data!.destinations[index];
 
-                          return Column(
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                          child: Column(
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 13.0),
@@ -515,7 +616,6 @@ class DestinationListWidget extends StatelessWidget {
                                     BoxShadow(
                                       color: Colors.black.withOpacity(0.2),
                                       blurRadius: 8,
-                                      offset: const Offset(0, 0),
                                     ),
                                   ],
                                 ),
@@ -535,21 +635,21 @@ class DestinationListWidget extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              index + 1 == state.data!.destinations.length
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(top: 25.0),
-                                      child: Text(
-                                        'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall,
-                                      ),
-                                    )
-                                  : const SizedBox.shrink(),
+                              if (index + 1 == state.data!.destinations.length)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 25.0),
+                                  child: Text(
+                                    'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                )
+                              else
+                                const SizedBox.shrink(),
                             ],
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   );
                 }
@@ -557,127 +657,5 @@ class DestinationListWidget extends StatelessWidget {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class DestinationListScreenWidget extends StatelessWidget {
-  const DestinationListScreenWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarForScheduleBusScreenWidget(
-        isSecondAndOtherScreen: true,
-        index: 0,
-      ),
-      body: BodyContentScheduleBusWidget(),
-    );
-  }
-}
-
-class BodyContentScheduleBusWidget extends StatelessWidget {
-  const BodyContentScheduleBusWidget({
-    super.key,
-  });
-
-  Future<void> _launchUrl(String url) async {
-    final Uri url0 = Uri.parse(url);
-    if (!await launchUrl(url0)) {
-      throw Exception('Could not launch $url0');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 30,
-        ),
-        Text(
-          'Все маршруты',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        BlocBuilder<ScheduleBusBLoC, ScheduleBusState>(
-          bloc: ScheduleBusScope.of(context).state.scheduleBusBloc,
-          builder: (context, state) {
-            if (state is ScheduleBusState$Processing) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            } else if (state is ScheduleBusState$Error) {
-              return Center(
-                child: Text(state.message),
-              );
-            } else {
-              if (state.data!.destinations.isEmpty) {
-                return const Center(
-                  child: Text('Маршруты не найдены'),
-                );
-              } else {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.data!.destinations.length,
-                    itemBuilder: (context, index) {
-                      final destination = state.data!.destinations[index];
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 13.0),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.background,
-                                borderRadius: BorderRadius.circular(18),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  textAlign: TextAlign.center,
-                                  destination.namePath,
-                                  softWrap: true,
-                                  maxLines: 3,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(fontWeight: FontWeight.w500),
-                                ),
-                                onTap: () async {
-                                  await _launchUrl(destination.link);
-                                },
-                              ),
-                            ),
-                            index + 1 == state.data!.destinations.length
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 25.0),
-                                    child: Text(
-                                      'Не нашли нужный маршрут?\nЗадайте вопрос в отдел HR',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }
-            }
-          },
-        ),
-      ],
-    );
-  }
+      );
 }

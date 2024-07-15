@@ -3,36 +3,38 @@ import 'package:flutter/services.dart';
 class InternationalPhoneFormatter extends TextInputFormatter {
   String internationalPhoneFormat(String text) {
     //регулярка протиа букв. в телефоне только цифры
-    text = text.replaceAll(RegExp(r'\D'), '');
-    if (text.isNotEmpty) {
-      String phone = '';
+    var newText = text.replaceAll(RegExp(r'\D'), '');
+    if (newText.isNotEmpty) {
+      var phone = '';
       //проверяем российски ли номер
-      if (['7', '8', '9'].contains(text[0])) {
+      if (['7', '8', '9'].contains(newText[0])) {
         //если пользователь начал с 9, то добавим 7
-        if (text[0] == '9') {
-          text = '7$text';
+        if (newText[0] == '9') {
+          newText = '7$newText';
         }
         //Проверяем нужен ли +
-        String firstSymbols = (text[0] == '8') ? '8' : '+7';
+        final firstSymbols = (newText[0] == '8') ? '8' : '+7';
         //само форматирование
         phone = '$firstSymbols ';
-        if (text.length > 1) {
-          phone += '(${text.substring(1, (text.length < 4) ? text.length : 4)}';
-        }
-        if (text.length >= 5) {
+        if (newText.length > 1) {
           phone +=
-              ') ${text.substring(4, (text.length < 7) ? text.length : 7)}';
+              '(${newText.substring(1, (newText.length < 4) ? newText.length : 4)}';
         }
-        if (text.length >= 8) {
-          phone += '-${text.substring(7, (text.length < 9) ? text.length : 9)}';
-        }
-        if (text.length >= 10) {
+        if (newText.length >= 5) {
           phone +=
-              '-${text.substring(9, (text.length < 11) ? text.length : 11)}';
+              ') ${newText.substring(4, (newText.length < 7) ? newText.length : 7)}';
+        }
+        if (newText.length >= 8) {
+          phone +=
+              '-${newText.substring(7, (newText.length < 9) ? newText.length : 9)}';
+        }
+        if (newText.length >= 10) {
+          phone +=
+              '-${newText.substring(9, (newText.length < 11) ? newText.length : 11)}';
         }
         return phone;
       } else {
-        return '+$text';
+        return '+$newText';
       }
     }
     return '';
@@ -40,17 +42,21 @@ class InternationalPhoneFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String text = newValue.text;
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final text = newValue.text;
 
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
 
     return newValue.copyWith(
-        text: internationalPhoneFormat(text),
-        selection: TextSelection.collapsed(
-            offset: internationalPhoneFormat(text).length));
+      text: internationalPhoneFormat(text),
+      selection: TextSelection.collapsed(
+        offset: internationalPhoneFormat(text).length,
+      ),
+    );
   }
 }
 
@@ -67,7 +73,7 @@ class CustomTextInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    String newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    var newText = newValue.text.replaceAll(RegExp('[^0-9]'), '');
 
     if (newText.length >= 3) {
       newText =
