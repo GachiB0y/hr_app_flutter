@@ -119,8 +119,7 @@ class HomeScope extends StatefulWidget {
 }
 
 /// State for widget HomeScope.
-class _HomeScopeState extends State<HomeScope>
-    implements HomeShellPageController {
+class _HomeScopeState extends State<HomeScope> implements HomeShellPageController {
   /* #region Lifecycle */
 
   // Octopus state observer
@@ -191,8 +190,9 @@ class _HomeScopeState extends State<HomeScope>
       _octopusStateObserver.value.arguments['home'],
       fallback: HomeTabsEnum.userMain,
     );
-    _switchTab(newTab);
+    // _switchTab(newTab);
   }
+
   /* #endregion */
 
   @override

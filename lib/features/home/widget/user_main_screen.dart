@@ -275,7 +275,7 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Дни рожения',
+                      'Дни рождения',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!

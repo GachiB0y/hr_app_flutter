@@ -84,6 +84,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             child: InkWell(
               borderRadius: BorderRadius.circular(radius),
               onTap: () async {
+                HomeScope.of(context).state.onItemTapped(4);
                 late final Routes route;
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
@@ -103,7 +104,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&
                     widget.idHandler == 2) {
-                  route = Routes.moderationNews;
+                  route = Routes.listModerationNews;
                   // Octopus.of(context).push(Routes.approveNews);
                 } else if (widget.service.id == 25) {
                   // Octopus.of(context).push(Routes.scheduleBus);

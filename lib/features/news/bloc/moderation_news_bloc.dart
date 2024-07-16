@@ -3,17 +3,19 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
-import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
 import 'package:hr_app_flutter/ui/commons/app_cupertino_action_sheet.dart';
 import 'package:hr_app_flutter/ui/commons/show_actions.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:octopus/octopus.dart';
 
 ///____________________________________________________________________________________
-/// Состояние экрана [RefactorModerationNewsScreen].
-class RefactorNewsState {
+/// Состояние экрана [ModerationNewsScreen].
+class ModerationNewsState {
   /// Модерируемая новость.
   final EventEntity? news;
 
@@ -32,7 +34,7 @@ class RefactorNewsState {
   /// Состояние экрана.
   final bool? valueState;
 
-  RefactorNewsState({
+  ModerationNewsState({
     this.news,
     this.status = ScaffoldManagerStatus.loading,
     this.date,
@@ -41,7 +43,7 @@ class RefactorNewsState {
     this.valueState,
   });
 
-  RefactorNewsState copyWith({
+  ModerationNewsState copyWith({
     EventEntity? news,
     ScaffoldManagerStatus? status,
     String? date,
@@ -49,7 +51,7 @@ class RefactorNewsState {
     String? createAt,
     bool? valueState,
   }) {
-    return RefactorNewsState(
+    return ModerationNewsState(
       news: news ?? this.news,
       status: status ?? this.status,
       date: date ?? this.date,
@@ -60,27 +62,26 @@ class RefactorNewsState {
   }
 }
 
-class RefactorNewsCubit extends Cubit<RefactorNewsState> {
+class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   final IEventEntityRepository eventEntityRepository;
   final String? id;
 
-  RefactorNewsCubit({
+  ModerationNewsCubit({
     required this.eventEntityRepository,
     required this.id,
   }) : super(
-          RefactorNewsState(),
+          ModerationNewsState(),
         ) {
+    eventEntityRepository.state.listen((event) {
+      _subscribeNews(event);
+    });
     _initialize();
   }
 
-  /// Получение новости по id.
-  Future<void> getNewsById() async {
-    if (id == null) return;
-    final news = await eventEntityRepository.getNewsById(id: id!);
-    await _refDateTime(news);
+  /// Прослушивание изменений [EventEntityRepository].
+  void _subscribeNews(EventEntityRepositoryState stateRepository) {
     final newState = state.copyWith(
-      news: news,
-      status: ScaffoldManagerStatus.loaded,
+      news: stateRepository.currentNews,
     );
     emit(newState);
   }
@@ -90,11 +91,25 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
     await getNewsById();
   }
 
+  /// Получение новости по id.
+  Future<void> getNewsById() async {
+      await eventEntityRepository.getNewsById(id: id!);
+      if (eventEntityRepository.currentNews == null) return;
+      await _refDateTime(eventEntityRepository.currentNews!);
+      final newState = state.copyWith(
+        // news: eventEntityRepository.currentNews!,
+        status: ScaffoldManagerStatus.loaded,
+      );
+      emit(newState);
+
+  }
+
   /// Преобразование данных даты и времени.
   Future<void> _refDateTime(EventEntity news) async {
-    final date = DateFormat('dd MMMM').format(news.startDate);
-    final time = DateFormat('HH:mm').format(news.startDate);
-    final createAt = DateFormat('dd.MM.yy').format(news.createdAt);
+    if (news.startDate == null || news.createdAt == null) return;
+    final date = DateFormat('dd MMMM').format(news.startDate!);
+    final time = DateFormat('HH:mm').format(news.startDate!);
+    final createAt = DateFormat('dd.MM.yy').format(news.createdAt!);
     final newState = state.copyWith(date: date, time: time, createAt: createAt);
     emit(newState);
   }
@@ -109,6 +124,21 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
           value: false,
           id: id.toString(),
         ),
+        onTapRefactoring: () {
+          context.octopus.setState(
+            (state) => state
+              ..findByName(
+                '${Routes.services.name}-tab',
+              )?.add(
+                OctopusNode.mutable(
+                  'create-moderation-screens',
+                  children: [
+                    Routes.createTypeNewsScreen.node(arguments: {"id": id.toString()}),
+                  ],
+                ),
+              ),
+          );
+        },
       ),
     );
   }
@@ -135,5 +165,10 @@ class RefactorNewsCubit extends Cubit<RefactorNewsState> {
   /// Опубликовать новость.
   Future<void> publishNews(String id) async {
     await eventEntityRepository.approvementNews(id: id);
+  }
+
+  @override
+  Future<void> close() async {
+    return;
   }
 }

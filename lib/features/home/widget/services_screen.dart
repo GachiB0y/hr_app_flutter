@@ -41,6 +41,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           'Все сервисы',
@@ -73,7 +74,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   state.data!.first.permissions.approveService == true) {
                 // Если можно модерировать новость, то даем такую возможность
                 titleService.add('Модерация новостей');
-                routes.add(Routes.moderationNews);
+                routes.add(Routes.listModerationNews);
               }
 
               return Column(

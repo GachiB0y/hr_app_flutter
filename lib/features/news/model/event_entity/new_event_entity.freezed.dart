@@ -21,23 +21,24 @@ EventEntity _$EventEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$EventEntity {
   int get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_date')
-  DateTime get startDate => throw _privateConstructorUsedError;
+  DateTime? get startDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
   DateTime? get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_publish')
-  bool get isPublish => throw _privateConstructorUsedError;
+  bool? get isPublish => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_archived')
-  bool get isArchived => throw _privateConstructorUsedError;
-  List<Category> get categories => throw _privateConstructorUsedError;
-  Writer get writer => throw _privateConstructorUsedError;
+  bool? get isArchived => throw _privateConstructorUsedError;
+  List<Category>? get categories => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>>? get vote => throw _privateConstructorUsedError;
+  Writer? get writer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,19 +54,20 @@ abstract class $EventEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String title,
-      String description,
-      String image,
-      @JsonKey(name: 'start_date') DateTime startDate,
+      String? title,
+      String? description,
+      String? image,
+      @JsonKey(name: 'start_date') DateTime? startDate,
       @JsonKey(name: 'end_date') DateTime? endDate,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'is_publish') bool isPublish,
-      @JsonKey(name: 'is_archived') bool isArchived,
-      List<Category> categories,
-      Writer writer});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'is_publish') bool? isPublish,
+      @JsonKey(name: 'is_archived') bool? isArchived,
+      List<Category>? categories,
+      List<Map<String, dynamic>>? vote,
+      Writer? writer});
 
-  $WriterCopyWith<$Res> get writer;
+  $WriterCopyWith<$Res>? get writer;
 }
 
 /// @nodoc
@@ -82,74 +84,83 @@ class _$EventEntityCopyWithImpl<$Res, $Val extends EventEntity>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
-    Object? description = null,
-    Object? image = null,
-    Object? startDate = null,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? image = freezed,
+    Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? isPublish = null,
-    Object? isArchived = null,
-    Object? categories = null,
-    Object? writer = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isPublish = freezed,
+    Object? isArchived = freezed,
+    Object? categories = freezed,
+    Object? vote = freezed,
+    Object? writer = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      image: null == image
+              as String?,
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
-      startDate: null == startDate
+              as String?,
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
+              as DateTime?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isPublish: null == isPublish
+              as DateTime?,
+      isPublish: freezed == isPublish
           ? _value.isPublish
           : isPublish // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isArchived: null == isArchived
+              as bool?,
+      isArchived: freezed == isArchived
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
-              as bool,
-      categories: null == categories
+              as bool?,
+      categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      writer: null == writer
+              as List<Category>?,
+      vote: freezed == vote
+          ? _value.vote
+          : vote // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
+      writer: freezed == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as Writer,
+              as Writer?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $WriterCopyWith<$Res> get writer {
-    return $WriterCopyWith<$Res>(_value.writer, (value) {
+  $WriterCopyWith<$Res>? get writer {
+    if (_value.writer == null) {
+      return null;
+    }
+
+    return $WriterCopyWith<$Res>(_value.writer!, (value) {
       return _then(_value.copyWith(writer: value) as $Val);
     });
   }
@@ -165,20 +176,21 @@ abstract class _$$_EventEntityCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String title,
-      String description,
-      String image,
-      @JsonKey(name: 'start_date') DateTime startDate,
+      String? title,
+      String? description,
+      String? image,
+      @JsonKey(name: 'start_date') DateTime? startDate,
       @JsonKey(name: 'end_date') DateTime? endDate,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'is_publish') bool isPublish,
-      @JsonKey(name: 'is_archived') bool isArchived,
-      List<Category> categories,
-      Writer writer});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'is_publish') bool? isPublish,
+      @JsonKey(name: 'is_archived') bool? isArchived,
+      List<Category>? categories,
+      List<Map<String, dynamic>>? vote,
+      Writer? writer});
 
   @override
-  $WriterCopyWith<$Res> get writer;
+  $WriterCopyWith<$Res>? get writer;
 }
 
 /// @nodoc
@@ -193,67 +205,72 @@ class __$$_EventEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
-    Object? description = null,
-    Object? image = null,
-    Object? startDate = null,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? image = freezed,
+    Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? isPublish = null,
-    Object? isArchived = null,
-    Object? categories = null,
-    Object? writer = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? isPublish = freezed,
+    Object? isArchived = freezed,
+    Object? categories = freezed,
+    Object? vote = freezed,
+    Object? writer = freezed,
   }) {
     return _then(_$_EventEntity(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      image: null == image
+              as String?,
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
-      startDate: null == startDate
+              as String?,
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
+              as DateTime?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isPublish: null == isPublish
+              as DateTime?,
+      isPublish: freezed == isPublish
           ? _value.isPublish
           : isPublish // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isArchived: null == isArchived
+              as bool?,
+      isArchived: freezed == isArchived
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
-              as bool,
-      categories: null == categories
+              as bool?,
+      categories: freezed == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      writer: null == writer
+              as List<Category>?,
+      vote: freezed == vote
+          ? _value._vote
+          : vote // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
+      writer: freezed == writer
           ? _value.writer
           : writer // ignore: cast_nullable_to_non_nullable
-              as Writer,
+              as Writer?,
     ));
   }
 }
@@ -264,18 +281,20 @@ class __$$_EventEntityCopyWithImpl<$Res>
 class _$_EventEntity implements _EventEntity {
   const _$_EventEntity(
       {required this.id,
-      required this.title,
-      required this.description,
-      required this.image,
-      @JsonKey(name: 'start_date') required this.startDate,
-      @JsonKey(name: 'end_date') required this.endDate,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'is_publish') required this.isPublish,
-      @JsonKey(name: 'is_archived') required this.isArchived,
-      required final List<Category> categories,
-      required this.writer})
-      : _categories = categories;
+      this.title,
+      this.description,
+      this.image,
+      @JsonKey(name: 'start_date') this.startDate,
+      @JsonKey(name: 'end_date') this.endDate,
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'is_publish') this.isPublish,
+      @JsonKey(name: 'is_archived') this.isArchived,
+      final List<Category>? categories,
+      final List<Map<String, dynamic>>? vote,
+      this.writer})
+      : _categories = categories,
+        _vote = vote;
 
   factory _$_EventEntity.fromJson(Map<String, dynamic> json) =>
       _$$_EventEntityFromJson(json);
@@ -283,43 +302,55 @@ class _$_EventEntity implements _EventEntity {
   @override
   final int id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String description;
+  final String? description;
   @override
-  final String image;
+  final String? image;
   @override
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
   @override
   @JsonKey(name: 'end_date')
   final DateTime? endDate;
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   @override
   @JsonKey(name: 'is_publish')
-  final bool isPublish;
+  final bool? isPublish;
   @override
   @JsonKey(name: 'is_archived')
-  final bool isArchived;
-  final List<Category> _categories;
+  final bool? isArchived;
+  final List<Category>? _categories;
   @override
-  List<Category> get categories {
+  List<Category>? get categories {
+    final value = _categories;
+    if (value == null) return null;
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<Map<String, dynamic>>? _vote;
+  @override
+  List<Map<String, dynamic>>? get vote {
+    final value = _vote;
+    if (value == null) return null;
+    if (_vote is EqualUnmodifiableListView) return _vote;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final Writer writer;
+  final Writer? writer;
 
   @override
   String toString() {
-    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, writer: $writer)';
+    return 'EventEntity(id: $id, title: $title, description: $description, image: $image, startDate: $startDate, endDate: $endDate, createdAt: $createdAt, updatedAt: $updatedAt, isPublish: $isPublish, isArchived: $isArchived, categories: $categories, vote: $vote, writer: $writer)';
   }
 
   @override
@@ -345,6 +376,7 @@ class _$_EventEntity implements _EventEntity {
                 other.isArchived == isArchived) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._vote, _vote) &&
             (identical(other.writer, writer) || other.writer == writer));
   }
 
@@ -363,6 +395,7 @@ class _$_EventEntity implements _EventEntity {
       isPublish,
       isArchived,
       const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_vote),
       writer);
 
   @JsonKey(ignore: true)
@@ -382,17 +415,18 @@ class _$_EventEntity implements _EventEntity {
 abstract class _EventEntity implements EventEntity {
   const factory _EventEntity(
       {required final int id,
-      required final String title,
-      required final String description,
-      required final String image,
-      @JsonKey(name: 'start_date') required final DateTime startDate,
-      @JsonKey(name: 'end_date') required final DateTime? endDate,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-      @JsonKey(name: 'is_publish') required final bool isPublish,
-      @JsonKey(name: 'is_archived') required final bool isArchived,
-      required final List<Category> categories,
-      required final Writer writer}) = _$_EventEntity;
+      final String? title,
+      final String? description,
+      final String? image,
+      @JsonKey(name: 'start_date') final DateTime? startDate,
+      @JsonKey(name: 'end_date') final DateTime? endDate,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
+      @JsonKey(name: 'updated_at') final DateTime? updatedAt,
+      @JsonKey(name: 'is_publish') final bool? isPublish,
+      @JsonKey(name: 'is_archived') final bool? isArchived,
+      final List<Category>? categories,
+      final List<Map<String, dynamic>>? vote,
+      final Writer? writer}) = _$_EventEntity;
 
   factory _EventEntity.fromJson(Map<String, dynamic> json) =
       _$_EventEntity.fromJson;
@@ -400,33 +434,35 @@ abstract class _EventEntity implements EventEntity {
   @override
   int get id;
   @override
-  String get title;
+  String? get title;
   @override
-  String get description;
+  String? get description;
   @override
-  String get image;
+  String? get image;
   @override
   @JsonKey(name: 'start_date')
-  DateTime get startDate;
+  DateTime? get startDate;
   @override
   @JsonKey(name: 'end_date')
   DateTime? get endDate;
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
+  DateTime? get updatedAt;
   @override
   @JsonKey(name: 'is_publish')
-  bool get isPublish;
+  bool? get isPublish;
   @override
   @JsonKey(name: 'is_archived')
-  bool get isArchived;
+  bool? get isArchived;
   @override
-  List<Category> get categories;
+  List<Category>? get categories;
   @override
-  Writer get writer;
+  List<Map<String, dynamic>>? get vote;
+  @override
+  Writer? get writer;
   @override
   @JsonKey(ignore: true)
   _$$_EventEntityCopyWith<_$_EventEntity> get copyWith =>

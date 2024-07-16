@@ -30,7 +30,7 @@ import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_
 import 'package:octopus/octopus.dart';
 
 import '../../features/initialiazation/widget/dependencies_scope.dart';
-import '../../features/news/bloc/refactor_news_bloc.dart';
+import '../../features/news/bloc/moderation_news_bloc.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -45,8 +45,20 @@ enum Routes with OctopusRoute {
     title: 'Search Friend And Send Coins',
   ),
   approveNews('approve-news', title: 'Approve News'),
-  moderationNews('moderation-news', title: 'Moderation News'),
-  refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
+
+  /// Блок экранов для создания и модерации новости.
+  createModerationScreens('create-moderation-screens', title:  'Create Moderation Screens'),
+  moderationNewsScreen('refactor-news', title: 'Refactor News'),
+  createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
+  listModerationNews('list-moderation-news', title: 'Moderation News'),
+  createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
+  createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
+  createTimeNewsScreen('create-time-news-screen', title: 'Create Time News Screen'),
+  createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
+  createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
+  createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+
+  ///
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -126,8 +138,7 @@ enum Routes with OctopusRoute {
   final String? title;
 
   @override
-  Widget builder(BuildContext context, OctopusState state, OctopusNode node) =>
-      switch (this) {
+  Widget builder(BuildContext context, OctopusState state, OctopusNode node) => switch (this) {
         Routes.signin => const AuthenticationFormScreen(),
         Routes.home => const HomeScreen(),
         Routes.userMain => const UserMainScreen(),
@@ -135,28 +146,63 @@ enum Routes with OctopusRoute {
         Routes.services => const ServicesScreen(),
         Routes.education => const EducationScreen(),
         Routes.company => const CompanyScreen(),
-        Routes.searchFriendAndSendCoins =>
-          const SearchFriendAndSendCoinsScreen(),
+        Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
-        Routes.moderationNews => const ModerationNewsScreen(),
-        Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-          child: const RefactorModerationNewsScreen(),
-          create: (BuildContext context) => RefactorNewsCubit(
-            id: node.arguments['id'],
-            eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+        Routes.listModerationNews => const ListModerationNewsScreen(),
+        Routes.createModerationScreens => const CreateRefactoringNewsScreen(),
+        Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
+            child: const ModerationNewsScreen(),
+            create: (BuildContext context) => ModerationNewsCubit(
+              id: node.arguments['id'],
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
           ),
-        ),
-
-
-
-            // RefactorModerationNewsScreen(id: node.arguments['id']),
-
-
-
-
-
-
-
+        Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+            child: const CreateRefactoringNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+              context: context,
+              id: node.arguments['id'],
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+            child: const CreateTypeNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+              id: node.arguments['id'],
+              context: context,
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
+            child: const CreateDateNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringDateNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTimeNewsScreen => BlocProvider<CreateRefactoringTimeNewsCubit>(
+            child: const CreateTimeNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTimeNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
+            child: const CreateTitleNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createDescriptionNewsScreen => BlocProvider<CreateRefactoringDescriptionNewsCubit>(
+            child: const CreateDescriptionNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringDescriptionNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
+        Routes.createPhotoNewsScreen => BlocProvider<CreateRefactoringPhotoNewsCubit>(
+            child: const CreatePhotoNewsScreen(),
+            create: (BuildContext context) => CreateRefactoringPhotoNewsCubit(
+              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+            ),
+          ),
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
             userId: node.arguments['id'],
@@ -191,16 +237,11 @@ enum Routes with OctopusRoute {
         Routes.exampleNews => const ExmapleNewsScreen(),
         Routes.allNews => const AllNewsScreen(),
         Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
-        Routes.writeProblemLeanProductionScreen =>
-          const WriteProblemLeanProductionScreen(),
-        Routes.writeSolutionLeanProductionScreen =>
-          const WriteSolutionLeamProductionScreen(),
-        Routes.writeExpensesLeanProductionScreen =>
-          const WriteExpensesLeanProductionScreen(),
-        Routes.writeBenefitLeanProductionScreen =>
-          const WriteBenefitLeanProductionScreen(),
-        Routes.selectorExecutorLeanProductionScreen =>
-          const SelectExecutorLeanProductionScreen(),
+        Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
+        Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
+        Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
+        Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
+        Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
         Routes.pickFileLeanProduction => const PickFileLeanProduction(),
       };
 }

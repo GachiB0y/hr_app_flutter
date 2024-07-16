@@ -54,21 +54,6 @@ class _MyPickerImageState extends State<MyPickerImage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // child: Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     IconButton(
-                //       splashColor: Colors.transparent,
-                //       highlightColor: Colors.transparent,
-                //       onPressed: () {},
-                //       icon: const Icon(
-                //         Icons.add,
-                //         size: 30,
-                //         color: Colors.black,
-                //       ),
-                //     ),
-                //   ],
-                // ),
               )
             : Container(
                 width: double.infinity,

@@ -30,39 +30,9 @@ import 'package:mockito/src/dummies.dart' as _i8;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEventEntity_0 extends _i1.SmartFake implements _i2.EventEntity {
-  _FakeEventEntity_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeDateTime_1 extends _i1.SmartFake implements DateTime {
-  _FakeDateTime_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeWriter_2 extends _i1.SmartFake implements _i2.Writer {
-  _FakeWriter_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _Fake$EventEntityCopyWith_3<$Res> extends _i1.SmartFake
+class _Fake$EventEntityCopyWith_0<$Res> extends _i1.SmartFake
     implements _i2.$EventEntityCopyWith<$Res> {
-  _Fake$EventEntityCopyWith_3(
+  _Fake$EventEntityCopyWith_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -71,9 +41,9 @@ class _Fake$EventEntityCopyWith_3<$Res> extends _i1.SmartFake
         );
 }
 
-class _Fake$CategoryCopyWith_4<$Res> extends _i1.SmartFake
+class _Fake$CategoryCopyWith_1<$Res> extends _i1.SmartFake
     implements _i2.$CategoryCopyWith<$Res> {
-  _Fake$CategoryCopyWith_4(
+  _Fake$CategoryCopyWith_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -148,6 +118,21 @@ class MockIEventEntityRepository extends _i1.Mock
   }
 
   @override
+  _i4.Stream<_i6.EventEntityRepositoryState> get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+      ) as _i4.Stream<_i6.EventEntityRepositoryState>);
+  @override
+  List<_i2.EventEntity> get approvmentEvents => (super.noSuchMethod(
+        Invocation.getter(#approvmentEvents),
+        returnValue: <_i2.EventEntity>[],
+      ) as List<_i2.EventEntity>);
+  @override
+  List<_i2.Category> get categoriesNews => (super.noSuchMethod(
+        Invocation.getter(#categoriesNews),
+        returnValue: <_i2.Category>[],
+      ) as List<_i2.Category>);
+  @override
   _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
@@ -157,23 +142,23 @@ class MockIEventEntityRepository extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
-      (super.noSuchMethod(
+  _i4.Future<void> getApprovmentEvents() => (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
         ),
-        returnValue:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-      ) as _i4.Future<List<_i2.EventEntity>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
+  _i4.Future<void> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-      ) as _i4.Future<List<_i2.Category>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> createNewEventEntity({
     required String? title,
@@ -182,6 +167,7 @@ class MockIEventEntityRepository extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
+    required List<Map<String, dynamic>>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -194,10 +180,28 @@ class MockIEventEntityRepository extends _i1.Mock
             #endDate: endDate,
             #imageFile: imageFile,
             #categories: categories,
+            #vote: vote,
           },
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  _i4.Future<void> updateNews({
+    required _i2.EventEntity? news,
+    _i7.File? file,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateNews,
+          [],
+          {
+            #news: news,
+            #file: file,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
@@ -209,22 +213,15 @@ class MockIEventEntityRepository extends _i1.Mock
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<_i2.EventEntity> getNewsById({required String? id}) =>
-      (super.noSuchMethod(
+  _i4.Future<void> getNewsById({required String? id}) => (super.noSuchMethod(
         Invocation.method(
           #getNewsById,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<_i2.EventEntity>.value(_FakeEventEntity_0(
-          this,
-          Invocation.method(
-            #getNewsById,
-            [],
-            {#id: id},
-          ),
-        )),
-      ) as _i4.Future<_i2.EventEntity>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> moveInArchiveNews({required String? id}) =>
       (super.noSuchMethod(
@@ -235,6 +232,22 @@ class MockIEventEntityRepository extends _i1.Mock
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  void changeCurrentNews(_i2.EventEntity? news) => super.noSuchMethod(
+        Invocation.method(
+          #changeCurrentNews,
+          [news],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void createEmptyNews() => super.noSuchMethod(
+        Invocation.method(
+          #createEmptyNews,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [EventEntity].
@@ -251,80 +264,9 @@ class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
         returnValue: 0,
       ) as int);
   @override
-  String get title => (super.noSuchMethod(
-        Invocation.getter(#title),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#title),
-        ),
-      ) as String);
-  @override
-  String get description => (super.noSuchMethod(
-        Invocation.getter(#description),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#description),
-        ),
-      ) as String);
-  @override
-  String get image => (super.noSuchMethod(
-        Invocation.getter(#image),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#image),
-        ),
-      ) as String);
-  @override
-  DateTime get startDate => (super.noSuchMethod(
-        Invocation.getter(#startDate),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#startDate),
-        ),
-      ) as DateTime);
-  @override
-  DateTime get createdAt => (super.noSuchMethod(
-        Invocation.getter(#createdAt),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#createdAt),
-        ),
-      ) as DateTime);
-  @override
-  DateTime get updatedAt => (super.noSuchMethod(
-        Invocation.getter(#updatedAt),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#updatedAt),
-        ),
-      ) as DateTime);
-  @override
-  bool get isPublish => (super.noSuchMethod(
-        Invocation.getter(#isPublish),
-        returnValue: false,
-      ) as bool);
-  @override
-  bool get isArchived => (super.noSuchMethod(
-        Invocation.getter(#isArchived),
-        returnValue: false,
-      ) as bool);
-  @override
-  List<_i2.Category> get categories => (super.noSuchMethod(
-        Invocation.getter(#categories),
-        returnValue: <_i2.Category>[],
-      ) as List<_i2.Category>);
-  @override
-  _i2.Writer get writer => (super.noSuchMethod(
-        Invocation.getter(#writer),
-        returnValue: _FakeWriter_2(
-          this,
-          Invocation.getter(#writer),
-        ),
-      ) as _i2.Writer);
-  @override
   _i2.$EventEntityCopyWith<_i2.EventEntity> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
-        returnValue: _Fake$EventEntityCopyWith_3<_i2.EventEntity>(
+        returnValue: _Fake$EventEntityCopyWith_0<_i2.EventEntity>(
           this,
           Invocation.getter(#copyWith),
         ),
@@ -363,7 +305,7 @@ class MockCategory extends _i1.Mock implements _i2.Category {
   @override
   _i2.$CategoryCopyWith<_i2.Category> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
-        returnValue: _Fake$CategoryCopyWith_4<_i2.Category>(
+        returnValue: _Fake$CategoryCopyWith_1<_i2.Category>(
           this,
           Invocation.getter(#copyWith),
         ),
@@ -437,6 +379,25 @@ class MockAuthRepo extends _i1.Mock implements _i3.IAuthRepository {
 class MockEventEntityRepo extends _i1.Mock
     implements _i6.IEventEntityRepository {
   @override
+  _i4.Stream<_i6.EventEntityRepositoryState> get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+        returnValueForMissingStub:
+            _i4.Stream<_i6.EventEntityRepositoryState>.empty(),
+      ) as _i4.Stream<_i6.EventEntityRepositoryState>);
+  @override
+  List<_i2.EventEntity> get approvmentEvents => (super.noSuchMethod(
+        Invocation.getter(#approvmentEvents),
+        returnValue: <_i2.EventEntity>[],
+        returnValueForMissingStub: <_i2.EventEntity>[],
+      ) as List<_i2.EventEntity>);
+  @override
+  List<_i2.Category> get categoriesNews => (super.noSuchMethod(
+        Invocation.getter(#categoriesNews),
+        returnValue: <_i2.Category>[],
+        returnValueForMissingStub: <_i2.Category>[],
+      ) as List<_i2.Category>);
+  @override
   _i4.Future<List<_i2.EventEntity>> getEvents() => (super.noSuchMethod(
         Invocation.method(
           #getEvents,
@@ -448,27 +409,23 @@ class MockEventEntityRepo extends _i1.Mock
             _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
       ) as _i4.Future<List<_i2.EventEntity>>);
   @override
-  _i4.Future<List<_i2.EventEntity>> getApprovmentEvents() =>
-      (super.noSuchMethod(
+  _i4.Future<void> getApprovmentEvents() => (super.noSuchMethod(
         Invocation.method(
           #getApprovmentEvents,
           [],
         ),
-        returnValue:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-        returnValueForMissingStub:
-            _i4.Future<List<_i2.EventEntity>>.value(<_i2.EventEntity>[]),
-      ) as _i4.Future<List<_i2.EventEntity>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
-  _i4.Future<List<_i2.Category>> getCategory() => (super.noSuchMethod(
+  _i4.Future<void> getCategory() => (super.noSuchMethod(
         Invocation.method(
           #getCategory,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-        returnValueForMissingStub:
-            _i4.Future<List<_i2.Category>>.value(<_i2.Category>[]),
-      ) as _i4.Future<List<_i2.Category>>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> createNewEventEntity({
     required String? title,
@@ -477,6 +434,7 @@ class MockEventEntityRepo extends _i1.Mock
     required String? endDate,
     required _i7.File? imageFile,
     required List<String>? categories,
+    required List<Map<String, dynamic>>? vote,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -489,11 +447,29 @@ class MockEventEntityRepo extends _i1.Mock
             #endDate: endDate,
             #imageFile: imageFile,
             #categories: categories,
+            #vote: vote,
           },
         ),
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  _i4.Future<void> updateNews({
+    required _i2.EventEntity? news,
+    _i7.File? file,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateNews,
+          [],
+          {
+            #news: news,
+            #file: file,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> approvementNews({required String? id}) =>
       (super.noSuchMethod(
@@ -506,31 +482,15 @@ class MockEventEntityRepo extends _i1.Mock
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  _i4.Future<_i2.EventEntity> getNewsById({required String? id}) =>
-      (super.noSuchMethod(
+  _i4.Future<void> getNewsById({required String? id}) => (super.noSuchMethod(
         Invocation.method(
           #getNewsById,
           [],
           {#id: id},
         ),
-        returnValue: _i4.Future<_i2.EventEntity>.value(_FakeEventEntity_0(
-          this,
-          Invocation.method(
-            #getNewsById,
-            [],
-            {#id: id},
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.EventEntity>.value(_FakeEventEntity_0(
-          this,
-          Invocation.method(
-            #getNewsById,
-            [],
-            {#id: id},
-          ),
-        )),
-      ) as _i4.Future<_i2.EventEntity>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
   _i4.Future<bool> moveInArchiveNews({required String? id}) =>
       (super.noSuchMethod(
@@ -542,6 +502,22 @@ class MockEventEntityRepo extends _i1.Mock
         returnValue: _i4.Future<bool>.value(false),
         returnValueForMissingStub: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+  @override
+  void changeCurrentNews(_i2.EventEntity? news) => super.noSuchMethod(
+        Invocation.method(
+          #changeCurrentNews,
+          [news],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void createEmptyNews() => super.noSuchMethod(
+        Invocation.method(
+          #createEmptyNews,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [EventEntity].
@@ -555,115 +531,13 @@ class MockNewsEntity extends _i1.Mock implements _i2.EventEntity {
         returnValueForMissingStub: 0,
       ) as int);
   @override
-  String get title => (super.noSuchMethod(
-        Invocation.getter(#title),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#title),
-        ),
-        returnValueForMissingStub: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#title),
-        ),
-      ) as String);
-  @override
-  String get description => (super.noSuchMethod(
-        Invocation.getter(#description),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#description),
-        ),
-        returnValueForMissingStub: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#description),
-        ),
-      ) as String);
-  @override
-  String get image => (super.noSuchMethod(
-        Invocation.getter(#image),
-        returnValue: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#image),
-        ),
-        returnValueForMissingStub: _i8.dummyValue<String>(
-          this,
-          Invocation.getter(#image),
-        ),
-      ) as String);
-  @override
-  DateTime get startDate => (super.noSuchMethod(
-        Invocation.getter(#startDate),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#startDate),
-        ),
-        returnValueForMissingStub: _FakeDateTime_1(
-          this,
-          Invocation.getter(#startDate),
-        ),
-      ) as DateTime);
-  @override
-  DateTime get createdAt => (super.noSuchMethod(
-        Invocation.getter(#createdAt),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#createdAt),
-        ),
-        returnValueForMissingStub: _FakeDateTime_1(
-          this,
-          Invocation.getter(#createdAt),
-        ),
-      ) as DateTime);
-  @override
-  DateTime get updatedAt => (super.noSuchMethod(
-        Invocation.getter(#updatedAt),
-        returnValue: _FakeDateTime_1(
-          this,
-          Invocation.getter(#updatedAt),
-        ),
-        returnValueForMissingStub: _FakeDateTime_1(
-          this,
-          Invocation.getter(#updatedAt),
-        ),
-      ) as DateTime);
-  @override
-  bool get isPublish => (super.noSuchMethod(
-        Invocation.getter(#isPublish),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
-  @override
-  bool get isArchived => (super.noSuchMethod(
-        Invocation.getter(#isArchived),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
-  @override
-  List<_i2.Category> get categories => (super.noSuchMethod(
-        Invocation.getter(#categories),
-        returnValue: <_i2.Category>[],
-        returnValueForMissingStub: <_i2.Category>[],
-      ) as List<_i2.Category>);
-  @override
-  _i2.Writer get writer => (super.noSuchMethod(
-        Invocation.getter(#writer),
-        returnValue: _FakeWriter_2(
-          this,
-          Invocation.getter(#writer),
-        ),
-        returnValueForMissingStub: _FakeWriter_2(
-          this,
-          Invocation.getter(#writer),
-        ),
-      ) as _i2.Writer);
-  @override
   _i2.$EventEntityCopyWith<_i2.EventEntity> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
-        returnValue: _Fake$EventEntityCopyWith_3<_i2.EventEntity>(
+        returnValue: _Fake$EventEntityCopyWith_0<_i2.EventEntity>(
           this,
           Invocation.getter(#copyWith),
         ),
-        returnValueForMissingStub: _Fake$EventEntityCopyWith_3<_i2.EventEntity>(
+        returnValueForMissingStub: _Fake$EventEntityCopyWith_0<_i2.EventEntity>(
           this,
           Invocation.getter(#copyWith),
         ),

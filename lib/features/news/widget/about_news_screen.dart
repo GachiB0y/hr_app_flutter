@@ -46,9 +46,11 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                       child: CircularProgressIndicator.adaptive(),
                     ),
                 loaded: (news) {
-                  final date = DateFormat('dd MMMM').format(news.startDate);
-                  final time = DateFormat('HH:mm').format(news.startDate);
-                  final createdAt = DateFormat('dd.MM.yy').format(news.createdAt);
+
+                    final date = DateFormat('dd MMMM').format(news.startDate!);
+                    final time = DateFormat('HH:mm').format(news.startDate!);
+                    final createdAt = DateFormat('dd.MM.yy').format(news.createdAt!);
+
                   return SafeArea(
                     child: CustomScrollView(
                       slivers: [
@@ -72,7 +74,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                         SliverPadding(
                           padding: const EdgeInsets.only(left: 36),
                           sliver: SliverToBoxAdapter(
-                            child: Text(news.title, style: Theme.of(context).textTheme.titleLarge),
+                            child: Text(news.title ?? '', style: Theme.of(context).textTheme.titleLarge),
                           ),
                         ),
                         const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
@@ -80,7 +82,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                           padding: const EdgeInsets.only(left: 36),
                           sliver: SliverToBoxAdapter(
                             child: Text(
-                              news.description,
+                              news.description ?? '',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -95,7 +97,7 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${news.writer.firstName} ${news.writer.middleName}',
+                                  '${news.writer?.firstName} ${news.writer?.middleName}',
                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         fontSize: 17,
                                       ),
@@ -114,4 +116,3 @@ class _AboutNewsScreenState extends State<AboutNewsScreen> {
     );
   }
 }
-

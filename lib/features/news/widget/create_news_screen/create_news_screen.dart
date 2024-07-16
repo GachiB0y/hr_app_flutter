@@ -31,6 +31,7 @@ class _CreateNewsScreenState extends State<CreateNewsScreen> {
 /// Exmaple News Screen
 class ExmapleNewsScreen extends StatelessWidget {
   const ExmapleNewsScreen({super.key});
+
   void showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -40,9 +41,9 @@ class ExmapleNewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     final date = DateFormat('dd MMMM').format(newsModel!.startDate);
     final time = DateFormat('HH:mm').format(newsModel.startDate);
 
@@ -102,7 +103,6 @@ class ExmapleNewsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
               BlocBuilder<EventEntityBloc, EventEntityState>(
                 builder: (context, state) {
@@ -170,6 +170,7 @@ class DateOrTimeWidget extends StatelessWidget {
     required this.text,
     super.key,
   });
+
   final String text;
 
   @override
@@ -273,21 +274,19 @@ class WriteDescriptionNewsScreen extends StatefulWidget {
   const WriteDescriptionNewsScreen({super.key});
 
   @override
-  State<WriteDescriptionNewsScreen> createState() =>
-      _WriteDescriptionNewsScreenState();
+  State<WriteDescriptionNewsScreen> createState() => _WriteDescriptionNewsScreenState();
 }
 
-class _WriteDescriptionNewsScreenState
-    extends State<WriteDescriptionNewsScreen> {
+class _WriteDescriptionNewsScreenState extends State<WriteDescriptionNewsScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     if (newsModel != null && newsModel.description != null) {
       _descriptionController.text = newsModel.description!;
     }
@@ -295,9 +294,9 @@ class _WriteDescriptionNewsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -308,10 +307,7 @@ class _WriteDescriptionNewsScreenState
               Center(
                 child: Text(
                   'Опиши мероприятие',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -324,12 +320,8 @@ class _WriteDescriptionNewsScreenState
                   decoration: InputDecoration(
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
-                    hintText:
-                        'Введи описание, не забудь указать место проведения',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintText: 'Введи описание, не забудь указать место проведения',
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -381,9 +373,9 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
   @override
   void initState() {
     super.initState();
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     if (newsModel != null && newsModel.title != null) {
       _titleController.text = newsModel.title!;
     }
@@ -391,9 +383,9 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -404,10 +396,7 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
               Center(
                 child: Text(
                   'Напиши заголовок',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontSize: 22),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
                 ),
               ),
               Padding(
@@ -421,10 +410,7 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
                     fillColor: const Color(0xfff5f5f5),
                     filled: true,
                     hintText: 'Введите заголовок',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 15),
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -492,9 +478,9 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -503,10 +489,7 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
             Center(
               child: Text(
                 'Выбери время проведения',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             CupertinoTimerPicker(
@@ -594,9 +577,9 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     return Scaffold(
       appBar: const _AppBarForCreateNews(),
       body: SafeArea(
@@ -606,10 +589,7 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
             Center(
               child: Text(
                 'Выбери дату мероприятия',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             CalendarDatePicker(
@@ -628,10 +608,7 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
             Center(
               child: Text(
                 'Дата: ${formatter.format(selectedDate)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontSize: 22),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
               ),
             ),
             const SizedBox(height: 10),
@@ -702,8 +679,7 @@ class SelectedTypeNewsScreen extends StatelessWidget {
       );
 }
 
-class _AppBarForCreateNews extends StatelessWidget
-    implements PreferredSizeWidget {
+class _AppBarForCreateNews extends StatelessWidget implements PreferredSizeWidget {
   const _AppBarForCreateNews();
 
   @override
@@ -711,8 +687,7 @@ class _AppBarForCreateNews extends StatelessWidget
         actions: [
           TextButton(
             onPressed: () {
-              context.octopus
-                  .setState((state) => state..removeByName('create-news'));
+              context.octopus.setState((state) => state..removeByName('create-news'));
             },
             child: const Text('Сбросить'),
           ),
@@ -790,9 +765,9 @@ class _TypeListWidgetState extends State<TypeListWidget> {
   }
 
   void selectItem(String item) {
-    final newsModel = ChangeNotifierProvaider.read<
-        ChangeNotifierProvaider<CreateEventsViewModel>,
-        CreateEventsViewModel>(context);
+    final newsModel =
+        ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>, CreateEventsViewModel>(
+            context);
     setState(() {
       if (selectedCategories.contains(item)) {
         selectedCategories.remove(item);

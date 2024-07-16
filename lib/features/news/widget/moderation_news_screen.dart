@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/news/bloc/refactor_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/ui/commons/blur_image_widget.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
-class RefactorModerationNewsScreen extends StatelessWidget {
+class ModerationNewsScreen extends StatelessWidget {
   /// Экран выбраной новости для модерации.
-  const RefactorModerationNewsScreen({
+  const ModerationNewsScreen({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<RefactorNewsCubit>();
-    final news = cubit.state.news;
-    return BlocBuilder<RefactorNewsCubit, RefactorNewsState>(
+    final cubit = context.read<ModerationNewsCubit>();
+    final news = context.select((ModerationNewsCubit value) => value.state.news);
+    return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(
       builder: (context, state) {
         return ScaffoldManager(
           appBar: AppBar(
@@ -36,15 +35,16 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                         width: 30,
                       ),
                       InkWell(
-                          splashColor: AppColors.green.withOpacity(0.3),
-                          onTap: () {
-                            if (news?.id == null) return;
-                            cubit.openActionSheet(context: context, id: news!.id);
-                          },
-                          child: const Icon(
-                            Icons.more_horiz_outlined,
-                            size: 35,
-                          )),
+                        splashColor: Colors.green.withOpacity(0.3),
+                        onTap: () {
+                          if (news?.id == 0) return;
+                          cubit.openActionSheet(context: context, id: news?.id ?? 0);
+                        },
+                        child: const Icon(
+                          Icons.more_horiz_outlined,
+                          size: 35,
+                        ),
+                      ),
                     ],
                   )
                 : null,
@@ -101,7 +101,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${news?.writer.firstName} ${news?.writer.middleName}',
+                                '${news?.writer?.firstName} ${news?.writer?.middleName}',
                                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                       fontSize: 17,
                                     ),
@@ -117,13 +117,13 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                         sliver: SliverToBoxAdapter(
                           child: InkWell(
                             onTap: () {
-                              if(news == null) return;
+                              if (news == null) return;
                               cubit.publishOrRejectNews(value: true, id: news.id.toString());
                             },
                             child: Container(
                               height: 57,
                               decoration: BoxDecoration(
-                                color: AppColors.black,
+                                color: Colors.black,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               width: double.infinity,
@@ -131,7 +131,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                                 child: Text(
                                   'Опубликовать',
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: Colors.white,
                                     fontSize: 26,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -144,7 +144,7 @@ class RefactorModerationNewsScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : PublishNewsScreen(
+              : _PublishNewsScreen(
                   title: news?.title ?? '',
                   value: state.valueState ?? true,
                 ),
@@ -154,17 +154,16 @@ class RefactorModerationNewsScreen extends StatelessWidget {
   }
 }
 
-class PublishNewsScreen extends StatelessWidget {
+class _PublishNewsScreen extends StatelessWidget {
   /// Название новости.
   final String title;
 
   /// Значение опубликована новость или отклонена.
   final bool value;
 
-  const PublishNewsScreen({
+  const _PublishNewsScreen({
     required this.title,
     required this.value,
-    super.key,
   });
 
   @override
@@ -175,14 +174,14 @@ class PublishNewsScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 110),
-            Image.asset( value ? 'assets/images/ok.png' : 'assets/images/cancel.png' ),
+            Image.asset(value ? 'assets/images/ok.png' : 'assets/images/cancel.png'),
             const SizedBox(height: 30),
             Text(
               value ? 'Запись опубликована' : 'Запись отклонена',
               style: const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.w700,
-                color: AppColors.black,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 25),
@@ -190,11 +189,11 @@ class PublishNewsScreen extends StatelessWidget {
               child: SizedBox(
                 height: 200,
                 child: Text(
-                 title,
+                  title,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.black,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,

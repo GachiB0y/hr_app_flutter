@@ -137,7 +137,7 @@ void main() {
         imageFile: imageFile,
         categories: categories,
         startDate: startDate,
-        endDate: endDate,
+        endDate: endDate, vote: [],
       )).thenAnswer((_) => Future.value(true));
 
       // Act
