@@ -38,16 +38,16 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       ContinueButton(
-                        isCreate: state.currentNews.id == null,
+                        isCreate: state.currentNews.id == 0,
                         onTap: () {
                           cubit.saveChanges();
-                          if (state.currentNews.id != null) {
+                          if (state.currentNews.id != 0) {
                             context.octopus.setState(
                               (state) => state..removeByName(Routes.createModerationScreens.name),
                             );
                           }
                         },
-                        text: state.currentNews.id != null ? 'Сохранить изменения' : 'Создать',
+                        text: state.currentNews.id != 0 ? 'Сохранить изменения' : 'Создать',
                       ),
                       const SizedBox(height: 10),
                     ],

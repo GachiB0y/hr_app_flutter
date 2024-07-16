@@ -17,7 +17,7 @@ class CreateRefactoringPhotoNewsState {
 
   /// Состояние блока [CreateRefactoringPhotoNewsCubit].
   CreateRefactoringPhotoNewsState({
-    this.currentNews = const EventEntity(),
+    this.currentNews = const EventEntity(id: 0),
     this.file,
     this.isNewsChecked = false,
   });
@@ -66,7 +66,7 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
 
   /// Сохранить изменения.
   Future<void> saveChanges() async {
-    if (state.currentNews.id == null) {
+    if (state.currentNews.id == 0) {
       if (state.file == null) return;
       List<String> categories = [];
       for (var e in state.currentNews.categories!) {

@@ -47,7 +47,7 @@ class CreateTypeNewsScreen extends StatelessWidget {
             BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
                 builder: (context, state) {
               return ContinueButton(
-                isCreate: cubit.state.currentNews.id == null,
+                isCreate: cubit.state.currentNews.id == 0,
                 onTap: () {
                   HomeScope.of(context).state.onItemTapped(4);
 

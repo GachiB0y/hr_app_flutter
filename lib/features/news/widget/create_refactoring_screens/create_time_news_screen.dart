@@ -32,7 +32,7 @@ class CreateTimeNewsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ContinueButton(
-                  isCreate: cubit.state.currentNews?.id == null,
+                  isCreate: cubit.state.currentNews?.id == 0,
                   onTap: () {
                     if(cubit.isActive) {
                       context.octopus.setState(

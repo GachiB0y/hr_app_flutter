@@ -43,7 +43,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
     this.id,
   }) : super(
           CreateRefactoringTypeNewsState(
-            currentNews: const EventEntity(),
+            currentNews: const EventEntity(id: 0),
             categoriesNews: [],
           ),
         ) {

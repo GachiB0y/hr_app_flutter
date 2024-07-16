@@ -195,6 +195,12 @@ class MockIEventsEntityProvider extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockEventEntity extends _i1.Mock implements _i2.EventEntity {
   @override
+  int get id => (super.noSuchMethod(
+        Invocation.getter(#id),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+  @override
   _i2.$EventEntityCopyWith<_i2.EventEntity> get copyWith => (super.noSuchMethod(
         Invocation.getter(#copyWith),
         returnValue: _Fake$EventEntityCopyWith_1<_i2.EventEntity>(

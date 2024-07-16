@@ -171,7 +171,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
 
   @override
   void createEmptyNews() {
-    _state = _state.copyWith(currentNews: const EventEntity());
+    _state = _state.copyWith(currentNews: const EventEntity(id: 0));
     _update();
   }
 

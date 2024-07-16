@@ -38,7 +38,7 @@ class ModerationNewsScreen extends StatelessWidget {
                       InkWell(
                         splashColor: AppColors.green.withOpacity(0.3),
                         onTap: () {
-                          if (news?.id == null) return;
+                          if (news?.id == 0) return;
                           cubit.openActionSheet(context: context, id: news?.id ?? 0);
                         },
                         child: const Icon(

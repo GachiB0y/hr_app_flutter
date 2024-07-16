@@ -10,7 +10,7 @@ part 'new_event_entity.g.dart';
 class EventEntity with _$EventEntity {
   @JsonSerializable(explicitToJson: true)
   const factory EventEntity({
-    int? id,
+   required int id,
     String? title,
     String? description,
     String? image,
