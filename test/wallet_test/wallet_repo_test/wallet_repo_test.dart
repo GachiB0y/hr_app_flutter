@@ -116,7 +116,7 @@ void main() {
 //Создаем list CoinsInfo
         final List<CoinsInfo> listInfo = [coinsInfoFirst];
 
-        when(walletApiClient.getCoinsInfo()).thenAnswer((_) async => listInfo);
+        // when(walletApiClient.getCoinsInfo()).thenAnswer((_) async => listInfo);
 
         final actual = await walletRepository.getCoinsInfo();
         expect(actual, listInfo);

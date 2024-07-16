@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/constant/constants.dart';
-import 'package:hr_app_flutter/core/widget/components/custom_curved_nav_bar/custom_curved_nav_bar.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_scope.dart';

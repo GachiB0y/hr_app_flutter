@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
 import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:octopus/octopus.dart';
 
@@ -93,13 +94,14 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     (state) => state
                       ..findByName(widget.tabName)?.add(
                         OctopusNode.mutable(
-                          'create-news',
+                          'create-moderation-screens',
                           children: [
-                            Routes.createNewsType.node(),
+                            Routes.createTypeNewsScreen.node(),
                           ],
                         ),
                       ),
                   );
+
                   return;
                 } else if (widget.service.id == 22 &&
                     widget.service.permissions.approveService == true &&

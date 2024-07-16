@@ -93,7 +93,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                               scrollDirection: Axis.horizontal,
                               slivers: <Widget>[
                                 ScrollBarServiceWidget(
-                                  tabName: '${Routes.userMain.name}-tab',
+                                  tabName: '${Routes.services.name}-tab',
                                 ),
                               ],
                             ),

@@ -68,15 +68,16 @@ class MockIWalletProvider extends _i1.Mock implements _i4.IWalletProvider {
                 (avarageCoins: 0, balance: 0)),
       ) as _i5.Future<({int avarageCoins, int balance})>);
   @override
-  _i5.Future<List<_i2.CoinsInfo>> getCoinsInfo() => (super.noSuchMethod(
+  _i5.Future<List<_i3.CoinsReward>> getCoinsInfo() => (super.noSuchMethod(
         Invocation.method(
           #getCoinsInfo,
           [],
         ),
-        returnValue: _i5.Future<List<_i2.CoinsInfo>>.value(<_i2.CoinsInfo>[]),
+        returnValue:
+            _i5.Future<List<_i3.CoinsReward>>.value(<_i3.CoinsReward>[]),
         returnValueForMissingStub:
-            _i5.Future<List<_i2.CoinsInfo>>.value(<_i2.CoinsInfo>[]),
-      ) as _i5.Future<List<_i2.CoinsInfo>>);
+            _i5.Future<List<_i3.CoinsReward>>.value(<_i3.CoinsReward>[]),
+      ) as _i5.Future<List<_i3.CoinsReward>>);
   @override
   _i5.Future<List<_i3.CoinsReward>> getInfoCoinsReward() => (super.noSuchMethod(
         Invocation.method(

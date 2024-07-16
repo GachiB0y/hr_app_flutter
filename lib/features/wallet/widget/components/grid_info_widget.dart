@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/coins_reward_bloc/coins_reward_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/widget/components/tile_coins_info.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
 
 /// Grid for HowToGetBigScreen and  WhatToSpendScreen
 class GridInfoCoins extends StatefulWidget {

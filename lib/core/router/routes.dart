@@ -3,34 +3,47 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_description_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_photo_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/create_lean_production_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/rookies_info_screen/rookies_info_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
-import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/statements/widget/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass.dart';
-import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/how_to_get_big/how_to_get_big_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
-
-import '../../features/initialiazation/widget/dependencies_scope.dart';
-import '../../features/news/bloc/moderation_news_bloc.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -47,7 +60,7 @@ enum Routes with OctopusRoute {
   approveNews('approve-news', title: 'Approve News'),
 
   /// Блок экранов для создания и модерации новости.
-  createModerationScreens('create-moderation-screens', title:  'Create Moderation Screens'),
+  createModerationScreens('create-moderation-screens', title: 'Create Moderation Screens'),
   moderationNewsScreen('refactor-news', title: 'Refactor News'),
   createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
   listModerationNews('list-moderation-news', title: 'Moderation News'),
@@ -93,7 +106,6 @@ enum Routes with OctopusRoute {
   allNews('all-news', title: 'All News'),
 
   ///  Start Create Lean Production Screens
-
   createLeanProductionScreen(
     'create-lean-production',
     title: 'Create Lean Production',
@@ -102,22 +114,18 @@ enum Routes with OctopusRoute {
     'write-problem-lean-production',
     title: 'Write Problem Lean Production',
   ),
-
   writeSolutionLeanProductionScreen(
     'write-solution-lean-production',
     title: 'Write Solution Lean Production',
   ),
-
   writeExpensesLeanProductionScreen(
     'write-expenses-lean-production',
     title: 'Write Expenses Lean Production',
   ),
-
   writeBenefitLeanProductionScreen(
     'write-benefit-lean-production',
     title: 'Write Benefit Lean Production',
   ),
-
   selectorExecutorLeanProductionScreen(
     'selector-executor-lean-production',
     title: 'Write Executor Lean Production',
