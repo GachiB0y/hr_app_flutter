@@ -11,10 +11,8 @@ import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart'
     as _i3;
 import 'package:hr_app_flutter/features/wallet/data/repo/wallet_repository.dart'
     as _i6;
-import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_info/coins_info.dart'
-    as _i7;
 import 'package:hr_app_flutter/features/wallet/model/coins_screen/coins_reward/coins_reward.dart'
-    as _i8;
+    as _i7;
 import 'package:hr_app_flutter/features/wallet/model/wallet/wallet.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -131,26 +129,27 @@ class MockIWalletRepository extends _i1.Mock implements _i6.IWalletRepository {
         )),
       ) as _i4.Future<_i2.Wallet>);
   @override
-  _i4.Future<List<_i7.CoinsInfo>> getCoinsInfo() => (super.noSuchMethod(
+  _i4.Future<List<_i7.CoinsReward>> getCoinsInfo() => (super.noSuchMethod(
         Invocation.method(
           #getCoinsInfo,
           [],
         ),
-        returnValue: _i4.Future<List<_i7.CoinsInfo>>.value(<_i7.CoinsInfo>[]),
+        returnValue:
+            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i7.CoinsInfo>>.value(<_i7.CoinsInfo>[]),
-      ) as _i4.Future<List<_i7.CoinsInfo>>);
+            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
+      ) as _i4.Future<List<_i7.CoinsReward>>);
   @override
-  _i4.Future<List<_i8.CoinsReward>> getInfoCoinsReward() => (super.noSuchMethod(
+  _i4.Future<List<_i7.CoinsReward>> getInfoCoinsReward() => (super.noSuchMethod(
         Invocation.method(
           #getInfoCoinsReward,
           [],
         ),
         returnValue:
-            _i4.Future<List<_i8.CoinsReward>>.value(<_i8.CoinsReward>[]),
+            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i8.CoinsReward>>.value(<_i8.CoinsReward>[]),
-      ) as _i4.Future<List<_i8.CoinsReward>>);
+            _i4.Future<List<_i7.CoinsReward>>.value(<_i7.CoinsReward>[]),
+      ) as _i4.Future<List<_i7.CoinsReward>>);
   @override
   _i4.Future<int> sendCoinsToOtherUser({
     required int? amount,

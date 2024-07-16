@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
+import 'package:intl/intl.dart';
 
 abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents();

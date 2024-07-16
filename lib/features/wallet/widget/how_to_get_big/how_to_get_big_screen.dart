@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
 import 'package:hr_app_flutter/features/wallet/widget/components/grid_info_widget.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
 
 /// Screen for how to get big coins
 class HowToGetBigScreen extends StatelessWidget {
