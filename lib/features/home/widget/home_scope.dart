@@ -201,9 +201,7 @@ class _HomeScopeState extends State<HomeScope> implements HomeShellPageControlle
         child: widget.child,
       );
 
-  HomeTabsEnum get tab {
-    return _tab;
-  }
+  HomeTabsEnum get tab => _tab;
 }
 
 /// Inherited widget for quick access in the element tree.
@@ -218,10 +216,15 @@ class _InheritedHomeScope extends InheritedWidget {
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
   /// For example: `HomeScope.maybeOf(context)`.
-  static _InheritedHomeScope? maybeOf(BuildContext context, {bool listen = true}) => listen
-      ? context.dependOnInheritedWidgetOfExactType<_InheritedHomeScope>()
-      : context.getElementForInheritedWidgetOfExactType<_InheritedHomeScope>()?.widget
-          as _InheritedHomeScope?;
+  static _InheritedHomeScope? maybeOf(
+    BuildContext context, {
+    bool listen = true,
+  }) =>
+      listen
+          ? context.dependOnInheritedWidgetOfExactType<_InheritedHomeScope>()
+          : context
+              .getElementForInheritedWidgetOfExactType<_InheritedHomeScope>()
+              ?.widget as _InheritedHomeScope?;
 
   static Never _notFoundInheritedWidgetOfExactType() => throw ArgumentError(
         'Out of scope, not found inherited widget '

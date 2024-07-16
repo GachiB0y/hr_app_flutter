@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:hr_app_flutter/core/router/routes.dart';
-import 'package:hr_app_flutter/features/home/widget/home_scope.dart';
-
+import 'package:hr_app_flutter/features/services/model/service/service.dart';
 import 'package:octopus/octopus.dart';
-
-import '../../model/service/service.dart';
 
 class ServiceElementWidget extends StatefulWidget {
   const ServiceElementWidget({
-    super.key,
     required this.title,
     required this.isRow,
     required this.service,
+    required this.tabName,
+    super.key,
     this.idHandler,
     this.imagePath,
-    required this.tabName,
   });
 
   final String? imagePath;
@@ -34,11 +30,11 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
 
   @override
   Widget build(BuildContext context) {
-    const double radius = 18.0;
+    const radius = 18.0;
 
     final sizeScreen = MediaQuery.of(context).size;
 
-    final sizeWidhtIsRow = (sizeScreen.width / 3.9);
+    final sizeWidhtIsRow = sizeScreen.width / 3.9;
 
     return Stack(
       children: [
@@ -47,16 +43,14 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
-                spreadRadius: 0,
                 blurRadius: 8,
-                offset: const Offset(0, 0),
               ),
             ],
             borderRadius: BorderRadius.circular(radius),
             color: Theme.of(context).colorScheme.onPrimary,
           ),
           width: widget.isRow ? sizeWidhtIsRow : null,
-          height: (MediaQuery.of(context).size.height / 8.0),
+          height: MediaQuery.of(context).size.height / 8.0,
           child: Padding(
             padding: const EdgeInsets.only(
               left: 16.0,
@@ -72,14 +66,14 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
             ),
           ),
         ),
-        SizedBox(
-          width: 40,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 16.0),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child:
-                  Image.asset(imagePath ?? 'assets/images/grass_coin_3d.webp'),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0, left: 16.0),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Image.asset(
+              imagePath ?? 'assets/images/grass_coin_3d.png',
+              width: 34,
+              height: 34,
             ),
           ),
         ),
@@ -95,24 +89,16 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                 if (widget.service.id == 22 &&
                     widget.service.permissions.createService == true &&
                     widget.idHandler == 1) {
-                  // context.octopus.setState((state) {
-                  //   final node = state.findByName('create-news');
-                  //   if (node == null) {
-                  //     return state
-                  //       ..add(OctopusNode.mutable('create-news', children: [
-                  //         Routes.createNewsType.node(),
-                  //       ]));
-                  //   }
-
-                  //   return state;
-                  // });
-
-                  context.octopus.setState(
+                  await context.octopus.setState(
                     (state) => state
-                      ..findByName(widget.tabName)
-                          ?.add(OctopusNode.mutable('create-moderation-screens', children: [
-                        Routes.createTypeNewsScreen.node(),
-                      ])),
+                      ..findByName(widget.tabName)?.add(
+                        OctopusNode.mutable(
+                          'create-news',
+                          children: [
+                            Routes.createNewsType.node(),
+                          ],
+                        ),
+                      ),
                   );
                   return;
                 } else if (widget.service.id == 22 &&
@@ -128,7 +114,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                   route = Routes.statementsForm;
                 }
 
-                context.octopus.setState(
+                await context.octopus.setState(
                   (state) => state
                     ..findByName(widget.tabName)?.add(
                       route.node(),

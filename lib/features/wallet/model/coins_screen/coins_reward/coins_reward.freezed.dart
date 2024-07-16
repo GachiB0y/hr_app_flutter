@@ -23,6 +23,8 @@ mixin _$CoinsReward {
   int get id => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,8 @@ abstract class $CoinsRewardCopyWith<$Res> {
           CoinsReward value, $Res Function(CoinsReward) then) =
       _$CoinsRewardCopyWithImpl<$Res, CoinsReward>;
   @useResult
-  $Res call({int id, int price, String title});
+  $Res call(
+      {int id, int price, String title, String? image, String? description});
 }
 
 /// @nodoc
@@ -55,6 +58,8 @@ class _$CoinsRewardCopyWithImpl<$Res, $Val extends CoinsReward>
     Object? id = null,
     Object? price = null,
     Object? title = null,
+    Object? image = freezed,
+    Object? description = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +74,14 @@ class _$CoinsRewardCopyWithImpl<$Res, $Val extends CoinsReward>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +94,8 @@ abstract class _$$_CoinsRewardCopyWith<$Res>
       __$$_CoinsRewardCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int price, String title});
+  $Res call(
+      {int id, int price, String title, String? image, String? description});
 }
 
 /// @nodoc
@@ -98,6 +112,8 @@ class __$$_CoinsRewardCopyWithImpl<$Res>
     Object? id = null,
     Object? price = null,
     Object? title = null,
+    Object? image = freezed,
+    Object? description = freezed,
   }) {
     return _then(_$_CoinsReward(
       id: null == id
@@ -112,6 +128,14 @@ class __$$_CoinsRewardCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -120,7 +144,11 @@ class __$$_CoinsRewardCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CoinsReward implements _CoinsReward {
   const _$_CoinsReward(
-      {required this.id, required this.price, required this.title});
+      {required this.id,
+      required this.price,
+      required this.title,
+      this.image,
+      this.description});
 
   factory _$_CoinsReward.fromJson(Map<String, dynamic> json) =>
       _$$_CoinsRewardFromJson(json);
@@ -131,10 +159,14 @@ class _$_CoinsReward implements _CoinsReward {
   final int price;
   @override
   final String title;
+  @override
+  final String? image;
+  @override
+  final String? description;
 
   @override
   String toString() {
-    return 'CoinsReward(id: $id, price: $price, title: $title)';
+    return 'CoinsReward(id: $id, price: $price, title: $title, image: $image, description: $description)';
   }
 
   @override
@@ -144,12 +176,16 @@ class _$_CoinsReward implements _CoinsReward {
             other is _$_CoinsReward &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, price, title);
+  int get hashCode =>
+      Object.hash(runtimeType, id, price, title, image, description);
 
   @JsonKey(ignore: true)
   @override
@@ -169,7 +205,9 @@ abstract class _CoinsReward implements CoinsReward {
   const factory _CoinsReward(
       {required final int id,
       required final int price,
-      required final String title}) = _$_CoinsReward;
+      required final String title,
+      final String? image,
+      final String? description}) = _$_CoinsReward;
 
   factory _CoinsReward.fromJson(Map<String, dynamic> json) =
       _$_CoinsReward.fromJson;
@@ -180,6 +218,10 @@ abstract class _CoinsReward implements CoinsReward {
   int get price;
   @override
   String get title;
+  @override
+  String? get image;
+  @override
+  String? get description;
   @override
   @JsonKey(ignore: true)
   _$$_CoinsRewardCopyWith<_$_CoinsReward> get copyWith =>

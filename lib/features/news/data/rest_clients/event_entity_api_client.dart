@@ -3,8 +3,7 @@
 import 'dart:io';
 
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
-import 'package:intl/intl.dart';
-import '../../model/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 
 abstract interface class IEventsEntityProvider {
   Future<List<EventEntity>> getEvents();
@@ -58,7 +57,9 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result = (data).map((item) => EventEntity.fromJson(item)).toList();
+      final result = data
+          .map((item) => EventEntity.fromJson(item as Map<String, dynamic>))
+          .toList();
       return result;
     }
     throw Exception('Error fetching EventsEntity');
@@ -74,7 +75,9 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<Category> result = (data).map((item) => Category.fromJson(item)).toList();
+      final result = data
+          .map((item) => Category.fromJson(item as Map<String, dynamic>))
+          .toList();
       return result;
     }
     throw Exception('Error fetching Category');
@@ -184,7 +187,9 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<EventEntity> result = (data).map((item) => EventEntity.fromJson(item)).toList();
+      final result = data
+          .map((item) => EventEntity.fromJson(item as Map<String, dynamic>))
+          .toList();
       return result;
     }
     throw Exception('Error fetching  Approvment Events');
@@ -225,7 +230,7 @@ class EventsEntityProviderImpl implements IEventsEntityProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final EventEntity result = EventEntity.fromJson(data);
+      final result = EventEntity.fromJson(data);
       return result;
     }
     throw Exception('Error fetching News By Id');

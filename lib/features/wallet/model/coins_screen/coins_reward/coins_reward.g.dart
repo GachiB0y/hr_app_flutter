@@ -11,6 +11,8 @@ _$_CoinsReward _$$_CoinsRewardFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       price: json['price'] as int,
       title: json['title'] as String,
+      image: json['image'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$_CoinsRewardToJson(_$_CoinsReward instance) =>
@@ -18,4 +20,6 @@ Map<String, dynamic> _$$_CoinsRewardToJson(_$_CoinsReward instance) =>
       'id': instance.id,
       'price': instance.price,
       'title': instance.title,
+      'image': instance.image,
+      'description': instance.description,
     };

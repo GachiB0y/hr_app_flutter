@@ -21,12 +21,11 @@ class _CreateNewsScreenState extends State<CreateNewsScreen> {
   final CreateEventsViewModel _model = CreateEventsViewModel();
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvaider<CreateEventsViewModel>(
-      model: _model,
-      child: const BucketNavigator(bucket: 'create-news'),
-    );
-  }
+  Widget build(BuildContext context) =>
+      ChangeNotifierProvaider<CreateEventsViewModel>(
+        model: _model,
+        child: const BucketNavigator(bucket: 'create-news'),
+      );
 }
 
 /// Exmaple News Screen
@@ -67,8 +66,9 @@ class ExmapleNewsScreen extends StatelessWidget {
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
-                          // height: 274,
-                          child: Image.file(newsModel.file!, fit: BoxFit.contain)),
+                        // height: 274,
+                        child: Image.file(newsModel.file!, fit: BoxFit.contain),
+                      ),
                     ),
                     const SliverPadding(padding: EdgeInsets.only(bottom: 43)),
                     SliverPadding(
@@ -81,7 +81,10 @@ class ExmapleNewsScreen extends StatelessWidget {
                     SliverPadding(
                       padding: const EdgeInsets.only(left: 36),
                       sliver: SliverToBoxAdapter(
-                        child: Text(newsModel.title!, style: Theme.of(context).textTheme.titleLarge),
+                        child: Text(
+                          newsModel.title!,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
                       ),
                     ),
                     const SliverPadding(padding: EdgeInsets.only(bottom: 18)),
@@ -90,36 +93,44 @@ class ExmapleNewsScreen extends StatelessWidget {
                       sliver: SliverToBoxAdapter(
                         child: Text(
                           newsModel.description!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontSize: 17, fontWeight: FontWeight.w400),
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              BlocBuilder<EventEntityBloc, EventEntityState>(builder: (context, state) {
-                if (state is EventEntityState$Processing) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return ResumeButtonWidget(
-                    title: 'Создать',
-                    onPressed: () {
-                      context.read<EventEntityBloc>().add(EventEntityEvent.create(
-                          title: newsModel.title!,
-                          description: newsModel.description!,
-                          imageFile: newsModel.file!,
-                          categories: newsModel.selectedItems!,
-                          startDate: newsModel.startDate.toString(),
-                          endDate: null));
+              BlocBuilder<EventEntityBloc, EventEntityState>(
+                builder: (context, state) {
+                  if (state is EventEntityState$Processing) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return ResumeButtonWidget(
+                      title: 'Создать',
+                      onPressed: () {
+                        context.read<EventEntityBloc>().add(
+                              EventEntityEvent.create(
+                                title: newsModel.title!,
+                                description: newsModel.description!,
+                                imageFile: newsModel.file!,
+                                categories: newsModel.selectedItems!,
+                                startDate: newsModel.startDate.toString(),
+                                endDate: null,
+                              ),
+                            );
 
-                      context.octopus.setState((state) => state..removeByName('create-news'));
-                    },
-                  );
-                }
-              }),
+                        context.octopus.setState(
+                          (state) => state..removeByName('create-news'),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -130,62 +141,59 @@ class ExmapleNewsScreen extends StatelessWidget {
 
 class DisplayDateAndTimeWidget extends StatelessWidget {
   const DisplayDateAndTimeWidget({
-    super.key,
     required this.date,
     required this.time,
+    super.key,
   });
 
   final String date;
   final String time;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        DateOrTimeWidget(
-          text: date,
-        ),
-        const SizedBox(
-          width: 7,
-        ),
-        DateOrTimeWidget(
-          text: time,
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Row(
+        children: [
+          DateOrTimeWidget(
+            text: date,
+          ),
+          const SizedBox(
+            width: 7,
+          ),
+          DateOrTimeWidget(
+            text: time,
+          ),
+        ],
+      );
 }
 
 class DateOrTimeWidget extends StatelessWidget {
   const DateOrTimeWidget({
-    super.key,
     required this.text,
+    super.key,
   });
 
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(145),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  fontSize: 15,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
+  Widget build(BuildContext context) => Center(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(145),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class VerificationNewsTitleWidget extends StatelessWidget {
@@ -194,29 +202,30 @@ class VerificationNewsTitleWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: Color(0xffD3F2D4),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              'Новость на проверке',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
-            )
-          ],
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Color(0xffD3F2D4),
         ),
-      ),
-    );
-  }
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Новость на проверке',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 22),
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 /// Add Photo News Screen
@@ -224,35 +233,39 @@ class AddPhotoNewsScreen extends StatelessWidget {
   const AddPhotoNewsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const _AppBarForCreateNews(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                'Добавь фото',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const _AppBarForCreateNews(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Добавь фото',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 22),
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 23.0, right: 23.0, top: 20.0),
-              child: MyPickerImage(),
-            ),
-            const Spacer(),
-            ResumeButtonWidget(
-              title: 'Продолжить',
-              onPressed: () {
-                context.octopus
-                    .setState((state) => state..findByName('create-news')?.add(Routes.exampleNews.node()));
-              },
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(left: 23.0, right: 23.0, top: 20.0),
+                child: MyPickerImage(),
+              ),
+              const Spacer(),
+              ResumeButtonWidget(
+                title: 'Продолжить',
+                onPressed: () {
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName('create-news')
+                          ?.add(Routes.exampleNews.node()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 /// Write Description News Screen
@@ -329,7 +342,10 @@ class _WriteDescriptionNewsScreenState extends State<WriteDescriptionNewsScreen>
                   if (_formKey.currentState!.validate()) {
                     newsModel?.description = _descriptionController.text;
                     context.octopus.setState(
-                        (state) => state..findByName('create-news')?.add(Routes.createNewsPhoto.node()));
+                      (state) => state
+                        ..findByName('create-news')
+                            ?.add(Routes.createNewsPhoto.node()),
+                    );
                   }
                 },
               ),
@@ -415,7 +431,10 @@ class _WriteTitleNewsScreenState extends State<WriteTitleNewsScreen> {
                   if (_formKey.currentState!.validate()) {
                     newsModel?.title = _titleController.text;
                     context.octopus.setState(
-                        (state) => state..findByName('create-news')?.add(Routes.createNewsDescrition.node()));
+                      (state) => state
+                        ..findByName('create-news')
+                            ?.add(Routes.createNewsDescrition.node()),
+                    );
                   }
                 },
               ),
@@ -438,8 +457,8 @@ class SelectedNewsTimeScreen extends StatefulWidget {
 class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
   Duration? time;
 
-  String TimeLeft(diff) {
-    var timestamp = diff.floor();
+  String TimeLeft(int diff) {
+    final timestamp = diff;
     var hours = (timestamp / 60 / 60).floor();
     var minutes = ((timestamp / 60) - (hours * 60)).floor();
     var seconds = timestamp % 60;
@@ -448,13 +467,13 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
       hours = 0;
       minutes = 0;
     }
-    String hs = hours.toString();
-    hs = hs.length > 1 ? hs : "0$hs";
-    String ms = minutes.toString();
-    ms = ms.length > 1 ? ms : "0$ms";
-    String ss = seconds.toString();
-    ss = ss.length > 1 ? ss : "0$ss";
-    return "$hs:$ms";
+    var hs = hours.toString();
+    hs = hs.length > 1 ? hs : '0$hs';
+    var ms = minutes.toString();
+    ms = ms.length > 1 ? ms : '0$ms';
+    var ss = seconds.toString();
+    ss = ss.length > 1 ? ss : '0$ss';
+    return '$hs:$ms';
   }
 
   @override
@@ -482,14 +501,42 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
               },
             ),
             const Spacer(),
-            time == null
-                ? const SizedBox.shrink()
-                : Center(
-                    child: Text(
-                      'Время: ${TimeLeft(time!.inSeconds)}',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
-                    ),
-                  ),
+            if (time == null)
+              const SizedBox.shrink()
+            else
+              Center(
+                child: Text(
+                  'Время: ${TimeLeft(time!.inSeconds)}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 22),
+                ),
+              ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                final newData = newsModel?.startDate.copyWith();
+                final resetTime = DateTime(
+                  newData!.year,
+                  newData.month,
+                  newData.day,
+                );
+                newsModel?.startDate = resetTime;
+                context.octopus.setState(
+                  (state) => state
+                    ..findByName('create-news')
+                        ?.add(Routes.createNewsTitle.node()),
+                );
+              },
+              child: Text(
+                'Пропустить',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 22, color: Colors.grey),
+              ),
+            ),
             const SizedBox(height: 10),
             ResumeButtonWidget(
               title: 'Продолжить',
@@ -502,8 +549,10 @@ class _SelectedNewsTimeScreenState extends State<SelectedNewsTimeScreen> {
                 newsModel?.startDate = data!;
 
                 context.octopus.setState(
-                    (state) => state..findByName('create-news')?.add(Routes.createNewsTitle.node()));
-                print('ModelStartDate:${newsModel?.startDate}');
+                  (state) => state
+                    ..findByName('create-news')
+                        ?.add(Routes.createNewsTitle.node()),
+                );
               },
             ),
           ],
@@ -544,16 +593,17 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
               ),
             ),
             CalendarDatePicker(
-                initialDate: selectedDate,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
-                onDateChanged: (DateTime value) {
-                  setState(() {
-                    selectedDate = value;
-                  });
+              initialDate: selectedDate,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+              onDateChanged: (DateTime value) {
+                setState(() {
+                  selectedDate = value;
+                });
 
-                  newsModel?.startDate = selectedDate;
-                }),
+                newsModel?.startDate = selectedDate;
+              },
+            ),
             const Spacer(),
             Center(
               child: Text(
@@ -568,8 +618,11 @@ class _SelectedNewsDateScreenState extends State<SelectedNewsDateScreen> {
                 if (newsModel?.startDate == null) {
                   return;
                 }
-                context.octopus
-                    .setState((state) => state..findByName('create-news')?.add(Routes.createNewsTime.node()));
+                context.octopus.setState(
+                  (state) => state
+                    ..findByName('create-news')
+                        ?.add(Routes.createNewsTime.node()),
+                );
               },
             ),
           ],
@@ -587,55 +640,60 @@ class SelectedTypeNewsScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const _AppBarForCreateNews(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                'Выбери тип события',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 22),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const _AppBarForCreateNews(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Выбери тип события',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 22),
+                ),
               ),
-            ),
-            const TypeListWidget(),
-            const Spacer(),
-            ResumeButtonWidget(
-              title: 'Продолжить',
-              onPressed: () {
-                final newsModel = ChangeNotifierProvaider.read<ChangeNotifierProvaider<CreateEventsViewModel>,
-                    CreateEventsViewModel>(context);
-                if (newsModel?.selectedItems == null || newsModel?.selectedItems?.isEmpty == true) {
-                  return;
-                }
-                context.octopus
-                    .setState((state) => state..findByName('create-news')?.add(Routes.createNewsDate.node()));
-              },
-            ),
-          ],
+              const TypeListWidget(),
+              const Spacer(),
+              ResumeButtonWidget(
+                title: 'Продолжить',
+                onPressed: () {
+                  final newsModel = ChangeNotifierProvaider.read<
+                      ChangeNotifierProvaider<CreateEventsViewModel>,
+                      CreateEventsViewModel>(context);
+                  if (newsModel?.selectedItems == null ||
+                      newsModel?.selectedItems?.isEmpty == true) {
+                    return;
+                  }
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName('create-news')
+                          ?.add(Routes.createNewsDate.node()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _AppBarForCreateNews extends StatelessWidget implements PreferredSizeWidget {
   const _AppBarForCreateNews();
 
   @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      actions: [
-        TextButton(
+  Widget build(BuildContext context) => AppBar(
+        actions: [
+          TextButton(
             onPressed: () {
               context.octopus.setState((state) => state..removeByName('create-news'));
             },
-            child: const Text('Сбросить'))
-      ],
-      backgroundColor: Theme.of(context).colorScheme.background,
-    );
-  }
+            child: const Text('Сбросить'),
+          ),
+        ],
+        backgroundColor: Theme.of(context).colorScheme.background,
+      );
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -643,49 +701,47 @@ class _AppBarForCreateNews extends StatelessWidget implements PreferredSizeWidge
 
 class ResumeButtonWidget extends StatelessWidget {
   const ResumeButtonWidget({
-    super.key,
     required this.onPressed,
     required this.title,
+    super.key,
   });
-
   final void Function() onPressed;
   final String title;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-              return const Color.fromARGB(46, 94, 222, 102);
-            },
-          ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) =>
+                  const Color.fromARGB(46, 94, 222, 102),
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+            ),
+            minimumSize:
+                MaterialStateProperty.all(const Size(double.infinity, 57)),
+            backgroundColor: MaterialStateProperty.resolveWith(
+              (states) => Theme.of(context).colorScheme.primary,
             ),
           ),
-          minimumSize: MaterialStateProperty.all(const Size(double.infinity, 57)),
-          backgroundColor:
-              MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.primary),
-        ),
-        child: Ink(
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          child: InkWell(
-            child: Text(
-              title,
-              style: const TextStyle(color: Colors.white, fontSize: 26),
+          child: Ink(
+            decoration: const BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: InkWell(
+              child: Text(
+                title,
+                style: const TextStyle(color: Colors.white, fontSize: 26),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class TypeListWidget extends StatefulWidget {
@@ -723,60 +779,59 @@ class _TypeListWidgetState extends State<TypeListWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      bloc: _categoryBloc,
-      builder: (context, state) {
-        if (state is CategoryState$Error) {
-          return const Center(child: Text('Error'));
-        } else if (state is CategoryState$Processing) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        } else {
-          if (state.data!.isEmpty) {
-            return const Center(child: Text('Список пуст.'));
+  Widget build(BuildContext context) =>
+      BlocBuilder<CategoryBloc, CategoryState>(
+        bloc: _categoryBloc,
+        builder: (context, state) {
+          if (state is CategoryState$Error) {
+            return const Center(child: Text('Error'));
+          } else if (state is CategoryState$Processing) {
+            return const Center(child: CircularProgressIndicator.adaptive());
           } else {
-            return Padding(
-              padding: const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
-              child: Wrap(
-                spacing: 14.0, // Расстояние между Chips
-                runSpacing: 14.0, // Расстояние между строками Chips
-                children: List.generate(
-                  state.data!.length, // Количество Chips
-                  (index) {
-                    bool isSelected = selectedCategories.contains(state.data![index].id.toString());
+            if (state.data!.isEmpty) {
+              return const Center(child: Text('Список пуст.'));
+            } else {
+              return Padding(
+                padding:
+                    const EdgeInsets.only(top: 34.0, left: 23.0, right: 23.0),
+                child: Wrap(
+                  spacing: 14.0, // Расстояние между Chips
+                  runSpacing: 14.0, // Расстояние между строками Chips
+                  children: List.generate(
+                    state.data!.length, // Количество Chips
+                    (index) {
+                      final isSelected = selectedCategories
+                          .contains(state.data![index].id.toString());
 
-                    return GestureDetector(
-                      onTap: () {
-                        selectItem(state.data![index].id.toString());
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 0,
-                              blurRadius: 8,
-                              offset: const Offset(0, 0),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10),
-                          color: isSelected
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.background,
+                      return GestureDetector(
+                        onTap: () {
+                          selectItem(state.data![index].id.toString());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 8,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                            color: isSelected
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.background,
+                          ),
+                          child: Text(
+                            state.data![index].name,
+                          ),
                         ),
-                        child: Text(
-                          state.data![index].name,
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
-        }
-      },
-    );
-  }
+        },
+      );
 }
