@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
 class ContinueButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -11,8 +10,8 @@ class ContinueButton extends StatelessWidget {
   /// Кнопка продолжения создания или модерирования новости.
   const ContinueButton({
     required this.onTap,
-    this.buttonColor = AppColors.black,
-    this.splashColor = AppColors.black,
+    this.buttonColor = Colors.black,
+    this.splashColor = Colors.black,
     this.text,
     this.isCreate = false,
     super.key,
@@ -34,15 +33,15 @@ class ContinueButton extends StatelessWidget {
               ),
             ),
             backgroundColor: MaterialStateProperty.all(
-              isCreate ? AppColors.green : AppColors.black,
+              isCreate ? Colors.green : Colors.black,
             ),
             textStyle: MaterialStateProperty.all(const TextStyle(
-              color: AppColors.white,
+              color: Colors.white,
               fontSize: 27,
             ))),
         child: Text(
           text ?? 'Продолжить',
-          style: const TextStyle(color: AppColors.white),
+          style: const TextStyle(color: Colors.white),
           overflow: TextOverflow.ellipsis,
         ),
       ),

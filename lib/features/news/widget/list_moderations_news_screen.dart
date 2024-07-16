@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc/list_moderation_news_bloc.dart';
 import 'package:hr_app_flutter/ui/commons/news_card.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 import 'package:octopus/octopus.dart';
 
 
@@ -31,7 +30,7 @@ class ListModerationNewsScreen extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            backgroundColor: AppColors.transparent,
+            backgroundColor: Colors.transparent,
             leading: IconButton(
               icon: Image.asset('assets/icons/chevrone_left.png'),
               onPressed: () {
@@ -65,7 +64,7 @@ class ListModerationNewsScreen extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.green,
+                                color: Colors.green,
                               ),
                             ),
                           ],
@@ -83,7 +82,7 @@ class ListModerationNewsScreen extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.green,
+                                color: Colors.green,
                               ),
                             ),
                           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
 class AppCupertinoActionSheet extends StatelessWidget {
   final int id;
@@ -17,14 +17,14 @@ class AppCupertinoActionSheet extends StatelessWidget {
     return CupertinoActionSheet(
       actions: [
         ColoredBox(
-          color: AppColors.white,
+          color: Colors.white,
           child: CupertinoActionSheetAction(
             child: const Text(
               'Редактировать',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: AppColors.black,
+                color: Colors.black,
               ),
             ),
             onPressed: () {
@@ -38,14 +38,14 @@ class AppCupertinoActionSheet extends StatelessWidget {
           height: 0.5,
         ),
         ColoredBox(
-          color: AppColors.white,
+          color: Colors.white,
           child: CupertinoActionSheetAction(
             child: const Text(
               'Отклонить',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: AppColors.black,
+                color: Colors.black,
               ),
             ),
             onPressed: () {onTapCancel();

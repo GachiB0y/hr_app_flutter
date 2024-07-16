@@ -4,7 +4,6 @@ import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/ui/commons/blur_image_widget.dart';
 import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
 class ModerationNewsScreen extends StatelessWidget {
   /// Экран выбраной новости для модерации.
@@ -36,7 +35,7 @@ class ModerationNewsScreen extends StatelessWidget {
                         width: 30,
                       ),
                       InkWell(
-                        splashColor: AppColors.green.withOpacity(0.3),
+                        splashColor: Colors.green.withOpacity(0.3),
                         onTap: () {
                           if (news?.id == 0) return;
                           cubit.openActionSheet(context: context, id: news?.id ?? 0);
@@ -124,7 +123,7 @@ class ModerationNewsScreen extends StatelessWidget {
                             child: Container(
                               height: 57,
                               decoration: BoxDecoration(
-                                color: AppColors.black,
+                                color: Colors.black,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               width: double.infinity,
@@ -132,7 +131,7 @@ class ModerationNewsScreen extends StatelessWidget {
                                 child: Text(
                                   'Опубликовать',
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: Colors.white,
                                     fontSize: 26,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -182,7 +181,7 @@ class _PublishNewsScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.w700,
-                color: AppColors.black,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 25),
@@ -194,7 +193,7 @@ class _PublishNewsScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.black,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,

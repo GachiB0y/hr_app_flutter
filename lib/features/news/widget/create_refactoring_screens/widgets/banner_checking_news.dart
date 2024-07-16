@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/ui/theme/app_colors.dart';
 
 class BannerCheckingNews extends StatelessWidget {
   const BannerCheckingNews({
@@ -10,7 +9,7 @@ class BannerCheckingNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(
-        color: AppColors.green2,
+        color: Color.fromRGBO(211, 242, 212, 1),
       ),
       child: Padding(
         padding: const EdgeInsets.all(14.0),

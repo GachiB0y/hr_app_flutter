@@ -10,8 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
-import '../../../../ui/theme/app_colors.dart';
-
 class CreateDateNewsScreen extends StatelessWidget {
   /// Экран выбора даты при создании или модерации новости.
   const CreateDateNewsScreen({super.key});
@@ -33,16 +31,16 @@ class CreateDateNewsScreen extends StatelessWidget {
                 disableModePicker: true,
                 lastMonthIcon: const Icon(
                   Icons.chevron_left,
-                  color: AppColors.green,
+                  color: Colors.green,
                   size: 30,
                 ),
                 nextMonthIcon: const Icon(
                   Icons.chevron_right,
-                  color: AppColors.green,
+                  color: Colors.green,
                   size: 30,
                 ),
-                  dayTextStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                controlsTextStyle: const TextStyle(color: AppColors.green, fontSize: 25),
+                dayTextStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                controlsTextStyle: const TextStyle(color: Colors.green, fontSize: 25),
                 weekdayLabels: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
                 modePickerTextHandler: ({required monthDate, isMonthPicker}) {
                   if (isMonthPicker ?? false) {
