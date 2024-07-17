@@ -18,6 +18,7 @@ class AllNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
+          title: const Text('События компании'),
         ),
         body: const Column(
           children: [
@@ -38,15 +39,15 @@ class ScrollCategoriesWidget extends StatefulWidget {
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
 
-  static _ScrollCategoriesWidgetState? maybeOf(BuildContext context) =>
-      context.findAncestorStateOfType<_ScrollCategoriesWidgetState>();
+  static ScrollCategoriesWidgetState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<ScrollCategoriesWidgetState>();
 
   @override
-  State<ScrollCategoriesWidget> createState() => _ScrollCategoriesWidgetState();
+  State<ScrollCategoriesWidget> createState() => ScrollCategoriesWidgetState();
 }
 
 /// State for widget ScrollCategoriesWidget.
-class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
+class ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
   List<int> selectedCategories = [1];
 
   @override
@@ -81,7 +82,7 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
           } else if (state is CategoryState$Processing) {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else {
-            return (state.data!.isEmpty)
+            return state.data!.isEmpty
                 ? const SizedBox.shrink()
                 : SizedBox(
                     height: 60,
@@ -91,12 +92,16 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                              final double leftPadding = index == 0 ? 25.0 : 8.0;
-                              final double rightPadding = index == state.data!.length ? 25.0 : 8.0;
-                              bool isSelected = selectedCategories.contains(state.data![index].id);
+                              final leftPadding = index == 0 ? 25.0 : 8.0;
+                              final rightPadding = index == state.data!.length ? 25.0 : 8.0;
+                              final isSelected = selectedCategories.contains(state.data![index].id);
                               return Padding(
                                 padding: EdgeInsets.only(
-                                    left: leftPadding, right: rightPadding, top: 10, bottom: 10),
+                                  left: leftPadding,
+                                  right: rightPadding,
+                                  top: 10,
+                                  bottom: 10,
+                                ),
                                 child: GestureDetector(
                                   onTap: () {
                                     selectItem(state.data![index].id);
@@ -112,9 +117,7 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.2),
-                                          spreadRadius: 0,
                                           blurRadius: 8,
-                                          offset: const Offset(0, 0),
                                         ),
                                       ],
                                       borderRadius: BorderRadius.circular(10),
@@ -150,15 +153,15 @@ class ScrollContentWithNews extends StatefulWidget {
 
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
-  static _ScrollContentWithNewsState? maybeOf(BuildContext context) =>
-      context.findAncestorStateOfType<_ScrollContentWithNewsState>();
+  static ScrollContentWithNewsState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<ScrollContentWithNewsState>();
 
   @override
-  State<ScrollContentWithNews> createState() => _ScrollContentWithNewsState();
+  State<ScrollContentWithNews> createState() => ScrollContentWithNewsState();
 }
 
 /// State for widget ScrollContentWithNews.
-class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
+class ScrollContentWithNewsState extends State<ScrollContentWithNews> {
   @override
   void initState() {
     super.initState();
@@ -188,9 +191,9 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) => _OneNewsElementWidget(
-                              news: news[index],
-                            ),
-                        childCount: state.data!.listEventEntityLoaded.length,
+                          news: news[index],
+                        ),
+                        childCount: state.data!.filteredListEventEntity.length,
                       ),
                     ),
                   ],
@@ -210,38 +213,36 @@ class _OneNewsElementWidget extends StatelessWidget {
   final EventEntity news;
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.octopus.setState((state) {
-          var findSate = state..findByName('all-news');
-          findSate.add(Routes.aboutNews.node(
-            arguments: <String, String>{'id': news.id.toString()},
-          ));
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: () {
+          context.octopus.setState((state) {
+            final findSate = state..findByName('all-news');
+            findSate.add(
+              Routes.aboutNews.node(
+                arguments: <String, String>{'id': news.id.toString()},
+              ),
+            );
 
-          return state;
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(
-          top: 8.0,
-          left: 15.0,
-          right: 30.0,
+            return state;
+          });
+        },
+        child: Container(
+          margin: const EdgeInsets.only(
+            top: 8.0,
+            left: 15.0,
+            right: 30.0,
+          ),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 8,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(16),
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: NewsCard(news: news),
         ),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 8,
-              offset: const Offset(0, 0),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(16),
-          color: Theme.of(context).colorScheme.background,
-        ),
-        child: NewsCard(news: news),
-      ),
-    );
-  }
+      );
 }

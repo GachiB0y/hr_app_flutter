@@ -10,7 +10,7 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:octopus/octopus.dart';
 
 class CreateTypeNewsScreen extends StatelessWidget {
-  /// Экран массива новостей на модерации.
+  /// Экран выбора категории новости при создании или модерации.
   const CreateTypeNewsScreen({super.key});
 
   @override
@@ -27,26 +27,25 @@ class CreateTypeNewsScreen extends StatelessWidget {
             const HeaderTitle(title: 'Выберите тип события'),
             const SizedBox(height: 30),
             BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
-              builder: (context, state) {
-                return Wrap(
-                  spacing: 14.0, // Расстояние между Chips
-                  runSpacing: 14.0, // Расстояние между строками Chips
-                  children: state.categoriesNews.isNotEmpty
-                      ? state.categoriesNews
-                          .map((item) => TypeNewsCard(
-                                onTap: () => cubit.selectCategory(item.id),
-                                title: item.name,
-                                isSelected: cubit.checkTypes(item.id),
-                              ))
-                          .toList()
-                      : [],
-                );
-              },
+              builder: (context, state) => Wrap(
+                spacing: 14.0, // Расстояние между Chips
+                runSpacing: 14.0, // Расстояние между строками Chips
+                children: state.categoriesNews.isNotEmpty
+                    ? state.categoriesNews
+                        .map(
+                          (item) => TypeNewsCard(
+                            onTap: () => cubit.selectCategory(item.id),
+                            title: item.name,
+                            isSelected: cubit.checkTypes(item.id),
+                          ),
+                        )
+                        .toList()
+                    : [],
+              ),
             ),
             const Spacer(),
             BlocBuilder<CreateRefactoringTypeNewsCubit, CreateRefactoringTypeNewsState>(
-                builder: (context, state) {
-              return ContinueButton(
+              builder: (context, state) => ContinueButton(
                 isCreate: cubit.state.currentNews.id == 0,
                 onTap: () {
                   HomeScope.of(context).state.onItemTapped(4);
@@ -61,8 +60,8 @@ class CreateTypeNewsScreen extends StatelessWidget {
                     );
                   }
                 },
-              );
-            }),
+              ),
+            ),
             const SizedBox(height: 10),
           ],
         ),

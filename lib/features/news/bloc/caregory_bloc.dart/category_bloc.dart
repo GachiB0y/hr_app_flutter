@@ -86,11 +86,17 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState>
       FetchCategoryEvent event, Emitter<CategoryState> emit) async {
     try {
       emit(CategoryState.processing(data: state.data));
-      final newData = await _eventEntityRepository
-          .getCategory()
-          .timeout(const Duration(seconds: 10));
-      /// TODO: Оформить подписку на репозиторий!!!!!
-      // emit(CategoryState.successful(data: newData));
+      if(_eventEntityRepository
+          .categoriesNews.isEmpty){
+        await _eventEntityRepository.getCategory();
+        final newData = _eventEntityRepository
+            .categoriesNews;
+        emit(CategoryState.successful(data: newData));
+      } else {
+        final newData = _eventEntityRepository
+            .categoriesNews;
+        emit(CategoryState.successful(data: newData));
+      }
     } on TimeoutException {
       emit(CategoryState.error(data: state.data));
     } on Object catch (err, stackTrace) {
