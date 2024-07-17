@@ -72,8 +72,7 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<CategoryBloc, CategoryState>(
+  Widget build(BuildContext context) => BlocBuilder<CategoryBloc, CategoryState>(
         builder: (BuildContext context, state) {
           if (state is CategoryState$Error) {
             return const Center(
@@ -92,18 +91,12 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                              final double leftPadding =
-                                  index == 0 ? 25.0 : 8.0;
-                              final double rightPadding =
-                                  index == state.data!.length ? 25.0 : 8.0;
-                              bool isSelected = selectedCategories
-                                  .contains(state.data![index].id);
+                              final double leftPadding = index == 0 ? 25.0 : 8.0;
+                              final double rightPadding = index == state.data!.length ? 25.0 : 8.0;
+                              bool isSelected = selectedCategories.contains(state.data![index].id);
                               return Padding(
                                 padding: EdgeInsets.only(
-                                    left: leftPadding,
-                                    right: rightPadding,
-                                    top: 10,
-                                    bottom: 10),
+                                    left: leftPadding, right: rightPadding, top: 10, bottom: 10),
                                 child: GestureDetector(
                                   onTap: () {
                                     selectItem(state.data![index].id);
@@ -126,19 +119,12 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                                       ],
                                       borderRadius: BorderRadius.circular(10),
                                       color: isSelected
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .background,
+                                          ? Theme.of(context).colorScheme.primary
+                                          : Theme.of(context).colorScheme.background,
                                     ),
                                     child: Text(
                                       state.data![index].name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(fontSize: 10),
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10),
                                     ),
                                   ),
                                 ),
@@ -180,8 +166,7 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<EventEntityBloc, EventEntityState>(
+  Widget build(BuildContext context) => BlocBuilder<EventEntityBloc, EventEntityState>(
         builder: (BuildContext context, state) {
           if (state is CategoryState$Error) {
             return const Center(
@@ -190,10 +175,10 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
           } else if (state is CategoryState$Processing) {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else {
-            if (state.data!.filteredListEventEntity.isEmpty) {
-              return const SizedBox.shrink();
+            if (state.data!.listEventEntityLoaded.isEmpty) {
+              return const Center(child: Text('Нет событий'));
             } else {
-              final news = state.data!.filteredListEventEntity;
+              final news = state.data!.listEventEntityLoaded;
               return Scrollbar(
                 thumbVisibility: true,
                 thickness: 10,
@@ -202,12 +187,10 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
                   slivers: [
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return _OneNewsElementWidget(
-                            news: news[index],
-                          );
-                        },
-                        childCount: state.data!.filteredListEventEntity.length,
+                        (BuildContext context, int index) => _OneNewsElementWidget(
+                              news: news[index],
+                            ),
+                        childCount: state.data!.listEventEntityLoaded.length,
                       ),
                     ),
                   ],
@@ -225,6 +208,7 @@ class _OneNewsElementWidget extends StatelessWidget {
   });
 
   final EventEntity news;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -261,4 +245,3 @@ class _OneNewsElementWidget extends StatelessWidget {
     );
   }
 }
-
