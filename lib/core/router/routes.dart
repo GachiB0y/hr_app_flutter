@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
+import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
+import 'package:octopus/octopus.dart';
+
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/bloc/refactor_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/refactor_moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/create_lean_production_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/rookies_info_screen/rookies_info_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
-import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/statements/widget/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass.dart';
-import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/how_to_get_big/how_to_get_big_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
-import 'package:octopus/octopus.dart';
-
-import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
-import 'package:hr_app_flutter/features/news/bloc/refactor_news_bloc.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -51,6 +53,7 @@ enum Routes with OctopusRoute {
   refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
+  notificaion('notification', title: 'Notification'),
   searchUser('search-user', title: 'Search User'),
   scheduleBus('schedule-bus', title: 'Schedule Bus'),
   myLeanProductions('my-lean-productions', title: 'My Lean Productions'),
@@ -197,5 +200,11 @@ enum Routes with OctopusRoute {
         Routes.selectorExecutorLeanProductionScreen =>
           const SelectExecutorLeanProductionScreen(),
         Routes.pickFileLeanProduction => const PickFileLeanProduction(),
+        Routes.notificaion => BlocProvider.value(
+            value: NotificationBLoC(
+              repository: DependenciesScope.of(context).notificationRepository,
+            )..add(const NotificationEvent.fetchNotification()),
+            child: NotificationScreen(),
+          ),
       };
 }
