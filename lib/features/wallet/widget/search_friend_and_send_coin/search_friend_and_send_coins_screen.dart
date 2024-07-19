@@ -36,8 +36,7 @@ class _SearchFriendAndSendCoinsScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -78,15 +77,14 @@ class _SearchFriendAndSendCoinsScreenState
         ),
       ),
     );
-  }
 
   void showPopupWindow(int autoCard) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
           title: const Text('Введите сумму'),
           content: TextField(
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Количество',
             ),
@@ -115,8 +113,7 @@ class _SearchFriendAndSendCoinsScreenState
               child: const Text('Подтвердить'),
             ),
           ],
-        );
-      },
+        ),
     );
   }
 }
