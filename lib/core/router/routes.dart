@@ -157,7 +157,7 @@ enum Routes with OctopusRoute {
         Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
         Routes.listModerationNews => const ListModerationNewsScreen(),
-        Routes.createModerationScreens => const CreateRefactoringNewsScreen(),
+        Routes.createModerationScreens => const CreateRefactoringNewsScreenBucket(),
         Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
             child: const ModerationNewsScreen(),
             create: (BuildContext context) => ModerationNewsCubit(
@@ -166,9 +166,8 @@ enum Routes with OctopusRoute {
             ),
           ),
         Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
-            child: const CreateRefactoringNewsScreen(),
+            child: const CreateRefactoringNewsScreenBucket(),
             create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
-              context: context,
               id: node.arguments['id'],
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
@@ -177,7 +176,6 @@ enum Routes with OctopusRoute {
             child: const CreateTypeNewsScreen(),
             create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
               id: node.arguments['id'],
-              context: context,
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
@@ -24,12 +23,11 @@ class CreateRefactoringTypeNewsState {
   CreateRefactoringTypeNewsState copyWith({
     EventEntity? currentNews,
     List<Category>? categoriesNews,
-  }) {
-    return CreateRefactoringTypeNewsState(
-      currentNews: currentNews ?? this.currentNews,
-      categoriesNews: categoriesNews ?? this.categoriesNews,
-    );
-  }
+  }) =>
+      CreateRefactoringTypeNewsState(
+        currentNews: currentNews ?? this.currentNews,
+        categoriesNews: categoriesNews ?? this.categoriesNews,
+      );
 }
 
 class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsState> {
@@ -39,7 +37,6 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
   /// Блок экрана создания или изменения типа новости.
   CreateRefactoringTypeNewsCubit({
     required IEventEntityRepository eventEntityRepository,
-    required BuildContext context,
     this.id,
   }) : super(
           CreateRefactoringTypeNewsState(
@@ -55,7 +52,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
   Future<void> _initialize() async {
     await getCategoriesNews();
     getApprovementNews(id: id);
-    if(id == null) {
+    if (id == null) {
       _assignCategory();
     }
   }
@@ -72,9 +69,14 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
 
   /// Получение массива категорий новостей.
   Future<void> getCategoriesNews() async {
-    await _eventEntityRepository.getCategory();
-    var categories = _eventEntityRepository.categoriesNews;
-    emit(state.copyWith(categoriesNews: categories));
+    if (_eventEntityRepository.categoriesNews.isEmpty) {
+      await _eventEntityRepository.getCategory();
+      final categories = _eventEntityRepository.categoriesNews;
+      emit(state.copyWith(categoriesNews: categories));
+    } else {
+      final categories = _eventEntityRepository.categoriesNews;
+      emit(state.copyWith(categoriesNews: categories));
+    }
   }
 
   /// Присвоение первой категории новости при создании новости.
@@ -82,7 +84,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
     if (state.currentNews.categories == null) {
       List<Category> list = [];
       list.add(state.categoriesNews.first);
-      var newState = state.copyWith(currentNews: state.currentNews.copyWith(categories: list));
+      final newState = state.copyWith(currentNews: state.currentNews.copyWith(categories: list));
       emit(newState);
       _eventEntityRepository.changeCurrentNews(state.currentNews);
     }
