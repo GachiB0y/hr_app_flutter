@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
-import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_description_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_photo_news_bloc.dart';
@@ -15,10 +7,6 @@ import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refacto
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
-import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
@@ -27,6 +15,22 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/c
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
+import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
+import 'package:octopus/octopus.dart';
+
+import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
 import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
@@ -43,7 +47,6 @@ import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_scr
 import 'package:hr_app_flutter/features/wallet/widget/how_to_get_big/how_to_get_big_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
-import 'package:octopus/octopus.dart';
 
 enum Routes with OctopusRoute {
   signin('auth', title: 'Auth'),
@@ -70,10 +73,13 @@ enum Routes with OctopusRoute {
   createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
   createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
   createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+  refactorModerationNewsScreen('refactor-moderation-news-screen', title: 'Refactor Moderation News Screen'),
 
   ///
   aboutNews('about-news', title: 'About News'),
+  moderationNews('moderation-news', title: 'Moderation News'),
   profileUser('profile-user', title: 'Profile User'),
+  notificaion('notification', title: 'Notification'),
   searchUser('search-user', title: 'Search User'),
   scheduleBus('schedule-bus', title: 'Schedule Bus'),
   myLeanProductions('my-lean-productions', title: 'My Lean Productions'),
@@ -156,6 +162,54 @@ enum Routes with OctopusRoute {
     Routes.company => const CompanyScreen(),
     Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
     Routes.approveNews => const ApproveNewsScreen(),
+    Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
+      child: const RefactorModerationNewsScreen(),
+      create: (BuildContext context) => RefactorNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+
+    Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
+    Routes.profileUser => UserProfileWidgetScreen(
+      userId: node.arguments['id'],
+      isSelfUser: node.arguments['isSelfUser'],
+    ),
+    Routes.searchUser => const SearchUserScreen(),
+    Routes.scheduleBus => const ScheduleBusScreen(),
+    Routes.myLeanProductions => const MyLeanProductionsScreen(),
+    Routes.infoProposals => LeanProductionInfoProposalsScreen(
+      number: node.arguments['number'],
+      id: node.arguments['id'],
+    ),
+    Routes.statementsForm => const StatementFormScreen(),
+    Routes.bagReport => const BagReportScreen(),
+    Routes.infoBirthDay => BirthDayInfoScreen(),
+    Routes.rookieInfo => BlocProvider.value(
+      value: RookiesBLoC(
+        userRepo: DependenciesScope.of(context).userRepository,
+      )..add(const RookiesEvent.fetch()),
+      child: RookiesInfoScreen(),
+    ),
+    Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
+    Routes.whatToSpendScreen => const WhatToSpendScreen(),
+    Routes.howToGetBigScreen => const HowToGetBigScreen(),
+    Routes.createNewsType => const SelectedTypeNewsScreen(),
+    Routes.createNews => const CreateNewsScreen(),
+    Routes.createNewsDate => const SelectedNewsDateScreen(),
+    Routes.createNewsTime => const SelectedNewsTimeScreen(),
+    Routes.createNewsTitle => const WriteTitleNewsScreen(),
+    Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
+    Routes.createNewsPhoto => const AddPhotoNewsScreen(),
+    Routes.exampleNews => const ExmapleNewsScreen(),
+    Routes.allNews => const AllNewsScreen(),
+    Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
+    Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
+    Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
+    Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
+    Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
+    Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
+    Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
     Routes.listModerationNews => const ListModerationNewsScreen(),
     Routes.createModerationScreens => const CreateRefactoringNewsScreenBucket(),
     Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
@@ -209,45 +263,14 @@ enum Routes with OctopusRoute {
         eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
       ),
     ),
-    Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
-    Routes.profileUser => UserProfileWidgetScreen(
-      userId: node.arguments['id'],
-      isSelfUser: node.arguments['isSelfUser'],
-    ),
-    Routes.searchUser => const SearchUserScreen(),
-    Routes.scheduleBus => const ScheduleBusScreen(),
-    Routes.myLeanProductions => const MyLeanProductionsScreen(),
-    Routes.infoProposals => LeanProductionInfoProposalsScreen(
-      number: node.arguments['number'],
-      id: node.arguments['id'],
-    ),
-    Routes.statementsForm => const StatementFormScreen(),
-    Routes.bagReport => const BagReportScreen(),
-    Routes.infoBirthDay => BirthDayInfoScreen(),
-    Routes.rookieInfo => BlocProvider.value(
-      value: RookiesBLoC(
-        userRepo: DependenciesScope.of(context).userRepository,
-      )..add(const RookiesEvent.fetch()),
-      child: RookiesInfoScreen(),
-    ),
-    Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
-    Routes.whatToSpendScreen => const WhatToSpendScreen(),
-    Routes.howToGetBigScreen => const HowToGetBigScreen(),
-    Routes.createNewsType => const SelectedTypeNewsScreen(),
-    Routes.createNews => const CreateNewsScreen(),
-    Routes.createNewsDate => const SelectedNewsDateScreen(),
-    Routes.createNewsTime => const SelectedNewsTimeScreen(),
-    Routes.createNewsTitle => const WriteTitleNewsScreen(),
-    Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
-    Routes.createNewsPhoto => const AddPhotoNewsScreen(),
-    Routes.exampleNews => const ExmapleNewsScreen(),
-    Routes.allNews => const AllNewsScreen(),
-    Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
-    Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
-    Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
-    Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
-    Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
-    Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
+    Routes.moderationNews => const ModerationNewsScreen(),
+
     Routes.pickFileLeanProduction => const PickFileLeanProduction(),
+    Routes.notificaion => BlocProvider.value(
+      value: NotificationBLoC(
+        repository: DependenciesScope.of(context).notificationRepository,
+      )..add(const NotificationEvent.fetchNotification()),
+      child: NotificationScreen(),
+    ),
   };
 }
