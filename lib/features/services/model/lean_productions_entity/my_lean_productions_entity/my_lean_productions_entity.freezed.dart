@@ -12,7 +12,7 @@ part of 'my_lean_productions_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MyLeanProductionsEntity _$MyLeanProductionsEntityFromJson(
     Map<String, dynamic> json) {
@@ -122,11 +122,12 @@ class _$MyLeanProductionsEntityCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_MyLeanProductionsEntityCopyWith<$Res>
+abstract class _$$MyLeanProductionsEntityImplCopyWith<$Res>
     implements $MyLeanProductionsEntityCopyWith<$Res> {
-  factory _$$_MyLeanProductionsEntityCopyWith(_$_MyLeanProductionsEntity value,
-          $Res Function(_$_MyLeanProductionsEntity) then) =
-      __$$_MyLeanProductionsEntityCopyWithImpl<$Res>;
+  factory _$$MyLeanProductionsEntityImplCopyWith(
+          _$MyLeanProductionsEntityImpl value,
+          $Res Function(_$MyLeanProductionsEntityImpl) then) =
+      __$$MyLeanProductionsEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -142,12 +143,13 @@ abstract class _$$_MyLeanProductionsEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MyLeanProductionsEntityCopyWithImpl<$Res>
+class __$$MyLeanProductionsEntityImplCopyWithImpl<$Res>
     extends _$MyLeanProductionsEntityCopyWithImpl<$Res,
-        _$_MyLeanProductionsEntity>
-    implements _$$_MyLeanProductionsEntityCopyWith<$Res> {
-  __$$_MyLeanProductionsEntityCopyWithImpl(_$_MyLeanProductionsEntity _value,
-      $Res Function(_$_MyLeanProductionsEntity) _then)
+        _$MyLeanProductionsEntityImpl>
+    implements _$$MyLeanProductionsEntityImplCopyWith<$Res> {
+  __$$MyLeanProductionsEntityImplCopyWithImpl(
+      _$MyLeanProductionsEntityImpl _value,
+      $Res Function(_$MyLeanProductionsEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -163,7 +165,7 @@ class __$$_MyLeanProductionsEntityCopyWithImpl<$Res>
     Object? implementers = null,
     Object? files = null,
   }) {
-    return _then(_$_MyLeanProductionsEntity(
+    return _then(_$MyLeanProductionsEntityImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -206,8 +208,8 @@ class __$$_MyLeanProductionsEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MyLeanProductionsEntity implements _MyLeanProductionsEntity {
-  const _$_MyLeanProductionsEntity(
+class _$MyLeanProductionsEntityImpl implements _MyLeanProductionsEntity {
+  const _$MyLeanProductionsEntityImpl(
       {required this.date,
       required this.number,
       required this.status,
@@ -220,8 +222,8 @@ class _$_MyLeanProductionsEntity implements _MyLeanProductionsEntity {
       : _implementers = implementers,
         _files = files;
 
-  factory _$_MyLeanProductionsEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_MyLeanProductionsEntityFromJson(json);
+  factory _$MyLeanProductionsEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MyLeanProductionsEntityImplFromJson(json);
 
   @override
   final DateTime date;
@@ -259,10 +261,10 @@ class _$_MyLeanProductionsEntity implements _MyLeanProductionsEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MyLeanProductionsEntity &&
+            other is _$MyLeanProductionsEntityImpl &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.number, number) || other.number == number) &&
             (identical(other.status, status) || other.status == status) &&
@@ -294,14 +296,13 @@ class _$_MyLeanProductionsEntity implements _MyLeanProductionsEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MyLeanProductionsEntityCopyWith<_$_MyLeanProductionsEntity>
-      get copyWith =>
-          __$$_MyLeanProductionsEntityCopyWithImpl<_$_MyLeanProductionsEntity>(
-              this, _$identity);
+  _$$MyLeanProductionsEntityImplCopyWith<_$MyLeanProductionsEntityImpl>
+      get copyWith => __$$MyLeanProductionsEntityImplCopyWithImpl<
+          _$MyLeanProductionsEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MyLeanProductionsEntityToJson(
+    return _$$MyLeanProductionsEntityImplToJson(
       this,
     );
   }
@@ -317,10 +318,10 @@ abstract class _MyLeanProductionsEntity implements MyLeanProductionsEntity {
       required final String expenses,
       required final String benefit,
       required final List<ImplementsForLeanProdInfo> implementers,
-      required final List<FileElement> files}) = _$_MyLeanProductionsEntity;
+      required final List<FileElement> files}) = _$MyLeanProductionsEntityImpl;
 
   factory _MyLeanProductionsEntity.fromJson(Map<String, dynamic> json) =
-      _$_MyLeanProductionsEntity.fromJson;
+      _$MyLeanProductionsEntityImpl.fromJson;
 
   @override
   DateTime get date;
@@ -342,7 +343,7 @@ abstract class _MyLeanProductionsEntity implements MyLeanProductionsEntity {
   List<FileElement> get files;
   @override
   @JsonKey(ignore: true)
-  _$$_MyLeanProductionsEntityCopyWith<_$_MyLeanProductionsEntity>
+  _$$MyLeanProductionsEntityImplCopyWith<_$MyLeanProductionsEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -401,22 +402,22 @@ class _$FileElementCopyWithImpl<$Res, $Val extends FileElement>
 }
 
 /// @nodoc
-abstract class _$$_FileElementCopyWith<$Res>
+abstract class _$$FileElementImplCopyWith<$Res>
     implements $FileElementCopyWith<$Res> {
-  factory _$$_FileElementCopyWith(
-          _$_FileElement value, $Res Function(_$_FileElement) then) =
-      __$$_FileElementCopyWithImpl<$Res>;
+  factory _$$FileElementImplCopyWith(
+          _$FileElementImpl value, $Res Function(_$FileElementImpl) then) =
+      __$$FileElementImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'name') String fileName, String? url});
 }
 
 /// @nodoc
-class __$$_FileElementCopyWithImpl<$Res>
-    extends _$FileElementCopyWithImpl<$Res, _$_FileElement>
-    implements _$$_FileElementCopyWith<$Res> {
-  __$$_FileElementCopyWithImpl(
-      _$_FileElement _value, $Res Function(_$_FileElement) _then)
+class __$$FileElementImplCopyWithImpl<$Res>
+    extends _$FileElementCopyWithImpl<$Res, _$FileElementImpl>
+    implements _$$FileElementImplCopyWith<$Res> {
+  __$$FileElementImplCopyWithImpl(
+      _$FileElementImpl _value, $Res Function(_$FileElementImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -425,7 +426,7 @@ class __$$_FileElementCopyWithImpl<$Res>
     Object? fileName = null,
     Object? url = freezed,
   }) {
-    return _then(_$_FileElement(
+    return _then(_$FileElementImpl(
       fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
@@ -440,12 +441,12 @@ class __$$_FileElementCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_FileElement implements _FileElement {
-  const _$_FileElement(
+class _$FileElementImpl implements _FileElement {
+  const _$FileElementImpl(
       {@JsonKey(name: 'name') required this.fileName, required this.url});
 
-  factory _$_FileElement.fromJson(Map<String, dynamic> json) =>
-      _$$_FileElementFromJson(json);
+  factory _$FileElementImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FileElementImplFromJson(json);
 
   @override
   @JsonKey(name: 'name')
@@ -459,10 +460,10 @@ class _$_FileElement implements _FileElement {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FileElement &&
+            other is _$FileElementImpl &&
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
             (identical(other.url, url) || other.url == url));
@@ -475,12 +476,12 @@ class _$_FileElement implements _FileElement {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FileElementCopyWith<_$_FileElement> get copyWith =>
-      __$$_FileElementCopyWithImpl<_$_FileElement>(this, _$identity);
+  _$$FileElementImplCopyWith<_$FileElementImpl> get copyWith =>
+      __$$FileElementImplCopyWithImpl<_$FileElementImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FileElementToJson(
+    return _$$FileElementImplToJson(
       this,
     );
   }
@@ -489,10 +490,10 @@ class _$_FileElement implements _FileElement {
 abstract class _FileElement implements FileElement {
   const factory _FileElement(
       {@JsonKey(name: 'name') required final String fileName,
-      required final String? url}) = _$_FileElement;
+      required final String? url}) = _$FileElementImpl;
 
   factory _FileElement.fromJson(Map<String, dynamic> json) =
-      _$_FileElement.fromJson;
+      _$FileElementImpl.fromJson;
 
   @override
   @JsonKey(name: 'name')
@@ -501,7 +502,7 @@ abstract class _FileElement implements FileElement {
   String? get url;
   @override
   @JsonKey(ignore: true)
-  _$$_FileElementCopyWith<_$_FileElement> get copyWith =>
+  _$$FileElementImplCopyWith<_$FileElementImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -561,25 +562,25 @@ class _$ImplementsForLeanProdInfoCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ImplementsForLeanProdInfoCopyWith<$Res>
+abstract class _$$ImplementsForLeanProdInfoImplCopyWith<$Res>
     implements $ImplementsForLeanProdInfoCopyWith<$Res> {
-  factory _$$_ImplementsForLeanProdInfoCopyWith(
-          _$_ImplementsForLeanProdInfo value,
-          $Res Function(_$_ImplementsForLeanProdInfo) then) =
-      __$$_ImplementsForLeanProdInfoCopyWithImpl<$Res>;
+  factory _$$ImplementsForLeanProdInfoImplCopyWith(
+          _$ImplementsForLeanProdInfoImpl value,
+          $Res Function(_$ImplementsForLeanProdInfoImpl) then) =
+      __$$ImplementsForLeanProdInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, int id});
 }
 
 /// @nodoc
-class __$$_ImplementsForLeanProdInfoCopyWithImpl<$Res>
+class __$$ImplementsForLeanProdInfoImplCopyWithImpl<$Res>
     extends _$ImplementsForLeanProdInfoCopyWithImpl<$Res,
-        _$_ImplementsForLeanProdInfo>
-    implements _$$_ImplementsForLeanProdInfoCopyWith<$Res> {
-  __$$_ImplementsForLeanProdInfoCopyWithImpl(
-      _$_ImplementsForLeanProdInfo _value,
-      $Res Function(_$_ImplementsForLeanProdInfo) _then)
+        _$ImplementsForLeanProdInfoImpl>
+    implements _$$ImplementsForLeanProdInfoImplCopyWith<$Res> {
+  __$$ImplementsForLeanProdInfoImplCopyWithImpl(
+      _$ImplementsForLeanProdInfoImpl _value,
+      $Res Function(_$ImplementsForLeanProdInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -588,7 +589,7 @@ class __$$_ImplementsForLeanProdInfoCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
   }) {
-    return _then(_$_ImplementsForLeanProdInfo(
+    return _then(_$ImplementsForLeanProdInfoImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -603,11 +604,11 @@ class __$$_ImplementsForLeanProdInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ImplementsForLeanProdInfo implements _ImplementsForLeanProdInfo {
-  const _$_ImplementsForLeanProdInfo({required this.name, required this.id});
+class _$ImplementsForLeanProdInfoImpl implements _ImplementsForLeanProdInfo {
+  const _$ImplementsForLeanProdInfoImpl({required this.name, required this.id});
 
-  factory _$_ImplementsForLeanProdInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_ImplementsForLeanProdInfoFromJson(json);
+  factory _$ImplementsForLeanProdInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ImplementsForLeanProdInfoImplFromJson(json);
 
   @override
   final String name;
@@ -620,10 +621,10 @@ class _$_ImplementsForLeanProdInfo implements _ImplementsForLeanProdInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ImplementsForLeanProdInfo &&
+            other is _$ImplementsForLeanProdInfoImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.id, id) || other.id == id));
   }
@@ -635,13 +636,13 @@ class _$_ImplementsForLeanProdInfo implements _ImplementsForLeanProdInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ImplementsForLeanProdInfoCopyWith<_$_ImplementsForLeanProdInfo>
-      get copyWith => __$$_ImplementsForLeanProdInfoCopyWithImpl<
-          _$_ImplementsForLeanProdInfo>(this, _$identity);
+  _$$ImplementsForLeanProdInfoImplCopyWith<_$ImplementsForLeanProdInfoImpl>
+      get copyWith => __$$ImplementsForLeanProdInfoImplCopyWithImpl<
+          _$ImplementsForLeanProdInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ImplementsForLeanProdInfoToJson(
+    return _$$ImplementsForLeanProdInfoImplToJson(
       this,
     );
   }
@@ -650,10 +651,10 @@ class _$_ImplementsForLeanProdInfo implements _ImplementsForLeanProdInfo {
 abstract class _ImplementsForLeanProdInfo implements ImplementsForLeanProdInfo {
   const factory _ImplementsForLeanProdInfo(
       {required final String name,
-      required final int id}) = _$_ImplementsForLeanProdInfo;
+      required final int id}) = _$ImplementsForLeanProdInfoImpl;
 
   factory _ImplementsForLeanProdInfo.fromJson(Map<String, dynamic> json) =
-      _$_ImplementsForLeanProdInfo.fromJson;
+      _$ImplementsForLeanProdInfoImpl.fromJson;
 
   @override
   String get name;
@@ -661,6 +662,6 @@ abstract class _ImplementsForLeanProdInfo implements ImplementsForLeanProdInfo {
   int get id;
   @override
   @JsonKey(ignore: true)
-  _$$_ImplementsForLeanProdInfoCopyWith<_$_ImplementsForLeanProdInfo>
+  _$$ImplementsForLeanProdInfoImplCopyWith<_$ImplementsForLeanProdInfoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,7 +12,7 @@ part of 'wallet_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WalletEvent {
@@ -88,25 +88,25 @@ class _$WalletEventCopyWithImpl<$Res, $Val extends WalletEvent>
 }
 
 /// @nodoc
-abstract class _$$FetchWalletEventCopyWith<$Res> {
-  factory _$$FetchWalletEventCopyWith(
-          _$FetchWalletEvent value, $Res Function(_$FetchWalletEvent) then) =
-      __$$FetchWalletEventCopyWithImpl<$Res>;
+abstract class _$$FetchWalletEventImplCopyWith<$Res> {
+  factory _$$FetchWalletEventImplCopyWith(_$FetchWalletEventImpl value,
+          $Res Function(_$FetchWalletEventImpl) then) =
+      __$$FetchWalletEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$FetchWalletEventCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$FetchWalletEvent>
-    implements _$$FetchWalletEventCopyWith<$Res> {
-  __$$FetchWalletEventCopyWithImpl(
-      _$FetchWalletEvent _value, $Res Function(_$FetchWalletEvent) _then)
+class __$$FetchWalletEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$FetchWalletEventImpl>
+    implements _$$FetchWalletEventImplCopyWith<$Res> {
+  __$$FetchWalletEventImplCopyWithImpl(_$FetchWalletEventImpl _value,
+      $Res Function(_$FetchWalletEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$FetchWalletEvent extends FetchWalletEvent {
-  const _$FetchWalletEvent() : super._();
+class _$FetchWalletEventImpl extends FetchWalletEvent {
+  const _$FetchWalletEventImpl() : super._();
 
   @override
   String toString() {
@@ -114,9 +114,9 @@ class _$FetchWalletEvent extends FetchWalletEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchWalletEvent);
+        (other.runtimeType == runtimeType && other is _$FetchWalletEventImpl);
   }
 
   @override
@@ -199,27 +199,27 @@ class _$FetchWalletEvent extends FetchWalletEvent {
 }
 
 abstract class FetchWalletEvent extends WalletEvent {
-  const factory FetchWalletEvent() = _$FetchWalletEvent;
+  const factory FetchWalletEvent() = _$FetchWalletEventImpl;
   const FetchWalletEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$WalletEventSendCoinsToBracerCopyWith<$Res> {
-  factory _$$WalletEventSendCoinsToBracerCopyWith(
-          _$WalletEventSendCoinsToBracer value,
-          $Res Function(_$WalletEventSendCoinsToBracer) then) =
-      __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>;
+abstract class _$$WalletEventSendCoinsToBracerImplCopyWith<$Res> {
+  factory _$$WalletEventSendCoinsToBracerImplCopyWith(
+          _$WalletEventSendCoinsToBracerImpl value,
+          $Res Function(_$WalletEventSendCoinsToBracerImpl) then) =
+      __$$WalletEventSendCoinsToBracerImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int amount});
 }
 
 /// @nodoc
-class __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventSendCoinsToBracer>
-    implements _$$WalletEventSendCoinsToBracerCopyWith<$Res> {
-  __$$WalletEventSendCoinsToBracerCopyWithImpl(
-      _$WalletEventSendCoinsToBracer _value,
-      $Res Function(_$WalletEventSendCoinsToBracer) _then)
+class __$$WalletEventSendCoinsToBracerImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventSendCoinsToBracerImpl>
+    implements _$$WalletEventSendCoinsToBracerImplCopyWith<$Res> {
+  __$$WalletEventSendCoinsToBracerImplCopyWithImpl(
+      _$WalletEventSendCoinsToBracerImpl _value,
+      $Res Function(_$WalletEventSendCoinsToBracerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -227,7 +227,7 @@ class __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>
   $Res call({
     Object? amount = null,
   }) {
-    return _then(_$WalletEventSendCoinsToBracer(
+    return _then(_$WalletEventSendCoinsToBracerImpl(
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -238,8 +238,8 @@ class __$$WalletEventSendCoinsToBracerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$WalletEventSendCoinsToBracer extends WalletEventSendCoinsToBracer {
-  const _$WalletEventSendCoinsToBracer({required this.amount}) : super._();
+class _$WalletEventSendCoinsToBracerImpl extends WalletEventSendCoinsToBracer {
+  const _$WalletEventSendCoinsToBracerImpl({required this.amount}) : super._();
 
   @override
   final int amount;
@@ -250,10 +250,10 @@ class _$WalletEventSendCoinsToBracer extends WalletEventSendCoinsToBracer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WalletEventSendCoinsToBracer &&
+            other is _$WalletEventSendCoinsToBracerImpl &&
             (identical(other.amount, amount) || other.amount == amount));
   }
 
@@ -263,9 +263,10 @@ class _$WalletEventSendCoinsToBracer extends WalletEventSendCoinsToBracer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$WalletEventSendCoinsToBracerCopyWith<_$WalletEventSendCoinsToBracer>
-      get copyWith => __$$WalletEventSendCoinsToBracerCopyWithImpl<
-          _$WalletEventSendCoinsToBracer>(this, _$identity);
+  _$$WalletEventSendCoinsToBracerImplCopyWith<
+          _$WalletEventSendCoinsToBracerImpl>
+      get copyWith => __$$WalletEventSendCoinsToBracerImplCopyWithImpl<
+          _$WalletEventSendCoinsToBracerImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -345,32 +346,34 @@ class _$WalletEventSendCoinsToBracer extends WalletEventSendCoinsToBracer {
 
 abstract class WalletEventSendCoinsToBracer extends WalletEvent {
   const factory WalletEventSendCoinsToBracer({required final int amount}) =
-      _$WalletEventSendCoinsToBracer;
+      _$WalletEventSendCoinsToBracerImpl;
   const WalletEventSendCoinsToBracer._() : super._();
 
   int get amount;
   @JsonKey(ignore: true)
-  _$$WalletEventSendCoinsToBracerCopyWith<_$WalletEventSendCoinsToBracer>
+  _$$WalletEventSendCoinsToBracerImplCopyWith<
+          _$WalletEventSendCoinsToBracerImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$WalletEventSendCoinsToOtherUserCopyWith<$Res> {
-  factory _$$WalletEventSendCoinsToOtherUserCopyWith(
-          _$WalletEventSendCoinsToOtherUser value,
-          $Res Function(_$WalletEventSendCoinsToOtherUser) then) =
-      __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>;
+abstract class _$$WalletEventSendCoinsToOtherUserImplCopyWith<$Res> {
+  factory _$$WalletEventSendCoinsToOtherUserImplCopyWith(
+          _$WalletEventSendCoinsToOtherUserImpl value,
+          $Res Function(_$WalletEventSendCoinsToOtherUserImpl) then) =
+      __$$WalletEventSendCoinsToOtherUserImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int amount, int userId, String message});
 }
 
 /// @nodoc
-class __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$WalletEventSendCoinsToOtherUser>
-    implements _$$WalletEventSendCoinsToOtherUserCopyWith<$Res> {
-  __$$WalletEventSendCoinsToOtherUserCopyWithImpl(
-      _$WalletEventSendCoinsToOtherUser _value,
-      $Res Function(_$WalletEventSendCoinsToOtherUser) _then)
+class __$$WalletEventSendCoinsToOtherUserImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res,
+        _$WalletEventSendCoinsToOtherUserImpl>
+    implements _$$WalletEventSendCoinsToOtherUserImplCopyWith<$Res> {
+  __$$WalletEventSendCoinsToOtherUserImplCopyWithImpl(
+      _$WalletEventSendCoinsToOtherUserImpl _value,
+      $Res Function(_$WalletEventSendCoinsToOtherUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -380,7 +383,7 @@ class __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>
     Object? userId = null,
     Object? message = null,
   }) {
-    return _then(_$WalletEventSendCoinsToOtherUser(
+    return _then(_$WalletEventSendCoinsToOtherUserImpl(
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -399,9 +402,9 @@ class __$$WalletEventSendCoinsToOtherUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$WalletEventSendCoinsToOtherUser
+class _$WalletEventSendCoinsToOtherUserImpl
     extends WalletEventSendCoinsToOtherUser {
-  const _$WalletEventSendCoinsToOtherUser(
+  const _$WalletEventSendCoinsToOtherUserImpl(
       {required this.amount, required this.userId, required this.message})
       : super._();
 
@@ -418,10 +421,10 @@ class _$WalletEventSendCoinsToOtherUser
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WalletEventSendCoinsToOtherUser &&
+            other is _$WalletEventSendCoinsToOtherUserImpl &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.message, message) || other.message == message));
@@ -433,9 +436,10 @@ class _$WalletEventSendCoinsToOtherUser
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$WalletEventSendCoinsToOtherUserCopyWith<_$WalletEventSendCoinsToOtherUser>
-      get copyWith => __$$WalletEventSendCoinsToOtherUserCopyWithImpl<
-          _$WalletEventSendCoinsToOtherUser>(this, _$identity);
+  _$$WalletEventSendCoinsToOtherUserImplCopyWith<
+          _$WalletEventSendCoinsToOtherUserImpl>
+      get copyWith => __$$WalletEventSendCoinsToOtherUserImplCopyWithImpl<
+          _$WalletEventSendCoinsToOtherUserImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -517,13 +521,14 @@ abstract class WalletEventSendCoinsToOtherUser extends WalletEvent {
   const factory WalletEventSendCoinsToOtherUser(
       {required final int amount,
       required final int userId,
-      required final String message}) = _$WalletEventSendCoinsToOtherUser;
+      required final String message}) = _$WalletEventSendCoinsToOtherUserImpl;
   const WalletEventSendCoinsToOtherUser._() : super._();
 
   int get amount;
   int get userId;
   String get message;
   @JsonKey(ignore: true)
-  _$$WalletEventSendCoinsToOtherUserCopyWith<_$WalletEventSendCoinsToOtherUser>
+  _$$WalletEventSendCoinsToOtherUserImplCopyWith<
+          _$WalletEventSendCoinsToOtherUserImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -40,11 +40,12 @@ class ScaffoldManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      appBar: appBar,
-      backgroundColor: backgroundColor,
-      body: _ScaffoldManagerHelper._getChild(status, body),
-      floatingActionButton:
-          status == ScaffoldManagerStatus.loaded ? floatingActionButton : const SizedBox.shrink(),
-    );
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+        appBar: appBar,
+        backgroundColor: backgroundColor,
+        body: _ScaffoldManagerHelper._getChild(status, body),
+        floatingActionButton: status == ScaffoldManagerStatus.loaded
+            ? floatingActionButton
+            : const SizedBox.shrink(),
+      );
 }

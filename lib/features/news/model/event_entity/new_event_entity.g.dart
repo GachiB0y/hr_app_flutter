@@ -6,9 +6,9 @@ part of 'new_event_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
-    _$_EventEntity(
-      id: json['id'] as int,
+_$EventEntityImpl _$$EventEntityImplFromJson(Map<String, dynamic> json) =>
+    _$EventEntityImpl(
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String?,
       description: json['description'] as String?,
       image: json['image'] as String?,
@@ -37,7 +37,7 @@ _$_EventEntity _$$_EventEntityFromJson(Map<String, dynamic> json) =>
           : Writer.fromJson(json['writer'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
+Map<String, dynamic> _$$EventEntityImplToJson(_$EventEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -54,34 +54,36 @@ Map<String, dynamic> _$$_EventEntityToJson(_$_EventEntity instance) =>
       'writer': instance.writer?.toJson(),
     };
 
-_$_Category _$$_CategoryFromJson(Map<String, dynamic> json) => _$_Category(
-      id: json['id'] as int,
+_$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
+    _$CategoryImpl(
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
+Map<String, dynamic> _$$CategoryImplToJson(_$CategoryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };
 
-_$_Writer _$$_WriterFromJson(Map<String, dynamic> json) => _$_Writer(
-      id: json['user_id'] as int,
+_$WriterImpl _$$WriterImplFromJson(Map<String, dynamic> json) => _$WriterImpl(
+      id: (json['user_id'] as num).toInt(),
       firstName: json['name_i'] as String,
       middleName: json['name'] as String,
       lastName: json['name_o'] as String,
     );
 
-Map<String, dynamic> _$$_WriterToJson(_$_Writer instance) => <String, dynamic>{
+Map<String, dynamic> _$$WriterImplToJson(_$WriterImpl instance) =>
+    <String, dynamic>{
       'user_id': instance.id,
       'name_i': instance.firstName,
       'name': instance.middleName,
       'name_o': instance.lastName,
     };
 
-_$_EventEntityViewModel _$$_EventEntityViewModelFromJson(
+_$EventEntityViewModelImpl _$$EventEntityViewModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_EventEntityViewModel(
+    _$EventEntityViewModelImpl(
       listEventEntityLoaded: (json['listEventEntityLoaded'] as List<dynamic>)
           .map((e) => EventEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -91,8 +93,8 @@ _$_EventEntityViewModel _$$_EventEntityViewModelFromJson(
               .toList(),
     );
 
-Map<String, dynamic> _$$_EventEntityViewModelToJson(
-        _$_EventEntityViewModel instance) =>
+Map<String, dynamic> _$$EventEntityViewModelImplToJson(
+        _$EventEntityViewModelImpl instance) =>
     <String, dynamic>{
       'listEventEntityLoaded': instance.listEventEntityLoaded,
       'filteredListEventEntity': instance.filteredListEventEntity,

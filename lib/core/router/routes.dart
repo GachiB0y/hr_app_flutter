@@ -28,6 +28,8 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/c
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
+import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
 import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -70,6 +72,8 @@ enum Routes with OctopusRoute {
   createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
   createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
   createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+
+  notificaion('notification', title: 'Notification'),
 
   ///
   aboutNews('about-news', title: 'About News'),
@@ -147,107 +151,113 @@ enum Routes with OctopusRoute {
 
   @override
   Widget builder(BuildContext context, OctopusState state, OctopusNode node) => switch (this) {
-        Routes.signin => const AuthenticationFormScreen(),
-        Routes.home => const HomeScreen(),
-        Routes.userMain => const UserMainScreen(),
-        Routes.coin => const GrassCoinScreen(),
-        Routes.services => const ServicesScreen(),
-        Routes.education => const EducationScreen(),
-        Routes.company => const CompanyScreen(),
-        Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
-        Routes.approveNews => const ApproveNewsScreen(),
-        Routes.listModerationNews => const ListModerationNewsScreen(),
-        Routes.createModerationScreens => const CreateRefactoringNewsScreenBucket(),
-        Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
-            child: const ModerationNewsScreen(),
-            create: (BuildContext context) => ModerationNewsCubit(
-              id: node.arguments['id'],
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
-            child: const CreateRefactoringNewsScreenBucket(),
-            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
-              id: node.arguments['id'],
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
-            child: const CreateTypeNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
-              id: node.arguments['id'],
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
-            child: const CreateDateNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringDateNewsCubit(
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createTimeNewsScreen => BlocProvider<CreateRefactoringTimeNewsCubit>(
-            child: const CreateTimeNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringTimeNewsCubit(
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
-            child: const CreateTitleNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createDescriptionNewsScreen => BlocProvider<CreateRefactoringDescriptionNewsCubit>(
-            child: const CreateDescriptionNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringDescriptionNewsCubit(
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.createPhotoNewsScreen => BlocProvider<CreateRefactoringPhotoNewsCubit>(
-            child: const CreatePhotoNewsScreen(),
-            create: (BuildContext context) => CreateRefactoringPhotoNewsCubit(
-              eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-        Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
-        Routes.profileUser => UserProfileWidgetScreen(
-            userId: node.arguments['id'],
-            isSelfUser: node.arguments['isSelfUser'],
-          ),
-        Routes.searchUser => const SearchUserScreen(),
-        Routes.scheduleBus => const ScheduleBusScreen(),
-        Routes.myLeanProductions => const MyLeanProductionsScreen(),
-        Routes.infoProposals => LeanProductionInfoProposalsScreen(
-            number: node.arguments['number'],
-            id: node.arguments['id'],
-          ),
-        Routes.statementsForm => const StatementFormScreen(),
-        Routes.bagReport => const BagReportScreen(),
-        Routes.infoBirthDay => BirthDayInfoScreen(),
-        Routes.rookieInfo => BlocProvider.value(
-            value: RookiesBLoC(
-              userRepo: DependenciesScope.of(context).userRepository,
-            )..add(const RookiesEvent.fetch()),
-            child: RookiesInfoScreen(),
-          ),
-        Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
-        Routes.whatToSpendScreen => const WhatToSpendScreen(),
-        Routes.howToGetBigScreen => const HowToGetBigScreen(),
-        Routes.createNewsType => const SelectedTypeNewsScreen(),
-        Routes.createNews => const CreateNewsScreen(),
-        Routes.createNewsDate => const SelectedNewsDateScreen(),
-        Routes.createNewsTime => const SelectedNewsTimeScreen(),
-        Routes.createNewsTitle => const WriteTitleNewsScreen(),
-        Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
-        Routes.createNewsPhoto => const AddPhotoNewsScreen(),
-        Routes.exampleNews => const ExmapleNewsScreen(),
-        Routes.allNews => const AllNewsScreen(),
-        Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
-        Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
-        Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
-        Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
-        Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
-        Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
-        Routes.pickFileLeanProduction => const PickFileLeanProduction(),
-      };
+    Routes.signin => const AuthenticationFormScreen(),
+    Routes.home => const HomeScreen(),
+    Routes.userMain => const UserMainScreen(),
+    Routes.coin => const GrassCoinScreen(),
+    Routes.services => const ServicesScreen(),
+    Routes.education => const EducationScreen(),
+    Routes.company => const CompanyScreen(),
+    Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
+    Routes.approveNews => const ApproveNewsScreen(),
+    Routes.listModerationNews => const ListModerationNewsScreen(),
+    Routes.createModerationScreens => const CreateRefactoringNewsScreenBucket(),
+    Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
+      child: const ModerationNewsScreen(),
+      create: (BuildContext context) => ModerationNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.notificaion => BlocProvider.value(
+      value: NotificationBLoC(
+        repository: DependenciesScope.of(context).notificationRepository,
+      )..add(const NotificationEvent.fetchNotification()),
+      child: NotificationScreen(),
+    ),
+    Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+      child: const CreateRefactoringNewsScreenBucket(),
+      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+      child: const CreateTypeNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
+      child: const CreateDateNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringDateNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTimeNewsScreen => BlocProvider<CreateRefactoringTimeNewsCubit>(
+      child: const CreateTimeNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTimeNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
+      child: const CreateTitleNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createDescriptionNewsScreen => BlocProvider<CreateRefactoringDescriptionNewsCubit>(
+      child: const CreateDescriptionNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringDescriptionNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createPhotoNewsScreen => BlocProvider<CreateRefactoringPhotoNewsCubit>(
+      child: const CreatePhotoNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringPhotoNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
+    Routes.profileUser => UserProfileWidgetScreen(
+      userId: node.arguments['id'],
+      isSelfUser: node.arguments['isSelfUser'],
+    ),
+    Routes.searchUser => const SearchUserScreen(),
+    Routes.scheduleBus => const ScheduleBusScreen(),
+    Routes.myLeanProductions => const MyLeanProductionsScreen(),
+    Routes.infoProposals => LeanProductionInfoProposalsScreen(
+      number: node.arguments['number'],
+      id: node.arguments['id'],
+    ),
+    Routes.statementsForm => const StatementFormScreen(),
+    Routes.bagReport => const BagReportScreen(),
+    Routes.infoBirthDay => BirthDayInfoScreen(),
+    Routes.rookieInfo => BlocProvider.value(
+      value: RookiesBLoC(
+        userRepo: DependenciesScope.of(context).userRepository,
+      )..add(const RookiesEvent.fetch()),
+      child: RookiesInfoScreen(),
+    ),
+    Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
+    Routes.whatToSpendScreen => const WhatToSpendScreen(),
+    Routes.howToGetBigScreen => const HowToGetBigScreen(),
+    Routes.createNewsType => const SelectedTypeNewsScreen(),
+    Routes.createNews => const CreateNewsScreen(),
+    Routes.createNewsDate => const SelectedNewsDateScreen(),
+    Routes.createNewsTime => const SelectedNewsTimeScreen(),
+    Routes.createNewsTitle => const WriteTitleNewsScreen(),
+    Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
+    Routes.createNewsPhoto => const AddPhotoNewsScreen(),
+    Routes.exampleNews => const ExmapleNewsScreen(),
+    Routes.allNews => const AllNewsScreen(),
+    Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
+    Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
+    Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
+    Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
+    Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
+    Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
+    Routes.pickFileLeanProduction => const PickFileLeanProduction(),
+  };
 }

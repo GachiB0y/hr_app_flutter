@@ -12,7 +12,7 @@ part of 'birth_day_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 BirthDayInfoEntity _$BirthDayInfoEntityFromJson(Map<String, dynamic> json) {
   return _BirthDayInfoEntity.fromJson(json);
@@ -68,22 +68,22 @@ class _$BirthDayInfoEntityCopyWithImpl<$Res, $Val extends BirthDayInfoEntity>
 }
 
 /// @nodoc
-abstract class _$$_BirthDayInfoEntityCopyWith<$Res>
+abstract class _$$BirthDayInfoEntityImplCopyWith<$Res>
     implements $BirthDayInfoEntityCopyWith<$Res> {
-  factory _$$_BirthDayInfoEntityCopyWith(_$_BirthDayInfoEntity value,
-          $Res Function(_$_BirthDayInfoEntity) then) =
-      __$$_BirthDayInfoEntityCopyWithImpl<$Res>;
+  factory _$$BirthDayInfoEntityImplCopyWith(_$BirthDayInfoEntityImpl value,
+          $Res Function(_$BirthDayInfoEntityImpl) then) =
+      __$$BirthDayInfoEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int count, List<OneBirthDayInfo> birthdays});
 }
 
 /// @nodoc
-class __$$_BirthDayInfoEntityCopyWithImpl<$Res>
-    extends _$BirthDayInfoEntityCopyWithImpl<$Res, _$_BirthDayInfoEntity>
-    implements _$$_BirthDayInfoEntityCopyWith<$Res> {
-  __$$_BirthDayInfoEntityCopyWithImpl(
-      _$_BirthDayInfoEntity _value, $Res Function(_$_BirthDayInfoEntity) _then)
+class __$$BirthDayInfoEntityImplCopyWithImpl<$Res>
+    extends _$BirthDayInfoEntityCopyWithImpl<$Res, _$BirthDayInfoEntityImpl>
+    implements _$$BirthDayInfoEntityImplCopyWith<$Res> {
+  __$$BirthDayInfoEntityImplCopyWithImpl(_$BirthDayInfoEntityImpl _value,
+      $Res Function(_$BirthDayInfoEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_BirthDayInfoEntityCopyWithImpl<$Res>
     Object? count = null,
     Object? birthdays = null,
   }) {
-    return _then(_$_BirthDayInfoEntity(
+    return _then(_$BirthDayInfoEntityImpl(
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -107,13 +107,13 @@ class __$$_BirthDayInfoEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BirthDayInfoEntity implements _BirthDayInfoEntity {
-  const _$_BirthDayInfoEntity(
+class _$BirthDayInfoEntityImpl implements _BirthDayInfoEntity {
+  const _$BirthDayInfoEntityImpl(
       {required this.count, required final List<OneBirthDayInfo> birthdays})
       : _birthdays = birthdays;
 
-  factory _$_BirthDayInfoEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_BirthDayInfoEntityFromJson(json);
+  factory _$BirthDayInfoEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BirthDayInfoEntityImplFromJson(json);
 
   @override
   final int count;
@@ -131,10 +131,10 @@ class _$_BirthDayInfoEntity implements _BirthDayInfoEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BirthDayInfoEntity &&
+            other is _$BirthDayInfoEntityImpl &&
             (identical(other.count, count) || other.count == count) &&
             const DeepCollectionEquality()
                 .equals(other._birthdays, _birthdays));
@@ -148,13 +148,13 @@ class _$_BirthDayInfoEntity implements _BirthDayInfoEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BirthDayInfoEntityCopyWith<_$_BirthDayInfoEntity> get copyWith =>
-      __$$_BirthDayInfoEntityCopyWithImpl<_$_BirthDayInfoEntity>(
+  _$$BirthDayInfoEntityImplCopyWith<_$BirthDayInfoEntityImpl> get copyWith =>
+      __$$BirthDayInfoEntityImplCopyWithImpl<_$BirthDayInfoEntityImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BirthDayInfoEntityToJson(
+    return _$$BirthDayInfoEntityImplToJson(
       this,
     );
   }
@@ -162,11 +162,12 @@ class _$_BirthDayInfoEntity implements _BirthDayInfoEntity {
 
 abstract class _BirthDayInfoEntity implements BirthDayInfoEntity {
   const factory _BirthDayInfoEntity(
-      {required final int count,
-      required final List<OneBirthDayInfo> birthdays}) = _$_BirthDayInfoEntity;
+          {required final int count,
+          required final List<OneBirthDayInfo> birthdays}) =
+      _$BirthDayInfoEntityImpl;
 
   factory _BirthDayInfoEntity.fromJson(Map<String, dynamic> json) =
-      _$_BirthDayInfoEntity.fromJson;
+      _$BirthDayInfoEntityImpl.fromJson;
 
   @override
   int get count;
@@ -174,7 +175,7 @@ abstract class _BirthDayInfoEntity implements BirthDayInfoEntity {
   List<OneBirthDayInfo> get birthdays;
   @override
   @JsonKey(ignore: true)
-  _$$_BirthDayInfoEntityCopyWith<_$_BirthDayInfoEntity> get copyWith =>
+  _$$BirthDayInfoEntityImplCopyWith<_$BirthDayInfoEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -267,11 +268,11 @@ class _$OneBirthDayInfoCopyWithImpl<$Res, $Val extends OneBirthDayInfo>
 }
 
 /// @nodoc
-abstract class _$$_OneBirthDayInfoCopyWith<$Res>
+abstract class _$$OneBirthDayInfoImplCopyWith<$Res>
     implements $OneBirthDayInfoCopyWith<$Res> {
-  factory _$$_OneBirthDayInfoCopyWith(
-          _$_OneBirthDayInfo value, $Res Function(_$_OneBirthDayInfo) then) =
-      __$$_OneBirthDayInfoCopyWithImpl<$Res>;
+  factory _$$OneBirthDayInfoImplCopyWith(_$OneBirthDayInfoImpl value,
+          $Res Function(_$OneBirthDayInfoImpl) then) =
+      __$$OneBirthDayInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -284,11 +285,11 @@ abstract class _$$_OneBirthDayInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OneBirthDayInfoCopyWithImpl<$Res>
-    extends _$OneBirthDayInfoCopyWithImpl<$Res, _$_OneBirthDayInfo>
-    implements _$$_OneBirthDayInfoCopyWith<$Res> {
-  __$$_OneBirthDayInfoCopyWithImpl(
-      _$_OneBirthDayInfo _value, $Res Function(_$_OneBirthDayInfo) _then)
+class __$$OneBirthDayInfoImplCopyWithImpl<$Res>
+    extends _$OneBirthDayInfoCopyWithImpl<$Res, _$OneBirthDayInfoImpl>
+    implements _$$OneBirthDayInfoImplCopyWith<$Res> {
+  __$$OneBirthDayInfoImplCopyWithImpl(
+      _$OneBirthDayInfoImpl _value, $Res Function(_$OneBirthDayInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -301,7 +302,7 @@ class __$$_OneBirthDayInfoCopyWithImpl<$Res>
     Object? dateBirth = null,
     Object? staffPosition = freezed,
   }) {
-    return _then(_$_OneBirthDayInfo(
+    return _then(_$OneBirthDayInfoImpl(
       autoCard: null == autoCard
           ? _value.autoCard
           : autoCard // ignore: cast_nullable_to_non_nullable
@@ -332,8 +333,8 @@ class __$$_OneBirthDayInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_OneBirthDayInfo implements _OneBirthDayInfo {
-  const _$_OneBirthDayInfo(
+class _$OneBirthDayInfoImpl implements _OneBirthDayInfo {
+  const _$OneBirthDayInfoImpl(
       {@JsonKey(name: 'auto_card') required this.autoCard,
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
@@ -341,8 +342,8 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
       @JsonKey(name: 'date_birth') required this.dateBirth,
       @JsonKey(name: 'staff_position') required this.staffPosition});
 
-  factory _$_OneBirthDayInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_OneBirthDayInfoFromJson(json);
+  factory _$OneBirthDayInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OneBirthDayInfoImplFromJson(json);
 
   @override
   @JsonKey(name: 'auto_card')
@@ -368,10 +369,10 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OneBirthDayInfo &&
+            other is _$OneBirthDayInfoImpl &&
             (identical(other.autoCard, autoCard) ||
                 other.autoCard == autoCard) &&
             (identical(other.name, name) || other.name == name) &&
@@ -391,12 +392,13 @@ class _$_OneBirthDayInfo implements _OneBirthDayInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OneBirthDayInfoCopyWith<_$_OneBirthDayInfo> get copyWith =>
-      __$$_OneBirthDayInfoCopyWithImpl<_$_OneBirthDayInfo>(this, _$identity);
+  _$$OneBirthDayInfoImplCopyWith<_$OneBirthDayInfoImpl> get copyWith =>
+      __$$OneBirthDayInfoImplCopyWithImpl<_$OneBirthDayInfoImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OneBirthDayInfoToJson(
+    return _$$OneBirthDayInfoImplToJson(
       this,
     );
   }
@@ -410,10 +412,10 @@ abstract class _OneBirthDayInfo implements OneBirthDayInfo {
       @JsonKey(name: 'name_o') required final String nameO,
       @JsonKey(name: 'date_birth') required final String dateBirth,
       @JsonKey(name: 'staff_position')
-      required final String? staffPosition}) = _$_OneBirthDayInfo;
+      required final String? staffPosition}) = _$OneBirthDayInfoImpl;
 
   factory _OneBirthDayInfo.fromJson(Map<String, dynamic> json) =
-      _$_OneBirthDayInfo.fromJson;
+      _$OneBirthDayInfoImpl.fromJson;
 
   @override
   @JsonKey(name: 'auto_card')
@@ -434,6 +436,6 @@ abstract class _OneBirthDayInfo implements OneBirthDayInfo {
   String? get staffPosition;
   @override
   @JsonKey(ignore: true)
-  _$$_OneBirthDayInfoCopyWith<_$_OneBirthDayInfo> get copyWith =>
+  _$$OneBirthDayInfoImplCopyWith<_$OneBirthDayInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

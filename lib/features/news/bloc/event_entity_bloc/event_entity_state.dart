@@ -1,17 +1,6 @@
 part of 'event_entity_bloc.dart';
 
-// @freezed
-// class EventEntityState with _$EventEntityState {
-//   const factory EventEntityState.loading() = EventEntityStateLoading;
-//   const factory EventEntityState.loaded({
-//     required List<EventEntity> listEventEntityLoaded,
-//     required List<EventEntity> filteredListEventEntity,
-//   }) = EventEntityStateLoaded;
-//   const factory EventEntityState.error() = EventEntityStateError;
 
-//   factory EventEntityState.fromJson(Map<String, dynamic> json) =>
-//       _$EventEntityStateFromJson(json);
-// }
 
 /// {@template event_entity_state_placeholder}
 /// Entity placeholder for EventEntityState
@@ -22,6 +11,9 @@ typedef EventEntityEntity = EventEntityViewModel?;
 /// EventEntityState.
 /// {@endtemplate}
 sealed class EventEntityState extends _$EventEntityStateBase {
+
+  /// {@macro event_entity_state}
+  const EventEntityState({required super.data, required super.message});
   /// Idling state
   /// {@macro event_entity_state}
   const factory EventEntityState.idle({
@@ -49,9 +41,6 @@ sealed class EventEntityState extends _$EventEntityStateBase {
     required EventEntityEntity? data,
     String message,
   }) = EventEntityState$Error;
-
-  /// {@macro event_entity_state}
-  const EventEntityState({required super.data, required super.message});
 }
 
 /// Idling state
@@ -68,7 +57,7 @@ final class EventEntityState$Processing extends EventEntityState
     with _$EventEntityState {
   /// {@nodoc}
   const EventEntityState$Processing(
-      {required super.data, super.message = 'Processing'});
+      {required super.data, super.message = 'Processing',});
 }
 
 /// Successful
@@ -77,7 +66,7 @@ final class EventEntityState$Successful extends EventEntityState
     with _$EventEntityState {
   /// {@nodoc}
   const EventEntityState$Successful(
-      {required super.data, super.message = 'Successful'});
+      {required super.data, super.message = 'Successful',});
 }
 
 /// Error
@@ -86,7 +75,7 @@ final class EventEntityState$Error extends EventEntityState
     with _$EventEntityState {
   /// {@nodoc}
   const EventEntityState$Error(
-      {required super.data, super.message = 'An error has occurred.'});
+      {required super.data, super.message = 'An error has occurred.',});
 }
 
 /// {@nodoc}
@@ -94,7 +83,7 @@ base mixin _$EventEntityState on EventEntityState {}
 
 /// Pattern matching for [EventEntityState].
 typedef EventEntityStateMatch<R, S extends EventEntityState> = R Function(
-    S state);
+    S state,);
 
 /// {@nodoc}
 @immutable
@@ -131,20 +120,19 @@ abstract base class _$EventEntityStateBase {
     required EventEntityStateMatch<R, EventEntityState$Error> error,
   }) =>
       switch (this) {
-        EventEntityState$Idle s => idle(s),
-        EventEntityState$Processing s => processing(s),
-        EventEntityState$Successful s => successful(s),
-        EventEntityState$Error s => error(s),
+        final EventEntityState$Idle s => idle(s),
+        final EventEntityState$Processing s => processing(s),
+        final EventEntityState$Successful s => successful(s),
+        final EventEntityState$Error s => error(s),
         _ => throw AssertionError(),
       };
 
   /// Pattern matching for [EventEntityState].
   R maybeMap<R>({
-    EventEntityStateMatch<R, EventEntityState$Idle>? idle,
+    required R Function() orElse, EventEntityStateMatch<R, EventEntityState$Idle>? idle,
     EventEntityStateMatch<R, EventEntityState$Processing>? processing,
     EventEntityStateMatch<R, EventEntityState$Successful>? successful,
     EventEntityStateMatch<R, EventEntityState$Error>? error,
-    required R Function() orElse,
   }) =>
       map<R>(
         idle: idle ?? (_) => orElse(),

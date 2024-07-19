@@ -10,7 +10,7 @@ part 'new_event_entity.g.dart';
 class EventEntity with _$EventEntity {
   @JsonSerializable(explicitToJson: true)
   const factory EventEntity({
-   required int id,
+    required int id,
     String? title,
     String? description,
     String? image,
@@ -20,10 +20,10 @@ class EventEntity with _$EventEntity {
     @JsonKey(name: 'updated_at')  DateTime? updatedAt,
     @JsonKey(name: 'is_publish')  bool? isPublish,
     @JsonKey(name: 'is_archived')  bool? isArchived,
-     List<Category>? categories,
+    List<Category>? categories,
     List<Map<String, dynamic>>? vote,
 
-     Writer? writer,
+    Writer? writer,
   }) = _EventEntity;
 
   factory EventEntity.fromJson(Map<String, dynamic> json) =>
@@ -63,3 +63,4 @@ class EventEntityViewModel with _$EventEntityViewModel {
   factory EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
       _$EventEntityViewModelFromJson(json);
 }
+
