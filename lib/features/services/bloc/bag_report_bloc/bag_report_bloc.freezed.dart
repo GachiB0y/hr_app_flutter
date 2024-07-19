@@ -12,7 +12,7 @@ part of 'bag_report_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BagReportEvent {
@@ -99,11 +99,11 @@ class _$BagReportEventCopyWithImpl<$Res, $Val extends BagReportEvent>
 }
 
 /// @nodoc
-abstract class _$$BagReportEventCreateCopyWith<$Res>
+abstract class _$$BagReportEventCreateImplCopyWith<$Res>
     implements $BagReportEventCopyWith<$Res> {
-  factory _$$BagReportEventCreateCopyWith(_$BagReportEventCreate value,
-          $Res Function(_$BagReportEventCreate) then) =
-      __$$BagReportEventCreateCopyWithImpl<$Res>;
+  factory _$$BagReportEventCreateImplCopyWith(_$BagReportEventCreateImpl value,
+          $Res Function(_$BagReportEventCreateImpl) then) =
+      __$$BagReportEventCreateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BagReportEntity formInfo});
@@ -113,11 +113,11 @@ abstract class _$$BagReportEventCreateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$BagReportEventCreateCopyWithImpl<$Res>
-    extends _$BagReportEventCopyWithImpl<$Res, _$BagReportEventCreate>
-    implements _$$BagReportEventCreateCopyWith<$Res> {
-  __$$BagReportEventCreateCopyWithImpl(_$BagReportEventCreate _value,
-      $Res Function(_$BagReportEventCreate) _then)
+class __$$BagReportEventCreateImplCopyWithImpl<$Res>
+    extends _$BagReportEventCopyWithImpl<$Res, _$BagReportEventCreateImpl>
+    implements _$$BagReportEventCreateImplCopyWith<$Res> {
+  __$$BagReportEventCreateImplCopyWithImpl(_$BagReportEventCreateImpl _value,
+      $Res Function(_$BagReportEventCreateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -125,7 +125,7 @@ class __$$BagReportEventCreateCopyWithImpl<$Res>
   $Res call({
     Object? formInfo = null,
   }) {
-    return _then(_$BagReportEventCreate(
+    return _then(_$BagReportEventCreateImpl(
       formInfo: null == formInfo
           ? _value.formInfo
           : formInfo // ignore: cast_nullable_to_non_nullable
@@ -136,8 +136,8 @@ class __$$BagReportEventCreateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BagReportEventCreate extends BagReportEventCreate {
-  const _$BagReportEventCreate({required this.formInfo}) : super._();
+class _$BagReportEventCreateImpl extends BagReportEventCreate {
+  const _$BagReportEventCreateImpl({required this.formInfo}) : super._();
 
   @override
   final BagReportEntity formInfo;
@@ -148,10 +148,10 @@ class _$BagReportEventCreate extends BagReportEventCreate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BagReportEventCreate &&
+            other is _$BagReportEventCreateImpl &&
             (identical(other.formInfo, formInfo) ||
                 other.formInfo == formInfo));
   }
@@ -162,9 +162,10 @@ class _$BagReportEventCreate extends BagReportEventCreate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BagReportEventCreateCopyWith<_$BagReportEventCreate> get copyWith =>
-      __$$BagReportEventCreateCopyWithImpl<_$BagReportEventCreate>(
-          this, _$identity);
+  _$$BagReportEventCreateImplCopyWith<_$BagReportEventCreateImpl>
+      get copyWith =>
+          __$$BagReportEventCreateImplCopyWithImpl<_$BagReportEventCreateImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -225,13 +226,13 @@ class _$BagReportEventCreate extends BagReportEventCreate {
 
 abstract class BagReportEventCreate extends BagReportEvent {
   const factory BagReportEventCreate(
-      {required final BagReportEntity formInfo}) = _$BagReportEventCreate;
+      {required final BagReportEntity formInfo}) = _$BagReportEventCreateImpl;
   const BagReportEventCreate._() : super._();
 
   @override
   BagReportEntity get formInfo;
   @override
   @JsonKey(ignore: true)
-  _$$BagReportEventCreateCopyWith<_$BagReportEventCreate> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BagReportEventCreateImplCopyWith<_$BagReportEventCreateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

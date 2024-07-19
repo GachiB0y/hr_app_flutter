@@ -12,7 +12,7 @@ part of 'view_model_my_lean_productions.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ViewModelMyLeanProductions _$ViewModelMyLeanProductionsFromJson(
     Map<String, dynamic> json) {
@@ -88,12 +88,12 @@ class _$ViewModelMyLeanProductionsCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ViewModelMyLeanProductionsCopyWith<$Res>
+abstract class _$$ViewModelMyLeanProductionsImplCopyWith<$Res>
     implements $ViewModelMyLeanProductionsCopyWith<$Res> {
-  factory _$$_ViewModelMyLeanProductionsCopyWith(
-          _$_ViewModelMyLeanProductions value,
-          $Res Function(_$_ViewModelMyLeanProductions) then) =
-      __$$_ViewModelMyLeanProductionsCopyWithImpl<$Res>;
+  factory _$$ViewModelMyLeanProductionsImplCopyWith(
+          _$ViewModelMyLeanProductionsImpl value,
+          $Res Function(_$ViewModelMyLeanProductionsImpl) then) =
+      __$$ViewModelMyLeanProductionsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -104,13 +104,13 @@ abstract class _$$_ViewModelMyLeanProductionsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ViewModelMyLeanProductionsCopyWithImpl<$Res>
+class __$$ViewModelMyLeanProductionsImplCopyWithImpl<$Res>
     extends _$ViewModelMyLeanProductionsCopyWithImpl<$Res,
-        _$_ViewModelMyLeanProductions>
-    implements _$$_ViewModelMyLeanProductionsCopyWith<$Res> {
-  __$$_ViewModelMyLeanProductionsCopyWithImpl(
-      _$_ViewModelMyLeanProductions _value,
-      $Res Function(_$_ViewModelMyLeanProductions) _then)
+        _$ViewModelMyLeanProductionsImpl>
+    implements _$$ViewModelMyLeanProductionsImplCopyWith<$Res> {
+  __$$ViewModelMyLeanProductionsImplCopyWithImpl(
+      _$ViewModelMyLeanProductionsImpl _value,
+      $Res Function(_$ViewModelMyLeanProductionsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +121,7 @@ class __$$_ViewModelMyLeanProductionsCopyWithImpl<$Res>
     Object? isLoadingFile = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_$_ViewModelMyLeanProductions(
+    return _then(_$ViewModelMyLeanProductionsImpl(
       myProposals: freezed == myProposals
           ? _value._myProposals
           : myProposals // ignore: cast_nullable_to_non_nullable
@@ -144,16 +144,17 @@ class __$$_ViewModelMyLeanProductionsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ViewModelMyLeanProductions implements _ViewModelMyLeanProductions {
-  const _$_ViewModelMyLeanProductions(
+class _$ViewModelMyLeanProductionsImpl implements _ViewModelMyLeanProductions {
+  const _$ViewModelMyLeanProductionsImpl(
       {required final List<MyLeanProductionsEntity>? myProposals,
       this.isSubmitting,
       this.isLoadingFile = false,
       this.exception})
       : _myProposals = myProposals;
 
-  factory _$_ViewModelMyLeanProductions.fromJson(Map<String, dynamic> json) =>
-      _$$_ViewModelMyLeanProductionsFromJson(json);
+  factory _$ViewModelMyLeanProductionsImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$ViewModelMyLeanProductionsImplFromJson(json);
 
   final List<MyLeanProductionsEntity>? _myProposals;
   @override
@@ -179,10 +180,10 @@ class _$_ViewModelMyLeanProductions implements _ViewModelMyLeanProductions {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ViewModelMyLeanProductions &&
+            other is _$ViewModelMyLeanProductionsImpl &&
             const DeepCollectionEquality()
                 .equals(other._myProposals, _myProposals) &&
             (identical(other.isSubmitting, isSubmitting) ||
@@ -205,13 +206,13 @@ class _$_ViewModelMyLeanProductions implements _ViewModelMyLeanProductions {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ViewModelMyLeanProductionsCopyWith<_$_ViewModelMyLeanProductions>
-      get copyWith => __$$_ViewModelMyLeanProductionsCopyWithImpl<
-          _$_ViewModelMyLeanProductions>(this, _$identity);
+  _$$ViewModelMyLeanProductionsImplCopyWith<_$ViewModelMyLeanProductionsImpl>
+      get copyWith => __$$ViewModelMyLeanProductionsImplCopyWithImpl<
+          _$ViewModelMyLeanProductionsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ViewModelMyLeanProductionsToJson(
+    return _$$ViewModelMyLeanProductionsImplToJson(
       this,
     );
   }
@@ -220,13 +221,14 @@ class _$_ViewModelMyLeanProductions implements _ViewModelMyLeanProductions {
 abstract class _ViewModelMyLeanProductions
     implements ViewModelMyLeanProductions {
   const factory _ViewModelMyLeanProductions(
-      {required final List<MyLeanProductionsEntity>? myProposals,
-      final bool? isSubmitting,
-      final bool? isLoadingFile,
-      final ApiClientExceptionType? exception}) = _$_ViewModelMyLeanProductions;
+          {required final List<MyLeanProductionsEntity>? myProposals,
+          final bool? isSubmitting,
+          final bool? isLoadingFile,
+          final ApiClientExceptionType? exception}) =
+      _$ViewModelMyLeanProductionsImpl;
 
   factory _ViewModelMyLeanProductions.fromJson(Map<String, dynamic> json) =
-      _$_ViewModelMyLeanProductions.fromJson;
+      _$ViewModelMyLeanProductionsImpl.fromJson;
 
   @override
   List<MyLeanProductionsEntity>? get myProposals;
@@ -238,6 +240,6 @@ abstract class _ViewModelMyLeanProductions
   ApiClientExceptionType? get exception;
   @override
   @JsonKey(ignore: true)
-  _$$_ViewModelMyLeanProductionsCopyWith<_$_ViewModelMyLeanProductions>
+  _$$ViewModelMyLeanProductionsImplCopyWith<_$ViewModelMyLeanProductionsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

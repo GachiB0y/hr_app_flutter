@@ -6,6 +6,7 @@ import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/notification/data/repo/notification_repository.dart';
 import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/service_repository.dart';
@@ -69,6 +70,9 @@ base class Dependencies {
 
   /// ILeanProductionRepository repository
   late final ILeanProductionRepository leanProductionRepository;
+
+  /// INotificationRepository repository
+  late final INotificationRepository notificationRepository;
 
   /// Authentication bloc
   late final AuthBLoC authBloc;

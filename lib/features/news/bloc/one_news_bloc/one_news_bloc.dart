@@ -3,14 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
-import '../../model/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 
 part 'one_news_bloc.freezed.dart';
-
 part 'one_news_bloc.g.dart';
-
 part 'one_news_event.dart';
-
 part 'one_news_state.dart';
 
 class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
@@ -26,14 +23,18 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
     });
   }
 
-  Future<void> onOneNewsEventFetch(Emitter<OneNewsState> emit, OneNewsEvent event) async {
+  Future<void> onOneNewsEventFetch(
+    Emitter<OneNewsState> emit,
+    OneNewsEvent event,
+  ) async {
     emit(const OneNewsState.loading());
     try {
-      await eventEntityRepository
+      final oneNewsLoaded = await eventEntityRepository
           .getNewsById(
             id: event.id,
           )
           .timeout(const Duration(seconds: 10));
+
       if (eventEntityRepository.currentNews == null) return;
       emit(OneNewsState.loaded(
         oneNewsLoaded: eventEntityRepository.currentNews!,

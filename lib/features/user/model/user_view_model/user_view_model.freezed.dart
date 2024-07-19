@@ -12,7 +12,7 @@ part of 'user_view_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 UserProfileViewModel _$UserProfileViewModelFromJson(Map<String, dynamic> json) {
   return _UserProfileViewModel.fromJson(json);
@@ -92,11 +92,11 @@ class _$UserProfileViewModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_UserProfileViewModelCopyWith<$Res>
+abstract class _$$UserProfileViewModelImplCopyWith<$Res>
     implements $UserProfileViewModelCopyWith<$Res> {
-  factory _$$_UserProfileViewModelCopyWith(_$_UserProfileViewModel value,
-          $Res Function(_$_UserProfileViewModel) then) =
-      __$$_UserProfileViewModelCopyWithImpl<$Res>;
+  factory _$$UserProfileViewModelImplCopyWith(_$UserProfileViewModelImpl value,
+          $Res Function(_$UserProfileViewModelImpl) then) =
+      __$$UserProfileViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({UserInfo authUser, UserInfo? currentProfileUser});
@@ -108,11 +108,11 @@ abstract class _$$_UserProfileViewModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserProfileViewModelCopyWithImpl<$Res>
-    extends _$UserProfileViewModelCopyWithImpl<$Res, _$_UserProfileViewModel>
-    implements _$$_UserProfileViewModelCopyWith<$Res> {
-  __$$_UserProfileViewModelCopyWithImpl(_$_UserProfileViewModel _value,
-      $Res Function(_$_UserProfileViewModel) _then)
+class __$$UserProfileViewModelImplCopyWithImpl<$Res>
+    extends _$UserProfileViewModelCopyWithImpl<$Res, _$UserProfileViewModelImpl>
+    implements _$$UserProfileViewModelImplCopyWith<$Res> {
+  __$$UserProfileViewModelImplCopyWithImpl(_$UserProfileViewModelImpl _value,
+      $Res Function(_$UserProfileViewModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +121,7 @@ class __$$_UserProfileViewModelCopyWithImpl<$Res>
     Object? authUser = null,
     Object? currentProfileUser = freezed,
   }) {
-    return _then(_$_UserProfileViewModel(
+    return _then(_$UserProfileViewModelImpl(
       authUser: null == authUser
           ? _value.authUser
           : authUser // ignore: cast_nullable_to_non_nullable
@@ -136,12 +136,12 @@ class __$$_UserProfileViewModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserProfileViewModel implements _UserProfileViewModel {
-  const _$_UserProfileViewModel(
+class _$UserProfileViewModelImpl implements _UserProfileViewModel {
+  const _$UserProfileViewModelImpl(
       {required this.authUser, required this.currentProfileUser});
 
-  factory _$_UserProfileViewModel.fromJson(Map<String, dynamic> json) =>
-      _$$_UserProfileViewModelFromJson(json);
+  factory _$UserProfileViewModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserProfileViewModelImplFromJson(json);
 
   @override
   final UserInfo authUser;
@@ -154,10 +154,10 @@ class _$_UserProfileViewModel implements _UserProfileViewModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserProfileViewModel &&
+            other is _$UserProfileViewModelImpl &&
             (identical(other.authUser, authUser) ||
                 other.authUser == authUser) &&
             (identical(other.currentProfileUser, currentProfileUser) ||
@@ -171,13 +171,14 @@ class _$_UserProfileViewModel implements _UserProfileViewModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserProfileViewModelCopyWith<_$_UserProfileViewModel> get copyWith =>
-      __$$_UserProfileViewModelCopyWithImpl<_$_UserProfileViewModel>(
-          this, _$identity);
+  _$$UserProfileViewModelImplCopyWith<_$UserProfileViewModelImpl>
+      get copyWith =>
+          __$$UserProfileViewModelImplCopyWithImpl<_$UserProfileViewModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileViewModelToJson(
+    return _$$UserProfileViewModelImplToJson(
       this,
     );
   }
@@ -185,11 +186,12 @@ class _$_UserProfileViewModel implements _UserProfileViewModel {
 
 abstract class _UserProfileViewModel implements UserProfileViewModel {
   const factory _UserProfileViewModel(
-      {required final UserInfo authUser,
-      required final UserInfo? currentProfileUser}) = _$_UserProfileViewModel;
+          {required final UserInfo authUser,
+          required final UserInfo? currentProfileUser}) =
+      _$UserProfileViewModelImpl;
 
   factory _UserProfileViewModel.fromJson(Map<String, dynamic> json) =
-      _$_UserProfileViewModel.fromJson;
+      _$UserProfileViewModelImpl.fromJson;
 
   @override
   UserInfo get authUser;
@@ -197,6 +199,6 @@ abstract class _UserProfileViewModel implements UserProfileViewModel {
   UserInfo? get currentProfileUser;
   @override
   @JsonKey(ignore: true)
-  _$$_UserProfileViewModelCopyWith<_$_UserProfileViewModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserProfileViewModelImplCopyWith<_$UserProfileViewModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

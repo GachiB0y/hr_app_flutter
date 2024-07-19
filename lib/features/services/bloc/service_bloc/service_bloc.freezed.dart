@@ -12,7 +12,7 @@ part of 'service_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ServiceEvent {
@@ -69,25 +69,25 @@ class _$ServiceEventCopyWithImpl<$Res, $Val extends ServiceEvent>
 }
 
 /// @nodoc
-abstract class _$$FetchServiceEventCopyWith<$Res> {
-  factory _$$FetchServiceEventCopyWith(
-          _$FetchServiceEvent value, $Res Function(_$FetchServiceEvent) then) =
-      __$$FetchServiceEventCopyWithImpl<$Res>;
+abstract class _$$FetchServiceEventImplCopyWith<$Res> {
+  factory _$$FetchServiceEventImplCopyWith(_$FetchServiceEventImpl value,
+          $Res Function(_$FetchServiceEventImpl) then) =
+      __$$FetchServiceEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$FetchServiceEventCopyWithImpl<$Res>
-    extends _$ServiceEventCopyWithImpl<$Res, _$FetchServiceEvent>
-    implements _$$FetchServiceEventCopyWith<$Res> {
-  __$$FetchServiceEventCopyWithImpl(
-      _$FetchServiceEvent _value, $Res Function(_$FetchServiceEvent) _then)
+class __$$FetchServiceEventImplCopyWithImpl<$Res>
+    extends _$ServiceEventCopyWithImpl<$Res, _$FetchServiceEventImpl>
+    implements _$$FetchServiceEventImplCopyWith<$Res> {
+  __$$FetchServiceEventImplCopyWithImpl(_$FetchServiceEventImpl _value,
+      $Res Function(_$FetchServiceEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$FetchServiceEvent extends FetchServiceEvent {
-  const _$FetchServiceEvent() : super._();
+class _$FetchServiceEventImpl extends FetchServiceEvent {
+  const _$FetchServiceEventImpl() : super._();
 
   @override
   String toString() {
@@ -95,9 +95,9 @@ class _$FetchServiceEvent extends FetchServiceEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchServiceEvent);
+        (other.runtimeType == runtimeType && other is _$FetchServiceEventImpl);
   }
 
   @override
@@ -161,6 +161,6 @@ class _$FetchServiceEvent extends FetchServiceEvent {
 }
 
 abstract class FetchServiceEvent extends ServiceEvent {
-  const factory FetchServiceEvent() = _$FetchServiceEvent;
+  const factory FetchServiceEvent() = _$FetchServiceEventImpl;
   const FetchServiceEvent._() : super._();
 }

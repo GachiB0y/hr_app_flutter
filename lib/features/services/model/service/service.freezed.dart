@@ -12,7 +12,7 @@ part of 'service.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Service _$ServiceFromJson(Map<String, dynamic> json) {
   return _Service.fromJson(json);
@@ -82,10 +82,10 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
 }
 
 /// @nodoc
-abstract class _$$_ServiceCopyWith<$Res> implements $ServiceCopyWith<$Res> {
-  factory _$$_ServiceCopyWith(
-          _$_Service value, $Res Function(_$_Service) then) =
-      __$$_ServiceCopyWithImpl<$Res>;
+abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
+  factory _$$ServiceImplCopyWith(
+          _$ServiceImpl value, $Res Function(_$ServiceImpl) then) =
+      __$$ServiceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, Permissions permissions});
@@ -95,10 +95,11 @@ abstract class _$$_ServiceCopyWith<$Res> implements $ServiceCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ServiceCopyWithImpl<$Res>
-    extends _$ServiceCopyWithImpl<$Res, _$_Service>
-    implements _$$_ServiceCopyWith<$Res> {
-  __$$_ServiceCopyWithImpl(_$_Service _value, $Res Function(_$_Service) _then)
+class __$$ServiceImplCopyWithImpl<$Res>
+    extends _$ServiceCopyWithImpl<$Res, _$ServiceImpl>
+    implements _$$ServiceImplCopyWith<$Res> {
+  __$$ServiceImplCopyWithImpl(
+      _$ServiceImpl _value, $Res Function(_$ServiceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +109,7 @@ class __$$_ServiceCopyWithImpl<$Res>
     Object? name = null,
     Object? permissions = null,
   }) {
-    return _then(_$_Service(
+    return _then(_$ServiceImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -127,12 +128,12 @@ class __$$_ServiceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Service implements _Service {
-  const _$_Service(
+class _$ServiceImpl implements _Service {
+  const _$ServiceImpl(
       {required this.id, required this.name, required this.permissions});
 
-  factory _$_Service.fromJson(Map<String, dynamic> json) =>
-      _$$_ServiceFromJson(json);
+  factory _$ServiceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ServiceImplFromJson(json);
 
   @override
   final int id;
@@ -147,10 +148,10 @@ class _$_Service implements _Service {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Service &&
+            other is _$ServiceImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.permissions, permissions) ||
@@ -164,12 +165,12 @@ class _$_Service implements _Service {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ServiceCopyWith<_$_Service> get copyWith =>
-      __$$_ServiceCopyWithImpl<_$_Service>(this, _$identity);
+  _$$ServiceImplCopyWith<_$ServiceImpl> get copyWith =>
+      __$$ServiceImplCopyWithImpl<_$ServiceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ServiceToJson(
+    return _$$ServiceImplToJson(
       this,
     );
   }
@@ -179,9 +180,9 @@ abstract class _Service implements Service {
   const factory _Service(
       {required final int id,
       required final String name,
-      required final Permissions permissions}) = _$_Service;
+      required final Permissions permissions}) = _$ServiceImpl;
 
-  factory _Service.fromJson(Map<String, dynamic> json) = _$_Service.fromJson;
+  factory _Service.fromJson(Map<String, dynamic> json) = _$ServiceImpl.fromJson;
 
   @override
   int get id;
@@ -191,7 +192,7 @@ abstract class _Service implements Service {
   Permissions get permissions;
   @override
   @JsonKey(ignore: true)
-  _$$_ServiceCopyWith<_$_Service> get copyWith =>
+  _$$ServiceImplCopyWith<_$ServiceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -269,11 +270,11 @@ class _$PermissionsCopyWithImpl<$Res, $Val extends Permissions>
 }
 
 /// @nodoc
-abstract class _$$_PermissionsCopyWith<$Res>
+abstract class _$$PermissionsImplCopyWith<$Res>
     implements $PermissionsCopyWith<$Res> {
-  factory _$$_PermissionsCopyWith(
-          _$_Permissions value, $Res Function(_$_Permissions) then) =
-      __$$_PermissionsCopyWithImpl<$Res>;
+  factory _$$PermissionsImplCopyWith(
+          _$PermissionsImpl value, $Res Function(_$PermissionsImpl) then) =
+      __$$PermissionsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -284,11 +285,11 @@ abstract class _$$_PermissionsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PermissionsCopyWithImpl<$Res>
-    extends _$PermissionsCopyWithImpl<$Res, _$_Permissions>
-    implements _$$_PermissionsCopyWith<$Res> {
-  __$$_PermissionsCopyWithImpl(
-      _$_Permissions _value, $Res Function(_$_Permissions) _then)
+class __$$PermissionsImplCopyWithImpl<$Res>
+    extends _$PermissionsCopyWithImpl<$Res, _$PermissionsImpl>
+    implements _$$PermissionsImplCopyWith<$Res> {
+  __$$PermissionsImplCopyWithImpl(
+      _$PermissionsImpl _value, $Res Function(_$PermissionsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -299,7 +300,7 @@ class __$$_PermissionsCopyWithImpl<$Res>
     Object? deleteService = null,
     Object? approveService = null,
   }) {
-    return _then(_$_Permissions(
+    return _then(_$PermissionsImpl(
       createService: null == createService
           ? _value.createService
           : createService // ignore: cast_nullable_to_non_nullable
@@ -322,15 +323,15 @@ class __$$_PermissionsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Permissions implements _Permissions {
-  const _$_Permissions(
+class _$PermissionsImpl implements _Permissions {
+  const _$PermissionsImpl(
       {@JsonKey(name: 'create_service') required this.createService,
       @JsonKey(name: 'update_service') required this.updateService,
       @JsonKey(name: 'delete_service') required this.deleteService,
       @JsonKey(name: 'approve_service') required this.approveService});
 
-  factory _$_Permissions.fromJson(Map<String, dynamic> json) =>
-      _$$_PermissionsFromJson(json);
+  factory _$PermissionsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PermissionsImplFromJson(json);
 
   @override
   @JsonKey(name: 'create_service')
@@ -351,10 +352,10 @@ class _$_Permissions implements _Permissions {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Permissions &&
+            other is _$PermissionsImpl &&
             (identical(other.createService, createService) ||
                 other.createService == createService) &&
             (identical(other.updateService, updateService) ||
@@ -373,12 +374,12 @@ class _$_Permissions implements _Permissions {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PermissionsCopyWith<_$_Permissions> get copyWith =>
-      __$$_PermissionsCopyWithImpl<_$_Permissions>(this, _$identity);
+  _$$PermissionsImplCopyWith<_$PermissionsImpl> get copyWith =>
+      __$$PermissionsImplCopyWithImpl<_$PermissionsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PermissionsToJson(
+    return _$$PermissionsImplToJson(
       this,
     );
   }
@@ -390,10 +391,10 @@ abstract class _Permissions implements Permissions {
       @JsonKey(name: 'update_service') required final bool updateService,
       @JsonKey(name: 'delete_service') required final bool deleteService,
       @JsonKey(name: 'approve_service')
-      required final bool approveService}) = _$_Permissions;
+      required final bool approveService}) = _$PermissionsImpl;
 
   factory _Permissions.fromJson(Map<String, dynamic> json) =
-      _$_Permissions.fromJson;
+      _$PermissionsImpl.fromJson;
 
   @override
   @JsonKey(name: 'create_service')
@@ -409,6 +410,6 @@ abstract class _Permissions implements Permissions {
   bool get approveService;
   @override
   @JsonKey(ignore: true)
-  _$$_PermissionsCopyWith<_$_Permissions> get copyWith =>
+  _$$PermissionsImplCopyWith<_$PermissionsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

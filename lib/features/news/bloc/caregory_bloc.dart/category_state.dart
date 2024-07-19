@@ -1,15 +1,6 @@
 part of 'category_bloc.dart';
 
-// @freezed
-// class CategoryState with _$CategoryState {
-//   const factory CategoryState.loading() = CategoryStateLoading;
-//   const factory CategoryState.loaded(
-//       {required List<Category> listCategoryLoaded}) = CategoryStateLoaded;
-//   const factory CategoryState.error() = CategoryStateError;
 
-//   factory CategoryState.fromJson(Map<String, dynamic> json) =>
-//       _$CategoryStateFromJson(json);
-// }
 
 /// {@template category_state_placeholder}
 /// Entity placeholder for CategoryState
@@ -20,6 +11,9 @@ typedef CategoryEntity = List<Category>;
 /// CategoryState.
 /// {@endtemplate}
 sealed class CategoryState extends _$CategoryStateBase {
+
+  /// {@macro category_state}
+  const CategoryState({required super.data, required super.message});
   /// Idling state
   /// {@macro category_state}
   const factory CategoryState.idle({
@@ -47,9 +41,6 @@ sealed class CategoryState extends _$CategoryStateBase {
     required CategoryEntity? data,
     String message,
   }) = CategoryState$Error;
-
-  /// {@macro category_state}
-  const CategoryState({required super.data, required super.message});
 }
 
 /// Idling state
@@ -65,7 +56,7 @@ final class CategoryState$Processing extends CategoryState
     with _$CategoryState {
   /// {@nodoc}
   const CategoryState$Processing(
-      {required super.data, super.message = 'Processing'});
+      {required super.data, super.message = 'Processing',});
 }
 
 /// Successful
@@ -74,7 +65,7 @@ final class CategoryState$Successful extends CategoryState
     with _$CategoryState {
   /// {@nodoc}
   const CategoryState$Successful(
-      {required super.data, super.message = 'Successful'});
+      {required super.data, super.message = 'Successful',});
 }
 
 /// Error
@@ -82,7 +73,7 @@ final class CategoryState$Successful extends CategoryState
 final class CategoryState$Error extends CategoryState with _$CategoryState {
   /// {@nodoc}
   const CategoryState$Error(
-      {required super.data, super.message = 'An error has occurred.'});
+      {required super.data, super.message = 'An error has occurred.',});
 }
 
 /// {@nodoc}
@@ -126,20 +117,19 @@ abstract base class _$CategoryStateBase {
     required CategoryStateMatch<R, CategoryState$Error> error,
   }) =>
       switch (this) {
-        CategoryState$Idle s => idle(s),
-        CategoryState$Processing s => processing(s),
-        CategoryState$Successful s => successful(s),
-        CategoryState$Error s => error(s),
+        final CategoryState$Idle s => idle(s),
+        final CategoryState$Processing s => processing(s),
+        final CategoryState$Successful s => successful(s),
+        final CategoryState$Error s => error(s),
         _ => throw AssertionError(),
       };
 
   /// Pattern matching for [CategoryState].
   R maybeMap<R>({
-    CategoryStateMatch<R, CategoryState$Idle>? idle,
+    required R Function() orElse, CategoryStateMatch<R, CategoryState$Idle>? idle,
     CategoryStateMatch<R, CategoryState$Processing>? processing,
     CategoryStateMatch<R, CategoryState$Successful>? successful,
     CategoryStateMatch<R, CategoryState$Error>? error,
-    required R Function() orElse,
   }) =>
       map<R>(
         idle: idle ?? (_) => orElse(),

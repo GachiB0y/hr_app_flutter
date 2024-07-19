@@ -12,7 +12,7 @@ part of 'statement_type_list_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$StatementTypeListEvent {
@@ -70,28 +70,28 @@ class _$StatementTypeListEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$FetchStatementTypeListEventCopyWith<$Res> {
-  factory _$$FetchStatementTypeListEventCopyWith(
-          _$FetchStatementTypeListEvent value,
-          $Res Function(_$FetchStatementTypeListEvent) then) =
-      __$$FetchStatementTypeListEventCopyWithImpl<$Res>;
+abstract class _$$FetchStatementTypeListEventImplCopyWith<$Res> {
+  factory _$$FetchStatementTypeListEventImplCopyWith(
+          _$FetchStatementTypeListEventImpl value,
+          $Res Function(_$FetchStatementTypeListEventImpl) then) =
+      __$$FetchStatementTypeListEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$FetchStatementTypeListEventCopyWithImpl<$Res>
+class __$$FetchStatementTypeListEventImplCopyWithImpl<$Res>
     extends _$StatementTypeListEventCopyWithImpl<$Res,
-        _$FetchStatementTypeListEvent>
-    implements _$$FetchStatementTypeListEventCopyWith<$Res> {
-  __$$FetchStatementTypeListEventCopyWithImpl(
-      _$FetchStatementTypeListEvent _value,
-      $Res Function(_$FetchStatementTypeListEvent) _then)
+        _$FetchStatementTypeListEventImpl>
+    implements _$$FetchStatementTypeListEventImplCopyWith<$Res> {
+  __$$FetchStatementTypeListEventImplCopyWithImpl(
+      _$FetchStatementTypeListEventImpl _value,
+      $Res Function(_$FetchStatementTypeListEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$FetchStatementTypeListEvent extends FetchStatementTypeListEvent {
-  const _$FetchStatementTypeListEvent() : super._();
+class _$FetchStatementTypeListEventImpl extends FetchStatementTypeListEvent {
+  const _$FetchStatementTypeListEventImpl() : super._();
 
   @override
   String toString() {
@@ -99,10 +99,10 @@ class _$FetchStatementTypeListEvent extends FetchStatementTypeListEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchStatementTypeListEvent);
+            other is _$FetchStatementTypeListEventImpl);
   }
 
   @override
@@ -166,6 +166,7 @@ class _$FetchStatementTypeListEvent extends FetchStatementTypeListEvent {
 }
 
 abstract class FetchStatementTypeListEvent extends StatementTypeListEvent {
-  const factory FetchStatementTypeListEvent() = _$FetchStatementTypeListEvent;
+  const factory FetchStatementTypeListEvent() =
+      _$FetchStatementTypeListEventImpl;
   const FetchStatementTypeListEvent._() : super._();
 }

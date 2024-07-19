@@ -12,7 +12,7 @@ part of 'user_birth_day_info_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$UserBirthDayInfoEvent {
@@ -96,25 +96,25 @@ class _$UserBirthDayInfoEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$UserBirthDayInfoEventFetchCopyWith<$Res>
+abstract class _$$UserBirthDayInfoEventFetchImplCopyWith<$Res>
     implements $UserBirthDayInfoEventCopyWith<$Res> {
-  factory _$$UserBirthDayInfoEventFetchCopyWith(
-          _$UserBirthDayInfoEventFetch value,
-          $Res Function(_$UserBirthDayInfoEventFetch) then) =
-      __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>;
+  factory _$$UserBirthDayInfoEventFetchImplCopyWith(
+          _$UserBirthDayInfoEventFetchImpl value,
+          $Res Function(_$UserBirthDayInfoEventFetchImpl) then) =
+      __$$UserBirthDayInfoEventFetchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
-class __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>
+class __$$UserBirthDayInfoEventFetchImplCopyWithImpl<$Res>
     extends _$UserBirthDayInfoEventCopyWithImpl<$Res,
-        _$UserBirthDayInfoEventFetch>
-    implements _$$UserBirthDayInfoEventFetchCopyWith<$Res> {
-  __$$UserBirthDayInfoEventFetchCopyWithImpl(
-      _$UserBirthDayInfoEventFetch _value,
-      $Res Function(_$UserBirthDayInfoEventFetch) _then)
+        _$UserBirthDayInfoEventFetchImpl>
+    implements _$$UserBirthDayInfoEventFetchImplCopyWith<$Res> {
+  __$$UserBirthDayInfoEventFetchImplCopyWithImpl(
+      _$UserBirthDayInfoEventFetchImpl _value,
+      $Res Function(_$UserBirthDayInfoEventFetchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
   }) {
-    return _then(_$UserBirthDayInfoEventFetch(
+    return _then(_$UserBirthDayInfoEventFetchImpl(
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -138,8 +138,8 @@ class __$$UserBirthDayInfoEventFetchCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
-  const _$UserBirthDayInfoEventFetch({this.startDate, this.endDate})
+class _$UserBirthDayInfoEventFetchImpl extends UserBirthDayInfoEventFetch {
+  const _$UserBirthDayInfoEventFetchImpl({this.startDate, this.endDate})
       : super._();
 
   @override
@@ -153,10 +153,10 @@ class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserBirthDayInfoEventFetch &&
+            other is _$UserBirthDayInfoEventFetchImpl &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate));
@@ -168,9 +168,9 @@ class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
-      get copyWith => __$$UserBirthDayInfoEventFetchCopyWithImpl<
-          _$UserBirthDayInfoEventFetch>(this, _$identity);
+  _$$UserBirthDayInfoEventFetchImplCopyWith<_$UserBirthDayInfoEventFetchImpl>
+      get copyWith => __$$UserBirthDayInfoEventFetchImplCopyWithImpl<
+          _$UserBirthDayInfoEventFetchImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -232,7 +232,7 @@ class _$UserBirthDayInfoEventFetch extends UserBirthDayInfoEventFetch {
 abstract class UserBirthDayInfoEventFetch extends UserBirthDayInfoEvent {
   const factory UserBirthDayInfoEventFetch(
       {final DateTime? startDate,
-      final DateTime? endDate}) = _$UserBirthDayInfoEventFetch;
+      final DateTime? endDate}) = _$UserBirthDayInfoEventFetchImpl;
   const UserBirthDayInfoEventFetch._() : super._();
 
   @override
@@ -241,6 +241,6 @@ abstract class UserBirthDayInfoEventFetch extends UserBirthDayInfoEvent {
   DateTime? get endDate;
   @override
   @JsonKey(ignore: true)
-  _$$UserBirthDayInfoEventFetchCopyWith<_$UserBirthDayInfoEventFetch>
+  _$$UserBirthDayInfoEventFetchImplCopyWith<_$UserBirthDayInfoEventFetchImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
