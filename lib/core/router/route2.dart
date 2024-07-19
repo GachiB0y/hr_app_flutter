@@ -47,7 +47,6 @@ enum Routes with OctopusRoute {
   ),
   approveNews('approve-news', title: 'Approve News'),
   moderationNews('moderation-news', title: 'Moderation News'),
-  refactorModerationNewsScreen('refactor-news', title: 'Refactor News'),
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   notificaion('notification', title: 'Notification'),
@@ -141,14 +140,6 @@ enum Routes with OctopusRoute {
         const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
         Routes.moderationNews => const ModerationNewsScreen(),
-        Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-          child: const RefactorModerationNewsScreen(),
-          create: (BuildContext context) => RefactorNewsCubit(
-            id: node.arguments['id'],
-            eventEntityRepository:
-            DependenciesScope.of(context).eventEntityRepository,
-          ),
-        ),
 
       // RefactorModerationNewsScreen(id: node.arguments['id']),
 

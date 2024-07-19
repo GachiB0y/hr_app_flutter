@@ -28,6 +28,8 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/c
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
+import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
 import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
@@ -70,6 +72,8 @@ enum Routes with OctopusRoute {
   createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
   createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
   createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+
+  notificaion('notification', title: 'Notification'),
 
   ///
   aboutNews('about-news', title: 'About News'),
@@ -164,6 +168,12 @@ enum Routes with OctopusRoute {
         id: node.arguments['id'],
         eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
       ),
+    ),
+    Routes.notificaion => BlocProvider.value(
+      value: NotificationBLoC(
+        repository: DependenciesScope.of(context).notificationRepository,
+      )..add(const NotificationEvent.fetchNotification()),
+      child: NotificationScreen(),
     ),
     Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
       child: const CreateRefactoringNewsScreenBucket(),
