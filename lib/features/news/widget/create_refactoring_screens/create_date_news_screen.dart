@@ -1,3 +1,4 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/router/routes.dart';
@@ -8,7 +9,6 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:intl/intl.dart';
 import 'package:octopus/octopus.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 class CreateDateNewsScreen extends StatelessWidget {
   /// Экран выбора даты при создании или модерации новости.
