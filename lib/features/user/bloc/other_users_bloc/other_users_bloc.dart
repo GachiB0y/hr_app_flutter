@@ -8,12 +8,13 @@ import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import '../../model/user/user_info.dart';
 
 part 'other_users_bloc.freezed.dart';
+
 part 'other_users_event.dart';
+
 part 'other_users_state.dart';
 
 /// Business Logic Component OtherUsersBLoC
-class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
-    implements EventSink<OtherUsersEvent> {
+class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState> implements EventSink<OtherUsersEvent> {
   OtherUsersBloc({
     required final IUserRepository userRepo,
     // required final IAuthRepository authRepository,
@@ -29,11 +30,9 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
         ) {
     on<OtherUsersEvent>(
       (event, emit) => event.map<Future<void>>(
-        gethUsersByPhoneNumber: (event) async =>
-            await _onOtherUsersEventGetUsersByPhoneNumber(emit, event),
+        gethUsersByPhoneNumber: (event) async => await _onOtherUsersEventGetUsersByPhoneNumber(emit, event),
         clearList: (event) => _onOtherUsersEventClearList(emit),
-        findUsers: (event) async =>
-            await _onOtherUsersEventFindUsers(emit, event),
+        findUsers: (event) async => await _onOtherUsersEventFindUsers(emit, event),
       ),
       transformer: bloc_concurrency.sequential(),
       //transformer: bloc_concurrency.restartable(),
@@ -43,6 +42,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
   }
 
   final IUserRepository _userRepo;
+
   // final IAuthRepository _authRepository;
 
   /// Get users by phone number
@@ -59,8 +59,7 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
 
       emit(OtherUsersState.successful(data: listUsersLoaded));
     } on TimeoutException {
-      emit(OtherUsersState.error(
-          data: state.data, message: 'Время ожидания истекло!'));
+      emit(OtherUsersState.error(data: state.data, message: 'Время ожидания истекло!'));
     } on Object catch (err, stackTrace) {
       //l.e('An error occurred in the OtherUsersBLoC: $err', stackTrace);
       emit(const OtherUsersState.error(data: null));
@@ -72,24 +71,25 @@ class OtherUsersBloc extends Bloc<OtherUsersEvent, OtherUsersState>
 
   /// Clear list users
   Future<void> _onOtherUsersEventClearList(
-      Emitter<OtherUsersState> emit) async {
+    Emitter<OtherUsersState> emit,
+  ) async {
     emit(const OtherUsersState.idle(data: []));
   }
 
   /// Find users
   Future<void> _onOtherUsersEventFindUsers(
-      Emitter<OtherUsersState> emit, OtherUsersEventFindUsers event) async {
+    Emitter<OtherUsersState> emit,
+    OtherUsersEventFindUsers event,
+  ) async {
     try {
       emit(OtherUsersState.processing(data: state.data));
 
-      List<UserInfo> listUsersLoaded = await _userRepo
-          .findUser(findText: event.findText)
-          .timeout(const Duration(seconds: 10));
+      List<UserInfo> listUsersLoaded =
+          await _userRepo.findUser(findText: event.findText).timeout(const Duration(seconds: 10));
 
       emit(OtherUsersState.successful(data: listUsersLoaded));
     } on TimeoutException {
-      emit(const OtherUsersState.error(
-          data: null, message: 'Время ожидания истекло!'));
+      emit(const OtherUsersState.error(data: null, message: 'Время ожидания истекло!'));
     } on Object catch (err, stackTrace) {
       //l.e('An error occurred in the OtherUsersBLoC: $err', stackTrace);
       emit(const OtherUsersState.error(data: null));
