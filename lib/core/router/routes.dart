@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_description_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_photo_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
 import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
 import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
 import 'package:octopus/octopus.dart';
@@ -58,9 +73,11 @@ enum Routes with OctopusRoute {
   createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
   createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
   createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+  refactorModerationNewsScreen('refactor-moderation-news-screen', title: 'Refactor Moderation News Screen'),
 
   ///
   aboutNews('about-news', title: 'About News'),
+  moderationNews('moderation-news', title: 'Moderation News'),
   profileUser('profile-user', title: 'Profile User'),
   notificaion('notification', title: 'Notification'),
   searchUser('search-user', title: 'Search User'),
@@ -145,7 +162,6 @@ enum Routes with OctopusRoute {
         Routes.company => const CompanyScreen(),
         Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
         Routes.approveNews => const ApproveNewsScreen(),
-        Routes.moderationNews => const ModerationNewsScreen(),
         Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
             child: const RefactorModerationNewsScreen(),
             create: (BuildContext context) => RefactorNewsCubit(
@@ -153,8 +169,6 @@ enum Routes with OctopusRoute {
               eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
             ),
           ),
-
-        // RefactorModerationNewsScreen(id: node.arguments['id']),
 
         Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
         Routes.profileUser => UserProfileWidgetScreen(
@@ -250,16 +264,6 @@ enum Routes with OctopusRoute {
             ),
           ),
         Routes.moderationNews => const ModerationNewsScreen(),
-        Routes.refactorModerationNewsScreen => BlocProvider<RefactorNewsCubit>(
-            child: const RefactorModerationNewsScreen(),
-            create: (BuildContext context) => RefactorNewsCubit(
-              id: node.arguments['id'],
-              eventEntityRepository:
-                  DependenciesScope.of(context).eventEntityRepository,
-            ),
-          ),
-
-        // RefactorModerationNewsScreen(id: node.arguments['id']),
 
         Routes.pickFileLeanProduction => const PickFileLeanProduction(),
         Routes.notificaion => BlocProvider.value(
