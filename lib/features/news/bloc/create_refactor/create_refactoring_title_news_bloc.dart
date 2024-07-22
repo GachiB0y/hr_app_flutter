@@ -57,27 +57,16 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
     emit(state.copyWith(currentNews: currentNews));
   }
 
-  /// Таймер для
-  Timer? _timer;
-
   /// Коллбак на изменение поля заголовка новости.
   void _getTitle() {
     if (textController.text == _eventEntityRepository.currentNews?.title) return;
     if (textController.text == ' ') {
       textController.text = '';
     }
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    _timer = Timer(
-      const Duration(milliseconds: 500),
-      () async {
-        changeCurrentNews(
-          state.currentNews!.copyWith(
-            title: textController.text,
-          ),
-        );
-      },
+    changeCurrentNews(
+      state.currentNews!.copyWith(
+        title: textController.text,
+      ),
     );
   }
 
