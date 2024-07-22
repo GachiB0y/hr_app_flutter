@@ -3,18 +3,20 @@ import 'package:hr_app_flutter/features/notification/data/model_dto/notification
 
 abstract interface class INotificationRestClient {
   Future<Iterable<NotificationDto>> getNotifications();
+
   Future<void> sendNotifications(int idNotifications);
 }
 
 final class NotificationRestClient implements INotificationRestClient {
-  const NotificationRestClient({required RestClient restClient})
-      : _restClient = restClient;
+  const NotificationRestClient({required RestClient restClient}) : _restClient = restClient;
   final RestClient _restClient;
 
   @override
   Future<Iterable<NotificationDto>> getNotifications() async {
     final response = await _restClient.get('/auth/notifications');
-
+    if (response == null) {
+      return [];
+    }
     if (response case {'result': final data as List<dynamic>}) {
       final result = data.map(
         (item) => NotificationDto.fromJson(item as Map<String, dynamic>),
@@ -30,9 +32,7 @@ final class NotificationRestClient implements INotificationRestClient {
     final response = await _restClient.get('/auth/notifications');
 
     if (response case {'result': final data as List<dynamic>}) {
-      final result = data
-          .map((item) => NotificationDto.fromJson(item as Map<String, dynamic>))
-          .toList();
+      final result = data.map((item) => NotificationDto.fromJson(item as Map<String, dynamic>)).toList();
     }
     throw Exception('Error send Notifications');
   }
