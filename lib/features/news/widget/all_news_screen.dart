@@ -181,7 +181,7 @@ class ScrollContentWithNewsState extends State<ScrollContentWithNews> {
             if (state.data!.listEventEntityLoaded.isEmpty) {
               return const Center(child: Text('Нет событий'));
             } else {
-              final news = state.data!.listEventEntityLoaded;
+              final news = state.data!.filteredListEventEntity;
               return Scrollbar(
                 thumbVisibility: true,
                 thickness: 10,
