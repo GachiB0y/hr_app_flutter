@@ -5,6 +5,9 @@ part of 'coins_reward_bloc.dart';
 class CoinsRewardEvent with _$CoinsRewardEvent {
   const CoinsRewardEvent._();
 
-  /// Fetch
-  const factory CoinsRewardEvent.fetch() = FetchCoinsRewardEvent;
+  /// Fetch CoinsReward
+  const factory CoinsRewardEvent.getCoinsReward() = GetCoinsRewardEvent;
+
+  /// Fetch CoinsInfo
+  const factory CoinsRewardEvent.getCoinsInfo() = GetCoinsInfoEvent;
 }

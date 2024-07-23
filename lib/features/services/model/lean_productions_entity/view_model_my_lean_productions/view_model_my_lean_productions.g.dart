@@ -6,9 +6,9 @@ part of 'view_model_my_lean_productions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ViewModelMyLeanProductions _$$_ViewModelMyLeanProductionsFromJson(
+_$ViewModelMyLeanProductionsImpl _$$ViewModelMyLeanProductionsImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ViewModelMyLeanProductions(
+    _$ViewModelMyLeanProductionsImpl(
       myProposals: (json['myProposals'] as List<dynamic>?)
           ?.map((e) =>
               MyLeanProductionsEntity.fromJson(e as Map<String, dynamic>))
@@ -19,8 +19,8 @@ _$_ViewModelMyLeanProductions _$$_ViewModelMyLeanProductionsFromJson(
           _$ApiClientExceptionTypeEnumMap, json['exception']),
     );
 
-Map<String, dynamic> _$$_ViewModelMyLeanProductionsToJson(
-        _$_ViewModelMyLeanProductions instance) =>
+Map<String, dynamic> _$$ViewModelMyLeanProductionsImplToJson(
+        _$ViewModelMyLeanProductionsImpl instance) =>
     <String, dynamic>{
       'myProposals': instance.myProposals,
       'isSubmitting': instance.isSubmitting,

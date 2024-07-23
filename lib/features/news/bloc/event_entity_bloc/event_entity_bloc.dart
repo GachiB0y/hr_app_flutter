@@ -8,7 +8,9 @@ import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import '../../model/event_entity/new_event_entity.dart';
 
 part 'event_entity_bloc.freezed.dart';
+
 part 'event_entity_event.dart';
+
 part 'event_entity_state.dart';
 
 /// Business Logic Component EventEntityBLoC
@@ -42,21 +44,18 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
   final IEventEntityRepository _eventEntityRepository;
 
   /// Fetch event handler
-  Future<void> _fetch(
-      EventEntityEventFetch event, Emitter<EventEntityState> emit) async {
+  Future<void> _fetch(EventEntityEventFetch event, Emitter<EventEntityState> emit) async {
     try {
       emit(EventEntityState.processing(data: state.data));
 
-      List<EventEntity> listEventEntityLoaded = await _eventEntityRepository
-          .getEvents()
-          .timeout(const Duration(seconds: 100));
+      List<EventEntity> listEventEntityLoaded =
+          await _eventEntityRepository.getEvents().timeout(const Duration(seconds: 100));
       List<EventEntity> filteredEventEntity = filterListCategory(
         listEventEntityLoaded: listEventEntityLoaded,
         idTab: 1,
       );
       final EventEntityViewModel viewModel = EventEntityViewModel(
-          listEventEntityLoaded: listEventEntityLoaded,
-          filteredListEventEntity: filteredEventEntity);
+          listEventEntityLoaded: listEventEntityLoaded, filteredListEventEntity: filteredEventEntity);
 
       emit(EventEntityState.successful(data: viewModel));
       // ignore: unused_catch_stack
@@ -69,18 +68,19 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     }
   }
 
-  Future<void> _createNewEventEntity(
-      EventEntityEventCreate event, Emitter<EventEntityState> emit) async {
+  Future<void> _createNewEventEntity(EventEntityEventCreate event, Emitter<EventEntityState> emit) async {
     try {
       emit(EventEntityState.processing(data: state.data));
 
       final bool isCreate = await _eventEntityRepository.createNewEventEntity(
-          title: event.title,
-          description: event.description,
-          imageFile: event.imageFile,
-          categories: event.categories,
-          startDate: event.startDate,
-          endDate: event.endDate);
+        title: event.title,
+        description: event.description,
+        imageFile: event.imageFile,
+        categories: event.categories,
+        startDate: event.startDate,
+        endDate: event.endDate,
+        vote: [],
+      );
       if (isCreate) {
         emit(EventEntityState.successful(data: state.data));
       } else {
@@ -95,25 +95,22 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     } finally {
       emit(EventEntityState.idle(data: state.data));
     }
+    _eventEntityRepository.getApprovmentEvents();
   }
 
   List<EventEntity> filterListCategory(
       {required List<EventEntity> listEventEntityLoaded, required int idTab}) {
     final List<EventEntity> filteredEventEntity = listEventEntityLoaded
-        .where(
-            (item) => item.categories.any((category) => category.id == idTab))
+        .where((item) => item.categories!.any((category) => category.id == idTab))
         .toList();
     return filteredEventEntity;
   }
 
-  Future<void> _eventFilterNews(
-      EventEntityEventUpdate event, Emitter<EventEntityState> emit) async {
-    List<EventEntity> filteredEventEntity = filterListCategory(
-        idTab: event.idTab,
-        listEventEntityLoaded: state.data!.listEventEntityLoaded);
+  Future<void> _eventFilterNews(EventEntityEventUpdate event, Emitter<EventEntityState> emit) async {
+    List<EventEntity> filteredEventEntity =
+        filterListCategory(idTab: event.idTab, listEventEntityLoaded: state.data!.listEventEntityLoaded);
 
-    final newState =
-        state.data?.copyWith(filteredListEventEntity: filteredEventEntity);
+    final newState = state.data?.copyWith(filteredListEventEntity: filteredEventEntity);
     emit(EventEntityState.successful(data: newState));
     emit(EventEntityState.idle(data: state.data));
   }

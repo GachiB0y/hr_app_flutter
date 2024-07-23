@@ -1,12 +1,14 @@
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
-import '../../../services/model/birth_day_info/birth_day_info.dart';
-import '../../../services/model/rookies_entity/rookies.dart';
-import '../../model/user/user_info.dart';
+import 'package:hr_app_flutter/features/services/model/birth_day_info/birth_day_info.dart';
+import 'package:hr_app_flutter/features/services/model/rookies_entity/rookies.dart';
+import 'package:hr_app_flutter/features/user/model/user/user_info.dart';
 
 abstract interface class IUserProvider {
   Future<UserInfo> getUserInfo();
-  Future<bool> saveTagsToSend(
-      {required List<String> tags, required int userId});
+  Future<bool> saveTagsToSend({
+    required List<String> tags,
+    required int userId,
+  });
   Future<UserInfo> getUserInfoById({required String userId});
   Future<List<UserInfo>> findUser({required String findText});
   Future<BirthDayInfoEntity> getBirthDayInfo({
@@ -38,15 +40,16 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final UserInfo result = UserInfo.fromJson(data);
+      final result = UserInfo.fromJson(data);
       return result;
     }
     throw Exception('Error fetching User Info');
   }
 
   @override
-  Future<List<UserInfo>> getUserByPhoneNumber(
-      {required String phoneNumber}) async {
+  Future<List<UserInfo>> getUserByPhoneNumber({
+    required String phoneNumber,
+  }) async {
     final response = await _httpService.get(
       '/auth/find_by_phone/$phoneNumber',
     );
@@ -55,7 +58,7 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final UserInfo result = UserInfo.fromJson(data);
+      final result = UserInfo.fromJson(data);
       final listUser = <UserInfo>[];
       listUser.add(result);
       return listUser;
@@ -70,7 +73,7 @@ class UserProviderImpl implements IUserProvider {
   }) async {
     final queryParams = (startDate == null && endDate == null)
         ? null
-        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
+        : {'start_date': startDate.toString(), 'end_date': endDate.toString()};
 
     final response = await _httpService.get(
       '/auth/birthday-list',
@@ -81,7 +84,7 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final BirthDayInfoEntity result = BirthDayInfoEntity.fromJson(data);
+      final result = BirthDayInfoEntity.fromJson(data);
 
       return result;
     }
@@ -95,7 +98,7 @@ class UserProviderImpl implements IUserProvider {
   }) async {
     final queryParams = (startDate == null && endDate == null)
         ? null
-        : {"start_date": startDate.toString(), "end_date": endDate.toString()};
+        : {'start_date': startDate.toString(), 'end_date': endDate.toString()};
 
     final response =
         await _httpService.get('/auth/rookies', queryParams: queryParams);
@@ -103,7 +106,7 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final Rookies result = Rookies.fromJson(data);
+      final result = Rookies.fromJson(data);
 
       return result;
     }
@@ -119,7 +122,7 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      final UserInfo result = UserInfo.fromJson(data);
+      final result = UserInfo.fromJson(data);
 
       return result;
     }
@@ -136,21 +139,24 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final List<dynamic> data,
         }) {
-      final List<UserInfo> result =
-          data.map((item) => UserInfo.fromJson(item)).toList();
+      final result = data
+          .map((item) => UserInfo.fromJson(item as Map<String, dynamic>))
+          .toList();
       return result;
     }
     throw const FormatException('Error fetching findUser User');
   }
 
   @override
-  Future<bool> saveTagsToSend(
-      {required List<String> tags, required int userId}) async {
+  Future<bool> saveTagsToSend({
+    required List<String> tags,
+    required int userId,
+  }) async {
     final response = await _httpService.post(
       '/auth/add_tags_to_user',
       body: {
-        "user_id": userId,
-        "tags": tags,
+        'user_id': userId,
+        'tags': tags,
       },
     );
 
@@ -187,7 +193,7 @@ class UserProviderImpl implements IUserProvider {
         case {
           'result': final Map<String, Object?> data,
         }) {
-      if (data['status'] == "ok") {
+      if (data['status'] == 'ok') {
         return true;
       }
     }

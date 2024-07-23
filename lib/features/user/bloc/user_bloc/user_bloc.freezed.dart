@@ -12,7 +12,7 @@ part of 'user_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$UserEvent {
@@ -102,25 +102,25 @@ class _$UserEventCopyWithImpl<$Res, $Val extends UserEvent>
 }
 
 /// @nodoc
-abstract class _$$UserEventFetchCopyWith<$Res> {
-  factory _$$UserEventFetchCopyWith(
-          _$UserEventFetch value, $Res Function(_$UserEventFetch) then) =
-      __$$UserEventFetchCopyWithImpl<$Res>;
+abstract class _$$UserEventFetchImplCopyWith<$Res> {
+  factory _$$UserEventFetchImplCopyWith(_$UserEventFetchImpl value,
+          $Res Function(_$UserEventFetchImpl) then) =
+      __$$UserEventFetchImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserEventFetchCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventFetch>
-    implements _$$UserEventFetchCopyWith<$Res> {
-  __$$UserEventFetchCopyWithImpl(
-      _$UserEventFetch _value, $Res Function(_$UserEventFetch) _then)
+class __$$UserEventFetchImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventFetchImpl>
+    implements _$$UserEventFetchImplCopyWith<$Res> {
+  __$$UserEventFetchImplCopyWithImpl(
+      _$UserEventFetchImpl _value, $Res Function(_$UserEventFetchImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserEventFetch extends UserEventFetch {
-  const _$UserEventFetch() : super._();
+class _$UserEventFetchImpl extends UserEventFetch {
+  const _$UserEventFetchImpl() : super._();
 
   @override
   String toString() {
@@ -128,9 +128,9 @@ class _$UserEventFetch extends UserEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserEventFetch);
+        (other.runtimeType == runtimeType && other is _$UserEventFetchImpl);
   }
 
   @override
@@ -228,26 +228,27 @@ class _$UserEventFetch extends UserEventFetch {
 }
 
 abstract class UserEventFetch extends UserEvent {
-  const factory UserEventFetch() = _$UserEventFetch;
+  const factory UserEventFetch() = _$UserEventFetchImpl;
   const UserEventFetch._() : super._();
 }
 
 /// @nodoc
-abstract class _$$UserEventGethUserByUserIdCopyWith<$Res> {
-  factory _$$UserEventGethUserByUserIdCopyWith(
-          _$UserEventGethUserByUserId value,
-          $Res Function(_$UserEventGethUserByUserId) then) =
-      __$$UserEventGethUserByUserIdCopyWithImpl<$Res>;
+abstract class _$$UserEventGethUserByUserIdImplCopyWith<$Res> {
+  factory _$$UserEventGethUserByUserIdImplCopyWith(
+          _$UserEventGethUserByUserIdImpl value,
+          $Res Function(_$UserEventGethUserByUserIdImpl) then) =
+      __$$UserEventGethUserByUserIdImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String userId});
 }
 
 /// @nodoc
-class __$$UserEventGethUserByUserIdCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventGethUserByUserId>
-    implements _$$UserEventGethUserByUserIdCopyWith<$Res> {
-  __$$UserEventGethUserByUserIdCopyWithImpl(_$UserEventGethUserByUserId _value,
-      $Res Function(_$UserEventGethUserByUserId) _then)
+class __$$UserEventGethUserByUserIdImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventGethUserByUserIdImpl>
+    implements _$$UserEventGethUserByUserIdImplCopyWith<$Res> {
+  __$$UserEventGethUserByUserIdImplCopyWithImpl(
+      _$UserEventGethUserByUserIdImpl _value,
+      $Res Function(_$UserEventGethUserByUserIdImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -255,7 +256,7 @@ class __$$UserEventGethUserByUserIdCopyWithImpl<$Res>
   $Res call({
     Object? userId = null,
   }) {
-    return _then(_$UserEventGethUserByUserId(
+    return _then(_$UserEventGethUserByUserIdImpl(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -266,8 +267,8 @@ class __$$UserEventGethUserByUserIdCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserEventGethUserByUserId extends UserEventGethUserByUserId {
-  const _$UserEventGethUserByUserId({required this.userId}) : super._();
+class _$UserEventGethUserByUserIdImpl extends UserEventGethUserByUserId {
+  const _$UserEventGethUserByUserIdImpl({required this.userId}) : super._();
 
   @override
   final String userId;
@@ -278,10 +279,10 @@ class _$UserEventGethUserByUserId extends UserEventGethUserByUserId {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserEventGethUserByUserId &&
+            other is _$UserEventGethUserByUserIdImpl &&
             (identical(other.userId, userId) || other.userId == userId));
   }
 
@@ -291,9 +292,9 @@ class _$UserEventGethUserByUserId extends UserEventGethUserByUserId {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEventGethUserByUserIdCopyWith<_$UserEventGethUserByUserId>
-      get copyWith => __$$UserEventGethUserByUserIdCopyWithImpl<
-          _$UserEventGethUserByUserId>(this, _$identity);
+  _$$UserEventGethUserByUserIdImplCopyWith<_$UserEventGethUserByUserIdImpl>
+      get copyWith => __$$UserEventGethUserByUserIdImplCopyWithImpl<
+          _$UserEventGethUserByUserIdImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -388,30 +389,32 @@ class _$UserEventGethUserByUserId extends UserEventGethUserByUserId {
 
 abstract class UserEventGethUserByUserId extends UserEvent {
   const factory UserEventGethUserByUserId({required final String userId}) =
-      _$UserEventGethUserByUserId;
+      _$UserEventGethUserByUserIdImpl;
   const UserEventGethUserByUserId._() : super._();
 
   String get userId;
   @JsonKey(ignore: true)
-  _$$UserEventGethUserByUserIdCopyWith<_$UserEventGethUserByUserId>
+  _$$UserEventGethUserByUserIdImplCopyWith<_$UserEventGethUserByUserIdImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserEventSaveTagsToSendCopyWith<$Res> {
-  factory _$$UserEventSaveTagsToSendCopyWith(_$UserEventSaveTagsToSend value,
-          $Res Function(_$UserEventSaveTagsToSend) then) =
-      __$$UserEventSaveTagsToSendCopyWithImpl<$Res>;
+abstract class _$$UserEventSaveTagsToSendImplCopyWith<$Res> {
+  factory _$$UserEventSaveTagsToSendImplCopyWith(
+          _$UserEventSaveTagsToSendImpl value,
+          $Res Function(_$UserEventSaveTagsToSendImpl) then) =
+      __$$UserEventSaveTagsToSendImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<TagUser> tags, int userId});
 }
 
 /// @nodoc
-class __$$UserEventSaveTagsToSendCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventSaveTagsToSend>
-    implements _$$UserEventSaveTagsToSendCopyWith<$Res> {
-  __$$UserEventSaveTagsToSendCopyWithImpl(_$UserEventSaveTagsToSend _value,
-      $Res Function(_$UserEventSaveTagsToSend) _then)
+class __$$UserEventSaveTagsToSendImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventSaveTagsToSendImpl>
+    implements _$$UserEventSaveTagsToSendImplCopyWith<$Res> {
+  __$$UserEventSaveTagsToSendImplCopyWithImpl(
+      _$UserEventSaveTagsToSendImpl _value,
+      $Res Function(_$UserEventSaveTagsToSendImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -420,7 +423,7 @@ class __$$UserEventSaveTagsToSendCopyWithImpl<$Res>
     Object? tags = null,
     Object? userId = null,
   }) {
-    return _then(_$UserEventSaveTagsToSend(
+    return _then(_$UserEventSaveTagsToSendImpl(
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -435,8 +438,8 @@ class __$$UserEventSaveTagsToSendCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserEventSaveTagsToSend extends UserEventSaveTagsToSend {
-  const _$UserEventSaveTagsToSend(
+class _$UserEventSaveTagsToSendImpl extends UserEventSaveTagsToSend {
+  const _$UserEventSaveTagsToSendImpl(
       {required final List<TagUser> tags, required this.userId})
       : _tags = tags,
         super._();
@@ -458,10 +461,10 @@ class _$UserEventSaveTagsToSend extends UserEventSaveTagsToSend {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserEventSaveTagsToSend &&
+            other is _$UserEventSaveTagsToSendImpl &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.userId, userId) || other.userId == userId));
   }
@@ -473,9 +476,9 @@ class _$UserEventSaveTagsToSend extends UserEventSaveTagsToSend {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEventSaveTagsToSendCopyWith<_$UserEventSaveTagsToSend> get copyWith =>
-      __$$UserEventSaveTagsToSendCopyWithImpl<_$UserEventSaveTagsToSend>(
-          this, _$identity);
+  _$$UserEventSaveTagsToSendImplCopyWith<_$UserEventSaveTagsToSendImpl>
+      get copyWith => __$$UserEventSaveTagsToSendImplCopyWithImpl<
+          _$UserEventSaveTagsToSendImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -571,21 +574,21 @@ class _$UserEventSaveTagsToSend extends UserEventSaveTagsToSend {
 abstract class UserEventSaveTagsToSend extends UserEvent {
   const factory UserEventSaveTagsToSend(
       {required final List<TagUser> tags,
-      required final int userId}) = _$UserEventSaveTagsToSend;
+      required final int userId}) = _$UserEventSaveTagsToSendImpl;
   const UserEventSaveTagsToSend._() : super._();
 
   List<TagUser> get tags;
   int get userId;
   @JsonKey(ignore: true)
-  _$$UserEventSaveTagsToSendCopyWith<_$UserEventSaveTagsToSend> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserEventSaveTagsToSendImplCopyWith<_$UserEventSaveTagsToSendImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserEventAddTagCopyWith<$Res> {
-  factory _$$UserEventAddTagCopyWith(
-          _$UserEventAddTag value, $Res Function(_$UserEventAddTag) then) =
-      __$$UserEventAddTagCopyWithImpl<$Res>;
+abstract class _$$UserEventAddTagImplCopyWith<$Res> {
+  factory _$$UserEventAddTagImplCopyWith(_$UserEventAddTagImpl value,
+          $Res Function(_$UserEventAddTagImpl) then) =
+      __$$UserEventAddTagImplCopyWithImpl<$Res>;
   @useResult
   $Res call({TagUser tag});
 
@@ -593,11 +596,11 @@ abstract class _$$UserEventAddTagCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserEventAddTagCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventAddTag>
-    implements _$$UserEventAddTagCopyWith<$Res> {
-  __$$UserEventAddTagCopyWithImpl(
-      _$UserEventAddTag _value, $Res Function(_$UserEventAddTag) _then)
+class __$$UserEventAddTagImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventAddTagImpl>
+    implements _$$UserEventAddTagImplCopyWith<$Res> {
+  __$$UserEventAddTagImplCopyWithImpl(
+      _$UserEventAddTagImpl _value, $Res Function(_$UserEventAddTagImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -605,7 +608,7 @@ class __$$UserEventAddTagCopyWithImpl<$Res>
   $Res call({
     Object? tag = null,
   }) {
-    return _then(_$UserEventAddTag(
+    return _then(_$UserEventAddTagImpl(
       tag: null == tag
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -624,8 +627,8 @@ class __$$UserEventAddTagCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserEventAddTag extends UserEventAddTag {
-  const _$UserEventAddTag({required this.tag}) : super._();
+class _$UserEventAddTagImpl extends UserEventAddTag {
+  const _$UserEventAddTagImpl({required this.tag}) : super._();
 
   @override
   final TagUser tag;
@@ -636,10 +639,10 @@ class _$UserEventAddTag extends UserEventAddTag {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserEventAddTag &&
+            other is _$UserEventAddTagImpl &&
             (identical(other.tag, tag) || other.tag == tag));
   }
 
@@ -649,8 +652,9 @@ class _$UserEventAddTag extends UserEventAddTag {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEventAddTagCopyWith<_$UserEventAddTag> get copyWith =>
-      __$$UserEventAddTagCopyWithImpl<_$UserEventAddTag>(this, _$identity);
+  _$$UserEventAddTagImplCopyWith<_$UserEventAddTagImpl> get copyWith =>
+      __$$UserEventAddTagImplCopyWithImpl<_$UserEventAddTagImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -745,20 +749,20 @@ class _$UserEventAddTag extends UserEventAddTag {
 
 abstract class UserEventAddTag extends UserEvent {
   const factory UserEventAddTag({required final TagUser tag}) =
-      _$UserEventAddTag;
+      _$UserEventAddTagImpl;
   const UserEventAddTag._() : super._();
 
   TagUser get tag;
   @JsonKey(ignore: true)
-  _$$UserEventAddTagCopyWith<_$UserEventAddTag> get copyWith =>
+  _$$UserEventAddTagImplCopyWith<_$UserEventAddTagImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserEventDeleteTagCopyWith<$Res> {
-  factory _$$UserEventDeleteTagCopyWith(_$UserEventDeleteTag value,
-          $Res Function(_$UserEventDeleteTag) then) =
-      __$$UserEventDeleteTagCopyWithImpl<$Res>;
+abstract class _$$UserEventDeleteTagImplCopyWith<$Res> {
+  factory _$$UserEventDeleteTagImplCopyWith(_$UserEventDeleteTagImpl value,
+          $Res Function(_$UserEventDeleteTagImpl) then) =
+      __$$UserEventDeleteTagImplCopyWithImpl<$Res>;
   @useResult
   $Res call({TagUser tag});
 
@@ -766,11 +770,11 @@ abstract class _$$UserEventDeleteTagCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserEventDeleteTagCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventDeleteTag>
-    implements _$$UserEventDeleteTagCopyWith<$Res> {
-  __$$UserEventDeleteTagCopyWithImpl(
-      _$UserEventDeleteTag _value, $Res Function(_$UserEventDeleteTag) _then)
+class __$$UserEventDeleteTagImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventDeleteTagImpl>
+    implements _$$UserEventDeleteTagImplCopyWith<$Res> {
+  __$$UserEventDeleteTagImplCopyWithImpl(_$UserEventDeleteTagImpl _value,
+      $Res Function(_$UserEventDeleteTagImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -778,7 +782,7 @@ class __$$UserEventDeleteTagCopyWithImpl<$Res>
   $Res call({
     Object? tag = null,
   }) {
-    return _then(_$UserEventDeleteTag(
+    return _then(_$UserEventDeleteTagImpl(
       tag: null == tag
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
@@ -797,8 +801,8 @@ class __$$UserEventDeleteTagCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserEventDeleteTag extends UserEventDeleteTag {
-  const _$UserEventDeleteTag({required this.tag}) : super._();
+class _$UserEventDeleteTagImpl extends UserEventDeleteTag {
+  const _$UserEventDeleteTagImpl({required this.tag}) : super._();
 
   @override
   final TagUser tag;
@@ -809,10 +813,10 @@ class _$UserEventDeleteTag extends UserEventDeleteTag {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserEventDeleteTag &&
+            other is _$UserEventDeleteTagImpl &&
             (identical(other.tag, tag) || other.tag == tag));
   }
 
@@ -822,8 +826,8 @@ class _$UserEventDeleteTag extends UserEventDeleteTag {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEventDeleteTagCopyWith<_$UserEventDeleteTag> get copyWith =>
-      __$$UserEventDeleteTagCopyWithImpl<_$UserEventDeleteTag>(
+  _$$UserEventDeleteTagImplCopyWith<_$UserEventDeleteTagImpl> get copyWith =>
+      __$$UserEventDeleteTagImplCopyWithImpl<_$UserEventDeleteTagImpl>(
           this, _$identity);
 
   @override
@@ -919,32 +923,32 @@ class _$UserEventDeleteTag extends UserEventDeleteTag {
 
 abstract class UserEventDeleteTag extends UserEvent {
   const factory UserEventDeleteTag({required final TagUser tag}) =
-      _$UserEventDeleteTag;
+      _$UserEventDeleteTagImpl;
   const UserEventDeleteTag._() : super._();
 
   TagUser get tag;
   @JsonKey(ignore: true)
-  _$$UserEventDeleteTagCopyWith<_$UserEventDeleteTag> get copyWith =>
+  _$$UserEventDeleteTagImplCopyWith<_$UserEventDeleteTagImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserEventSendAvatarWithProfileCopyWith<$Res> {
-  factory _$$UserEventSendAvatarWithProfileCopyWith(
-          _$UserEventSendAvatarWithProfile value,
-          $Res Function(_$UserEventSendAvatarWithProfile) then) =
-      __$$UserEventSendAvatarWithProfileCopyWithImpl<$Res>;
+abstract class _$$UserEventSendAvatarWithProfileImplCopyWith<$Res> {
+  factory _$$UserEventSendAvatarWithProfileImplCopyWith(
+          _$UserEventSendAvatarWithProfileImpl value,
+          $Res Function(_$UserEventSendAvatarWithProfileImpl) then) =
+      __$$UserEventSendAvatarWithProfileImplCopyWithImpl<$Res>;
   @useResult
   $Res call({io.File imageFile, int userId});
 }
 
 /// @nodoc
-class __$$UserEventSendAvatarWithProfileCopyWithImpl<$Res>
-    extends _$UserEventCopyWithImpl<$Res, _$UserEventSendAvatarWithProfile>
-    implements _$$UserEventSendAvatarWithProfileCopyWith<$Res> {
-  __$$UserEventSendAvatarWithProfileCopyWithImpl(
-      _$UserEventSendAvatarWithProfile _value,
-      $Res Function(_$UserEventSendAvatarWithProfile) _then)
+class __$$UserEventSendAvatarWithProfileImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserEventSendAvatarWithProfileImpl>
+    implements _$$UserEventSendAvatarWithProfileImplCopyWith<$Res> {
+  __$$UserEventSendAvatarWithProfileImplCopyWithImpl(
+      _$UserEventSendAvatarWithProfileImpl _value,
+      $Res Function(_$UserEventSendAvatarWithProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -953,7 +957,7 @@ class __$$UserEventSendAvatarWithProfileCopyWithImpl<$Res>
     Object? imageFile = null,
     Object? userId = null,
   }) {
-    return _then(_$UserEventSendAvatarWithProfile(
+    return _then(_$UserEventSendAvatarWithProfileImpl(
       imageFile: null == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
@@ -968,8 +972,9 @@ class __$$UserEventSendAvatarWithProfileCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserEventSendAvatarWithProfile extends UserEventSendAvatarWithProfile {
-  const _$UserEventSendAvatarWithProfile(
+class _$UserEventSendAvatarWithProfileImpl
+    extends UserEventSendAvatarWithProfile {
+  const _$UserEventSendAvatarWithProfileImpl(
       {required this.imageFile, required this.userId})
       : super._();
 
@@ -984,10 +989,10 @@ class _$UserEventSendAvatarWithProfile extends UserEventSendAvatarWithProfile {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserEventSendAvatarWithProfile &&
+            other is _$UserEventSendAvatarWithProfileImpl &&
             (identical(other.imageFile, imageFile) ||
                 other.imageFile == imageFile) &&
             (identical(other.userId, userId) || other.userId == userId));
@@ -999,9 +1004,10 @@ class _$UserEventSendAvatarWithProfile extends UserEventSendAvatarWithProfile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEventSendAvatarWithProfileCopyWith<_$UserEventSendAvatarWithProfile>
-      get copyWith => __$$UserEventSendAvatarWithProfileCopyWithImpl<
-          _$UserEventSendAvatarWithProfile>(this, _$identity);
+  _$$UserEventSendAvatarWithProfileImplCopyWith<
+          _$UserEventSendAvatarWithProfileImpl>
+      get copyWith => __$$UserEventSendAvatarWithProfileImplCopyWithImpl<
+          _$UserEventSendAvatarWithProfileImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1097,12 +1103,13 @@ class _$UserEventSendAvatarWithProfile extends UserEventSendAvatarWithProfile {
 abstract class UserEventSendAvatarWithProfile extends UserEvent {
   const factory UserEventSendAvatarWithProfile(
       {required final io.File imageFile,
-      required final int userId}) = _$UserEventSendAvatarWithProfile;
+      required final int userId}) = _$UserEventSendAvatarWithProfileImpl;
   const UserEventSendAvatarWithProfile._() : super._();
 
   io.File get imageFile;
   int get userId;
   @JsonKey(ignore: true)
-  _$$UserEventSendAvatarWithProfileCopyWith<_$UserEventSendAvatarWithProfile>
+  _$$UserEventSendAvatarWithProfileImplCopyWith<
+          _$UserEventSendAvatarWithProfileImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

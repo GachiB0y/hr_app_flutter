@@ -22,6 +22,7 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     List<String>? pathsToFiles,
+    bool isFormData = false,
   }) async {
     try {
       final uri = buildUri(path: path, queryParams: queryParams);
@@ -51,6 +52,11 @@ final class RestClientDio extends RestClientBase {
             ),
           );
         }
+      } else if (isFormData) {
+        formData = FormData();
+        body!.forEach((key, value) {
+          formData!.fields.add(MapEntry(key, value.toString()));
+        });
       }
       final response = await _dio.request<T>(
         uri.toString(),
@@ -140,6 +146,7 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     List<String>? pathsToFiles,
+        bool isFormData = false,
   }) =>
       sendRequest(
         path: path,
@@ -148,6 +155,7 @@ final class RestClientDio extends RestClientBase {
         headers: headers,
         queryParams: queryParams,
         pathsToFiles: pathsToFiles,
+        isFormData: isFormData,
       );
 
   @override
@@ -156,6 +164,7 @@ final class RestClientDio extends RestClientBase {
     required Map<String, Object?> body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    List<String>? pathsToFiles,
   }) =>
       sendRequest(
         path: path,

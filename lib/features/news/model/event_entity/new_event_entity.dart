@@ -11,17 +11,19 @@ class EventEntity with _$EventEntity {
   @JsonSerializable(explicitToJson: true)
   const factory EventEntity({
     required int id,
-    required String title,
-    required String description,
-    required String image,
-    @JsonKey(name: 'start_date') required DateTime startDate,
-    @JsonKey(name: 'end_date') required DateTime? endDate,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'is_publish') required bool isPublish,
-    @JsonKey(name: 'is_archived') required bool isArchived,
-    required List<Category> categories,
-    required Writer writer,
+    String? title,
+    String? description,
+    String? image,
+    @JsonKey(name: 'start_date') DateTime? startDate,
+    @JsonKey(name: 'end_date')  DateTime? endDate,
+    @JsonKey(name: 'created_at')  DateTime? createdAt,
+    @JsonKey(name: 'updated_at')  DateTime? updatedAt,
+    @JsonKey(name: 'is_publish')  bool? isPublish,
+    @JsonKey(name: 'is_archived')  bool? isArchived,
+    List<Category>? categories,
+    List<Map<String, dynamic>>? vote,
+
+    Writer? writer,
   }) = _EventEntity;
 
   factory EventEntity.fromJson(Map<String, dynamic> json) =>
@@ -61,3 +63,4 @@ class EventEntityViewModel with _$EventEntityViewModel {
   factory EventEntityViewModel.fromJson(Map<String, dynamic> json) =>
       _$EventEntityViewModelFromJson(json);
 }
+

@@ -12,7 +12,7 @@ part of 'one_news_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OneNewsEvent {
@@ -89,22 +89,22 @@ class _$OneNewsEventCopyWithImpl<$Res, $Val extends OneNewsEvent>
 }
 
 /// @nodoc
-abstract class _$$OneNewsEventFetchCopyWith<$Res>
+abstract class _$$OneNewsEventFetchImplCopyWith<$Res>
     implements $OneNewsEventCopyWith<$Res> {
-  factory _$$OneNewsEventFetchCopyWith(
-          _$OneNewsEventFetch value, $Res Function(_$OneNewsEventFetch) then) =
-      __$$OneNewsEventFetchCopyWithImpl<$Res>;
+  factory _$$OneNewsEventFetchImplCopyWith(_$OneNewsEventFetchImpl value,
+          $Res Function(_$OneNewsEventFetchImpl) then) =
+      __$$OneNewsEventFetchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id});
 }
 
 /// @nodoc
-class __$$OneNewsEventFetchCopyWithImpl<$Res>
-    extends _$OneNewsEventCopyWithImpl<$Res, _$OneNewsEventFetch>
-    implements _$$OneNewsEventFetchCopyWith<$Res> {
-  __$$OneNewsEventFetchCopyWithImpl(
-      _$OneNewsEventFetch _value, $Res Function(_$OneNewsEventFetch) _then)
+class __$$OneNewsEventFetchImplCopyWithImpl<$Res>
+    extends _$OneNewsEventCopyWithImpl<$Res, _$OneNewsEventFetchImpl>
+    implements _$$OneNewsEventFetchImplCopyWith<$Res> {
+  __$$OneNewsEventFetchImplCopyWithImpl(_$OneNewsEventFetchImpl _value,
+      $Res Function(_$OneNewsEventFetchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +112,7 @@ class __$$OneNewsEventFetchCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$OneNewsEventFetch(
+    return _then(_$OneNewsEventFetchImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -123,8 +123,8 @@ class __$$OneNewsEventFetchCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OneNewsEventFetch implements OneNewsEventFetch {
-  const _$OneNewsEventFetch({required this.id});
+class _$OneNewsEventFetchImpl implements OneNewsEventFetch {
+  const _$OneNewsEventFetchImpl({required this.id});
 
   @override
   final String id;
@@ -135,10 +135,10 @@ class _$OneNewsEventFetch implements OneNewsEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OneNewsEventFetch &&
+            other is _$OneNewsEventFetchImpl &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -148,8 +148,9 @@ class _$OneNewsEventFetch implements OneNewsEventFetch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OneNewsEventFetchCopyWith<_$OneNewsEventFetch> get copyWith =>
-      __$$OneNewsEventFetchCopyWithImpl<_$OneNewsEventFetch>(this, _$identity);
+  _$$OneNewsEventFetchImplCopyWith<_$OneNewsEventFetchImpl> get copyWith =>
+      __$$OneNewsEventFetchImplCopyWithImpl<_$OneNewsEventFetchImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -210,13 +211,13 @@ class _$OneNewsEventFetch implements OneNewsEventFetch {
 
 abstract class OneNewsEventFetch implements OneNewsEvent {
   const factory OneNewsEventFetch({required final String id}) =
-      _$OneNewsEventFetch;
+      _$OneNewsEventFetchImpl;
 
   @override
   String get id;
   @override
   @JsonKey(ignore: true)
-  _$$OneNewsEventFetchCopyWith<_$OneNewsEventFetch> get copyWith =>
+  _$$OneNewsEventFetchImplCopyWith<_$OneNewsEventFetchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -303,29 +304,29 @@ class _$OneNewsStateCopyWithImpl<$Res, $Val extends OneNewsState>
 }
 
 /// @nodoc
-abstract class _$$OneNewsStateLoadingCopyWith<$Res> {
-  factory _$$OneNewsStateLoadingCopyWith(_$OneNewsStateLoading value,
-          $Res Function(_$OneNewsStateLoading) then) =
-      __$$OneNewsStateLoadingCopyWithImpl<$Res>;
+abstract class _$$OneNewsStateLoadingImplCopyWith<$Res> {
+  factory _$$OneNewsStateLoadingImplCopyWith(_$OneNewsStateLoadingImpl value,
+          $Res Function(_$OneNewsStateLoadingImpl) then) =
+      __$$OneNewsStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$OneNewsStateLoadingCopyWithImpl<$Res>
-    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateLoading>
-    implements _$$OneNewsStateLoadingCopyWith<$Res> {
-  __$$OneNewsStateLoadingCopyWithImpl(
-      _$OneNewsStateLoading _value, $Res Function(_$OneNewsStateLoading) _then)
+class __$$OneNewsStateLoadingImplCopyWithImpl<$Res>
+    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateLoadingImpl>
+    implements _$$OneNewsStateLoadingImplCopyWith<$Res> {
+  __$$OneNewsStateLoadingImplCopyWithImpl(_$OneNewsStateLoadingImpl _value,
+      $Res Function(_$OneNewsStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$OneNewsStateLoading implements OneNewsStateLoading {
-  const _$OneNewsStateLoading({final String? $type})
+class _$OneNewsStateLoadingImpl implements OneNewsStateLoading {
+  const _$OneNewsStateLoadingImpl({final String? $type})
       : $type = $type ?? 'loading';
 
-  factory _$OneNewsStateLoading.fromJson(Map<String, dynamic> json) =>
-      _$$OneNewsStateLoadingFromJson(json);
+  factory _$OneNewsStateLoadingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OneNewsStateLoadingImplFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -336,9 +337,10 @@ class _$OneNewsStateLoading implements OneNewsStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OneNewsStateLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$OneNewsStateLoadingImpl);
   }
 
   @JsonKey(ignore: true)
@@ -415,24 +417,24 @@ class _$OneNewsStateLoading implements OneNewsStateLoading {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OneNewsStateLoadingToJson(
+    return _$$OneNewsStateLoadingImplToJson(
       this,
     );
   }
 }
 
 abstract class OneNewsStateLoading implements OneNewsState {
-  const factory OneNewsStateLoading() = _$OneNewsStateLoading;
+  const factory OneNewsStateLoading() = _$OneNewsStateLoadingImpl;
 
   factory OneNewsStateLoading.fromJson(Map<String, dynamic> json) =
-      _$OneNewsStateLoading.fromJson;
+      _$OneNewsStateLoadingImpl.fromJson;
 }
 
 /// @nodoc
-abstract class _$$OneNewsStateLoadedCopyWith<$Res> {
-  factory _$$OneNewsStateLoadedCopyWith(_$OneNewsStateLoaded value,
-          $Res Function(_$OneNewsStateLoaded) then) =
-      __$$OneNewsStateLoadedCopyWithImpl<$Res>;
+abstract class _$$OneNewsStateLoadedImplCopyWith<$Res> {
+  factory _$$OneNewsStateLoadedImplCopyWith(_$OneNewsStateLoadedImpl value,
+          $Res Function(_$OneNewsStateLoadedImpl) then) =
+      __$$OneNewsStateLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({EventEntity oneNewsLoaded});
 
@@ -440,11 +442,11 @@ abstract class _$$OneNewsStateLoadedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$OneNewsStateLoadedCopyWithImpl<$Res>
-    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateLoaded>
-    implements _$$OneNewsStateLoadedCopyWith<$Res> {
-  __$$OneNewsStateLoadedCopyWithImpl(
-      _$OneNewsStateLoaded _value, $Res Function(_$OneNewsStateLoaded) _then)
+class __$$OneNewsStateLoadedImplCopyWithImpl<$Res>
+    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateLoadedImpl>
+    implements _$$OneNewsStateLoadedImplCopyWith<$Res> {
+  __$$OneNewsStateLoadedImplCopyWithImpl(_$OneNewsStateLoadedImpl _value,
+      $Res Function(_$OneNewsStateLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -452,7 +454,7 @@ class __$$OneNewsStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? oneNewsLoaded = null,
   }) {
-    return _then(_$OneNewsStateLoaded(
+    return _then(_$OneNewsStateLoadedImpl(
       oneNewsLoaded: null == oneNewsLoaded
           ? _value.oneNewsLoaded
           : oneNewsLoaded // ignore: cast_nullable_to_non_nullable
@@ -471,12 +473,13 @@ class __$$OneNewsStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OneNewsStateLoaded implements OneNewsStateLoaded {
-  const _$OneNewsStateLoaded({required this.oneNewsLoaded, final String? $type})
+class _$OneNewsStateLoadedImpl implements OneNewsStateLoaded {
+  const _$OneNewsStateLoadedImpl(
+      {required this.oneNewsLoaded, final String? $type})
       : $type = $type ?? 'loaded';
 
-  factory _$OneNewsStateLoaded.fromJson(Map<String, dynamic> json) =>
-      _$$OneNewsStateLoadedFromJson(json);
+  factory _$OneNewsStateLoadedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OneNewsStateLoadedImplFromJson(json);
 
   @override
   final EventEntity oneNewsLoaded;
@@ -490,10 +493,10 @@ class _$OneNewsStateLoaded implements OneNewsStateLoaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OneNewsStateLoaded &&
+            other is _$OneNewsStateLoadedImpl &&
             (identical(other.oneNewsLoaded, oneNewsLoaded) ||
                 other.oneNewsLoaded == oneNewsLoaded));
   }
@@ -505,8 +508,8 @@ class _$OneNewsStateLoaded implements OneNewsStateLoaded {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OneNewsStateLoadedCopyWith<_$OneNewsStateLoaded> get copyWith =>
-      __$$OneNewsStateLoadedCopyWithImpl<_$OneNewsStateLoaded>(
+  _$$OneNewsStateLoadedImplCopyWith<_$OneNewsStateLoadedImpl> get copyWith =>
+      __$$OneNewsStateLoadedImplCopyWithImpl<_$OneNewsStateLoadedImpl>(
           this, _$identity);
 
   @override
@@ -579,7 +582,7 @@ class _$OneNewsStateLoaded implements OneNewsStateLoaded {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OneNewsStateLoadedToJson(
+    return _$$OneNewsStateLoadedImplToJson(
       this,
     );
   }
@@ -587,40 +590,41 @@ class _$OneNewsStateLoaded implements OneNewsStateLoaded {
 
 abstract class OneNewsStateLoaded implements OneNewsState {
   const factory OneNewsStateLoaded({required final EventEntity oneNewsLoaded}) =
-      _$OneNewsStateLoaded;
+      _$OneNewsStateLoadedImpl;
 
   factory OneNewsStateLoaded.fromJson(Map<String, dynamic> json) =
-      _$OneNewsStateLoaded.fromJson;
+      _$OneNewsStateLoadedImpl.fromJson;
 
   EventEntity get oneNewsLoaded;
   @JsonKey(ignore: true)
-  _$$OneNewsStateLoadedCopyWith<_$OneNewsStateLoaded> get copyWith =>
+  _$$OneNewsStateLoadedImplCopyWith<_$OneNewsStateLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OneNewsStateErrorCopyWith<$Res> {
-  factory _$$OneNewsStateErrorCopyWith(
-          _$OneNewsStateError value, $Res Function(_$OneNewsStateError) then) =
-      __$$OneNewsStateErrorCopyWithImpl<$Res>;
+abstract class _$$OneNewsStateErrorImplCopyWith<$Res> {
+  factory _$$OneNewsStateErrorImplCopyWith(_$OneNewsStateErrorImpl value,
+          $Res Function(_$OneNewsStateErrorImpl) then) =
+      __$$OneNewsStateErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$OneNewsStateErrorCopyWithImpl<$Res>
-    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateError>
-    implements _$$OneNewsStateErrorCopyWith<$Res> {
-  __$$OneNewsStateErrorCopyWithImpl(
-      _$OneNewsStateError _value, $Res Function(_$OneNewsStateError) _then)
+class __$$OneNewsStateErrorImplCopyWithImpl<$Res>
+    extends _$OneNewsStateCopyWithImpl<$Res, _$OneNewsStateErrorImpl>
+    implements _$$OneNewsStateErrorImplCopyWith<$Res> {
+  __$$OneNewsStateErrorImplCopyWithImpl(_$OneNewsStateErrorImpl _value,
+      $Res Function(_$OneNewsStateErrorImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$OneNewsStateError implements OneNewsStateError {
-  const _$OneNewsStateError({final String? $type}) : $type = $type ?? 'error';
+class _$OneNewsStateErrorImpl implements OneNewsStateError {
+  const _$OneNewsStateErrorImpl({final String? $type})
+      : $type = $type ?? 'error';
 
-  factory _$OneNewsStateError.fromJson(Map<String, dynamic> json) =>
-      _$$OneNewsStateErrorFromJson(json);
+  factory _$OneNewsStateErrorImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OneNewsStateErrorImplFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -631,9 +635,9 @@ class _$OneNewsStateError implements OneNewsStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OneNewsStateError);
+        (other.runtimeType == runtimeType && other is _$OneNewsStateErrorImpl);
   }
 
   @JsonKey(ignore: true)
@@ -710,15 +714,15 @@ class _$OneNewsStateError implements OneNewsStateError {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OneNewsStateErrorToJson(
+    return _$$OneNewsStateErrorImplToJson(
       this,
     );
   }
 }
 
 abstract class OneNewsStateError implements OneNewsState {
-  const factory OneNewsStateError() = _$OneNewsStateError;
+  const factory OneNewsStateError() = _$OneNewsStateErrorImpl;
 
   factory OneNewsStateError.fromJson(Map<String, dynamic> json) =
-      _$OneNewsStateError.fromJson;
+      _$OneNewsStateErrorImpl.fromJson;
 }

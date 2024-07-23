@@ -1,0 +1,174 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_app_flutter/core/router/routes.dart';
+import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
+import 'package:hr_app_flutter/ui/commons/app_cupertino_action_sheet.dart';
+import 'package:hr_app_flutter/ui/commons/show_actions.dart';
+import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
+import 'package:intl/intl.dart';
+import 'package:octopus/octopus.dart';
+
+///____________________________________________________________________________________
+/// Состояние экрана [ModerationNewsScreen].
+class ModerationNewsState {
+  /// Модерируемая новость.
+  final EventEntity? news;
+
+  /// Статус экрана.
+  final ScaffoldManagerStatus status;
+
+  /// Дата создания новости.
+  final String? date;
+
+  /// Время создания новости.
+  final String? time;
+
+  /// Полная дата создания новости.
+  final String? createAt;
+
+  /// Состояние экрана.
+  final bool? valueState;
+
+  ModerationNewsState({
+    this.news,
+    this.status = ScaffoldManagerStatus.loading,
+    this.date,
+    this.time,
+    this.createAt,
+    this.valueState,
+  });
+
+  ModerationNewsState copyWith({
+    EventEntity? news,
+    ScaffoldManagerStatus? status,
+    String? date,
+    String? time,
+    String? createAt,
+    bool? valueState,
+  }) {
+    return ModerationNewsState(
+      news: news ?? this.news,
+      status: status ?? this.status,
+      date: date ?? this.date,
+      time: time ?? this.time,
+      createAt: createAt ?? this.createAt,
+      valueState: valueState ?? this.valueState,
+    );
+  }
+}
+
+class ModerationNewsCubit extends Cubit<ModerationNewsState> {
+  final IEventEntityRepository eventEntityRepository;
+  final String? id;
+
+  ModerationNewsCubit({
+    required this.eventEntityRepository,
+    required this.id,
+  }) : super(
+          ModerationNewsState(),
+        ) {
+    eventEntityRepository.state.listen((event) {
+      _subscribeNews(event);
+    });
+    _initialize();
+  }
+
+  /// Прослушивание изменений [EventEntityRepository].
+  void _subscribeNews(EventEntityRepositoryState stateRepository) {
+    final newState = state.copyWith(
+      news: stateRepository.currentNews,
+    );
+    emit(newState);
+  }
+
+  /// Инициализация состояния.
+  Future<void> _initialize() async {
+    await getNewsById();
+  }
+
+  /// Получение новости по id.
+  Future<void> getNewsById() async {
+      await eventEntityRepository.getNewsById(id: id!);
+      if (eventEntityRepository.currentNews == null) return;
+      await _refDateTime(eventEntityRepository.currentNews!);
+      final newState = state.copyWith(
+        // news: eventEntityRepository.currentNews!,
+        status: ScaffoldManagerStatus.loaded,
+      );
+      emit(newState);
+
+  }
+
+  /// Преобразование данных даты и времени.
+  Future<void> _refDateTime(EventEntity news) async {
+    if (news.startDate == null || news.createdAt == null) return;
+    final date = DateFormat('dd MMMM').format(news.startDate!);
+    final time = DateFormat('HH:mm').format(news.startDate!);
+    final createAt = DateFormat('dd.MM.yy').format(news.createdAt!);
+    final newState = state.copyWith(date: date, time: time, createAt: createAt);
+    emit(newState);
+  }
+
+  /// Показать модалку новости.
+  Future<void> openActionSheet({required BuildContext context, required int id}) async {
+    ShowAction.cupertinoActionSheet(
+      context: context,
+      child: AppCupertinoActionSheet(
+        id: id,
+        onTapCancel: () => publishOrRejectNews(
+          value: false,
+          id: id.toString(),
+        ),
+        onTapRefactoring: () {
+          context.octopus.setState(
+            (state) => state
+              ..findByName(
+                '${Routes.services.name}-tab',
+              )?.add(
+                OctopusNode.mutable(
+                  'create-moderation-screens',
+                  children: [
+                    Routes.createTypeNewsScreen.node(arguments: {"id": id.toString()}),
+                  ],
+                ),
+              ),
+          );
+        },
+      ),
+    );
+  }
+
+  /// Опубликовать или отклонить новость.
+  Future<void> publishOrRejectNews({
+    required bool value,
+    required String id,
+  }) async {
+    if (value) {
+      await publishNews(id);
+    } else {
+      await moveInArchiveNews(id);
+    }
+    await eventEntityRepository.getApprovmentEvents();
+    emit(state.copyWith(valueState: value));
+  }
+
+  /// Отклонить новость (переместить в архив).
+  Future<void> moveInArchiveNews(String id) async {
+    await eventEntityRepository.moveInArchiveNews(id: id);
+  }
+
+  /// Опубликовать новость.
+  Future<void> publishNews(String id) async {
+    await eventEntityRepository.approvementNews(id: id);
+  }
+
+  @override
+  Future<void> close() async {
+    return;
+  }
+}

@@ -12,7 +12,7 @@ part of 'statements_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$StatementsEvent {
@@ -81,10 +81,11 @@ class _$StatementsEventCopyWithImpl<$Res, $Val extends StatementsEvent>
 }
 
 /// @nodoc
-abstract class _$$StatementsEventCreateCopyWith<$Res> {
-  factory _$$StatementsEventCreateCopyWith(_$StatementsEventCreate value,
-          $Res Function(_$StatementsEventCreate) then) =
-      __$$StatementsEventCreateCopyWithImpl<$Res>;
+abstract class _$$StatementsEventCreateImplCopyWith<$Res> {
+  factory _$$StatementsEventCreateImplCopyWith(
+          _$StatementsEventCreateImpl value,
+          $Res Function(_$StatementsEventCreateImpl) then) =
+      __$$StatementsEventCreateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({StatementFormInfoToSubmit itemsForm});
 
@@ -92,11 +93,11 @@ abstract class _$$StatementsEventCreateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$StatementsEventCreateCopyWithImpl<$Res>
-    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventCreate>
-    implements _$$StatementsEventCreateCopyWith<$Res> {
-  __$$StatementsEventCreateCopyWithImpl(_$StatementsEventCreate _value,
-      $Res Function(_$StatementsEventCreate) _then)
+class __$$StatementsEventCreateImplCopyWithImpl<$Res>
+    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventCreateImpl>
+    implements _$$StatementsEventCreateImplCopyWith<$Res> {
+  __$$StatementsEventCreateImplCopyWithImpl(_$StatementsEventCreateImpl _value,
+      $Res Function(_$StatementsEventCreateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +105,7 @@ class __$$StatementsEventCreateCopyWithImpl<$Res>
   $Res call({
     Object? itemsForm = null,
   }) {
-    return _then(_$StatementsEventCreate(
+    return _then(_$StatementsEventCreateImpl(
       itemsForm: null == itemsForm
           ? _value.itemsForm
           : itemsForm // ignore: cast_nullable_to_non_nullable
@@ -123,8 +124,8 @@ class __$$StatementsEventCreateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatementsEventCreate extends StatementsEventCreate {
-  const _$StatementsEventCreate({required this.itemsForm}) : super._();
+class _$StatementsEventCreateImpl extends StatementsEventCreate {
+  const _$StatementsEventCreateImpl({required this.itemsForm}) : super._();
 
   @override
   final StatementFormInfoToSubmit itemsForm;
@@ -135,10 +136,10 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatementsEventCreate &&
+            other is _$StatementsEventCreateImpl &&
             (identical(other.itemsForm, itemsForm) ||
                 other.itemsForm == itemsForm));
   }
@@ -149,9 +150,9 @@ class _$StatementsEventCreate extends StatementsEventCreate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatementsEventCreateCopyWith<_$StatementsEventCreate> get copyWith =>
-      __$$StatementsEventCreateCopyWithImpl<_$StatementsEventCreate>(
-          this, _$identity);
+  _$$StatementsEventCreateImplCopyWith<_$StatementsEventCreateImpl>
+      get copyWith => __$$StatementsEventCreateImplCopyWithImpl<
+          _$StatementsEventCreateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -225,30 +226,30 @@ class _$StatementsEventCreate extends StatementsEventCreate {
 abstract class StatementsEventCreate extends StatementsEvent {
   const factory StatementsEventCreate(
           {required final StatementFormInfoToSubmit itemsForm}) =
-      _$StatementsEventCreate;
+      _$StatementsEventCreateImpl;
   const StatementsEventCreate._() : super._();
 
   StatementFormInfoToSubmit get itemsForm;
   @JsonKey(ignore: true)
-  _$$StatementsEventCreateCopyWith<_$StatementsEventCreate> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$StatementsEventCreateImplCopyWith<_$StatementsEventCreateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StatementsEventFetchCopyWith<$Res> {
-  factory _$$StatementsEventFetchCopyWith(_$StatementsEventFetch value,
-          $Res Function(_$StatementsEventFetch) then) =
-      __$$StatementsEventFetchCopyWithImpl<$Res>;
+abstract class _$$StatementsEventFetchImplCopyWith<$Res> {
+  factory _$$StatementsEventFetchImplCopyWith(_$StatementsEventFetchImpl value,
+          $Res Function(_$StatementsEventFetchImpl) then) =
+      __$$StatementsEventFetchImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String id});
 }
 
 /// @nodoc
-class __$$StatementsEventFetchCopyWithImpl<$Res>
-    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventFetch>
-    implements _$$StatementsEventFetchCopyWith<$Res> {
-  __$$StatementsEventFetchCopyWithImpl(_$StatementsEventFetch _value,
-      $Res Function(_$StatementsEventFetch) _then)
+class __$$StatementsEventFetchImplCopyWithImpl<$Res>
+    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventFetchImpl>
+    implements _$$StatementsEventFetchImplCopyWith<$Res> {
+  __$$StatementsEventFetchImplCopyWithImpl(_$StatementsEventFetchImpl _value,
+      $Res Function(_$StatementsEventFetchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -256,7 +257,7 @@ class __$$StatementsEventFetchCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$StatementsEventFetch(
+    return _then(_$StatementsEventFetchImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -267,8 +268,8 @@ class __$$StatementsEventFetchCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatementsEventFetch extends StatementsEventFetch {
-  const _$StatementsEventFetch({required this.id}) : super._();
+class _$StatementsEventFetchImpl extends StatementsEventFetch {
+  const _$StatementsEventFetchImpl({required this.id}) : super._();
 
   @override
   final String id;
@@ -279,10 +280,10 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatementsEventFetch &&
+            other is _$StatementsEventFetchImpl &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -292,9 +293,10 @@ class _$StatementsEventFetch extends StatementsEventFetch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatementsEventFetchCopyWith<_$StatementsEventFetch> get copyWith =>
-      __$$StatementsEventFetchCopyWithImpl<_$StatementsEventFetch>(
-          this, _$identity);
+  _$$StatementsEventFetchImplCopyWith<_$StatementsEventFetchImpl>
+      get copyWith =>
+          __$$StatementsEventFetchImplCopyWithImpl<_$StatementsEventFetchImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -367,32 +369,33 @@ class _$StatementsEventFetch extends StatementsEventFetch {
 
 abstract class StatementsEventFetch extends StatementsEvent {
   const factory StatementsEventFetch({required final String id}) =
-      _$StatementsEventFetch;
+      _$StatementsEventFetchImpl;
   const StatementsEventFetch._() : super._();
 
   String get id;
   @JsonKey(ignore: true)
-  _$$StatementsEventFetchCopyWith<_$StatementsEventFetch> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$StatementsEventFetchImplCopyWith<_$StatementsEventFetchImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StatementsEventSignDocumentCopyWith<$Res> {
-  factory _$$StatementsEventSignDocumentCopyWith(
-          _$StatementsEventSignDocument value,
-          $Res Function(_$StatementsEventSignDocument) then) =
-      __$$StatementsEventSignDocumentCopyWithImpl<$Res>;
+abstract class _$$StatementsEventSignDocumentImplCopyWith<$Res> {
+  factory _$$StatementsEventSignDocumentImplCopyWith(
+          _$StatementsEventSignDocumentImpl value,
+          $Res Function(_$StatementsEventSignDocumentImpl) then) =
+      __$$StatementsEventSignDocumentImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String code});
 }
 
 /// @nodoc
-class __$$StatementsEventSignDocumentCopyWithImpl<$Res>
-    extends _$StatementsEventCopyWithImpl<$Res, _$StatementsEventSignDocument>
-    implements _$$StatementsEventSignDocumentCopyWith<$Res> {
-  __$$StatementsEventSignDocumentCopyWithImpl(
-      _$StatementsEventSignDocument _value,
-      $Res Function(_$StatementsEventSignDocument) _then)
+class __$$StatementsEventSignDocumentImplCopyWithImpl<$Res>
+    extends _$StatementsEventCopyWithImpl<$Res,
+        _$StatementsEventSignDocumentImpl>
+    implements _$$StatementsEventSignDocumentImplCopyWith<$Res> {
+  __$$StatementsEventSignDocumentImplCopyWithImpl(
+      _$StatementsEventSignDocumentImpl _value,
+      $Res Function(_$StatementsEventSignDocumentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -400,7 +403,7 @@ class __$$StatementsEventSignDocumentCopyWithImpl<$Res>
   $Res call({
     Object? code = null,
   }) {
-    return _then(_$StatementsEventSignDocument(
+    return _then(_$StatementsEventSignDocumentImpl(
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -411,8 +414,8 @@ class __$$StatementsEventSignDocumentCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatementsEventSignDocument extends StatementsEventSignDocument {
-  const _$StatementsEventSignDocument({required this.code}) : super._();
+class _$StatementsEventSignDocumentImpl extends StatementsEventSignDocument {
+  const _$StatementsEventSignDocumentImpl({required this.code}) : super._();
 
   @override
   final String code;
@@ -423,10 +426,10 @@ class _$StatementsEventSignDocument extends StatementsEventSignDocument {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatementsEventSignDocument &&
+            other is _$StatementsEventSignDocumentImpl &&
             (identical(other.code, code) || other.code == code));
   }
 
@@ -436,9 +439,9 @@ class _$StatementsEventSignDocument extends StatementsEventSignDocument {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatementsEventSignDocumentCopyWith<_$StatementsEventSignDocument>
-      get copyWith => __$$StatementsEventSignDocumentCopyWithImpl<
-          _$StatementsEventSignDocument>(this, _$identity);
+  _$$StatementsEventSignDocumentImplCopyWith<_$StatementsEventSignDocumentImpl>
+      get copyWith => __$$StatementsEventSignDocumentImplCopyWithImpl<
+          _$StatementsEventSignDocumentImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -511,11 +514,11 @@ class _$StatementsEventSignDocument extends StatementsEventSignDocument {
 
 abstract class StatementsEventSignDocument extends StatementsEvent {
   const factory StatementsEventSignDocument({required final String code}) =
-      _$StatementsEventSignDocument;
+      _$StatementsEventSignDocumentImpl;
   const StatementsEventSignDocument._() : super._();
 
   String get code;
   @JsonKey(ignore: true)
-  _$$StatementsEventSignDocumentCopyWith<_$StatementsEventSignDocument>
+  _$$StatementsEventSignDocumentImplCopyWith<_$StatementsEventSignDocumentImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,8 +6,9 @@ part of 'participant.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ParticipantEntity _$$_ParticipantEntityFromJson(Map<String, dynamic> json) =>
-    _$_ParticipantEntity(
+_$ParticipantEntityImpl _$$ParticipantEntityImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ParticipantEntityImpl(
       lastName: json['lastName'] as String,
       firstName: json['firstName'] as String,
       patronymic: json['patronymic'] as String,
@@ -15,8 +16,8 @@ _$_ParticipantEntity _$$_ParticipantEntityFromJson(Map<String, dynamic> json) =>
       position: json['position'] as String,
     );
 
-Map<String, dynamic> _$$_ParticipantEntityToJson(
-        _$_ParticipantEntity instance) =>
+Map<String, dynamic> _$$ParticipantEntityImplToJson(
+        _$ParticipantEntityImpl instance) =>
     <String, dynamic>{
       'lastName': instance.lastName,
       'firstName': instance.firstName,

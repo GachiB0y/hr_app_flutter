@@ -12,7 +12,7 @@ part of 'rookies.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Rookies _$RookiesFromJson(Map<String, dynamic> json) {
   return _Rookies.fromJson(json);
@@ -66,20 +66,21 @@ class _$RookiesCopyWithImpl<$Res, $Val extends Rookies>
 }
 
 /// @nodoc
-abstract class _$$_RookiesCopyWith<$Res> implements $RookiesCopyWith<$Res> {
-  factory _$$_RookiesCopyWith(
-          _$_Rookies value, $Res Function(_$_Rookies) then) =
-      __$$_RookiesCopyWithImpl<$Res>;
+abstract class _$$RookiesImplCopyWith<$Res> implements $RookiesCopyWith<$Res> {
+  factory _$$RookiesImplCopyWith(
+          _$RookiesImpl value, $Res Function(_$RookiesImpl) then) =
+      __$$RookiesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int count, List<OneRookiesInfo> rookies});
 }
 
 /// @nodoc
-class __$$_RookiesCopyWithImpl<$Res>
-    extends _$RookiesCopyWithImpl<$Res, _$_Rookies>
-    implements _$$_RookiesCopyWith<$Res> {
-  __$$_RookiesCopyWithImpl(_$_Rookies _value, $Res Function(_$_Rookies) _then)
+class __$$RookiesImplCopyWithImpl<$Res>
+    extends _$RookiesCopyWithImpl<$Res, _$RookiesImpl>
+    implements _$$RookiesImplCopyWith<$Res> {
+  __$$RookiesImplCopyWithImpl(
+      _$RookiesImpl _value, $Res Function(_$RookiesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +89,7 @@ class __$$_RookiesCopyWithImpl<$Res>
     Object? count = null,
     Object? rookies = null,
   }) {
-    return _then(_$_Rookies(
+    return _then(_$RookiesImpl(
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -103,13 +104,13 @@ class __$$_RookiesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Rookies implements _Rookies {
-  const _$_Rookies(
+class _$RookiesImpl implements _Rookies {
+  const _$RookiesImpl(
       {required this.count, required final List<OneRookiesInfo> rookies})
       : _rookies = rookies;
 
-  factory _$_Rookies.fromJson(Map<String, dynamic> json) =>
-      _$$_RookiesFromJson(json);
+  factory _$RookiesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RookiesImplFromJson(json);
 
   @override
   final int count;
@@ -127,10 +128,10 @@ class _$_Rookies implements _Rookies {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Rookies &&
+            other is _$RookiesImpl &&
             (identical(other.count, count) || other.count == count) &&
             const DeepCollectionEquality().equals(other._rookies, _rookies));
   }
@@ -143,12 +144,12 @@ class _$_Rookies implements _Rookies {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RookiesCopyWith<_$_Rookies> get copyWith =>
-      __$$_RookiesCopyWithImpl<_$_Rookies>(this, _$identity);
+  _$$RookiesImplCopyWith<_$RookiesImpl> get copyWith =>
+      __$$RookiesImplCopyWithImpl<_$RookiesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RookiesToJson(
+    return _$$RookiesImplToJson(
       this,
     );
   }
@@ -157,9 +158,9 @@ class _$_Rookies implements _Rookies {
 abstract class _Rookies implements Rookies {
   const factory _Rookies(
       {required final int count,
-      required final List<OneRookiesInfo> rookies}) = _$_Rookies;
+      required final List<OneRookiesInfo> rookies}) = _$RookiesImpl;
 
-  factory _Rookies.fromJson(Map<String, dynamic> json) = _$_Rookies.fromJson;
+  factory _Rookies.fromJson(Map<String, dynamic> json) = _$RookiesImpl.fromJson;
 
   @override
   int get count;
@@ -167,7 +168,7 @@ abstract class _Rookies implements Rookies {
   List<OneRookiesInfo> get rookies;
   @override
   @JsonKey(ignore: true)
-  _$$_RookiesCopyWith<_$_Rookies> get copyWith =>
+  _$$RookiesImplCopyWith<_$RookiesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -268,11 +269,11 @@ class _$OneRookiesInfoCopyWithImpl<$Res, $Val extends OneRookiesInfo>
 }
 
 /// @nodoc
-abstract class _$$_OneRookiesInfoCopyWith<$Res>
+abstract class _$$OneRookiesInfoImplCopyWith<$Res>
     implements $OneRookiesInfoCopyWith<$Res> {
-  factory _$$_OneRookiesInfoCopyWith(
-          _$_OneRookiesInfo value, $Res Function(_$_OneRookiesInfo) then) =
-      __$$_OneRookiesInfoCopyWithImpl<$Res>;
+  factory _$$OneRookiesInfoImplCopyWith(_$OneRookiesInfoImpl value,
+          $Res Function(_$OneRookiesInfoImpl) then) =
+      __$$OneRookiesInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -286,11 +287,11 @@ abstract class _$$_OneRookiesInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OneRookiesInfoCopyWithImpl<$Res>
-    extends _$OneRookiesInfoCopyWithImpl<$Res, _$_OneRookiesInfo>
-    implements _$$_OneRookiesInfoCopyWith<$Res> {
-  __$$_OneRookiesInfoCopyWithImpl(
-      _$_OneRookiesInfo _value, $Res Function(_$_OneRookiesInfo) _then)
+class __$$OneRookiesInfoImplCopyWithImpl<$Res>
+    extends _$OneRookiesInfoCopyWithImpl<$Res, _$OneRookiesInfoImpl>
+    implements _$$OneRookiesInfoImplCopyWith<$Res> {
+  __$$OneRookiesInfoImplCopyWithImpl(
+      _$OneRookiesInfoImpl _value, $Res Function(_$OneRookiesInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -304,7 +305,7 @@ class __$$_OneRookiesInfoCopyWithImpl<$Res>
     Object? joinDate = null,
     Object? staffPosition = null,
   }) {
-    return _then(_$_OneRookiesInfo(
+    return _then(_$OneRookiesInfoImpl(
       autoCard: null == autoCard
           ? _value.autoCard
           : autoCard // ignore: cast_nullable_to_non_nullable
@@ -339,8 +340,8 @@ class __$$_OneRookiesInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_OneRookiesInfo implements _OneRookiesInfo {
-  const _$_OneRookiesInfo(
+class _$OneRookiesInfoImpl implements _OneRookiesInfo {
+  const _$OneRookiesInfoImpl(
       {@JsonKey(name: 'auto_card') required this.autoCard,
       required this.name,
       @JsonKey(name: 'name_i') required this.nameI,
@@ -349,8 +350,8 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
       @JsonKey(name: 'join_date') required this.joinDate,
       @JsonKey(name: 'staff_position') required this.staffPosition});
 
-  factory _$_OneRookiesInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_OneRookiesInfoFromJson(json);
+  factory _$OneRookiesInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OneRookiesInfoImplFromJson(json);
 
   @override
   @JsonKey(name: 'auto_card')
@@ -379,10 +380,10 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OneRookiesInfo &&
+            other is _$OneRookiesInfoImpl &&
             (identical(other.autoCard, autoCard) ||
                 other.autoCard == autoCard) &&
             (identical(other.name, name) || other.name == name) &&
@@ -404,12 +405,13 @@ class _$_OneRookiesInfo implements _OneRookiesInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OneRookiesInfoCopyWith<_$_OneRookiesInfo> get copyWith =>
-      __$$_OneRookiesInfoCopyWithImpl<_$_OneRookiesInfo>(this, _$identity);
+  _$$OneRookiesInfoImplCopyWith<_$OneRookiesInfoImpl> get copyWith =>
+      __$$OneRookiesInfoImplCopyWithImpl<_$OneRookiesInfoImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OneRookiesInfoToJson(
+    return _$$OneRookiesInfoImplToJson(
       this,
     );
   }
@@ -424,10 +426,10 @@ abstract class _OneRookiesInfo implements OneRookiesInfo {
       @JsonKey(name: 'date_birth') required final String dateBirth,
       @JsonKey(name: 'join_date') required final String joinDate,
       @JsonKey(name: 'staff_position')
-      required final String staffPosition}) = _$_OneRookiesInfo;
+      required final String staffPosition}) = _$OneRookiesInfoImpl;
 
   factory _OneRookiesInfo.fromJson(Map<String, dynamic> json) =
-      _$_OneRookiesInfo.fromJson;
+      _$OneRookiesInfoImpl.fromJson;
 
   @override
   @JsonKey(name: 'auto_card')
@@ -451,6 +453,6 @@ abstract class _OneRookiesInfo implements OneRookiesInfo {
   String get staffPosition;
   @override
   @JsonKey(ignore: true)
-  _$$_OneRookiesInfoCopyWith<_$_OneRookiesInfo> get copyWith =>
+  _$$OneRookiesInfoImplCopyWith<_$OneRookiesInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

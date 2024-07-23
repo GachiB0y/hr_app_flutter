@@ -6,22 +6,23 @@ part of 'rookies.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Rookies _$$_RookiesFromJson(Map<String, dynamic> json) => _$_Rookies(
-      count: json['count'] as int,
+_$RookiesImpl _$$RookiesImplFromJson(Map<String, dynamic> json) =>
+    _$RookiesImpl(
+      count: (json['count'] as num).toInt(),
       rookies: (json['rookies'] as List<dynamic>)
           .map((e) => OneRookiesInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_RookiesToJson(_$_Rookies instance) =>
+Map<String, dynamic> _$$RookiesImplToJson(_$RookiesImpl instance) =>
     <String, dynamic>{
       'count': instance.count,
       'rookies': instance.rookies,
     };
 
-_$_OneRookiesInfo _$$_OneRookiesInfoFromJson(Map<String, dynamic> json) =>
-    _$_OneRookiesInfo(
-      autoCard: json['auto_card'] as int,
+_$OneRookiesInfoImpl _$$OneRookiesInfoImplFromJson(Map<String, dynamic> json) =>
+    _$OneRookiesInfoImpl(
+      autoCard: (json['auto_card'] as num).toInt(),
       name: json['name'] as String,
       nameI: json['name_i'] as String,
       nameO: json['name_o'] as String,
@@ -30,7 +31,8 @@ _$_OneRookiesInfo _$$_OneRookiesInfoFromJson(Map<String, dynamic> json) =>
       staffPosition: json['staff_position'] as String,
     );
 
-Map<String, dynamic> _$$_OneRookiesInfoToJson(_$_OneRookiesInfo instance) =>
+Map<String, dynamic> _$$OneRookiesInfoImplToJson(
+        _$OneRookiesInfoImpl instance) =>
     <String, dynamic>{
       'auto_card': instance.autoCard,
       'name': instance.name,

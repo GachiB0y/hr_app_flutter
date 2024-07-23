@@ -1,12 +1,11 @@
 import 'package:hr_app_flutter/features/wallet/data/rest_clients/wallet_api_client.dart';
 
-import '../../model/coins_screen/coins_info/coins_info.dart';
 import '../../model/coins_screen/coins_reward/coins_reward.dart';
 import '../../model/wallet/wallet.dart';
 
 abstract interface class IWalletRepository {
   Future<Wallet> getWallet();
-  Future<List<CoinsInfo>> getCoinsInfo();
+  Future<List<CoinsReward>> getCoinsInfo();
   Future<List<CoinsReward>> getInfoCoinsReward();
   Future<int> sendCoinsToOtherUser(
       {required int amount, required int userId, required String message});
@@ -74,7 +73,7 @@ class WalletRepositoryImpl implements IWalletRepository {
   }
 
   @override
-  Future<List<CoinsInfo>> getCoinsInfo() => _walletProvider.getCoinsInfo();
+  Future<List<CoinsReward>> getCoinsInfo() => _walletProvider.getCoinsInfo();
 
   @override
   Future<List<CoinsReward>> getInfoCoinsReward() =>

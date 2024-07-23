@@ -6,38 +6,41 @@ part of 'one_news_bloc.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$OneNewsStateLoading _$$OneNewsStateLoadingFromJson(
+_$OneNewsStateLoadingImpl _$$OneNewsStateLoadingImplFromJson(
         Map<String, dynamic> json) =>
-    _$OneNewsStateLoading(
+    _$OneNewsStateLoadingImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$OneNewsStateLoadingToJson(
-        _$OneNewsStateLoading instance) =>
+Map<String, dynamic> _$$OneNewsStateLoadingImplToJson(
+        _$OneNewsStateLoadingImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$OneNewsStateLoaded _$$OneNewsStateLoadedFromJson(Map<String, dynamic> json) =>
-    _$OneNewsStateLoaded(
+_$OneNewsStateLoadedImpl _$$OneNewsStateLoadedImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OneNewsStateLoadedImpl(
       oneNewsLoaded:
           EventEntity.fromJson(json['oneNewsLoaded'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$OneNewsStateLoadedToJson(
-        _$OneNewsStateLoaded instance) =>
+Map<String, dynamic> _$$OneNewsStateLoadedImplToJson(
+        _$OneNewsStateLoadedImpl instance) =>
     <String, dynamic>{
       'oneNewsLoaded': instance.oneNewsLoaded,
       'runtimeType': instance.$type,
     };
 
-_$OneNewsStateError _$$OneNewsStateErrorFromJson(Map<String, dynamic> json) =>
-    _$OneNewsStateError(
+_$OneNewsStateErrorImpl _$$OneNewsStateErrorImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OneNewsStateErrorImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$OneNewsStateErrorToJson(_$OneNewsStateError instance) =>
+Map<String, dynamic> _$$OneNewsStateErrorImplToJson(
+        _$OneNewsStateErrorImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
