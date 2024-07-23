@@ -7,6 +7,7 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/photo_widget.dart';
+import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:octopus/octopus.dart';
 
 class CreatePhotoNewsScreen extends StatelessWidget {
@@ -17,13 +18,13 @@ class CreatePhotoNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringPhotoNewsCubit>();
     return BlocBuilder<CreateRefactoringPhotoNewsCubit, CreateRefactoringPhotoNewsState>(
-      builder: (context, state) {
-        return state.isNewsChecked
+      builder: (context, state) => state.isNewsChecked
             ? CheckingNewsScreen(
                 news: state.currentNews,
                 file: state.file!,
               )
-            : Scaffold(
+            : ScaffoldManager(
+        status: state.status,
                 appBar: const AppBarCreateRefactoringNewsScreens(),
                 body: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -53,8 +54,7 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              );
-      },
+              ),
     );
   }
 }

@@ -50,8 +50,7 @@ class ModerationNewsState {
     String? time,
     String? createAt,
     bool? valueState,
-  }) {
-    return ModerationNewsState(
+  }) => ModerationNewsState(
       news: news ?? this.news,
       status: status ?? this.status,
       date: date ?? this.date,
@@ -59,7 +58,6 @@ class ModerationNewsState {
       createAt: createAt ?? this.createAt,
       valueState: valueState ?? this.valueState,
     );
-  }
 }
 
 class ModerationNewsCubit extends Cubit<ModerationNewsState> {
@@ -116,7 +114,7 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
 
   /// Показать модалку новости.
   Future<void> openActionSheet({required BuildContext context, required int id}) async {
-    ShowAction.cupertinoActionSheet(
+    await ShowAction.cupertinoActionSheet(
       context: context,
       child: AppCupertinoActionSheet(
         id: id,
