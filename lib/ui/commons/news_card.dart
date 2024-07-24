@@ -1,40 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 import 'package:hr_app_flutter/ui/commons/blur_image_widget.dart';
 import 'package:intl/intl.dart';
-import 'package:octopus/octopus.dart';
 
 class NewsCard extends StatelessWidget {
   /// Виджет карточки новости.
   const NewsCard({
-    super.key,
     required this.news,
+    required this.onTap,
+    super.key,
   });
 
   final EventEntity news;
 
+  final VoidCallback onTap;
+
   @override
-  Widget build(BuildContext context) {
-    var id = {'id': news.id.toString()};
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 11.0, bottom: 9.0, right: 11.0, left: 11.0),
       child: InkWell(
-        onTap: () {
-          context.octopus.setState(
-            (state) => state
-              ..findByName('${Routes.services.name}-tab')?.add(
-                Routes.moderationNewsScreen.node(arguments: id),
-              ),
-          );
-        },
+        onTap: onTap,
         child: Row(
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-
               ),
               child: BlurImageWidget(
                 urlImage: news.image ?? '',
@@ -48,12 +39,14 @@ class NewsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  (news.startDate != null) ?
-                  _InfoDateWidget(
-                    text: DateFormat('dd MMMM').format(
-                      news.startDate!
-                    ),
-                  ) : const Text(''),
+                  if (news.startDate != null)
+                    _InfoDateWidget(
+                      text: DateFormat('dd MMMM').format(
+                        news.startDate!,
+                      ),
+                    )
+                  else
+                    const Text(''),
                   Text(
                     news.title ?? '',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -79,7 +72,6 @@ class NewsCard extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
 class _InfoDateWidget extends StatelessWidget {
@@ -90,23 +82,21 @@ class _InfoDateWidget extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(145),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontSize: 9,
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w700,
-              ),
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(145),
         ),
-      ),
-    );
-  }
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 9,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
 }

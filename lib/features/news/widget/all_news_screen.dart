@@ -17,6 +17,12 @@ class AllNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Image.asset('assets/icons/chevrone_left.png'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('События компании'),
         ),
@@ -181,7 +187,7 @@ class ScrollContentWithNewsState extends State<ScrollContentWithNews> {
             if (state.data!.listEventEntityLoaded.isEmpty) {
               return const Center(child: Text('Нет событий'));
             } else {
-              final news = state.data!.listEventEntityLoaded;
+              final news = state.data!.filteredListEventEntity;
               return Scrollbar(
                 thumbVisibility: true,
                 thickness: 10,
@@ -213,36 +219,34 @@ class _OneNewsElementWidget extends StatelessWidget {
   final EventEntity news;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () {
-          context.octopus.setState((state) {
-            final findSate = state..findByName('all-news');
-            findSate.add(
-              Routes.aboutNews.node(
-                arguments: <String, String>{'id': news.id.toString()},
-              ),
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.only(
+          top: 8.0,
+          left: 15.0,
+          right: 30.0,
+        ),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.background,
+        ),
+        child: NewsCard(
+          onTap: () {
+            context.octopus.setState(
+              (state) => state
+                ..findByName('${Routes.services.name}-tab')?.add(
+                  Routes.aboutNews.node(
+                    arguments: <String, String>{'id': news.id.toString()},
+                  ),
+                ),
             );
-
-            return state;
-          });
-        },
-        child: Container(
-          margin: const EdgeInsets.only(
-            top: 8.0,
-            left: 15.0,
-            right: 30.0,
-          ),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-              ),
-            ],
-            borderRadius: BorderRadius.circular(16),
-            color: Theme.of(context).colorScheme.background,
-          ),
-          child: NewsCard(news: news),
+          },
+          news: news,
         ),
       );
 }

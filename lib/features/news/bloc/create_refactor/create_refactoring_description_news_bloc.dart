@@ -34,7 +34,8 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
 
   /// Флаг активности кнопки "Продолжить".
   bool get isActive =>
-      _eventEntityRepository.currentNews?.description != null && _eventEntityRepository.currentNews?.description != '';
+      _eventEntityRepository.currentNews?.description != null &&
+      _eventEntityRepository.currentNews?.description != '';
 
   /// Блок экрана создания или изменения описания новости.
   CreateRefactoringDescriptionNewsCubit({
@@ -58,27 +59,17 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
     emit(state.copyWith(currentNews: currentNews));
   }
 
-  /// Таймер для
-  Timer? _timer;
-
   /// Коллбак на изменение поля заголовка новости.
   void _getDescription() {
     if (textController.text == _eventEntityRepository.currentNews?.description) return;
     if (textController.text == ' ') {
       textController.text = '';
     }
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    _timer = Timer(
-      const Duration(milliseconds: 500),
-          () async {
-        changeCurrentNews(
-          state.currentNews!.copyWith(
-            description: textController.text,
-          ),
-        );
-      },
+
+    changeCurrentNews(
+      state.currentNews!.copyWith(
+        description: textController.text,
+      ),
     );
   }
 

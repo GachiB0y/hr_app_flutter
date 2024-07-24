@@ -33,13 +33,13 @@ class CheckingNewsScreen extends StatelessWidget {
               icon: const Icon(Icons.clear),
               onPressed: () {
                 context.octopus
-                    .setState((state) => state..removeByName(Routes.createModerationScreens.name));
+                    .setState((state) => state..removeByName(Routes.createModerationScreensBucket.name));
               },
             ),
             actions: [TextButton(
                 onPressed: () {
                   context.octopus
-                      .setState((state) => state..removeByName(Routes.createModerationScreens.name));
+                      .setState((state) => state..removeByName(Routes.createModerationScreensBucket.name));
                 },
                 child: const Text('Выход')) ],
           ),

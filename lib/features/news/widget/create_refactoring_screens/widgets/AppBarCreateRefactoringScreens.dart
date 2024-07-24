@@ -12,7 +12,7 @@ class AppBarCreateRefactoringNewsScreens extends StatelessWidget implements Pref
         TextButton(
             onPressed: () {
               context.octopus
-                  .setState((state) => state..removeByName(Routes.createModerationScreens.name));
+                  .setState((state) => state..removeByName(Routes.createModerationScreensBucket.name));
             },
             child: const Text('Сбросить'))
       ],

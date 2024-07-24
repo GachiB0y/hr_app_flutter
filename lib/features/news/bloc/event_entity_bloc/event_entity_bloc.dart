@@ -50,12 +50,11 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
 
       List<EventEntity> listEventEntityLoaded =
           await _eventEntityRepository.getEvents().timeout(const Duration(seconds: 100));
-      List<EventEntity> filteredEventEntity = filterListCategory(
-        listEventEntityLoaded: listEventEntityLoaded,
-        idTab: 1,
-      );
+      List<EventEntity> filteredEventEntity = listEventEntityLoaded;
       final EventEntityViewModel viewModel = EventEntityViewModel(
-          listEventEntityLoaded: listEventEntityLoaded, filteredListEventEntity: filteredEventEntity);
+        listEventEntityLoaded: listEventEntityLoaded,
+        filteredListEventEntity: filteredEventEntity,
+      );
 
       emit(EventEntityState.successful(data: viewModel));
       // ignore: unused_catch_stack
@@ -95,11 +94,13 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
     } finally {
       emit(EventEntityState.idle(data: state.data));
     }
-    _eventEntityRepository.getApprovmentEvents();
+    await _eventEntityRepository.getApprovmentEvents();
   }
 
-  List<EventEntity> filterListCategory(
-      {required List<EventEntity> listEventEntityLoaded, required int idTab}) {
+  List<EventEntity> filterListCategory({
+    required List<EventEntity> listEventEntityLoaded,
+    required int idTab,
+  }) {
     final List<EventEntity> filteredEventEntity = listEventEntityLoaded
         .where((item) => item.categories!.any((category) => category.id == idTab))
         .toList();
@@ -107,8 +108,10 @@ class EventEntityBloc extends Bloc<EventEntityEvent, EventEntityState>
   }
 
   Future<void> _eventFilterNews(EventEntityEventUpdate event, Emitter<EventEntityState> emit) async {
-    List<EventEntity> filteredEventEntity =
-        filterListCategory(idTab: event.idTab, listEventEntityLoaded: state.data!.listEventEntityLoaded);
+    List<EventEntity> filteredEventEntity = filterListCategory(
+      idTab: event.idTab,
+      listEventEntityLoaded: state.data!.listEventEntityLoaded,
+    );
 
     final newState = state.data?.copyWith(filteredListEventEntity: filteredEventEntity);
     emit(EventEntityState.successful(data: newState));
