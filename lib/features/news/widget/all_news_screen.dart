@@ -17,6 +17,12 @@ class AllNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Image.asset('assets/icons/chevrone_left.png'),
+            onPressed: () {
+             Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('События компании'),
         ),
