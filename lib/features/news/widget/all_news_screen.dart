@@ -213,36 +213,36 @@ class _OneNewsElementWidget extends StatelessWidget {
   final EventEntity news;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () {
-          context.octopus.setState((state) {
-            final findSate = state..findByName('all-news');
-            findSate.add(
-              Routes.aboutNews.node(
-                arguments: <String, String>{'id': news.id.toString()},
-              ),
-            );
-
-            return state;
-          });
-        },
-        child: Container(
-          margin: const EdgeInsets.only(
-            top: 8.0,
-            left: 15.0,
-            right: 30.0,
-          ),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-              ),
-            ],
-            borderRadius: BorderRadius.circular(16),
-            color: Theme.of(context).colorScheme.background,
-          ),
-          child: NewsCard(news: news),
+  Widget build(BuildContext context) => Container(
+    margin: const EdgeInsets.only(
+      top: 8.0,
+      left: 15.0,
+      right: 30.0,
+    ),
+    decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 8,
         ),
-      );
+      ],
+      borderRadius: BorderRadius.circular(16),
+      color: Theme.of(context).colorScheme.background,
+    ),
+    child: NewsCard(
+      onTap: () {
+        context.octopus.setState((state) {
+          final findSate = state..findByName('all-news');
+          findSate.add(
+            Routes.aboutNews.node(
+              arguments: <String, String>{'id': news.id.toString()},
+            ),
+          );
+
+          return state;
+        });
+      },
+      news: news,
+    ),
+  );
 }
