@@ -44,8 +44,8 @@ class CountNotificationBLoC
   ) async {
     try {
       emit(CountNotificationState.processing(data: state.data));
-      final newData = await _repository.getNotifications();
-      emit(CountNotificationState.successful(data: newData.length));
+      final newData = await _repository.getCountNotifications();
+      emit(CountNotificationState.successful(data: int.parse(newData)));
     } on Object catch (err, stackTrace) {
       //l.e('An error occurred in the CountNotificationBLoC: $err', stackTrace);
       emit(CountNotificationState.error(data: state.data));
