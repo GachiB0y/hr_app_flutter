@@ -17,7 +17,14 @@ class CreateTimeNewsScreen extends StatelessWidget {
     final cubit = context.read<CreateRefactoringTimeNewsCubit>();
 
         return Scaffold(
-          appBar: const AppBarCreateRefactoringNewsScreens(),
+          appBar: AppBarCreateRefactoringNewsScreens(
+            id: cubit.state.currentNews!.id.toString(),
+            reset: () {
+              cubit.reset(
+                cubit.state.currentNews!.id.toString(),
+              );
+            },
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(

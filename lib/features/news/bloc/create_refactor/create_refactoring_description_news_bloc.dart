@@ -77,4 +77,9 @@ class CreateRefactoringDescriptionNewsCubit extends Cubit<CreateRefactoringDescr
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
   }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
+  }
 }

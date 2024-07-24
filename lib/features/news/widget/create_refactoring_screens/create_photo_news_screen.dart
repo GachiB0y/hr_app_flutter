@@ -25,7 +25,14 @@ class CreatePhotoNewsScreen extends StatelessWidget {
               )
             : ScaffoldManager(
         status: state.status,
-                appBar: const AppBarCreateRefactoringNewsScreens(),
+                appBar: AppBarCreateRefactoringNewsScreens(
+                  id: cubit.state.currentNews.id.toString(),
+                  reset: () {
+                    cubit.reset(
+                      cubit.state.currentNews.id.toString(),
+                    );
+                  },
+                ),
                 body: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(

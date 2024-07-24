@@ -16,8 +16,7 @@ class ModerationNewsScreen extends StatelessWidget {
     final cubit = context.read<ModerationNewsCubit>();
     final news = context.select((ModerationNewsCubit value) => value.state.news);
     return BlocBuilder<ModerationNewsCubit, ModerationNewsState>(
-      builder: (context, state) {
-        return ScaffoldManager(
+      builder: (context, state) => ScaffoldManager(
           appBar: AppBar(
             title: state.valueState == null
                 ? Row(
@@ -148,8 +147,7 @@ class ModerationNewsScreen extends StatelessWidget {
                   title: news?.title ?? '',
                   value: state.valueState ?? true,
                 ),
-        );
-      },
+        ),
     );
   }
 }

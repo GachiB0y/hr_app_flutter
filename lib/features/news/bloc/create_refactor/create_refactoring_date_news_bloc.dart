@@ -17,11 +17,9 @@ class CreateRefactoringDateNewsState {
 
   CreateRefactoringDateNewsState copyWith({
     EventEntity? currentNews,
-  }) {
-    return CreateRefactoringDateNewsState(
+  }) => CreateRefactoringDateNewsState(
       currentNews: currentNews ?? this.currentNews,
     );
-  }
 }
 
 class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsState> {
@@ -54,6 +52,11 @@ bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
         endDate: dates.last,
       ),
     );
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
   }
 
   /// Изменение даты новости в репозитории.

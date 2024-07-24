@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 
-import '../../model/event_entity/new_event_entity.dart';
-
-///____________________________________________________________________________________
+import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
 
 class CreateRefactoringTitleNewsState {
   final EventEntity? currentNews;
@@ -18,11 +16,10 @@ class CreateRefactoringTitleNewsState {
 
   CreateRefactoringTitleNewsState copyWith({
     EventEntity? currentNews,
-  }) {
-    return CreateRefactoringTitleNewsState(
-      currentNews: currentNews ?? this.currentNews,
-    );
-  }
+  }) =>
+      CreateRefactoringTitleNewsState(
+        currentNews: currentNews ?? this.currentNews,
+      );
 }
 
 class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsState> {
@@ -73,5 +70,10 @@ class CreateRefactoringTitleNewsCubit extends Cubit<CreateRefactoringTitleNewsSt
   /// Изменение заголовкa новости в репозитории.
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
   }
 }

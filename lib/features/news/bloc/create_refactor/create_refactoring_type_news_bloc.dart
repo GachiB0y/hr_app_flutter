@@ -51,13 +51,13 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
   /// Инициализация состояния.
   Future<void> _initialize() async {
     await getCategoriesNews();
-    getApprovementNews(id: id);
+    await getApprovementNews(id: id);
     if (id == null) {
       _assignCategory();
     }
   }
 
-  /// Получение редактируемой новости по id.
+  /// Получение редактируемой новости из репозитория.
   Future<void> getApprovementNews({String? id}) async {
     if (id == null) {
       _eventEntityRepository.createEmptyNews();
@@ -113,5 +113,10 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
     }
     emit(state.copyWith(currentNews: state.currentNews.copyWith(categories: newCategories)));
     _eventEntityRepository.changeCurrentNews(state.currentNews);
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
   }
 }
