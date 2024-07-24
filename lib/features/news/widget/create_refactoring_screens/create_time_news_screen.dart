@@ -37,7 +37,7 @@ class CreateTimeNewsScreen extends StatelessWidget {
                     if(cubit.isActive) {
                       context.octopus.setState(
                             (state) => state
-                          ..findByName(Routes.createModerationScreens.name)?.add(
+                          ..findByName(Routes.createModerationScreensBucket.name)?.add(
                             Routes.createTitleNewsScreen.node(),
                           ),
                       );

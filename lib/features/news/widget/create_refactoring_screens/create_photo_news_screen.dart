@@ -44,7 +44,7 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                           cubit.saveChanges();
                           if (state.currentNews.id != 0) {
                             context.octopus.setState(
-                              (state) => state..removeByName(Routes.createModerationScreens.name),
+                              (state) => state..removeByName(Routes.createModerationScreensBucket.name),
                             );
                           }
                         },

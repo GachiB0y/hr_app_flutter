@@ -94,7 +94,7 @@ class _ServiceElementWidgetState extends State<ServiceElementWidget> {
                     (state) => state
                       ..findByName(widget.tabName)?.add(
                         OctopusNode.mutable(
-                          'create-moderation-screens',
+                          'create-moderation-screens-bucket',
                           children: [
                             Routes.createTypeNewsScreen.node(),
                           ],

@@ -5,5 +5,5 @@ class CreateRefactoringNewsScreenBucket extends StatelessWidget {
   const CreateRefactoringNewsScreenBucket({super.key});
 
   @override
-  Widget build(BuildContext context) => const BucketNavigator(bucket: 'create-moderation-screens');
+  Widget build(BuildContext context) => const BucketNavigator(bucket: 'create-moderation-screens-bucket');
 }

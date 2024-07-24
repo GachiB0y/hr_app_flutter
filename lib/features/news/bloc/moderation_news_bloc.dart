@@ -76,7 +76,7 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
     _initialize();
   }
 
-  /// Прослушивание изменений [EventEntityRepository].
+  /// Прослушивание изменений [IEventEntityRepository].
   void _subscribeNews(EventEntityRepositoryState stateRepository) {
     final newState = state.copyWith(
       news: stateRepository.currentNews,
@@ -129,9 +129,9 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
                 '${Routes.services.name}-tab',
               )?.add(
                 OctopusNode.mutable(
-                  'create-moderation-screens',
+                  'create-moderation-screens-bucket',
                   children: [
-                    Routes.createTypeNewsScreen.node(arguments: {"id": id.toString()}),
+                    Routes.createTypeNewsScreen.node(arguments: {'id': id.toString()}),
                   ],
                 ),
               ),
