@@ -20,7 +20,7 @@ class AllNewsScreen extends StatelessWidget {
           leading: IconButton(
             icon: Image.asset('assets/icons/chevrone_left.png'),
             onPressed: () {
-             Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -220,35 +220,33 @@ class _OneNewsElementWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    margin: const EdgeInsets.only(
-      top: 8.0,
-      left: 15.0,
-      right: 30.0,
-    ),
-    decoration: BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          blurRadius: 8,
+        margin: const EdgeInsets.only(
+          top: 8.0,
+          left: 15.0,
+          right: 30.0,
         ),
-      ],
-      borderRadius: BorderRadius.circular(16),
-      color: Theme.of(context).colorScheme.background,
-    ),
-    child: NewsCard(
-      onTap: () {
-        context.octopus.setState((state) {
-          final findSate = state..findByName('all-news');
-          findSate.add(
-            Routes.aboutNews.node(
-              arguments: <String, String>{'id': news.id.toString()},
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
             ),
-          );
-
-          return state;
-        });
-      },
-      news: news,
-    ),
-  );
+          ],
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.background,
+        ),
+        child: NewsCard(
+          onTap: () {
+            context.octopus.setState(
+              (state) => state
+                ..findByName('${Routes.services.name}-tab')?.add(
+                  Routes.aboutNews.node(
+                    arguments: <String, String>{'id': news.id.toString()},
+                  ),
+                ),
+            );
+          },
+          news: news,
+        ),
+      );
 }

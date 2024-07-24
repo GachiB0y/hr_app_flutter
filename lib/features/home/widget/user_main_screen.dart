@@ -104,9 +104,10 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             child: RowElementTitleAndSeeAllBottonWidget(
                               title: 'События компании',
                               onTap: () {
+                                HomeScope.of(context).state.onItemTapped(4);
                                 context.octopus.setState(
                                   (state) => state
-                                    ..findByName('user-main-tab')?.add(
+                                    ..findByName('${Routes.services.name}-tab')?.add(
                                       Routes.allNews.node(),
                                     ),
                                 );
