@@ -50,14 +50,15 @@ class ModerationNewsState {
     String? time,
     String? createAt,
     bool? valueState,
-  }) => ModerationNewsState(
-      news: news ?? this.news,
-      status: status ?? this.status,
-      date: date ?? this.date,
-      time: time ?? this.time,
-      createAt: createAt ?? this.createAt,
-      valueState: valueState ?? this.valueState,
-    );
+  }) =>
+      ModerationNewsState(
+        news: news ?? this.news,
+        status: status ?? this.status,
+        date: date ?? this.date,
+        time: time ?? this.time,
+        createAt: createAt ?? this.createAt,
+        valueState: valueState ?? this.valueState,
+      );
 }
 
 class ModerationNewsCubit extends Cubit<ModerationNewsState> {
@@ -70,14 +71,16 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
   }) : super(
           ModerationNewsState(),
         ) {
-    eventEntityRepository.state.listen((event) {
-      _subscribeNews(event);
-    });
+    eventEntityRepository.state.listen(_subscribeNews);
     _initialize();
   }
 
   /// Прослушивание изменений [IEventEntityRepository].
   void _subscribeNews(EventEntityRepositoryState stateRepository) {
+    if (eventEntityRepository.currentNews != null) {
+      _refDateTime(eventEntityRepository.currentNews!);
+    }
+
     final newState = state.copyWith(
       news: stateRepository.currentNews,
     );
@@ -91,15 +94,14 @@ class ModerationNewsCubit extends Cubit<ModerationNewsState> {
 
   /// Получение новости по id.
   Future<void> getNewsById() async {
-      await eventEntityRepository.getNewsById(id: id!);
-      if (eventEntityRepository.currentNews == null) return;
-      await _refDateTime(eventEntityRepository.currentNews!);
-      final newState = state.copyWith(
-        // news: eventEntityRepository.currentNews!,
-        status: ScaffoldManagerStatus.loaded,
-      );
-      emit(newState);
-
+    await eventEntityRepository.getNewsById(id: id!);
+    if (eventEntityRepository.currentNews == null) return;
+    await _refDateTime(eventEntityRepository.currentNews!);
+    final newState = state.copyWith(
+      news: eventEntityRepository.currentNews,
+      status: ScaffoldManagerStatus.loaded,
+    );
+    emit(newState);
   }
 
   /// Преобразование данных даты и времени.

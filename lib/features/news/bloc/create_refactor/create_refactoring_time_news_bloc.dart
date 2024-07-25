@@ -17,11 +17,10 @@ class CreateRefactoringTimeNewsState {
 
   CreateRefactoringTimeNewsState copyWith({
     EventEntity? currentNews,
-  }) {
-    return CreateRefactoringTimeNewsState(
-      currentNews: currentNews ?? this.currentNews,
-    );
-  }
+  }) =>
+      CreateRefactoringTimeNewsState(
+        currentNews: currentNews ?? this.currentNews,
+      );
 }
 
 class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsState> {
@@ -65,5 +64,10 @@ class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsStat
   /// Изменение времени новости в репозитории.
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
   }
 }

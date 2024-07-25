@@ -17,7 +17,14 @@ class CreateTitleNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringTitleNewsCubit>();
     return Scaffold(
-      appBar: const AppBarCreateRefactoringNewsScreens(),
+      appBar: AppBarCreateRefactoringNewsScreens(
+        id: cubit.state.currentNews!.id.toString(),
+        reset: () {
+          cubit.reset(
+            cubit.state.currentNews!.id.toString(),
+          );
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -28,7 +35,7 @@ class CreateTitleNewsScreen extends StatelessWidget {
               controller: cubit.textController,
               hintText: 'Введи заголовок',
             ),
-            // const Spacer(),
+            const Spacer(),
             ContinueButton(
               isCreate: cubit.state.currentNews?.id == 0,
               onTap: () {
@@ -42,6 +49,7 @@ class CreateTitleNewsScreen extends StatelessWidget {
                 }
               },
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

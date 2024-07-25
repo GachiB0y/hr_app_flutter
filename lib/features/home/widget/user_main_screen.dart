@@ -37,18 +37,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
   void initState() {
     super.initState();
     context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
-    context
-        .read<UserBirthDayInfoBLoc>()
-        .add(const UserBirthDayInfoEvent.fetch());
+    context.read<UserBirthDayInfoBLoc>().add(const UserBirthDayInfoEvent.fetch());
   }
 
   Future<void> _refreshEventsList() async {
     context.read<ServiceBloc>().add(const ServiceEvent.fetch());
     context.read<RookiesBLoC>().add(const RookiesEvent.fetch());
 
-    context
-        .read<UserBirthDayInfoBLoc>()
-        .add(const UserBirthDayInfoEvent.fetch());
+    context.read<UserBirthDayInfoBLoc>().add(const UserBirthDayInfoEvent.fetch());
     context.read<EventEntityBloc>().add(const EventEntityEvent.fetch());
     context.read<WalletBLoC>().add(const WalletEvent.fetch());
     context.read<CategoryBloc>().add(const CategoryEvent.fetch());
@@ -79,16 +75,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             child: AppBarUserWdiget(),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 25.0, right: 25.0),
+                            padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                             child: RowElementTitleAndSeeAllBottonWidget(
                               title: 'Сервисы',
-                              onTap: () =>
-                                  HomeScope.of(context).state.onItemTapped(4),
+                              onTap: () => HomeScope.of(context).state.onItemTapped(4),
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height / 7.0,
+                            height: 120,
                             child: CustomScrollView(
                               scrollDirection: Axis.horizontal,
                               slivers: <Widget>[
@@ -99,8 +93,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 25.0, right: 25.0),
+                            padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                             child: RowElementTitleAndSeeAllBottonWidget(
                               title: 'События компании',
                               onTap: () {
@@ -190,8 +183,10 @@ class RowElementTitleAndSeeAllBottonWidget extends StatelessWidget {
     super.key,
     this.onTap,
   });
+
   final String title;
   final void Function()? onTap;
+
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -277,10 +272,7 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Дни рождения',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 11),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11),
                     ),
                     const SizedBox(
                       height: 3.0,
@@ -297,13 +289,8 @@ class BirthDayInfoRectangleWidget extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          state.data == null
-                              ? '0'
-                              : state.data!.count.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontSize: 23),
+                          state.data == null ? '0' : state.data!.count.toString(),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 23),
                         ),
                       ],
                     ),
@@ -365,10 +352,7 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Новенькие',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 11),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11),
                     ),
                     const SizedBox(
                       height: 3.0,
@@ -385,13 +369,8 @@ class RookiesInfoRectangleWidget extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          state.data == null
-                              ? '0'
-                              : state.data!.count.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontSize: 23),
+                          state.data == null ? '0' : state.data!.count.toString(),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 23),
                         ),
                       ],
                     ),
@@ -448,10 +427,7 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Баланс coin',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontSize: 11),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11),
                     ),
                     const SizedBox(
                       height: 3.0,
@@ -468,13 +444,8 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          state.data == null
-                              ? '0'
-                              : state.data!.balance.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontSize: 23),
+                          state.data == null ? '0' : state.data!.balance.toString(),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 23),
                         ),
                       ],
                     ),
@@ -491,6 +462,7 @@ class BalanceInfoRectangleWidget extends StatelessWidget {
 
 class ScrollBarServiceWidget extends StatefulWidget {
   const ScrollBarServiceWidget({required this.tabName, super.key});
+
   final String tabName;
 
   @override
@@ -501,6 +473,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
   List<Widget> groupWidgets = [];
   late final ServiceBloc blocService;
   final bool isRow = true;
+
   @override
   void initState() {
     blocService = context.read<ServiceBloc>();
@@ -587,8 +560,7 @@ class _ScrollBarServiceWidgetState extends State<ScrollBarServiceWidget> {
               }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) =>
-                      ElementServiceForScrollBarWidget(
+                  (BuildContext context, int index) => ElementServiceForScrollBarWidget(
                     listService: state.data!,
                     index: index,
                     groupWidgets: groupWidgets,
