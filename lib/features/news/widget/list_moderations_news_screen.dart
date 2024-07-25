@@ -20,8 +20,7 @@ class ListModerationNewsScreen extends StatelessWidget {
     final moderationNews = context.select((ListModerationNewsCubit value) => value.state.moderationNews);
 
     return BlocBuilder<ListModerationNewsCubit, ListModerationNewsState>(
-      builder: (context, state) {
-        return Scaffold(
+      builder: (context, state) => Scaffold(
           appBar: AppBar(
             title: const Text(
               'События компании',
@@ -91,7 +90,18 @@ class ListModerationNewsScreen extends StatelessWidget {
                     ),
                     Column(
                       children: cubit.state.moderationNews.isNotEmpty
-                          ? moderationNews.map((item) => NewsCard(news: item)).toList()
+                          ? moderationNews.map((item) => NewsCard(
+                          onTap: () {
+                            context.octopus.setState(
+                                  (state) => state
+                                ..findByName('${Routes.services.name}-tab')?.add(
+                                  Routes.moderationNewsScreen.node(arguments: {'id': item.id.toString()}),
+                                ),
+                            );
+                          },
+
+
+                          news: item)).toList()
                           : [],
                     ),
                   ],
@@ -99,8 +109,7 @@ class ListModerationNewsScreen extends StatelessWidget {
               ),
             ],
           ),
-        );
-      },
+        ),
     );
   }
 }

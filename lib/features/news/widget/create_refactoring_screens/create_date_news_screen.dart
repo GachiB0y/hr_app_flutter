@@ -19,7 +19,14 @@ class CreateDateNewsScreen extends StatelessWidget {
     final cubit = context.read<CreateRefactoringDateNewsCubit>();
 
     return Scaffold(
-      appBar: const AppBarCreateRefactoringNewsScreens(),
+      appBar: AppBarCreateRefactoringNewsScreens(
+        id: cubit.state.currentNews!.id.toString(),
+        reset: () {
+          cubit.reset(
+            cubit.state.currentNews!.id.toString(),
+          );
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -71,7 +78,7 @@ class CreateDateNewsScreen extends StatelessWidget {
                 if (cubit.isActive) {
                   context.octopus.setState(
                     (state) => state
-                      ..findByName(Routes.createModerationScreens.name)?.add(
+                      ..findByName(Routes.createModerationScreensBucket.name)?.add(
                         Routes.createTimeNewsScreen.node(),
                       ),
                   );

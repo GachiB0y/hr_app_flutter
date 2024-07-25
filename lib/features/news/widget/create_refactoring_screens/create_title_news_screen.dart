@@ -17,35 +17,42 @@ class CreateTitleNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringTitleNewsCubit>();
     return Scaffold(
-          appBar: const AppBarCreateRefactoringNewsScreens(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const HeaderTitle(title: 'Напиши заголовок'),
-                const SizedBox(height: 30),
-                CreateNewsTextField(
-                  controller: cubit.textController,
-                  hintText: 'Введи заголовок',
-                ),
-                const Spacer(),
-                ContinueButton(
-                  isCreate: cubit.state.currentNews?.id == 0,
-                  onTap: () {
-                    if (cubit.isActive) {
-                      context.octopus.setState(
-                        (state) => state
-                          ..findByName(Routes.createModerationScreens.name)?.add(
-                            Routes.createDescriptionNewsScreen.node(),
-                          ),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 10),
-              ],
+      appBar: AppBarCreateRefactoringNewsScreens(
+        id: cubit.state.currentNews!.id.toString(),
+        reset: () {
+          cubit.reset(
+            cubit.state.currentNews!.id.toString(),
+          );
+        },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const HeaderTitle(title: 'Напиши заголовок'),
+            const SizedBox(height: 30),
+            CreateNewsTextField(
+              controller: cubit.textController,
+              hintText: 'Введи заголовок',
             ),
-          ),
-        );
+            const Spacer(),
+            ContinueButton(
+              isCreate: cubit.state.currentNews?.id == 0,
+              onTap: () {
+                if (cubit.isActive) {
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName(Routes.createModerationScreensBucket.name)?.add(
+                        Routes.createDescriptionNewsScreen.node(),
+                      ),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
   }
 }

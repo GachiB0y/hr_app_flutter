@@ -62,7 +62,7 @@ enum Routes with OctopusRoute {
   approveNews('approve-news', title: 'Approve News'),
 
   /// Блок экранов для создания и модерации новости.
-  createModerationScreens('create-moderation-screens', title: 'Create Moderation Screens'),
+  createModerationScreensBucket('create-moderation-screens-bucket', title: 'Create Moderation Screens Bucket'),
   moderationNewsScreen('refactor-news', title: 'Refactor News'),
   createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
   listModerationNews('list-moderation-news', title: 'Moderation News'),
@@ -161,7 +161,7 @@ enum Routes with OctopusRoute {
     Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
     Routes.approveNews => const ApproveNewsScreen(),
     Routes.listModerationNews => const ListModerationNewsScreen(),
-    Routes.createModerationScreens => const CreateRefactoringNewsScreenBucket(),
+    Routes.createModerationScreensBucket => const CreateRefactoringNewsScreenBucket(),
     Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
       child: const ModerationNewsScreen(),
       create: (BuildContext context) => ModerationNewsCubit(

@@ -7,6 +7,7 @@ import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/w
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/continue_button.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/header_title.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/widgets/photo_widget.dart';
+import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:octopus/octopus.dart';
 
 class CreatePhotoNewsScreen extends StatelessWidget {
@@ -17,14 +18,21 @@ class CreatePhotoNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringPhotoNewsCubit>();
     return BlocBuilder<CreateRefactoringPhotoNewsCubit, CreateRefactoringPhotoNewsState>(
-      builder: (context, state) {
-        return state.isNewsChecked
+      builder: (context, state) => state.isNewsChecked
             ? CheckingNewsScreen(
                 news: state.currentNews,
                 file: state.file!,
               )
-            : Scaffold(
-                appBar: const AppBarCreateRefactoringNewsScreens(),
+            : ScaffoldManager(
+        status: state.status,
+                appBar: AppBarCreateRefactoringNewsScreens(
+                  id: cubit.state.currentNews.id.toString(),
+                  reset: () {
+                    cubit.reset(
+                      cubit.state.currentNews.id.toString(),
+                    );
+                  },
+                ),
                 body: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -43,7 +51,7 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                           cubit.saveChanges();
                           if (state.currentNews.id != 0) {
                             context.octopus.setState(
-                              (state) => state..removeByName(Routes.createModerationScreens.name),
+                              (state) => state..removeByName(Routes.createModerationScreensBucket.name),
                             );
                           }
                         },
@@ -53,8 +61,7 @@ class CreatePhotoNewsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              );
-      },
+              ),
     );
   }
 }

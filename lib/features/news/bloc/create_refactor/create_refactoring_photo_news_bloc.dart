@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
+import 'package:hr_app_flutter/ui/library/scaffold_manager/scaffold_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -14,25 +15,28 @@ class CreateRefactoringPhotoNewsState {
   final EventEntity currentNews;
   final File? file;
   final bool isNewsChecked;
+  final ScaffoldManagerStatus status;
 
   /// Состояние блока [CreateRefactoringPhotoNewsCubit].
   CreateRefactoringPhotoNewsState({
     this.currentNews = const EventEntity(id: 0),
     this.file,
     this.isNewsChecked = false,
+    this.status = ScaffoldManagerStatus.loading,
   });
 
   CreateRefactoringPhotoNewsState copyWith({
     EventEntity? currentNews,
     File? file,
     bool? isNewsChecked,
-  }) {
-    return CreateRefactoringPhotoNewsState(
-      currentNews: currentNews ?? this.currentNews,
-      file: file ?? this.file,
-      isNewsChecked: isNewsChecked ?? this.isNewsChecked,
-    );
-  }
+    ScaffoldManagerStatus? status,
+  }) =>
+      CreateRefactoringPhotoNewsState(
+        currentNews: currentNews ?? this.currentNews,
+        file: file ?? this.file,
+        isNewsChecked: isNewsChecked ?? this.isNewsChecked,
+        status: status ?? this.status,
+      );
 }
 
 class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsState> {
@@ -51,7 +55,12 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
   /// Инициализация состояния.
   Future<void> _initialize() async {
     final currentNews = _eventEntityRepository.currentNews;
-    emit(state.copyWith(currentNews: currentNews));
+    emit(
+      state.copyWith(
+        currentNews: currentNews,
+        status: ScaffoldManagerStatus.loaded,
+      ),
+    );
   }
 
   /// Колбек на выбор времени.
@@ -68,6 +77,9 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
   Future<void> saveChanges() async {
     if (state.currentNews.id == 0) {
       if (state.file == null) return;
+
+      emit(state.copyWith(status: ScaffoldManagerStatus.loading));
+
       List<String> categories = [];
       for (var e in state.currentNews.categories!) {
         categories.add(e.id.toString());
@@ -94,5 +106,10 @@ class CreateRefactoringPhotoNewsCubit extends Cubit<CreateRefactoringPhotoNewsSt
   /// Показать экран "Новость на проверке".
   void showCheckingNewsScreen() {
     emit(state.copyWith(isNewsChecked: true));
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  Future<void> reset(String id) async {
+    await _eventEntityRepository.getNewsById(id: id);
   }
 }

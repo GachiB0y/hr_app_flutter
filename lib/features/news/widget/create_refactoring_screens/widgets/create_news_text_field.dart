@@ -12,8 +12,7 @@ class CreateNewsTextField extends StatelessWidget {
   final String? hintText;
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
+  Widget build(BuildContext context) => TextFormField(
       maxLength: 256,
       maxLines: 10,
       minLines: 5,
@@ -29,5 +28,4 @@ class CreateNewsTextField extends StatelessWidget {
         ),
       ),
     );
-  }
 }
