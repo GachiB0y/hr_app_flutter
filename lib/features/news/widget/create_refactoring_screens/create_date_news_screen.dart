@@ -46,8 +46,10 @@ class CreateDateNewsScreen extends StatelessWidget {
                   color: Colors.green,
                   size: 30,
                 ),
-                dayTextStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                controlsTextStyle: const TextStyle(color: Colors.green, fontSize: 25),
+                dayTextStyle:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                controlsTextStyle:
+                    const TextStyle(color: Colors.green, fontSize: 25),
                 weekdayLabels: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
                 modePickerTextHandler: ({required monthDate, isMonthPicker}) {
                   if (isMonthPicker ?? false) {
@@ -67,9 +69,7 @@ class CreateDateNewsScreen extends StatelessWidget {
                 cubit.state.currentNews?.startDate,
                 cubit.state.currentNews?.endDate,
               ],
-              onValueChanged: (value) {
-                cubit.changeDate(value);
-              },
+              onValueChanged: cubit.changeDate,
             ),
             const Spacer(),
             ContinueButton(

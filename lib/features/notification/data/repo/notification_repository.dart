@@ -5,6 +5,7 @@ import 'package:hr_app_flutter/features/notification/model/notification.dart';
 abstract interface class INotificationRepository {
   Future<Iterable<NotificationEntity>> getNotifications();
   Future<void> sendNotifications(int idNotifications);
+  Future<String> getCountNotifications();
 }
 
 class NotificationRepository implements INotificationRepository {
@@ -25,5 +26,11 @@ class NotificationRepository implements INotificationRepository {
   @override
   Future<void> sendNotifications(int idNotifications) async {
     await _restClient.sendNotifications(idNotifications);
+  }
+
+  @override
+  Future<String> getCountNotifications() async {
+    final count = await _restClient.getCountNotifications();
+    return count;
   }
 }
