@@ -22,7 +22,7 @@ import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_ne
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen_bucket.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';

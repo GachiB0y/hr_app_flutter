@@ -116,7 +116,7 @@ class CreateRefactoringTypeNewsCubit extends Cubit<CreateRefactoringTypeNewsStat
   }
 
   /// Сбросить изменения редактируемой новости.
-  Future<void> reset(String id) async {
-    await _eventEntityRepository.getNewsById(id: id);
+  void reset() {
+    _eventEntityRepository.reset();
   }
 }

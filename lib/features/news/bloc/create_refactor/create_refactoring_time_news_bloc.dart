@@ -48,17 +48,38 @@ class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsStat
   /// Колбек на выбор времени.
   void changeTime(Duration time) {
     if (state.currentNews == null) return;
-    changeCurrentNews(
-      state.currentNews!.copyWith(
-        startDate: DateTime(
-          state.currentNews!.startDate!.year,
-          state.currentNews!.startDate!.month,
-          state.currentNews!.startDate!.day,
-          0,
-          time.inMinutes,
+    if (state.currentNews?.startDate == state.currentNews?.endDate) {
+      changeCurrentNews(
+        state.currentNews!.copyWith(
+          startDate: DateTime(
+            state.currentNews!.startDate!.year,
+            state.currentNews!.startDate!.month,
+            state.currentNews!.startDate!.day,
+            0,
+            time.inMinutes,
+          ),
+          endDate: DateTime(
+            state.currentNews!.startDate!.year,
+            state.currentNews!.startDate!.month,
+            state.currentNews!.startDate!.day,
+            0,
+            time.inMinutes + 10,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      changeCurrentNews(
+        state.currentNews!.copyWith(
+          startDate: DateTime(
+            state.currentNews!.startDate!.year,
+            state.currentNews!.startDate!.month,
+            state.currentNews!.startDate!.day,
+            0,
+            time.inMinutes,
+          ),
+        ),
+      );
+    }
   }
 
   /// Изменение времени новости в репозитории.
@@ -67,7 +88,7 @@ class CreateRefactoringTimeNewsCubit extends Cubit<CreateRefactoringTimeNewsStat
   }
 
   /// Сбросить изменения редактируемой новости.
-  Future<void> reset(String id) async {
-    await _eventEntityRepository.getNewsById(id: id);
+  void reset() {
+    _eventEntityRepository.reset();
   }
 }
