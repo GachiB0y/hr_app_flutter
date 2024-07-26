@@ -3,13 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass_scope.dart';
+import 'package:octopus/octopus.dart';
+
 class ExchangeCoinForPass extends StatelessWidget {
   const ExchangeCoinForPass({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(
             'Обмен на пропуск',
             style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
@@ -89,18 +91,17 @@ class SendCoinToBracerButtonWidget extends StatelessWidget {
             // }
           },
           style: ButtonStyle(
-            overlayColor: WidgetStateProperty.resolveWith<Color>(
-              (Set<WidgetState> states) => const Color.fromARGB(46, 94, 222, 102),
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) => const Color.fromARGB(46, 94, 222, 102),
             ),
-            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
             ),
-            minimumSize: WidgetStateProperty.all(const Size(double.infinity, 57)),
-            backgroundColor: WidgetStateProperty.resolveWith(
-              (states) => Theme.of(context).colorScheme.primary,
-            ),
+            minimumSize: MaterialStateProperty.all(const Size(double.infinity, 57)),
+            backgroundColor:
+                MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.primary),
           ),
           child: Ink(
             decoration: const BoxDecoration(
@@ -135,7 +136,11 @@ class BalanceInfoWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0, left: 22.0, right: 22.0, bottom: 4.0),
             child: Text(
               '${state.data == null ? '0' : state.data!.balance} coin',
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
