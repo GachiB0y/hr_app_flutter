@@ -16,46 +16,39 @@ class CreateTimeNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CreateRefactoringTimeNewsCubit>();
 
-        return Scaffold(
-          appBar: AppBarCreateRefactoringNewsScreens(
-            id: cubit.state.currentNews!.id.toString(),
-            reset: () {
-              cubit.reset(
-                cubit.state.currentNews!.id.toString(),
-              );
-            },
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const HeaderTitle(title: 'Выберите время проведения'),
-                const SizedBox(height: 30),
-                CupertinoTimerPicker(
-                  mode: CupertinoTimerPickerMode.hm,
-                  onTimerDurationChanged: (Duration value) {
-                   cubit.changeTime(value);
-                  },
-                ),
-                const Spacer(),
-                ContinueButton(
-                  isCreate: cubit.state.currentNews?.id == 0,
-                  onTap: () {
-                    if(cubit.isActive) {
-                      context.octopus.setState(
-                            (state) => state
-                          ..findByName(Routes.createModerationScreensBucket.name)?.add(
-                            Routes.createTitleNewsScreen.node(),
-                          ),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 10),
-              ],
+    return Scaffold(
+      appBar: AppBarCreateRefactoringNewsScreens(
+        id: cubit.state.currentNews!.id.toString(),
+        reset: cubit.reset,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const HeaderTitle(title: 'Выберите время проведения'),
+            const SizedBox(height: 30),
+            CupertinoTimerPicker(
+              mode: CupertinoTimerPickerMode.hm,
+              onTimerDurationChanged: cubit.changeTime,
             ),
-          ),
-        );
-
+            const Spacer(),
+            ContinueButton(
+              isCreate: cubit.state.currentNews?.id == 0,
+              onTap: () {
+                if (cubit.isActive) {
+                  context.octopus.setState(
+                    (state) => state
+                      ..findByName(Routes.createModerationScreensBucket.name)?.add(
+                        Routes.createTitleNewsScreen.node(),
+                      ),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
   }
 }

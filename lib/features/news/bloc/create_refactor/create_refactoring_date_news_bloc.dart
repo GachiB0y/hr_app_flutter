@@ -17,15 +17,16 @@ class CreateRefactoringDateNewsState {
 
   CreateRefactoringDateNewsState copyWith({
     EventEntity? currentNews,
-  }) => CreateRefactoringDateNewsState(
-      currentNews: currentNews ?? this.currentNews,
-    );
+  }) =>
+      CreateRefactoringDateNewsState(
+        currentNews: currentNews ?? this.currentNews,
+      );
 }
 
 class CreateRefactoringDateNewsCubit extends Cubit<CreateRefactoringDateNewsState> {
   late IEventEntityRepository _eventEntityRepository;
 
-bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
+  bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
 
   /// Блок экрана создания или изменения даты новости.
   CreateRefactoringDateNewsCubit({
@@ -54,13 +55,13 @@ bool get isActive => _eventEntityRepository.currentNews?.startDate != null;
     );
   }
 
-  /// Сбросить изменения редактируемой новости.
-  Future<void> reset(String id) async {
-    await _eventEntityRepository.getNewsById(id: id);
-  }
-
   /// Изменение даты новости в репозитории.
   void changeCurrentNews(EventEntity news) {
     _eventEntityRepository.changeCurrentNews(news);
+  }
+
+  /// Сбросить изменения редактируемой новости.
+  void reset() {
+    _eventEntityRepository.reset();
   }
 }

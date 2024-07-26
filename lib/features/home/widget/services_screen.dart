@@ -92,7 +92,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 7.0,
+                    height: 120,
                     child: CustomScrollView(
                       scrollDirection: Axis.horizontal,
                       slivers: <Widget>[

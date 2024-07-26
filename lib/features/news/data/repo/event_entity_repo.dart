@@ -60,6 +60,9 @@ abstract interface class IEventEntityRepository {
 
   /// Создать пустую новость.
   void createEmptyNews();
+
+  /// Сброс изменений при модерации.
+  void reset();
 }
 
 /// Состояние репозитория новостей [IEventEntityRepository].
@@ -73,23 +76,27 @@ class EventEntityRepositoryState {
   /// Новость.
   final EventEntity? currentNews;
 
+  /// Сохраненные исходные данные редактируемой новости.
+  final EventEntity? originalNews;
+
   EventEntityRepositoryState({
     this.approvmentEvents = const [],
     this.categoriesNews = const [],
     this.currentNews,
+    this.originalNews,
   });
 
   EventEntityRepositoryState copyWith({
     List<EventEntity>? approvmentEvents,
     List<Category>? categoriesNews,
     EventEntity? currentNews,
-  }) {
-    return EventEntityRepositoryState(
+    EventEntity? originalNews,
+  }) => EventEntityRepositoryState(
       approvmentEvents: approvmentEvents ?? this.approvmentEvents,
       categoriesNews: categoriesNews ?? this.categoriesNews,
       currentNews: currentNews ?? this.currentNews,
+      originalNews: originalNews ?? this.originalNews,
     );
-  }
 }
 
 class EventEntityRepositoryImpl implements IEventEntityRepository {
@@ -113,9 +120,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   EventEntity? get currentNews => _state.currentNews;
 
   @override
-  Future<List<EventEntity>> getEvents() async {
-    return await _eventEntityProvider.getEvents();
-  }
+  Future<List<EventEntity>> getEvents() async => _eventEntityProvider.getEvents();
 
   @override
   Future<void> getCategory() async {
@@ -129,27 +134,27 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   }
 
   @override
-  Future<bool> createNewEventEntity(
-      {required String title,
-      required String description,
-      required String startDate,
-      required String? endDate,
-      required File imageFile,
-      required List<String> categories,
-      required List<Map<String, dynamic>>? vote,
-
-      }) async {
+  Future<bool> createNewEventEntity({
+    required String title,
+    required String description,
+    required String startDate,
+    required String? endDate,
+    required File imageFile,
+    required List<String> categories,
+    required List<Map<String, dynamic>>? vote,
+  }) async {
     try {
       final List<String> pathsNew = [];
       pathsNew.add(imageFile.path);
       final bool result = await _eventEntityProvider.createNewEventEntity(
-          title: title,
-          description: description,
-          paths: pathsNew,
-          categories: categories,
-          startDate: startDate,
-          endDate: endDate,
-        vote: vote,);
+        title: title,
+        description: description,
+        paths: pathsNew,
+        categories: categories,
+        startDate: startDate,
+        endDate: endDate,
+        vote: vote,
+      );
 
       return result;
     } catch (e) {
@@ -199,7 +204,7 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   Future<void> getNewsById({required String id}) async {
     try {
       final news = await _eventEntityProvider.getNewsById(id: id);
-      _state = _state.copyWith(currentNews: news);
+      _state = _state.copyWith(currentNews: news, originalNews: news);
       _update();
     } catch (e) {
       rethrow;
@@ -219,7 +224,6 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
   void changeCurrentNews(EventEntity news) {
     _state = _state.copyWith(currentNews: news);
     _update();
-
   }
 
   final StreamController<EventEntityRepositoryState> _stateController =
@@ -227,6 +231,13 @@ class EventEntityRepositoryImpl implements IEventEntityRepository {
 
   @override
   Stream<EventEntityRepositoryState> get state => _stateController.stream.asBroadcastStream();
+
+  /// Сбросить изменения редактируемой новости.
+  @override
+  void reset() {
+    _state = _state.copyWith(currentNews: _state.originalNews);
+    _update();
+  }
 
   /// Добавление события в стрим.
   void _update() {

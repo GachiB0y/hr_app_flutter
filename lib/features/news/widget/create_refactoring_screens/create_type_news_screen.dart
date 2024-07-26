@@ -21,11 +21,7 @@ class CreateTypeNewsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBarCreateRefactoringNewsScreens(
         id: cubit.state.currentNews.id.toString(),
-        reset: () {
-          cubit.reset(
-            cubit.state.currentNews.id.toString(),
-          );
-        },
+        reset: cubit.reset,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
