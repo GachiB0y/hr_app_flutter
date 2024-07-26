@@ -52,6 +52,7 @@ class _ScrollNewsWidgetState extends State<ScrollNewsWidget> {
 
                   return GestureDetector(
                     onTap: () {
+                      if(context.octopus.state.location.contains('about-news')) return;
                       context.octopus.setState(
                         (state) => state
                           ..findByName('user-main-tab')?.add(
