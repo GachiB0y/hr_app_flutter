@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/other_users_bloc/other_users_bloc.dart';
-import 'package:hr_app_flutter/features/wallet/bloc/wallet_bloc/wallet_bloc.dart';
-import 'package:octopus/octopus.dart';
 
 class SearchFriendAndSendCoinsScreen extends StatefulWidget {
   const SearchFriendAndSendCoinsScreen({
@@ -97,25 +95,25 @@ class SearchFriendAndSendCoinsScreenState extends State<SearchFriendAndSendCoins
         actions: [
           TextButton(
             onPressed: () {
-              final blocWallet = context.read<WalletBLoC>();
-              print(amountCoins);
-              if(int.parse(amountCoins).runtimeType != int || int.parse(amountCoins) < 1) return;
-              blocWallet.add(
-                WalletEvent.sendCoinsToOtherUser(
-                  amount: int.parse(amountCoins),
-                  userId: autoCard,
-                  message: 'LOL',
-                ),
-              );
-              blocWallet.add(const WalletEvent.fetch());
-
-              /// Закрыть Алерт.
-              Navigator.of(context).pop();
-
-              /// Переход на главный экран вкладки "Коины".
-              context.octopus.setState(
-                (state) => state..findByName('coin-tab')?.clear(),
-              );
+              /// TODO: Для работы раскоментировать код.
+              // final blocWallet = context.read<WalletBLoC>();
+              // if(int.parse(amountCoins).runtimeType != int || int.parse(amountCoins) < 1) return;
+              // blocWallet.add(
+              //   WalletEvent.sendCoinsToOtherUser(
+              //     amount: int.parse(amountCoins),
+              //     userId: autoCard,
+              //     message: 'LOL',
+              //   ),
+              // );
+              // blocWallet.add(const WalletEvent.fetch());
+              //
+              // /// Закрыть Алерт.
+              // Navigator.of(context).pop();
+              //
+              // /// Переход на главный экран вкладки "Коины".
+              // context.octopus.setState(
+              //   (state) => state..findByName('coin-tab')?.clear(),
+              // );
             },
             child: const Text('Подтвердить'),
           ),
