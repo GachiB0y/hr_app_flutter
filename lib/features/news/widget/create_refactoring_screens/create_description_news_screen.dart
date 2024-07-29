@@ -21,32 +21,36 @@ class CreateDescriptionNewsScreen extends StatelessWidget {
             id: cubit.state.currentNews!.id.toString(),
             reset: cubit.reset,
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const HeaderTitle(title: 'Опиши мероприятие'),
-                const SizedBox(height: 30),
-                CreateNewsTextField(
-                  controller: cubit.textController,
-                  hintText: 'Введи описание, не забудь указать место проведения',
-                ),
-                const Spacer(),
-                ContinueButton(
-                  isCreate: cubit.state.currentNews?.id == 0,
-                  onTap: () {
-                    if(cubit.isActive) {
-                      context.octopus.setState(
-                            (state) => state
-                          ..findByName(Routes.createModerationScreensBucket.name)?.add(
-                            Routes.createPhotoNewsScreen.node(),
-                          ),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 10),
-              ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const HeaderTitle(title: 'Опиши мероприятие'),
+                  const SizedBox(height: 30),
+                  CreateNewsTextField(
+                    maxLength: 1024,
+                    maxLines: 15,
+                    controller: cubit.textController,
+                    hintText: 'Введи описание, не забудь указать место проведения',
+                  ),
+                  const SizedBox(height: 30),
+                  ContinueButton(
+                    isCreate: cubit.state.currentNews?.id == 0,
+                    onTap: () {
+                      if(cubit.isActive) {
+                        context.octopus.setState(
+                              (state) => state
+                            ..findByName(Routes.createModerationScreensBucket.name)?.add(
+                              Routes.createPhotoNewsScreen.node(),
+                            ),
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         );

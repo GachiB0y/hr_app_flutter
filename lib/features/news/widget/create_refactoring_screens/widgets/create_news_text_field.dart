@@ -6,15 +6,19 @@ class CreateNewsTextField extends StatelessWidget {
     super.key,
     required this.controller,
     this.hintText,
+    this.maxLength,
+    this.maxLines,
   });
 
   final TextEditingController controller;
   final String? hintText;
+  final int? maxLength;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) => TextFormField(
-      maxLength: 256,
-      maxLines: 10,
+      maxLength: maxLength ?? 256,
+      maxLines: maxLines ?? 10,
       minLines: 5,
       controller: controller,
       decoration: InputDecoration(
