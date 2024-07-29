@@ -36,11 +36,11 @@ class EnvironmentConfiguration {
         baseUrl: const String.fromEnvironment(
           'url',
           defaultValue:
-          !kReleaseMode
-              ? (kDebugMode
-                  ? 'https://grass-test-api.grass.su/'
-                  : 'https://grass-test-api.grass.su/')
-              :
+          // !kReleaseMode
+          //     ? (kDebugMode
+          //         ? 'https://grass-test-api.grass.su/'
+          //         : 'https://grass-test-api.grass.su/')
+          //     :
           'https://grass-app-api.grass.su/',
         ),
       );

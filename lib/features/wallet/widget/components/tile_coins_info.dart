@@ -27,46 +27,47 @@ class TileCoinsInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 20,
               ),
-              SizedBox(
-                width: 54,
-                height: 54,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      item.price.toString(),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    item.price.toString(),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
                     ),
-                    Text(
-                      'coin',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  ),
+                  Text(
+                    'coin',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
+          const Spacer(),
           Text(
             item.title,
             style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
+          const Spacer(),
           Text(
             item.description ?? '',
             style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 11),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
+          ),
+          const Spacer(
+            flex: 3,
           ),
         ],
       );
