@@ -43,8 +43,9 @@ class _GridInfoCoinsState extends State<GridInfoCoins> {
           BlocBuilder<CoinsRewardBLoC, CoinsRewardState>(
             bloc: coinsRewardBloc,
             builder: (context, state) => SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 155.0,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                // maxCrossAxisExtent: 155.0,
                 mainAxisSpacing: 24.0,
                 crossAxisSpacing: 30.0,
               ),
