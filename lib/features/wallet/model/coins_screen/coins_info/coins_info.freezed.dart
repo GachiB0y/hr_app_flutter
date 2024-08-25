@@ -12,7 +12,7 @@ part of 'coins_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 CoinsInfo _$CoinsInfoFromJson(Map<String, dynamic> json) {
   return _CoinsInfo.fromJson(json);
@@ -73,21 +73,22 @@ class _$CoinsInfoCopyWithImpl<$Res, $Val extends CoinsInfo>
 }
 
 /// @nodoc
-abstract class _$$_CoinsInfoCopyWith<$Res> implements $CoinsInfoCopyWith<$Res> {
-  factory _$$_CoinsInfoCopyWith(
-          _$_CoinsInfo value, $Res Function(_$_CoinsInfo) then) =
-      __$$_CoinsInfoCopyWithImpl<$Res>;
+abstract class _$$CoinsInfoImplCopyWith<$Res>
+    implements $CoinsInfoCopyWith<$Res> {
+  factory _$$CoinsInfoImplCopyWith(
+          _$CoinsInfoImpl value, $Res Function(_$CoinsInfoImpl) then) =
+      __$$CoinsInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, int price, String title});
 }
 
 /// @nodoc
-class __$$_CoinsInfoCopyWithImpl<$Res>
-    extends _$CoinsInfoCopyWithImpl<$Res, _$_CoinsInfo>
-    implements _$$_CoinsInfoCopyWith<$Res> {
-  __$$_CoinsInfoCopyWithImpl(
-      _$_CoinsInfo _value, $Res Function(_$_CoinsInfo) _then)
+class __$$CoinsInfoImplCopyWithImpl<$Res>
+    extends _$CoinsInfoCopyWithImpl<$Res, _$CoinsInfoImpl>
+    implements _$$CoinsInfoImplCopyWith<$Res> {
+  __$$CoinsInfoImplCopyWithImpl(
+      _$CoinsInfoImpl _value, $Res Function(_$CoinsInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -97,7 +98,7 @@ class __$$_CoinsInfoCopyWithImpl<$Res>
     Object? price = null,
     Object? title = null,
   }) {
-    return _then(_$_CoinsInfo(
+    return _then(_$CoinsInfoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -116,12 +117,12 @@ class __$$_CoinsInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CoinsInfo implements _CoinsInfo {
-  const _$_CoinsInfo(
+class _$CoinsInfoImpl implements _CoinsInfo {
+  const _$CoinsInfoImpl(
       {required this.id, required this.price, required this.title});
 
-  factory _$_CoinsInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_CoinsInfoFromJson(json);
+  factory _$CoinsInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinsInfoImplFromJson(json);
 
   @override
   final int id;
@@ -136,10 +137,10 @@ class _$_CoinsInfo implements _CoinsInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CoinsInfo &&
+            other is _$CoinsInfoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.title, title) || other.title == title));
@@ -152,12 +153,12 @@ class _$_CoinsInfo implements _CoinsInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CoinsInfoCopyWith<_$_CoinsInfo> get copyWith =>
-      __$$_CoinsInfoCopyWithImpl<_$_CoinsInfo>(this, _$identity);
+  _$$CoinsInfoImplCopyWith<_$CoinsInfoImpl> get copyWith =>
+      __$$CoinsInfoImplCopyWithImpl<_$CoinsInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CoinsInfoToJson(
+    return _$$CoinsInfoImplToJson(
       this,
     );
   }
@@ -167,10 +168,10 @@ abstract class _CoinsInfo implements CoinsInfo {
   const factory _CoinsInfo(
       {required final int id,
       required final int price,
-      required final String title}) = _$_CoinsInfo;
+      required final String title}) = _$CoinsInfoImpl;
 
   factory _CoinsInfo.fromJson(Map<String, dynamic> json) =
-      _$_CoinsInfo.fromJson;
+      _$CoinsInfoImpl.fromJson;
 
   @override
   int get id;
@@ -180,6 +181,6 @@ abstract class _CoinsInfo implements CoinsInfo {
   String get title;
   @override
   @JsonKey(ignore: true)
-  _$$_CoinsInfoCopyWith<_$_CoinsInfo> get copyWith =>
+  _$$CoinsInfoImplCopyWith<_$CoinsInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

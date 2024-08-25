@@ -12,7 +12,7 @@ part of 'participant.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ParticipantEntity _$ParticipantEntityFromJson(Map<String, dynamic> json) {
   return _ParticipantEntity.fromJson(json);
@@ -91,11 +91,11 @@ class _$ParticipantEntityCopyWithImpl<$Res, $Val extends ParticipantEntity>
 }
 
 /// @nodoc
-abstract class _$$_ParticipantEntityCopyWith<$Res>
+abstract class _$$ParticipantEntityImplCopyWith<$Res>
     implements $ParticipantEntityCopyWith<$Res> {
-  factory _$$_ParticipantEntityCopyWith(_$_ParticipantEntity value,
-          $Res Function(_$_ParticipantEntity) then) =
-      __$$_ParticipantEntityCopyWithImpl<$Res>;
+  factory _$$ParticipantEntityImplCopyWith(_$ParticipantEntityImpl value,
+          $Res Function(_$ParticipantEntityImpl) then) =
+      __$$ParticipantEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -107,11 +107,11 @@ abstract class _$$_ParticipantEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ParticipantEntityCopyWithImpl<$Res>
-    extends _$ParticipantEntityCopyWithImpl<$Res, _$_ParticipantEntity>
-    implements _$$_ParticipantEntityCopyWith<$Res> {
-  __$$_ParticipantEntityCopyWithImpl(
-      _$_ParticipantEntity _value, $Res Function(_$_ParticipantEntity) _then)
+class __$$ParticipantEntityImplCopyWithImpl<$Res>
+    extends _$ParticipantEntityCopyWithImpl<$Res, _$ParticipantEntityImpl>
+    implements _$$ParticipantEntityImplCopyWith<$Res> {
+  __$$ParticipantEntityImplCopyWithImpl(_$ParticipantEntityImpl _value,
+      $Res Function(_$ParticipantEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_ParticipantEntityCopyWithImpl<$Res>
     Object? id = null,
     Object? position = null,
   }) {
-    return _then(_$_ParticipantEntity(
+    return _then(_$ParticipantEntityImpl(
       lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -150,16 +150,16 @@ class __$$_ParticipantEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ParticipantEntity implements _ParticipantEntity {
-  const _$_ParticipantEntity(
+class _$ParticipantEntityImpl implements _ParticipantEntity {
+  const _$ParticipantEntityImpl(
       {required this.lastName,
       required this.firstName,
       required this.patronymic,
       required this.id,
       required this.position});
 
-  factory _$_ParticipantEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_ParticipantEntityFromJson(json);
+  factory _$ParticipantEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ParticipantEntityImplFromJson(json);
 
   @override
   final String lastName;
@@ -178,10 +178,10 @@ class _$_ParticipantEntity implements _ParticipantEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParticipantEntity &&
+            other is _$ParticipantEntityImpl &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.firstName, firstName) ||
@@ -201,13 +201,13 @@ class _$_ParticipantEntity implements _ParticipantEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ParticipantEntityCopyWith<_$_ParticipantEntity> get copyWith =>
-      __$$_ParticipantEntityCopyWithImpl<_$_ParticipantEntity>(
+  _$$ParticipantEntityImplCopyWith<_$ParticipantEntityImpl> get copyWith =>
+      __$$ParticipantEntityImplCopyWithImpl<_$ParticipantEntityImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ParticipantEntityToJson(
+    return _$$ParticipantEntityImplToJson(
       this,
     );
   }
@@ -219,10 +219,10 @@ abstract class _ParticipantEntity implements ParticipantEntity {
       required final String firstName,
       required final String patronymic,
       required final String id,
-      required final String position}) = _$_ParticipantEntity;
+      required final String position}) = _$ParticipantEntityImpl;
 
   factory _ParticipantEntity.fromJson(Map<String, dynamic> json) =
-      _$_ParticipantEntity.fromJson;
+      _$ParticipantEntityImpl.fromJson;
 
   @override
   String get lastName;
@@ -236,6 +236,6 @@ abstract class _ParticipantEntity implements ParticipantEntity {
   String get position;
   @override
   @JsonKey(ignore: true)
-  _$$_ParticipantEntityCopyWith<_$_ParticipantEntity> get copyWith =>
+  _$$ParticipantEntityImplCopyWith<_$ParticipantEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

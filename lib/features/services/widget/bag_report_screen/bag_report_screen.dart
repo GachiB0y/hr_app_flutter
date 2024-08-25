@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/core/components/database/custom_provider/inherit_widget.dart';
-import 'package:hr_app_flutter/core/widget/components/custom_text_form_field/custom_text_form_field.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_model.dart';
-import 'package:hr_app_flutter/core/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/custom_text_form_field/custom_text_form_field.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_floating_action_button.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_model.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/file_picker_custom/file_picker_custom_widget.dart';
 
 import '../../bloc/bag_report_bloc/bag_report_bloc.dart';
 import '../../model/bag_report_entity/bag_report_entity.dart';
@@ -21,20 +21,20 @@ class BagReportScreen extends StatefulWidget {
 
 class _BagReportScreenState extends State<BagReportScreen> {
   final _model = FilePickerCustomModel();
+
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvaider<FilePickerCustomModel>(
-      model: _model,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          title: const Text('Сообщить об ошибке'),
+  Widget build(BuildContext context) => ChangeNotifierProvaider<FilePickerCustomModel>(
+        model: _model,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).canvasColor,
+            title: const Text('Сообщить об ошибке'),
+          ),
+          body: const SafeArea(child: SingleChildScrollView(child: BagReportFormWidget())),
+          floatingActionButton: const CustomFABFromImagePicker(),
         ),
-        body: const SafeArea(child: BagReportFormWidget()),
-        floatingActionButton: const CustomFABFromImagePicker(),
-      ),
-    );
-  }
+      );
 }
 
 class BagReportFormWidget extends StatefulWidget {
@@ -47,12 +47,12 @@ class BagReportFormWidget extends StatefulWidget {
 class _BagReportFormWidgetState extends State<BagReportFormWidget> {
   final _formKeyBagReport = GlobalKey<FormState>();
   bool isShowErrorText = false;
-  final TextEditingController inputControllerDescription =
-      TextEditingController();
+  final TextEditingController inputControllerDescription = TextEditingController();
   final TextEditingController inputControllerTitle = TextEditingController();
   late final BagReportBLoC blocBagReport;
 
   List<FocusNode> focusNodes = List.generate(3, (index) => FocusNode());
+
   @override
   void initState() {
     super.initState();
@@ -80,9 +80,9 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = ChangeNotifierProvaider.watch<
-        ChangeNotifierProvaider<FilePickerCustomModel>,
-        FilePickerCustomModel>(context);
+    final model =
+        ChangeNotifierProvaider.watch<ChangeNotifierProvaider<FilePickerCustomModel>, FilePickerCustomModel>(
+            context);
     return BlocListener<BagReportBLoC, BagReportState>(
       bloc: blocBagReport,
       listener: (context, state) {
@@ -91,8 +91,7 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               const SnackBar(
-                content:
-                    Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
+                content: Center(child: Text('Ошибка отправки.\nПопробуйте снова.')),
                 duration: Duration(seconds: 6),
               ),
             );
@@ -126,39 +125,60 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
                   focusNode: focusNodes[0],
                   nameController: inputControllerTitle,
                   iconData: const Icon(Icons.priority_high),
+                  maxLines: 2,
+                  maxLength: 60,
                   inputText: 'Заголовок',
-                ),
-                const SizedBox(
-                  height: 16.0,
+                  inputDecoration: InputDecoration(
+                    fillColor: const Color(0xfff5f5f5),
+                    filled: true,
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
                 CustomTextFormField(
                   focusNode: focusNodes[1],
                   nameController: inputControllerDescription,
                   iconData: const Icon(Icons.mode_edit),
+                  maxLines: 8,
+                  minLines: 3,
+                  maxLength: 256,
                   inputText: 'Описание ошибки',
+                  inputDecoration: InputDecoration(
+                    fillColor: const Color(0xfff5f5f5),
+                    filled: true,
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 15),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
-                model?.fileNames.isEmpty == false
-                    ? const Padding(
-                        padding: EdgeInsets.only(
-                          top: 16.0,
-                        ),
-                        child: FilePickerWidget(),
-                      )
-                    : const SizedBox.shrink(),
-                isShowErrorText
-                    ? const Text(
-                        'Нужно прикрепить хотя бы 1 файл ',
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : const SizedBox.shrink(),
+                if (model?.fileNames.isEmpty == false)
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      top: 16.0,
+                    ),
+                    child: FilePickerWidget(),
+                  )
+                else
+                  const SizedBox.shrink(),
+                if (isShowErrorText)
+                  const Text(
+                    'Нужно прикрепить хотя бы 1 файл ',
+                    style: TextStyle(color: Colors.red),
+                  )
+                else
+                  const SizedBox.shrink(),
                 const SizedBox(
                   height: 8.0,
                 ),
                 ElevatedButton(
                   child: Text(
                     'Отправить',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   onPressed: () {
                     if (_formKeyBagReport.currentState != null) {
@@ -171,12 +191,10 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
                         final BagReportEntity formInfo = BagReportEntity(
                           description: inputControllerDescription.text,
                           title: inputControllerTitle.text,
-                          pathsToFiles:
-                              model.paths.whereType<String>().toList(),
+                          pathsToFiles: model.paths.whereType<String>().toList(),
                         );
 
-                        blocBagReport
-                            .add(BagReportEvent.create(formInfo: formInfo));
+                        blocBagReport.add(BagReportEvent.create(formInfo: formInfo));
                       } else {
                         setState(() {
                           isShowErrorText = true;
@@ -184,7 +202,8 @@ class _BagReportFormWidgetState extends State<BagReportFormWidget> {
                       }
                     }
                   },
-                )
+                ),
+                const SizedBox(height: 50),
               ],
             ),
           ),

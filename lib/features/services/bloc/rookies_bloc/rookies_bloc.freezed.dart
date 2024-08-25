@@ -12,7 +12,7 @@ part of 'rookies_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$RookiesEvent {
@@ -95,22 +95,22 @@ class _$RookiesEventCopyWithImpl<$Res, $Val extends RookiesEvent>
 }
 
 /// @nodoc
-abstract class _$$RookiesEventFetchCopyWith<$Res>
+abstract class _$$RookiesEventFetchImplCopyWith<$Res>
     implements $RookiesEventCopyWith<$Res> {
-  factory _$$RookiesEventFetchCopyWith(
-          _$RookiesEventFetch value, $Res Function(_$RookiesEventFetch) then) =
-      __$$RookiesEventFetchCopyWithImpl<$Res>;
+  factory _$$RookiesEventFetchImplCopyWith(_$RookiesEventFetchImpl value,
+          $Res Function(_$RookiesEventFetchImpl) then) =
+      __$$RookiesEventFetchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime? startDate, DateTime? endDate});
 }
 
 /// @nodoc
-class __$$RookiesEventFetchCopyWithImpl<$Res>
-    extends _$RookiesEventCopyWithImpl<$Res, _$RookiesEventFetch>
-    implements _$$RookiesEventFetchCopyWith<$Res> {
-  __$$RookiesEventFetchCopyWithImpl(
-      _$RookiesEventFetch _value, $Res Function(_$RookiesEventFetch) _then)
+class __$$RookiesEventFetchImplCopyWithImpl<$Res>
+    extends _$RookiesEventCopyWithImpl<$Res, _$RookiesEventFetchImpl>
+    implements _$$RookiesEventFetchImplCopyWith<$Res> {
+  __$$RookiesEventFetchImplCopyWithImpl(_$RookiesEventFetchImpl _value,
+      $Res Function(_$RookiesEventFetchImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -119,7 +119,7 @@ class __$$RookiesEventFetchCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
   }) {
-    return _then(_$RookiesEventFetch(
+    return _then(_$RookiesEventFetchImpl(
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -134,8 +134,8 @@ class __$$RookiesEventFetchCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RookiesEventFetch extends RookiesEventFetch {
-  const _$RookiesEventFetch({this.startDate, this.endDate}) : super._();
+class _$RookiesEventFetchImpl extends RookiesEventFetch {
+  const _$RookiesEventFetchImpl({this.startDate, this.endDate}) : super._();
 
   @override
   final DateTime? startDate;
@@ -148,10 +148,10 @@ class _$RookiesEventFetch extends RookiesEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RookiesEventFetch &&
+            other is _$RookiesEventFetchImpl &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate));
@@ -163,8 +163,9 @@ class _$RookiesEventFetch extends RookiesEventFetch {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RookiesEventFetchCopyWith<_$RookiesEventFetch> get copyWith =>
-      __$$RookiesEventFetchCopyWithImpl<_$RookiesEventFetch>(this, _$identity);
+  _$$RookiesEventFetchImplCopyWith<_$RookiesEventFetchImpl> get copyWith =>
+      __$$RookiesEventFetchImplCopyWithImpl<_$RookiesEventFetchImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -226,7 +227,7 @@ class _$RookiesEventFetch extends RookiesEventFetch {
 abstract class RookiesEventFetch extends RookiesEvent {
   const factory RookiesEventFetch(
       {final DateTime? startDate,
-      final DateTime? endDate}) = _$RookiesEventFetch;
+      final DateTime? endDate}) = _$RookiesEventFetchImpl;
   const RookiesEventFetch._() : super._();
 
   @override
@@ -235,6 +236,6 @@ abstract class RookiesEventFetch extends RookiesEvent {
   DateTime? get endDate;
   @override
   @JsonKey(ignore: true)
-  _$$RookiesEventFetchCopyWith<_$RookiesEventFetch> get copyWith =>
+  _$$RookiesEventFetchImplCopyWith<_$RookiesEventFetchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -16,7 +16,7 @@ class LeanProductionFormEntity with _$LeanProductionFormEntity {
     required String solution,
     required String expenses,
     required String benefit,
-    required List<String> paths,
+    required List<String>? paths,
   }) = _LeanProductionFormEntity;
 
   factory LeanProductionFormEntity.fromJson(Map<String, dynamic> json) =>

@@ -6,8 +6,9 @@ part of 'bag_report_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BagReportEntity _$$_BagReportEntityFromJson(Map<String, dynamic> json) =>
-    _$_BagReportEntity(
+_$BagReportEntityImpl _$$BagReportEntityImplFromJson(
+        Map<String, dynamic> json) =>
+    _$BagReportEntityImpl(
       title: json['title'] as String,
       description: json['description'] as String,
       pathsToFiles: (json['pathsToFiles'] as List<dynamic>)
@@ -15,7 +16,8 @@ _$_BagReportEntity _$$_BagReportEntityFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_BagReportEntityToJson(_$_BagReportEntity instance) =>
+Map<String, dynamic> _$$BagReportEntityImplToJson(
+        _$BagReportEntityImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,

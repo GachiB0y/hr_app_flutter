@@ -12,7 +12,7 @@ part of 'bag_report_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 BagReportEntity _$BagReportEntityFromJson(Map<String, dynamic> json) {
   return _BagReportEntity.fromJson(json);
@@ -74,22 +74,22 @@ class _$BagReportEntityCopyWithImpl<$Res, $Val extends BagReportEntity>
 }
 
 /// @nodoc
-abstract class _$$_BagReportEntityCopyWith<$Res>
+abstract class _$$BagReportEntityImplCopyWith<$Res>
     implements $BagReportEntityCopyWith<$Res> {
-  factory _$$_BagReportEntityCopyWith(
-          _$_BagReportEntity value, $Res Function(_$_BagReportEntity) then) =
-      __$$_BagReportEntityCopyWithImpl<$Res>;
+  factory _$$BagReportEntityImplCopyWith(_$BagReportEntityImpl value,
+          $Res Function(_$BagReportEntityImpl) then) =
+      __$$BagReportEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String title, String description, List<String> pathsToFiles});
 }
 
 /// @nodoc
-class __$$_BagReportEntityCopyWithImpl<$Res>
-    extends _$BagReportEntityCopyWithImpl<$Res, _$_BagReportEntity>
-    implements _$$_BagReportEntityCopyWith<$Res> {
-  __$$_BagReportEntityCopyWithImpl(
-      _$_BagReportEntity _value, $Res Function(_$_BagReportEntity) _then)
+class __$$BagReportEntityImplCopyWithImpl<$Res>
+    extends _$BagReportEntityCopyWithImpl<$Res, _$BagReportEntityImpl>
+    implements _$$BagReportEntityImplCopyWith<$Res> {
+  __$$BagReportEntityImplCopyWithImpl(
+      _$BagReportEntityImpl _value, $Res Function(_$BagReportEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_BagReportEntityCopyWithImpl<$Res>
     Object? description = null,
     Object? pathsToFiles = null,
   }) {
-    return _then(_$_BagReportEntity(
+    return _then(_$BagReportEntityImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -118,15 +118,15 @@ class __$$_BagReportEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BagReportEntity implements _BagReportEntity {
-  const _$_BagReportEntity(
+class _$BagReportEntityImpl implements _BagReportEntity {
+  const _$BagReportEntityImpl(
       {required this.title,
       required this.description,
       required final List<String> pathsToFiles})
       : _pathsToFiles = pathsToFiles;
 
-  factory _$_BagReportEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_BagReportEntityFromJson(json);
+  factory _$BagReportEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BagReportEntityImplFromJson(json);
 
   @override
   final String title;
@@ -146,10 +146,10 @@ class _$_BagReportEntity implements _BagReportEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BagReportEntity &&
+            other is _$BagReportEntityImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -165,12 +165,13 @@ class _$_BagReportEntity implements _BagReportEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BagReportEntityCopyWith<_$_BagReportEntity> get copyWith =>
-      __$$_BagReportEntityCopyWithImpl<_$_BagReportEntity>(this, _$identity);
+  _$$BagReportEntityImplCopyWith<_$BagReportEntityImpl> get copyWith =>
+      __$$BagReportEntityImplCopyWithImpl<_$BagReportEntityImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BagReportEntityToJson(
+    return _$$BagReportEntityImplToJson(
       this,
     );
   }
@@ -180,10 +181,10 @@ abstract class _BagReportEntity implements BagReportEntity {
   const factory _BagReportEntity(
       {required final String title,
       required final String description,
-      required final List<String> pathsToFiles}) = _$_BagReportEntity;
+      required final List<String> pathsToFiles}) = _$BagReportEntityImpl;
 
   factory _BagReportEntity.fromJson(Map<String, dynamic> json) =
-      _$_BagReportEntity.fromJson;
+      _$BagReportEntityImpl.fromJson;
 
   @override
   String get title;
@@ -193,6 +194,6 @@ abstract class _BagReportEntity implements BagReportEntity {
   List<String> get pathsToFiles;
   @override
   @JsonKey(ignore: true)
-  _$$_BagReportEntityCopyWith<_$_BagReportEntity> get copyWith =>
+  _$$BagReportEntityImplCopyWith<_$BagReportEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

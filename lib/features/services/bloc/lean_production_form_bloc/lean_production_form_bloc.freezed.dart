@@ -12,7 +12,7 @@ part of 'lean_production_form_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$LeanProductionFormEvent {
@@ -92,29 +92,32 @@ class _$LeanProductionFormEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$GetMyLeanProductionsLeanProductionFormEventCopyWith<$Res> {
-  factory _$$GetMyLeanProductionsLeanProductionFormEventCopyWith(
-          _$GetMyLeanProductionsLeanProductionFormEvent value,
-          $Res Function(_$GetMyLeanProductionsLeanProductionFormEvent) then) =
-      __$$GetMyLeanProductionsLeanProductionFormEventCopyWithImpl<$Res>;
+abstract class _$$GetMyLeanProductionsLeanProductionFormEventImplCopyWith<
+    $Res> {
+  factory _$$GetMyLeanProductionsLeanProductionFormEventImplCopyWith(
+          _$GetMyLeanProductionsLeanProductionFormEventImpl value,
+          $Res Function(_$GetMyLeanProductionsLeanProductionFormEventImpl)
+              then) =
+      __$$GetMyLeanProductionsLeanProductionFormEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$GetMyLeanProductionsLeanProductionFormEventCopyWithImpl<$Res>
+class __$$GetMyLeanProductionsLeanProductionFormEventImplCopyWithImpl<$Res>
     extends _$LeanProductionFormEventCopyWithImpl<$Res,
-        _$GetMyLeanProductionsLeanProductionFormEvent>
-    implements _$$GetMyLeanProductionsLeanProductionFormEventCopyWith<$Res> {
-  __$$GetMyLeanProductionsLeanProductionFormEventCopyWithImpl(
-      _$GetMyLeanProductionsLeanProductionFormEvent _value,
-      $Res Function(_$GetMyLeanProductionsLeanProductionFormEvent) _then)
+        _$GetMyLeanProductionsLeanProductionFormEventImpl>
+    implements
+        _$$GetMyLeanProductionsLeanProductionFormEventImplCopyWith<$Res> {
+  __$$GetMyLeanProductionsLeanProductionFormEventImplCopyWithImpl(
+      _$GetMyLeanProductionsLeanProductionFormEventImpl _value,
+      $Res Function(_$GetMyLeanProductionsLeanProductionFormEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$GetMyLeanProductionsLeanProductionFormEvent
+class _$GetMyLeanProductionsLeanProductionFormEventImpl
     extends GetMyLeanProductionsLeanProductionFormEvent {
-  const _$GetMyLeanProductionsLeanProductionFormEvent() : super._();
+  const _$GetMyLeanProductionsLeanProductionFormEventImpl() : super._();
 
   @override
   String toString() {
@@ -122,10 +125,10 @@ class _$GetMyLeanProductionsLeanProductionFormEvent
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetMyLeanProductionsLeanProductionFormEvent);
+            other is _$GetMyLeanProductionsLeanProductionFormEventImpl);
   }
 
   @override
@@ -213,16 +216,16 @@ class _$GetMyLeanProductionsLeanProductionFormEvent
 abstract class GetMyLeanProductionsLeanProductionFormEvent
     extends LeanProductionFormEvent {
   const factory GetMyLeanProductionsLeanProductionFormEvent() =
-      _$GetMyLeanProductionsLeanProductionFormEvent;
+      _$GetMyLeanProductionsLeanProductionFormEventImpl;
   const GetMyLeanProductionsLeanProductionFormEvent._() : super._();
 }
 
 /// @nodoc
-abstract class _$$SubmitFormLeanProductionFormEventCopyWith<$Res> {
-  factory _$$SubmitFormLeanProductionFormEventCopyWith(
-          _$SubmitFormLeanProductionFormEvent value,
-          $Res Function(_$SubmitFormLeanProductionFormEvent) then) =
-      __$$SubmitFormLeanProductionFormEventCopyWithImpl<$Res>;
+abstract class _$$SubmitFormLeanProductionFormEventImplCopyWith<$Res> {
+  factory _$$SubmitFormLeanProductionFormEventImplCopyWith(
+          _$SubmitFormLeanProductionFormEventImpl value,
+          $Res Function(_$SubmitFormLeanProductionFormEventImpl) then) =
+      __$$SubmitFormLeanProductionFormEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({LeanProductionFormEntity formEntity});
 
@@ -230,13 +233,13 @@ abstract class _$$SubmitFormLeanProductionFormEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$SubmitFormLeanProductionFormEventCopyWithImpl<$Res>
+class __$$SubmitFormLeanProductionFormEventImplCopyWithImpl<$Res>
     extends _$LeanProductionFormEventCopyWithImpl<$Res,
-        _$SubmitFormLeanProductionFormEvent>
-    implements _$$SubmitFormLeanProductionFormEventCopyWith<$Res> {
-  __$$SubmitFormLeanProductionFormEventCopyWithImpl(
-      _$SubmitFormLeanProductionFormEvent _value,
-      $Res Function(_$SubmitFormLeanProductionFormEvent) _then)
+        _$SubmitFormLeanProductionFormEventImpl>
+    implements _$$SubmitFormLeanProductionFormEventImplCopyWith<$Res> {
+  __$$SubmitFormLeanProductionFormEventImplCopyWithImpl(
+      _$SubmitFormLeanProductionFormEventImpl _value,
+      $Res Function(_$SubmitFormLeanProductionFormEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -244,7 +247,7 @@ class __$$SubmitFormLeanProductionFormEventCopyWithImpl<$Res>
   $Res call({
     Object? formEntity = null,
   }) {
-    return _then(_$SubmitFormLeanProductionFormEvent(
+    return _then(_$SubmitFormLeanProductionFormEventImpl(
       formEntity: null == formEntity
           ? _value.formEntity
           : formEntity // ignore: cast_nullable_to_non_nullable
@@ -263,9 +266,9 @@ class __$$SubmitFormLeanProductionFormEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SubmitFormLeanProductionFormEvent
+class _$SubmitFormLeanProductionFormEventImpl
     extends SubmitFormLeanProductionFormEvent {
-  const _$SubmitFormLeanProductionFormEvent({required this.formEntity})
+  const _$SubmitFormLeanProductionFormEventImpl({required this.formEntity})
       : super._();
 
   @override
@@ -277,10 +280,10 @@ class _$SubmitFormLeanProductionFormEvent
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SubmitFormLeanProductionFormEvent &&
+            other is _$SubmitFormLeanProductionFormEventImpl &&
             (identical(other.formEntity, formEntity) ||
                 other.formEntity == formEntity));
   }
@@ -291,10 +294,10 @@ class _$SubmitFormLeanProductionFormEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SubmitFormLeanProductionFormEventCopyWith<
-          _$SubmitFormLeanProductionFormEvent>
-      get copyWith => __$$SubmitFormLeanProductionFormEventCopyWithImpl<
-          _$SubmitFormLeanProductionFormEvent>(this, _$identity);
+  _$$SubmitFormLeanProductionFormEventImplCopyWith<
+          _$SubmitFormLeanProductionFormEventImpl>
+      get copyWith => __$$SubmitFormLeanProductionFormEventImplCopyWithImpl<
+          _$SubmitFormLeanProductionFormEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -379,39 +382,41 @@ abstract class SubmitFormLeanProductionFormEvent
     extends LeanProductionFormEvent {
   const factory SubmitFormLeanProductionFormEvent(
           {required final LeanProductionFormEntity formEntity}) =
-      _$SubmitFormLeanProductionFormEvent;
+      _$SubmitFormLeanProductionFormEventImpl;
   const SubmitFormLeanProductionFormEvent._() : super._();
 
   LeanProductionFormEntity get formEntity;
   @JsonKey(ignore: true)
-  _$$SubmitFormLeanProductionFormEventCopyWith<
-          _$SubmitFormLeanProductionFormEvent>
+  _$$SubmitFormLeanProductionFormEventImplCopyWith<
+          _$SubmitFormLeanProductionFormEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWith<
+abstract class _$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWith<
     $Res> {
-  factory _$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWith(
-          _$DownloadFileWithLeanProductionLeanProductionFormEvent value,
-          $Res Function(_$DownloadFileWithLeanProductionLeanProductionFormEvent)
+  factory _$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWith(
+          _$DownloadFileWithLeanProductionLeanProductionFormEventImpl value,
+          $Res Function(
+                  _$DownloadFileWithLeanProductionLeanProductionFormEventImpl)
               then) =
-      __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl<
+      __$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWithImpl<
           $Res>;
   @useResult
   $Res call({String url});
 }
 
 /// @nodoc
-class __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl<
+class __$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWithImpl<
         $Res>
     extends _$LeanProductionFormEventCopyWithImpl<$Res,
-        _$DownloadFileWithLeanProductionLeanProductionFormEvent>
+        _$DownloadFileWithLeanProductionLeanProductionFormEventImpl>
     implements
-        _$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWith<$Res> {
-  __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl(
-      _$DownloadFileWithLeanProductionLeanProductionFormEvent _value,
-      $Res Function(_$DownloadFileWithLeanProductionLeanProductionFormEvent)
+        _$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWith<
+            $Res> {
+  __$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWithImpl(
+      _$DownloadFileWithLeanProductionLeanProductionFormEventImpl _value,
+      $Res Function(_$DownloadFileWithLeanProductionLeanProductionFormEventImpl)
           _then)
       : super(_value, _then);
 
@@ -420,7 +425,7 @@ class __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl<
   $Res call({
     Object? url = null,
   }) {
-    return _then(_$DownloadFileWithLeanProductionLeanProductionFormEvent(
+    return _then(_$DownloadFileWithLeanProductionLeanProductionFormEventImpl(
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -431,9 +436,9 @@ class __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl<
 
 /// @nodoc
 
-class _$DownloadFileWithLeanProductionLeanProductionFormEvent
+class _$DownloadFileWithLeanProductionLeanProductionFormEventImpl
     extends DownloadFileWithLeanProductionLeanProductionFormEvent {
-  const _$DownloadFileWithLeanProductionLeanProductionFormEvent(
+  const _$DownloadFileWithLeanProductionLeanProductionFormEventImpl(
       {required this.url})
       : super._();
 
@@ -446,10 +451,11 @@ class _$DownloadFileWithLeanProductionLeanProductionFormEvent
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DownloadFileWithLeanProductionLeanProductionFormEvent &&
+            other
+                is _$DownloadFileWithLeanProductionLeanProductionFormEventImpl &&
             (identical(other.url, url) || other.url == url));
   }
 
@@ -459,11 +465,11 @@ class _$DownloadFileWithLeanProductionLeanProductionFormEvent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWith<
-          _$DownloadFileWithLeanProductionLeanProductionFormEvent>
+  _$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWith<
+          _$DownloadFileWithLeanProductionLeanProductionFormEventImpl>
       get copyWith =>
-          __$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWithImpl<
-                  _$DownloadFileWithLeanProductionLeanProductionFormEvent>(
+          __$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWithImpl<
+                  _$DownloadFileWithLeanProductionLeanProductionFormEventImpl>(
               this, _$identity);
 
   @override
@@ -549,12 +555,12 @@ abstract class DownloadFileWithLeanProductionLeanProductionFormEvent
     extends LeanProductionFormEvent {
   const factory DownloadFileWithLeanProductionLeanProductionFormEvent(
           {required final String url}) =
-      _$DownloadFileWithLeanProductionLeanProductionFormEvent;
+      _$DownloadFileWithLeanProductionLeanProductionFormEventImpl;
   const DownloadFileWithLeanProductionLeanProductionFormEvent._() : super._();
 
   String get url;
   @JsonKey(ignore: true)
-  _$$DownloadFileWithLeanProductionLeanProductionFormEventCopyWith<
-          _$DownloadFileWithLeanProductionLeanProductionFormEvent>
+  _$$DownloadFileWithLeanProductionLeanProductionFormEventImplCopyWith<
+          _$DownloadFileWithLeanProductionLeanProductionFormEventImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

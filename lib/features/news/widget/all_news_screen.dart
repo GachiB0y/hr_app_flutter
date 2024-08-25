@@ -4,7 +4,7 @@ import 'package:hr_app_flutter/core/router/routes.dart';
 import 'package:hr_app_flutter/features/news/bloc/caregory_bloc.dart/category_bloc.dart';
 import 'package:hr_app_flutter/features/news/bloc/event_entity_bloc/event_entity_bloc.dart';
 import 'package:hr_app_flutter/features/news/model/event_entity/new_event_entity.dart';
-import 'package:intl/intl.dart';
+import 'package:hr_app_flutter/ui/commons/news_card.dart';
 import 'package:octopus/octopus.dart';
 
 /// {@template all_news_screen}
@@ -17,7 +17,14 @@ class AllNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Image.asset('assets/icons/chevrone_left.png'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: Theme.of(context).colorScheme.background,
+          title: const Text('События компании'),
         ),
         body: const Column(
           children: [
@@ -38,15 +45,15 @@ class ScrollCategoriesWidget extends StatefulWidget {
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
 
-  static _ScrollCategoriesWidgetState? maybeOf(BuildContext context) =>
-      context.findAncestorStateOfType<_ScrollCategoriesWidgetState>();
+  static ScrollCategoriesWidgetState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<ScrollCategoriesWidgetState>();
 
   @override
-  State<ScrollCategoriesWidget> createState() => _ScrollCategoriesWidgetState();
+  State<ScrollCategoriesWidget> createState() => ScrollCategoriesWidgetState();
 }
 
 /// State for widget ScrollCategoriesWidget.
-class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
+class ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
   List<int> selectedCategories = [1];
 
   @override
@@ -72,8 +79,7 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<CategoryBloc, CategoryState>(
+  Widget build(BuildContext context) => BlocBuilder<CategoryBloc, CategoryState>(
         builder: (BuildContext context, state) {
           if (state is CategoryState$Error) {
             return const Center(
@@ -82,7 +88,7 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
           } else if (state is CategoryState$Processing) {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else {
-            return (state.data!.isEmpty)
+            return state.data!.isEmpty
                 ? const SizedBox.shrink()
                 : SizedBox(
                     height: 60,
@@ -92,18 +98,16 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                              final double leftPadding =
-                                  index == 0 ? 25.0 : 8.0;
-                              final double rightPadding =
-                                  index == state.data!.length ? 25.0 : 8.0;
-                              bool isSelected = selectedCategories
-                                  .contains(state.data![index].id);
+                              final leftPadding = index == 0 ? 25.0 : 8.0;
+                              final rightPadding = index == state.data!.length ? 25.0 : 8.0;
+                              final isSelected = selectedCategories.contains(state.data![index].id);
                               return Padding(
                                 padding: EdgeInsets.only(
-                                    left: leftPadding,
-                                    right: rightPadding,
-                                    top: 10,
-                                    bottom: 10),
+                                  left: leftPadding,
+                                  right: rightPadding,
+                                  top: 10,
+                                  bottom: 10,
+                                ),
                                 child: GestureDetector(
                                   onTap: () {
                                     selectItem(state.data![index].id);
@@ -119,26 +123,17 @@ class _ScrollCategoriesWidgetState extends State<ScrollCategoriesWidget> {
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.2),
-                                          spreadRadius: 0,
                                           blurRadius: 8,
-                                          offset: const Offset(0, 0),
                                         ),
                                       ],
                                       borderRadius: BorderRadius.circular(10),
                                       color: isSelected
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .background,
+                                          ? Theme.of(context).colorScheme.primary
+                                          : Theme.of(context).colorScheme.background,
                                     ),
                                     child: Text(
                                       state.data![index].name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(fontSize: 10),
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10),
                                     ),
                                   ),
                                 ),
@@ -164,15 +159,15 @@ class ScrollContentWithNews extends StatefulWidget {
 
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
-  static _ScrollContentWithNewsState? maybeOf(BuildContext context) =>
-      context.findAncestorStateOfType<_ScrollContentWithNewsState>();
+  static ScrollContentWithNewsState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<ScrollContentWithNewsState>();
 
   @override
-  State<ScrollContentWithNews> createState() => _ScrollContentWithNewsState();
+  State<ScrollContentWithNews> createState() => ScrollContentWithNewsState();
 }
 
 /// State for widget ScrollContentWithNews.
-class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
+class ScrollContentWithNewsState extends State<ScrollContentWithNews> {
   @override
   void initState() {
     super.initState();
@@ -180,8 +175,7 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<EventEntityBloc, EventEntityState>(
+  Widget build(BuildContext context) => BlocBuilder<EventEntityBloc, EventEntityState>(
         builder: (BuildContext context, state) {
           if (state is CategoryState$Error) {
             return const Center(
@@ -190,8 +184,8 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
           } else if (state is CategoryState$Processing) {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else {
-            if (state.data!.filteredListEventEntity.isEmpty) {
-              return const SizedBox.shrink();
+            if (state.data!.listEventEntityLoaded.isEmpty) {
+              return const Center(child: Text('Нет событий'));
             } else {
               final news = state.data!.filteredListEventEntity;
               return Scrollbar(
@@ -202,11 +196,9 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
                   slivers: [
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return _OneNewsElementWidget(
-                            news: news[index],
-                          );
-                        },
+                        (BuildContext context, int index) => _OneNewsElementWidget(
+                          news: news[index],
+                        ),
                         childCount: state.data!.filteredListEventEntity.length,
                       ),
                     ),
@@ -221,25 +213,13 @@ class _ScrollContentWithNewsState extends State<ScrollContentWithNews> {
 
 class _OneNewsElementWidget extends StatelessWidget {
   const _OneNewsElementWidget({
-    super.key,
     required this.news,
   });
 
   final EventEntity news;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.octopus.setState((state) {
-          var findSate = state..findByName('all-news');
-          findSate.add(Routes.aboutNews.node(
-            arguments: <String, String>{'id': news.id.toString()},
-          ));
 
-          return state;
-        });
-      },
-      child: Container(
+  @override
+  Widget build(BuildContext context) => Container(
         margin: const EdgeInsets.only(
           top: 8.0,
           left: 15.0,
@@ -249,93 +229,24 @@ class _OneNewsElementWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
-              spreadRadius: 0,
               blurRadius: 8,
-              offset: const Offset(0, 0),
             ),
           ],
           borderRadius: BorderRadius.circular(16),
           color: Theme.of(context).colorScheme.background,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: 11.0, bottom: 9.0, right: 11.0, left: 11.0),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  news.image,
-                  fit: BoxFit.fill,
-                  height: 90,
-                  width: 107,
+        child: NewsCard(
+          onTap: () {
+            context.octopus.setState(
+              (state) => state
+                ..findByName('${Routes.services.name}-tab')?.add(
+                  Routes.aboutNews.node(
+                    arguments: <String, String>{'id': news.id.toString()},
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 22,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _InfoDateWidget(
-                      text: DateFormat('dd MMMM').format(
-                        news.startDate,
-                      ),
-                    ),
-                    Text(
-                      news.title,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      news.description,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontSize: 12,
-                          color: Theme.of(context).colorScheme.outline),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            );
+          },
+          news: news,
         ),
-      ),
-    );
-  }
-}
-
-class _InfoDateWidget extends StatelessWidget {
-  const _InfoDateWidget({
-    super.key,
-    required this.text,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(145),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontSize: 9,
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w700,
-              ),
-        ),
-      ),
-    );
-  }
+      );
 }

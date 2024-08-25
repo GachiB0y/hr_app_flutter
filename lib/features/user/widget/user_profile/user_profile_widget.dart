@@ -2,17 +2,21 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_app_flutter/core/widget/components/shimmer/shimmer.dart';
+import 'package:hr_app_flutter/core/utils/extensions/string_extension.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_scope.dart';
 import 'package:hr_app_flutter/features/settings/widget/settings_scope.dart';
 import 'package:hr_app_flutter/features/user/bloc/user_bloc/user_bloc.dart';
 import 'package:hr_app_flutter/features/user/widget/user_scope.dart';
+import 'package:hr_app_flutter/ui/commons/widget/components/shimmer/shimmer.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/user/user_info.dart';
 
 class UserProfileWidgetScreen extends StatefulWidget {
   final String? userId;
   final String? isSelfUser;
+
   const UserProfileWidgetScreen({
     Key? key,
     required this.userId,
@@ -95,7 +99,25 @@ class ToggleThemeWidget extends StatelessWidget {
 
 class UserInfoForm extends StatelessWidget {
   const UserInfoForm({super.key, required this.isSelfUser});
+
   final String? isSelfUser;
+
+  /// Open app phone and dial number
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  Future<void> _sendEmail(String email) async {
+    final Uri launchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+    await launchUrl(launchUri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +125,7 @@ class UserInfoForm extends StatelessWidget {
       if (state is UserState$Processing) {
         return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
       } else if (state is UserState$Idle || state is UserState$Successful) {
-        if (state.data!.currentProfileUser == null) {
+        if (state.data?.currentProfileUser == null) {
           return ShimmerUserProfileWidget(isSelfUser: isSelfUser);
         } else {
           String? phoneNumber = state.data!.currentProfileUser!.phoneOne;
@@ -111,6 +133,16 @@ class UserInfoForm extends StatelessWidget {
           RegExp regExp = RegExp(r'^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$');
           String? formattedNumber = phoneNumber?.replaceAllMapped(regExp,
               (Match m) => '+ ${m[1]}(${m[2]}) ${m[3]}-${m[4]}-${m[5]}');
+
+          /// Преобразование даты рождения пользователя.
+          var day = state.data!.currentProfileUser?.dateBirth != null
+              ? DateFormat('yMMMMd')
+                  .format(
+                    state.data!.currentProfileUser!.dateBirth!
+                        .convertToDateTime(),
+                  )
+                  .replaceAll('г.', '')
+              : '';
 
           return Column(
             children: [
@@ -155,28 +187,33 @@ class UserInfoForm extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    '${state.data!.currentProfileUser!.email}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: const Color(0xFF7B7D84)),
+                                  ButtonTextWidget(
+                                    title:
+                                        '${state.data!.currentProfileUser!.email}',
+                                    onPressed: () =>
+                                        state.data?.currentProfileUser?.email !=
+                                                null
+                                            ? _sendEmail(state.data!
+                                                .currentProfileUser!.email!)
+                                            : null,
                                   ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    formattedNumber ?? '',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            color: const Color(0xFF7B7D84)),
+                                  const SizedBox(width: 8),
+                                  ButtonTextWidget(
+                                    title: formattedNumber,
+                                    onPressed: () => formattedNumber != null
+                                        ? _makePhoneCall(formattedNumber)
+                                        : null,
                                   ),
                                 ],
+                              ),
+                              Text(
+                                day,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 14,
+                                        color: const Color(0xFF7B7D84)),
                               ),
                               const SizedBox(height: 25),
                               const TagsWidget(),
@@ -202,6 +239,30 @@ class UserInfoForm extends StatelessWidget {
         return const Center(child: Text('Пользователь не найден.'));
       }
     });
+  }
+}
+
+/// Button for click email and phone number
+class ButtonTextWidget extends StatelessWidget {
+  const ButtonTextWidget({super.key, this.onPressed, required this.title});
+  final void Function()? onPressed;
+  final String? title;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
+      onPressed: onPressed,
+      child: Text(
+        title ?? '',
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              fontSize: 14,
+              color: const Color(0xFF7B7D84),
+            ),
+      ),
+    );
   }
 }
 
@@ -304,6 +365,7 @@ class ShimmerBodyContentWidget extends StatelessWidget {
 
 class LogoutButtonWidget extends StatelessWidget {
   const LogoutButtonWidget({super.key, required this.isSelfuser});
+
   final String? isSelfuser;
 
   @override

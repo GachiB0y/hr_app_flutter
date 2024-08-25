@@ -12,7 +12,7 @@ part of 'event_entity_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$EventEntityEvent {
@@ -92,10 +92,11 @@ class _$EventEntityEventCopyWithImpl<$Res, $Val extends EventEntityEvent>
 }
 
 /// @nodoc
-abstract class _$$EventEntityEventCreateCopyWith<$Res> {
-  factory _$$EventEntityEventCreateCopyWith(_$EventEntityEventCreate value,
-          $Res Function(_$EventEntityEventCreate) then) =
-      __$$EventEntityEventCreateCopyWithImpl<$Res>;
+abstract class _$$EventEntityEventCreateImplCopyWith<$Res> {
+  factory _$$EventEntityEventCreateImplCopyWith(
+          _$EventEntityEventCreateImpl value,
+          $Res Function(_$EventEntityEventCreateImpl) then) =
+      __$$EventEntityEventCreateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {String title,
@@ -107,11 +108,12 @@ abstract class _$$EventEntityEventCreateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$EventEntityEventCreateCopyWithImpl<$Res>
-    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventCreate>
-    implements _$$EventEntityEventCreateCopyWith<$Res> {
-  __$$EventEntityEventCreateCopyWithImpl(_$EventEntityEventCreate _value,
-      $Res Function(_$EventEntityEventCreate) _then)
+class __$$EventEntityEventCreateImplCopyWithImpl<$Res>
+    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventCreateImpl>
+    implements _$$EventEntityEventCreateImplCopyWith<$Res> {
+  __$$EventEntityEventCreateImplCopyWithImpl(
+      _$EventEntityEventCreateImpl _value,
+      $Res Function(_$EventEntityEventCreateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -124,7 +126,7 @@ class __$$EventEntityEventCreateCopyWithImpl<$Res>
     Object? imageFile = null,
     Object? categories = null,
   }) {
-    return _then(_$EventEntityEventCreate(
+    return _then(_$EventEntityEventCreateImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -155,8 +157,8 @@ class __$$EventEntityEventCreateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EventEntityEventCreate extends EventEntityEventCreate {
-  const _$EventEntityEventCreate(
+class _$EventEntityEventCreateImpl extends EventEntityEventCreate {
+  const _$EventEntityEventCreateImpl(
       {required this.title,
       required this.description,
       required this.startDate,
@@ -190,10 +192,10 @@ class _$EventEntityEventCreate extends EventEntityEventCreate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EventEntityEventCreate &&
+            other is _$EventEntityEventCreateImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -213,9 +215,9 @@ class _$EventEntityEventCreate extends EventEntityEventCreate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$EventEntityEventCreateCopyWith<_$EventEntityEventCreate> get copyWith =>
-      __$$EventEntityEventCreateCopyWithImpl<_$EventEntityEventCreate>(
-          this, _$identity);
+  _$$EventEntityEventCreateImplCopyWith<_$EventEntityEventCreateImpl>
+      get copyWith => __$$EventEntityEventCreateImplCopyWithImpl<
+          _$EventEntityEventCreateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -307,7 +309,7 @@ abstract class EventEntityEventCreate extends EventEntityEvent {
       required final String startDate,
       required final String? endDate,
       required final File imageFile,
-      required final List<String> categories}) = _$EventEntityEventCreate;
+      required final List<String> categories}) = _$EventEntityEventCreateImpl;
   const EventEntityEventCreate._() : super._();
 
   String get title;
@@ -317,30 +319,31 @@ abstract class EventEntityEventCreate extends EventEntityEvent {
   File get imageFile;
   List<String> get categories;
   @JsonKey(ignore: true)
-  _$$EventEntityEventCreateCopyWith<_$EventEntityEventCreate> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$EventEntityEventCreateImplCopyWith<_$EventEntityEventCreateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$EventEntityEventFetchCopyWith<$Res> {
-  factory _$$EventEntityEventFetchCopyWith(_$EventEntityEventFetch value,
-          $Res Function(_$EventEntityEventFetch) then) =
-      __$$EventEntityEventFetchCopyWithImpl<$Res>;
+abstract class _$$EventEntityEventFetchImplCopyWith<$Res> {
+  factory _$$EventEntityEventFetchImplCopyWith(
+          _$EventEntityEventFetchImpl value,
+          $Res Function(_$EventEntityEventFetchImpl) then) =
+      __$$EventEntityEventFetchImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$EventEntityEventFetchCopyWithImpl<$Res>
-    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventFetch>
-    implements _$$EventEntityEventFetchCopyWith<$Res> {
-  __$$EventEntityEventFetchCopyWithImpl(_$EventEntityEventFetch _value,
-      $Res Function(_$EventEntityEventFetch) _then)
+class __$$EventEntityEventFetchImplCopyWithImpl<$Res>
+    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventFetchImpl>
+    implements _$$EventEntityEventFetchImplCopyWith<$Res> {
+  __$$EventEntityEventFetchImplCopyWithImpl(_$EventEntityEventFetchImpl _value,
+      $Res Function(_$EventEntityEventFetchImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$EventEntityEventFetch extends EventEntityEventFetch {
-  const _$EventEntityEventFetch() : super._();
+class _$EventEntityEventFetchImpl extends EventEntityEventFetch {
+  const _$EventEntityEventFetchImpl() : super._();
 
   @override
   String toString() {
@@ -348,9 +351,10 @@ class _$EventEntityEventFetch extends EventEntityEventFetch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EventEntityEventFetch);
+        (other.runtimeType == runtimeType &&
+            other is _$EventEntityEventFetchImpl);
   }
 
   @override
@@ -437,25 +441,27 @@ class _$EventEntityEventFetch extends EventEntityEventFetch {
 }
 
 abstract class EventEntityEventFetch extends EventEntityEvent {
-  const factory EventEntityEventFetch() = _$EventEntityEventFetch;
+  const factory EventEntityEventFetch() = _$EventEntityEventFetchImpl;
   const EventEntityEventFetch._() : super._();
 }
 
 /// @nodoc
-abstract class _$$EventEntityEventUpdateCopyWith<$Res> {
-  factory _$$EventEntityEventUpdateCopyWith(_$EventEntityEventUpdate value,
-          $Res Function(_$EventEntityEventUpdate) then) =
-      __$$EventEntityEventUpdateCopyWithImpl<$Res>;
+abstract class _$$EventEntityEventUpdateImplCopyWith<$Res> {
+  factory _$$EventEntityEventUpdateImplCopyWith(
+          _$EventEntityEventUpdateImpl value,
+          $Res Function(_$EventEntityEventUpdateImpl) then) =
+      __$$EventEntityEventUpdateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int idTab});
 }
 
 /// @nodoc
-class __$$EventEntityEventUpdateCopyWithImpl<$Res>
-    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventUpdate>
-    implements _$$EventEntityEventUpdateCopyWith<$Res> {
-  __$$EventEntityEventUpdateCopyWithImpl(_$EventEntityEventUpdate _value,
-      $Res Function(_$EventEntityEventUpdate) _then)
+class __$$EventEntityEventUpdateImplCopyWithImpl<$Res>
+    extends _$EventEntityEventCopyWithImpl<$Res, _$EventEntityEventUpdateImpl>
+    implements _$$EventEntityEventUpdateImplCopyWith<$Res> {
+  __$$EventEntityEventUpdateImplCopyWithImpl(
+      _$EventEntityEventUpdateImpl _value,
+      $Res Function(_$EventEntityEventUpdateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -463,7 +469,7 @@ class __$$EventEntityEventUpdateCopyWithImpl<$Res>
   $Res call({
     Object? idTab = null,
   }) {
-    return _then(_$EventEntityEventUpdate(
+    return _then(_$EventEntityEventUpdateImpl(
       idTab: null == idTab
           ? _value.idTab
           : idTab // ignore: cast_nullable_to_non_nullable
@@ -474,8 +480,8 @@ class __$$EventEntityEventUpdateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EventEntityEventUpdate extends EventEntityEventUpdate {
-  const _$EventEntityEventUpdate({required this.idTab}) : super._();
+class _$EventEntityEventUpdateImpl extends EventEntityEventUpdate {
+  const _$EventEntityEventUpdateImpl({required this.idTab}) : super._();
 
   @override
   final int idTab;
@@ -486,10 +492,10 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EventEntityEventUpdate &&
+            other is _$EventEntityEventUpdateImpl &&
             (identical(other.idTab, idTab) || other.idTab == idTab));
   }
 
@@ -499,9 +505,9 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$EventEntityEventUpdateCopyWith<_$EventEntityEventUpdate> get copyWith =>
-      __$$EventEntityEventUpdateCopyWithImpl<_$EventEntityEventUpdate>(
-          this, _$identity);
+  _$$EventEntityEventUpdateImplCopyWith<_$EventEntityEventUpdateImpl>
+      get copyWith => __$$EventEntityEventUpdateImplCopyWithImpl<
+          _$EventEntityEventUpdateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -585,11 +591,11 @@ class _$EventEntityEventUpdate extends EventEntityEventUpdate {
 
 abstract class EventEntityEventUpdate extends EventEntityEvent {
   const factory EventEntityEventUpdate({required final int idTab}) =
-      _$EventEntityEventUpdate;
+      _$EventEntityEventUpdateImpl;
   const EventEntityEventUpdate._() : super._();
 
   int get idTab;
   @JsonKey(ignore: true)
-  _$$EventEntityEventUpdateCopyWith<_$EventEntityEventUpdate> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$EventEntityEventUpdateImplCopyWith<_$EventEntityEventUpdateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

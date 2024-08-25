@@ -6,9 +6,9 @@ part of 'my_lean_productions_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MyLeanProductionsEntity _$$_MyLeanProductionsEntityFromJson(
+_$MyLeanProductionsEntityImpl _$$MyLeanProductionsEntityImplFromJson(
         Map<String, dynamic> json) =>
-    _$_MyLeanProductionsEntity(
+    _$MyLeanProductionsEntityImpl(
       date: DateTime.parse(json['date'] as String),
       number: json['number'] as String,
       status: json['status'] as String,
@@ -25,8 +25,8 @@ _$_MyLeanProductionsEntity _$$_MyLeanProductionsEntityFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_MyLeanProductionsEntityToJson(
-        _$_MyLeanProductionsEntity instance) =>
+Map<String, dynamic> _$$MyLeanProductionsEntityImplToJson(
+        _$MyLeanProductionsEntityImpl instance) =>
     <String, dynamic>{
       'date': instance.date.toIso8601String(),
       'number': instance.number,
@@ -39,27 +39,27 @@ Map<String, dynamic> _$$_MyLeanProductionsEntityToJson(
       'files': instance.files,
     };
 
-_$_FileElement _$$_FileElementFromJson(Map<String, dynamic> json) =>
-    _$_FileElement(
+_$FileElementImpl _$$FileElementImplFromJson(Map<String, dynamic> json) =>
+    _$FileElementImpl(
       fileName: json['name'] as String,
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$$_FileElementToJson(_$_FileElement instance) =>
+Map<String, dynamic> _$$FileElementImplToJson(_$FileElementImpl instance) =>
     <String, dynamic>{
       'name': instance.fileName,
       'url': instance.url,
     };
 
-_$_ImplementsForLeanProdInfo _$$_ImplementsForLeanProdInfoFromJson(
+_$ImplementsForLeanProdInfoImpl _$$ImplementsForLeanProdInfoImplFromJson(
         Map<String, dynamic> json) =>
-    _$_ImplementsForLeanProdInfo(
+    _$ImplementsForLeanProdInfoImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$_ImplementsForLeanProdInfoToJson(
-        _$_ImplementsForLeanProdInfo instance) =>
+Map<String, dynamic> _$$ImplementsForLeanProdInfoImplToJson(
+        _$ImplementsForLeanProdInfoImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,

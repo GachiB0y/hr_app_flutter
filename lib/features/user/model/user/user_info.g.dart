@@ -6,8 +6,9 @@ part of 'user_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserInfo _$$_UserInfoFromJson(Map<String, dynamic> json) => _$_UserInfo(
-      autoCard: json['auto_card'] as int,
+_$UserInfoImpl _$$UserInfoImplFromJson(Map<String, dynamic> json) =>
+    _$UserInfoImpl(
+      autoCard: (json['auto_card'] as num).toInt(),
       name: json['name'] as String,
       nameI: json['name_i'] as String,
       nameO: json['name_o'] as String,
@@ -24,7 +25,7 @@ _$_UserInfo _$$_UserInfoFromJson(Map<String, dynamic> json) => _$_UserInfo(
       self: json['self'] as bool,
     );
 
-Map<String, dynamic> _$$_UserInfoToJson(_$_UserInfo instance) =>
+Map<String, dynamic> _$$UserInfoImplToJson(_$UserInfoImpl instance) =>
     <String, dynamic>{
       'auto_card': instance.autoCard,
       'name': instance.name,
@@ -41,12 +42,13 @@ Map<String, dynamic> _$$_UserInfoToJson(_$_UserInfo instance) =>
       'self': instance.self,
     };
 
-_$_TagUser _$$_TagUserFromJson(Map<String, dynamic> json) => _$_TagUser(
-      id: json['id'] as int? ?? null,
+_$TagUserImpl _$$TagUserImplFromJson(Map<String, dynamic> json) =>
+    _$TagUserImpl(
+      id: (json['id'] as num?)?.toInt() ?? null,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$_TagUserToJson(_$_TagUser instance) =>
+Map<String, dynamic> _$$TagUserImplToJson(_$TagUserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

@@ -38,9 +38,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           'Все сервисы',
@@ -66,14 +66,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   state.data!.first.permissions.createService == true) {
                 // Если можно создаввать новость, то даем такую возможность
                 titleService.add('Предложить новость');
-                routes.add(Routes.createNewsType);
+                routes.add(Routes.createTypeNewsScreen);
               }
               if (state.data != null &&
                   state.data!.first.id == 22 &&
                   state.data!.first.permissions.approveService == true) {
                 // Если можно модерировать новость, то даем такую возможность
                 titleService.add('Модерация новостей');
-                routes.add(Routes.approveNews);
+                routes.add(Routes.listModerationNews);
               }
 
               return Column(
@@ -92,7 +92,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 7.0,
+                    height: 120,
                     child: CustomScrollView(
                       scrollDirection: Axis.horizontal,
                       slivers: <Widget>[
@@ -169,7 +169,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
         ),
       ),
     );
-  }
 }
 
 class CustomServiceBlockWidget extends StatelessWidget {
@@ -183,8 +182,7 @@ class CustomServiceBlockWidget extends StatelessWidget {
   final List<String> titleService;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -195,15 +193,12 @@ class CustomServiceBlockWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: titleService.length,
-          itemBuilder: (context, index) {
-            return ElementServiceToRouteWidget(
+          itemBuilder: (context, index) => ElementServiceToRouteWidget(
               nameParent: '${Routes.services.name}-tab',
               route: routes[index],
               titleService: titleService[index],
-            );
-          },
+            ),
         ),
       ],
     );
-  }
 }

@@ -82,11 +82,15 @@ class LeanProductionFormBloc
     try {
       emit(LeanProductionFormState.processing(data: state.data));
 
-      await _repositoryLeanProduction
+      final bool isSend = await _repositoryLeanProduction
           .submitForm(formEntity: event.formEntity)
           .timeout(const Duration(seconds: 10));
-      final newData = state.data?.copyWith(isSubmitting: true);
-      emit(LeanProductionFormState.successful(data: newData));
+      final newData = state.data?.copyWith(isSubmitting: isSend);
+      if (isSend) {
+        emit(LeanProductionFormState.successful(data: newData));
+      } else {
+        emit(LeanProductionFormState.error(data: newData));
+      }
     } on TimeoutException {
       emit(LeanProductionFormState.error(
           data: state.data, message: 'Ошибка ожидания  запроса!'));
@@ -97,7 +101,6 @@ class LeanProductionFormBloc
       //l.e('An error occurred in the LeanProductionFormBLoC: $err', stackTrace);
       emit(LeanProductionFormState.error(
           data: state.data, message: 'Неизвестная ошибка'));
-      rethrow;
     } finally {
       emit(LeanProductionFormState.idle(data: state.data));
     }

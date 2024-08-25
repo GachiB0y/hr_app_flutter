@@ -1,17 +1,23 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/firebase_api/firebase_api.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/src/rest_client_dio.dart';
+import 'package:hr_app_flutter/core/environment/environment_configuration.dart';
 import 'package:hr_app_flutter/core/utils/logger.dart';
 import 'package:hr_app_flutter/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:hr_app_flutter/features/auth/data/repo/auth_repository.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/auth_datasource.dart';
 import 'package:hr_app_flutter/features/auth/data/rest_clients/refresh_client.dart';
+import 'package:hr_app_flutter/features/initialiazation/model/dependencies.dart';
 import 'package:hr_app_flutter/features/initialiazation/model/initialization_progress.dart';
 import 'package:hr_app_flutter/features/news/data/repo/event_entity_repo.dart';
 import 'package:hr_app_flutter/features/news/data/rest_clients/event_entity_api_client.dart';
+import 'package:hr_app_flutter/features/notification/data/mappers/notification_mappers.dart';
+import 'package:hr_app_flutter/features/notification/data/repo/notification_repository.dart';
+import 'package:hr_app_flutter/features/notification/data/rest_client/notification_rest_client.dart';
 import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_api_client.dart';
 import 'package:hr_app_flutter/features/schedule_bus/data/schedule_bus_repository.dart';
 import 'package:hr_app_flutter/features/services/data/repo/lean_production_repository.dart';
@@ -59,6 +65,17 @@ mixin InitializationSteps {
         localeDataSource: localeDataSource,
       );
     },
+    'Environment Configuration': (progress) {
+      final environmentConfiguration =
+          EnvironmentConfiguration.fromEnvironmentVariables();
+      if (kDebugMode || kProfileMode) {
+        debugPrint(
+          'environment: ${EnvironmentConfiguration.environment.name}\nurl: ${EnvironmentConfiguration.baseUrl}',
+        );
+      }
+
+      progress.dependencies.environmentConfiguration = environmentConfiguration;
+    },
     'Firebase API': (progress) {
       final firebaseApi = FirebaseApi();
       firebaseApi.initNotifications();
@@ -66,9 +83,10 @@ mixin InitializationSteps {
     },
     'AuthRepository': (progress) async {
       final interceptedDio = Dio();
+      final baseUrl = EnvironmentConfiguration.baseUrl;
       final justDio = Dio(
         BaseOptions(
-          baseUrl: 'https://grass-app-api.grass.su/',
+          baseUrl: baseUrl,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -76,7 +94,7 @@ mixin InitializationSteps {
         ),
       );
       final restClient = RestClientDio(
-        baseUrl: 'https://grass-app-api.grass.su/',
+        baseUrl: baseUrl,
         dio: interceptedDio,
       );
       final authDataSource = AuthDataSourceImpl(
@@ -93,9 +111,10 @@ mixin InitializationSteps {
       interceptedDio.interceptors.add(oauthInterceptor);
 
       final authRepository = AuthRepositoryImpl(
-          authStatusDataSource: oauthInterceptor,
-          authDataSource: authDataSource,
-          firebaseApi: progress.dependencies.firebaseApi);
+        authStatusDataSource: oauthInterceptor,
+        authDataSource: authDataSource,
+        firebaseApi: progress.dependencies.firebaseApi,
+      );
 
       progress.dependencies.authRepository = authRepository;
       progress.dependencies.restClient = restClient;
@@ -146,7 +165,8 @@ mixin InitializationSteps {
     },
     'LeanProductionRepository': (progress) async {
       final leanProductionRepository = LeanProductionRepositoryImpl(
-          serviceProvider: progress.dependencies.serviceProvider);
+        serviceProvider: progress.dependencies.serviceProvider,
+      );
 
       progress.dependencies.leanProductionRepository = leanProductionRepository;
     },
@@ -158,6 +178,17 @@ mixin InitializationSteps {
           ScheduleBusRepositoryImpl(scheduleBusProvider: scheduleBusProvider);
 
       progress.dependencies.scheduleBusRepository = scheduleBusRepository;
+    },
+    'NotificationRepository': (progress) async {
+      final notificationProvider =
+          NotificationRestClient(restClient: progress.dependencies.restClient);
+
+      final notificationMappers = NotificationMappers();
+      final notificationRepository = NotificationRepository(
+          restClient: notificationProvider,
+          notificationMappers: notificationMappers);
+
+      progress.dependencies.notificationRepository = notificationRepository;
     },
     'AuthBloc': (progress) async {
       final authRepository = progress.dependencies.authRepository;

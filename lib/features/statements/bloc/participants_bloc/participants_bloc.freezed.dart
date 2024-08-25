@@ -12,7 +12,7 @@ part of 'participants_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ParticipantsEvent {
@@ -89,22 +89,24 @@ class _$ParticipantsEventCopyWithImpl<$Res, $Val extends ParticipantsEvent>
 }
 
 /// @nodoc
-abstract class _$$FetchParticipantsEventCopyWith<$Res>
+abstract class _$$FetchParticipantsEventImplCopyWith<$Res>
     implements $ParticipantsEventCopyWith<$Res> {
-  factory _$$FetchParticipantsEventCopyWith(_$FetchParticipantsEvent value,
-          $Res Function(_$FetchParticipantsEvent) then) =
-      __$$FetchParticipantsEventCopyWithImpl<$Res>;
+  factory _$$FetchParticipantsEventImplCopyWith(
+          _$FetchParticipantsEventImpl value,
+          $Res Function(_$FetchParticipantsEventImpl) then) =
+      __$$FetchParticipantsEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String inputValue});
 }
 
 /// @nodoc
-class __$$FetchParticipantsEventCopyWithImpl<$Res>
-    extends _$ParticipantsEventCopyWithImpl<$Res, _$FetchParticipantsEvent>
-    implements _$$FetchParticipantsEventCopyWith<$Res> {
-  __$$FetchParticipantsEventCopyWithImpl(_$FetchParticipantsEvent _value,
-      $Res Function(_$FetchParticipantsEvent) _then)
+class __$$FetchParticipantsEventImplCopyWithImpl<$Res>
+    extends _$ParticipantsEventCopyWithImpl<$Res, _$FetchParticipantsEventImpl>
+    implements _$$FetchParticipantsEventImplCopyWith<$Res> {
+  __$$FetchParticipantsEventImplCopyWithImpl(
+      _$FetchParticipantsEventImpl _value,
+      $Res Function(_$FetchParticipantsEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +114,7 @@ class __$$FetchParticipantsEventCopyWithImpl<$Res>
   $Res call({
     Object? inputValue = null,
   }) {
-    return _then(_$FetchParticipantsEvent(
+    return _then(_$FetchParticipantsEventImpl(
       inputValue: null == inputValue
           ? _value.inputValue
           : inputValue // ignore: cast_nullable_to_non_nullable
@@ -123,8 +125,8 @@ class __$$FetchParticipantsEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FetchParticipantsEvent extends FetchParticipantsEvent {
-  const _$FetchParticipantsEvent({required this.inputValue}) : super._();
+class _$FetchParticipantsEventImpl extends FetchParticipantsEvent {
+  const _$FetchParticipantsEventImpl({required this.inputValue}) : super._();
 
   @override
   final String inputValue;
@@ -135,10 +137,10 @@ class _$FetchParticipantsEvent extends FetchParticipantsEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchParticipantsEvent &&
+            other is _$FetchParticipantsEventImpl &&
             (identical(other.inputValue, inputValue) ||
                 other.inputValue == inputValue));
   }
@@ -149,9 +151,9 @@ class _$FetchParticipantsEvent extends FetchParticipantsEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FetchParticipantsEventCopyWith<_$FetchParticipantsEvent> get copyWith =>
-      __$$FetchParticipantsEventCopyWithImpl<_$FetchParticipantsEvent>(
-          this, _$identity);
+  _$$FetchParticipantsEventImplCopyWith<_$FetchParticipantsEventImpl>
+      get copyWith => __$$FetchParticipantsEventImplCopyWithImpl<
+          _$FetchParticipantsEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -212,13 +214,13 @@ class _$FetchParticipantsEvent extends FetchParticipantsEvent {
 
 abstract class FetchParticipantsEvent extends ParticipantsEvent {
   const factory FetchParticipantsEvent({required final String inputValue}) =
-      _$FetchParticipantsEvent;
+      _$FetchParticipantsEventImpl;
   const FetchParticipantsEvent._() : super._();
 
   @override
   String get inputValue;
   @override
   @JsonKey(ignore: true)
-  _$$FetchParticipantsEventCopyWith<_$FetchParticipantsEvent> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FetchParticipantsEventImplCopyWith<_$FetchParticipantsEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

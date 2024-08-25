@@ -12,7 +12,7 @@ part of 'category_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CategoryEvent {
@@ -69,25 +69,25 @@ class _$CategoryEventCopyWithImpl<$Res, $Val extends CategoryEvent>
 }
 
 /// @nodoc
-abstract class _$$FetchCategoryEventCopyWith<$Res> {
-  factory _$$FetchCategoryEventCopyWith(_$FetchCategoryEvent value,
-          $Res Function(_$FetchCategoryEvent) then) =
-      __$$FetchCategoryEventCopyWithImpl<$Res>;
+abstract class _$$FetchCategoryEventImplCopyWith<$Res> {
+  factory _$$FetchCategoryEventImplCopyWith(_$FetchCategoryEventImpl value,
+          $Res Function(_$FetchCategoryEventImpl) then) =
+      __$$FetchCategoryEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$FetchCategoryEventCopyWithImpl<$Res>
-    extends _$CategoryEventCopyWithImpl<$Res, _$FetchCategoryEvent>
-    implements _$$FetchCategoryEventCopyWith<$Res> {
-  __$$FetchCategoryEventCopyWithImpl(
-      _$FetchCategoryEvent _value, $Res Function(_$FetchCategoryEvent) _then)
+class __$$FetchCategoryEventImplCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res, _$FetchCategoryEventImpl>
+    implements _$$FetchCategoryEventImplCopyWith<$Res> {
+  __$$FetchCategoryEventImplCopyWithImpl(_$FetchCategoryEventImpl _value,
+      $Res Function(_$FetchCategoryEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$FetchCategoryEvent extends FetchCategoryEvent {
-  const _$FetchCategoryEvent() : super._();
+class _$FetchCategoryEventImpl extends FetchCategoryEvent {
+  const _$FetchCategoryEventImpl() : super._();
 
   @override
   String toString() {
@@ -95,9 +95,9 @@ class _$FetchCategoryEvent extends FetchCategoryEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchCategoryEvent);
+        (other.runtimeType == runtimeType && other is _$FetchCategoryEventImpl);
   }
 
   @override
@@ -161,6 +161,6 @@ class _$FetchCategoryEvent extends FetchCategoryEvent {
 }
 
 abstract class FetchCategoryEvent extends CategoryEvent {
-  const factory FetchCategoryEvent() = _$FetchCategoryEvent;
+  const factory FetchCategoryEvent() = _$FetchCategoryEventImpl;
   const FetchCategoryEvent._() : super._();
 }

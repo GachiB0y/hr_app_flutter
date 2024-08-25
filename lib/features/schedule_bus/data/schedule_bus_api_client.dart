@@ -8,11 +8,12 @@ abstract interface class IScheduleBusProvider {
 
   ///Метод для получения направлений
 
-  Future<List<Destination>> getDestionations(
-      {required int? cityId,
-      required String? timeOfDay,
-      required String? routeForJob,
-      required bool all});
+  Future<List<Destination>> getDestionations({
+    required int? cityId,
+    required String? timeOfDay,
+    required String? routeForJob,
+    required bool all,
+  });
 }
 
 class ScheduleBusProviderImpl implements IScheduleBusProvider {
@@ -23,9 +24,10 @@ class ScheduleBusProviderImpl implements IScheduleBusProvider {
   Future<List<City>> getCities() async {
     final response = await _httpService.get('/bus/get_destination');
 
-    if (response case {'result': final data}) {
-      final List<City> result =
-          (data as List<dynamic>).map((item) => City.fromJson(item)).toList();
+    if (response case {'result': final data as List<dynamic>}) {
+      final result = data
+          .map((item) => City.fromJson(item as Map<String, dynamic>))
+          .toList();
 
       return result;
     }
@@ -33,11 +35,12 @@ class ScheduleBusProviderImpl implements IScheduleBusProvider {
   }
 
   @override
-  Future<List<Destination>> getDestionations(
-      {required int? cityId,
-      required String? timeOfDay,
-      required String? routeForJob,
-      required bool all}) async {
+  Future<List<Destination>> getDestionations({
+    required int? cityId,
+    required String? timeOfDay,
+    required String? routeForJob,
+    required bool all,
+  }) async {
     final response = await _httpService.get(
       '/bus/get_destination',
       queryParams: all
@@ -45,13 +48,13 @@ class ScheduleBusProviderImpl implements IScheduleBusProvider {
           : {
               'city_id': '$cityId',
               'times_of_day': timeOfDay,
-              'route': routeForJob
+              'route': routeForJob,
             },
     );
 
-    if (response case {'result': final data}) {
-      final List<Destination> result = (data as List<dynamic>)
-          .map((item) => Destination.fromJson(item))
+    if (response case {'result': final data as List<dynamic>}) {
+      final result = data
+          .map((item) => Destination.fromJson(item as Map<String, dynamic>))
           .toList();
 
       return result;

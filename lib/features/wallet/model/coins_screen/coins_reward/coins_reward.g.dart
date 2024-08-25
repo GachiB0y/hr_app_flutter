@@ -6,16 +6,20 @@ part of 'coins_reward.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CoinsReward _$$_CoinsRewardFromJson(Map<String, dynamic> json) =>
-    _$_CoinsReward(
-      id: json['id'] as int,
-      price: json['price'] as int,
+_$CoinsRewardImpl _$$CoinsRewardImplFromJson(Map<String, dynamic> json) =>
+    _$CoinsRewardImpl(
+      id: (json['id'] as num).toInt(),
+      price: (json['price'] as num).toInt(),
       title: json['title'] as String,
+      image: json['image'] as String?,
+      description: json['description'] as String?,
     );
 
-Map<String, dynamic> _$$_CoinsRewardToJson(_$_CoinsReward instance) =>
+Map<String, dynamic> _$$CoinsRewardImplToJson(_$CoinsRewardImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'price': instance.price,
       'title': instance.title,
+      'image': instance.image,
+      'description': instance.description,
     };

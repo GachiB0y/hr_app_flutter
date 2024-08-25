@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_app_flutter/features/auth/widget/auth_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/company_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/education_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
 import 'package:hr_app_flutter/features/home/widget/home_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
+import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/initialiazation/widget/dependencies_scope.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_date_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_description_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_photo_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_time_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_title_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/create_refactor/create_refactoring_type_news_bloc.dart';
+import 'package:hr_app_flutter/features/news/bloc/moderation_news_bloc.dart';
 import 'package:hr_app_flutter/features/news/widget/about_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/all_news_screen.dart';
 import 'package:hr_app_flutter/features/news/widget/approve_news_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/user_main_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_date_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_description_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_photo_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_refactoring_news_screen_bucket.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_time_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_title_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/create_refactoring_screens/create_type_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/list_moderations_news_screen.dart';
+import 'package:hr_app_flutter/features/news/widget/moderation_news_screen.dart';
+import 'package:hr_app_flutter/features/notification/bloc/notification_bloc/notification_bloc.dart';
+import 'package:hr_app_flutter/features/notification/widget/notification_screen.dart';
+import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
+import 'package:hr_app_flutter/features/services/bloc/rookies_bloc/rookies_bloc.dart';
 import 'package:hr_app_flutter/features/services/widget/bag_report_screen/bag_report_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/birth_day_info_screen/birth_day_info_screen.dart';
-import 'package:hr_app_flutter/features/news/widget/create_news_screen/create_news_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/create_lean_production_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/lean_production_info_proposals.dart';
 import 'package:hr_app_flutter/features/services/widget/lean_production_screens/my_lean_productions_screen.dart';
 import 'package:hr_app_flutter/features/services/widget/rookies_info_screen/rookies_info_screen.dart';
-import 'package:hr_app_flutter/features/home/widget/services_screen.dart';
-import 'package:hr_app_flutter/features/schedule_bus/widget/schedule_bus_screen.dart';
 import 'package:hr_app_flutter/features/statements/widget/statements_screens/statement_type_list_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/search_user/serch_user_screen.dart';
 import 'package:hr_app_flutter/features/user/widget/user_profile/user_profile_widget.dart';
 import 'package:hr_app_flutter/features/wallet/widget/exchange_coin_for_pass_screen/exchange_coin_for_pass.dart';
-import 'package:hr_app_flutter/features/home/widget/grass_coin_screen.dart';
+import 'package:hr_app_flutter/features/wallet/widget/how_to_get_big/how_to_get_big_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/search_friend_and_send_coin/search_friend_and_send_coins_screen.dart';
 import 'package:hr_app_flutter/features/wallet/widget/what_to_spend_screen/what_to_spend_screen.dart';
 import 'package:octopus/octopus.dart';
@@ -33,9 +55,27 @@ enum Routes with OctopusRoute {
   services('services', title: 'Services'),
   education('education', title: 'Education'),
   company('company', title: 'Company'),
-  searchFriendAndSendCoins('search-friend-and-send-coins',
-      title: 'Search Friend And Send Coins'),
+  searchFriendAndSendCoins(
+    'search-friend-and-send-coins',
+    title: 'Search Friend And Send Coins',
+  ),
   approveNews('approve-news', title: 'Approve News'),
+
+  /// Блок экранов для создания и модерации новости.
+  createModerationScreensBucket('create-moderation-screens-bucket', title: 'Create Moderation Screens Bucket'),
+  moderationNewsScreen('refactor-news', title: 'Refactor News'),
+  createRefactoringNewsScreen('create-refactoring-news-screen', title: 'Refactor Refactoring News Screen'),
+  listModerationNews('list-moderation-news', title: 'Moderation News'),
+  createTypeNewsScreen('create-type-news-screen', title: 'Create Type News Screen'),
+  createDateNewsScreen('create-date-news-screen', title: 'Create Date News Screen'),
+  createTimeNewsScreen('create-time-news-screen', title: 'Create Time News Screen'),
+  createTitleNewsScreen('create-title-news-screen', title: 'Create Title News Screen'),
+  createDescriptionNewsScreen('create-description-news-screen', title: 'Create Description News Screen'),
+  createPhotoNewsScreen('create-photo-news-screen', title: 'Create Photo News Screen'),
+
+  notificaion('notification', title: 'Notification'),
+
+  ///
   aboutNews('about-news', title: 'About News'),
   profileUser('profile-user', title: 'Profile User'),
   searchUser('search-user', title: 'Search User'),
@@ -46,9 +86,12 @@ enum Routes with OctopusRoute {
   bagReport('bag-report', title: 'Bag Report'),
   infoBirthDay('info-birth-day', title: 'Info Birth Day'),
   rookieInfo('rookie-info', title: 'Rookie Info'),
-  exchangeCoinForPass('exchange-coin-for-pass',
-      title: 'Exchange Coin For Pass'),
+  exchangeCoinForPass(
+    'exchange-coin-for-pass',
+    title: 'Exchange Coin For Pass',
+  ),
   whatToSpendScreen('what-to-spend', title: 'What To Spend'),
+  howToGetBigScreen('how-to-get-big', title: 'How To Get Big'),
 
   ///  Start Create News Screens
   createNews('create-news', title: 'Create News'),
@@ -56,8 +99,10 @@ enum Routes with OctopusRoute {
   createNewsDate('create-news-date', title: 'Create News Date'),
   createNewsTime('create-news-time', title: 'Create News Time'),
   createNewsTitle('create-news-title', title: 'Create News Title'),
-  createNewsDescrition('create-news-descrition',
-      title: 'Create News Descrition'),
+  createNewsDescrition(
+    'create-news-descrition',
+    title: 'Create News Descrition',
+  ),
   createNewsPhoto('create-news-photo', title: 'Create News Photo'),
   exampleNews('example-news', title: 'Example News'),
 
@@ -65,25 +110,34 @@ enum Routes with OctopusRoute {
   allNews('all-news', title: 'All News'),
 
   ///  Start Create Lean Production Screens
-
-  createLeanProductionScreen('create-lean-production',
-      title: 'Create Lean Production'),
-  writeProblemLeanProductionScreen('write-problem-lean-production',
-      title: 'Write Problem Lean Production'),
-
-  writeSolutionLeanProductionScreen('write-solution-lean-production',
-      title: 'Write Solution Lean Production'),
-
-  writeExpensesLeanProductionScreen('write-expenses-lean-production',
-      title: 'Write Expenses Lean Production'),
-
-  writeBenefitLeanProductionScreen('write-benefit-lean-production',
-      title: 'Write Benefit Lean Production'),
-
-  selectorExecutorLeanProductionScreen('selector-executor-lean-production',
-      title: 'Write Executor Lean Production'),
-  pickFileLeanProduction('pick-file-lean-production',
-      title: 'Pick File Lean Production');
+  createLeanProductionScreen(
+    'create-lean-production',
+    title: 'Create Lean Production',
+  ),
+  writeProblemLeanProductionScreen(
+    'write-problem-lean-production',
+    title: 'Write Problem Lean Production',
+  ),
+  writeSolutionLeanProductionScreen(
+    'write-solution-lean-production',
+    title: 'Write Solution Lean Production',
+  ),
+  writeExpensesLeanProductionScreen(
+    'write-expenses-lean-production',
+    title: 'Write Expenses Lean Production',
+  ),
+  writeBenefitLeanProductionScreen(
+    'write-benefit-lean-production',
+    title: 'Write Benefit Lean Production',
+  ),
+  selectorExecutorLeanProductionScreen(
+    'selector-executor-lean-production',
+    title: 'Write Executor Lean Production',
+  ),
+  pickFileLeanProduction(
+    'pick-file-lean-production',
+    title: 'Pick File Lean Production',
+  );
 
   ///  End Create Lean Production Screens
 
@@ -96,56 +150,114 @@ enum Routes with OctopusRoute {
   final String? title;
 
   @override
-  Widget builder(BuildContext context, OctopusState state, OctopusNode node) =>
-      switch (this) {
-        Routes.signin => const AuthenticationFormScreen(),
-        Routes.home => const HomeScreen(),
-        Routes.userMain => const UserMainScreen(),
-        Routes.coin => const GrassCoinScreen(),
-        Routes.services => const ServicesScreen(),
-        Routes.education => const EducationScreen(),
-        Routes.company => const CompanyScreen(),
-        Routes.searchFriendAndSendCoins =>
-          const SearchFriendAndSendCoinsScreen(),
-        Routes.approveNews => const ApproveNewsScreen(),
-        Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
-        Routes.profileUser => UserProfileWidgetScreen(
-            userId: node.arguments['id'],
-            isSelfUser: node.arguments['isSelfUser'],
-          ),
-        Routes.searchUser => const SearchUserScreen(),
-        Routes.scheduleBus => const ScheduleBusScreen(),
-        Routes.myLeanProductions => const MyLeanProductionsScreen(),
-        Routes.infoProposals => LeanProductionInfoProposalsScreen(
-            number: node.arguments['number'],
-            id: node.arguments['id'],
-          ),
-        Routes.statementsForm => const StatementFormScreen(),
-        Routes.bagReport => const BagReportScreen(),
-        Routes.infoBirthDay => BirthDayInfoScreen(),
-        Routes.rookieInfo => RookiesInfoScreen(),
-        Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
-        Routes.whatToSpendScreen => const WhatToSpendScreen(),
-        Routes.createNewsType => const SelectedTypeNewsScreen(),
-        Routes.createNews => const CreateNewsScreen(),
-        Routes.createNewsDate => const SelectedNewsDateScreen(),
-        Routes.createNewsTime => const SelectedNewsTimeScreen(),
-        Routes.createNewsTitle => const WriteTitleNewsScreen(),
-        Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
-        Routes.createNewsPhoto => const AddPhotoNewsScreen(),
-        Routes.exampleNews => const ExmapleNewsScreen(),
-        Routes.allNews => const AllNewsScreen(),
-        Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
-        Routes.writeProblemLeanProductionScreen =>
-          const WriteProblemLeanProductionScreen(),
-        Routes.writeSolutionLeanProductionScreen =>
-          const WriteSolutionLeamProductionScreen(),
-        Routes.writeExpensesLeanProductionScreen =>
-          const WriteExpensesLeanProductionScreen(),
-        Routes.writeBenefitLeanProductionScreen =>
-          const WriteBenefitLeanProductionScreen(),
-        Routes.selectorExecutorLeanProductionScreen =>
-          const SelectExecutorLeanProductionScreen(),
-        Routes.pickFileLeanProduction => const PickFileLeanProduction(),
-      };
+  Widget builder(BuildContext context, OctopusState state, OctopusNode node) => switch (this) {
+    Routes.signin => const AuthenticationFormScreen(),
+    Routes.home => const HomeScreen(),
+    Routes.userMain => const UserMainScreen(),
+    Routes.coin => const GrassCoinScreen(),
+    Routes.services => const ServicesScreen(),
+    Routes.education => const EducationScreen(),
+    Routes.company => const CompanyScreen(),
+    Routes.searchFriendAndSendCoins => const SearchFriendAndSendCoinsScreen(),
+    Routes.approveNews => const ApproveNewsScreen(),
+    Routes.listModerationNews => const ListModerationNewsScreen(),
+    Routes.createModerationScreensBucket => const CreateRefactoringNewsScreenBucket(),
+    Routes.moderationNewsScreen => BlocProvider<ModerationNewsCubit>(
+      child: const ModerationNewsScreen(),
+      create: (BuildContext context) => ModerationNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.notificaion => BlocProvider.value(
+      value: NotificationBLoC(
+        repository: DependenciesScope.of(context).notificationRepository,
+      )..add(const NotificationEvent.fetchNotification()),
+      child: NotificationScreen(),
+    ),
+    Routes.createRefactoringNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+      child: const CreateRefactoringNewsScreenBucket(),
+      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTypeNewsScreen => BlocProvider<CreateRefactoringTypeNewsCubit>(
+      child: const CreateTypeNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTypeNewsCubit(
+        id: node.arguments['id'],
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createDateNewsScreen => BlocProvider<CreateRefactoringDateNewsCubit>(
+      child: const CreateDateNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringDateNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTimeNewsScreen => BlocProvider<CreateRefactoringTimeNewsCubit>(
+      child: const CreateTimeNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTimeNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createTitleNewsScreen => BlocProvider<CreateRefactoringTitleNewsCubit>(
+      child: const CreateTitleNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringTitleNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createDescriptionNewsScreen => BlocProvider<CreateRefactoringDescriptionNewsCubit>(
+      child: const CreateDescriptionNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringDescriptionNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.createPhotoNewsScreen => BlocProvider<CreateRefactoringPhotoNewsCubit>(
+      child: const CreatePhotoNewsScreen(),
+      create: (BuildContext context) => CreateRefactoringPhotoNewsCubit(
+        eventEntityRepository: DependenciesScope.of(context).eventEntityRepository,
+      ),
+    ),
+    Routes.aboutNews => AboutNewsScreen(id: node.arguments['id']),
+    Routes.profileUser => UserProfileWidgetScreen(
+      userId: node.arguments['id'],
+      isSelfUser: node.arguments['isSelfUser'],
+    ),
+    Routes.searchUser => const SearchUserScreen(),
+    Routes.scheduleBus => const ScheduleBusScreen(),
+    Routes.myLeanProductions => const MyLeanProductionsScreen(),
+    Routes.infoProposals => LeanProductionInfoProposalsScreen(
+      number: node.arguments['number'],
+      id: node.arguments['id'],
+    ),
+    Routes.statementsForm => const StatementFormScreen(),
+    Routes.bagReport => const BagReportScreen(),
+    Routes.infoBirthDay => BirthDayInfoScreen(),
+    Routes.rookieInfo => BlocProvider.value(
+      value: RookiesBLoC(
+        userRepo: DependenciesScope.of(context).userRepository,
+      )..add(const RookiesEvent.fetch()),
+      child: RookiesInfoScreen(),
+    ),
+    Routes.exchangeCoinForPass => const ExchangeCoinForPass(),
+    Routes.whatToSpendScreen => const WhatToSpendScreen(),
+    Routes.howToGetBigScreen => const HowToGetBigScreen(),
+    Routes.createNewsType => const SelectedTypeNewsScreen(),
+    Routes.createNews => const CreateNewsScreen(),
+    Routes.createNewsDate => const SelectedNewsDateScreen(),
+    Routes.createNewsTime => const SelectedNewsTimeScreen(),
+    Routes.createNewsTitle => const WriteTitleNewsScreen(),
+    Routes.createNewsDescrition => const WriteDescriptionNewsScreen(),
+    Routes.createNewsPhoto => const AddPhotoNewsScreen(),
+    Routes.exampleNews => const ExmapleNewsScreen(),
+    Routes.allNews => const AllNewsScreen(),
+    Routes.createLeanProductionScreen => const CreateLeanProductionScreen(),
+    Routes.writeProblemLeanProductionScreen => const WriteProblemLeanProductionScreen(),
+    Routes.writeSolutionLeanProductionScreen => const WriteSolutionLeamProductionScreen(),
+    Routes.writeExpensesLeanProductionScreen => const WriteExpensesLeanProductionScreen(),
+    Routes.writeBenefitLeanProductionScreen => const WriteBenefitLeanProductionScreen(),
+    Routes.selectorExecutorLeanProductionScreen => const SelectExecutorLeanProductionScreen(),
+    Routes.pickFileLeanProduction => const PickFileLeanProduction(),
+  };
 }
