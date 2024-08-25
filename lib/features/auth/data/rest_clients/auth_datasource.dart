@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:hr_app_flutter/core/components/rest_clients/rest_client.dart';
+import 'package:hr_app_flutter/core/utils/async_mutex.dart';
 import 'package:hr_app_flutter/core/utils/preferences_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,8 +13,11 @@ abstract interface class AuthDataSource {
   Future<void> getCodeByPhoneNumber({required String numberPhone});
 
   /// Sign In with phone and code.
-  Future<void> signInWithPhoneAndCode(
-      {required String numberPhone, required String code, String? deviceToken});
+  Future<void> signInWithPhoneAndCode({
+    required String numberPhone,
+    required String code,
+    String? deviceToken,
+  });
 
   /// Sign out the current user.
   Future<void> signOut();
@@ -39,6 +43,7 @@ final class AuthDataSourceImpl
   late final _accessToken = stringEntry('access_token');
   late final _refreshToken = stringEntry('refresh_token');
   final _controller = StreamController<TokenPair?>.broadcast();
+  static final _mutex = AsyncMutex();
 
   @override
   Future<void> getCodeByPhoneNumber({
@@ -59,16 +64,17 @@ final class AuthDataSourceImpl
   }
 
   @override
-  Future<void> signInWithPhoneAndCode(
-      {required String numberPhone,
-      required String code,
-      String? deviceToken}) async {
+  Future<void> signInWithPhoneAndCode({
+    required String numberPhone,
+    required String code,
+    String? deviceToken,
+  }) async {
     final response = await client.post<Map<String, Object?>>(
       '/auth/verify_sms',
       queryParameters: {
         'phone': numberPhone,
         'code': code,
-        'device_token': deviceToken
+        'device_token': deviceToken,
       },
     );
     if (response.statusCode == 401) {
@@ -84,24 +90,45 @@ final class AuthDataSourceImpl
 
   @override
   Future<void> clearTokenPair() async {
-    await _accessToken.remove();
-    await _refreshToken.remove();
-    _controller.add(null);
+    try {
+      await _mutex.lock();
+      await _accessToken.remove();
+      await _refreshToken.remove();
+      _controller.add(null);
+    } catch (e) {
+      rethrow;
+    } finally {
+      _mutex.unlock();
+    }
   }
 
   @override
   Future<TokenPair?> loadTokenPair() async {
-    final accessToken = _accessToken.read();
-    final refreshToken = _refreshToken.read();
-    if (accessToken == null || refreshToken == null) return null;
-    return (accessToken: accessToken, refreshToken: refreshToken);
+    try {
+      await _mutex.lock();
+      final accessToken = _accessToken.read();
+      final refreshToken = _refreshToken.read();
+      if (accessToken == null || refreshToken == null) return null;
+      return (accessToken: accessToken, refreshToken: refreshToken);
+    } on Exception catch (e) {
+      rethrow;
+    } finally {
+      _mutex.unlock();
+    }
   }
 
   @override
   Future<void> saveTokenPair(TokenPair tokenPair) async {
-    await _accessToken.set(tokenPair.accessToken);
-    await _refreshToken.set(tokenPair.refreshToken);
-    _controller.add(tokenPair);
+    try {
+      await _mutex.lock();
+      await _accessToken.set(tokenPair.accessToken);
+      await _refreshToken.set(tokenPair.refreshToken);
+      _controller.add(tokenPair);
+    } catch (e) {
+      rethrow;
+    } finally {
+      _mutex.unlock();
+    }
   }
 
   @override
